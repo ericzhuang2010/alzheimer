@@ -1,5 +1,6 @@
 # Keep portable project files such as .Rprofile, .renvignore, renv.lock,
-# config/, scripts/, jobs/, renv/activate.R, and renv/settings.json tracked.
+# shared/Minerva config files, scripts/, jobs/, renv/activate.R, and
+# renv/settings.json tracked.
 
 # Generated analysis outputs and transient execution files.
 results/
@@ -47,3 +48,9 @@ data/
 docs/
 untracked/
 ad_research/
+
+# Workstation-only local-pilot configuration; Minerva uses the shared and
+# Minerva-production configuration files instead.
+config/local_pilot.yml
+config/local_pilot_execution.yml
+config/local_pilot_rds_manifest.tsv

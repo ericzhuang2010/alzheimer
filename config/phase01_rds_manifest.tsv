@@ -1,2 +1,0 @@
-manifest_row	rds_id	stable_rds_task_id	input_rds	estimated_disk_gib	estimated_peak_ram_gib	expected_features	expected_cells	expected_donors	expected_cell_types	enabled
-1	vasculature	rds:vasculature	data/processed/Vasculature_cells.rds	0.135	0.67	33538	17974	423	5	TRUE
