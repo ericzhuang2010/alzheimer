@@ -9,7 +9,7 @@ inputs:
   cell_metadata_tsv: data/processed/cell.meta.data.tsv
 
 outputs:
-  root: results/phase1_local
+  root: results/local_pilot
 
 scope:
   rds_ids: [vasculature]

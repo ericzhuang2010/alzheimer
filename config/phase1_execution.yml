@@ -1,7 +1,7 @@
 execution:
   execution_phase: 1
   backend: direct
-  run_id: phase1_local_001
+  run_id: local_pilot_001
   max_total_cores: 1
   total_memory_gib: 15
   reserve_memory_gib: 4
@@ -20,8 +20,8 @@ execution:
   resume: true
   fail_fast: true
   poll_seconds: 5
-  temp_dir: results/phase1_local/tmp
-  log_dir: results/phase1_local/logs
+  temp_dir: results/local_pilot/tmp
+  log_dir: results/local_pilot/logs
 
 environment:
   OMP_NUM_THREADS: 1

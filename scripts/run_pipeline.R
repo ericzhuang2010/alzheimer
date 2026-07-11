@@ -107,6 +107,9 @@ registry <- data.frame(
   ),
   stringsAsFactors = FALSE
 )
+registry$argument_names[registry$task_mode == "cohort"] <- paste(
+  c("config", "execution-config", "audit", "task-mode"), collapse = ","
+)
 
 args <- parse_cli(commandArgs(trailingOnly = TRUE))
 if (!requireNamespace("yaml", quietly = TRUE)) stop("Package 'yaml' is required", call. = FALSE)
@@ -216,26 +219,48 @@ if (args$phase == "environment") {
   quit(status = exit_code)
 }
 
-# Scientific tasks use a single shared runner and a stable CLI. Global task support is
-# intentionally enabled only as each owning scientific script is implemented.
-if (any(task_graph$task_mode != "environment" & is.na(task_graph$manifest_row))) {
+# Scientific tasks use either the shared per-RDS runner or the same global
+# scientific entry point in every execution stage.
+implemented_global_modes <- c("cohort")
+unsupported_global <- task_graph$task_mode[
+  is.na(task_graph$manifest_row) &
+    !task_graph$task_mode %in% implemented_global_modes
+]
+if (length(unsupported_global)) {
   stop(
-    "Global scientific task execution is not yet implemented in the Section 7 controller. ",
-    "The dry-run graph is authoritative; implement the owning scientific phase first.",
+    "Global scientific task execution is not implemented for: ",
+    paste(unique(unsupported_global), collapse = ", "),
     call. = FALSE
   )
 }
 
+failed_tasks <- character()
 for (i in seq_len(nrow(task_graph))) {
   row <- task_graph[i, , drop = FALSE]
-  runner_args <- c(
-    absolute_path("scripts/run_one_rds.R", root),
-    "--config", config_path,
-    "--execution-config", execution_path,
-    "--manifest-row", as.character(row$manifest_row),
-    "--task-mode", row$task_mode,
-    "--script", absolute_path(row$scientific_script, root)
-  )
+  if (is.na(row$manifest_row)) {
+    runner_args <- c(
+      absolute_path(row$scientific_script, root),
+      "--config", config_path,
+      "--execution-config", execution_path,
+      "--task-mode", row$task_mode
+    )
+  } else {
+    runner_args <- c(
+      absolute_path("scripts/run_one_rds.R", root),
+      "--config", config_path,
+      "--execution-config", execution_path,
+      "--manifest-row", as.character(row$manifest_row),
+      "--task-mode", row$task_mode,
+      "--script", absolute_path(row$scientific_script, root)
+    )
+  }
   exit_code <- system2("Rscript", runner_args)
-  if (exit_code != 0L && isTRUE(execution$fail_fast)) quit(status = exit_code)
+  if (exit_code != 0L) {
+    failed_tasks <- c(failed_tasks, row$stable_task_id)
+    if (isTRUE(execution$fail_fast)) quit(status = exit_code)
+  }
+}
+if (length(failed_tasks)) {
+  cat("Failed tasks: ", paste(failed_tasks, collapse = ", "), "\n", sep = "")
+  quit(status = 2L)
 }

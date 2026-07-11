@@ -173,6 +173,7 @@ audit_dir <- file.path(output_root, "01_audit")
 audit_path <- file.path(audit_dir, paste0(base_name, ".audit.tsv"))
 features_path <- file.path(audit_dir, paste0(base_name, ".features.tsv.gz"))
 cell_types_path <- file.path(audit_dir, paste0(base_name, ".cell_types.tsv"))
+donors_path <- file.path(audit_dir, paste0(base_name, ".donors.tsv"))
 status_path <- file.path(audit_dir, paste0(base_name, ".audit_status.tsv"))
 
 message("Reading Seurat object: ", input_path)
@@ -397,9 +398,51 @@ cell_type_table <- cell_type_dt[, .(
 ), by = fine_cell_type]
 data.table::setorder(cell_type_table, fine_cell_type)
 
+
+donor_dt <- data.table::data.table(
+  projid = object_projids,
+  fine_cell_type = object_cell_types,
+  raw_counts = as.numeric(Matrix::colSums(counts))
+)
+sex_linked_genes <- c("XIST", "UTY")
+sex_linked_counts <- matrix(
+  0,
+  nrow = length(cells),
+  ncol = length(sex_linked_genes),
+  dimnames = list(cells, sex_linked_genes)
+)
+measured_sex_linked <- intersect(sex_linked_genes, features)
+if (length(measured_sex_linked)) {
+  sex_linked_counts[, measured_sex_linked] <- t(as.matrix(
+    counts[measured_sex_linked, , drop = FALSE]
+  ))
+}
+donor_dt[, xist_counts := sex_linked_counts[, "XIST"]]
+donor_dt[, uty_counts := sex_linked_counts[, "UTY"]]
+donor_table <- donor_dt[, .(
+  nuclei = .N,
+  fine_cell_types = data.table::uniqueN(fine_cell_type[!is.na(fine_cell_type)]),
+  raw_counts = sum(raw_counts),
+  xist_counts = sum(xist_counts),
+  uty_counts = sum(uty_counts)
+), by = projid]
+donor_table[, `:=`(
+  schema_version = "rds_donor_inventory_v1",
+  rds_id = rds_id,
+  source_rds = input_rel,
+  xist_cpm = ifelse(raw_counts > 0, 1e6 * xist_counts / raw_counts, NA_real_),
+  uty_cpm = ifelse(raw_counts > 0, 1e6 * uty_counts / raw_counts, NA_real_)
+)]
+data.table::setcolorder(donor_table, c(
+  "schema_version", "rds_id", "source_rds", "projid", "nuclei",
+  "fine_cell_types", "raw_counts", "xist_counts", "uty_counts",
+  "xist_cpm", "uty_cpm"
+))
+data.table::setorder(donor_table, projid)
+
 execution_phase <- if (isTRUE(config$scope$pilot)) 1L else 2L
 backend <- "direct"
-run_id <- if (isTRUE(config$scope$pilot)) "phase1_local_manual" else "manual_audit"
+run_id <- if (isTRUE(config$scope$pilot)) "local_pilot_manual" else "manual_audit"
 if (!is.null(args$execution_config)) {
   execution_path <- absolute_path(args$execution_config, project_root)
   if (!file.exists(execution_path)) stop("Execution config does not exist: ", execution_path, call. = FALSE)
@@ -431,11 +474,13 @@ status <- data.frame(
 atomic_write_tsv(audit, audit_path)
 atomic_write_tsv_gz(feature_table, features_path)
 atomic_write_tsv(cell_type_table, cell_types_path)
+atomic_write_tsv(donor_table, donors_path)
 atomic_write_tsv(status, status_path)
 
 cat("Audit summary: ", audit_path, "\n", sep = "")
 cat("Feature inventory: ", features_path, "\n", sep = "")
 cat("Cell-type summary: ", cell_types_path, "\n", sep = "")
+cat("Donor inventory: ", donors_path, "\n", sep = "")
 cat("Audit status: ", validation_status, "\n", sep = "")
 if (length(failed_checks)) {
   cat("Failed checks: ", paste(failed_checks, collapse = ", "), "\n", sep = "")
