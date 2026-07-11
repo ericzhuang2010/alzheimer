@@ -1,7 +1,7 @@
 project:
   root: "."
   analysis_config: config/analysis_parameters.yml
-  manifest: config/phase1_rds_manifest.tsv
+  manifest: config/phase01_rds_manifest.tsv
 
 inputs:
   expression_root: data/processed
