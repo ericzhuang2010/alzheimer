@@ -129,11 +129,20 @@ get_assay_layer <- function(object, assay, layer) {
 }
 
 args <- parse_cli(commandArgs(trailingOnly = TRUE))
-required_packages <- c("yaml", "Matrix", "SeuratObject", "data.table")
+required_packages <- c(
+  "yaml", "Matrix", "RcppAnnoy", "Seurat", "SeuratObject", "data.table"
+)
 missing_packages <- required_packages[!vapply(required_packages, requireNamespace, logical(1), quietly = TRUE)]
 if (length(missing_packages)) {
   stop("Missing required packages: ", paste(missing_packages, collapse = ", "), call. = FALSE)
 }
+
+# Load RcppAnnoy before Seurat so serialized Seurat objects do not trigger an
+# order-dependent Rcpp module failure while S4 methods are resolved lazily.
+suppressPackageStartupMessages({
+  library(RcppAnnoy)
+  library(Seurat)
+})
 
 invocation_root <- normalizePath(getwd(), mustWork = TRUE)
 config_path <- absolute_path(args$config, invocation_root)
