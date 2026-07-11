@@ -269,9 +269,19 @@ add_check <- function(check, passed, observed, expected) {
     stringsAsFactors = FALSE
   )
 }
+pinned_count_matches <- function(observed, expected) {
+  is.na(expected) || identical(as.integer(observed), as.integer(expected))
+}
+pinned_count_label <- function(expected) {
+  if (is.na(expected)) "not_pinned_discovery" else as.character(expected)
+}
 add_check("seurat_object", object_is_seurat, paste(class(object), collapse = ";"), "Seurat")
-add_check("feature_count", nrow(counts) == expected_features, nrow(counts), expected_features)
-add_check("nucleus_count", ncol(counts) == expected_cells, ncol(counts), expected_cells)
+add_check("feature_count", pinned_count_matches(nrow(counts), expected_features),
+  nrow(counts), pinned_count_label(expected_features)
+)
+add_check("nucleus_count", pinned_count_matches(ncol(counts), expected_cells),
+  ncol(counts), pinned_count_label(expected_cells)
+)
 add_check("counts_sparse", is_sparse, paste(class(counts), collapse = ";"), "sparseMatrix")
 add_check("counts_finite", counts_finite, counts_finite, TRUE)
 add_check("counts_nonnegative", counts_nonnegative, counts_nonnegative, TRUE)
@@ -287,10 +297,12 @@ add_check("required_object_metadata", all(object_metadata_present),
   paste(required_object_metadata, collapse = ";")
 )
 add_check("donor_ids_complete", !anyNA(object_projids), sum(is.na(object_projids)), 0)
-add_check("donor_count", observed_donors == expected_donors, observed_donors, expected_donors)
+add_check("donor_count", pinned_count_matches(observed_donors, expected_donors),
+  observed_donors, pinned_count_label(expected_donors)
+)
 add_check("cell_types_complete", !anyNA(object_cell_types), sum(is.na(object_cell_types)), 0)
-add_check("cell_type_count", observed_cell_types == expected_cell_types,
-  observed_cell_types, expected_cell_types
+add_check("cell_type_count", pinned_count_matches(observed_cell_types, expected_cell_types),
+  observed_cell_types, pinned_count_label(expected_cell_types)
 )
 add_check("mtdna_protein_genes", !length(missing_mt),
   paste(observed_mt, collapse = ";"), paste(expected_mt, collapse = ";")
@@ -343,6 +355,10 @@ audit <- data.frame(
   nuclei = ncol(counts),
   donors = observed_donors,
   fine_cell_types = observed_cell_types,
+  expected_features = expected_features,
+  expected_nuclei = expected_cells,
+  expected_donors = expected_donors,
+  expected_fine_cell_types = expected_cell_types,
   metadata_fields = paste(colnames(object_metadata), collapse = ";"),
   master_metadata_rows_matched = length(cells) - master_missing_barcodes,
   master_metadata_missing_barcodes = master_missing_barcodes,
