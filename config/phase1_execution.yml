@@ -1,0 +1,29 @@
+execution:
+  execution_phase: 1
+  backend: direct
+  run_id: phase1_local_001
+  max_total_cores: 1
+  total_memory_gib: 15
+  reserve_memory_gib: 4
+  walltime_hours: 12
+  stop_launching_minutes_before_end: 30
+  max_concurrent_rds: 1
+  cores_per_rds: 1
+  max_concurrent_contrasts: 1
+  cores_per_contrast: 1
+  max_concurrent_mast_per_rds: 1
+  memory_estimate_column: estimated_peak_ram_gib
+  default_rds_memory_gib: 4
+  default_contrast_memory_gib: 4
+  large_job_threshold_gib: 8
+  large_jobs_exclusive: true
+  resume: true
+  fail_fast: true
+  poll_seconds: 5
+  temp_dir: results/phase1_local/tmp
+  log_dir: results/phase1_local/logs
+
+environment:
+  OMP_NUM_THREADS: 1
+  OPENBLAS_NUM_THREADS: 1
+  MKL_NUM_THREADS: 1

@@ -1,0 +1,29 @@
+execution:
+  execution_phase: 2
+  backend: direct
+  run_id: phase2_ondemand_192gb_001
+  max_total_cores: 48
+  total_memory_gib: 192
+  reserve_memory_gib: 32
+  walltime_hours: 12
+  stop_launching_minutes_before_end: 45
+  max_concurrent_rds: 2
+  cores_per_rds: 2
+  max_concurrent_contrasts: 8
+  cores_per_contrast: 1
+  max_concurrent_mast_per_rds: 1
+  memory_estimate_column: estimated_peak_ram_gib
+  default_rds_memory_gib: 96
+  default_contrast_memory_gib: 12
+  large_job_threshold_gib: 100
+  large_jobs_exclusive: true
+  resume: true
+  fail_fast: false
+  poll_seconds: 15
+  temp_dir: results/minerva_production/tmp/phase2
+  log_dir: results/minerva_production/logs/phase2
+
+environment:
+  OMP_NUM_THREADS: 1
+  OPENBLAS_NUM_THREADS: 1
+  MKL_NUM_THREADS: 1

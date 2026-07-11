@@ -1,0 +1,139 @@
+analysis:
+  name: mitochondria_sex_apoe
+  version: "0.1.0"
+  genome_build: GRCh38
+  seed: 20260711
+
+environment:
+  minimum_r_version: "4.3.3"
+  required_packages:
+    - yaml
+    - renv
+    - Matrix
+    - SeuratObject
+    - Seurat
+    - data.table
+    - stringr
+    - dplyr
+    - edgeR
+    - MAST
+    - readxl
+
+references:
+  gencode_release: "44"
+  gencode_gtf: data/reference/gencode/gencode.v44.basic.annotation.gtf.gz
+  gencode_gtf_sha256: 3e52f82c63f8fd860bf632ccde10441c05751f4c342ad08c0a98e9e2700171a5
+  mitocarta_version: "3.0"
+  mitocarta_url: https://personal.broadinstitute.org/scalvo/MitoCarta3.0/Human.MitoCarta3.0.xls
+  mitocarta_source: data/reference/Human.MitoCarta3.0.xls
+
+cohort:
+  join_key: projid
+  projid_width: 8
+  diagnosis_field: cogdx
+  nci_values: [1]
+  ad_values: [4]
+  sex_field: msex
+  female_value: 0
+  male_value: 1
+  apoe_field: apoe_genotype
+  apoe_e2_values: [22, 23]
+  apoe_e33_values: [33]
+  apoe_e4_values: [34, 44]
+  excluded_apoe_values: [24]
+  pmi_field: pmi
+  excluded_sex_discordant_projids:
+    - "50301963"
+    - "11326252"
+    - "15114174"
+    - "10277308"
+  expected_global_donors: 276
+  expected_phase1_donors: 274
+  expected_phase1_absent_projids: ["20261901", "11072071"]
+
+mitochondrial_features:
+  mtdna_protein_genes:
+    - MT-ND1
+    - MT-ND2
+    - MT-CO1
+    - MT-CO2
+    - MT-ATP8
+    - MT-ATP6
+    - MT-CO3
+    - MT-ND3
+    - MT-ND4L
+    - MT-ND4
+    - MT-ND5
+    - MT-ND6
+    - MT-CYB
+  primary_pathway_source: MitoCarta3.0_MitoPathways
+
+normalization:
+  assay: RNA
+  method: LogNormalize
+  scale_factor: 10000
+  preserve_raw_counts: true
+
+quality_control:
+  retain_original_study_cells_primary: true
+  regress_percent_mt_primary: false
+  automatic_percent_mt_cutoff: null
+  robust_flag_method: within_cell_type_median_mad
+
+pseudobulk:
+  unit: donor_cell_type
+  minimum_nuclei_primary: 20
+  minimum_nuclei_sensitivity: 50
+  minimum_donors_per_contrast_side: 5
+  count_source: RNA_counts
+
+contrasts:
+  outcome: diagnosis
+  numerator: AD
+  denominator: NCI
+  strata: [sex, apoe_group, fine_cell_type]
+  sex_levels: [Female, Male]
+  apoe_levels: [e2, e33, e4]
+
+models:
+  pseudobulk:
+    method: edgeR_QL
+    covariates: [age_death_scaled, pmi_scaled]
+  mast:
+    method: Seurat_FindMarkers_MAST
+    latent_vars: [nCount_RNA, age_death_scaled, pmi_scaled]
+  continuous_covariate_scaling: analytic_cohort
+
+multiple_testing:
+  method: BH
+  alpha: 0.05
+  families:
+    - gene_within_cell_type_and_sex_apoe_group
+    - pathway_within_cell_type_and_sex_apoe_group
+
+pilot:
+  similarity_permutations: 100
+  sensitivity_bootstrap_repetitions: 50
+  power_repetitions: 10
+  output_status: nonfinal_smoke_test
+
+production:
+  similarity_permutations: 10000
+  sensitivity_bootstrap_repetitions: 1000
+  power_repetitions: 100
+  output_status: final
+
+provenance:
+  required_output_fields:
+    - execution_phase
+    - backend
+    - run_id
+    - stable_task_id
+    - source_rds
+    - scientific_script
+    - scientific_code_bundle_sha256
+    - scientific_config_sha256
+    - manifest_sha256
+    - peak_ram_gib
+    - elapsed_seconds
+    - validation_status

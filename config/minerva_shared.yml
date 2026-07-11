@@ -1,0 +1,45 @@
+project:
+  root: "."
+  analysis_config: config/analysis_parameters.yml
+  manifest: config/minerva_rds_manifest.tsv
+
+inputs:
+  expression_root: data/processed
+  clinical_csv: data/processed/ROSMAP_clinical.csv
+  cell_metadata_tsv: data/processed/cell.meta.data.tsv
+
+outputs:
+  root: results/minerva_production
+
+scope:
+  rds_ids:
+    - astrocytes
+    - excitatory_set1
+    - excitatory_set2
+    - excitatory_set3
+    - immune
+    - inhibitory
+    - opcs
+    - oligodendrocytes
+    - vasculature
+  pilot: false
+  allowed_task_modes:
+    - environment
+    - parity
+    - audit
+    - cohort
+    - annotations
+    - qc
+    - normalize
+    - descriptive
+    - pseudobulk
+    - contrasts
+    - pseudobulk_de
+    - mast
+    - mito_fraction
+    - pathways
+    - similarity
+    - sensitivity
+    - power
+    - validate
+    - figures

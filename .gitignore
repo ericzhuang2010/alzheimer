@@ -1,0 +1,49 @@
+# Keep portable project files such as .Rprofile, .renvignore, renv.lock,
+# config/, scripts/, jobs/, renv/activate.R, and renv/settings.json tracked.
+
+# Generated analysis outputs and transient execution files.
+results/
+logs/
+tmp/
+*.log
+*.out
+*.err
+*.tmp
+*.tmp.*
+*.orig
+*.rej
+
+# Python build/test caches in addition to the local .venv below.
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# R session and IDE state.
+.RData
+.Rhistory
+.Ruserdata
+.Rproj.user/
+
+# Machine-specific renv libraries and caches.
+renv/library/
+renv/local/
+renv/cellar/
+renv/lock/
+renv/python/
+renv/sandbox/
+renv/staging/
+
+# Editor and operating-system metadata.
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Large inputs, documentation, local environments, and scratch directories.
+.venv/
+__pycache__/
+data/
+docs/
+untracked/
+ad_research/

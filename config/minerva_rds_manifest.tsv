@@ -1,0 +1,10 @@
+manifest_row	rds_id	stable_rds_task_id	input_rds	estimated_disk_gib	estimated_peak_ram_gib	expected_features	expected_cells	expected_donors	expected_cell_types	enabled
+1	astrocytes	rds:astrocytes	data/processed/Astrocytes.rds	1.586	8.16	33538	149558	427	3	TRUE
+2	excitatory_set1	rds:excitatory_set1	data/processed/Excitatory_neurons_set1.rds	5.7	64	NA	NA	NA	NA	TRUE
+3	excitatory_set2	rds:excitatory_set2	data/processed/Excitatory_neurons_set2.rds	9.8	128	NA	NA	NA	NA	TRUE
+4	excitatory_set3	rds:excitatory_set3	data/processed/Excitatory_neurons_set3.rds	5.8	64	NA	NA	NA	NA	TRUE
+5	immune	rds:immune	data/processed/Immune_cells.rds	0.602	3.12	33538	83889	426	5	TRUE
+6	inhibitory	rds:inhibitory	data/processed/Inhibitory_neurons.rds	5.2	64	NA	NA	NA	NA	TRUE
+7	opcs	rds:opcs	data/processed/OPCs.rds	1.139	5.75	33538	90502	427	1	TRUE
+8	oligodendrocytes	rds:oligodendrocytes	data/processed/Oligodendrocytes.rds	5.0	64	NA	NA	NA	NA	TRUE
+9	vasculature	rds:vasculature	data/processed/Vasculature_cells.rds	0.135	0.67	33538	17974	423	5	TRUE

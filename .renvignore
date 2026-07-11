@@ -1,0 +1,6 @@
+data/
+docs/
+results/
+scripts/AD_scRNAseq_companion/
+scripts/misc/
+untracked
