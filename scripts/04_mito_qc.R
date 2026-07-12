@@ -195,6 +195,29 @@ source_path <- absolute_path(source_rel, project_root)
 if (!file.exists(source_path)) stop("Input RDS does not exist: ", source_path, call. = FALSE)
 source_sha_before <- sha256_file(source_path)
 
+# Phase 01 is the authoritative dimension inventory. Large Minerva manifest
+# rows may intentionally leave expected counts unpinned until that audit has
+# completed; non-missing manifest pins must still agree with the audit.
+source_base <- sub("[.][Rr][Dd][Ss]$", "", basename(source_path))
+audit_path <- file.path(output_root, "01_audit", paste0(source_base, ".audit.tsv"))
+if (!file.exists(audit_path)) {
+  stop("Required promoted Phase 01 audit is missing: ", audit_path, call. = FALSE)
+}
+audit <- data.table::fread(audit_path, data.table = FALSE)
+if (nrow(audit) != 1L || !identical(audit$validation_status[[1L]], "validated_complete")) {
+  stop("Phase 01 audit must contain one validated_complete row: ", audit_path, call. = FALSE)
+}
+audit_expected_features <- as.integer(audit$features[[1L]])
+audit_expected_nuclei <- as.integer(audit$nuclei[[1L]])
+manifest_expected_features <- suppressWarnings(as.integer(selected$expected_features[[1L]]))
+manifest_expected_nuclei <- suppressWarnings(as.integer(selected$expected_cells[[1L]]))
+if (!is.na(manifest_expected_features) && manifest_expected_features != audit_expected_features) {
+  stop("Manifest feature pin disagrees with the promoted Phase 01 audit", call. = FALSE)
+}
+if (!is.na(manifest_expected_nuclei) && manifest_expected_nuclei != audit_expected_nuclei) {
+  stop("Manifest nucleus pin disagrees with the promoted Phase 01 audit", call. = FALSE)
+}
+
 intersections_path <- file.path(output_root, "02_cohort", "cohort_rds_intersections.tsv")
 if (!file.exists(intersections_path)) {
   stop("Required cohort intersection manifest is missing: ", intersections_path, call. = FALSE)
@@ -539,8 +562,8 @@ add_check <- function(check, passed, observed, expected) {
     stringsAsFactors = FALSE
   )
 }
-add_check("source_feature_count", nrow(counts) == selected$expected_features[[1L]], nrow(counts), selected$expected_features[[1L]])
-add_check("source_nucleus_count", ncol(counts) == selected$expected_cells[[1L]], ncol(counts), selected$expected_cells[[1L]])
+add_check("source_feature_count", nrow(counts) == audit_expected_features, nrow(counts), audit_expected_features)
+add_check("source_nucleus_count", ncol(counts) == audit_expected_nuclei, ncol(counts), audit_expected_nuclei)
 add_check("counts_finite", counts_finite, counts_finite, TRUE)
 add_check("counts_nonnegative", counts_nonnegative, counts_nonnegative, TRUE)
 add_check("counts_integer", counts_integer, counts_integer, TRUE)
@@ -609,6 +632,7 @@ status <- data.frame(
   scientific_code_bundle_sha256 = sha256_file(file.path(project_root, "scripts/04_mito_qc.R")),
   scientific_config_sha256 = sha256_file(analysis_path),
   manifest_sha256 = sha256_file(manifest_path),
+  phase01_audit_sha256 = sha256_file(audit_path),
   cohort_sha256 = sha256_file(cohort_path),
   mt_annotation_sha256 = sha256_file(mt_path),
   mitocarta_annotation_sha256 = sha256_file(mitocarta_path),
