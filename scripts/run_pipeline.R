@@ -139,6 +139,17 @@ if (!args$phase %in% valid_modes) {
 }
 
 execution <- execution_config$execution
+execution_stage <- as.character(execution$execution_stage %||% if (
+  isTRUE(config$scope$pilot)
+) "local_pilot" else "minerva_production")
+allowed_execution_stages <- c("local_pilot", "minerva_production", "lsf_fallback")
+if (length(execution_stage) != 1L || !execution_stage %in% allowed_execution_stages) {
+  stop(
+    "execution.execution_stage must be one of: ",
+    paste(allowed_execution_stages, collapse = ", "),
+    call. = FALSE
+  )
+}
 total_memory <- as.numeric(execution$total_memory_gib)
 reserve_memory <- as.numeric(execution$reserve_memory_gib)
 if (!is.finite(total_memory) || !is.finite(reserve_memory) || total_memory <= reserve_memory) {
@@ -162,6 +173,7 @@ for (i in seq_len(nrow(selected_registry))) {
     stable_task_id <- if (is_rds) paste(task$task_mode, rds_id, sep = ":") else paste0("global:", task$task_mode)
     script_path <- absolute_path(task$script, root)
     graph_rows[[length(graph_rows) + 1L]] <- data.frame(
+      execution_stage = execution_stage,
       execution_phase = execution$execution_phase,
       backend = execution$backend,
       run_id = execution$run_id,
@@ -185,7 +197,7 @@ task_graph <- do.call(rbind, graph_rows)
 
 default_graph <- file.path(
   config$outputs$root, "00_environment",
-  paste0("phase", execution$execution_phase, "_", args$phase, "_task_graph.tsv")
+  paste0(execution_stage, "_", args$phase, "_task_graph.tsv")
 )
 graph_path <- absolute_path(args$task_graph_output %||% default_graph, root)
 atomic_write_tsv(task_graph, graph_path)

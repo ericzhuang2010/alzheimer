@@ -1,4 +1,5 @@
 execution:
+  execution_stage: minerva_production
   execution_phase: 2
   backend: direct
   run_id: minerva_production_192gb_001
