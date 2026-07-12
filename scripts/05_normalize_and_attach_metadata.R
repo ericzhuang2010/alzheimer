@@ -134,7 +134,10 @@ make_formula_samples <- function(counts, scale_factor, seed, sample_size = 500L)
   } else {
     integer()
   }
-  random_n <- min(as.integer(sample_size), nrow(counts) * ncol(counts))
+  # Coerce dimensions before multiplication: large Minerva matrices exceed
+  # R's 32-bit integer range even though only a small sample is requested.
+  matrix_entries <- as.double(nrow(counts)) * as.double(ncol(counts))
+  random_n <- as.integer(min(as.double(sample_size), matrix_entries))
   random_rows <- sample.int(nrow(counts), random_n, replace = TRUE)
   random_columns <- sample.int(ncol(counts), random_n, replace = TRUE)
   pairs <- unique(data.frame(
@@ -214,20 +217,23 @@ base_name <- sub("[.][Rr][Dd][Ss]$", "", basename(source_path))
 
 audit_path <- file.path(output_root, "01_audit", paste0(base_name, ".audit.tsv"))
 if (!file.exists(audit_path)) stop("Required Phase 01 audit is missing: ", audit_path, call. = FALSE)
-audit <- data.table::fread(audit_path, data.table = FALSE)
+audit <- data.table::fread(audit_path, integer64 = "double", data.table = FALSE)
 if (nrow(audit) != 1L || !identical(audit$validation_status[[1L]], "validated_complete")) {
   stop("Phase 01 audit must contain one validated_complete row", call. = FALSE)
 }
 
 intersections_path <- file.path(output_root, "02_cohort", "cohort_rds_intersections.tsv")
 if (!file.exists(intersections_path)) stop("Cohort intersection manifest is missing", call. = FALSE)
-intersections <- data.table::fread(intersections_path, data.table = FALSE)
+intersections <- data.table::fread(
+  intersections_path, integer64 = "double", data.table = FALSE
+)
 intersection <- intersections[intersections$rds_id == rds_id, , drop = FALSE]
 if (nrow(intersection) != 1L) stop("Cohort intersection must identify one row", call. = FALSE)
 cohort_path <- absolute_path(as.character(intersection$output_file[[1L]]), project_root)
 if (!file.exists(cohort_path)) stop("RDS cohort is missing: ", cohort_path, call. = FALSE)
 cohort <- data.table::fread(
-  cohort_path, colClasses = c(projid = "character"), data.table = FALSE
+  cohort_path, colClasses = c(projid = "character"),
+  integer64 = "double", data.table = FALSE
 )
 projid_width <- as.integer(analysis$cohort$projid_width %||% 8L)
 cohort$projid <- normalize_id(cohort$projid, projid_width)
@@ -240,14 +246,16 @@ qc_path <- file.path(qc_dir, paste0(tolower(rds_id), "_cell_qc.tsv.gz"))
 qc_status_path <- file.path(qc_dir, paste0(tolower(rds_id), "_qc_status.tsv"))
 if (!file.exists(qc_path)) stop("Phase 04 cell QC is missing: ", qc_path, call. = FALSE)
 if (!file.exists(qc_status_path)) stop("Phase 04 QC status is missing", call. = FALSE)
-qc_status <- data.table::fread(qc_status_path, data.table = FALSE)
+qc_status <- data.table::fread(
+  qc_status_path, integer64 = "double", data.table = FALSE
+)
 if (nrow(qc_status) != 1L || !identical(qc_status$validation_status[[1L]], "validated_complete")) {
   stop("Phase 04 must be validated_complete before normalization", call. = FALSE)
 }
 qc <- data.table::fread(
   qc_path,
   colClasses = c(barcode = "character", projid = "character"),
-  data.table = FALSE
+  integer64 = "double", data.table = FALSE
 )
 
 message("Reading source Seurat object: ", source_path)
