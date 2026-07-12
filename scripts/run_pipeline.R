@@ -74,24 +74,24 @@ registry <- data.frame(
   ),
   script = c(
     "scripts/00_check_environment.R",
-    "scripts/validate_execution_parity.R",
+    "scripts/14_validate_execution_parity.R",
     "scripts/01_audit_seurat_inputs.R",
     "scripts/02_build_cohort.R",
     "scripts/03_build_mito_annotations.R",
     "scripts/04_mito_qc.R",
     "scripts/05_normalize_and_attach_metadata.R",
-    "scripts/summarize_celltypes.R",
-    "scripts/06_make_pseudobulk.R",
+    "scripts/06_summarize_celltypes.R",
+    "scripts/07_make_pseudobulk.R",
     "scripts/07_build_contrast_manifest.R",
-    "scripts/08_run_pseudobulk_de.R",
-    "scripts/09_run_mast.R",
-    "scripts/run_mito_fraction_models.R",
-    "scripts/10_run_mito_pathways.R",
-    "scripts/11_similarity_analysis.R",
-    "scripts/12_sensitivity_power.R",
-    "scripts/12_sensitivity_power.R",
+    "scripts/07_run_pseudobulk_de.R",
+    "scripts/08_run_mast.R",
+    "scripts/09_run_mito_fraction_models.R",
+    "scripts/09_run_mito_pathways.R",
+    "scripts/10_similarity_analysis.R",
+    "scripts/12_sensitivity_analysis.R",
+    "scripts/13_power_analysis.R",
     "scripts/14_validate_outputs.R",
-    "scripts/13_make_figures.R"
+    "scripts/15_make_figures.R"
   ),
   argument_names = c(
     "config,execution-config,report,status",
@@ -236,7 +236,7 @@ if (args$phase == "environment") {
 
 # Scientific tasks use either the shared per-RDS runner or the same global
 # scientific entry point in every execution stage.
-implemented_global_modes <- c("cohort", "annotations")
+implemented_global_modes <- c("cohort", "annotations", "contrasts")
 unsupported_global <- task_graph$task_mode[
   is.na(task_graph$manifest_row) &
     !task_graph$task_mode %in% implemented_global_modes

@@ -19,7 +19,7 @@ parse_cli <- function(args) {
     key <- args[[i]]
     if (key %in% c("--help", "-h")) {
       cat(
-        "Usage: Rscript scripts/summarize_celltypes.R --config FILE ",
+        "Usage: Rscript scripts/06_summarize_celltypes.R --config FILE ",
         "[--execution-config FILE] [--manifest-row N | --rds-id ID] ",
         "[--task-mode descriptive]\n",
         sep = ""
@@ -603,8 +603,8 @@ status <- data.frame(
   stable_task_id = paste("descriptive", rds_id, sep = ":"),
   source_rds = source_rel,
   source_rds_sha256 = source_sha_before,
-  scientific_script = "scripts/summarize_celltypes.R",
-  scientific_code_bundle_sha256 = sha256_file(file.path(project_root, "scripts/summarize_celltypes.R")),
+  scientific_script = "scripts/06_summarize_celltypes.R",
+  scientific_code_bundle_sha256 = sha256_file(file.path(project_root, "scripts/06_summarize_celltypes.R")),
   scientific_config_sha256 = sha256_file(analysis_path),
   manifest_sha256 = sha256_file(manifest_path),
   phase01_audit_sha256 = sha256_file(audit_path),

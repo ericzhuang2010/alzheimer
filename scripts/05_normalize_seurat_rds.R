@@ -13,7 +13,7 @@ input_files <- character()
 usage <- function() {
   cat(
     "Usage:\n",
-    "  Rscript scripts/normalize_seurat_rds.R [options] [file1.rds file2.rds ...]\n\n",
+    "  Rscript scripts/05_normalize_seurat_rds.R [options] [file1.rds file2.rds ...]\n\n",
     "Options:\n",
     "  --input-dir DIR      Directory to scan when no files are given. Default: data/processed\n",
     "  --output-dir DIR     Directory for normalized RDS files. Default: data/processed/normalized\n",
