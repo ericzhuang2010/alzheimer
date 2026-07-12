@@ -261,6 +261,28 @@ qc <- data.table::fread(
 message("Reading source Seurat object: ", source_path)
 object <- readRDS(source_path)
 if (!inherits(object, "Seurat")) stop("Input is not a Seurat object", call. = FALSE)
+source_object_version <- tryCatch(
+  as.character(object@version),
+  error = function(e) NA_character_
+)
+source_object_valid <- isTRUE(tryCatch(
+  methods::validObject(object),
+  error = function(e) FALSE
+))
+if (!source_object_valid) {
+  message(
+    "Updating legacy Seurat object structure for SeuratObject ",
+    as.character(utils::packageVersion("SeuratObject"))
+  )
+}
+object <- SeuratObject::UpdateSeuratObject(object)
+if (!isTRUE(methods::validObject(object))) {
+  stop("Seurat object remains invalid after UpdateSeuratObject", call. = FALSE)
+}
+updated_object_version <- tryCatch(
+  as.character(object@version),
+  error = function(e) NA_character_
+)
 assay <- analysis$normalization$assay %||% "RNA"
 method <- analysis$normalization$method %||% "LogNormalize"
 scale_factor <- as.numeric(analysis$normalization$scale_factor %||% 10000)
@@ -503,6 +525,11 @@ status <- data.frame(
   phase02_cohort_sha256 = sha256_file(cohort_path),
   phase04_qc_sha256 = sha256_file(qc_path),
   phase04_status_sha256 = sha256_file(qc_status_path),
+  source_seurat_object_version = source_object_version,
+  source_seurat_object_valid = source_object_valid,
+  updated_seurat_object_version = updated_object_version,
+  seurat_version = as.character(utils::packageVersion("Seurat")),
+  seuratobject_version = as.character(utils::packageVersion("SeuratObject")),
   assay = assay,
   normalization_method = method,
   scale_factor = scale_factor,
