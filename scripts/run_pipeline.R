@@ -110,6 +110,9 @@ registry <- data.frame(
 registry$argument_names[registry$task_mode == "cohort"] <- paste(
   c("config", "execution-config", "audit", "task-mode"), collapse = ","
 )
+registry$argument_names[registry$task_mode == "annotations"] <- paste(
+  c("config", "execution-config", "features", "task-mode"), collapse = ","
+)
 
 args <- parse_cli(commandArgs(trailingOnly = TRUE))
 if (!requireNamespace("yaml", quietly = TRUE)) stop("Package 'yaml' is required", call. = FALSE)
@@ -221,7 +224,7 @@ if (args$phase == "environment") {
 
 # Scientific tasks use either the shared per-RDS runner or the same global
 # scientific entry point in every execution stage.
-implemented_global_modes <- c("cohort")
+implemented_global_modes <- c("cohort", "annotations")
 unsupported_global <- task_graph$task_mode[
   is.na(task_graph$manifest_row) &
     !task_graph$task_mode %in% implemented_global_modes

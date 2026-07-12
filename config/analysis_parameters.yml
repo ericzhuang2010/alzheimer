@@ -26,6 +26,9 @@ references:
   mitocarta_version: "3.0"
   mitocarta_url: https://personal.broadinstitute.org/scalvo/MitoCarta3.0/Human.MitoCarta3.0.xls
   mitocarta_source: data/reference/Human.MitoCarta3.0.xls
+  mitocarta_sha256: e6ada0ae8dcd5447a5efb6f77c69a1c10b1ffa66521540a1e81b92c61e5505f2
+  mitocarta_inventory_sheet: "A Human MitoCarta3.0"
+  mitocarta_pathways_sheet: "C MitoPathways"
 
 cohort:
   join_key: projid
