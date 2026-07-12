@@ -82,6 +82,9 @@ quality_control:
   regress_percent_mt_primary: false
   automatic_percent_mt_cutoff: null
   robust_flag_method: within_cell_type_median_mad
+  robust_mad_threshold: 5
+  donor_dominance_top1_fraction_warning: 0.25
+  donor_dominance_top3_fraction_warning: 0.50
 
 pseudobulk:
   unit: donor_cell_type
