@@ -1,0 +1,11 @@
+schema_version	rds_id	check	passed	observed	expected
+mast_de_checks_v1	vasculature	one_status_per_manifest_row	TRUE	70	70
+mast_de_checks_v1	vasculature	eligible_paper_rows_completed	TRUE	3	3
+mast_de_checks_v1	vasculature	ineligible_paper_rows_explicit	TRUE	27	27
+mast_de_checks_v1	vasculature	nonpaper_rows_not_applicable	TRUE	40	40
+mast_de_checks_v1	vasculature	no_failed_contrasts	TRUE	0	0
+mast_de_checks_v1	vasculature	result_keys_unique	TRUE	0	0
+mast_de_checks_v1	vasculature	p_values_in_range	TRUE	0	0
+mast_de_checks_v1	vasculature	fdr_in_range	TRUE	0	0
+mast_de_checks_v1	vasculature	detection_threshold_respected	TRUE	0	0
+mast_de_checks_v1	vasculature	normalized_rds_unchanged	TRUE	b5ad54a5f1f64cb3fd49ce0f160477664a7a7017bf9b13ba4bb3839fd088897b	b5ad54a5f1f64cb3fd49ce0f160477664a7a7017bf9b13ba4bb3839fd088897b

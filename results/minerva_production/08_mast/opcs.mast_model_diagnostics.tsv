@@ -1,0 +1,7 @@
+schema_version	rds_id	manifest_row	contrast_id	cell_type_high_resolution	contrast_name	cells_ad	cells_nci	donors_ad	donors_nci	tested_genes	latent_vars	min_pct	logfc_threshold	spearman_logfc_with_pseudobulk	overlap_genes	model_status	message
+mast_model_diagnostics_v1	opcs	673	opcs::OPC::AD_vs_NCI__Female__e2	OPC	AD_vs_NCI__Female__e2	1325	3716	8	15	8808	nCount_RNA;age_death_scaled;pmi_scaled	0.1	0	0.719004071768103	8808	fitted	
+mast_model_diagnostics_v1	opcs	674	opcs::OPC::AD_vs_NCI__Female__e33	OPC	AD_vs_NCI__Female__e33	8923	10650	37	45	8084	nCount_RNA;age_death_scaled;pmi_scaled	0.1	0	0.878614233571742	8084	fitted	
+mast_model_diagnostics_v1	opcs	675	opcs::OPC::AD_vs_NCI__Female__e4	OPC	AD_vs_NCI__Female__e4	5225	2760	24	11	8624	nCount_RNA;age_death_scaled;pmi_scaled	0.1	0	0.929745175692447	8624	fitted	
+mast_model_diagnostics_v1	opcs	676	opcs::OPC::AD_vs_NCI__Male__e2	OPC	AD_vs_NCI__Male__e2	1320	1391	7	5	7648	nCount_RNA;age_death_scaled;pmi_scaled	0.1	0	0.857344390474169	7648	fitted	
+mast_model_diagnostics_v1	opcs	677	opcs::OPC::AD_vs_NCI__Male__e33	OPC	AD_vs_NCI__Male__e33	4871	14431	28	53	7652	nCount_RNA;age_death_scaled;pmi_scaled	0.1	0	0.867397539647387	7652	fitted	
+mast_model_diagnostics_v1	opcs	678	opcs::OPC::AD_vs_NCI__Male__e4	OPC	AD_vs_NCI__Male__e4	5095	2083	25	10	7906	nCount_RNA;age_death_scaled;pmi_scaled	0.1	0	0.820399613167484	7906	fitted	

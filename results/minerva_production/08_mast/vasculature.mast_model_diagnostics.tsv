@@ -1,0 +1,4 @@
+schema_version	rds_id	manifest_row	contrast_id	cell_type_high_resolution	contrast_name	cells_ad	cells_nci	donors_ad	donors_nci	tested_genes	latent_vars	min_pct	logfc_threshold	spearman_logfc_with_pseudobulk	overlap_genes	model_status	message
+mast_model_diagnostics_v1	vasculature	688	vasculature::End::AD_vs_NCI__Female__e33	End	AD_vs_NCI__Female__e33	495	522	13	16	4847	nCount_RNA;age_death_scaled;pmi_scaled	0.1	0	0.752071482799338	4595	fitted	
+mast_model_diagnostics_v1	vasculature	691	vasculature::End::AD_vs_NCI__Male__e33	End	AD_vs_NCI__Male__e33	261	896	10	21	5228	nCount_RNA;age_death_scaled;pmi_scaled	0.1	0	0.806977792577187	4853	fitted	
+mast_model_diagnostics_v1	vasculature	730	vasculature::Per::AD_vs_NCI__Female__e33	Per	AD_vs_NCI__Female__e33	405	266	9	9	4883	nCount_RNA;age_death_scaled;pmi_scaled	0.1	0	0.818574498151477	4342	fitted	

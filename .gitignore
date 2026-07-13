@@ -3,7 +3,6 @@
 # renv/settings.json tracked.
 
 # Generated analysis outputs and transient execution files.
-results/
 logs/
 tmp/
 *.log
@@ -25,6 +24,7 @@ tmp/
 .Rhistory
 .Ruserdata
 .Rproj.user/
+.RDataTmp
 
 # Machine-specific renv libraries and caches.
 renv/library/
@@ -54,3 +54,9 @@ ad_research/
 config/local_pilot.yml
 config/local_pilot_execution.yml
 config/local_pilot_rds_manifest.tsv
+
+# ignore everything in results directory except for results/minerva_production/08_mast
+results/*
+!results/minerva_production
+results/minerva_production/*
+!results/minerva_production/08_mast
