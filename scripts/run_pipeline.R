@@ -7,11 +7,12 @@ options(stringsAsFactors = FALSE, warn = 1)
 parse_cli <- function(args) {
   out <- list(
     config = NULL, execution_config = NULL, phase = NULL,
-    manifest = NULL, task_graph_output = NULL, dry_run = FALSE
+    manifest = NULL, task_graph_output = NULL, rds_id = NULL,
+    dry_run = FALSE, force = FALSE
   )
   value_options <- c(
     "--config", "--execution-config", "--phase", "--manifest",
-    "--task-graph-output"
+    "--task-graph-output", "--rds-id"
   )
   i <- 1L
   while (i <= length(args)) {
@@ -20,13 +21,15 @@ parse_cli <- function(args) {
       cat(
         "Usage: Rscript scripts/run_pipeline.R --config FILE ",
         "--execution-config FILE --phase MODE [--manifest FILE] ",
-        "[--dry-run] [--task-graph-output FILE]\n",
+        "[--rds-id ID] [--dry-run] [--force] ",
+        "[--task-graph-output FILE]\n",
         sep = ""
       )
       quit(status = 0L)
     }
-    if (key == "--dry-run") {
-      out$dry_run <- TRUE
+    if (key %in% c("--dry-run", "--force")) {
+      name <- gsub("-", "_", sub("^--", "", key))
+      out[[name]] <- TRUE
       i <- i + 1L
       next
     }
@@ -162,6 +165,17 @@ selected_registry <- registry[registry$task_mode %in% selected_modes, , drop = F
 selected_registry$order <- match(selected_registry$task_mode, registry$task_mode)
 selected_registry <- selected_registry[order(selected_registry$order), , drop = FALSE]
 
+if (!is.null(args$rds_id)) {
+  if (!nrow(selected_registry) || any(selected_registry$scope != "rds")) {
+    stop("--rds-id can only be used when every selected task mode has RDS scope", call. = FALSE)
+  }
+  selected_manifest <- manifest[manifest$rds_id == args$rds_id, , drop = FALSE]
+  if (nrow(selected_manifest) != 1L) {
+    stop("--rds-id must identify exactly one enabled manifest row: ", args$rds_id, call. = FALSE)
+  }
+  manifest <- selected_manifest
+}
+
 graph_rows <- list()
 for (i in seq_len(nrow(selected_registry))) {
   task <- selected_registry[i, , drop = FALSE]
@@ -197,7 +211,13 @@ task_graph <- do.call(rbind, graph_rows)
 
 default_graph <- file.path(
   config$outputs$root, "00_environment",
-  paste0(execution_stage, "_", args$phase, "_task_graph.tsv")
+  paste0(
+    execution_stage, "_", args$phase,
+    if (is.null(args$rds_id)) "" else paste0(
+      "_", gsub("[^A-Za-z0-9_.-]", "_", args$rds_id)
+    ),
+    "_task_graph.tsv"
+  )
 )
 graph_path <- absolute_path(args$task_graph_output %||% default_graph, root)
 atomic_write_tsv(task_graph, graph_path)
@@ -268,6 +288,7 @@ for (i in seq_len(nrow(task_graph))) {
       "--task-mode", row$task_mode,
       "--script", absolute_path(row$scientific_script, root)
     )
+    if (isTRUE(args$force)) runner_args <- c(runner_args, "--force")
   }
   exit_code <- system2("Rscript", runner_args)
   if (exit_code != 0L) {

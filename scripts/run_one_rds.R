@@ -7,7 +7,8 @@ options(stringsAsFactors = FALSE, warn = 1)
 parse_cli <- function(args) {
   out <- list(
     config = NULL, execution_config = NULL, manifest_row = NULL,
-    rds_id = NULL, task_mode = NULL, script = NULL, dry_run = FALSE
+    rds_id = NULL, task_mode = NULL, script = NULL,
+    dry_run = FALSE, force = FALSE
   )
   value_options <- c(
     "--config", "--execution-config", "--manifest-row", "--rds-id",
@@ -20,12 +21,13 @@ parse_cli <- function(args) {
       cat(paste(
         "Usage: Rscript scripts/run_one_rds.R --config FILE",
         "--execution-config FILE --task-mode MODE --script FILE",
-        "[--manifest-row N | --rds-id ID] [--dry-run]\n"
+        "[--manifest-row N | --rds-id ID] [--dry-run] [--force]\n"
       ))
       quit(status = 0L)
     }
-    if (key == "--dry-run") {
-      out$dry_run <- TRUE
+    if (key %in% c("--dry-run", "--force")) {
+      name <- gsub("-", "_", sub("^--", "", key))
+      out[[name]] <- TRUE
       i <- i + 1L
       next
     }
@@ -89,6 +91,133 @@ log_dir <- absolute_path(execution_config$execution$log_dir, root)
 dir.create(log_dir, recursive = TRUE, showWarnings = FALSE)
 log_path <- file.path(log_dir, paste0(gsub(":", "__", task_id), ".log"))
 
+read_single_tsv <- function(path) {
+  if (!file.exists(path)) return(NULL)
+  value <- tryCatch(
+    read.delim(path, check.names = FALSE, stringsAsFactors = FALSE),
+    error = function(e) NULL
+  )
+  if (is.null(value) || nrow(value) != 1L) NULL else value
+}
+
+field_matches <- function(table, field, expected) {
+  !is.null(table) &&
+    field %in% names(table) &&
+    length(table[[field]]) == 1L &&
+    !is.na(table[[field]][[1L]]) &&
+    identical(as.character(table[[field]][[1L]]), as.character(expected))
+}
+
+validate_mast_resume <- function() {
+  reasons <- character()
+  require_check <- function(value, label) {
+    if (!isTRUE(value)) reasons <<- c(reasons, label)
+  }
+
+  script_sha <- sha256_file(script_path)
+  analysis_path <- absolute_path(config$project$analysis_config, root)
+  analysis_sha <- sha256_file(analysis_path)
+  manifest_sha <- sha256_file(manifest_path)
+  execution <- execution_config$execution
+  rds_id <- as.character(row$rds_id[[1L]])
+  source_rds <- as.character(row$input_rds[[1L]])
+  prefix <- tolower(rds_id)
+  base_name <- sub("[.][Rr][Dd][Ss]$", "", basename(source_rds))
+
+  controller <- read_single_tsv(status_path)
+  require_check(field_matches(controller, "stable_task_id", task_id), "controller task ID")
+  require_check(field_matches(controller, "source_rds", source_rds), "controller source RDS")
+  require_check(field_matches(controller, "scientific_code_bundle_sha256", script_sha), "controller script checksum")
+  require_check(field_matches(controller, "scientific_config_sha256", analysis_sha), "controller scientific-config checksum")
+  require_check(field_matches(controller, "manifest_sha256", manifest_sha), "controller manifest checksum")
+  require_check(field_matches(controller, "execution_phase", execution$execution_phase), "controller execution phase")
+  require_check(field_matches(controller, "backend", execution$backend), "controller backend")
+  require_check(field_matches(controller, "run_id", execution$run_id), "controller run ID")
+  require_check(field_matches(controller, "validation_status", "validated_complete"), "controller validation status")
+  require_check(field_matches(controller, "exit_code", 0L), "controller exit code")
+
+  output_dir <- file.path(output_root, "08_mast")
+  scientific_path <- file.path(output_dir, paste0(prefix, ".mast_de_status.tsv"))
+  artifact_manifest_path <- file.path(output_dir, paste0(prefix, ".mast_de_artifacts.tsv"))
+  scientific <- read_single_tsv(scientific_path)
+  require_check(field_matches(scientific, "schema_version", "mast_de_status_v1"), "scientific status schema")
+  require_check(field_matches(scientific, "stable_task_id", task_id), "scientific task ID")
+  require_check(field_matches(scientific, "source_rds", source_rds), "scientific source RDS")
+  require_check(field_matches(scientific, "scientific_code_bundle_sha256", script_sha), "scientific script checksum")
+  require_check(field_matches(scientific, "scientific_config_sha256", analysis_sha), "scientific-config checksum")
+  require_check(field_matches(scientific, "rds_manifest_sha256", manifest_sha), "scientific manifest checksum")
+  require_check(field_matches(scientific, "validation_status", "validated_complete"), "scientific validation status")
+  require_check(field_matches(scientific, "failed_contrasts", 0L), "scientific failed-contrast count")
+
+  normalized_path <- file.path(
+    output_root, "05_normalized", paste0(base_name, ".normalized.rds")
+  )
+  contrast_manifest_path <- file.path(
+    output_root, "07_contrasts",
+    paste0(execution$execution_stage, "_contrast_manifest.tsv")
+  )
+  pseudobulk_samples_path <- file.path(
+    output_root, "07_pseudobulk", paste0(base_name, ".pseudobulk_samples.tsv")
+  )
+  pseudobulk_de_path <- file.path(
+    output_root, "07_pseudobulk_de", paste0(prefix, ".pseudobulk_de.tsv.gz")
+  )
+  require_check(
+    field_matches(scientific, "normalized_rds_sha256", sha256_file(normalized_path)),
+    "normalized-RDS checksum"
+  )
+  require_check(
+    field_matches(scientific, "contrast_manifest_sha256", sha256_file(contrast_manifest_path)),
+    "contrast-manifest checksum"
+  )
+  require_check(
+    field_matches(scientific, "pseudobulk_samples_sha256", sha256_file(pseudobulk_samples_path)),
+    "pseudobulk-sample checksum"
+  )
+  require_check(
+    field_matches(scientific, "pseudobulk_de_sha256", sha256_file(pseudobulk_de_path)),
+    "pseudobulk-DE checksum"
+  )
+
+  artifacts <- tryCatch(
+    read.delim(artifact_manifest_path, check.names = FALSE, stringsAsFactors = FALSE),
+    error = function(e) NULL
+  )
+  artifact_columns <- c("path", "bytes", "sha256", "validation_status")
+  artifacts_ready <- !is.null(artifacts) && nrow(artifacts) > 0L &&
+    all(artifact_columns %in% names(artifacts))
+  require_check(artifacts_ready, "artifact manifest")
+  if (artifacts_ready) {
+    artifact_paths <- vapply(
+      artifacts$path, absolute_path, character(1), root = root
+    )
+    artifacts_exist <- all(file.exists(artifact_paths))
+    require_check(artifacts_exist, "artifact existence")
+    if (artifacts_exist) {
+      require_check(
+        identical(
+          as.numeric(file.info(artifact_paths)$size),
+          as.numeric(artifacts$bytes)
+        ),
+        "artifact byte counts"
+      )
+      require_check(
+        identical(
+          unname(vapply(artifact_paths, sha256_file, character(1))),
+          as.character(artifacts$sha256)
+        ),
+        "artifact checksums"
+      )
+    }
+    require_check(
+      all(artifacts$validation_status == "validated_complete"),
+      "artifact validation statuses"
+    )
+  }
+
+  list(valid = !length(reasons), reasons = unique(reasons))
+}
+
 child_args <- c(
   script_path,
   "--config", config_path,
@@ -100,6 +229,26 @@ command_text <- paste(c("Rscript", shQuote(child_args)), collapse = " ")
 if (args$dry_run) {
   cat(command_text, "\n")
   quit(status = 0L)
+}
+
+resume_enabled <- isTRUE(execution_config$execution$resume) && !isTRUE(args$force)
+if (resume_enabled && identical(args$task_mode, "mast")) {
+  resume <- validate_mast_resume()
+  if (isTRUE(resume$valid)) {
+    cat(
+      "Resume: skipping validated task ", task_id,
+      " because code, inputs, statuses, and artifact checksums match.\n",
+      sep = ""
+    )
+    quit(status = 0L)
+  }
+  if (file.exists(status_path)) {
+    cat(
+      "Resume: rerunning ", task_id, "; validation mismatch: ",
+      paste(resume$reasons, collapse = "; "), "\n",
+      sep = ""
+    )
+  }
 }
 
 start <- Sys.time()
