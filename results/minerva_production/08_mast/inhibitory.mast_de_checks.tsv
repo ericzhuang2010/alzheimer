@@ -1,0 +1,11 @@
+schema_version	rds_id	check	passed	observed	expected
+mast_de_checks_v1	inhibitory	one_status_per_manifest_row	TRUE	350	350
+mast_de_checks_v1	inhibitory	eligible_paper_rows_completed	TRUE	81	81
+mast_de_checks_v1	inhibitory	ineligible_paper_rows_explicit	TRUE	69	69
+mast_de_checks_v1	inhibitory	nonpaper_rows_not_applicable	TRUE	200	200
+mast_de_checks_v1	inhibitory	no_failed_contrasts	TRUE	0	0
+mast_de_checks_v1	inhibitory	result_keys_unique	TRUE	0	0
+mast_de_checks_v1	inhibitory	p_values_in_range	TRUE	0	0
+mast_de_checks_v1	inhibitory	fdr_in_range	TRUE	0	0
+mast_de_checks_v1	inhibitory	detection_threshold_respected	TRUE	0	0
+mast_de_checks_v1	inhibitory	normalized_rds_unchanged	TRUE	177bcb29bf4c778b1ee5d75ef51cef6d068cfee4e7790fcaeae6ea098d1e0309	177bcb29bf4c778b1ee5d75ef51cef6d068cfee4e7790fcaeae6ea098d1e0309
