@@ -285,7 +285,8 @@ make_standard_result <- function(
     contrast_name, entity_type, entity, primary_effect, sensitivity_effect,
     primary_ci_low, primary_ci_high, sensitivity_ci_low, sensitivity_ci_high,
     primary_fdr, sensitivity_fdr, repetitions_planned = 0L,
-    repetitions_completed = 0L, terminal_status = "validated_complete", message = "") {
+    repetitions_completed = 0L, terminal_status = "validated_complete", message = "",
+    effect_applicable = TRUE, effect_nonapplicability_reason = "") {
   data.table::data.table(
     schema_version = "sensitivity_results_v1",
     sensitivity_id = sensitivity_id, method_branch = method_branch,
@@ -297,6 +298,8 @@ make_standard_result <- function(
     primary_ci95_low = primary_ci_low, primary_ci95_high = primary_ci_high,
     sensitivity_ci95_low = sensitivity_ci_low,
     sensitivity_ci95_high = sensitivity_ci_high,
+    effect_applicable = as.logical(effect_applicable),
+    effect_nonapplicability_reason = effect_nonapplicability_reason,
     primary_fdr = primary_fdr, sensitivity_fdr = sensitivity_fdr,
     direction_concordant = ifelse(
       is.finite(primary_effect) & is.finite(sensitivity_effect),
@@ -601,13 +604,25 @@ global_gene <- gene_mt[
   is_mtdna_protein_gene | is_mitocarta |
     fdr_bh_within_contrast < alpha | fdr_bh_global_genome_sensitivity < alpha
 ]
+global_gene_effect_applicable <- !(
+  global_gene$method_branch == "pseudobulk" &
+    global_gene$contrast_name == "AD_effect_heterogeneity_across_sex_APOE"
+)
+global_gene_effect_reason <- ifelse(
+  global_gene_effect_applicable, "",
+  "multi_df_omnibus_test_has_no_single_signed_effect"
+)
+global_gene_effect <- as.numeric(global_gene$logFC)
+global_gene_effect[!global_gene_effect_applicable] <- NA_real_
 global_results <- make_standard_result(
   "global_vs_within_contrast_fdr", global_gene$method_branch,
   global_gene$rds_id, global_gene$cell_type_high_resolution,
   global_gene$contrast_id, global_gene$contrast_name,
-  "gene", global_gene$gene, global_gene$logFC, global_gene$logFC,
+  "gene", global_gene$gene, global_gene_effect, global_gene_effect,
   NA_real_, NA_real_, NA_real_, NA_real_,
-  global_gene$fdr_bh_within_contrast, global_gene$fdr_bh_global_genome_sensitivity
+  global_gene$fdr_bh_within_contrast, global_gene$fdr_bh_global_genome_sensitivity,
+  effect_applicable = global_gene_effect_applicable,
+  effect_nonapplicability_reason = global_gene_effect_reason
 )
 eligible_pathway <- pathway_mt[
   terminal_status == "validated_complete" &
@@ -794,13 +809,64 @@ add_check(
   sum(robustness$terminal_status == "failed"), 0L
 )
 completed <- results$terminal_status == "validated_complete"
+effect_applicable <- completed & as_logical(results$effect_applicable)
+effect_not_applicable <- completed & !as_logical(results$effect_applicable)
 add_check(
-  "completed_results_have_effect_and_fdr",
-  all(is.finite(results$primary_effect[completed]) &
-    is.finite(results$sensitivity_effect[completed]) &
-    is.finite(results$primary_fdr[completed]) &
+  "completed_results_have_fdr",
+  all(is.finite(results$primary_fdr[completed]) &
     is.finite(results$sensitivity_fdr[completed])),
-  sum(completed), sum(completed)
+  sum(
+    is.finite(results$primary_fdr[completed]) &
+      is.finite(results$sensitivity_fdr[completed])
+  ),
+  sum(completed)
+)
+add_check(
+  "effect_applicable_results_have_effect",
+  all(is.finite(results$primary_effect[effect_applicable]) &
+    is.finite(results$sensitivity_effect[effect_applicable])),
+  sum(
+    is.finite(results$primary_effect[effect_applicable]) &
+      is.finite(results$sensitivity_effect[effect_applicable])
+  ),
+  sum(effect_applicable)
+)
+add_check(
+  "effect_nonapplicable_results_have_reason",
+  all(nzchar(results$effect_nonapplicability_reason[effect_not_applicable])),
+  sum(nzchar(results$effect_nonapplicability_reason[effect_not_applicable])),
+  sum(effect_not_applicable)
+)
+add_check(
+  "effect_nonapplicable_results_are_prespecified_omnibus",
+  all(
+    results$sensitivity_id[effect_not_applicable] ==
+      "global_vs_within_contrast_fdr" &
+      results$method_branch[effect_not_applicable] == "pseudobulk" &
+      results$entity_type[effect_not_applicable] == "gene" &
+      results$contrast_name[effect_not_applicable] ==
+        "AD_effect_heterogeneity_across_sex_APOE"
+  ),
+  sum(effect_not_applicable),
+  sum(effect_not_applicable)
+)
+toy_omnibus <- make_standard_result(
+  "global_vs_within_contrast_fdr", "pseudobulk", "toy", "toy",
+  "toy::AD_effect_heterogeneity_across_sex_APOE",
+  "AD_effect_heterogeneity_across_sex_APOE", "gene", "TOY",
+  NA_real_, NA_real_, NA_real_, NA_real_, NA_real_, NA_real_,
+  0.04, 0.08,
+  effect_applicable = FALSE,
+  effect_nonapplicability_reason =
+    "multi_df_omnibus_test_has_no_single_signed_effect"
+)
+add_check(
+  "omnibus_effect_applicability_toy",
+  !toy_omnibus$effect_applicable &&
+    !is.finite(toy_omnibus$primary_effect) &&
+    is.finite(toy_omnibus$primary_fdr) &&
+    nzchar(toy_omnibus$effect_nonapplicability_reason),
+  "fdr_only_omnibus", "fdr_only_omnibus"
 )
 add_check(
   "bootstrap_repetitions_complete",
@@ -887,6 +953,7 @@ status <- data.frame(
   not_estimable_sensitivities = sum(robustness$terminal_status == "not_estimable"),
   blocked_sensitivities = sum(robustness$terminal_status == "blocked_missing_input"),
   result_rows = nrow(results),
+  effect_nonapplicable_rows = sum(!as_logical(results$effect_applicable)),
   conclusion_changes = sum(results$conclusion_changed, na.rm = TRUE),
   direction_discordant_rows = sum(!results$direction_concordant, na.rm = TRUE),
   peak_ram_gib = peak_ram_gib(),
