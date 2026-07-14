@@ -1,0 +1,21 @@
+schema_version	rds_id	check	passed	observed	expected
+descriptive_checks_v1	astrocytes	phase01_status_validated	TRUE	validated_complete	validated_complete
+descriptive_checks_v1	astrocytes	phase03_status_validated	TRUE	validated_complete	validated_complete
+descriptive_checks_v1	astrocytes	phase04_status_validated	TRUE	validated_complete	validated_complete
+descriptive_checks_v1	astrocytes	phase05_status_validated	TRUE	validated_complete	validated_complete
+descriptive_checks_v1	astrocytes	source_feature_count_matches_audit	TRUE	33538	33538
+descriptive_checks_v1	astrocytes	source_nucleus_count_matches_audit	TRUE	149558	149558
+descriptive_checks_v1	astrocytes	qc_barcode_join_complete	TRUE	149558	149558
+descriptive_checks_v1	astrocytes	analytic_donor_count_matches_cohort	TRUE	276	276
+descriptive_checks_v1	astrocytes	sample_cell_conservation	TRUE	99034	99034
+descriptive_checks_v1	astrocytes	group_row_count	TRUE	36	36
+descriptive_checks_v1	astrocytes	twelve_groups_per_cell_type	TRUE	12;12;12	12
+descriptive_checks_v1	astrocytes	group_nucleus_conservation	TRUE	99034	99034
+descriptive_checks_v1	astrocytes	contrast_row_count	TRUE	18	18
+descriptive_checks_v1	astrocytes	eligibility_thresholds	TRUE	20 50	20 50
+descriptive_checks_v1	astrocytes	all_expected_mtdna_features	TRUE	MT-ND1;MT-ND2;MT-CO1;MT-CO2;MT-ATP8;MT-ATP6;MT-CO3;MT-ND3;MT-ND4L;MT-ND4;MT-ND5;MT-ND6;MT-CYB	MT-ND1;MT-ND2;MT-CO1;MT-CO2;MT-ATP8;MT-ATP6;MT-CO3;MT-ND3;MT-ND4L;MT-ND4;MT-ND5;MT-ND6;MT-CYB
+descriptive_checks_v1	astrocytes	mtdna_rows_per_cell_type	TRUE	39	39
+descriptive_checks_v1	astrocytes	mtdna_detection_ranges	TRUE	0.00773089135336616;0.851558642483294	0..1
+descriptive_checks_v1	astrocytes	mitocarta_cell_type_rows	TRUE	3	3
+descriptive_checks_v1	astrocytes	mitocarta_coverage_bounds	TRUE	1098	1134
+descriptive_checks_v1	astrocytes	source_rds_unchanged	TRUE	f2e22b3adfbe97e092786b2f108d38b8a67e128cd95fc1ac46dd44d9e33882d7	f2e22b3adfbe97e092786b2f108d38b8a67e128cd95fc1ac46dd44d9e33882d7

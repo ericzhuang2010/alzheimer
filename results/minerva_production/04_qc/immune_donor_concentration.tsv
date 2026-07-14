@@ -1,0 +1,6 @@
+schema_version	rds_id	cell_type_high_resolution	donors	nuclei	total_mt_counts	top_mt_donor	top1_mt_count_fraction	top3_mt_count_fraction	top1_nuclei_fraction	top1_warning	top3_warning
+mito_donor_concentration_v1	immune	CAMs	231	1516	33359	74284255	0.0601037201354957	0.138493360112713	0.0310026385224274	FALSE	FALSE
+mito_donor_concentration_v1	immune	Mic MKI67	110	524	29262	69982533	0.164513703779646	0.251657439682865	0.0725190839694656	FALSE	FALSE
+mito_donor_concentration_v1	immune	Mic P2RY12	275	48676	1174307	10202345	0.0225247741859667	0.058485557865192	0.0154285479497083	FALSE	FALSE
+mito_donor_concentration_v1	immune	Mic TPT1	245	3449	81175	10202345	0.188062827225131	0.263393902063443	0.0594375181211945	FALSE	FALSE
+mito_donor_concentration_v1	immune	T cells	239	1740	158369	21101658	0.0249038637612159	0.0668438899026956	0.0373563218390805	FALSE	FALSE

@@ -1,0 +1,7 @@
+schema_version	rds_id	cell_type_high_resolution	sex	apoe_group	contrast	minimum_donors_per_side	nci_nuclei	ad_nuclei	nci_primary_eligible_donors	ad_primary_eligible_donors	nci_sensitivity_eligible_donors	ad_sensitivity_eligible_donors	primary_contrast_eligible	sensitivity_contrast_eligible	primary_ineligibility_reason
+descriptive_contrast_coverage_v1	oligodendrocytes	Oli	Female	e2	AD_vs_NCI	5	21373	11733	17	8	17	8	TRUE	TRUE	
+descriptive_contrast_coverage_v1	oligodendrocytes	Oli	Female	e33	AD_vs_NCI	5	75904	67094	45	37	45	37	TRUE	TRUE	
+descriptive_contrast_coverage_v1	oligodendrocytes	Oli	Female	e4	AD_vs_NCI	5	27181	45666	11	26	11	26	TRUE	TRUE	
+descriptive_contrast_coverage_v1	oligodendrocytes	Oli	Male	e2	AD_vs_NCI	5	5807	9717	6	7	6	7	TRUE	TRUE	
+descriptive_contrast_coverage_v1	oligodendrocytes	Oli	Male	e33	AD_vs_NCI	5	94184	35873	53	28	53	28	TRUE	TRUE	
+descriptive_contrast_coverage_v1	oligodendrocytes	Oli	Male	e4	AD_vs_NCI	5	15559	37526	10	27	10	26	TRUE	TRUE	

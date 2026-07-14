@@ -1,0 +1,5 @@
+schema_version	example	first_states	second_states	expected_score	observed_score	passed
+similarity_toy_checks_v1	identical	1,-1	1,-1	1	1	TRUE
+similarity_toy_checks_v1	one_sided	1	0	-0.5	-0.5	TRUE
+similarity_toy_checks_v1	opposite	1,-1	-1,1	-1	-1	TRUE
+similarity_toy_checks_v1	both_unchanged	0	0	0	0	TRUE

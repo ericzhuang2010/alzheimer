@@ -1,0 +1,21 @@
+schema_version	rds_id	check	passed	observed	expected
+descriptive_checks_v1	inhibitory	phase01_status_validated	TRUE	validated_complete	validated_complete
+descriptive_checks_v1	inhibitory	phase03_status_validated	TRUE	validated_complete	validated_complete
+descriptive_checks_v1	inhibitory	phase04_status_validated	TRUE	validated_complete	validated_complete
+descriptive_checks_v1	inhibitory	phase05_status_validated	TRUE	validated_complete	validated_complete
+descriptive_checks_v1	inhibitory	source_feature_count_matches_audit	TRUE	33538	33538
+descriptive_checks_v1	inhibitory	source_nucleus_count_matches_audit	TRUE	329699	329699
+descriptive_checks_v1	inhibitory	qc_barcode_join_complete	TRUE	329699	329699
+descriptive_checks_v1	inhibitory	analytic_donor_count_matches_cohort	TRUE	275	275
+descriptive_checks_v1	inhibitory	sample_cell_conservation	TRUE	226971	226971
+descriptive_checks_v1	inhibitory	group_row_count	TRUE	300	300
+descriptive_checks_v1	inhibitory	twelve_groups_per_cell_type	TRUE	12;12;12;12;12;12;12;12;12;12;12;12;12;12;12;12;12;12;12;12;12;12;12;12;12	12
+descriptive_checks_v1	inhibitory	group_nucleus_conservation	TRUE	226971	226971
+descriptive_checks_v1	inhibitory	contrast_row_count	TRUE	150	150
+descriptive_checks_v1	inhibitory	eligibility_thresholds	TRUE	20 50	20 50
+descriptive_checks_v1	inhibitory	all_expected_mtdna_features	TRUE	MT-ND1;MT-ND2;MT-CO1;MT-CO2;MT-ATP8;MT-ATP6;MT-CO3;MT-ND3;MT-ND4L;MT-ND4;MT-ND5;MT-ND6;MT-CYB	MT-ND1;MT-ND2;MT-CO1;MT-CO2;MT-ATP8;MT-ATP6;MT-CO3;MT-ND3;MT-ND4L;MT-ND4;MT-ND5;MT-ND6;MT-CYB
+descriptive_checks_v1	inhibitory	mtdna_rows_per_cell_type	TRUE	325	325
+descriptive_checks_v1	inhibitory	mtdna_detection_ranges	TRUE	0.0294403892944039;0.985720375106564	0..1
+descriptive_checks_v1	inhibitory	mitocarta_cell_type_rows	TRUE	25	25
+descriptive_checks_v1	inhibitory	mitocarta_coverage_bounds	TRUE	1097	1134
+descriptive_checks_v1	inhibitory	source_rds_unchanged	TRUE	18ad23210bfb6e20d3d1320f215453baa55aeec465b0cebab54690b6ab685b18	18ad23210bfb6e20d3d1320f215453baa55aeec465b0cebab54690b6ab685b18

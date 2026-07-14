@@ -1,0 +1,6 @@
+schema_version	rds_id	cell_type_high_resolution	donors	nuclei	total_mt_counts	top_mt_donor	top1_mt_count_fraction	top3_mt_count_fraction	top1_nuclei_fraction	top1_warning	top3_warning
+mito_donor_concentration_v1	vasculature	End	263	4756	177090	62404688	0.0331300468688238	0.0864870969563499	0.0178721614802355	FALSE	FALSE
+mito_donor_concentration_v1	vasculature	Fib FLRT2	262	2592	80460	50100932	0.0267089236887895	0.0716256524981357	0.0250771604938272	FALSE	FALSE
+mito_donor_concentration_v1	vasculature	Fib SLC4A4	78	588	14893	50400709	0.120526421808904	0.323171959981199	0.147959183673469	FALSE	FALSE
+mito_donor_concentration_v1	vasculature	Per	250	3800	218387	74284255	0.0281930701003265	0.0711489236996708	0.0202631578947368	FALSE	FALSE
+mito_donor_concentration_v1	vasculature	SMC	200	1168	105346	20594407	0.158800523987622	0.239705351888064	0.104452054794521	FALSE	FALSE

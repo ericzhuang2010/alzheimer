@@ -1,0 +1,31 @@
+schema_version	rds_id	cell_type_high_resolution	sex	apoe_group	contrast	minimum_donors_per_side	nci_nuclei	ad_nuclei	nci_primary_eligible_donors	ad_primary_eligible_donors	nci_sensitivity_eligible_donors	ad_sensitivity_eligible_donors	primary_contrast_eligible	sensitivity_contrast_eligible	primary_ineligibility_reason
+descriptive_contrast_coverage_v1	vasculature	End	Female	e2	AD_vs_NCI	5	215	51	4	1	1	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	vasculature	End	Female	e33	AD_vs_NCI	5	747	730	16	13	3	3	TRUE	FALSE	
+descriptive_contrast_coverage_v1	vasculature	End	Female	e4	AD_vs_NCI	5	220	445	2	9	0	3	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	vasculature	End	Male	e2	AD_vs_NCI	5	126	87	2	1	1	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	vasculature	End	Male	e33	AD_vs_NCI	5	1170	390	21	10	8	0	TRUE	FALSE	
+descriptive_contrast_coverage_v1	vasculature	End	Male	e4	AD_vs_NCI	5	143	432	3	5	0	1	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	vasculature	Fib FLRT2	Female	e2	AD_vs_NCI	5	141	84	1	1	0	1	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	vasculature	Fib FLRT2	Female	e33	AD_vs_NCI	5	423	341	7	4	1	1	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	vasculature	Fib FLRT2	Female	e4	AD_vs_NCI	5	111	170	3	1	0	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	vasculature	Fib FLRT2	Male	e2	AD_vs_NCI	5	16	72	0	1	0	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	vasculature	Fib FLRT2	Male	e33	AD_vs_NCI	5	666	225	12	2	0	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	vasculature	Fib FLRT2	Male	e4	AD_vs_NCI	5	131	212	2	2	0	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	vasculature	Fib SLC4A4	Female	e2	AD_vs_NCI	5	7	36	0	1	0	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	vasculature	Fib SLC4A4	Female	e33	AD_vs_NCI	5	55	57	1	1	0	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	vasculature	Fib SLC4A4	Female	e4	AD_vs_NCI	5	37	15	1	0	0	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	vasculature	Fib SLC4A4	Male	e2	AD_vs_NCI	5	11	0	0	0	0	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	vasculature	Fib SLC4A4	Male	e33	AD_vs_NCI	5	280	52	3	0	3	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	vasculature	Fib SLC4A4	Male	e4	AD_vs_NCI	5	22	16	0	0	0	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	vasculature	Per	Female	e2	AD_vs_NCI	5	167	63	3	1	0	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	vasculature	Per	Female	e33	AD_vs_NCI	5	613	638	9	9	0	4	TRUE	FALSE	
+descriptive_contrast_coverage_v1	vasculature	Per	Female	e4	AD_vs_NCI	5	217	308	3	7	1	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	vasculature	Per	Male	e2	AD_vs_NCI	5	99	81	2	1	0	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	vasculature	Per	Male	e33	AD_vs_NCI	5	855	302	15	4	3	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	vasculature	Per	Male	e4	AD_vs_NCI	5	135	322	2	2	0	1	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	vasculature	SMC	Female	e2	AD_vs_NCI	5	53	16	0	0	0	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	vasculature	SMC	Female	e33	AD_vs_NCI	5	151	282	0	2	0	1	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	vasculature	SMC	Female	e4	AD_vs_NCI	5	43	66	0	1	0	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	vasculature	SMC	Male	e2	AD_vs_NCI	5	32	12	1	0	0	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	vasculature	SMC	Male	e33	AD_vs_NCI	5	282	70	2	0	1	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	vasculature	SMC	Male	e4	AD_vs_NCI	5	62	99	1	1	0	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides

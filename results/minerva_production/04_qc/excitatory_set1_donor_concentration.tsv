@@ -1,0 +1,2 @@
+schema_version	rds_id	cell_type_high_resolution	donors	nuclei	total_mt_counts	top_mt_donor	top1_mt_count_fraction	top3_mt_count_fraction	top1_nuclei_fraction	top1_warning	top3_warning
+mito_donor_concentration_v1	excitatory_set1	Exc L2-3 CBLN2 LINC02306	276	203994	55878256	83034844	0.0174120502257622	0.0437014533882375	0.0379226840005098	FALSE	FALSE

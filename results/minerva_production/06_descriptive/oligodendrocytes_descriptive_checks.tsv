@@ -1,0 +1,21 @@
+schema_version	rds_id	check	passed	observed	expected
+descriptive_checks_v1	oligodendrocytes	phase01_status_validated	TRUE	validated_complete	validated_complete
+descriptive_checks_v1	oligodendrocytes	phase03_status_validated	TRUE	validated_complete	validated_complete
+descriptive_checks_v1	oligodendrocytes	phase04_status_validated	TRUE	validated_complete	validated_complete
+descriptive_checks_v1	oligodendrocytes	phase05_status_validated	TRUE	validated_complete	validated_complete
+descriptive_checks_v1	oligodendrocytes	source_feature_count_matches_audit	TRUE	33538	33538
+descriptive_checks_v1	oligodendrocytes	source_nucleus_count_matches_audit	TRUE	645142	645142
+descriptive_checks_v1	oligodendrocytes	qc_barcode_join_complete	TRUE	645142	645142
+descriptive_checks_v1	oligodendrocytes	analytic_donor_count_matches_cohort	TRUE	276	276
+descriptive_checks_v1	oligodendrocytes	sample_cell_conservation	TRUE	447617	447617
+descriptive_checks_v1	oligodendrocytes	group_row_count	TRUE	12	12
+descriptive_checks_v1	oligodendrocytes	twelve_groups_per_cell_type	TRUE	12	12
+descriptive_checks_v1	oligodendrocytes	group_nucleus_conservation	TRUE	447617	447617
+descriptive_checks_v1	oligodendrocytes	contrast_row_count	TRUE	6	6
+descriptive_checks_v1	oligodendrocytes	eligibility_thresholds	TRUE	20 50	20 50
+descriptive_checks_v1	oligodendrocytes	all_expected_mtdna_features	TRUE	MT-ND1;MT-ND2;MT-CO1;MT-CO2;MT-ATP8;MT-ATP6;MT-CO3;MT-ND3;MT-ND4L;MT-ND4;MT-ND5;MT-ND6;MT-CYB	MT-ND1;MT-ND2;MT-CO1;MT-CO2;MT-ATP8;MT-ATP6;MT-CO3;MT-ND3;MT-ND4L;MT-ND4;MT-ND5;MT-ND6;MT-CYB
+descriptive_checks_v1	oligodendrocytes	mtdna_rows_per_cell_type	TRUE	13	13
+descriptive_checks_v1	oligodendrocytes	mtdna_detection_ranges	TRUE	0.0222735061447622;0.880898178576774	0..1
+descriptive_checks_v1	oligodendrocytes	mitocarta_cell_type_rows	TRUE	1	1
+descriptive_checks_v1	oligodendrocytes	mitocarta_coverage_bounds	TRUE	1102	1134
+descriptive_checks_v1	oligodendrocytes	source_rds_unchanged	TRUE	dcb162508c195f5ecff3d7a1e8c45ca510e259dfd1f7ba0d836ab41a58cee3bb	dcb162508c195f5ecff3d7a1e8c45ca510e259dfd1f7ba0d836ab41a58cee3bb

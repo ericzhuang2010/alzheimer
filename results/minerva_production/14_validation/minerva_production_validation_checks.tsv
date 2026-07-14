@@ -1,0 +1,17 @@
+check	passed	gate	observed	expected
+expected_statuses_present	TRUE	validation	89	89
+status_files_readable_single_row	TRUE	validation	89	89
+stable_task_ids_match	TRUE	validation	89	89
+all_tasks_validated_complete	TRUE	validation	89	89
+scientific_script_paths_match	TRUE	validation	89	89
+scientific_script_checksums_match	TRUE	validation	89	89
+manifest_checksums_match	TRUE	validation	89	89
+required_scientific_checks_pass	TRUE	validation	0	0
+declared_artifacts_exist	TRUE	validation	156	156
+declared_artifact_sizes_match	TRUE	validation	156	156
+declared_artifact_checksums_match	TRUE	validation	156	156
+declared_artifacts_validated	TRUE	validation	156	156
+scientific_config_checksums_match_current_config	FALSE	promotion	13	89
+clean_rerun_output_exists	FALSE	promotion	FALSE	TRUE
+execution_task_graph_parity_available	FALSE	promotion	0	>0
+output_labels_match_execution_scope	FALSE	promotion	final;partial_with_blocked_sensitivities	final

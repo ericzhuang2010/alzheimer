@@ -1,0 +1,4 @@
+schema_version	rds_id	cell_type_high_resolution	donors	nuclei	total_mt_counts	top_mt_donor	top1_mt_count_fraction	top3_mt_count_fraction	top1_nuclei_fraction	top1_warning	top3_warning
+mito_donor_concentration_v1	astrocytes	Ast CHI3L1	254	16545	511738	11349119	0.0953476192895583	0.191637126810985	0.0737987307343608	FALSE	FALSE
+mito_donor_concentration_v1	astrocytes	Ast DPP10	274	21731	314625	31726180	0.02021771950735	0.0579292808899484	0.0169343334407068	FALSE	FALSE
+mito_donor_concentration_v1	astrocytes	Ast GRM3	276	60758	2154497	20947550	0.0253627644874883	0.0686893506929924	0.019964449126041	FALSE	FALSE

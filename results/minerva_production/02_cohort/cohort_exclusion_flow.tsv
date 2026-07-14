@@ -1,0 +1,8 @@
+schema_version	step	rule	donors_before	donors_excluded	donors_remaining
+cohort_exclusion_flow_v1	1	represented_in_master_cell_metadata	427	0	427
+cohort_exclusion_flow_v1	2	retain_NCI_or_AD	427	137	290
+cohort_exclusion_flow_v1	3	exclude_prespecified_sex_discordant	290	3	287
+cohort_exclusion_flow_v1	4	exclude_APOE_e2_e4	287	8	279
+cohort_exclusion_flow_v1	5	require_APOE_genotype	279	2	277
+cohort_exclusion_flow_v1	6	require_PMI	277	1	276
+cohort_exclusion_flow_v1	7	require_age_at_death_and_valid_sex	276	0	276

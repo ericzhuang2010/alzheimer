@@ -1,0 +1,26 @@
+schema_version	rds_id	cell_type_high_resolution	inventory_genes	measured_genes	tested_genes	unmatched_genes	genes_detected_in_analytic_nuclei	fraction_of_inventory_measured	fraction_of_measured_detected	analytic_nuclei	analytic_donors
+descriptive_mitocarta_coverage_v1	inhibitory	Inh ALCAM TRPM3	1136	1134	1103	2	1090	0.998239436619718	0.961199294532628	7483	265
+descriptive_mitocarta_coverage_v1	inhibitory	Inh CUX2 MSR1	1136	1134	1103	2	1089	0.998239436619718	0.96031746031746	17284	268
+descriptive_mitocarta_coverage_v1	inhibitory	Inh ENOX2 SPHKAP	1136	1134	1103	2	1087	0.998239436619718	0.958553791887125	8343	266
+descriptive_mitocarta_coverage_v1	inhibitory	Inh FBN2 EPB41L4A	1136	1134	1103	2	1088	0.998239436619718	0.959435626102293	4692	268
+descriptive_mitocarta_coverage_v1	inhibitory	Inh GPC5 RIT2	1136	1134	1103	2	1084	0.998239436619718	0.955908289241623	3391	264
+descriptive_mitocarta_coverage_v1	inhibitory	Inh L1 PAX6 CA4	1136	1134	1103	2	1083	0.998239436619718	0.955026455026455	3521	255
+descriptive_mitocarta_coverage_v1	inhibitory	Inh L1-2 PAX6 SCGN	1136	1134	1103	2	1072	0.998239436619718	0.945326278659612	1131	237
+descriptive_mitocarta_coverage_v1	inhibitory	Inh L1-6 LAMP5 CA13	1136	1134	1103	2	1088	0.998239436619718	0.959435626102293	10459	272
+descriptive_mitocarta_coverage_v1	inhibitory	Inh L3-5 SST MAFB	1136	1134	1103	2	1091	0.998239436619718	0.962081128747795	15994	268
+descriptive_mitocarta_coverage_v1	inhibitory	Inh L5-6 PVALB STON2	1136	1134	1103	2	1082	0.998239436619718	0.954144620811287	3668	258
+descriptive_mitocarta_coverage_v1	inhibitory	Inh L5-6 SST TH	1136	1134	1103	2	1080	0.998239436619718	0.952380952380952	3129	261
+descriptive_mitocarta_coverage_v1	inhibitory	Inh L6 SST NPY	1136	1134	1103	2	1074	0.998239436619718	0.947089947089947	990	231
+descriptive_mitocarta_coverage_v1	inhibitory	Inh LAMP5 NRG1 (Rosehip)	1136	1134	1103	2	1096	0.998239436619718	0.966490299823633	17989	271
+descriptive_mitocarta_coverage_v1	inhibitory	Inh LAMP5 RELN	1136	1134	1103	2	1081	0.998239436619718	0.95326278659612	6220	252
+descriptive_mitocarta_coverage_v1	inhibitory	Inh PTPRK FAM19A1	1136	1134	1103	2	1080	0.998239436619718	0.952380952380952	7314	263
+descriptive_mitocarta_coverage_v1	inhibitory	Inh PVALB CA8 (Chandelier)	1136	1134	1103	2	1091	0.998239436619718	0.962081128747795	10028	270
+descriptive_mitocarta_coverage_v1	inhibitory	Inh PVALB HTR4	1136	1134	1103	2	1097	0.998239436619718	0.967372134038801	28802	271
+descriptive_mitocarta_coverage_v1	inhibitory	Inh PVALB SULF1	1136	1134	1103	2	1095	0.998239436619718	0.965608465608466	14591	270
+descriptive_mitocarta_coverage_v1	inhibitory	Inh RYR3 TSHZ2	1136	1134	1103	2	1092	0.998239436619718	0.962962962962963	16440	273
+descriptive_mitocarta_coverage_v1	inhibitory	Inh SGCD PDE3A	1136	1134	1103	2	1081	0.998239436619718	0.95326278659612	2745	260
+descriptive_mitocarta_coverage_v1	inhibitory	Inh SORCS1 TTN	1136	1134	1103	2	1082	0.998239436619718	0.954144620811287	6569	261
+descriptive_mitocarta_coverage_v1	inhibitory	Inh VIP ABI3BP	1136	1134	1103	2	1088	0.998239436619718	0.959435626102293	9813	273
+descriptive_mitocarta_coverage_v1	inhibitory	Inh VIP CLSTN2	1136	1134	1103	2	1090	0.998239436619718	0.961199294532628	12165	272
+descriptive_mitocarta_coverage_v1	inhibitory	Inh VIP THSD7B	1136	1134	1103	2	1086	0.998239436619718	0.957671957671958	5656	266
+descriptive_mitocarta_coverage_v1	inhibitory	Inh VIP TSHZ2	1136	1134	1103	2	1090	0.998239436619718	0.961199294532628	8554	271

@@ -1,0 +1,10 @@
+schema_version	rds_id	check	passed	observed	expected
+mito_fraction_checks_v1	inhibitory	one_terminal_status_per_manifest_row	TRUE	350	350
+mito_fraction_checks_v1	inhibitory	eligible_contrasts_completed	TRUE	155	155
+mito_fraction_checks_v1	inhibitory	ineligible_contrasts_explicit	TRUE	195	195
+mito_fraction_checks_v1	inhibitory	result_keys_unique	TRUE	0	0
+mito_fraction_checks_v1	inhibitory	numerator_denominator_valid	TRUE	0	0
+mito_fraction_checks_v1	inhibitory	p_values_in_range	TRUE	0	0
+mito_fraction_checks_v1	inhibitory	fdr_in_range	TRUE	0	0
+mito_fraction_checks_v1	inhibitory	all_models_donor_level	TRUE	43	>0
+mito_fraction_checks_v1	inhibitory	execution_stage_recorded	TRUE	minerva_production	nonempty

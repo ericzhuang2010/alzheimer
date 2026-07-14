@@ -1,0 +1,2 @@
+schema_version	rds_id	cell_type_high_resolution	inventory_genes	measured_genes	tested_genes	unmatched_genes	genes_detected_in_analytic_nuclei	fraction_of_inventory_measured	fraction_of_measured_detected	analytic_nuclei	analytic_donors
+descriptive_mitocarta_coverage_v1	opcs	OPC	1136	1134	1098	2	1097	0.998239436619718	0.967372134038801	61883	276

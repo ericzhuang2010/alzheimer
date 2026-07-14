@@ -1,0 +1,13 @@
+schema_version	check	passed	observed	expected
+similarity_checks_v1	toy_examples_match_hand_calculations	TRUE	4	4
+similarity_checks_v1	method_branches_separate_and_present	TRUE	mast;pseudobulk	mast;pseudobulk
+similarity_checks_v1	result_keys_unique	TRUE	0	0
+similarity_checks_v1	scores_within_minus_one_plus_one	TRUE	-1;1	[-1,1]
+similarity_checks_v1	empirical_p_values_in_range	TRUE	9.99900009999e-05;1	(0,1]
+similarity_checks_v1	empirical_fdr_in_range	TRUE	0.151594840515948;1	[0,1]
+similarity_checks_v1	mitochondrial_annotations_recorded	TRUE	20997	no_missing_flags
+similarity_checks_v1	configured_permutations_recorded	TRUE	10000	10000
+similarity_checks_v1	execution_stage_recorded	TRUE	minerva_production	minerva_production
+similarity_checks_v1	output_status_recorded	TRUE	final	final
+similarity_checks_v1	all_comparisons_have_terminal_status	TRUE	20	20
+similarity_checks_v1	validated_upstream_statuses	TRUE	validated_complete	validated_complete

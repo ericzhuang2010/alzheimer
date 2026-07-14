@@ -1,0 +1,2 @@
+schema_version	rds_id	cell_type_high_resolution	donors	nuclei	total_mt_counts	top_mt_donor	top1_mt_count_fraction	top3_mt_count_fraction	top1_nuclei_fraction	top1_warning	top3_warning
+mito_donor_concentration_v1	opcs	OPC	276	61883	2732917	20947550	0.0145547779167827	0.041431554635578	0.0146566908520919	FALSE	FALSE

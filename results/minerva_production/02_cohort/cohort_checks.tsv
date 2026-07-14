@@ -1,0 +1,6 @@
+schema_version	check	passed	observed	expected
+cohort_checks_v1	metadata_donor_count	TRUE	427	427
+cohort_checks_v1	global_cohort_count	TRUE	276	276
+cohort_checks_v1	global_group_counts	TRUE	17;8;45;37;11;26;6;7;53;29;10;27	17;8;45;37;11;26;6;7;53;29;10;27
+cohort_checks_v1	unique_global_projids	TRUE	0	0
+cohort_checks_v1	required_derived_fields_complete	TRUE	0	0

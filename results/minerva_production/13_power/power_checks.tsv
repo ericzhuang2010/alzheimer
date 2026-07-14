@@ -1,0 +1,11 @@
+schema_version	check	passed	observed	expected
+power_checks_v1	both_analysis_branches_present	TRUE	paper_like_mast_hurdle;pseudobulk_edgeR_known_dispersion	paper_like_mast_hurdle;pseudobulk_edgeR_known_dispersion
+power_checks_v1	representative_rare_and_abundant_cell_types_present	TRUE	rare;abundant	rare;abundant
+power_checks_v1	zero_and_positive_effects_present	TRUE	0;0.25;0.3785116;0.5;0.75;1	zero_and_positive
+power_checks_v1	all_grid_rows_reach_repetition_target	TRUE	100;100	100
+power_checks_v1	all_simulations_validate	TRUE	0	0
+power_checks_v1	p_values_and_effects_finite	TRUE	7200	7200
+power_checks_v1	seeds_unique_within_method	TRUE	0	0
+power_checks_v1	output_label_matches_execution_scope	TRUE	final	final
+power_checks_v1	mde_rows_cover_scenarios_and_methods	TRUE	12	12
+power_checks_v1	upstream_artifacts_unchanged	TRUE	unchanged	unchanged

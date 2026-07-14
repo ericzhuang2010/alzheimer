@@ -1,0 +1,10 @@
+schema_version	rds_id	source_rds	represented_donors	eligible_donors	globally_eligible_absent_donors	absent_projids	output_file
+cohort_rds_intersection_v1	astrocytes	data/processed/Astrocytes.rds	427	276	0		results/minerva_production/02_cohort/astrocytes_cohort_276.tsv
+cohort_rds_intersection_v1	excitatory_set1	data/processed/Excitatory_neurons_set1.rds	427	276	0		results/minerva_production/02_cohort/excitatory_set1_cohort_276.tsv
+cohort_rds_intersection_v1	excitatory_set2	data/processed/Excitatory_neurons_set2.rds	425	275	1	15144878	results/minerva_production/02_cohort/excitatory_set2_cohort_275.tsv
+cohort_rds_intersection_v1	excitatory_set3	data/processed/Excitatory_neurons_set3.rds	426	275	1	10102206	results/minerva_production/02_cohort/excitatory_set3_cohort_275.tsv
+cohort_rds_intersection_v1	immune	data/processed/Immune_cells.rds	426	276	0		results/minerva_production/02_cohort/immune_cohort_276.tsv
+cohort_rds_intersection_v1	inhibitory	data/processed/Inhibitory_neurons.rds	423	275	1	15144878	results/minerva_production/02_cohort/inhibitory_cohort_275.tsv
+cohort_rds_intersection_v1	oligodendrocytes	data/processed/Oligodendrocytes.rds	427	276	0		results/minerva_production/02_cohort/oligodendrocytes_cohort_276.tsv
+cohort_rds_intersection_v1	opcs	data/processed/OPCs.rds	427	276	0		results/minerva_production/02_cohort/opcs_cohort_276.tsv
+cohort_rds_intersection_v1	vasculature	data/processed/Vasculature_cells.rds	423	274	2	11072071;20261901	results/minerva_production/02_cohort/vasculature_cohort_274.tsv

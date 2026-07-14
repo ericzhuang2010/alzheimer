@@ -1,0 +1,66 @@
+schema_version	rds_id	cell_type_high_resolution	feature	measured	nuclei	donors	total_raw_counts	nuclei_detected	nucleus_detection_fraction	donors_detected	donor_detection_fraction
+descriptive_mtdna_detection_v1	vasculature	End	MT-ND1	TRUE	4756	263	11936	3029	0.636879730866274	252	0.958174904942966
+descriptive_mtdna_detection_v1	vasculature	End	MT-ND2	TRUE	4756	263	10252	2736	0.575273338940286	255	0.96958174904943
+descriptive_mtdna_detection_v1	vasculature	End	MT-CO1	TRUE	4756	263	21618	3647	0.766820857863751	257	0.977186311787072
+descriptive_mtdna_detection_v1	vasculature	End	MT-CO2	TRUE	4756	263	21380	3614	0.759882253994954	259	0.984790874524715
+descriptive_mtdna_detection_v1	vasculature	End	MT-ATP8	TRUE	4756	263	278	239	0.0502523128679563	125	0.475285171102662
+descriptive_mtdna_detection_v1	vasculature	End	MT-ATP6	TRUE	4756	263	26419	3864	0.812447434819176	257	0.977186311787072
+descriptive_mtdna_detection_v1	vasculature	End	MT-CO3	TRUE	4756	263	26664	3924	0.825063078216989	260	0.988593155893536
+descriptive_mtdna_detection_v1	vasculature	End	MT-ND3	TRUE	4756	263	14395	2981	0.626787216148024	253	0.961977186311787
+descriptive_mtdna_detection_v1	vasculature	End	MT-ND4L	TRUE	4756	263	1270	855	0.179772918418839	208	0.790874524714829
+descriptive_mtdna_detection_v1	vasculature	End	MT-ND4	TRUE	4756	263	19485	3528	0.741799831791421	257	0.977186311787072
+descriptive_mtdna_detection_v1	vasculature	End	MT-ND5	TRUE	4756	263	4865	2137	0.44932716568545	240	0.91254752851711
+descriptive_mtdna_detection_v1	vasculature	End	MT-ND6	TRUE	4756	263	138	121	0.0254415475189235	80	0.304182509505703
+descriptive_mtdna_detection_v1	vasculature	End	MT-CYB	TRUE	4756	263	18390	3454	0.726240538267452	259	0.984790874524715
+descriptive_mtdna_detection_v1	vasculature	Fib FLRT2	MT-ND1	TRUE	2592	262	5242	1641	0.633101851851852	247	0.942748091603053
+descriptive_mtdna_detection_v1	vasculature	Fib FLRT2	MT-ND2	TRUE	2592	262	3646	1370	0.528549382716049	245	0.935114503816794
+descriptive_mtdna_detection_v1	vasculature	Fib FLRT2	MT-CO1	TRUE	2592	262	8283	1884	0.726851851851852	256	0.977099236641221
+descriptive_mtdna_detection_v1	vasculature	Fib FLRT2	MT-CO2	TRUE	2592	262	9692	1962	0.756944444444444	255	0.973282442748092
+descriptive_mtdna_detection_v1	vasculature	Fib FLRT2	MT-ATP8	TRUE	2592	262	83	75	0.0289351851851852	55	0.209923664122137
+descriptive_mtdna_detection_v1	vasculature	Fib FLRT2	MT-ATP6	TRUE	2592	262	12156	2034	0.784722222222222	255	0.973282442748092
+descriptive_mtdna_detection_v1	vasculature	Fib FLRT2	MT-CO3	TRUE	2592	262	13340	2094	0.80787037037037	254	0.969465648854962
+descriptive_mtdna_detection_v1	vasculature	Fib FLRT2	MT-ND3	TRUE	2592	262	7624	1689	0.65162037037037	249	0.950381679389313
+descriptive_mtdna_detection_v1	vasculature	Fib FLRT2	MT-ND4L	TRUE	2592	262	476	364	0.140432098765432	158	0.603053435114504
+descriptive_mtdna_detection_v1	vasculature	Fib FLRT2	MT-ND4	TRUE	2592	262	8794	1836	0.708333333333333	253	0.965648854961832
+descriptive_mtdna_detection_v1	vasculature	Fib FLRT2	MT-ND5	TRUE	2592	262	1543	871	0.336033950617284	216	0.824427480916031
+descriptive_mtdna_detection_v1	vasculature	Fib FLRT2	MT-ND6	TRUE	2592	262	70	66	0.025462962962963	50	0.190839694656489
+descriptive_mtdna_detection_v1	vasculature	Fib FLRT2	MT-CYB	TRUE	2592	262	9511	1877	0.724151234567901	259	0.988549618320611
+descriptive_mtdna_detection_v1	vasculature	Fib SLC4A4	MT-ND1	TRUE	588	78	832	267	0.454081632653061	62	0.794871794871795
+descriptive_mtdna_detection_v1	vasculature	Fib SLC4A4	MT-ND2	TRUE	588	78	627	232	0.394557823129252	58	0.743589743589744
+descriptive_mtdna_detection_v1	vasculature	Fib SLC4A4	MT-CO1	TRUE	588	78	2652	400	0.680272108843537	68	0.871794871794872
+descriptive_mtdna_detection_v1	vasculature	Fib SLC4A4	MT-CO2	TRUE	588	78	1560	365	0.620748299319728	64	0.82051282051282
+descriptive_mtdna_detection_v1	vasculature	Fib SLC4A4	MT-ATP8	TRUE	588	78	19	18	0.0306122448979592	10	0.128205128205128
+descriptive_mtdna_detection_v1	vasculature	Fib SLC4A4	MT-ATP6	TRUE	588	78	2002	379	0.644557823129252	64	0.82051282051282
+descriptive_mtdna_detection_v1	vasculature	Fib SLC4A4	MT-CO3	TRUE	588	78	3001	439	0.746598639455782	70	0.897435897435897
+descriptive_mtdna_detection_v1	vasculature	Fib SLC4A4	MT-ND3	TRUE	588	78	929	272	0.462585034013605	57	0.730769230769231
+descriptive_mtdna_detection_v1	vasculature	Fib SLC4A4	MT-ND4L	TRUE	588	78	77	54	0.0918367346938776	28	0.358974358974359
+descriptive_mtdna_detection_v1	vasculature	Fib SLC4A4	MT-ND4	TRUE	588	78	1486	342	0.581632653061224	69	0.884615384615385
+descriptive_mtdna_detection_v1	vasculature	Fib SLC4A4	MT-ND5	TRUE	588	78	291	152	0.258503401360544	43	0.551282051282051
+descriptive_mtdna_detection_v1	vasculature	Fib SLC4A4	MT-ND6	TRUE	588	78	6	6	0.0102040816326531	6	0.0769230769230769
+descriptive_mtdna_detection_v1	vasculature	Fib SLC4A4	MT-CYB	TRUE	588	78	1411	329	0.55952380952381	61	0.782051282051282
+descriptive_mtdna_detection_v1	vasculature	Per	MT-ND1	TRUE	3800	250	15219	2990	0.786842105263158	248	0.992
+descriptive_mtdna_detection_v1	vasculature	Per	MT-ND2	TRUE	3800	250	10915	2706	0.712105263157895	249	0.996
+descriptive_mtdna_detection_v1	vasculature	Per	MT-CO1	TRUE	3800	250	23408	3304	0.869473684210526	250	1
+descriptive_mtdna_detection_v1	vasculature	Per	MT-CO2	TRUE	3800	250	27019	3341	0.879210526315789	249	0.996
+descriptive_mtdna_detection_v1	vasculature	Per	MT-ATP8	TRUE	3800	250	260	231	0.0607894736842105	117	0.468
+descriptive_mtdna_detection_v1	vasculature	Per	MT-ATP6	TRUE	3800	250	35289	3367	0.886052631578947	249	0.996
+descriptive_mtdna_detection_v1	vasculature	Per	MT-CO3	TRUE	3800	250	36686	3509	0.923421052631579	249	0.996
+descriptive_mtdna_detection_v1	vasculature	Per	MT-ND3	TRUE	3800	250	20932	3000	0.789473684210526	248	0.992
+descriptive_mtdna_detection_v1	vasculature	Per	MT-ND4L	TRUE	3800	250	1334	912	0.24	214	0.856
+descriptive_mtdna_detection_v1	vasculature	Per	MT-ND4	TRUE	3800	250	19945	3145	0.827631578947368	249	0.996
+descriptive_mtdna_detection_v1	vasculature	Per	MT-ND5	TRUE	3800	250	3985	1783	0.469210526315789	239	0.956
+descriptive_mtdna_detection_v1	vasculature	Per	MT-ND6	TRUE	3800	250	84	80	0.0210526315789474	56	0.224
+descriptive_mtdna_detection_v1	vasculature	Per	MT-CYB	TRUE	3800	250	23311	3187	0.838684210526316	249	0.996
+descriptive_mtdna_detection_v1	vasculature	SMC	MT-ND1	TRUE	1168	200	8032	1006	0.861301369863014	191	0.955
+descriptive_mtdna_detection_v1	vasculature	SMC	MT-ND2	TRUE	1168	200	6570	926	0.792808219178082	182	0.91
+descriptive_mtdna_detection_v1	vasculature	SMC	MT-CO1	TRUE	1168	200	14533	1076	0.921232876712329	197	0.985
+descriptive_mtdna_detection_v1	vasculature	SMC	MT-CO2	TRUE	1168	200	13518	1065	0.911815068493151	193	0.965
+descriptive_mtdna_detection_v1	vasculature	SMC	MT-ATP8	TRUE	1168	200	132	105	0.0898972602739726	52	0.26
+descriptive_mtdna_detection_v1	vasculature	SMC	MT-ATP6	TRUE	1168	200	12807	1080	0.924657534246575	193	0.965
+descriptive_mtdna_detection_v1	vasculature	SMC	MT-CO3	TRUE	1168	200	17687	1107	0.94777397260274	196	0.98
+descriptive_mtdna_detection_v1	vasculature	SMC	MT-ND3	TRUE	1168	200	7570	983	0.841609589041096	188	0.94
+descriptive_mtdna_detection_v1	vasculature	SMC	MT-ND4L	TRUE	1168	200	802	425	0.363869863013699	131	0.655
+descriptive_mtdna_detection_v1	vasculature	SMC	MT-ND4	TRUE	1168	200	11621	1041	0.891267123287671	189	0.945
+descriptive_mtdna_detection_v1	vasculature	SMC	MT-ND5	TRUE	1168	200	2175	689	0.589897260273973	161	0.805
+descriptive_mtdna_detection_v1	vasculature	SMC	MT-ND6	TRUE	1168	200	90	77	0.0659246575342466	44	0.22
+descriptive_mtdna_detection_v1	vasculature	SMC	MT-CYB	TRUE	1168	200	9809	1054	0.902397260273973	191	0.955

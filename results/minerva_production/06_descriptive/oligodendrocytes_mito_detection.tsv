@@ -1,0 +1,14 @@
+schema_version	rds_id	cell_type_high_resolution	feature	measured	nuclei	donors	total_raw_counts	nuclei_detected	nucleus_detection_fraction	donors_detected	donor_detection_fraction
+descriptive_mtdna_detection_v1	oligodendrocytes	Oli	MT-ND1	TRUE	447617	276	1106381	312567	0.698291173034089	276	1
+descriptive_mtdna_detection_v1	oligodendrocytes	Oli	MT-ND2	TRUE	447617	276	1127324	306019	0.68366259547783	276	1
+descriptive_mtdna_detection_v1	oligodendrocytes	Oli	MT-CO1	TRUE	447617	276	2099866	363439	0.811941905691696	276	1
+descriptive_mtdna_detection_v1	oligodendrocytes	Oli	MT-CO2	TRUE	447617	276	3539397	394305	0.880898178576774	276	1
+descriptive_mtdna_detection_v1	oligodendrocytes	Oli	MT-ATP8	TRUE	447617	276	22449	20536	0.0458785077421099	272	0.985507246376812
+descriptive_mtdna_detection_v1	oligodendrocytes	Oli	MT-ATP6	TRUE	447617	276	2701895	377922	0.84429769200008	276	1
+descriptive_mtdna_detection_v1	oligodendrocytes	Oli	MT-CO3	TRUE	447617	276	2634597	388184	0.867223541554499	276	1
+descriptive_mtdna_detection_v1	oligodendrocytes	Oli	MT-ND3	TRUE	447617	276	2173942	343345	0.767050849275162	276	1
+descriptive_mtdna_detection_v1	oligodendrocytes	Oli	MT-ND4L	TRUE	447617	276	108596	80904	0.180743805530174	276	1
+descriptive_mtdna_detection_v1	oligodendrocytes	Oli	MT-ND4	TRUE	447617	276	2076780	358096	0.800005361726655	276	1
+descriptive_mtdna_detection_v1	oligodendrocytes	Oli	MT-ND5	TRUE	447617	276	345111	182663	0.40807878163698	276	1
+descriptive_mtdna_detection_v1	oligodendrocytes	Oli	MT-ND6	TRUE	447617	276	10465	9970	0.0222735061447622	272	0.985507246376812
+descriptive_mtdna_detection_v1	oligodendrocytes	Oli	MT-CYB	TRUE	447617	276	2007164	354502	0.791976176061231	276	1

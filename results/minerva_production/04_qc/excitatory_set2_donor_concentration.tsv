@@ -1,0 +1,5 @@
+schema_version	rds_id	cell_type_high_resolution	donors	nuclei	total_mt_counts	top_mt_donor	top1_mt_count_fraction	top3_mt_count_fraction	top1_nuclei_fraction	top1_warning	top3_warning
+mito_donor_concentration_v1	excitatory_set2	Exc L3-4 RORB CUX2	273	126809	60012561	76733461	0.0179935830433899	0.0456003868923374	0.0156140337042323	FALSE	FALSE
+mito_donor_concentration_v1	excitatory_set2	Exc L3-5 RORB PLCH1	273	26298	8826119	76733461	0.0216869951560816	0.0524038934893128	0.01886074986691	FALSE	FALSE
+mito_donor_concentration_v1	excitatory_set2	Exc L4-5 RORB GABRG1	271	55350	17444040	10202345	0.0205571645100562	0.048132829321648	0.0163143631436314	FALSE	FALSE
+mito_donor_concentration_v1	excitatory_set2	Exc L4-5 RORB IL1RAPL2	274	82526	42351823	76733461	0.0155439826049519	0.0392947193796121	0.0127474977582822	FALSE	FALSE

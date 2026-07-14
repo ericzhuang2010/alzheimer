@@ -1,0 +1,2 @@
+schema_version	rds_id	cell_type_high_resolution	nuclei	mad_threshold	log1p_nCount_RNA_median	log1p_nCount_RNA_mad	log1p_nFeature_RNA_median	log1p_nFeature_RNA_mad	percent_mt_median	percent_mt_mad	percent_mitocarta_median	percent_mitocarta_mad
+mito_qc_thresholds_v1	excitatory_set1	Exc L2-3 CBLN2 LINC02306	296936	5	9.36160116581677	0.894189546285197	8.35678966992321	0.502429980158683	1.73280954634073	1.57780927891307	5.28757551309634	1.68795086315073

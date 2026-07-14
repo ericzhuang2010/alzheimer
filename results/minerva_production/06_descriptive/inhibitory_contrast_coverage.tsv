@@ -1,0 +1,151 @@
+schema_version	rds_id	cell_type_high_resolution	sex	apoe_group	contrast	minimum_donors_per_side	nci_nuclei	ad_nuclei	nci_primary_eligible_donors	ad_primary_eligible_donors	nci_sensitivity_eligible_donors	ad_sensitivity_eligible_donors	primary_contrast_eligible	sensitivity_contrast_eligible	primary_ineligibility_reason
+descriptive_contrast_coverage_v1	inhibitory	Inh ALCAM TRPM3	Female	e2	AD_vs_NCI	5	451	132	11	1	2	1	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh ALCAM TRPM3	Female	e33	AD_vs_NCI	5	1309	939	24	21	9	4	TRUE	FALSE	
+descriptive_contrast_coverage_v1	inhibitory	Inh ALCAM TRPM3	Female	e4	AD_vs_NCI	5	329	605	6	13	2	1	TRUE	FALSE	
+descriptive_contrast_coverage_v1	inhibitory	Inh ALCAM TRPM3	Male	e2	AD_vs_NCI	5	106	155	3	3	0	1	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh ALCAM TRPM3	Male	e33	AD_vs_NCI	5	1792	712	37	13	13	4	TRUE	FALSE	
+descriptive_contrast_coverage_v1	inhibitory	Inh ALCAM TRPM3	Male	e4	AD_vs_NCI	5	270	683	7	18	1	3	TRUE	FALSE	
+descriptive_contrast_coverage_v1	inhibitory	Inh CUX2 MSR1	Female	e2	AD_vs_NCI	5	967	142	11	4	8	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh CUX2 MSR1	Female	e33	AD_vs_NCI	5	3417	1801	39	22	23	12	TRUE	TRUE	
+descriptive_contrast_coverage_v1	inhibitory	Inh CUX2 MSR1	Female	e4	AD_vs_NCI	5	666	1105	8	16	4	10	TRUE	FALSE	
+descriptive_contrast_coverage_v1	inhibitory	Inh CUX2 MSR1	Male	e2	AD_vs_NCI	5	322	342	3	5	2	4	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh CUX2 MSR1	Male	e33	AD_vs_NCI	5	5009	1592	43	17	33	11	TRUE	TRUE	
+descriptive_contrast_coverage_v1	inhibitory	Inh CUX2 MSR1	Male	e4	AD_vs_NCI	5	534	1387	6	18	5	11	TRUE	TRUE	
+descriptive_contrast_coverage_v1	inhibitory	Inh ENOX2 SPHKAP	Female	e2	AD_vs_NCI	5	524	119	11	3	4	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh ENOX2 SPHKAP	Female	e33	AD_vs_NCI	5	1545	1059	32	19	10	6	TRUE	TRUE	
+descriptive_contrast_coverage_v1	inhibitory	Inh ENOX2 SPHKAP	Female	e4	AD_vs_NCI	5	423	552	9	13	2	1	TRUE	FALSE	
+descriptive_contrast_coverage_v1	inhibitory	Inh ENOX2 SPHKAP	Male	e2	AD_vs_NCI	5	198	196	4	5	1	1	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh ENOX2 SPHKAP	Male	e33	AD_vs_NCI	5	2076	700	37	14	17	3	TRUE	FALSE	
+descriptive_contrast_coverage_v1	inhibitory	Inh ENOX2 SPHKAP	Male	e4	AD_vs_NCI	5	240	711	6	18	1	3	TRUE	FALSE	
+descriptive_contrast_coverage_v1	inhibitory	Inh FBN2 EPB41L4A	Female	e2	AD_vs_NCI	5	216	95	4	1	0	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh FBN2 EPB41L4A	Female	e33	AD_vs_NCI	5	797	786	17	16	1	4	TRUE	FALSE	
+descriptive_contrast_coverage_v1	inhibitory	Inh FBN2 EPB41L4A	Female	e4	AD_vs_NCI	5	239	395	6	6	0	0	TRUE	FALSE	
+descriptive_contrast_coverage_v1	inhibitory	Inh FBN2 EPB41L4A	Male	e2	AD_vs_NCI	5	101	125	1	3	1	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh FBN2 EPB41L4A	Male	e33	AD_vs_NCI	5	986	412	23	8	2	1	TRUE	FALSE	
+descriptive_contrast_coverage_v1	inhibitory	Inh FBN2 EPB41L4A	Male	e4	AD_vs_NCI	5	145	395	3	5	0	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh GPC5 RIT2	Female	e2	AD_vs_NCI	5	186	65	3	1	0	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh GPC5 RIT2	Female	e33	AD_vs_NCI	5	659	505	13	10	0	0	TRUE	FALSE	
+descriptive_contrast_coverage_v1	inhibitory	Inh GPC5 RIT2	Female	e4	AD_vs_NCI	5	161	289	1	6	0	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh GPC5 RIT2	Male	e2	AD_vs_NCI	5	77	50	1	0	1	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh GPC5 RIT2	Male	e33	AD_vs_NCI	5	748	297	14	5	1	0	TRUE	FALSE	
+descriptive_contrast_coverage_v1	inhibitory	Inh GPC5 RIT2	Male	e4	AD_vs_NCI	5	94	260	1	3	0	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh L1 PAX6 CA4	Female	e2	AD_vs_NCI	5	180	62	1	1	0	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh L1 PAX6 CA4	Female	e33	AD_vs_NCI	5	650	436	12	7	0	0	TRUE	FALSE	
+descriptive_contrast_coverage_v1	inhibitory	Inh L1 PAX6 CA4	Female	e4	AD_vs_NCI	5	224	294	3	5	1	1	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh L1 PAX6 CA4	Male	e2	AD_vs_NCI	5	65	71	1	1	0	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh L1 PAX6 CA4	Male	e33	AD_vs_NCI	5	853	320	20	6	1	0	TRUE	FALSE	
+descriptive_contrast_coverage_v1	inhibitory	Inh L1 PAX6 CA4	Male	e4	AD_vs_NCI	5	116	250	1	2	0	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh L1-2 PAX6 SCGN	Female	e2	AD_vs_NCI	5	59	19	0	0	0	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh L1-2 PAX6 SCGN	Female	e33	AD_vs_NCI	5	206	141	0	0	0	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh L1-2 PAX6 SCGN	Female	e4	AD_vs_NCI	5	59	104	1	0	0	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh L1-2 PAX6 SCGN	Male	e2	AD_vs_NCI	5	13	34	0	0	0	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh L1-2 PAX6 SCGN	Male	e33	AD_vs_NCI	5	254	97	1	0	0	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh L1-2 PAX6 SCGN	Male	e4	AD_vs_NCI	5	39	106	0	0	0	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh L1-6 LAMP5 CA13	Female	e2	AD_vs_NCI	5	621	173	12	4	4	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh L1-6 LAMP5 CA13	Female	e33	AD_vs_NCI	5	1741	1540	36	29	11	10	TRUE	TRUE	
+descriptive_contrast_coverage_v1	inhibitory	Inh L1-6 LAMP5 CA13	Female	e4	AD_vs_NCI	5	505	941	10	20	4	6	TRUE	FALSE	
+descriptive_contrast_coverage_v1	inhibitory	Inh L1-6 LAMP5 CA13	Male	e2	AD_vs_NCI	5	220	265	3	5	1	2	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh L1-6 LAMP5 CA13	Male	e33	AD_vs_NCI	5	2302	924	44	18	16	6	TRUE	TRUE	
+descriptive_contrast_coverage_v1	inhibitory	Inh L1-6 LAMP5 CA13	Male	e4	AD_vs_NCI	5	335	892	7	21	2	6	TRUE	FALSE	
+descriptive_contrast_coverage_v1	inhibitory	Inh L3-5 SST MAFB	Female	e2	AD_vs_NCI	5	916	168	12	3	9	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh L3-5 SST MAFB	Female	e33	AD_vs_NCI	5	3338	1924	42	27	27	12	TRUE	TRUE	
+descriptive_contrast_coverage_v1	inhibitory	Inh L3-5 SST MAFB	Female	e4	AD_vs_NCI	5	850	1075	10	19	4	6	TRUE	FALSE	
+descriptive_contrast_coverage_v1	inhibitory	Inh L3-5 SST MAFB	Male	e2	AD_vs_NCI	5	292	364	4	5	2	4	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh L3-5 SST MAFB	Male	e33	AD_vs_NCI	5	4114	1276	45	18	38	12	TRUE	TRUE	
+descriptive_contrast_coverage_v1	inhibitory	Inh L3-5 SST MAFB	Male	e4	AD_vs_NCI	5	410	1267	6	20	4	14	TRUE	FALSE	
+descriptive_contrast_coverage_v1	inhibitory	Inh L5-6 PVALB STON2	Female	e2	AD_vs_NCI	5	205	68	3	0	0	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh L5-6 PVALB STON2	Female	e33	AD_vs_NCI	5	685	568	12	10	0	2	TRUE	FALSE	
+descriptive_contrast_coverage_v1	inhibitory	Inh L5-6 PVALB STON2	Female	e4	AD_vs_NCI	5	175	323	3	5	0	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh L5-6 PVALB STON2	Male	e2	AD_vs_NCI	5	90	76	1	2	1	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh L5-6 PVALB STON2	Male	e33	AD_vs_NCI	5	767	304	12	5	0	0	TRUE	FALSE	
+descriptive_contrast_coverage_v1	inhibitory	Inh L5-6 PVALB STON2	Male	e4	AD_vs_NCI	5	105	302	1	5	0	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh L5-6 SST TH	Female	e2	AD_vs_NCI	5	164	59	2	0	0	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh L5-6 SST TH	Female	e33	AD_vs_NCI	5	590	405	8	5	0	1	TRUE	FALSE	
+descriptive_contrast_coverage_v1	inhibitory	Inh L5-6 SST TH	Female	e4	AD_vs_NCI	5	201	280	4	3	0	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh L5-6 SST TH	Male	e2	AD_vs_NCI	5	63	70	1	0	0	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh L5-6 SST TH	Male	e33	AD_vs_NCI	5	704	269	13	4	0	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh L5-6 SST TH	Male	e4	AD_vs_NCI	5	86	238	1	2	0	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh L6 SST NPY	Female	e2	AD_vs_NCI	5	32	15	0	0	0	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh L6 SST NPY	Female	e33	AD_vs_NCI	5	189	128	0	0	0	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh L6 SST NPY	Female	e4	AD_vs_NCI	5	51	85	0	0	0	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh L6 SST NPY	Male	e2	AD_vs_NCI	5	16	25	0	0	0	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh L6 SST NPY	Male	e33	AD_vs_NCI	5	222	122	0	1	0	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh L6 SST NPY	Male	e4	AD_vs_NCI	5	23	82	0	0	0	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh LAMP5 NRG1 (Rosehip)	Female	e2	AD_vs_NCI	5	965	299	13	5	8	2	TRUE	FALSE	
+descriptive_contrast_coverage_v1	inhibitory	Inh LAMP5 NRG1 (Rosehip)	Female	e33	AD_vs_NCI	5	3211	2462	43	32	27	24	TRUE	TRUE	
+descriptive_contrast_coverage_v1	inhibitory	Inh LAMP5 NRG1 (Rosehip)	Female	e4	AD_vs_NCI	5	914	1329	11	22	6	11	TRUE	TRUE	
+descriptive_contrast_coverage_v1	inhibitory	Inh LAMP5 NRG1 (Rosehip)	Male	e2	AD_vs_NCI	5	333	420	4	5	3	4	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh LAMP5 NRG1 (Rosehip)	Male	e33	AD_vs_NCI	5	4297	1647	47	24	38	15	TRUE	TRUE	
+descriptive_contrast_coverage_v1	inhibitory	Inh LAMP5 NRG1 (Rosehip)	Male	e4	AD_vs_NCI	5	575	1537	8	23	6	16	TRUE	TRUE	
+descriptive_contrast_coverage_v1	inhibitory	Inh LAMP5 RELN	Female	e2	AD_vs_NCI	5	339	70	8	1	1	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh LAMP5 RELN	Female	e33	AD_vs_NCI	5	1354	625	21	12	9	3	TRUE	FALSE	
+descriptive_contrast_coverage_v1	inhibitory	Inh LAMP5 RELN	Female	e4	AD_vs_NCI	5	386	457	5	9	1	1	TRUE	FALSE	
+descriptive_contrast_coverage_v1	inhibitory	Inh LAMP5 RELN	Male	e2	AD_vs_NCI	5	92	128	2	3	1	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh LAMP5 RELN	Male	e33	AD_vs_NCI	5	1573	579	28	10	14	4	TRUE	FALSE	
+descriptive_contrast_coverage_v1	inhibitory	Inh LAMP5 RELN	Male	e4	AD_vs_NCI	5	206	411	3	10	0	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh PTPRK FAM19A1	Female	e2	AD_vs_NCI	5	427	111	11	3	2	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh PTPRK FAM19A1	Female	e33	AD_vs_NCI	5	1500	843	27	18	10	4	TRUE	FALSE	
+descriptive_contrast_coverage_v1	inhibitory	Inh PTPRK FAM19A1	Female	e4	AD_vs_NCI	5	376	536	5	14	3	1	TRUE	FALSE	
+descriptive_contrast_coverage_v1	inhibitory	Inh PTPRK FAM19A1	Male	e2	AD_vs_NCI	5	111	134	2	3	1	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh PTPRK FAM19A1	Male	e33	AD_vs_NCI	5	1791	642	31	13	15	4	TRUE	FALSE	
+descriptive_contrast_coverage_v1	inhibitory	Inh PTPRK FAM19A1	Male	e4	AD_vs_NCI	5	240	603	5	16	2	2	TRUE	FALSE	
+descriptive_contrast_coverage_v1	inhibitory	Inh PVALB CA8 (Chandelier)	Female	e2	AD_vs_NCI	5	596	173	12	4	5	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh PVALB CA8 (Chandelier)	Female	e33	AD_vs_NCI	5	1771	1493	36	29	10	11	TRUE	TRUE	
+descriptive_contrast_coverage_v1	inhibitory	Inh PVALB CA8 (Chandelier)	Female	e4	AD_vs_NCI	5	488	812	9	19	4	5	TRUE	FALSE	
+descriptive_contrast_coverage_v1	inhibitory	Inh PVALB CA8 (Chandelier)	Male	e2	AD_vs_NCI	5	206	226	3	5	1	1	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh PVALB CA8 (Chandelier)	Male	e33	AD_vs_NCI	5	2277	838	41	16	18	6	TRUE	TRUE	
+descriptive_contrast_coverage_v1	inhibitory	Inh PVALB CA8 (Chandelier)	Male	e4	AD_vs_NCI	5	333	815	8	19	2	5	TRUE	FALSE	
+descriptive_contrast_coverage_v1	inhibitory	Inh PVALB HTR4	Female	e2	AD_vs_NCI	5	1654	484	15	6	13	4	TRUE	FALSE	
+descriptive_contrast_coverage_v1	inhibitory	Inh PVALB HTR4	Female	e33	AD_vs_NCI	5	4963	3965	41	33	32	28	TRUE	TRUE	
+descriptive_contrast_coverage_v1	inhibitory	Inh PVALB HTR4	Female	e4	AD_vs_NCI	5	1553	2139	11	23	10	18	TRUE	TRUE	
+descriptive_contrast_coverage_v1	inhibitory	Inh PVALB HTR4	Male	e2	AD_vs_NCI	5	545	612	4	6	4	5	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh PVALB HTR4	Male	e33	AD_vs_NCI	5	6929	2488	50	24	43	18	TRUE	TRUE	
+descriptive_contrast_coverage_v1	inhibitory	Inh PVALB HTR4	Male	e4	AD_vs_NCI	5	877	2593	8	24	6	21	TRUE	TRUE	
+descriptive_contrast_coverage_v1	inhibitory	Inh PVALB SULF1	Female	e2	AD_vs_NCI	5	766	310	12	6	6	4	TRUE	FALSE	
+descriptive_contrast_coverage_v1	inhibitory	Inh PVALB SULF1	Female	e33	AD_vs_NCI	5	2480	2133	42	30	19	16	TRUE	TRUE	
+descriptive_contrast_coverage_v1	inhibitory	Inh PVALB SULF1	Female	e4	AD_vs_NCI	5	639	1169	11	19	6	11	TRUE	TRUE	
+descriptive_contrast_coverage_v1	inhibitory	Inh PVALB SULF1	Male	e2	AD_vs_NCI	5	368	331	4	5	3	3	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh PVALB SULF1	Male	e33	AD_vs_NCI	5	3381	1228	47	21	31	12	TRUE	TRUE	
+descriptive_contrast_coverage_v1	inhibitory	Inh PVALB SULF1	Male	e4	AD_vs_NCI	5	462	1324	8	21	4	11	TRUE	FALSE	
+descriptive_contrast_coverage_v1	inhibitory	Inh RYR3 TSHZ2	Female	e2	AD_vs_NCI	5	919	294	12	5	7	2	TRUE	FALSE	
+descriptive_contrast_coverage_v1	inhibitory	Inh RYR3 TSHZ2	Female	e33	AD_vs_NCI	5	3115	2197	38	31	23	21	TRUE	TRUE	
+descriptive_contrast_coverage_v1	inhibitory	Inh RYR3 TSHZ2	Female	e4	AD_vs_NCI	5	679	1239	11	18	5	12	TRUE	TRUE	
+descriptive_contrast_coverage_v1	inhibitory	Inh RYR3 TSHZ2	Male	e2	AD_vs_NCI	5	297	362	4	5	3	3	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh RYR3 TSHZ2	Male	e33	AD_vs_NCI	5	3874	1463	42	23	34	12	TRUE	TRUE	
+descriptive_contrast_coverage_v1	inhibitory	Inh RYR3 TSHZ2	Male	e4	AD_vs_NCI	5	587	1414	8	20	6	15	TRUE	TRUE	
+descriptive_contrast_coverage_v1	inhibitory	Inh SGCD PDE3A	Female	e2	AD_vs_NCI	5	133	51	1	0	0	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh SGCD PDE3A	Female	e33	AD_vs_NCI	5	441	392	5	4	0	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh SGCD PDE3A	Female	e4	AD_vs_NCI	5	154	229	3	2	0	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh SGCD PDE3A	Male	e2	AD_vs_NCI	5	50	45	0	0	0	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh SGCD PDE3A	Male	e33	AD_vs_NCI	5	651	241	10	2	1	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh SGCD PDE3A	Male	e4	AD_vs_NCI	5	103	255	1	1	0	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh SORCS1 TTN	Female	e2	AD_vs_NCI	5	377	115	10	3	2	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh SORCS1 TTN	Female	e33	AD_vs_NCI	5	1233	774	24	15	6	2	TRUE	FALSE	
+descriptive_contrast_coverage_v1	inhibitory	Inh SORCS1 TTN	Female	e4	AD_vs_NCI	5	426	479	4	11	3	1	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh SORCS1 TTN	Male	e2	AD_vs_NCI	5	92	145	1	5	1	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh SORCS1 TTN	Male	e33	AD_vs_NCI	5	1612	586	30	9	9	3	TRUE	FALSE	
+descriptive_contrast_coverage_v1	inhibitory	Inh SORCS1 TTN	Male	e4	AD_vs_NCI	5	193	537	5	12	0	1	TRUE	FALSE	
+descriptive_contrast_coverage_v1	inhibitory	Inh VIP ABI3BP	Female	e2	AD_vs_NCI	5	487	174	9	4	3	1	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh VIP ABI3BP	Female	e33	AD_vs_NCI	5	1765	1318	37	26	12	10	TRUE	TRUE	
+descriptive_contrast_coverage_v1	inhibitory	Inh VIP ABI3BP	Female	e4	AD_vs_NCI	5	480	743	9	16	4	3	TRUE	FALSE	
+descriptive_contrast_coverage_v1	inhibitory	Inh VIP ABI3BP	Male	e2	AD_vs_NCI	5	178	200	3	5	2	1	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh VIP ABI3BP	Male	e33	AD_vs_NCI	5	2403	873	42	18	22	4	TRUE	FALSE	
+descriptive_contrast_coverage_v1	inhibitory	Inh VIP ABI3BP	Male	e4	AD_vs_NCI	5	352	840	7	19	2	6	TRUE	FALSE	
+descriptive_contrast_coverage_v1	inhibitory	Inh VIP CLSTN2	Female	e2	AD_vs_NCI	5	714	196	12	5	6	2	TRUE	FALSE	
+descriptive_contrast_coverage_v1	inhibitory	Inh VIP CLSTN2	Female	e33	AD_vs_NCI	5	2181	1645	37	30	16	12	TRUE	TRUE	
+descriptive_contrast_coverage_v1	inhibitory	Inh VIP CLSTN2	Female	e4	AD_vs_NCI	5	608	912	10	17	4	6	TRUE	FALSE	
+descriptive_contrast_coverage_v1	inhibitory	Inh VIP CLSTN2	Male	e2	AD_vs_NCI	5	209	249	3	5	2	2	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh VIP CLSTN2	Male	e33	AD_vs_NCI	5	2848	1110	41	22	25	6	TRUE	TRUE	
+descriptive_contrast_coverage_v1	inhibitory	Inh VIP CLSTN2	Male	e4	AD_vs_NCI	5	472	1021	7	20	5	6	TRUE	TRUE	
+descriptive_contrast_coverage_v1	inhibitory	Inh VIP THSD7B	Female	e2	AD_vs_NCI	5	319	57	10	0	1	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh VIP THSD7B	Female	e33	AD_vs_NCI	5	1057	742	26	16	3	3	TRUE	FALSE	
+descriptive_contrast_coverage_v1	inhibitory	Inh VIP THSD7B	Female	e4	AD_vs_NCI	5	269	473	5	11	1	1	TRUE	FALSE	
+descriptive_contrast_coverage_v1	inhibitory	Inh VIP THSD7B	Male	e2	AD_vs_NCI	5	88	131	2	5	0	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh VIP THSD7B	Male	e33	AD_vs_NCI	5	1353	481	32	12	4	1	TRUE	FALSE	
+descriptive_contrast_coverage_v1	inhibitory	Inh VIP THSD7B	Male	e4	AD_vs_NCI	5	179	507	5	16	0	0	TRUE	FALSE	
+descriptive_contrast_coverage_v1	inhibitory	Inh VIP TSHZ2	Female	e2	AD_vs_NCI	5	517	139	11	2	4	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh VIP TSHZ2	Female	e33	AD_vs_NCI	5	1640	1054	32	22	8	6	TRUE	TRUE	
+descriptive_contrast_coverage_v1	inhibitory	Inh VIP TSHZ2	Female	e4	AD_vs_NCI	5	377	650	10	12	3	1	TRUE	FALSE	
+descriptive_contrast_coverage_v1	inhibitory	Inh VIP TSHZ2	Male	e2	AD_vs_NCI	5	162	172	2	4	2	0	FALSE	FALSE	fewer_than_5_eligible_donors_on_one_or_both_sides
+descriptive_contrast_coverage_v1	inhibitory	Inh VIP TSHZ2	Male	e33	AD_vs_NCI	5	2077	737	39	12	16	2	TRUE	FALSE	
+descriptive_contrast_coverage_v1	inhibitory	Inh VIP TSHZ2	Male	e4	AD_vs_NCI	5	299	730	7	19	2	2	TRUE	FALSE	

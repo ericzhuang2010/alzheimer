@@ -1,0 +1,14 @@
+schema_version	rds_id	cell_type_high_resolution	feature	measured	nuclei	donors	total_raw_counts	nuclei_detected	nucleus_detection_fraction	donors_detected	donor_detection_fraction
+descriptive_mtdna_detection_v1	excitatory_set1	Exc L2-3 CBLN2 LINC02306	MT-ND1	TRUE	203994	276	4300154	190176	0.932262713609224	276	1
+descriptive_mtdna_detection_v1	excitatory_set1	Exc L2-3 CBLN2 LINC02306	MT-ND2	TRUE	203994	276	2447317	183749	0.900756885006422	276	1
+descriptive_mtdna_detection_v1	excitatory_set1	Exc L2-3 CBLN2 LINC02306	MT-CO1	TRUE	203994	276	7612783	197499	0.968160828259655	276	1
+descriptive_mtdna_detection_v1	excitatory_set1	Exc L2-3 CBLN2 LINC02306	MT-CO2	TRUE	203994	276	8060294	196319	0.962376344402286	276	1
+descriptive_mtdna_detection_v1	excitatory_set1	Exc L2-3 CBLN2 LINC02306	MT-ATP8	TRUE	203994	276	45091	33297	0.163225388982029	276	1
+descriptive_mtdna_detection_v1	excitatory_set1	Exc L2-3 CBLN2 LINC02306	MT-ATP6	TRUE	203994	276	8236234	194589	0.953895702814789	276	1
+descriptive_mtdna_detection_v1	excitatory_set1	Exc L2-3 CBLN2 LINC02306	MT-CO3	TRUE	203994	276	10386071	198622	0.973665892134082	276	1
+descriptive_mtdna_detection_v1	excitatory_set1	Exc L2-3 CBLN2 LINC02306	MT-ND3	TRUE	203994	276	3869022	184088	0.902418698589174	276	1
+descriptive_mtdna_detection_v1	excitatory_set1	Exc L2-3 CBLN2 LINC02306	MT-ND4L	TRUE	203994	276	215524	90923	0.445714089630087	275	0.996376811594203
+descriptive_mtdna_detection_v1	excitatory_set1	Exc L2-3 CBLN2 LINC02306	MT-ND4	TRUE	203994	276	4851871	192412	0.94322382030844	276	1
+descriptive_mtdna_detection_v1	excitatory_set1	Exc L2-3 CBLN2 LINC02306	MT-ND5	TRUE	203994	276	787153	150132	0.735962822435954	276	1
+descriptive_mtdna_detection_v1	excitatory_set1	Exc L2-3 CBLN2 LINC02306	MT-ND6	TRUE	203994	276	11301	10287	0.050427953763346	265	0.960144927536232
+descriptive_mtdna_detection_v1	excitatory_set1	Exc L2-3 CBLN2 LINC02306	MT-CYB	TRUE	203994	276	5055441	191778	0.940115885761346	276	1

@@ -1,0 +1,118 @@
+schema_version	rds_id	cell_type_high_resolution	feature	measured	nuclei	donors	total_raw_counts	nuclei_detected	nucleus_detection_fraction	donors_detected	donor_detection_fraction
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L5 ET	MT-ND1	TRUE	2307	254	112080	2153	0.933246640658864	254	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L5 ET	MT-ND2	TRUE	2307	254	64959	2057	0.891634156913741	253	0.996062992125984
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L5 ET	MT-CO1	TRUE	2307	254	261526	2248	0.974425661031643	254	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L5 ET	MT-CO2	TRUE	2307	254	293061	2243	0.972258344169918	254	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L5 ET	MT-ATP8	TRUE	2307	254	909	521	0.225834416991764	187	0.736220472440945
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L5 ET	MT-ATP6	TRUE	2307	254	219403	2217	0.960988296488947	254	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L5 ET	MT-CO3	TRUE	2307	254	348013	2265	0.981794538361508	254	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L5 ET	MT-ND3	TRUE	2307	254	117826	2089	0.905504984828782	254	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L5 ET	MT-ND4L	TRUE	2307	254	5703	1166	0.505418292154313	243	0.956692913385827
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L5 ET	MT-ND4	TRUE	2307	254	153113	2177	0.943649761595145	254	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L5 ET	MT-ND5	TRUE	2307	254	20675	1749	0.758127438231469	252	0.992125984251969
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L5 ET	MT-ND6	TRUE	2307	254	238	189	0.081924577373212	118	0.464566929133858
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L5 ET	MT-CYB	TRUE	2307	254	187425	2199	0.953185955786736	254	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L5-6 RORB LINC02196	MT-ND1	TRUE	15511	273	526038	14851	0.957449551930888	273	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L5-6 RORB LINC02196	MT-ND2	TRUE	15511	273	234471	14317	0.923022371220424	273	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L5-6 RORB LINC02196	MT-CO1	TRUE	15511	273	964414	15250	0.983173231899942	273	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L5-6 RORB LINC02196	MT-CO2	TRUE	15511	273	1042542	15173	0.978209012958546	273	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L5-6 RORB LINC02196	MT-ATP8	TRUE	15511	273	4799	3275	0.211140480949004	252	0.923076923076923
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L5-6 RORB LINC02196	MT-ATP6	TRUE	15511	273	935181	15050	0.970279156727484	273	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L5-6 RORB LINC02196	MT-CO3	TRUE	15511	273	1586820	15305	0.986719102572368	273	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L5-6 RORB LINC02196	MT-ND3	TRUE	15511	273	553303	14557	0.938495261427374	273	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L5-6 RORB LINC02196	MT-ND4L	TRUE	15511	273	24109	8138	0.524659918767326	273	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L5-6 RORB LINC02196	MT-ND4	TRUE	15511	273	610544	14988	0.966281993424022	273	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L5-6 RORB LINC02196	MT-ND5	TRUE	15511	273	86725	12352	0.796338082651022	273	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L5-6 RORB LINC02196	MT-ND6	TRUE	15511	273	1040	955	0.0615692089484882	221	0.80952380952381
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L5-6 RORB LINC02196	MT-CYB	TRUE	15511	273	678742	14973	0.965314937786087	273	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L5/6 IT Car3	MT-ND1	TRUE	12686	272	432064	12026	0.94797414472647	272	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L5/6 IT Car3	MT-ND2	TRUE	12686	272	237706	11703	0.922513006463818	272	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L5/6 IT Car3	MT-CO1	TRUE	12686	272	972281	12421	0.979110830837143	272	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L5/6 IT Car3	MT-CO2	TRUE	12686	272	1062198	12393	0.976903673340691	272	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L5/6 IT Car3	MT-ATP8	TRUE	12686	272	4232	2793	0.220163960271165	258	0.948529411764706
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L5/6 IT Car3	MT-ATP6	TRUE	12686	272	961593	12304	0.969888065584108	272	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L5/6 IT Car3	MT-CO3	TRUE	12686	272	1280779	12446	0.981081507173262	272	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L5/6 IT Car3	MT-ND3	TRUE	12686	272	522083	11847	0.933864102159861	272	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L5/6 IT Car3	MT-ND4L	TRUE	12686	272	21450	7011	0.552656471701088	272	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L5/6 IT Car3	MT-ND4	TRUE	12686	272	536981	12150	0.957748699353618	272	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L5/6 IT Car3	MT-ND5	TRUE	12686	272	89957	10307	0.812470439854958	272	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L5/6 IT Car3	MT-ND6	TRUE	12686	272	946	847	0.0667665142676967	222	0.816176470588235
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L5/6 IT Car3	MT-CYB	TRUE	12686	272	761823	12180	0.96011351095696	272	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L5/6 NP	MT-ND1	TRUE	11740	269	265936	10998	0.93679727427598	269	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L5/6 NP	MT-ND2	TRUE	11740	269	131626	10388	0.884838160136286	269	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L5/6 NP	MT-CO1	TRUE	11740	269	602189	11445	0.974872231686542	269	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L5/6 NP	MT-CO2	TRUE	11740	269	675073	11428	0.973424190800681	269	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L5/6 NP	MT-ATP8	TRUE	11740	269	2588	1857	0.158177172061329	242	0.899628252788104
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L5/6 NP	MT-ATP6	TRUE	11740	269	484269	11290	0.961669505962521	269	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L5/6 NP	MT-CO3	TRUE	11740	269	721441	11475	0.977427597955707	269	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L5/6 NP	MT-ND3	TRUE	11740	269	240406	10691	0.910647359454855	269	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L5/6 NP	MT-ND4L	TRUE	11740	269	13419	5356	0.456218057921635	268	0.996282527881041
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L5/6 NP	MT-ND4	TRUE	11740	269	300306	11108	0.946166950596252	269	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L5/6 NP	MT-ND5	TRUE	11740	269	48918	8734	0.743952299829642	268	0.996282527881041
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L5/6 NP	MT-ND6	TRUE	11740	269	654	604	0.0514480408858603	201	0.747211895910781
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L5/6 NP	MT-CYB	TRUE	11740	269	267234	11013	0.938074957410562	269	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L6 CT	MT-ND1	TRUE	16007	271	383328	15045	0.939901293184232	271	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L6 CT	MT-ND2	TRUE	16007	271	184919	14295	0.893046792028488	271	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L6 CT	MT-CO1	TRUE	16007	271	663501	15559	0.972012244642969	271	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L6 CT	MT-CO2	TRUE	16007	271	713203	15505	0.968638720559755	271	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L6 CT	MT-ATP8	TRUE	16007	271	3971	2797	0.174736052976823	250	0.922509225092251
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L6 CT	MT-ATP6	TRUE	16007	271	731279	15390	0.961454363715874	271	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L6 CT	MT-CO3	TRUE	16007	271	1016260	15643	0.977259948772412	271	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L6 CT	MT-ND3	TRUE	16007	271	415657	14783	0.923533454113825	271	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L6 CT	MT-ND4L	TRUE	16007	271	22592	7934	0.495658149559568	269	0.992619926199262
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L6 CT	MT-ND4	TRUE	16007	271	504436	15289	0.955144624226901	271	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L6 CT	MT-ND5	TRUE	16007	271	74209	12163	0.759855063409758	271	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L6 CT	MT-ND6	TRUE	16007	271	800	731	0.0456675204597988	210	0.774907749077491
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L6 CT	MT-CYB	TRUE	16007	271	533303	15294	0.955456987567939	271	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L6 THEMIS NFIA	MT-ND1	TRUE	46394	272	1932153	44762	0.964823037461741	272	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L6 THEMIS NFIA	MT-ND2	TRUE	46394	272	977964	43547	0.938634306160279	272	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L6 THEMIS NFIA	MT-CO1	TRUE	46394	272	3622931	45744	0.985989567616502	272	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L6 THEMIS NFIA	MT-CO2	TRUE	46394	272	3832638	45592	0.9827132818899	272	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L6 THEMIS NFIA	MT-ATP8	TRUE	46394	272	17174	11021	0.237552269690046	265	0.974264705882353
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L6 THEMIS NFIA	MT-ATP6	TRUE	46394	272	3727303	45353	0.977561753675044	272	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L6 THEMIS NFIA	MT-CO3	TRUE	46394	272	5338462	45922	0.989826270638445	272	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L6 THEMIS NFIA	MT-ND3	TRUE	46394	272	1993025	44032	0.949088244169505	272	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L6 THEMIS NFIA	MT-ND4L	TRUE	46394	272	88564	26550	0.57227227658749	272	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L6 THEMIS NFIA	MT-ND4	TRUE	46394	272	2339881	45075	0.971569599517179	272	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L6 THEMIS NFIA	MT-ND5	TRUE	46394	272	344162	38716	0.834504461783851	272	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L6 THEMIS NFIA	MT-ND6	TRUE	46394	272	3397	3020	0.065094624304867	261	0.959558823529412
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L6 THEMIS NFIA	MT-CYB	TRUE	46394	272	2716511	45119	0.972517998016985	272	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L6b	MT-ND1	TRUE	17502	272	657572	16636	0.95051994057822	272	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L6b	MT-ND2	TRUE	17502	272	335898	16168	0.923780139412639	272	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L6b	MT-CO1	TRUE	17502	272	1170352	17112	0.977716832362016	272	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L6b	MT-CO2	TRUE	17502	272	1338978	17056	0.97451719803451	272	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L6b	MT-ATP8	TRUE	17502	272	6207	4010	0.229116672380299	257	0.944852941176471
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L6b	MT-ATP6	TRUE	17502	272	1230671	16928	0.967203748143069	272	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L6b	MT-CO3	TRUE	17502	272	1671983	17166	0.980802194034967	272	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L6b	MT-ND3	TRUE	17502	272	682519	16354	0.934407496286139	272	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L6b	MT-ND4L	TRUE	17502	272	34570	10064	0.575019997714547	270	0.992647058823529
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L6b	MT-ND4	TRUE	17502	272	849414	16834	0.961832933379042	272	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L6b	MT-ND5	TRUE	17502	272	118709	14288	0.816363844132099	271	0.996323529411765
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L6b	MT-ND6	TRUE	17502	272	1190	1072	0.0612501428408182	226	0.830882352941177
+descriptive_mtdna_detection_v1	excitatory_set3	Exc L6b	MT-CYB	TRUE	17502	272	814849	16791	0.959376071306136	272	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc NRGN	MT-ND1	TRUE	30685	274	343829	27698	0.902656020857096	274	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc NRGN	MT-ND2	TRUE	30685	274	193363	24658	0.803584813426756	274	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc NRGN	MT-CO1	TRUE	30685	274	698207	29285	0.95437510184129	274	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc NRGN	MT-CO2	TRUE	30685	274	744518	29357	0.956721525175167	274	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc NRGN	MT-ATP8	TRUE	30685	274	3675	2889	0.094150236271794	250	0.912408759124088
+descriptive_mtdna_detection_v1	excitatory_set3	Exc NRGN	MT-ATP6	TRUE	30685	274	671427	29318	0.955450545869317	274	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc NRGN	MT-CO3	TRUE	30685	274	963788	29945	0.975883982401825	274	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc NRGN	MT-ND3	TRUE	30685	274	329636	26909	0.876943131823366	274	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc NRGN	MT-ND4L	TRUE	30685	274	17804	9024	0.294085057845853	270	0.985401459854015
+descriptive_mtdna_detection_v1	excitatory_set3	Exc NRGN	MT-ND4	TRUE	30685	274	400927	28191	0.918722502851556	274	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc NRGN	MT-ND5	TRUE	30685	274	66430	18481	0.602281244907935	273	0.996350364963504
+descriptive_mtdna_detection_v1	excitatory_set3	Exc NRGN	MT-ND6	TRUE	30685	274	1310	1155	0.0376405409809353	192	0.700729927007299
+descriptive_mtdna_detection_v1	excitatory_set3	Exc NRGN	MT-CYB	TRUE	30685	274	462142	28353	0.924001955352778	274	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc RELN CHD7	MT-ND1	TRUE	52647	267	401474	40981	0.7784109255988	267	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc RELN CHD7	MT-ND2	TRUE	52647	267	202691	37379	0.709992972059187	266	0.99625468164794
+descriptive_mtdna_detection_v1	excitatory_set3	Exc RELN CHD7	MT-CO1	TRUE	52647	267	580568	45838	0.870666894599882	267	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc RELN CHD7	MT-CO2	TRUE	52647	267	718841	45383	0.862024426842935	267	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc RELN CHD7	MT-ATP8	TRUE	52647	267	4640	3794	0.0720648849886983	231	0.865168539325843
+descriptive_mtdna_detection_v1	excitatory_set3	Exc RELN CHD7	MT-ATP6	TRUE	52647	267	718046	43695	0.829961821186392	267	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc RELN CHD7	MT-CO3	TRUE	52647	267	947494	47082	0.894295971280415	267	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc RELN CHD7	MT-ND3	TRUE	52647	267	352569	38741	0.735863392026136	267	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc RELN CHD7	MT-ND4L	TRUE	52647	267	22623	12609	0.239500826257906	262	0.9812734082397
+descriptive_mtdna_detection_v1	excitatory_set3	Exc RELN CHD7	MT-ND4	TRUE	52647	267	426160	42615	0.809447831785287	267	1
+descriptive_mtdna_detection_v1	excitatory_set3	Exc RELN CHD7	MT-ND5	TRUE	52647	267	63513	24198	0.459627329192547	264	0.98876404494382
+descriptive_mtdna_detection_v1	excitatory_set3	Exc RELN CHD7	MT-ND6	TRUE	52647	267	804	757	0.0143787870154045	153	0.573033707865168
+descriptive_mtdna_detection_v1	excitatory_set3	Exc RELN CHD7	MT-CYB	TRUE	52647	267	448327	42189	0.801356202632629	267	1
