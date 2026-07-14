@@ -1,0 +1,11 @@
+schema_version	rds_id	check	passed	observed	expected
+mast_de_checks_v1	excitatory_set2	one_status_per_manifest_row	TRUE	56	56
+mast_de_checks_v1	excitatory_set2	eligible_paper_rows_completed	TRUE	24	24
+mast_de_checks_v1	excitatory_set2	ineligible_paper_rows_explicit	TRUE	0	0
+mast_de_checks_v1	excitatory_set2	nonpaper_rows_not_applicable	TRUE	32	32
+mast_de_checks_v1	excitatory_set2	no_failed_contrasts	TRUE	0	0
+mast_de_checks_v1	excitatory_set2	result_keys_unique	TRUE	0	0
+mast_de_checks_v1	excitatory_set2	p_values_in_range	TRUE	0	0
+mast_de_checks_v1	excitatory_set2	fdr_in_range	TRUE	0	0
+mast_de_checks_v1	excitatory_set2	detection_threshold_respected	TRUE	0	0
+mast_de_checks_v1	excitatory_set2	normalized_rds_unchanged	TRUE	afe9b462a30f1df2614eefdb0b98cf469e1027a4e05f86a36e6a046b2a8e36d2	afe9b462a30f1df2614eefdb0b98cf469e1027a4e05f86a36e6a046b2a8e36d2
