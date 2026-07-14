@@ -259,7 +259,7 @@ if (args$phase == "environment") {
 # scientific entry point in every execution stage.
 implemented_global_modes <- c(
   "cohort", "annotations", "contrasts", "similarity", "multiple_testing",
-  "sensitivity", "power", "validate"
+  "sensitivity", "power", "validate", "figures"
 )
 unsupported_global <- task_graph$task_mode[
   is.na(task_graph$manifest_row) &
