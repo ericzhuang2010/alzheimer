@@ -59,5 +59,15 @@ config/local_pilot_rds_manifest.tsv
 results/*
 !results/minerva_production
 results/minerva_production/*
+!resutls/minerva_production/01_audit
+!resutls/minerva_production/02_cohort
+!resutls/minerva_production/03_annotations
+!resutls/minerva_production/04_qc
+!resutls/minerva_production/06_descriptive
 !results/minerva_production/08_mast
+!resutls/minerva_production/09_downstream
+!resutls/minerva_production/10_downstream
+!resutls/minerva_production/12_sensitivity
+!resutls/minerva_production/13_power
+!resutls/minerva_production/14_validation
 !results/minerva_production/15_figures
