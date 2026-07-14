@@ -732,6 +732,14 @@ add_status(
   }
 )
 
+if (!pilot && any(vapply(
+  status_list,
+  function(row) row$terminal_status[[1L]] %in% c("blocked_missing_input", "failed"),
+  logical(1)
+))) {
+  output_status <- "partial_with_blocked_sensitivities"
+}
+
 results <- data.table::rbindlist(result_list, fill = TRUE, use.names = TRUE)
 results[, `:=`(execution_stage = execution$execution_stage, output_status = output_status)]
 robustness <- data.table::rbindlist(status_list, fill = TRUE, use.names = TRUE)
