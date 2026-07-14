@@ -113,9 +113,16 @@ models:
 multiple_testing:
   method: BH
   alpha: 0.05
+  yu_absolute_fold_change_threshold: 1.3
   families:
-    - gene_within_cell_type_and_sex_apoe_group
-    - pathway_within_cell_type_and_sex_apoe_group
+    - genomewide_gene_within_method_cell_type_contrast
+    - genomewide_gene_global_across_cell_types_and_contrasts_sensitivity
+    - mtdna_gene_global_across_cell_types_and_contrasts
+    - mitocarta_gene_global_across_cell_types_and_contrasts
+    - pathway_rank_global_across_cell_types_and_contrasts
+    - pathway_ora_global_across_cell_types_and_contrasts
+    - similarity_within_method_comparison
+    - similarity_global_across_comparisons_sensitivity
 
 pilot:
   similarity_permutations: 100

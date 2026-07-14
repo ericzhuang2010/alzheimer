@@ -39,6 +39,7 @@ scope:
     - mito_fraction
     - pathways
     - similarity
+    - multiple_testing
     - sensitivity
     - power
     - validate
