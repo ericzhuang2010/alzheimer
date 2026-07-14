@@ -258,7 +258,8 @@ if (args$phase == "environment") {
 # Scientific tasks use either the shared per-RDS runner or the same global
 # scientific entry point in every execution stage.
 implemented_global_modes <- c(
-  "cohort", "annotations", "contrasts", "similarity", "multiple_testing"
+  "cohort", "annotations", "contrasts", "similarity", "multiple_testing",
+  "sensitivity"
 )
 unsupported_global <- task_graph$task_mode[
   is.na(task_graph$manifest_row) &
