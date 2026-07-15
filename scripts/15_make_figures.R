@@ -370,12 +370,20 @@ render_figure <- function(
 render_figure(
   "01_cohort_flow", "Cohort inclusion flow", input_paths$cohort,
   FALSE, TRUE, "donor", function() {
-    labels <- paste0("Step ", cohort$step, ": ", short_text(gsub("_", " ", cohort$rule), 36L))
-    old <- graphics::par(mar = c(8, 5, 4, 2))
+    rules <- vapply(
+      gsub("_", " ", cohort$rule),
+      function(rule) paste(strwrap(rule, width = 18L), collapse = "\n"),
+      character(1)
+    )
+    labels <- paste0("Step ", cohort$step, ":\n", rules)
+    y_max <- max(cohort$donors_remaining, na.rm = TRUE)
+    old <- graphics::par(mar = c(8, 5, 5, 2))
     on.exit(graphics::par(old), add = TRUE)
     bars <- graphics::barplot(
-      cohort$donors_remaining, names.arg = labels, las = 2, col = "#4C78A8",
-      ylab = "Donors remaining", main = paste0("Cohort flow [", execution_stage, "]")
+      cohort$donors_remaining, names.arg = labels, las = 1, col = "#4C78A8",
+      cex.names = 0.75, ylim = c(0, max(1, y_max * 1.12)),
+      ylab = "Donors remaining",
+      main = paste0("Cohort flow [", execution_stage, "]")
     )
     graphics::text(bars, cohort$donors_remaining, labels = cohort$donors_remaining, pos = 3)
   }
