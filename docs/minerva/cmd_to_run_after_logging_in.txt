@@ -1,0 +1,31 @@
+cd /sc/arion/work/zhuane01/alzheimer
+
+if ! type module >/dev/null 2>&1; then
+  source /etc/profile
+fi
+
+module purge
+module load mpfr/3.1.2
+module load openssl
+module load cmake
+module load R/4.3.3
+module load gcc/11.2.0
+
+module -t list
+hash -r
+command -v Rscript
+Rscript --version
+
+export R_LIBS_USER="$HOME/.Rlib"
+export http_proxy=http://proxy.chimera.hpc.mssm.edu:3128
+export https_proxy=http://proxy.chimera.hpc.mssm.edu:3128
+export all_proxy=http://proxy.chimera.hpc.mssm.edu:3128
+export no_proxy="localhost,*.hpc.mssm.edu,*.chimera.hpc.mssm.edu,172.28.0.0/16"
+
+export LD_RUN_PATH="$LD_LIBRARY_PATH"
+export OMP_NUM_THREADS=1
+export OPENBLAS_NUM_THREADS=1
+export MKL_NUM_THREADS=1
+
+mkdir -p results/minerva_production/tmp
+export TMPDIR="$PWD/results/minerva_production/tmp"

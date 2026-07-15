@@ -1,0 +1,28 @@
+cd /sc/arion/work/zhuane01/alzheimer
+
+export MKLROOT=/hpc/packages/minerva-centos7/intel/parallel_studio_xe_2019/compilers_and_libraries/linux/mkl
+export MKL_LIB="$MKLROOT/lib/intel64_lin"
+export MKL_PRELOAD="$MKL_LIB/libmkl_gf_lp64.so:$MKL_LIB/libmkl_gnu_thread.so:$MKL_LIB/libmkl_core.so"
+
+export LD_LIBRARY_PATH="$MKL_LIB${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+export LD_RUN_PATH="$LD_LIBRARY_PATH"
+export MKL_ENABLE_INSTRUCTIONS=AVX2
+export MKL_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+export OPENBLAS_NUM_THREADS=1
+
+unset LD_DEBUG LD_DEBUG_OUTPUT
+
+RDS_ID=excitatory_set3
+
+LD_PRELOAD="$MKL_PRELOAD" \
+Rscript scripts/run_pipeline.R \
+  --config config/minerva_shared.yml \
+  --execution-config config/minerva_production_execution.yml \
+  --phase mast --dry-run
+
+LD_PRELOAD="$MKL_PRELOAD" \
+Rscript scripts/run_pipeline.R \
+  --config config/minerva_shared.yml \
+  --execution-config config/minerva_production_execution.yml \
+  --phase mast

@@ -45,7 +45,6 @@ Thumbs.db
 .venv/
 __pycache__/
 data/
-docs/
 untracked/
 ad_research/
 
@@ -54,6 +53,10 @@ ad_research/
 config/local_pilot.yml
 config/local_pilot_execution.yml
 config/local_pilot_rds_manifest.tsv
+
+# minerva docs are uploaded
+docs/*
+!docs/minerva
 
 # ignore everything in results directory except for results/minerva_production/08_mast
 results/*
