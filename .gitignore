@@ -64,7 +64,7 @@ results/*
 results/minerva_production/*
 !results/minerva_production/01_audit
 !results/minerva_production/02_cohort
-!resutlts/minerva_production/03_annotations
+!results/minerva_production/03_annotations
 !results/minerva_production/04_qc
 !results/minerva_production/06_descriptive
 !results/minerva_production/08_mast
