@@ -384,7 +384,27 @@ render_figure(
   }
 )
 
-coverage$group_label <- paste(coverage$diagnosis, coverage$sex, coverage$apoe_group, sep = "\n")
+coverage_group_order <- with(
+  expand.grid(
+    diagnosis = c("AD", "NCI"),
+    apoe_group = c("e2", "e33", "e4"),
+    sex = c("Female", "Male"),
+    stringsAsFactors = FALSE
+  ),
+  paste(diagnosis, sex, apoe_group, sep = "\n")
+)
+coverage_group_labels <- paste(
+  coverage$diagnosis, coverage$sex, coverage$apoe_group, sep = "\n"
+)
+unexpected_coverage_groups <- setdiff(unique(coverage_group_labels), coverage_group_order)
+if (length(unexpected_coverage_groups)) {
+  stop(
+    "Group coverage contains unexpected diagnosis/sex/APOE combinations: ",
+    paste(unexpected_coverage_groups, collapse = "; "),
+    call. = FALSE
+  )
+}
+coverage$group_label <- factor(coverage_group_labels, levels = coverage_group_order)
 coverage_matrix <- stats::xtabs(donors ~ cell_type_high_resolution + group_label, data = coverage)
 render_figure(
   "02_group_coverage", "Sex-APOE-diagnosis donor coverage", input_paths$group_coverage,
