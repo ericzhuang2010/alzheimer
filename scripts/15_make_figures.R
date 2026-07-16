@@ -325,7 +325,6 @@ render_figure <- function(
   error <- NULL
   tryCatch({
     grDevices::pdf(tmp, width = 14, height = 8.5, onefile = TRUE)
-    graphics::par(oma = c(1.5, 1, 2.5, 1))
     if (estimable) {
       plotter()
     } else {
@@ -333,10 +332,6 @@ render_figure <- function(
       graphics::text(0.5, 0.58, title, cex = 1.3, font = 2)
       graphics::text(0.5, 0.45, paste("Not estimable:", not_estimable_reason), cex = 0.9)
     }
-    graphics::mtext(
-      paste0("Phase 15 | ", execution_stage, " | ", output_status),
-      side = 3, outer = TRUE, line = 0.4, adj = 1, cex = 0.75, col = "#555555"
-    )
     grDevices::dev.off()
     if (!file.rename(tmp, output_path)) stop("Could not publish figure")
   }, error = function(e) {
@@ -383,7 +378,7 @@ render_figure(
       cohort$donors_remaining, names.arg = labels, las = 1, col = "#4C78A8",
       cex.names = 0.75, ylim = c(0, max(1, y_max * 1.12)),
       ylab = "Donors remaining",
-      main = paste0("Cohort flow [", execution_stage, "]")
+      main = "Cohort flow"
     )
     graphics::text(bars, cohort$donors_remaining, labels = cohort$donors_remaining, pos = 3)
   }
@@ -400,7 +395,7 @@ render_figure(
     graphics::image(
       seq_len(ncol(z)), seq_len(nrow(z)), t(z), axes = FALSE,
       col = grDevices::colorRampPalette(c("#F7FBFF", "#6BAED6", "#08306B"))(30),
-      xlab = "", ylab = "", main = paste0("Donor coverage [", execution_stage, "]")
+      xlab = "", ylab = "", main = "Donor coverage"
     )
     graphics::axis(1, at = seq_len(ncol(z)), labels = colnames(z), las = 2, cex.axis = 0.6)
     graphics::axis(2, at = seq_len(nrow(z)), labels = rownames(z), las = 2, cex.axis = 0.7)
@@ -422,7 +417,7 @@ render_figure(
       donor_qc$aggregate_percent_mt ~ factor(donor_qc$box_group, levels = names(box_counts)),
       names = box_labels, las = 2, col = "#9ECAE1", outline = FALSE,
       ylab = "Aggregate percent mitochondrial reads",
-      main = paste0("Donor-level mitochondrial summary [", execution_stage, "]")
+      main = "Donor-level mitochondrial summary"
     )
   }
 )
@@ -441,7 +436,7 @@ render_figure(
   input_paths$fraction, TRUE, TRUE, "donor", function() {
     point_figure(
       fraction$effect_size, fraction_labels,
-      paste0("Mitochondrial-fraction effects [", execution_stage, "]"),
+      "Mitochondrial-fraction effects",
       "Log odds ratio (95% CI)", fraction_colors, fraction$ci95_low, fraction$ci95_high
     )
   }, nrow(fraction) > 0L, "no estimable mitochondrial-fraction models"
@@ -479,7 +474,7 @@ render_figure(
   "05_mtdna_gene_effects", "mtDNA gene effects", input_paths$gene_results,
   TRUE, TRUE, "donor", function() {
     point_figure(
-      mtdna$logFC, mtdna_labels, paste0("Top mtDNA effects [", execution_stage, "]"),
+      mtdna$logFC, mtdna_labels, "Top mtDNA effects",
       "Log2 fold change", mtdna_colors
     )
   }, nrow(mtdna) > 0L, "no finite mtDNA gene effects"
@@ -515,7 +510,7 @@ render_figure(
   TRUE, TRUE, "donor", function() {
     point_figure(
       pathway_plot$rank_mean_difference, pathway_labels,
-      paste0("Top pathway rank effects [", execution_stage, "]"),
+      "Top pathway rank effects",
       "Mean rank difference: pathway minus complement", pathway_colors
     )
   }, nrow(pathway_plot) > 0L, "no estimable pathway rank effects"
@@ -535,7 +530,7 @@ render_figure(
       ),
       names = balance_labels, las = 2, col = "#A1D99B", outline = FALSE,
       ylab = "Log2 mtDNA:nuclear OXPHOS balance per measured gene",
-      main = paste0("Mitonuclear balance [", execution_stage, "]")
+      main = "Mitonuclear balance"
     )
   }
 )
@@ -568,7 +563,7 @@ render_figure(
     point_figure(
       similarity_plot$similarity_score, similarity_labels,
       paste0(
-        "MitoCarta similarity [", execution_stage, "] | eligible source contrasts: ",
+        "MitoCarta similarity | eligible source contrasts: ",
         donor_range[[1L]], "-", donor_range[[2L]], " donors per side"
       ),
       "Similarity score", similarity_colors
@@ -592,7 +587,7 @@ render_figure(
     bars <- graphics::barplot(
       sensitivity$result_rows, names.arg = sensitivity$bar_label, las = 2,
       col = unname(sensitivity_colors[sensitivity$terminal_status]),
-      ylab = "Result rows", main = paste0("Robustness status [", execution_stage, "]")
+      ylab = "Result rows", main = "Robustness status"
     )
     graphics::text(bars, sensitivity$result_rows, labels = sensitivity$result_rows, pos = 3, cex = 0.7)
   }
@@ -653,7 +648,7 @@ checks <- data.frame(
     "phase14_validation_complete", "all_planned_figures_have_manifest_row",
     "all_figures_terminal", "all_figure_files_exist", "all_figure_files_nonempty",
     "all_figure_checksums_recorded", "inferential_figures_display_donor_counts",
-    "no_nucleus_used_as_inferential_sample_size", "execution_labels_match_scope",
+    "no_nucleus_used_as_inferential_sample_size", "manifest_execution_scope_matches",
     "upstream_artifacts_unchanged"
   ),
   passed = c(
