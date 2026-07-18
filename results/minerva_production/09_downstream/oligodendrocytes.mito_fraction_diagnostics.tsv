@@ -1,2 +1,0 @@
-schema_version	rds_id	cell_type_high_resolution	donors	groups	design_columns	design_rank	residual_df	dispersion	converged	model_status	message
-mito_fraction_diagnostics_v1	oligodendrocytes	Oli	275	12	AD__Female__e2;AD__Female__e33;AD__Female__e4;AD__Male__e2;AD__Male__e33;AD__Male__e4;NCI__Female__e2;NCI__Female__e33;NCI__Female__e4;NCI__Male__e2;NCI__Male__e33;NCI__Male__e4;age_death_scaled;pmi_scaled	14	261	10005.7565021035	TRUE	fitted	

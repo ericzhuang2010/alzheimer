@@ -1,6 +1,0 @@
-schema_version	rds_id	cell_type_high_resolution	donors	groups	design_columns	design_rank	residual_df	dispersion	converged	model_status	message
-mito_fraction_diagnostics_v1	immune	CAMs	0	0		0	NA	NA	NA	not_fit_no_eligible_contrasts	
-mito_fraction_diagnostics_v1	immune	Mic MKI67	0	0		0	NA	NA	NA	not_fit_no_eligible_contrasts	
-mito_fraction_diagnostics_v1	immune	Mic P2RY12	258	12	AD__Female__e2;AD__Female__e33;AD__Female__e4;AD__Male__e2;AD__Male__e33;AD__Male__e4;NCI__Female__e2;NCI__Female__e33;NCI__Female__e4;NCI__Male__e2;NCI__Male__e33;NCI__Male__e4;age_death_scaled;pmi_scaled	14	244	1164.94432358434	TRUE	fitted	
-mito_fraction_diagnostics_v1	immune	Mic TPT1	57	9	AD__Female__e33;AD__Female__e4;AD__Male__e33;AD__Male__e4;NCI__Female__e2;NCI__Female__e33;NCI__Female__e4;NCI__Male__e33;NCI__Male__e4;age_death_scaled;pmi_scaled	11	46	212.596550015685	TRUE	fitted	
-mito_fraction_diagnostics_v1	immune	T cells	0	0		0	NA	NA	NA	not_fit_no_eligible_contrasts	
