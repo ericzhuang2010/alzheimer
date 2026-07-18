@@ -1,7 +1,0 @@
-schema_version	rds_id	manifest_row	contrast_id	cell_type_high_resolution	contrast_name	cells_ad	cells_nci	donors_ad	donors_nci	tested_genes	latent_vars	min_pct	logfc_threshold	spearman_logfc_with_pseudobulk	overlap_genes	model_status	message
-mast_model_diagnostics_v1	oligodendrocytes	659	oligodendrocytes::Oli::AD_vs_NCI__Female__e2	Oli	AD_vs_NCI__Female__e2	11733	21373	8	17	6274	nCount_RNA;age_death_scaled;pmi_scaled	0.1	0	0.69720538579106	6274	fitted	
-mast_model_diagnostics_v1	oligodendrocytes	660	oligodendrocytes::Oli::AD_vs_NCI__Female__e33	Oli	AD_vs_NCI__Female__e33	67094	75904	37	45	5712	nCount_RNA;age_death_scaled;pmi_scaled	0.1	0	0.921638382958372	5712	fitted	
-mast_model_diagnostics_v1	oligodendrocytes	661	oligodendrocytes::Oli::AD_vs_NCI__Female__e4	Oli	AD_vs_NCI__Female__e4	45666	27181	26	11	6054	nCount_RNA;age_death_scaled;pmi_scaled	0.1	0	0.787108228701157	6054	fitted	
-mast_model_diagnostics_v1	oligodendrocytes	662	oligodendrocytes::Oli::AD_vs_NCI__Male__e2	Oli	AD_vs_NCI__Male__e2	9717	5807	7	6	5054	nCount_RNA;age_death_scaled;pmi_scaled	0.1	0	0.76284688773062	5054	fitted	
-mast_model_diagnostics_v1	oligodendrocytes	663	oligodendrocytes::Oli::AD_vs_NCI__Male__e33	Oli	AD_vs_NCI__Male__e33	35863	94184	28	53	5547	nCount_RNA;age_death_scaled;pmi_scaled	0.1	0	0.774358176837923	5547	fitted	
-mast_model_diagnostics_v1	oligodendrocytes	664	oligodendrocytes::Oli::AD_vs_NCI__Male__e4	Oli	AD_vs_NCI__Male__e4	37526	15559	27	10	5644	nCount_RNA;age_death_scaled;pmi_scaled	0.1	0	0.844728512550653	5644	fitted	
