@@ -55,8 +55,8 @@ config/local_pilot_execution.yml
 config/local_pilot_rds_manifest.tsv
 
 # minerva docs are uploaded
-docs/*
-!docs/minerva
+# docs/*
+# !docs/minerva
 
 # ignore everything in results directory except for results/minerva_production/08_mast
 results/*

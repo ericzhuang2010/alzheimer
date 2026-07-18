@@ -1,0 +1,8 @@
+Eric,
+
+The snRNA-seq dataset you will use (described attached paper) is available from Minerva at /sc/arion/projects/zhangb03a/shared/ROSMAP/Synapse/snRNAseq_MIT/GeneExpression/10x/processed
+
+Due to the large data size, the dataset has been splitted into multiple R/Seurat objects in RDS files by cell type.
+The dataset has been quality controlled (QCed) by the original study. However, only the raw counts are included in each R/Seurat. You need to do normalization using NormalizeData from R/Seurat package before any down stream analysis. You may find some reference data analysis code from https://github.com/songw01/AD_scRNAseq_companion
+
+Minghui
