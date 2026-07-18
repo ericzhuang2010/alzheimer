@@ -67,13 +67,11 @@ registry <- data.frame(
   task_mode = c(
     "environment", "parity", "audit", "cohort", "annotations", "qc",
     "normalize", "descriptive", "pseudobulk", "contrasts", "pseudobulk_de",
-    "mast", "mito_fraction", "pathways", "similarity", "multiple_testing", "sensitivity",
-    "power", "validate", "figures"
+    "mast"
   ),
   scope = c(
     "global", "global", "rds", "global", "global", "rds", "rds", "rds",
-    "rds", "global", "rds", "rds", "rds", "rds", "global", "global",
-    "global", "global", "global", "global"
+    "rds", "global", "rds", "rds"
   ),
   script = c(
     "scripts/00_check_environment.R",
@@ -87,27 +85,17 @@ registry <- data.frame(
     "scripts/07_make_pseudobulk.R",
     "scripts/07_build_contrast_manifest.R",
     "scripts/07_run_pseudobulk_de.R",
-    "scripts/08_run_mast.R",
-    "scripts/09_run_mito_fraction_models.R",
-    "scripts/09_run_mito_pathways.R",
-    "scripts/10_similarity_analysis.R",
-    "scripts/11_apply_multiple_testing.R",
-    "scripts/12_sensitivity_analysis.R",
-    "scripts/13_power_analysis.R",
-    "scripts/14_validate_outputs.R",
-    "scripts/15_make_figures.R"
+    "scripts/08_run_mast.R"
   ),
   argument_names = c(
     "config,execution-config,report,status",
-    rep("config,execution-config,manifest-row,task-mode", 19L)
+    rep("config,execution-config,manifest-row,task-mode", 11L)
   ),
   output_schema = c(
     "environment_checks_v1", "parity_v1", "rds_audit_v1", "cohort_v1",
     "mito_annotations_v1", "mito_qc_v1", "normalized_rds_v1",
     "descriptive_v1", "pseudobulk_v1", "contrast_manifest_v1",
-    "pseudobulk_de_v1", "yu_mast_de_v2", "mito_fraction_v1", "pathways_v1",
-    "similarity_v1", "multiple_testing_v1", "sensitivity_v1", "power_v1", "validation_v1",
-    "figures_v1"
+    "pseudobulk_de_v1", "yu_mast_de_v2"
   ),
   stringsAsFactors = FALSE
 )
@@ -258,8 +246,7 @@ if (args$phase == "environment") {
 # Scientific tasks use either the shared per-RDS runner or the same global
 # scientific entry point in every execution stage.
 implemented_global_modes <- c(
-  "cohort", "annotations", "contrasts", "similarity", "multiple_testing",
-  "sensitivity", "power", "validate", "figures"
+  "cohort", "annotations", "contrasts"
 )
 unsupported_global <- task_graph$task_mode[
   is.na(task_graph$manifest_row) &
