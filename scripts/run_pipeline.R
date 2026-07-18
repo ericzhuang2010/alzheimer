@@ -105,7 +105,7 @@ registry <- data.frame(
     "environment_checks_v1", "parity_v1", "rds_audit_v1", "cohort_v1",
     "mito_annotations_v1", "mito_qc_v1", "normalized_rds_v1",
     "descriptive_v1", "pseudobulk_v1", "contrast_manifest_v1",
-    "pseudobulk_de_v1", "mast_de_v1", "mito_fraction_v1", "pathways_v1",
+    "pseudobulk_de_v1", "yu_mast_de_v2", "mito_fraction_v1", "pathways_v1",
     "similarity_v1", "multiple_testing_v1", "sensitivity_v1", "power_v1", "validation_v1",
     "figures_v1"
   ),

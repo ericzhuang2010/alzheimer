@@ -107,6 +107,11 @@ models:
     covariates: [age_death_scaled, pmi_scaled]
   mast:
     method: Seurat_FindMarkers_MAST
+    analysis_population: yu_all_cohort_included_nuclei
+    assay: RNA
+    slot: data
+    min_pct: 0.10
+    logfc_threshold: 0
     latent_vars: [nCount_RNA, age_death_scaled, pmi_scaled]
   continuous_covariate_scaling: analytic_cohort
 

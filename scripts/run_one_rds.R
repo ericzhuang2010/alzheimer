@@ -137,46 +137,49 @@ validate_mast_resume <- function() {
   require_check(field_matches(controller, "exit_code", 0L), "controller exit code")
 
   output_dir <- file.path(output_root, "08_mast")
-  scientific_path <- file.path(output_dir, paste0(prefix, ".mast_de_status.tsv"))
-  artifact_manifest_path <- file.path(output_dir, paste0(prefix, ".mast_de_artifacts.tsv"))
+  scientific_path <- file.path(output_dir, paste0(prefix, ".yu_mast_de_status.tsv"))
+  artifact_manifest_path <- file.path(
+    output_dir, paste0(prefix, ".yu_mast_de_artifacts.tsv")
+  )
   scientific <- read_single_tsv(scientific_path)
-  require_check(field_matches(scientific, "schema_version", "mast_de_status_v1"), "scientific status schema")
+  require_check(field_matches(scientific, "schema_version", "yu_mast_de_status_v2"), "scientific status schema")
   require_check(field_matches(scientific, "stable_task_id", task_id), "scientific task ID")
   require_check(field_matches(scientific, "source_rds", source_rds), "scientific source RDS")
   require_check(field_matches(scientific, "scientific_code_bundle_sha256", script_sha), "scientific script checksum")
   require_check(field_matches(scientific, "scientific_config_sha256", analysis_sha), "scientific-config checksum")
   require_check(field_matches(scientific, "rds_manifest_sha256", manifest_sha), "scientific manifest checksum")
+  require_check(
+    field_matches(
+      scientific, "analysis_population", "yu_all_cohort_included_nuclei"
+    ),
+    "scientific analysis population"
+  )
   require_check(field_matches(scientific, "validation_status", "validated_complete"), "scientific validation status")
   require_check(field_matches(scientific, "failed_contrasts", 0L), "scientific failed-contrast count")
 
   normalized_path <- file.path(
     output_root, "05_normalized", paste0(base_name, ".normalized.rds")
   )
-  contrast_manifest_path <- file.path(
-    output_root, "07_contrasts",
-    paste0(execution$execution_stage, "_contrast_manifest.tsv")
+  normalization_status_path <- file.path(
+    output_root, "05_normalized", paste0(base_name, ".normalization_status.tsv")
   )
-  pseudobulk_samples_path <- file.path(
-    output_root, "07_pseudobulk", paste0(base_name, ".pseudobulk_samples.tsv")
-  )
-  pseudobulk_de_path <- file.path(
-    output_root, "07_pseudobulk_de", paste0(prefix, ".pseudobulk_de.tsv.gz")
+  yu_manifest_path <- file.path(
+    output_dir, paste0(prefix, ".yu_mast_contrast_manifest.tsv")
   )
   require_check(
     field_matches(scientific, "normalized_rds_sha256", sha256_file(normalized_path)),
     "normalized-RDS checksum"
   )
   require_check(
-    field_matches(scientific, "contrast_manifest_sha256", sha256_file(contrast_manifest_path)),
-    "contrast-manifest checksum"
+    field_matches(
+      scientific, "normalization_status_sha256",
+      sha256_file(normalization_status_path)
+    ),
+    "normalization-status checksum"
   )
   require_check(
-    field_matches(scientific, "pseudobulk_samples_sha256", sha256_file(pseudobulk_samples_path)),
-    "pseudobulk-sample checksum"
-  )
-  require_check(
-    field_matches(scientific, "pseudobulk_de_sha256", sha256_file(pseudobulk_de_path)),
-    "pseudobulk-DE checksum"
+    field_matches(scientific, "yu_manifest_sha256", sha256_file(yu_manifest_path)),
+    "Yu-manifest checksum"
   )
 
   artifacts <- tryCatch(
