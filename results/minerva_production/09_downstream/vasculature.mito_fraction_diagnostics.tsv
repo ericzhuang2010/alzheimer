@@ -1,6 +1,0 @@
-schema_version	rds_id	cell_type_high_resolution	donors	groups	design_columns	design_rank	residual_df	dispersion	converged	model_status	message
-mito_fraction_diagnostics_v1	vasculature	End	87	12	AD__Female__e2;AD__Female__e33;AD__Female__e4;AD__Male__e2;AD__Male__e33;AD__Male__e4;NCI__Female__e2;NCI__Female__e33;NCI__Female__e4;NCI__Male__e2;NCI__Male__e33;NCI__Male__e4;age_death_scaled;pmi_scaled	14	73	398.597303983702	TRUE	fitted	
-mito_fraction_diagnostics_v1	vasculature	Fib FLRT2	0	0		0	NA	NA	NA	not_fit_no_eligible_contrasts	
-mito_fraction_diagnostics_v1	vasculature	Fib SLC4A4	0	0		0	NA	NA	NA	not_fit_no_eligible_contrasts	
-mito_fraction_diagnostics_v1	vasculature	Per	58	12	AD__Female__e2;AD__Female__e33;AD__Female__e4;AD__Male__e2;AD__Male__e33;AD__Male__e4;NCI__Female__e2;NCI__Female__e33;NCI__Female__e4;NCI__Male__e2;NCI__Male__e33;NCI__Male__e4;age_death_scaled;pmi_scaled	14	44	257.221358084741	TRUE	fitted	
-mito_fraction_diagnostics_v1	vasculature	SMC	0	0		0	NA	NA	NA	not_fit_no_eligible_contrasts	

@@ -5,6 +5,7 @@
 # Generated analysis outputs and transient execution files.
 logs/
 tmp/
+archive/
 *.log
 *.out
 *.err
