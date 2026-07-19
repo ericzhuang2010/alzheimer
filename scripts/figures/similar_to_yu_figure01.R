@@ -261,9 +261,9 @@ scope_tiers <- if (args$gene_scope == "core_mito") {
   allowed_tiers
 }
 scope_label <- if (args$gene_scope == "core_mito") {
-  "core MitoCarta"
+  "core mitochondrial"
 } else {
-  "all mitochondrial-related"
+  "mitochondrial-related"
 }
 mito <- direct[mito_tier %in% scope_tiers]
 if (!nrow(mito)) stop("No Phase 09 rows belong to the selected scope", call. = FALSE)
@@ -919,7 +919,7 @@ tryCatch({
   graphics::layout(matrix(1:2, nrow = 2L), heights = c(1, 1.15))
   draw_heatmap(
     make_main_plot_table("up"), group_order, main_row_labels, up_row_colors,
-    paste0("Upregulated ", scope_label, " genes in AD"), "A",
+    paste0("Number of ", scope_label, " genes upregulated in AD"), "A",
     paste0(
       "Validated Phase 09 tiers; Phase 08 MAST paper_deg; ",
       "line 1 = DEGs/tested assay features; line 2 = AD/NCI donors"
@@ -929,7 +929,7 @@ tryCatch({
   )
   draw_heatmap(
     make_main_plot_table("down"), group_order, main_row_labels, down_row_colors,
-    paste0("Downregulated ", scope_label, " genes in AD"), "B",
+    paste0("Number of ", scope_label, " genes downregulated in AD"), "B",
     paste0(
       "Validated Phase 09 tiers; Phase 08 MAST paper_deg; ",
       "line 1 = DEGs/tested assay features; line 2 = AD/NCI donors"
@@ -968,7 +968,7 @@ tryCatch({
   draw_heatmap(
     sex_panel$tiles, pair_row_orders[["E"]], pair_row_labels[["E"]],
     pair_row_colors[["E"]],
-    "Female-versus-male comparisons within APOE groups", "E",
+    "Sex-based comparisons within APOE groups", "E",
     paste0(
       "Jointly tested Phase 09 assay features in ", args$gene_scope,
       "; line 2 = female AD/NCI donors | male AD/NCI donors"
