@@ -55,10 +55,26 @@ absolute_path <- function(path, root) {
 atomic_write_tsv <- function(x, path, gzip = FALSE) {
   dir.create(dirname(path), recursive = TRUE, showWarnings = FALSE)
   tmp <- paste0(path, ".tmp.", Sys.getpid(), if (gzip) ".gz" else "")
-  data.table::fwrite(
-    x, tmp, sep = "\t", quote = FALSE, na = "NA",
-    compress = if (gzip) "gzip" else "none"
-  )
+  if (gzip) {
+    raw_tmp <- paste0(tmp, ".raw")
+    data.table::fwrite(
+      x, raw_tmp, sep = "\t", quote = FALSE, na = "NA", compress = "none"
+    )
+    input <- file(raw_tmp, open = "rb")
+    output <- gzfile(tmp, open = "wb")
+    repeat {
+      chunk <- readBin(input, what = "raw", n = 1024L * 1024L)
+      if (!length(chunk)) break
+      writeBin(chunk, output)
+    }
+    close(input)
+    close(output)
+    unlink(raw_tmp)
+  } else {
+    data.table::fwrite(
+      x, tmp, sep = "\t", quote = FALSE, na = "NA", compress = "none"
+    )
+  }
   if (!file.rename(tmp, path)) stop("Could not publish ", path, call. = FALSE)
 }
 
@@ -749,7 +765,11 @@ draw_heatmap <- function(
       labels = rds_display[[rds_id]], cex = 0.49, font = 2
     )
     if (i < length(group_runs$values)) {
-      graphics::abline(v = ends[[i]] + 0.5, col = "#555555", lwd = 0.8)
+      boundary <- ends[[i]] + 0.5
+      graphics::segments(
+        boundary, 0.5, boundary, nr + 0.92,
+        col = "#555555", lwd = 0.8, xpd = FALSE
+      )
     }
   }
 

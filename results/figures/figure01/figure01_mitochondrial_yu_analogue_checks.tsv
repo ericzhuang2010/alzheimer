@@ -13,5 +13,5 @@ mito_related_mast_yu_checks_v2	direct_tier_denominators_sum	TRUE	321	all eligibl
 mito_related_mast_yu_checks_v2	pairwise_intersections_have_denominators	TRUE	1908	all eligible pairwise tiles
 mito_related_mast_yu_checks_v2	pairwise_tier_denominators_sum	TRUE	1908	all eligible pairwise tier totals
 mito_related_mast_yu_checks_v2	all_panels_present	TRUE	A;B;C;D;E	A;B;C;D;E
-mito_related_mast_yu_checks_v2	pdf_exists_nonempty	TRUE	68489	>0 bytes
+mito_related_mast_yu_checks_v2	pdf_exists_nonempty	TRUE	68765	>0 bytes
 mito_related_mast_yu_checks_v2	companion_tables_exist_nonempty	TRUE	2	2

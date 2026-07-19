@@ -438,7 +438,10 @@ Suggested checks include:
 - no ineligible contrast is displayed as zero;
 - donor counts match the Phase 09 preserved contrast metadata;
 - all 54 fine cell types are represented or explicitly not estimable; and
-- input checksums are unchanged during rendering.
+- input checksums are unchanged during rendering;
+- Panels A–E each have an explicit color legend; and
+- cell-class boundary lines are clipped to the heatmap region of each panel
+  and never extend into another panel.
 
 ## 11. Interpretation cautions
 
