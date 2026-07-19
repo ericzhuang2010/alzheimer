@@ -95,7 +95,7 @@ Analyze mtDNA-versus-nuclear OXPHOS balance
 Test whether the effects differ by sex, APOE, and cell type
 ```
 
-The generated Yu-style figure contains 990 canonical MitoCarta genes because not every one of the 1,136 inventory genes is mapped and tested in the eligible Phase 08 contrasts. See the [figure checks](../results/figures/similar_to_yu_figure01/11_similar_to_yu_figure01_checks.tsv).
+The generated Yu-style figure contains 990 canonical MitoCarta genes because not every one of the 1,136 inventory genes is mapped and tested in the eligible Phase 08 contrasts. See the [figure checks](../results/figures/figure01/figure01_mitochondrial_yu_analogue_checks.tsv).
 
 ## What is actually new?
 

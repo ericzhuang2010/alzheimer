@@ -8,8 +8,10 @@ the validated Phase 10 mitochondrial-similarity phase and the validated Phase
 production tables into mitochondrial analogues of Yu et al. Figures 3, 4, 5,
 and 6. Figure generation is not assigned a pipeline phase number.
 
-Planning status on 2026-07-19: the required Minerva production bundles are
-present locally and validated. Figure implementation has not yet started.
+Execution status on 2026-07-19: the workflow completed locally from the
+validated Minerva production bundles. Four PDF and four 300-dpi PNG figures
+were written under `results/figures/figures03_to_06/`; all 60 blocking checks pass and
+`figure_status.tsv` is `validated_complete`.
 
 The figure workflow will:
 
@@ -39,7 +41,7 @@ scripts/figures/generate_yu_mitochondrial_figures_3_to_6.R
 All new figure artifacts will be placed under:
 
 ```text
-results/figures/
+results/figures/figures03_to_06/
 ```
 
 The figure workflow must **not**:
@@ -67,7 +69,7 @@ The supporting design documents are:
 This plan is authoritative for the figure workflow's paths, execution,
 outputs, and acceptance criteria. In particular, it supersedes the older
 guides' example output paths by requiring all new images under
-`results/figures/`.
+`results/figures/figures03_to_06/`.
 
 ## High-level purpose
 
@@ -495,7 +497,7 @@ config/yu_mitochondrial_figures_3_to_6.yml
 It will freeze at minimum:
 
 - input root `results/minerva_production`;
-- output root `results/figures`;
+- output root `results/figures/figures03_to_06`;
 - primary profile, universe, and pathway collection;
 - Figure 3–6 comparison, panel, tail, and requested-rank-set mapping;
 - nine state-pair columns, labels, groups, and order;
@@ -657,7 +659,7 @@ implementation-defined replacement option.
 Create the following under:
 
 ```text
-results/figures/
+results/figures/figures03_to_06/
 ```
 
 ### Primary image files
@@ -732,7 +734,7 @@ config/yu_mitochondrial_figures_3_to_6.yml
 ### Output
 
 ```text
-results/figures/
+results/figures/figures03_to_06/
 ```
 
 ### Preflight
@@ -798,7 +800,7 @@ schema, key, row-count, and panel-definition validations.
 Rscript scripts/figures/generate_yu_mitochondrial_figures_3_to_6.R \
   --config config/yu_mitochondrial_figures_3_to_6.yml \
   --input-root results/minerva_production \
-  --output-root results/figures \
+  --output-root results/figures/figures03_to_06 \
   --dry-run
 ```
 
@@ -817,7 +819,7 @@ The dry run must:
 Rscript scripts/figures/generate_yu_mitochondrial_figures_3_to_6.R \
   --config config/yu_mitochondrial_figures_3_to_6.yml \
   --input-root results/minerva_production \
-  --output-root results/figures
+  --output-root results/figures/figures03_to_06
 ```
 
 ### Validate
@@ -825,7 +827,7 @@ Rscript scripts/figures/generate_yu_mitochondrial_figures_3_to_6.R \
 ```bash
 Rscript -e '
 library(data.table)
-root <- "results/figures"
+root <- "results/figures/figures03_to_06"
 status <- fread(file.path(root, "figure_status.tsv"))
 checks <- fread(file.path(root, "figure_checks.tsv"))
 manifest <- fread(file.path(root, "figure_manifest.tsv"))
@@ -847,8 +849,8 @@ stopifnot(
 cat("Figure bundle validated successfully\n")
 '
 
-pdfinfo results/figures/figure03_mitochondrial_yu_analogue.pdf
-file results/figures/figure03_mitochondrial_yu_analogue.png
+pdfinfo results/figures/figures03_to_06/figure03_mitochondrial_yu_analogue.pdf
+file results/figures/figures03_to_06/figure03_mitochondrial_yu_analogue.png
 ```
 
 Repeat the PDF and PNG inspection for Figures 4–6. Automated checks establish
@@ -926,7 +928,7 @@ figure at normal manuscript zoom for clipped labels and unreadable text.
 ### Structural gate
 
 - The script is under `scripts/figures/`.
-- All outputs are under `results/figures/`.
+- All outputs are under `results/figures/figures03_to_06/`.
 - The required eight primary images and seven companion files exist.
 - All versioned schemas, required columns, and keys validate.
 - No earlier-phase file is modified.
@@ -978,7 +980,7 @@ The figure workflow is complete when:
 - the standalone figure script and figure config are implemented;
 - the local dry run validates the production handoff;
 - Figures 3–6 are exported as four PDF and four PNG files under
-  `results/figures/`;
+  `results/figures/figures03_to_06/`;
 - panel-A and panel-B display selections match the frozen rules;
 - explicit empty pathway facets are retained;
 - captions and companion tables are complete;
@@ -990,32 +992,32 @@ The figure workflow is complete when:
 
 ### Implement
 
-- [ ] Add `config/yu_mitochondrial_figures_3_to_6.yml`.
-- [ ] Add `scripts/figures/generate_yu_mitochondrial_figures_3_to_6.R`.
-- [ ] Implement strict CLI and dry-run behavior.
-- [ ] Implement upstream status, check, schema, artifact, and hash validation.
-- [ ] Implement deterministic panel-A selection and occurrence heatmaps.
-- [ ] Implement deterministic panel-B selection and explicit empty facets.
-- [ ] Implement Figure 3–6 assembly and caption templates.
-- [ ] Implement atomic Cairo PDF/PNG export.
-- [ ] Implement displayed-data, summary, check, manifest, and status tables.
-- [ ] Implement identical-input resumability and changed-input refusal.
+- [x] Add `config/yu_mitochondrial_figures_3_to_6.yml`.
+- [x] Add `scripts/figures/generate_yu_mitochondrial_figures_3_to_6.R`.
+- [x] Implement strict CLI and dry-run behavior.
+- [x] Implement upstream status, check, schema, artifact, and hash validation.
+- [x] Implement deterministic panel-A selection and occurrence heatmaps.
+- [x] Implement deterministic panel-B selection and explicit empty facets.
+- [x] Implement Figure 3–6 assembly and caption templates.
+- [x] Implement atomic Cairo PDF/PNG export.
+- [x] Implement displayed-data, summary, check, manifest, and status tables.
+- [x] Implement identical-input resumability and changed-input refusal.
 
 ### Execute locally
 
-- [ ] Run the production preflight.
-- [ ] Run the figure-workflow dry run.
-- [ ] Confirm no Phase 05 or Phase 07 path is resolved.
-- [ ] Generate the four PDF and four PNG primary figures.
-- [ ] Run the independent validation command.
-- [ ] Inspect every PDF and PNG for legibility and clipping.
-- [ ] Confirm all eight image hashes match the manifest.
+- [x] Run the production preflight.
+- [x] Run the figure-workflow dry run.
+- [x] Confirm no Phase 05 or Phase 07 path is resolved.
+- [x] Generate the four PDF and four PNG primary figures.
+- [x] Run the independent validation command.
+- [x] Inspect every PDF and PNG for legibility and clipping.
+- [x] Confirm all eight image hashes match the manifest.
 
 ### Finalize
 
-- [ ] Freeze final dimensions and any presentation-only config adjustments.
-- [ ] Confirm the Figure 3–5 high-score pathway facets remain explicitly empty.
-- [ ] Confirm captions disclose all universe, coverage, background, release,
+- [x] Freeze final dimensions and any presentation-only config adjustments.
+- [x] Confirm the Figure 3–5 high-score pathway facets remain explicitly empty.
+- [x] Confirm captions disclose all universe, coverage, background, release,
   and FDR details.
-- [ ] Confirm no prior-phase result changed.
-- [ ] Publish `figure_status.tsv` as `validated_complete`.
+- [x] Confirm no prior-phase result changed.
+- [x] Publish `figure_status.tsv` as `validated_complete`.

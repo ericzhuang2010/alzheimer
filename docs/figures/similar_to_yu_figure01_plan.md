@@ -357,24 +357,31 @@ similarity, Phase 11 pathway, archived downstream, or pseudobulk outputs.
 
 ## 10. Recommended outputs
 
+Keep every Figure 01 artifact together and separate from the Figure 03–06
+bundle under:
+
+```text
+results/figures/figure01/
+```
+
 ### Main PDF
 
 ```text
-results/minerva_production/15_figures/11_all_mito_related_mast_deg_landscape.pdf
+results/figures/figure01/figure01_mitochondrial_yu_analogue.pdf
 ```
 
-The default name includes both `all_mito_related` and `mast` so neither the
-gene scope nor statistical source can be mistaken. A `core_mito` sensitivity
-rendering must use a distinct output path, for example:
+The default rendering uses `all_mito_related` and the MAST-derived Phase 09
+handoff; those choices remain explicit in the figure and companion tables. A
+`core_mito` sensitivity rendering must use a distinct output path, for example:
 
 ```text
-results/minerva_production/15_figures/11_core_mito_mast_deg_landscape.pdf
+results/figures/figure01/figure01_core_mito_mitochondrial_yu_analogue.pdf
 ```
 
 ### Companion summary table
 
 ```text
-results/minerva_production/15_figures/11_all_mito_related_mast_deg_landscape_tiles.tsv
+results/figures/figure01/figure01_mitochondrial_yu_analogue_tiles.tsv
 ```
 
 One row per panel, comparison, fine cell type, and category should include:
@@ -399,7 +406,7 @@ One row per panel, comparison, fine cell type, and category should include:
 ### Gene-level classification table
 
 ```text
-results/minerva_production/15_figures/11_all_mito_related_mast_deg_landscape_genes.tsv.gz
+results/figures/figure01/figure01_mitochondrial_yu_analogue_genes.tsv.gz
 ```
 
 This should contain every directly tested or jointly tested exact assay feature
@@ -411,7 +418,7 @@ within-contrast FDR, and `paper_deg` evidence for each source contrast.
 ### Checks table
 
 ```text
-results/minerva_production/15_figures/11_all_mito_related_mast_deg_landscape_checks.tsv
+results/figures/figure01/figure01_mitochondrial_yu_analogue_checks.tsv
 ```
 
 Suggested checks include:

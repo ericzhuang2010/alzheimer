@@ -63,6 +63,7 @@ config/local_pilot_rds_manifest.tsv
 
 # ignore everything in results directory except for results/minerva_production/08_mast
 results/*
+!results/figures
 !results/minerva_production
 results/minerva_production/*
 !results/minerva_production/00_environment

@@ -71,7 +71,7 @@ figure must carry `nonfinal_smoke_test` in its subtitle or watermark.
 Write visual artifacts outside the scientific data phases:
 
 ```text
-results/<environment>/figures/yu_mitochondrial/
+results/figures/figures03_to_06/
 ```
 
 Required primary files are:
@@ -92,7 +92,7 @@ figure_checks.tsv
 The recommended implementation is:
 
 ```text
-scripts/figures/phase11_figures_3_to_6.R
+scripts/figures/generate_yu_mitochondrial_figures_3_to_6.R
 ```
 
 The figure script is a downstream consumer, not a Phase 11 pipeline task.
@@ -484,11 +484,11 @@ figure03 <- figure03a / figure03b +
   plot_annotation(tag_levels = "A")
 
 ggsave(
-  "results/minerva_production/figures/yu_mitochondrial/figure03_mitochondrial_yu_analogue.pdf",
+  "results/figures/figures03_to_06/figure03_mitochondrial_yu_analogue.pdf",
   figure03, width = 11, height = 15, units = "in"
 )
 ggsave(
-  "results/minerva_production/figures/yu_mitochondrial/figure03_mitochondrial_yu_analogue.png",
+  "results/figures/figures03_to_06/figure03_mitochondrial_yu_analogue.png",
   figure03, width = 11, height = 15, units = "in", dpi = 300
 )
 ```

@@ -7,8 +7,8 @@ options(stringsAsFactors = FALSE, warn = 1)
 parse_args <- function(args) {
   out <- list(
     output = paste0(
-      "results/minerva_production/15_figures/",
-      "11_all_mito_related_mast_deg_landscape.pdf"
+      "results/figures/figure01/",
+      "figure01_mitochondrial_yu_analogue.pdf"
     ),
     gene_scope = "all_mito_related"
   )
