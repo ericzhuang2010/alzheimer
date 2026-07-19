@@ -1,0 +1,105 @@
+schema_version: phase10_similarity_config_v1
+
+accepted_mito_tiers:
+  - core_mito_protein
+  - mtdna_noncoding
+  - mito_extended
+
+analysis_universes:
+  core_mito:
+    tiers: [core_mito_protein]
+    role: primary
+  all_mito_related:
+    tiers: [core_mito_protein, mtdna_noncoding, mito_extended]
+    role: inclusive_secondary
+
+comparisons:
+  - comparison_id: female_vs_male_all_apoe
+    yu_analogue: Figure_3
+    first_state: Female
+    second_state: Male
+    dimension_keys: [rds_id, cell_type_high_resolution, apoe_group]
+    nominal_dimensions: 162
+    panel_tail_size: 25
+  - comparison_id: e2_vs_e33_all_sexes
+    yu_analogue: Figure_4
+    first_state: e2
+    second_state: e33
+    dimension_keys: [rds_id, cell_type_high_resolution, sex]
+    nominal_dimensions: 108
+    panel_tail_size: 25
+  - comparison_id: e4_vs_e33_all_sexes
+    yu_analogue: Figure_5
+    first_state: e4
+    second_state: e33
+    dimension_keys: [rds_id, cell_type_high_resolution, sex]
+    nominal_dimensions: 108
+    panel_tail_size: 25
+  - comparison_id: female_vs_male_e2
+    yu_analogue: Figure_6_e2
+    first_state: Female_e2
+    second_state: Male_e2
+    dimension_keys: [rds_id, cell_type_high_resolution]
+    nominal_dimensions: 54
+    panel_tail_size: 10
+  - comparison_id: female_vs_male_e33
+    yu_analogue: Figure_6_e33
+    first_state: Female_e33
+    second_state: Male_e33
+    dimension_keys: [rds_id, cell_type_high_resolution]
+    nominal_dimensions: 54
+    panel_tail_size: 10
+  - comparison_id: female_vs_male_e4
+    yu_analogue: Figure_6_e4
+    first_state: Female_e4
+    second_state: Male_e4
+    dimension_keys: [rds_id, cell_type_high_resolution]
+    nominal_dimensions: 54
+    panel_tail_size: 10
+
+score:
+  same_direction_significant: 1.0
+  one_sided_significant: -0.5
+  opposite_direction_significant: -1.0
+  both_not_significant: 0.0
+
+coverage:
+  minimum_paired_tests: 3
+  minimum_structural_fraction: 0.50
+
+permutation:
+  local_pilot_repetitions: 100
+  minerva_production_repetitions: 10000
+  base_seed: 10092026
+  rng_kind: Mersenne-Twister
+  normal_kind: Inversion
+  sample_kind: Rejection
+  estimator: plus_one_empirical_tail
+
+fdr:
+  method: BH
+  family: comparison_id_x_analysis_universe
+  threshold: 0.05
+
+rank_sets:
+  supplemental_tail_size: 200
+  require_disjoint_tails: true
+
+expected_phase09:
+  status_schema: mitochondrial_annotation_status_v1
+  annotated_results_schema: annotated_yu_mast_results_v1
+  required_validation_status: validated_complete
+
+schemas:
+  feature_manifest: mitochondrial_similarity_feature_manifest_v1
+  comparison_manifest: similarity_comparison_manifest_v1
+  dimension_manifest: similarity_dimension_manifest_v1
+  state_pairs: mitochondrial_similarity_state_pairs_v1
+  results: mitochondrial_similarity_results_v1
+  rank_sets: mitochondrial_similarity_rank_sets_v1
+  permutation_diagnostics: similarity_permutation_diagnostics_v1
+  toy_checks: similarity_toy_checks_v1
+  qc_summary: similarity_qc_summary_v1
+  checks: similarity_checks_v1
+  artifacts: similarity_artifacts_v1
+  status: mitochondrial_similarity_status_v1

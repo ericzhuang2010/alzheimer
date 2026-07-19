@@ -2,6 +2,7 @@ project:
   root: "."
   analysis_config: config/analysis_parameters.yml
   phase09_annotation_config: config/phase09_annotation.yml
+  phase10_similarity_config: config/phase10_similarity.yml
   manifest: config/minerva_rds_manifest.tsv
 
 inputs:
@@ -38,3 +39,4 @@ scope:
     - pseudobulk_de
     - mast
     - annotate_genes
+    - similarity
