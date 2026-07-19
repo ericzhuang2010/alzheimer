@@ -7,6 +7,15 @@ the validated Phase 10 mitochondrial-similarity phase and prepares the pathway
 enrichment tables and panel-ready data needed for later mitochondrial
 analogues of Yu Figures 3, 4, 5, and 6.
 
+Local implementation status on 2026-07-19: the single-task pipeline dry run and
+Vasculature smoke test completed successfully. The published local bundle is
+`results/local_pilot/11_pathway/` with status `nonfinal_smoke_test`, 2
+validated references, 12 backgrounds, 24 queries, 102,336 complete ORA rows,
+8,174 tested ORA rows, 3,780 similarity-panel rows, and 75,411 pathway-panel
+rows. All blocking checks and independent artifact hash/schema checks passed;
+a second invocation confirmed hash-valid resumability. Minerva production
+remains pending.
+
 Phase 11 is one global data-production task. It will:
 
 - validate the complete Phase 10 bundle;
@@ -1339,37 +1348,37 @@ Phase 11 is complete when:
 
 ### Implement
 
-- [ ] Add `config/phase11_pathway.yml`.
-- [ ] Add `scripts/11_prepare_mitochondrial_pathway_data.R`.
-- [ ] Validate Phase 10 status, schemas, keys, checks, and hashes.
-- [ ] Parse and normalize both pathway collections.
-- [ ] Build 12 backgrounds and 24 query manifests.
-- [ ] Implement symbol mapping and ambiguity checks.
-- [ ] Implement the complete ORA grid and toy tests.
-- [ ] Implement local and global BH correction.
-- [ ] Build similarity and pathway panel-ready tables.
-- [ ] Build the downstream panel manifest.
-- [ ] Write all tables atomically with schemas and hashes.
+- [x] Add `config/phase11_pathway.yml`.
+- [x] Add `scripts/11_prepare_mitochondrial_pathway_data.R`.
+- [x] Validate Phase 10 status, schemas, keys, checks, and hashes.
+- [x] Parse and normalize both pathway collections.
+- [x] Build 12 backgrounds and 24 query manifests.
+- [x] Implement symbol mapping and ambiguity checks.
+- [x] Implement the complete ORA grid and toy tests.
+- [x] Implement local and global BH correction.
+- [x] Build similarity and pathway panel-ready tables.
+- [x] Build the downstream panel manifest.
+- [x] Write all tables atomically with schemas and hashes.
 
 ### Integrate
 
-- [ ] Register global `pathway` after `similarity` in `scripts/run_pipeline.R`.
-- [ ] Add the Phase 11 config path and task mode to local and Minerva configs.
-- [ ] Reject per-RDS execution for the global task.
-- [ ] Update `renv.lock` only if a new dependency is required.
-- [ ] Update ignore/tracking policy without redistributing restricted
-  reference data.
-- [ ] Keep all Phase 00–10 code and results unchanged.
+- [x] Register global `pathway` after `similarity` in `scripts/run_pipeline.R`.
+- [x] Add the Phase 11 config path and task mode to local and Minerva configs.
+- [x] Reject per-RDS execution for the global task.
+- [x] Keep `renv.lock` unchanged because all dependencies were already pinned.
+- [x] Confirm the existing `data/` ignore policy keeps the restricted MSigDB
+  reference local.
+- [x] Keep all Phase 00–10 scientific code and result bundles unchanged.
 
 ### Validate
 
-- [ ] Run the local dry run and Vasculature smoke test.
-- [ ] Review reference normalization and symbol-mapping reports.
-- [ ] Verify local capped tail sizes are used as actual `n`.
-- [ ] Cross-check audited ORA rows with one-sided Fisher tests.
-- [ ] Confirm all FDR families and statistical ordering reproduce exactly.
-- [ ] Confirm local panel-ready tables carry nonfinal labels.
-- [ ] Confirm no figure artifact exists under local `11_pathway/`.
+- [x] Run the local dry run and Vasculature smoke test.
+- [x] Review reference normalization and symbol-mapping reports.
+- [x] Verify local capped tail sizes are used as actual `n`.
+- [x] Cross-check audited ORA rows with one-sided Fisher tests.
+- [x] Confirm all FDR families and statistical ordering reproduce exactly.
+- [x] Confirm local panel-ready tables carry nonfinal labels.
+- [x] Confirm no figure artifact exists under local `11_pathway/`.
 - [ ] Promote identical code, config, and reference hashes to Minerva.
 - [ ] Run the single production Phase 11 task.
 - [ ] Validate 102,336 ORA rows and all downstream panel-ready tables.
