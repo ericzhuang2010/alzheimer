@@ -46,7 +46,8 @@ Thumbs.db
 .venv/
 __pycache__/
 # Ignore local data except the reference assets maintained in Git.
-data/
+data/*
+!data/reference
 untracked/
 ad_research/
 

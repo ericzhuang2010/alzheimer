@@ -1,0 +1,5 @@
+schema_version	case_id	background_size	query_size	background_pathway_size	overlap_count	formula	expected_p_value	observed_p_value	absolute_error	passed
+pathway_toy_checks_v1	moderate_overlap	20	5	4	2	phyper(k-1,M,N-M,n,lower.tail=FALSE)	0.248710010319917	0.248710010319917	8.32667268468867e-17	TRUE
+pathway_toy_checks_v1	zero_overlap	10	2	3	0	phyper(k-1,M,N-M,n,lower.tail=FALSE)	1	1	0	TRUE
+pathway_toy_checks_v1	single_overlap	10	2	3	1	phyper(k-1,M,N-M,n,lower.tail=FALSE)	0.533333333333333	0.533333333333333	3.33066907387547e-16	TRUE
+pathway_toy_checks_v1	complete_overlap	10	2	3	2	phyper(k-1,M,N-M,n,lower.tail=FALSE)	0.0666666666666667	0.0666666666666667	4.16333634234434e-17	TRUE
