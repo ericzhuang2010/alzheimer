@@ -65,10 +65,13 @@ config/local_pilot_rds_manifest.tsv
 results/*
 !results/minerva_production
 results/minerva_production/*
+!results/minerva_production/00_environment
 !results/minerva_production/01_audit
 !results/minerva_production/02_cohort
 !results/minerva_production/03_annotations
 !results/minerva_production/04_qc
+!results/minerva_production/05_normalized
+results/minerva_production/05_normalized/**/*.rds
 !results/minerva_production/06_descriptive
 !results/minerva_production/08_mast
 # !results/minerva_production/09_annotate_genes
