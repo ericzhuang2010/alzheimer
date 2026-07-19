@@ -70,8 +70,8 @@ results/minerva_production/*
 !results/minerva_production/04_qc
 !results/minerva_production/06_descriptive
 !results/minerva_production/08_mast
-!results/minerva_production/09_downstream
-!results/minerva_production/10_downstream
+# !results/minerva_production/09_annotate_genes
+!results/minerva_production/10_similarity
 !results/minerva_production/12_sensitivity
 !results/minerva_production/13_power
 !results/minerva_production/14_validation

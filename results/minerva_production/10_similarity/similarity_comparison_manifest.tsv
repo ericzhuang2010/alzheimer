@@ -1,0 +1,7 @@
+schema_version	comparison_order	comparison_id	yu_analogue	first_state_label	second_state_label	dimension_keys	nominal_dimensions	planned_dimensions	structurally_estimable_dimensions	non_estimable_dimensions	failed_dimensions	missing_contrast_dimensions	minimum_paired_tests	minimum_structural_fraction	panel_tail_size	supplemental_tail_size	expected_selection_sizes
+similarity_comparison_manifest_v1	1	female_vs_male_all_apoe	Figure_3	Female	Male	rds_id + cell_type_high_resolution + apoe_group	162	162	159	3	0	0	3	0.5	25	200	25,200
+similarity_comparison_manifest_v1	2	e2_vs_e33_all_sexes	Figure_4	e2	e33	rds_id + cell_type_high_resolution + sex	108	108	105	3	0	0	3	0.5	25	200	25,200
+similarity_comparison_manifest_v1	3	e4_vs_e33_all_sexes	Figure_5	e4	e33	rds_id + cell_type_high_resolution + sex	108	108	108	0	0	0	3	0.5	25	200	25,200
+similarity_comparison_manifest_v1	4	female_vs_male_e2	Figure_6_e2	Female_e2	Male_e2	rds_id + cell_type_high_resolution	54	54	51	3	0	0	3	0.5	10	200	10,200
+similarity_comparison_manifest_v1	5	female_vs_male_e33	Figure_6_e33	Female_e33	Male_e33	rds_id + cell_type_high_resolution	54	54	54	0	0	0	3	0.5	10	200	10,200
+similarity_comparison_manifest_v1	6	female_vs_male_e4	Figure_6_e4	Female_e4	Male_e4	rds_id + cell_type_high_resolution	54	54	54	0	0	0	3	0.5	10	200	10,200

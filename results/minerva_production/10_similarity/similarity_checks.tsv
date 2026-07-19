@@ -1,0 +1,26 @@
+schema_version	check_name	passed	observed	expected	details
+similarity_checks_v1	phase09_status_validated	TRUE	validated_complete	validated_complete	
+similarity_checks_v1	phase09_blocking_checks	TRUE	38	38	
+similarity_checks_v1	phase09_artifact_hashes	TRUE	10	10	
+similarity_checks_v1	feature_identity_unique	TRUE	1300	1300	
+similarity_checks_v1	feature_annotations_consistent	TRUE	1300	1300	
+similarity_checks_v1	six_comparisons	TRUE	6	6	
+similarity_checks_v1	dimension_keys_unique	TRUE	540	540	
+similarity_checks_v1	no_failed_dimensions	TRUE	0	0	
+similarity_checks_v1	state_pair_keys_unique	TRUE	702000	702000	
+similarity_checks_v1	ternary_states_valid	TRUE	all nonmissing states	-1,0,+1	
+similarity_checks_v1	paired_state_counts_reconcile	TRUE	all result rows	nine cells sum to paired_tests	
+similarity_checks_v1	score_range	TRUE	-0.5,0.5	[-1,1]	
+similarity_checks_v1	zero_pairs_not_scoreable	TRUE	1254	all NA scores	
+similarity_checks_v1	toy_scores	TRUE	4	4	
+similarity_checks_v1	result_keys_unique	TRUE	7800	7800	
+similarity_checks_v1	ranking_eligibility_rule	TRUE	4603	exact minimum-three/50% rule	
+similarity_checks_v1	reference_only_not_scored	TRUE	0	0	
+similarity_checks_v1	permutation_row_count	TRUE	4603	4603	
+similarity_checks_v1	permutation_marginals_preserved	TRUE	4603	4603	
+similarity_checks_v1	empirical_p_range	TRUE	0.0001999800019998,1	[9.99900009999e-05,1]	
+similarity_checks_v1	fdr_family_sizes	TRUE	4210/4603	recorded eligible family sizes	
+similarity_checks_v1	fdr_range	TRUE	0.141585841415858,1	[0,1]	
+similarity_checks_v1	rank_tails_disjoint	TRUE	0	0	
+similarity_checks_v1	rank_set_size_rule	TRUE	200	requested size capped at floor(eligible/2)	
+similarity_checks_v1	no_figure_or_enrichment_outputs	TRUE	tabular outputs only	no PDF/PNG/SVG/enrichment	
