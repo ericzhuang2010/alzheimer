@@ -1,0 +1,40 @@
+check	required	passed	detail
+project_root	TRUE	TRUE	/sc/arion/work/zhuane01/alzheimer
+analysis_config_exists	TRUE	TRUE	/sc/arion/work/zhuane01/alzheimer/config/analysis_parameters.yml
+manifest_exists	TRUE	TRUE	/sc/arion/work/zhuane01/alzheimer/config/minerva_rds_manifest.tsv
+clinical_csv_exists	TRUE	TRUE	/sc/arion/work/zhuane01/alzheimer/data/processed/ROSMAP_clinical.csv
+cell_metadata_exists	TRUE	TRUE	/sc/arion/work/zhuane01/alzheimer/data/processed/cell.meta.data.tsv
+r_version	TRUE	TRUE	observed 4.3.3 required 4.3.3
+r_package_yaml	TRUE	TRUE	2.3.12
+r_package_renv	TRUE	TRUE	1.2.3
+r_package_Matrix	TRUE	TRUE	1.6.5
+r_package_SeuratObject	TRUE	TRUE	5.4.0
+r_package_Seurat	TRUE	TRUE	5.5.1
+r_package_data.table	TRUE	TRUE	1.18.4
+r_package_stringr	TRUE	TRUE	1.6.0
+r_package_dplyr	TRUE	TRUE	1.2.1
+r_package_edgeR	TRUE	TRUE	4.0.16
+r_package_MAST	TRUE	TRUE	1.28.0
+r_package_readxl	TRUE	TRUE	1.5.0
+gencode_gtf_exists	TRUE	TRUE	/sc/arion/work/zhuane01/alzheimer/data/reference/gencode/gencode.v44.basic.annotation.gtf.gz
+gencode_gtf_gzip_integrity	TRUE	TRUE	exit 0
+gencode_gtf_sha256	TRUE	TRUE	3e52f82c63f8fd860bf632ccde10441c05751f4c342ad08c0a98e9e2700171a5
+mitocarta_source_exists	FALSE	TRUE	/sc/arion/work/zhuane01/alzheimer/data/reference/Human.MitoCarta3.0.xls (required when annotations starts)
+manifest_schema	TRUE	TRUE	ok
+manifest_has_enabled_rows	TRUE	TRUE	9 enabled rows
+manifest_unique_rows	TRUE	TRUE	manifest_row
+manifest_unique_rds_ids	TRUE	TRUE	rds_id
+manifest_unique_task_ids	TRUE	TRUE	stable_rds_task_id
+input_rds_astrocytes	TRUE	TRUE	/sc/arion/projects/zhangb03a/shared/ROSMAP/Synapse/snRNAseq_MIT/GeneExpression/10x/processed/Astrocytes.rds
+input_rds_excitatory_set1	TRUE	TRUE	/sc/arion/projects/zhangb03a/shared/ROSMAP/Synapse/snRNAseq_MIT/GeneExpression/10x/processed/Excitatory_neurons_set1.rds
+input_rds_excitatory_set2	TRUE	TRUE	/sc/arion/projects/zhangb03a/shared/ROSMAP/Synapse/snRNAseq_MIT/GeneExpression/10x/processed/Excitatory_neurons_set2.rds
+input_rds_excitatory_set3	TRUE	TRUE	/sc/arion/projects/zhangb03a/shared/ROSMAP/Synapse/snRNAseq_MIT/GeneExpression/10x/processed/Excitatory_neurons_set3.rds
+input_rds_immune	TRUE	TRUE	/sc/arion/projects/zhangb03a/shared/ROSMAP/Synapse/snRNAseq_MIT/GeneExpression/10x/processed/Immune_cells.rds
+input_rds_inhibitory	TRUE	TRUE	/sc/arion/projects/zhangb03a/shared/ROSMAP/Synapse/snRNAseq_MIT/GeneExpression/10x/processed/Inhibitory_neurons.rds
+input_rds_opcs	TRUE	TRUE	/sc/arion/projects/zhangb03a/shared/ROSMAP/Synapse/snRNAseq_MIT/GeneExpression/10x/processed/OPCs.rds
+input_rds_oligodendrocytes	TRUE	TRUE	/sc/arion/projects/zhangb03a/shared/ROSMAP/Synapse/snRNAseq_MIT/GeneExpression/10x/processed/Oligodendrocytes.rds
+input_rds_vasculature	TRUE	TRUE	/sc/arion/projects/zhangb03a/shared/ROSMAP/Synapse/snRNAseq_MIT/GeneExpression/10x/processed/Vasculature_cells.rds
+execution_config_exists	TRUE	TRUE	/sc/arion/work/zhuane01/alzheimer/config/minerva_production_execution.yml
+memory_budget	TRUE	TRUE	total 192 GiB reserve 32 GiB
+core_budget	TRUE	TRUE	max_total_cores 48
+output_root_writable	TRUE	TRUE	/sc/arion/work/zhuane01/alzheimer/results/minerva_production

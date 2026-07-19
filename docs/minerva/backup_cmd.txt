@@ -1,0 +1,1 @@
+rsync -av --exclude='alzheimer/results/minerva_production/05_normalized/' alzheimer /sc/arion/scratch/zhuane01/
