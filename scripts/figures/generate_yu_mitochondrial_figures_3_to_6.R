@@ -87,11 +87,28 @@ peak_ram_gib <- function() {
 atomic_fwrite <- function(x, path) {
   dir.create(dirname(path), recursive = TRUE, showWarnings = FALSE)
   tmp <- file.path(dirname(path), paste0(".", basename(path), ".tmp.", Sys.getpid()))
-  compress <- if (grepl("[.]gz$", path)) "gzip" else "none"
-  data.table::fwrite(
-    x, tmp, sep = "\t", quote = FALSE, na = "NA",
-    logical01 = FALSE, compress = compress
-  )
+  if (grepl("[.]gz$", path)) {
+    raw_tmp <- paste0(tmp, ".raw")
+    data.table::fwrite(
+      x, raw_tmp, sep = "\t", quote = FALSE, na = "NA",
+      logical01 = FALSE, compress = "none"
+    )
+    input <- file(raw_tmp, open = "rb")
+    output <- gzfile(tmp, open = "wb")
+    repeat {
+      chunk <- readBin(input, what = "raw", n = 1024L * 1024L)
+      if (!length(chunk)) break
+      writeBin(chunk, output)
+    }
+    close(input)
+    close(output)
+    unlink(raw_tmp)
+  } else {
+    data.table::fwrite(
+      x, tmp, sep = "\t", quote = FALSE, na = "NA",
+      logical01 = FALSE, compress = "none"
+    )
+  }
   if (!file.rename(tmp, path)) stop("Could not publish ", path, call. = FALSE)
 }
 
@@ -132,10 +149,30 @@ png_dimensions <- function(path) {
 }
 
 pdf_pages <- function(path) {
-  info <- suppressWarnings(system2("pdfinfo", path, stdout = TRUE, stderr = TRUE))
-  line <- grep("^Pages:", info, value = TRUE)
-  if (!length(line)) return(NA_integer_)
-  as.integer(trimws(sub("^Pages:", "", line[[1L]])))
+  if (nzchar(Sys.which("pdfinfo"))) {
+    info <- suppressWarnings(system2(
+      "pdfinfo", shQuote(path), stdout = TRUE, stderr = TRUE
+    ))
+    line <- grep("^Pages:", info, value = TRUE)
+    if (length(line)) {
+      return(as.integer(trimws(sub("^Pages:", "", line[[1L]]))))
+    }
+  }
+  if (nzchar(Sys.which("mdls"))) {
+    if (nzchar(Sys.which("mdimport"))) {
+      suppressWarnings(system2(
+        "mdimport", shQuote(path), stdout = FALSE, stderr = FALSE
+      ))
+    }
+    info <- suppressWarnings(system2(
+      "mdls",
+      c("-raw", "-name", "kMDItemNumberOfPages", shQuote(path)),
+      stdout = TRUE, stderr = TRUE
+    ))
+    pages <- suppressWarnings(as.integer(info[[1L]]))
+    if (!is.na(pages)) return(pages)
+  }
+  NA_integer_
 }
 
 args <- parse_cli(commandArgs(trailingOnly = TRUE))
@@ -172,7 +209,7 @@ if (!capabilities("cairo") || !capabilities("png")) {
 }
 
 config <- yaml::read_yaml(config_path)
-if (!identical(config$schema_version, "yu_mitochondrial_figures_config_v1")) {
+if (!identical(config$schema_version, "yu_mitochondrial_figures_config_v2")) {
   stop("Unexpected figure config schema", call. = FALSE)
 }
 
@@ -180,10 +217,12 @@ figures <- list_to_dt(config$figures)
 panel_a_cfg <- list_to_dt(config$panel_a_blocks)
 panel_b_cfg <- list_to_dt(config$panel_b_queries)
 pair_cfg <- list_to_dt(config$state_pairs)
+group_cfg <- list_to_dt(config$state_pair_groups)
 data.table::setorder(figures, figure_number)
 data.table::setorder(panel_a_cfg, figure_id, block_order)
 data.table::setorder(panel_b_cfg, figure_id, facet_order)
 data.table::setorder(pair_cfg, pair_order)
+data.table::setorder(group_cfg, group_order)
 
 check_rows <- list()
 assert_check <- function(name, passed, observed, expected, details = "", blocking = TRUE) {
@@ -215,9 +254,11 @@ required_paths <- c(
   path_checks = file.path(path_root, "pathway_checks.tsv"),
   path_artifacts = file.path(path_root, "pathway_artifacts.tsv"),
   references = file.path(path_root, "pathway_reference_manifest.tsv"),
+  query_manifest = file.path(path_root, "pathway_query_manifest.tsv"),
   panel_manifest = file.path(path_root, "downstream_panel_manifest.tsv"),
   similarity_panel = file.path(path_root, "similarity_panel_data.tsv.gz"),
-  pathway_panel = file.path(path_root, "pathway_panel_data.tsv.gz")
+  pathway_panel = file.path(path_root, "pathway_panel_data.tsv.gz"),
+  pathway_ora = file.path(path_root, "similarity_tail_pathway_ora.tsv.gz")
 )
 assert_check(
   "required_input_files", all(file.exists(required_paths)),
@@ -232,6 +273,7 @@ path_status <- fread(required_paths[["path_status"]])
 path_checks <- fread(required_paths[["path_checks"]])
 path_artifacts <- fread(required_paths[["path_artifacts"]])
 references <- fread(required_paths[["references"]])
+query_manifest <- fread(required_paths[["query_manifest"]])
 panel_manifest <- fread(required_paths[["panel_manifest"]])
 
 expected <- config$inputs
@@ -320,10 +362,17 @@ assert_check(
     nrow(panel_manifest) == expected$expected_downstream_definitions,
   nrow(panel_manifest), expected$expected_downstream_definitions
 )
+assert_check(
+  "query_manifest",
+  schema_ok(query_manifest, expected$expected_query_manifest_schema) &&
+    nrow(query_manifest) == expected$expected_query_manifest_rows,
+  nrow(query_manifest), expected$expected_query_manifest_rows
+)
 
 message("Reading panel-ready Phase 11 data")
 similarity_data <- fread(required_paths[["similarity_panel"]], showProgress = FALSE)
 pathway_data <- fread(required_paths[["pathway_panel"]], showProgress = FALSE)
+pathway_ora <- fread(required_paths[["pathway_ora"]], showProgress = FALSE)
 assert_check(
   "similarity_panel_schema_rows",
   schema_ok(similarity_data, expected$expected_similarity_panel_schema) &&
@@ -340,6 +389,14 @@ assert_check(
   paste(expected$expected_pathway_panel_schema,
         expected$expected_pathway_panel_rows, sep = "/")
 )
+assert_check(
+  "pathway_ora_schema_rows",
+  schema_ok(pathway_ora, expected$expected_pathway_ora_schema) &&
+    nrow(pathway_ora) == expected$expected_pathway_ora_rows,
+  paste(unique(pathway_ora$schema_version), nrow(pathway_ora), sep = "/"),
+  paste(expected$expected_pathway_ora_schema,
+        expected$expected_pathway_ora_rows, sep = "/")
+)
 
 primary <- config$primary
 sim_primary <- similarity_data[analysis_universe == primary$analysis_universe]
@@ -355,7 +412,8 @@ sim_display <- merge(
   sim_display,
   pair_cfg[, .(
     pair_column, configured_pair_label = pair_label,
-    pair_group, configured_pair_order = pair_order
+    pair_group, configured_pair_order = pair_order,
+    display_in_panel_a
   )],
   by = "pair_column", all.x = TRUE, sort = FALSE
 )
@@ -416,29 +474,44 @@ sim_display[, tail_label := ifelse(
 sim_display[, source_schema_version := schema_version]
 sim_display[, schema_version := config$schemas$displayed_similarity]
 setorder(sim_display, figure_id, block_order, tail_order, selection_order, pair_order)
-
-manifest_primary <- copy(panel_manifest[profile_id == primary$profile_id])
-setnames(manifest_primary, "required_tail", "tail")
+sim_display <- sim_display[display_in_panel_a == TRUE]
+expected_display_rows <- sum(
+  2L * panel_a_cfg$requested_k * sum(pair_cfg$display_in_panel_a)
+)
 assert_check(
-  "primary_query_manifest_rows", nrow(manifest_primary) == 9L,
-  nrow(manifest_primary), 9L
+  "displayed_similarity_rows", nrow(sim_display) == expected_display_rows,
+  nrow(sim_display), expected_display_rows
+)
+
+query_primary <- copy(query_manifest[
+  analysis_universe == primary$analysis_universe & requested_k == 200L
+])
+assert_check(
+  "primary_query_manifest_rows", nrow(query_primary) == 12L,
+  nrow(query_primary), 12L
 )
 b_defs <- merge(
   panel_b_cfg,
-  manifest_primary[, .(
+  query_primary[, .(
     comparison_id, tail, query_id, panel_id, requested_k, selected_k,
-    query_size, background_size, expected_pathway_rows,
-    analysis_universe, pathway_collection, collection_release
+    query_size, background_size, analysis_universe
   )],
   by = c("comparison_id", "tail"), all.x = TRUE, sort = FALSE
 )
+b_defs[, `:=`(
+  pathway_collection = primary$pathway_collection,
+  collection_release = primary$collection_release,
+  expected_pathway_rows = references[
+    pathway_collection == primary$pathway_collection, normalized_pathways
+  ][[1L]]
+)]
 setorder(b_defs, figure_id, facet_order)
 assert_check(
   "primary_query_definitions",
-  nrow(b_defs) == 9L && !anyNA(b_defs$query_id) &&
+  nrow(b_defs) == 12L && !anyNA(b_defs$query_id) &&
     all(b_defs$analysis_universe == primary$analysis_universe) &&
     all(b_defs$pathway_collection == primary$pathway_collection),
-  nrow(b_defs), 9L
+  nrow(b_defs), 12L
 )
 
 summary_rows <- list()
@@ -449,15 +522,17 @@ label_width <- as.integer(config$display$pathway_label_width)
 for (i in seq_len(nrow(b_defs))) {
   def <- b_defs[i]
   query_value <- def$query_id[[1L]]
-  d <- pathway_data[
-    profile_id == primary$profile_id & query_id == query_value
+  d <- pathway_ora[
+    query_id == query_value &
+      pathway_collection == primary$pathway_collection
   ]
   assert_check(
     paste0("query_rows_", i), nrow(d) == def$expected_pathway_rows[[1L]],
     nrow(d), def$expected_pathway_rows[[1L]]
   )
-  significant <- d[
-    test_status == "tested" & !is.na(tail_fdr_bh) & tail_fdr_bh < fdr_threshold
+  tested <- d[test_status == "tested" & !is.na(statistical_order)]
+  significant <- tested[
+    !is.na(tail_fdr_bh) & tail_fdr_bh < fdr_threshold
   ]
   setorder(significant, statistical_order, pathway_id)
   significant_count <- nrow(significant)
@@ -467,20 +542,22 @@ for (i in seq_len(nrow(b_defs))) {
       all(unique(d$query_significant_pathways) == significant_count),
     significant_count, def$expected_significant[[1L]]
   )
-  selected <- head(significant, display_cap)
-  displayed_count <- nrow(selected)
-  omitted_count <- significant_count - displayed_count
-  explicit_status <- unique(d$explicit_query_status)
-  expected_status <- if (significant_count == 0L) {
-    "no_significant_pathways"
-  } else {
-    "significant_pathways_present"
-  }
+  matched <- tested[overlap_count > 0L]
+  setorder(matched, statistical_order, pathway_id)
+  matched_count <- nrow(matched)
   assert_check(
-    paste0("query_explicit_status_", i),
-    length(explicit_status) == 1L && explicit_status == expected_status,
-    explicit_status, expected_status
+    paste0("query_matches_", i),
+    matched_count == def$expected_matched[[1L]],
+    matched_count, def$expected_matched[[1L]]
   )
+  selected <- head(matched, display_cap)
+  displayed_count <- nrow(selected)
+  omitted_count <- matched_count - displayed_count
+  expected_status <- if (matched_count == 0L) {
+    "no_pathway_matches"
+  } else {
+    "pathway_matches_present"
+  }
   summary_rows[[i]] <- data.table(
     schema_version = config$schemas$pathway_display_summary,
     figure_id = def$figure_id[[1L]],
@@ -497,8 +574,10 @@ for (i in seq_len(nrow(b_defs))) {
     query_size = def$query_size[[1L]],
     background_size = def$background_size[[1L]],
     significant_pathways = significant_count,
+    matched_pathways = matched_count,
     displayed_pathways = displayed_count,
     omitted_by_cap = omitted_count,
+    display_rule = "tested_overlap_positive_by_statistical_order",
     explicit_query_status = expected_status
   )
   if (displayed_count) {
@@ -509,23 +588,26 @@ for (i in seq_len(nrow(b_defs))) {
       facet_order = def$facet_order[[1L]],
       facet_label = def$facet_label[[1L]],
       record_type = "pathway",
-      query_id, panel_id, comparison_id, tail, profile_id,
+      query_id, panel_id, comparison_id, tail,
+      profile_id = primary$profile_id,
       analysis_universe, pathway_collection, collection_release,
       query_size, background_size,
       significant_pathways = significant_count,
+      matched_pathways = matched_count,
       displayed_pathways = displayed_count,
       omitted_by_cap = omitted_count,
+      display_rule = "tested_overlap_positive_by_statistical_order",
       display_rank = seq_len(.N),
       pathway_id, pathway_label,
       pathway_label_wrapped = wrap_text(pathway_label, label_width),
       statistical_order, gene_ratio, overlap_count, tail_fdr_bh,
       neg_log10_tail_fdr = -log10(pmax(tail_fdr_bh, .Machine$double.xmin)),
-      test_status, overlap_genes
+      tail_fdr_significant, p_value, test_status, overlap_genes
     )]
   } else {
     display_rows[[i]] <- data.table(
       schema_version = config$schemas$displayed_pathway,
-      source_schema_version = expected$expected_pathway_panel_schema,
+      source_schema_version = expected$expected_pathway_ora_schema,
       figure_id = def$figure_id[[1L]],
       facet_order = def$facet_order[[1L]],
       facet_label = def$facet_label[[1L]],
@@ -541,13 +623,16 @@ for (i in seq_len(nrow(b_defs))) {
       query_size = def$query_size[[1L]],
       background_size = def$background_size[[1L]],
       significant_pathways = 0L,
+      matched_pathways = 0L,
       displayed_pathways = 0L,
       omitted_by_cap = 0L,
+      display_rule = "tested_overlap_positive_by_statistical_order",
       display_rank = NA_integer_,
       pathway_id = NA_character_, pathway_label = NA_character_,
       pathway_label_wrapped = NA_character_, statistical_order = NA_integer_,
       gene_ratio = NA_real_, overlap_count = NA_integer_, tail_fdr_bh = NA_real_,
-      neg_log10_tail_fdr = NA_real_, test_status = NA_character_,
+      neg_log10_tail_fdr = NA_real_, tail_fdr_significant = NA,
+      p_value = NA_real_, test_status = NA_character_,
       overlap_genes = NA_character_
     )
   }
@@ -557,12 +642,12 @@ path_display <- rbindlist(display_rows, use.names = TRUE, fill = TRUE)
 setorder(path_summary, figure_id, facet_order)
 setorder(path_display, figure_id, facet_order, display_rank)
 assert_check(
-  "pathway_summary_rows", nrow(path_summary) == 9L, nrow(path_summary), 9L
+  "pathway_summary_rows", nrow(path_summary) == 12L, nrow(path_summary), 12L
 )
 assert_check(
   "pathway_display_cap",
   all(path_summary$displayed_pathways <= display_cap) &&
-    all(path_summary$significant_pathways ==
+    all(path_summary$matched_pathways ==
           path_summary$displayed_pathways + path_summary$omitted_by_cap),
   max(path_summary$displayed_pathways), display_cap
 )
@@ -575,6 +660,8 @@ current_hashes <- list(
   similarity_panel_sha256 = sha256_file(required_paths[["similarity_panel"]]),
   pathway_status_sha256 = sha256_file(required_paths[["path_status"]]),
   pathway_panel_sha256 = sha256_file(required_paths[["pathway_panel"]]),
+  pathway_ora_sha256 = sha256_file(required_paths[["pathway_ora"]]),
+  query_manifest_sha256 = sha256_file(required_paths[["query_manifest"]]),
   panel_manifest_sha256 = sha256_file(required_paths[["panel_manifest"]])
 )
 assert_check(
@@ -601,6 +688,8 @@ if (!args$dry_run && !args$force && file.exists(file.path(output_root, "figure_s
     old_status$config_sha256[[1L]] == current_hashes$config_sha256 &&
     old_status$similarity_panel_sha256[[1L]] == current_hashes$similarity_panel_sha256 &&
     old_status$pathway_panel_sha256[[1L]] == current_hashes$pathway_panel_sha256 &&
+    old_status$pathway_ora_sha256[[1L]] == current_hashes$pathway_ora_sha256 &&
+    old_status$query_manifest_sha256[[1L]] == current_hashes$query_manifest_sha256 &&
     file.exists(old_manifest_path)
   if (resumable) {
     old_manifest <- fread(old_manifest_path)
@@ -627,7 +716,7 @@ cat("  panel-A tail blocks: ", nrow(tail_counts), "\n", sep = "")
 cat("  panel-B queries: ", nrow(path_summary), "\n", sep = "")
 print(path_summary[, .(
   figure_id, facet_label, query_size, background_size,
-  significant_pathways, displayed_pathways, omitted_by_cap
+  significant_pathways, matched_pathways, displayed_pathways
 )])
 if (args$dry_run) {
   cat("Planned image outputs:\n")
@@ -641,37 +730,86 @@ if (args$dry_run) {
 }
 
 base_font <- as.numeric(config$display$base_font_size)
-make_heatmap <- function(comparison_value, title_value) {
-  d <- copy(sim_display[comparison_id == comparison_value])
-  setorder(d, tail_order, selection_order, pair_order)
-  gene_order <- unique(d$rendered_gene_label)
-  pair_axis_levels <- pair_cfg[order(pair_order),
-                               paste(pair_group, pair_label, sep = "\n")]
-  d[, gene_factor := factor(rendered_gene_label, levels = rev(gene_order))]
-  d[, pair_factor := factor(pair_axis_label, levels = pair_axis_levels)]
-  d[, tail_factor := factor(
-    tail_label, levels = c("Highest similarity", "Lowest similarity")
-  )]
-  ggplot(d, aes(x = pair_factor, y = gene_factor, fill = occurrence_count)) +
+make_heatmap_group <- function(
+    d, group_value, occurrence_max, show_y_axis, show_legend) {
+  group_spec <- group_cfg[pair_group == group_value]
+  pair_levels <- pair_cfg[
+    display_in_panel_a & pair_group == group_value
+  ][order(pair_order), pair_label]
+  gd <- copy(d[pair_group == group_value])
+  gd[, pair_factor := factor(configured_pair_label, levels = pair_levels)]
+  p <- ggplot(
+    gd, aes(x = pair_factor, y = gene_factor, fill = occurrence_count)
+  ) +
     geom_tile(color = "white", linewidth = 0.22) +
     facet_grid(
       rows = vars(tail_factor), scales = "free_y", space = "free_y",
       switch = "y"
     ) +
-    scale_fill_viridis_c(
-      option = config$display$heatmap_viridis_option,
-      name = "Occurrences", begin = 0.05, end = 0.95
+    scale_fill_gradient(
+      low = group_spec$low_color[[1L]],
+      high = group_spec$high_color[[1L]],
+      limits = c(0, occurrence_max),
+      oob = scales::squish,
+      name = paste0(group_value, " occurrences"),
+      guide = guide_colorbar(
+        direction = "horizontal", title.position = "top",
+        barwidth = grid::unit(1.5, "cm"),
+        barheight = grid::unit(0.22, "cm")
+      )
     ) +
-    labs(title = title_value, x = "Paired AD-versus-NCI ternary states", y = NULL) +
+    labs(title = group_value, x = NULL, y = NULL) +
     theme_bw(base_size = base_font) +
     theme(
-      plot.title = element_text(face = "bold", size = base_font + 1),
+      plot.title = element_text(
+        face = "bold", hjust = 0.5, size = base_font + 0.5
+      ),
       axis.text.x = element_text(angle = 45, hjust = 1, size = base_font - 1.2),
       axis.text.y = element_text(size = base_font - 2.0),
       strip.placement = "outside",
       strip.text.y.left = element_text(angle = 0, face = "bold"),
       panel.spacing.y = grid::unit(0.35, "lines"),
-      plot.margin = margin(4, 6, 4, 4)
+      legend.position = if (show_legend) "bottom" else "none",
+      legend.title = element_text(size = base_font - 1),
+      legend.text = element_text(size = base_font - 1.5),
+      plot.margin = margin(2, 2, 2, 2)
+    )
+  if (!show_y_axis) {
+    p <- p + theme(
+      axis.text.y = element_blank(),
+      axis.ticks.y = element_blank(),
+      strip.text.y.left = element_blank(),
+      strip.background.y = element_blank()
+    )
+  }
+  p
+}
+
+make_heatmap <- function(
+    comparison_value, title_value, occurrence_max, show_legends = TRUE) {
+  d <- copy(sim_display[comparison_id == comparison_value])
+  setorder(d, tail_order, selection_order, pair_order)
+  gene_order <- unique(d$rendered_gene_label)
+  d[, gene_factor := factor(rendered_gene_label, levels = rev(gene_order))]
+  d[, tail_factor := factor(
+    tail_label, levels = c("Highest similarity", "Lowest similarity")
+  )]
+  group_values <- group_cfg$pair_group
+  group_plots <- lapply(seq_along(group_values), function(i) {
+    make_heatmap_group(
+      d, group_values[[i]], occurrence_max,
+      show_y_axis = i == 1L, show_legend = show_legends
+    )
+  })
+  group_widths <- vapply(group_values, function(group_value) {
+    sum(pair_cfg$display_in_panel_a & pair_cfg$pair_group == group_value)
+  }, numeric(1))
+  wrap_plots(group_plots, nrow = 1L, widths = group_widths) +
+    plot_annotation(
+      title = title_value,
+      theme = theme(plot.title = element_text(
+        face = "bold", size = base_font + 1
+      ))
     )
 }
 
@@ -685,17 +823,14 @@ plot_limits_for_figure <- function(figure_value) {
   list(x = c(0, x_max), color = color, size = size)
 }
 
-make_pathway_plot <- function(query_value, limits) {
+make_pathway_plot <- function(query_value, limits, show_legend = TRUE) {
   summary <- path_summary[query_id == query_value]
   d <- copy(path_display[query_id == query_value & record_type == "pathway"])
   subtitle <- paste0(
-    "n=", summary$query_size, ", N=", summary$background_size,
-    "; ", summary$significant_pathways, " significant; ",
-    summary$displayed_pathways, " shown"
+    "n/N=", summary$query_size, "/", summary$background_size,
+    "; sig=", summary$significant_pathways, "; shown=",
+    summary$displayed_pathways, "/", summary$matched_pathways
   )
-  if (summary$omitted_by_cap > 0L) {
-    subtitle <- paste0(subtitle, "; ", summary$omitted_by_cap, " omitted by cap")
-  }
   if (!nrow(d)) {
     return(
       ggplot() +
@@ -721,9 +856,10 @@ make_pathway_plot <- function(query_value, limits) {
   )]
   ggplot(d, aes(
     x = gene_ratio, y = pathway_factor,
-    size = overlap_count, color = neg_log10_tail_fdr
+    size = overlap_count, color = neg_log10_tail_fdr,
+    shape = tail_fdr_significant
   )) +
-    geom_point(alpha = 0.9) +
+    geom_point(alpha = 1, stroke = 1.0) +
     scale_x_continuous(
       limits = limits$x,
       labels = scales::percent_format(accuracy = 1),
@@ -735,7 +871,15 @@ make_pathway_plot <- function(query_value, limits) {
       name = expression(-log[10]("BH FDR"))
     ) +
     scale_size_continuous(
-      limits = limits$size, range = c(2.0, 6.0), name = "Overlap"
+      limits = limits$size, range = c(3.0, 6.0), name = "Overlap"
+    ) +
+    scale_shape_manual(
+      values = c(`FALSE` = 1, `TRUE` = 16),
+      limits = c("FALSE", "TRUE"),
+      breaks = c("FALSE", "TRUE"),
+      labels = c("No", "Yes"),
+      drop = FALSE,
+      name = "BH FDR < 0.05"
     ) +
     labs(
       title = summary$facet_label, subtitle = subtitle,
@@ -747,6 +891,7 @@ make_pathway_plot <- function(query_value, limits) {
       plot.subtitle = element_text(size = base_font - 1),
       axis.text.y = element_text(size = base_font - 2),
       panel.grid.major.y = element_blank(),
+      legend.position = if (show_legend) "right" else "none",
       plot.margin = margin(5, 5, 5, 5)
     )
 }
@@ -754,34 +899,46 @@ make_pathway_plot <- function(query_value, limits) {
 build_figure <- function(figure_value) {
   figure_def <- figures[figure_id == figure_value]
   a_defs <- panel_a_cfg[figure_id == figure_value][order(block_order)]
+  occurrence_max <- max(
+    sim_display[figure_id == figure_value, occurrence_count], na.rm = TRUE
+  )
   a_plots <- lapply(seq_len(nrow(a_defs)), function(i) {
-    make_heatmap(a_defs$comparison_id[[i]], a_defs$block_label[[i]])
+    make_heatmap(
+      a_defs$comparison_id[[i]], a_defs$block_label[[i]], occurrence_max,
+      show_legends = i == nrow(a_defs)
+    )
   })
-  if (length(a_plots) == 1L) {
-    a_panel <- a_plots[[1L]] +
-      labs(subtitle = "A. Highest- and lowest-similarity mitochondrial genes")
-  } else {
-    a_panel <- wrap_plots(a_plots, ncol = 1L, guides = "collect") +
-      plot_annotation(title = "A. Similarity occurrence heatmaps by APOE group")
-    a_panel <- a_panel & theme(legend.position = "right")
-  }
+  a_panel <- wrap_plots(a_plots, ncol = 1L) +
+    plot_annotation(
+      title = "A. Highest- and lowest-similarity mitochondrial genes",
+      subtitle = "Same (green), Different (orange), and Opposite (purple)"
+    )
 
   b_defs_fig <- b_defs[figure_id == figure_value][order(facet_order)]
   limits <- plot_limits_for_figure(figure_value)
-  b_plots <- lapply(b_defs_fig$query_id, make_pathway_plot, limits = limits)
-  b_ncol <- if (figure_value == "figure06") 1L else length(b_plots)
-  b_panel <- wrap_plots(b_plots, ncol = b_ncol, guides = "collect") +
-    plot_annotation(title = "B. C2:CP pathway enrichment")
-  b_panel <- b_panel & theme(legend.position = "right")
+  b_plots <- lapply(seq_len(nrow(b_defs_fig)), function(i) {
+    make_pathway_plot(
+      b_defs_fig$query_id[[i]], limits,
+      show_legend = i == nrow(b_defs_fig)
+    )
+  })
+  b_ncol <- if (figure_value == "figure06") 2L else length(b_plots)
+  b_panel <- wrap_plots(b_plots, ncol = b_ncol) +
+    plot_annotation(title = "B. C2:CP pathway matches for 200-gene score tails")
 
   subtitle <- paste0(
     "core_mito; mitochondrial-restricted Yu analogue; ",
     "Human MSigDB C2:CP v", primary$collection_release
   )
   short_caption <- paste0(
-    "Panel A uses stored Phase 10 ranks and observed paired-state counts; ",
-    "missing states are excluded. * denotes directional BH FDR <= 0.05. ",
-    "Panel B: x = gene ratio, size = overlap, color = within-query BH FDR."
+    "Panel A: green = Same, orange = Different, purple = Opposite; (0,0) ",
+    "remains in the score denominator but is not tiled. Missing states are ",
+    "excluded; * denotes directional BH FDR <= 0.05. Panel B shows the ",
+    "top stored pathway matches for both 200-gene tails regardless of FDR; ",
+    "x = gene ratio, size = overlap, color = FDR, filled = FDR < 0.05."
+  )
+  short_caption <- wrap_text(
+    short_caption, if (figure_value == "figure06") 220L else 175L
   )
   combined <- wrap_elements(full = a_panel) / wrap_elements(full = b_panel) +
     plot_layout(heights = c(
@@ -842,29 +999,37 @@ caption_for <- function(figure_value) {
   queries <- paste0(
     b$facet_label, " (n=", b$query_size, ", N=", b$background_size,
     "; ", b$significant_pathways, " FDR-significant; ",
-    b$displayed_pathways, " displayed; ", b$omitted_by_cap, " omitted)"
+    b$matched_pathways, " pathway matches; ",
+    b$displayed_pathways, " displayed)"
   )
   paste0(
     "**Figure ", f$figure_number, ". ", f$title, ".** ",
     "Mitochondrial-restricted Yu analogue using the Phase 10 `core_mito` ",
     "universe. Panel A displays stored highest- and lowest-similarity ",
     "Zhang–Yu rank sets over nominal paired dimensions ", dimensions,
-    ". Heatmap cells are observed paired-state occurrence counts; missing ",
-    "states are excluded rather than assigned to `(0,0)`. Row labels give ",
+    ". Heatmap cells are observed paired-state occurrence counts, grouped as ",
+    "Same (green), Different (orange), and Opposite (purple). The `(0,0)` ",
+    "count remains in each score denominator and companion validation but is ",
+    "not a displayed tile; missing states are excluded rather than assigned ",
+    "to `(0,0)`. Row labels give ",
     "the stored score and observed/nominal coverage; `*` marks stored ",
-    "directional BH FDR <= 0.05. Panel B uses stored Phase 11 one-sided ORA ",
-    "for Human MSigDB C2:CP v", primary$collection_release,
+    "directional BH FDR <= 0.05. Panel B uses the stored top and bottom 200 ",
+    "score-tail queries and Phase 11 one-sided ORA for Human MSigDB C2:CP v",
+    primary$collection_release,
     ". GeneRatio = k/n, BackgroundRatio = M/N, and fold enrichment = ",
     "(k/n)/(M/N); point x, size, and color show GeneRatio, overlap k, and ",
-    "within-query BH FDR. At most ", display_cap,
-    " pathways are displayed per query, and empty FDR-significant results ",
-    "remain explicit. Queries: ", paste(queries, collapse = "; "),
+    "within-query BH FDR. Filled points pass BH FDR < 0.05 and open points ",
+    "do not. The first ", display_cap,
+    " tested pathways with at least one matched query gene are displayed in ",
+    "stored statistical order regardless of FDR, so a highest-similarity ",
+    "tail remains visible even when none of its pathways passes FDR. Queries: ",
+    paste(queries, collapse = "; "),
     ". `all_mito_related` and MitoPathways are sensitivity profiles and are ",
     "not used in this primary figure."
   )
 }
 
-staging_root <- file.path(output_root, paste0(".yu_figures_3_to_6.staging.", Sys.getpid()))
+staging_root <- file.path(output_root, paste0("yu_figures_3_to_6.staging.", Sys.getpid()))
 dir.create(staging_root, recursive = TRUE, showWarnings = FALSE)
 on.exit(if (dir.exists(staging_root)) unlink(staging_root, recursive = TRUE), add = TRUE)
 
@@ -915,6 +1080,8 @@ for (i in seq_len(nrow(figures))) {
       similarity_panel_sha256 = current_hashes$similarity_panel_sha256,
       pathway_status_sha256 = current_hashes$pathway_status_sha256,
       pathway_panel_sha256 = current_hashes$pathway_panel_sha256,
+      pathway_ora_sha256 = current_hashes$pathway_ora_sha256,
+      query_manifest_sha256 = current_hashes$query_manifest_sha256,
       r_version = as.character(getRversion()),
       ggplot2_version = as.character(packageVersion("ggplot2")),
       patchwork_version = as.character(packageVersion("patchwork")),
@@ -926,6 +1093,11 @@ for (i in seq_len(nrow(figures))) {
   invisible(gc())
 }
 figure_manifest <- rbindlist(manifest_rows, use.names = TRUE)
+figure_manifest[format == "pdf", page_count := vapply(
+  basename(artifact_path),
+  function(filename) pdf_pages(file.path(staging_root, filename)),
+  integer(1)
+)]
 
 assert_check(
   "eight_primary_images", nrow(figure_manifest) == 8L &&
@@ -1005,6 +1177,8 @@ status <- data.table(
   similarity_panel_sha256 = current_hashes$similarity_panel_sha256,
   pathway_status_sha256 = current_hashes$pathway_status_sha256,
   pathway_panel_sha256 = current_hashes$pathway_panel_sha256,
+  pathway_ora_sha256 = current_hashes$pathway_ora_sha256,
+  query_manifest_sha256 = current_hashes$query_manifest_sha256,
   panel_manifest_sha256 = current_hashes$panel_manifest_sha256,
   displayed_similarity_sha256 = sha256_file(
     file.path(staging_root, "displayed_similarity_data.tsv.gz")

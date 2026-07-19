@@ -8,9 +8,12 @@ the validated Phase 10 mitochondrial-similarity phase and the validated Phase
 production tables into mitochondrial analogues of Yu et al. Figures 3, 4, 5,
 and 6. Figure generation is not assigned a pipeline phase number.
 
-Execution status on 2026-07-19: the workflow completed locally from the
-validated Minerva production bundles. Four PDF and four 300-dpi PNG figures
-were written under `results/figures/figures03_to_06/`; all 60 blocking checks pass and
+Execution status on 2026-07-19: the corrected workflow completed locally from
+the validated Minerva production bundles. Panel-A columns are grouped into
+separately colored Same, Different, and Opposite blocks, and panel B shows the
+best-ranked pathway matches for both 200-gene score tails even when none pass
+BH FDR. Four PDF and four 300-dpi PNG figures were regenerated under
+`results/figures/figures03_to_06/`; all 71 blocking checks pass and
 `figure_status.tsv` is `validated_complete`.
 
 The figure workflow will:
@@ -18,9 +21,9 @@ The figure workflow will:
 - validate the complete Phase 10 and Phase 11 production handoffs;
 - select the prespecified primary downstream profile;
 - draw similarity occurrence heatmaps from stored Phase 11 panel-A rows;
-- draw pathway-enrichment dot plots from stored Phase 11 panel-B rows;
-- preserve explicit empty pathway facets when no pathway passes the frozen
-  FDR threshold;
+- draw pathway-analysis dot plots from the complete stored Phase 11 ORA table;
+- retain the best-ranked matched pathways for both high- and low-score tails,
+  while distinguishing FDR-significant from nonsignificant results;
 - assemble four complete Yu-style figure analogues;
 - write captions, displayed-data tables, checks, and provenance manifests;
   and
@@ -111,6 +114,7 @@ not require another Minerva job.
 | Phase 11 production status | `validated_complete`; all blocking checks pass | Ready |
 | Panel-ready similarity data | 3,780 rows in `similarity_panel_data.tsv.gz` | Ready |
 | Panel-ready pathway data | 75,411 rows in `pathway_panel_data.tsv.gz` | Ready |
+| Complete stored ORA data | 102,336 rows in `similarity_tail_pathway_ora.tsv.gz` | Ready |
 | Phase 10 disk footprint | Approximately 23 MB | Small local input |
 | Phase 11 disk footprint | Approximately 9 MB | Small local input |
 | Required R packages | `data.table`, `ggplot2`, `patchwork`, `scales`, `yaml`, and `digest` installed | Ready |
@@ -154,8 +158,8 @@ local machine.
 | Panel-A feature identity | Gene symbol | Exact assay feature; disambiguated display symbol |
 | Pathway background | All analyzed genes reported by Yu | Comparison-specific ranking-eligible mitochondrial genes |
 | Pathway reference | C2:CP release not reported | Human MSigDB C2:CP v2026.1.Hs |
-| Empty pathway result | Not shown in the paper | Explicit empty facet at BH FDR 0.05 |
-| Display cap | Only shown pathways visible | Deterministic first 15 significant pathways per query, with omitted count recorded |
+| Nonsignificant pathway result | Not clearly distinguished | Retained as an open point; only filled points pass BH FDR 0.05 |
+| Display cap | Only shown pathways visible | Deterministic first 15 tested pathways with positive overlap per query |
 | Sensitivity analyses | Not applicable | `all_mito_related` and MitoPathways retained as labeled, nonprimary options |
 
 The caption of every primary figure must state that it is a
@@ -200,14 +204,15 @@ acceptance checks.
 | 6 | A, e2 | `female_vs_male_e2` | high 10 + low 10 | 54 |
 | 6 | A, e33 | `female_vs_male_e33` | high 10 + low 10 | 54 |
 | 6 | A, e4 | `female_vs_male_e4` | high 10 + low 10 | 54 |
-| 6 | B, e2 | `female_vs_male_e2` | low 200 | — |
-| 6 | B, e33 | `female_vs_male_e33` | low 200 | — |
-| 6 | B, e4 | `female_vs_male_e4` | low 200 | — |
+| 6 | B, e2 | `female_vs_male_e2` | high 200 + low 200 | — |
+| 6 | B, e33 | `female_vs_male_e33` | high 200 + low 200 | — |
+| 6 | B, e4 | `female_vs_male_e4` | high 200 + low 200 | — |
 
-The Figure 6 panel-B decision is frozen to `low_score`. Yu Results section
-3.5 describes pathway analysis of the bottom 200 genes, while the caption
-uses the phrase "greatest sex differences." Both refer to the most-divergent
-tail. The figure workflow must not substitute the high-score tail.
+The corrected panel-B rule is uniform across all six comparisons: sort the
+eligible genes by the stored Phase 10 similarity score, use the stored top 200
+and bottom 200 rank sets, and display pathway matches for both. Figure 6
+therefore contains paired highest- and lowest-similarity pathway facets within
+each APOE group.
 
 ### Panel A: similarity occurrence heatmaps
 
@@ -241,19 +246,22 @@ when a category has zero occurrences:
 
 | Order | `pair_column` | Display | Interpretation | Header group |
 |---:|---|---|---|---|
-| 1 | `S_pos1_pos1` | `(+1,+1)` | significant up in both | Same direction |
-| 2 | `S_neg1_neg1` | `(-1,-1)` | significant down in both | Same direction |
+| 1 | `S_pos1_pos1` | `(+1,+1)` | significant up in both | Same |
+| 2 | `S_neg1_neg1` | `(-1,-1)` | significant down in both | Same |
 | 3 | `S_pos1_0` | `(+1,0)` | significant up only in first | Different |
 | 4 | `S_neg1_0` | `(-1,0)` | significant down only in first | Different |
 | 5 | `S_0_pos1` | `(0,+1)` | significant up only in second | Different |
 | 6 | `S_0_neg1` | `(0,-1)` | significant down only in second | Different |
 | 7 | `S_pos1_neg1` | `(+1,-1)` | significant in opposite directions | Opposite |
 | 8 | `S_neg1_pos1` | `(-1,+1)` | significant in opposite directions | Opposite |
-| 9 | `S_0_0` | `(0,0)` | nonsignificant in both observed tests | Neither significant |
+| 9 | `S_0_0` | `(0,0)` | nonsignificant in both observed tests | Not tiled |
 
 A zero `occurrence_count` means no **observed paired dimension** had that
 state pair. It must never represent an imputed missing pair. The script must
-not reconstruct these counts from Phase 10 or independently regroup them.
+not reconstruct these counts from Phase 10. The `(0,0)` count remains in the
+score denominator and is validated with the other eight cells, but it is not
+displayed because the corrected Yu-style heatmap has only Same, Different,
+and Opposite blocks.
 
 #### Row order and labels
 
@@ -272,24 +280,24 @@ For each comparison:
 No feature may be filtered after rank-tail selection. In particular, panel A
 must not remove a ranked feature because its stored FDR exceeds 0.05.
 
-The occurrence scale will use one colorblind-safe sequential scale per full
-figure. Figure 6's three APOE blocks will share one fill scale because they
-all have 54 nominal dimensions. The nine state-pair columns will receive
-fixed group labels so the visual grammar remains close to Yu's same,
-different, and opposite organization.
+The displayed columns form three blocks with their own sequential color
+legends: Same is green, Different is orange, and Opposite is purple. All three
+legends use the same occurrence-count limits within a full figure, so
+intensities remain quantitatively comparable. Figure 6 shares those limits
+across its three APOE blocks.
 
 #### Expected primary panel-A sizes
 
 | Figure | Features | State-pair rows |
 |---|---:|---:|
-| 3A | 25 high + 25 low = 50 | 450 |
-| 4A | 25 high + 25 low = 50 | 450 |
-| 5A | 25 high + 25 low = 50 | 450 |
-| 6A | 3 × (10 high + 10 low) = 60 | 540 |
-| Total | 210 displayed feature records | 1,890 |
+| 3A | 25 high + 25 low = 50 | 400 |
+| 4A | 25 high + 25 low = 50 | 400 |
+| 5A | 25 high + 25 low = 50 | 400 |
+| 6A | 3 × (10 high + 10 low) = 60 | 480 |
+| Total | 210 displayed feature records | 1,680 |
 
-These 1,890 rows are exactly the `core_mito` half of the 3,780-row Phase 11
-similarity panel table.
+The script first validates all 1,890 `core_mito` source rows, including the
+210 `(0,0)` rows, then writes the exact 1,680 rows tiled in panel A.
 
 ### Panel B: pathway-enrichment dot plots
 
@@ -299,23 +307,25 @@ Panel B reads:
 
 ```text
 results/minerva_production/11_pathway/pathway_panel_data.tsv.gz
+results/minerva_production/11_pathway/similarity_tail_pathway_ora.tsv.gz
+results/minerva_production/11_pathway/pathway_query_manifest.tsv
 results/minerva_production/11_pathway/downstream_panel_manifest.tsv
 ```
 
-The manifest, not the presence of significant rows, defines which query
-facets must exist. For every required query, the script will:
+The query manifest defines the 12 primary high/low 200-gene queries. For each
+query, the script will:
 
-1. filter to `profile_id == "primary_yu_mito"`;
+1. require `analysis_universe == "core_mito"` and the frozen C2:CP collection;
 2. require `test_status == "tested"`;
-3. require stored `tail_fdr_bh < 0.05`;
+3. require `overlap_count > 0` for a displayed pathway match;
 4. order by stored `statistical_order`;
 5. select at most the first 15 pathways for display;
-6. retain the complete number significant before applying the visual cap;
-7. record the number omitted only because of that cap; and
-8. render an explicit empty facet when zero pathways pass.
+6. retain and report the complete number passing stored
+   `tail_fdr_bh < 0.05`; and
+7. show nonsignificant matches rather than dropping the entire high tail.
 
 The script must not recompute ORA, adjust P values again, choose a nominal
-P-value cutoff, or fill an empty panel with pathways from another profile.
+P-value cutoff, or call an open nonsignificant point enriched.
 
 #### Dot-plot encodings
 
@@ -324,18 +334,20 @@ Use the stored values as follows:
 - x-axis: `gene_ratio = overlap_count / query_size`;
 - point size: `overlap_count`;
 - point color: `-log10(tail_fdr_bh)`;
+- point shape: filled when `tail_fdr_bh < 0.05`, open otherwise;
 - y-axis: `pathway_label` in stored statistical order;
 - Figures 3–5 facets: high-score tail followed by low-score tail; and
-- Figure 6 facets: e2, e33, and e4 low-score queries.
+- Figure 6 facets: high and low tails paired within e2, e33, and e4.
 
 The facets within one figure will share x, color, and size scales. A pathway
 label will be wrapped deterministically at a configured width without
 changing the underlying name.
 
-Each empty facet will retain its title and display:
+If a query has no tested pathway with positive overlap, its facet retains its
+title and displays:
 
 ```text
-No C2:CP pathways at BH FDR < 0.05
+No tested pathways share a gene with this 200-gene tail
 ```
 
 Gene ratio, background ratio, and fold enrichment must not be conflated. The
@@ -354,21 +366,24 @@ Only gene ratio is plotted on the x-axis.
 The current validated Phase 11 input produces the following deterministic
 display baseline:
 
-| Panel-B query | Query/background | FDR-significant | Displayed | Omitted by cap |
+| Panel-B query | Query/background | Positive-overlap matches | FDR-significant | Displayed |
 |---|---:|---:|---:|---:|
-| Figure 3 high | 200 / 700 | 0 | 0 | 0 |
-| Figure 3 low | 200 / 700 | 81 | 15 | 66 |
-| Figure 4 high | 200 / 708 | 0 | 0 | 0 |
-| Figure 4 low | 200 / 708 | 58 | 15 | 43 |
-| Figure 5 high | 200 / 686 | 0 | 0 | 0 |
-| Figure 5 low | 200 / 686 | 53 | 15 | 38 |
-| Figure 6 e2 low | 200 / 732 | 39 | 15 | 24 |
-| Figure 6 e33 low | 200 / 705 | 52 | 15 | 37 |
-| Figure 6 e4 low | 200 / 679 | 29 | 15 | 14 |
+| Figure 3 high | 200 / 700 | 241 | 0 | 15 |
+| Figure 3 low | 200 / 700 | 292 | 81 | 15 |
+| Figure 4 high | 200 / 708 | 283 | 0 | 15 |
+| Figure 4 low | 200 / 708 | 294 | 58 | 15 |
+| Figure 5 high | 200 / 686 | 231 | 0 | 15 |
+| Figure 5 low | 200 / 686 | 295 | 53 | 15 |
+| Figure 6 e2 high | 200 / 732 | 276 | 0 | 15 |
+| Figure 6 e2 low | 200 / 732 | 301 | 39 | 15 |
+| Figure 6 e33 high | 200 / 705 | 267 | 0 | 15 |
+| Figure 6 e33 low | 200 / 705 | 310 | 52 | 15 |
+| Figure 6 e4 high | 200 / 679 | 286 | 0 | 15 |
+| Figure 6 e4 low | 200 / 679 | 273 | 29 | 15 |
 
-The zero high-score results in Figures 3–5 are valid scientific results and
-must appear as explicit empty high-score facets. They are not errors and must
-not be hidden by plotting only rows that pass FDR.
+The zero high-tail FDR counts remain visible as open points. This separates
+the existence of pathway matches from evidence of statistically significant
+overrepresentation.
 
 ### Figure assembly
 
@@ -382,8 +397,8 @@ Figures 3–5 will place panel A above panel B and use the following titles:
 
 Figure 6 panel A will contain three vertically arranged heatmap blocks in the
 order e2, e33, and e4. Each block contains both highest- and lowest-similarity
-genes. Figure 6 panel B will contain the three low-score pathway facets in the
-same APOE order.
+genes. Figure 6 panel B will pair highest- and lowest-similarity pathway
+facets in the same APOE order.
 
 Every composite will:
 
@@ -403,7 +418,7 @@ review and presentation.
 | 3 | 11 in | 15 in | 1 | 3300 × 4500 |
 | 4 | 11 in | 15 in | 1 | 3300 × 4500 |
 | 5 | 11 in | 15 in | 1 | 3300 × 4500 |
-| 6 | 12 in | 22 in | 1 | 3600 × 6600 |
+| 6 | 12 in | 30 in | 1 | 3600 × 9000 |
 
 Use `grDevices::cairo_pdf` for PDF and a headless Cairo PNG device for PNG.
 The local R installation reports both capabilities. Dimensions may be
@@ -428,7 +443,10 @@ Every primary caption must state:
 - that the pathway reference is Human MSigDB C2:CP v2026.1.Hs;
 - that point x, size, and color encode gene ratio, overlap count, and
   within-query BH FDR;
-- that no significant-pathway facets are displayed explicitly; and
+- that filled versus open points distinguish FDR-significant from
+  nonsignificant pathway matches;
+- that the display includes top-ranked positive-overlap matches regardless of
+  FDR and does not label nonsignificant matches as enriched; and
 - that `all_mito_related` and MitoPathways are sensitivity profiles.
 
 ## Inputs and dependencies
@@ -464,9 +482,11 @@ results/minerva_production/11_pathway/pathway_status.tsv
 results/minerva_production/11_pathway/pathway_checks.tsv
 results/minerva_production/11_pathway/pathway_artifacts.tsv
 results/minerva_production/11_pathway/pathway_reference_manifest.tsv
+results/minerva_production/11_pathway/pathway_query_manifest.tsv
 results/minerva_production/11_pathway/downstream_panel_manifest.tsv
 results/minerva_production/11_pathway/similarity_panel_data.tsv.gz
 results/minerva_production/11_pathway/pathway_panel_data.tsv.gz
+results/minerva_production/11_pathway/similarity_tail_pathway_ora.tsv.gz
 ```
 
 The required production conditions are:
@@ -478,6 +498,8 @@ comparison_families = 6
 downstream_panel_definitions = 27
 similarity_panel_rows = 3780
 pathway_panel_rows = 75411
+ora_rows = 102336
+query_families = 24
 failed_checks = 0
 ```
 
@@ -500,8 +522,11 @@ It will freeze at minimum:
 - output root `results/figures/figures03_to_06`;
 - primary profile, universe, and pathway collection;
 - Figure 3–6 comparison, panel, tail, and requested-rank-set mapping;
-- nine state-pair columns, labels, groups, and order;
+- nine validated state-pair columns, eight displayed columns, group colors,
+  and order;
 - pathway FDR threshold `0.05` and display cap `15`;
+- the display rule `tested + overlap_count > 0`, ordered by stored
+  `statistical_order`;
 - row-label and pathway-label wrapping rules;
 - titles, output filenames, dimensions, DPI, and graphics devices;
 - color palettes and common theme settings;
@@ -583,43 +608,44 @@ the environment-specific scientific result tree.
 - preserve stored `tail_order`, `selection_order`, and `pair_order`;
 - validate that counts are nonnegative integers;
 - validate that state-pair counts sum to `paired_tests` for every feature;
+- retain `(0,0)` for that reconciliation, then exclude it from plotted rows;
 - build score, FDR-marker, and coverage display labels without changing true
   feature identity; and
-- write the exact 1,890-row primary display table used by the plots.
+- write the exact 1,680-row primary display table used by the plots.
 
 ### 4. Draw panel-A heatmaps
 
 - create one heatmap for each Figure 3–5 comparison;
 - create one heatmap block for each Figure 6 APOE group;
 - show high and low tails as visibly separate row blocks;
-- retain all nine fixed columns, including zero-count categories;
-- use one occurrence-count fill scale per composite figure;
-- label state-pair groups and ternary meanings clearly; and
+- retain all eight score-contributing Same/Different/Opposite columns,
+  including zero-count categories;
+- use green, orange, and purple sequential scales for Same, Different, and
+  Opposite with common limits per composite figure;
+- label the three groups and ternary meanings clearly; and
 - never derive a score, rank, FDR, or occurrence count during plotting.
 
 ### 5. Build deterministic panel-B display data
 
-- instantiate all nine required primary queries from
-  `downstream_panel_manifest.tsv`;
-- join each query to the complete Phase 11 pathway-panel rows;
-- apply only the frozen `tested`, tail-FDR, statistical-order, and 15-pathway
-  display rules;
-- preserve one explicit record for each empty query;
-- record significant, displayed, and omitted counts per query;
+- instantiate all 12 `core_mito` high/low 200-gene queries from
+  `pathway_query_manifest.tsv`;
+- join each query to the complete Phase 11 ORA rows;
+- apply only the frozen `tested`, positive-overlap, statistical-order, and
+  15-pathway display rules;
+- preserve one explicit record if a query has no positive-overlap pathway;
+- record matched, FDR-significant, displayed, and omitted counts per query;
 - validate every selected row against its source row and query sizes; and
 - write a display table containing selected pathways plus explicit empty-query
   records.
 
 ### 6. Draw panel-B dot plots
 
-- create separate high- and low-tail subplots for Figures 3–5 so an empty
-  high tail cannot disappear during filtering;
-- create e2, e33, and e4 low-tail subplots for Figure 6;
+- create separate high- and low-tail subplots for Figures 3–5;
+- create paired high/low subplots for e2, e33, and e4 in Figure 6;
 - use stored gene ratio, overlap count, and tail FDR directly;
 - share scales within each composite figure;
 - show an explicit text panel for every empty query; and
-- annotate the number of significant pathways omitted by the display cap in
-  the companion table or caption, not by adding arbitrary extra points.
+- distinguish FDR-significant filled points from nonsignificant open points.
 
 ### 7. Assemble figures and captions
 
@@ -679,9 +705,9 @@ figure06_mitochondrial_yu_analogue.png
 
 | File | Contents |
 |---|---|
-| `displayed_similarity_data.tsv.gz` | Exact 1,890 primary panel-A rows with plot order and rendered labels. |
-| `displayed_pathway_data.tsv.gz` | Exact displayed pathway rows plus explicit empty-query rows and display ranks. |
-| `pathway_display_summary.tsv` | One row per required query with query/background size and significant/displayed/omitted counts. |
+| `displayed_similarity_data.tsv.gz` | Exact 1,680 primary panel-A rows with plot order, color group, and rendered labels. |
+| `displayed_pathway_data.tsv.gz` | Exact displayed matched-pathway rows, FDR significance flags, and display ranks. |
+| `pathway_display_summary.tsv` | One row per required query with query/background size and matched/significant/displayed/omitted counts. |
 | `figure_captions.md` | Final caption for each of the four primary figures. |
 | `figure_manifest.tsv` | One row per PDF/PNG with source IDs, dimensions, DPI, bytes, hashes, package versions, and validation status. |
 | `figure_checks.tsv` | Blocking and informational input, selection, plotting, artifact, and provenance checks. |
@@ -690,12 +716,12 @@ figure06_mitochondrial_yu_analogue.png
 Use versioned schemas:
 
 ```text
-yu_mitochondrial_displayed_similarity_v1
-yu_mitochondrial_displayed_pathway_v1
-yu_mitochondrial_pathway_display_summary_v1
-yu_mitochondrial_figure_manifest_v1
-yu_mitochondrial_figure_checks_v1
-yu_mitochondrial_figure_status_v1
+yu_mitochondrial_displayed_similarity_v2
+yu_mitochondrial_displayed_pathway_v2
+yu_mitochondrial_pathway_display_summary_v2
+yu_mitochondrial_figure_manifest_v2
+yu_mitochondrial_figure_checks_v2
+yu_mitochondrial_figure_status_v2
 ```
 
 No new figure or companion table may be written beneath
@@ -750,9 +776,11 @@ test -r results/minerva_production/10_similarity/similarity_artifacts.tsv
 test -r results/minerva_production/11_pathway/pathway_status.tsv
 test -r results/minerva_production/11_pathway/pathway_checks.tsv
 test -r results/minerva_production/11_pathway/pathway_artifacts.tsv
+test -r results/minerva_production/11_pathway/pathway_query_manifest.tsv
 test -r results/minerva_production/11_pathway/downstream_panel_manifest.tsv
 test -r results/minerva_production/11_pathway/similarity_panel_data.tsv.gz
 test -r results/minerva_production/11_pathway/pathway_panel_data.tsv.gz
+test -r results/minerva_production/11_pathway/similarity_tail_pathway_ora.tsv.gz
 test -r config/yu_mitochondrial_figures_3_to_6.yml
 
 Rscript -e '
@@ -807,9 +835,9 @@ Rscript scripts/figures/generate_yu_mitochondrial_figures_3_to_6.R \
 The dry run must:
 
 - validate all inputs without writing final artifacts;
-- report the 12 panel-A tail blocks and nine panel-B queries;
-- report 1,890 selected panel-A rows;
-- report the significant/displayed/omitted baseline by panel-B query;
+- report the 12 panel-A tail blocks and 12 panel-B queries;
+- report 1,680 selected panel-A rows;
+- report the matched/significant/displayed baseline by panel-B query;
 - report four planned PDF and four planned PNG paths; and
 - confirm that no Phase 05 or Phase 07 path is resolved.
 
@@ -835,14 +863,14 @@ sim_display <- fread(file.path(root, "displayed_similarity_data.tsv.gz"))
 path_summary <- fread(file.path(root, "pathway_display_summary.tsv"))
 
 stopifnot(
-  status$schema_version == "yu_mitochondrial_figure_status_v1",
+  status$schema_version == "yu_mitochondrial_figure_status_v2",
   status$validation_status == "validated_complete",
   all(checks$passed[checks$blocking]),
   nrow(manifest) == 8L,
   all(manifest$validation_status == "validated_complete"),
   all(file.exists(manifest$artifact_path)),
-  nrow(sim_display) == 1890L,
-  nrow(path_summary) == 9L,
+  nrow(sim_display) == 1680L,
+  nrow(path_summary) == 12L,
   sum(manifest$format == "pdf") == 4L,
   sum(manifest$format == "png") == 4L
 )
@@ -873,26 +901,29 @@ figure at normal manuscript zoom for clipped labels and unreadable text.
 
 - Figures 3–5 each contain exactly 25 high and 25 low features.
 - Figure 6 contains exactly 10 high and 10 low features for each APOE group.
-- Every selected feature has exactly nine ordered state-pair rows.
-- The final primary display table contains exactly 1,890 rows.
+- Every selected feature has exactly nine validated source state-pair rows and
+  eight displayed rows.
+- The final primary display table contains exactly 1,680 rows.
 - Feature, tail, and pair orders reproduce stored Phase 11 order fields.
 - State-pair counts are nonnegative and sum to `paired_tests` per feature.
-- Zero-count categories remain visible.
+- Zero-count categories remain visible within Same, Different, and Opposite.
+- `(0,0)` is excluded only after nine-cell count reconciliation.
 - No feature is removed by a post-selection FDR filter.
 - Stored display labels, scores, FDR values, and coverage are unchanged.
 
 ### Panel-B checks
 
-- Exactly nine primary query facets are instantiated from the manifest.
-- Figures 3–5 use both high- and low-score 200-gene queries.
-- Figure 6 uses only the three low-score 200-gene queries.
+- Exactly 12 primary query facets are instantiated from the query manifest.
+- Figures 3–6 use both high- and low-score 200-gene queries.
 - Every displayed point has `test_status == "tested"` and
-  `tail_fdr_bh < 0.05`.
+  `overlap_count > 0`.
 - Every displayed order reproduces stored `statistical_order`.
 - No query displays more than 15 pathways.
-- Significant, displayed, and omitted counts reconcile exactly.
-- Figure 3–5 high-score facets remain present and explicitly empty for the
-  current validated inputs.
+- Matched, displayed, and omitted counts reconcile exactly.
+- Stored `tail_fdr_bh < 0.05` flags exactly determine filled versus open
+  points.
+- High-score facets remain populated even when their FDR-significant count is
+  zero.
 - Plotted x, size, and color values reproduce stored gene ratio, overlap, and
   tail FDR.
 - No P value or FDR is recalculated.
@@ -915,8 +946,10 @@ figure at normal manuscript zoom for clipped labels and unreadable text.
 - All gene labels are readable at normal manuscript zoom.
 - No score, coverage, pathway, axis, facet, or legend label is clipped.
 - High- and low-similarity blocks are visually distinct.
-- Same, different, opposite, and neither-significant state columns are clear.
-- Empty pathway facets are obvious and cannot be mistaken for missing output.
+- Same, Different, and Opposite state blocks and their green, orange, and
+  purple legends are clear.
+- Open nonsignificant points cannot be mistaken for FDR-significant
+  enrichment.
 - Figure 6 e2, e33, and e4 blocks are in the frozen order.
 - Color palettes remain interpretable in grayscale and for common forms of
   color-vision deficiency.
@@ -939,8 +972,9 @@ figure at normal manuscript zoom for clipped labels and unreadable text.
 - Primary figures use only `core_mito` and C2:CP v2026.1.Hs.
 - Panel A uses stored occurrence counts, score ranks, FDR, and coverage.
 - Panel B uses stored ORA ratios, overlap, FDR, and statistical order.
-- Figure 6 uses the low-score pathway tail.
-- Empty FDR-significant pathway results remain explicit.
+- Figure 6 uses both high- and low-score pathway tails.
+- Nonsignificant pathway matches remain explicit and are not described as
+  enriched.
 - Captions accurately disclose the mitochondrial universe, missingness,
   pathway background, reference release, and FDR scope.
 
@@ -982,7 +1016,7 @@ The figure workflow is complete when:
 - Figures 3–6 are exported as four PDF and four PNG files under
   `results/figures/figures03_to_06/`;
 - panel-A and panel-B display selections match the frozen rules;
-- explicit empty pathway facets are retained;
+- high- and low-tail pathway matches are retained regardless of FDR;
 - captions and companion tables are complete;
 - all automated and visual checks pass;
 - every artifact and input is hashed in the figure manifest; and
@@ -997,7 +1031,7 @@ The figure workflow is complete when:
 - [x] Implement strict CLI and dry-run behavior.
 - [x] Implement upstream status, check, schema, artifact, and hash validation.
 - [x] Implement deterministic panel-A selection and occurrence heatmaps.
-- [x] Implement deterministic panel-B selection and explicit empty facets.
+- [x] Implement deterministic panel-B matched-pathway selection for both tails.
 - [x] Implement Figure 3–6 assembly and caption templates.
 - [x] Implement atomic Cairo PDF/PNG export.
 - [x] Implement displayed-data, summary, check, manifest, and status tables.
@@ -1016,7 +1050,8 @@ The figure workflow is complete when:
 ### Finalize
 
 - [x] Freeze final dimensions and any presentation-only config adjustments.
-- [x] Confirm the Figure 3–5 high-score pathway facets remain explicitly empty.
+- [x] Confirm all high-score pathway facets show the top stored matches and
+  mark their zero FDR-significant counts with open points.
 - [x] Confirm captions disclose all universe, coverage, background, release,
   and FDR details.
 - [x] Confirm no prior-phase result changed.

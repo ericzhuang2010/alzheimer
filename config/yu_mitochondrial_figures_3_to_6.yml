@@ -1,4 +1,4 @@
-schema_version: yu_mitochondrial_figures_config_v1
+schema_version: yu_mitochondrial_figures_config_v2
 
 inputs:
   expected_similarity_status_schema: mitochondrial_similarity_status_v1
@@ -9,6 +9,8 @@ inputs:
   expected_pathway_artifacts_schema: pathway_artifacts_v1
   expected_similarity_panel_schema: mitochondrial_similarity_panel_data_v1
   expected_pathway_panel_schema: mitochondrial_pathway_panel_data_v1
+  expected_pathway_ora_schema: similarity_tail_pathway_ora_v1
+  expected_query_manifest_schema: pathway_query_manifest_v1
   expected_downstream_manifest_schema: downstream_panel_manifest_v1
   expected_reference_manifest_schema: pathway_reference_manifest_v1
   expected_validation_status: validated_complete
@@ -17,6 +19,8 @@ inputs:
   expected_downstream_definitions: 27
   expected_similarity_panel_rows: 3780
   expected_pathway_panel_rows: 75411
+  expected_pathway_ora_rows: 102336
+  expected_query_manifest_rows: 24
 
 primary:
   profile_id: primary_yu_mito
@@ -31,47 +35,69 @@ display:
   pathway_label_width: 42
   score_digits: 3
   base_font_size: 8
-  heatmap_viridis_option: C
   pathway_viridis_option: D
-  empty_pathway_message: "No C2:CP pathways at BH FDR < 0.05"
+  empty_pathway_message: "No tested pathways share a gene with this 200-gene tail"
+
+state_pair_groups:
+  - pair_group: Same
+    group_order: 1
+    low_color: "#F7FCF5"
+    high_color: "#238B45"
+  - pair_group: Different
+    group_order: 2
+    low_color: "#FFF5EB"
+    high_color: "#E6550D"
+  - pair_group: Opposite
+    group_order: 3
+    low_color: "#FCFBFD"
+    high_color: "#7A0177"
 
 state_pairs:
   - pair_column: S_pos1_pos1
     pair_label: "(+1,+1)"
-    pair_group: Same direction
+    pair_group: Same
     pair_order: 1
+    display_in_panel_a: true
   - pair_column: S_neg1_neg1
     pair_label: "(-1,-1)"
-    pair_group: Same direction
+    pair_group: Same
     pair_order: 2
+    display_in_panel_a: true
   - pair_column: S_pos1_0
     pair_label: "(+1,0)"
     pair_group: Different
     pair_order: 3
+    display_in_panel_a: true
   - pair_column: S_neg1_0
     pair_label: "(-1,0)"
     pair_group: Different
     pair_order: 4
+    display_in_panel_a: true
   - pair_column: S_0_pos1
     pair_label: "(0,+1)"
     pair_group: Different
     pair_order: 5
+    display_in_panel_a: true
   - pair_column: S_0_neg1
     pair_label: "(0,-1)"
     pair_group: Different
     pair_order: 6
+    display_in_panel_a: true
   - pair_column: S_pos1_neg1
     pair_label: "(+1,-1)"
     pair_group: Opposite
     pair_order: 7
+    display_in_panel_a: true
   - pair_column: S_neg1_pos1
     pair_label: "(-1,+1)"
     pair_group: Opposite
     pair_order: 8
+    display_in_panel_a: true
   - pair_column: S_0_0
     pair_label: "(0,0)"
     pair_group: Neither significant
     pair_order: 9
+    display_in_panel_a: false
 
 figures:
   - figure_id: figure03
@@ -105,9 +131,9 @@ figures:
     figure_number: 6
     title: APOE-dependent sex divergence in mitochondrial transcriptional responses in AD
     width_in: 12
-    height_in: 22
-    panel_a_fraction: 0.56
-    panel_b_fraction: 0.44
+    height_in: 30
+    panel_a_fraction: 0.45
+    panel_b_fraction: 0.55
     pdf_filename: figure06_mitochondrial_yu_analogue.pdf
     png_filename: figure06_mitochondrial_yu_analogue.png
 
@@ -156,54 +182,84 @@ panel_b_queries:
     tail: high_score
     facet_label: Highest similarity
     expected_significant: 0
+    expected_matched: 241
   - figure_id: figure03
     facet_order: 2
     comparison_id: female_vs_male_all_apoe
     tail: low_score
     facet_label: Lowest similarity
     expected_significant: 81
+    expected_matched: 292
   - figure_id: figure04
     facet_order: 1
     comparison_id: e2_vs_e33_all_sexes
     tail: high_score
     facet_label: Highest similarity
     expected_significant: 0
+    expected_matched: 283
   - figure_id: figure04
     facet_order: 2
     comparison_id: e2_vs_e33_all_sexes
     tail: low_score
     facet_label: Lowest similarity
     expected_significant: 58
+    expected_matched: 294
   - figure_id: figure05
     facet_order: 1
     comparison_id: e4_vs_e33_all_sexes
     tail: high_score
     facet_label: Highest similarity
     expected_significant: 0
+    expected_matched: 231
   - figure_id: figure05
     facet_order: 2
     comparison_id: e4_vs_e33_all_sexes
     tail: low_score
     facet_label: Lowest similarity
     expected_significant: 53
+    expected_matched: 295
   - figure_id: figure06
     facet_order: 1
     comparison_id: female_vs_male_e2
-    tail: low_score
-    facet_label: APOE e2 — lowest similarity
-    expected_significant: 39
+    tail: high_score
+    facet_label: APOE e2 - highest similarity
+    expected_significant: 0
+    expected_matched: 276
   - figure_id: figure06
     facet_order: 2
-    comparison_id: female_vs_male_e33
+    comparison_id: female_vs_male_e2
     tail: low_score
-    facet_label: APOE e33 — lowest similarity
-    expected_significant: 52
+    facet_label: APOE e2 - lowest similarity
+    expected_significant: 39
+    expected_matched: 301
   - figure_id: figure06
     facet_order: 3
+    comparison_id: female_vs_male_e33
+    tail: high_score
+    facet_label: APOE e33 - highest similarity
+    expected_significant: 0
+    expected_matched: 267
+  - figure_id: figure06
+    facet_order: 4
+    comparison_id: female_vs_male_e33
+    tail: low_score
+    facet_label: APOE e33 - lowest similarity
+    expected_significant: 52
+    expected_matched: 310
+  - figure_id: figure06
+    facet_order: 5
+    comparison_id: female_vs_male_e4
+    tail: high_score
+    facet_label: APOE e4 - highest similarity
+    expected_significant: 0
+    expected_matched: 286
+  - figure_id: figure06
+    facet_order: 6
     comparison_id: female_vs_male_e4
     tail: low_score
-    facet_label: APOE e4 — lowest similarity
+    facet_label: APOE e4 - lowest similarity
     expected_significant: 29
+    expected_matched: 273
 
 export:
   dpi: 300
@@ -212,9 +268,9 @@ export:
   background: white
 
 schemas:
-  displayed_similarity: yu_mitochondrial_displayed_similarity_v1
-  displayed_pathway: yu_mitochondrial_displayed_pathway_v1
-  pathway_display_summary: yu_mitochondrial_pathway_display_summary_v1
-  figure_manifest: yu_mitochondrial_figure_manifest_v1
-  figure_checks: yu_mitochondrial_figure_checks_v1
-  figure_status: yu_mitochondrial_figure_status_v1
+  displayed_similarity: yu_mitochondrial_displayed_similarity_v2
+  displayed_pathway: yu_mitochondrial_displayed_pathway_v2
+  pathway_display_summary: yu_mitochondrial_pathway_display_summary_v2
+  figure_manifest: yu_mitochondrial_figure_manifest_v2
+  figure_checks: yu_mitochondrial_figure_checks_v2
+  figure_status: yu_mitochondrial_figure_status_v2
