@@ -46,7 +46,7 @@ For each fine cell type and sex-by-APOE stratum, select nuclei satisfying all of
 
 Use every selected nucleus. Do not apply Phase 07's minimum of 20 nuclei per donor-cell-type unit, minimum of five donors per diagnosis arm, `primary_eligible` flag, or contrast `eligibility_status`.
 
-Record cell counts and unique-donor counts for AD and NCI separately. Low counts are warnings, not replication exclusion criteria. A comparison is `not_estimable` only when the model cannot be fit, such as when an arm has zero cells, a required covariate is unavailable or nonfinite, or the design is non-estimable. Every planned comparison must still have one explicit terminal status.
+Record cell counts and unique-donor counts for AD and NCI separately. Low counts are warnings, not replication exclusion criteria. Seurat requires at least three cells in each identity group before dispatching to MAST, so a comparison with fewer than three cells in either arm is `not_estimable`. Other non-estimable cases include an unavailable or nonfinite required covariate and a rank-deficient design. Every planned comparison must still have one explicit terminal status.
 
 ### Six Yu contrasts
 
@@ -75,6 +75,7 @@ Seurat::FindMarkers(
   slot = "data",
   test.use = "MAST",
   min.pct = 0.10,
+  min.cells.group = 3,
   logfc.threshold = 0,
   latent.vars = c("nCount_RNA", "age_death_scaled", "pmi_scaled"),
   densify = FALSE,

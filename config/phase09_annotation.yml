@@ -1,0 +1,87 @@
+schema_version: phase09_annotation_config_v1
+
+references:
+  gencode:
+    path: data/reference/gencode/gencode.v44.basic.annotation.gtf.gz
+    sha256: 3e52f82c63f8fd860bf632ccde10441c05751f4c342ad08c0a98e9e2700171a5
+    version: GENCODE_44
+  mitocarta:
+    path: data/reference/Human.MitoCarta3.0.xls
+    sha256: e6ada0ae8dcd5447a5efb6f77c69a1c10b1ffa66521540a1e81b92c61e5505f2
+    version: MitoCarta_3.0
+  hgnc:
+    path: data/reference/hgnc/hgnc_complete_set_2026-06-05.txt
+    sha256: f3051e4aa6fac82166e1c26638d0077a95b0f66ab62a03e18bb35eb613e40a90
+    release: "2026-06-05"
+    expected_rows: 44997
+    required_columns:
+      - hgnc_id
+      - symbol
+      - name
+      - status
+      - locus_type
+      - prev_symbol
+      - alias_symbol
+      - ensembl_gene_id
+  extended_tier:
+    enabled: true
+    source_zip_path: data/reference/mitochondrial_extended/ReactomePathways.v97.gmt.zip
+    source_zip_sha256: 8c1dbc8578431da5d2d5118262718c60b553a9be3398e93658daa069e4a9afd4
+    source_gmt_path: data/reference/mitochondrial_extended/ReactomePathways.v97.gmt
+    source_gmt_sha256: 89983d5c1f0af11c52edfeee7323eb425580ac6281d387a528562ab1787ce56b
+    derived_gmt_path: data/reference/mitochondrial_extended/mitochondrial_extended_gene_sets.gmt
+    derived_gmt_sha256: f4d8b6c7a74894929028805e5e3cf81523968f8eecc380ac52b47038c5f9b847
+    manifest_path: data/reference/mitochondrial_extended/mitochondrial_extended_manifest.tsv
+    manifest_sha256: 8d77d6782872d6d19eb98a6297c92dda686dfba719199c6c0b6346d4127fb4ec
+    stable_ids:
+      - R-HSA-1592230
+      - R-HSA-5205647
+      - R-HSA-9840373
+      - R-HSA-9841251
+    expected_union_genes: 157
+    expected_mitocarta_core_genes: 77
+    expected_extended_only_genes: 80
+
+annotation:
+  mtDNA_chromosome: chrM
+  mtDNA_noncoding_gene_types:
+    - Mt_rRNA
+    - Mt_tRNA
+  mapping_precedence:
+    - unique_stable_ensembl
+    - unique_current_hgnc_symbol
+    - unique_previous_hgnc_symbol
+    - unique_hgnc_alias
+  allowed_mapping_status:
+    - mapped_ensembl
+    - mapped_current_symbol
+    - mapped_previous_symbol
+    - mapped_alias
+    - ambiguous_previous_symbol
+    - ambiguous_alias
+    - unmapped
+  allowed_tested_status:
+    - contrast_not_estimable
+    - not_in_expression_matrix
+    - present_but_filtered_min_pct
+    - tested_not_significant
+    - significant_up
+    - significant_down
+
+expected:
+  mitocarta_genes: 1136
+  conventional_mtDNA_genes: 37
+  mtDNA_protein_coding_genes: 13
+  mtDNA_tRNA_genes: 22
+  mtDNA_rRNA_genes: 2
+  local_pilot_features: 33538
+  local_pilot_contrasts: 30
+
+schemas:
+  master: gene_annotation_master_v1
+  reference_inventory: mitochondrial_reference_inventory_v1
+  annotated_results: annotated_yu_mast_results_v1
+  qc: mitochondrial_annotation_qc_v1
+  checks: mitochondrial_annotation_checks_v1
+  artifacts: mitochondrial_annotation_artifacts_v1
+  status: mitochondrial_annotation_status_v1

@@ -67,11 +67,11 @@ registry <- data.frame(
   task_mode = c(
     "environment", "parity", "audit", "cohort", "annotations", "qc",
     "normalize", "descriptive", "pseudobulk", "contrasts", "pseudobulk_de",
-    "mast"
+    "mast", "annotate_genes"
   ),
   scope = c(
     "global", "global", "rds", "global", "global", "rds", "rds", "rds",
-    "rds", "global", "rds", "rds"
+    "rds", "global", "rds", "rds", "global"
   ),
   script = c(
     "scripts/00_check_environment.R",
@@ -85,17 +85,19 @@ registry <- data.frame(
     "scripts/07_make_pseudobulk.R",
     "scripts/07_build_contrast_manifest.R",
     "scripts/07_run_pseudobulk_de.R",
-    "scripts/08_run_mast.R"
+    "scripts/08_run_mast.R",
+    "scripts/09_annotate_mitochondrial_genes.R"
   ),
   argument_names = c(
     "config,execution-config,report,status",
-    rep("config,execution-config,manifest-row,task-mode", 11L)
+    rep("config,execution-config,manifest-row,task-mode", 12L)
   ),
   output_schema = c(
     "environment_checks_v1", "parity_v1", "rds_audit_v1", "cohort_v1",
     "mito_annotations_v1", "mito_qc_v1", "normalized_rds_v1",
     "descriptive_v1", "pseudobulk_v1", "contrast_manifest_v1",
-    "pseudobulk_de_v1", "yu_mast_de_v2"
+    "pseudobulk_de_v1", "yu_mast_de_v2",
+    "mitochondrial_annotation_status_v1"
   ),
   stringsAsFactors = FALSE
 )
@@ -104,6 +106,9 @@ registry$argument_names[registry$task_mode == "cohort"] <- paste(
 )
 registry$argument_names[registry$task_mode == "annotations"] <- paste(
   c("config", "execution-config", "features", "task-mode"), collapse = ","
+)
+registry$argument_names[registry$task_mode == "annotate_genes"] <- paste(
+  c("config", "execution-config", "task-mode"), collapse = ","
 )
 
 args <- parse_cli(commandArgs(trailingOnly = TRUE))
@@ -175,6 +180,18 @@ for (i in seq_len(nrow(selected_registry))) {
     manifest_row <- if (is_rds) manifest$manifest_row[[target]] else NA_integer_
     stable_task_id <- if (is_rds) paste(task$task_mode, rds_id, sep = ":") else paste0("global:", task$task_mode)
     script_path <- absolute_path(task$script, root)
+    task_config_path <- if (task$task_mode == "annotate_genes") {
+      phase09_config <- config$project$phase09_annotation_config
+      if (is.null(phase09_config)) {
+        stop("project.phase09_annotation_config is required for annotate_genes", call. = FALSE)
+      }
+      absolute_path(phase09_config, root)
+    } else {
+      analysis_path
+    }
+    if (!file.exists(task_config_path)) {
+      stop("Scientific config does not exist: ", task_config_path, call. = FALSE)
+    }
     graph_rows[[length(graph_rows) + 1L]] <- data.frame(
       execution_stage = execution_stage,
       execution_phase = execution$execution_phase,
@@ -187,7 +204,7 @@ for (i in seq_len(nrow(selected_registry))) {
       scientific_script = task$script,
       script_exists = file.exists(script_path),
       scientific_script_sha256 = sha256_file(script_path),
-      scientific_config_sha256 = sha256_file(analysis_path),
+      scientific_config_sha256 = sha256_file(task_config_path),
       manifest_sha256 = sha256_file(manifest_path),
       argument_names = task$argument_names,
       output_schema = task$output_schema,
@@ -246,7 +263,7 @@ if (args$phase == "environment") {
 # Scientific tasks use either the shared per-RDS runner or the same global
 # scientific entry point in every execution stage.
 implemented_global_modes <- c(
-  "cohort", "annotations", "contrasts"
+  "cohort", "annotations", "contrasts", "annotate_genes"
 )
 unsupported_global <- task_graph$task_mode[
   is.na(task_graph$manifest_row) &
