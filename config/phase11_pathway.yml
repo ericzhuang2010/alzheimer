@@ -1,0 +1,126 @@
+schema_version: phase11_pathway_config_v1
+
+analysis_universes:
+  core_mito:
+    membership_column: in_core_mito
+    role: primary
+  all_mito_related:
+    membership_column: in_all_mito_related
+    role: inclusive_sensitivity
+
+comparisons:
+  - comparison_id: female_vs_male_all_apoe
+    figure_analogue: Figure_3
+    panel_a_requested_k: 25
+    panel_b_tails: [high_score, low_score]
+  - comparison_id: e2_vs_e33_all_sexes
+    figure_analogue: Figure_4
+    panel_a_requested_k: 25
+    panel_b_tails: [high_score, low_score]
+  - comparison_id: e4_vs_e33_all_sexes
+    figure_analogue: Figure_5
+    panel_a_requested_k: 25
+    panel_b_tails: [high_score, low_score]
+  - comparison_id: female_vs_male_e2
+    figure_analogue: Figure_6_e2
+    panel_a_requested_k: 10
+    panel_b_tails: [low_score]
+  - comparison_id: female_vs_male_e33
+    figure_analogue: Figure_6_e33
+    panel_a_requested_k: 10
+    panel_b_tails: [low_score]
+  - comparison_id: female_vs_male_e4
+    figure_analogue: Figure_6_e4
+    panel_a_requested_k: 10
+    panel_b_tails: [low_score]
+
+rank_sets:
+  ora_requested_k: 200
+  tails: [high_score, low_score]
+  figure6_primary_tail: low_score
+
+references:
+  msigdb_c2_cp:
+    collection_id: msigdb_c2_cp_v2026_1
+    release: 2026.1.Hs
+    species: Human
+    identifier_namespace: HGNC_gene_symbols
+    path: data/reference/msigdb/c2.cp.v2026.1.Hs.symbols.gmt
+    source_url: https://www.gsea-msigdb.org/gsea/msigdb/collections.jsp
+    sha256: af1b31c091f5d296438f6ca20fba0286ca31fd8ae84efd6317675e6579968093
+    expected_pathways: 4115
+    minimum_background_members: 5
+  mitocarta_mitopathways:
+    collection_id: mitocarta_mitopathways_v3_0
+    release: MitoCarta3.0
+    species: Human
+    identifier_namespace: HGNC_gene_symbols
+    path: data/reference/Human.MitoCarta3.0.xls
+    sheet: C MitoPathways
+    sha256: e6ada0ae8dcd5447a5efb6f77c69a1c10b1ffa66521540a1e81b92c61e5505f2
+    expected_pathways: 149
+    expected_memberships: 3904
+    expected_unique_symbols: 1035
+    expected_blank_rows: 5
+    minimum_background_members: 5
+    minimum_reference_coverage: 0.30
+
+symbol_policy:
+  ora_identifier: symbol_hgnc_current
+  require_nonmissing_symbol: true
+  collapse_duplicate_symbols_within_query: true
+  fail_cross_tail_symbol_ambiguity: true
+
+ora:
+  alternative: greater
+  formula: phyper_k_minus_1_lower_tail_false
+  small_pathway_upper_bound: 9
+
+fdr:
+  method: BH
+  threshold: 0.05
+  primary_family: comparison_id_x_analysis_universe_x_pathway_collection_x_tail
+  global_family: analysis_universe_x_pathway_collection
+
+downstream_profiles:
+  primary_yu_mito:
+    analysis_universe: core_mito
+    pathway_collection: msigdb_c2_cp_v2026_1
+    role: required_primary
+  focused_mitopathways:
+    analysis_universe: core_mito
+    pathway_collection: mitocarta_mitopathways_v3_0
+    role: focused_companion
+  inclusive_yu_sensitivity:
+    analysis_universe: all_mito_related
+    pathway_collection: msigdb_c2_cp_v2026_1
+    role: inclusive_sensitivity
+
+expected_phase10:
+  status_schema: mitochondrial_similarity_status_v1
+  checks_schema: similarity_checks_v1
+  artifacts_schema: similarity_artifacts_v1
+  comparison_manifest_schema: similarity_comparison_manifest_v1
+  feature_manifest_schema: mitochondrial_similarity_feature_manifest_v1
+  results_schema: mitochondrial_similarity_results_v1
+  rank_sets_schema: mitochondrial_similarity_rank_sets_v1
+  state_pairs_schema: mitochondrial_similarity_state_pairs_v1
+  local_validation_status: nonfinal_smoke_test
+  production_validation_status: validated_complete
+
+schemas:
+  reference_manifest: pathway_reference_manifest_v1
+  membership_long: pathway_membership_long_v1
+  background_manifest: pathway_background_manifest_v1
+  background_genes: pathway_background_genes_v1
+  query_manifest: pathway_query_manifest_v1
+  query_genes: pathway_query_genes_v1
+  ora: similarity_tail_pathway_ora_v1
+  similarity_panel: mitochondrial_similarity_panel_data_v1
+  pathway_panel: mitochondrial_pathway_panel_data_v1
+  downstream_panel_manifest: downstream_panel_manifest_v1
+  toy_checks: pathway_toy_checks_v1
+  qc_summary: pathway_qc_summary_v1
+  checks: pathway_checks_v1
+  artifacts: pathway_artifacts_v1
+  status: mitochondrial_pathway_status_v1

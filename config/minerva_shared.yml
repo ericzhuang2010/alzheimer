@@ -3,10 +3,11 @@ project:
   analysis_config: config/analysis_parameters.yml
   phase09_annotation_config: config/phase09_annotation.yml
   phase10_similarity_config: config/phase10_similarity.yml
+  phase11_pathway_config: config/phase11_pathway.yml
   manifest: config/minerva_rds_manifest.tsv
 
 inputs:
-  expression_root: data/processed
+  expression_root: /sc/arion/projects/zhangb03a/shared/ROSMAP/Synapse/snRNAseq_MIT/GeneExpression/10x/processed
   clinical_csv: data/processed/ROSMAP_clinical.csv
   cell_metadata_tsv: data/processed/cell.meta.data.tsv
 
@@ -40,3 +41,4 @@ scope:
     - mast
     - annotate_genes
     - similarity
+    - pathway
