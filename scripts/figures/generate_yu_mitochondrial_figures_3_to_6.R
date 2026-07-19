@@ -209,7 +209,7 @@ if (!capabilities("cairo") || !capabilities("png")) {
 }
 
 config <- yaml::read_yaml(config_path)
-if (!identical(config$schema_version, "yu_mitochondrial_figures_config_v2")) {
+if (!identical(config$schema_version, "yu_mitochondrial_figures_config_v3")) {
   stop("Unexpected figure config schema", call. = FALSE)
 }
 
@@ -508,10 +508,10 @@ b_defs[, `:=`(
 setorder(b_defs, figure_id, facet_order)
 assert_check(
   "primary_query_definitions",
-  nrow(b_defs) == 12L && !anyNA(b_defs$query_id) &&
+  nrow(b_defs) == 9L && !anyNA(b_defs$query_id) &&
     all(b_defs$analysis_universe == primary$analysis_universe) &&
     all(b_defs$pathway_collection == primary$pathway_collection),
-  nrow(b_defs), 12L
+  nrow(b_defs), 9L
 )
 
 summary_rows <- list()
@@ -641,8 +641,24 @@ path_summary <- rbindlist(summary_rows, use.names = TRUE)
 path_display <- rbindlist(display_rows, use.names = TRUE, fill = TRUE)
 setorder(path_summary, figure_id, facet_order)
 setorder(path_display, figure_id, facet_order, display_rank)
+path_display[, plot_x_label := fcase(
+  figure_id == "figure06" & comparison_id == "female_vs_male_e2", "APOE e2",
+  figure_id == "figure06" & comparison_id == "female_vs_male_e33", "APOE e33",
+  figure_id == "figure06" & comparison_id == "female_vs_male_e4", "APOE e4",
+  tail == "low_score", "Bottom 200",
+  tail == "high_score", "Top 200",
+  default = NA_character_
+)]
+path_display[, plot_x_order := fcase(
+  figure_id == "figure06" & comparison_id == "female_vs_male_e2", 1L,
+  figure_id == "figure06" & comparison_id == "female_vs_male_e33", 2L,
+  figure_id == "figure06" & comparison_id == "female_vs_male_e4", 3L,
+  tail == "low_score", 1L,
+  tail == "high_score", 2L,
+  default = NA_integer_
+)]
 assert_check(
-  "pathway_summary_rows", nrow(path_summary) == 12L, nrow(path_summary), 12L
+  "pathway_summary_rows", nrow(path_summary) == 9L, nrow(path_summary), 9L
 )
 assert_check(
   "pathway_display_cap",
@@ -650,6 +666,20 @@ assert_check(
     all(path_summary$matched_pathways ==
           path_summary$displayed_pathways + path_summary$omitted_by_cap),
   max(path_summary$displayed_pathways), display_cap
+)
+assert_check(
+  "pathway_x_positions",
+  !anyNA(path_display$plot_x_label) &&
+    setequal(
+      unique(path_display[figure_id != "figure06", plot_x_label]),
+      c("Bottom 200", "Top 200")
+    ) &&
+    setequal(
+      unique(path_display[figure_id == "figure06", plot_x_label]),
+      c("APOE e2", "APOE e33", "APOE e4")
+    ),
+  paste(sort(unique(path_display$plot_x_label)), collapse = ","),
+  "APOE e2,APOE e33,APOE e4,Bottom 200,Top 200"
 )
 
 current_hashes <- list(
@@ -813,24 +843,10 @@ make_heatmap <- function(
     )
 }
 
-plot_limits_for_figure <- function(figure_value) {
-  d <- path_display[figure_id == figure_value & record_type == "pathway"]
-  x_max <- if (nrow(d)) max(d$gene_ratio, na.rm = TRUE) * 1.08 else 1
-  color <- if (nrow(d)) range(d$neg_log10_tail_fdr, finite = TRUE) else c(0, 1)
-  size <- if (nrow(d)) range(d$overlap_count, finite = TRUE) else c(1, 2)
-  if (diff(color) == 0) color <- color + c(-0.1, 0.1)
-  if (diff(size) == 0) size <- size + c(-0.5, 0.5)
-  list(x = c(0, x_max), color = color, size = size)
-}
-
-make_pathway_plot <- function(query_value, limits, show_legend = TRUE) {
-  summary <- path_summary[query_id == query_value]
-  d <- copy(path_display[query_id == query_value & record_type == "pathway"])
-  subtitle <- paste0(
-    "n/N=", summary$query_size, "/", summary$background_size,
-    "; sig=", summary$significant_pathways, "; shown=",
-    summary$displayed_pathways, "/", summary$matched_pathways
-  )
+make_pathway_panel <- function(figure_value) {
+  d <- copy(path_display[
+    figure_id == figure_value & record_type == "pathway"
+  ])
   if (!nrow(d)) {
     return(
       ggplot() +
@@ -840,59 +856,66 @@ make_pathway_plot <- function(query_value, limits, show_legend = TRUE) {
           size = 3.2, fontface = "italic"
         ) +
         xlim(0, 1) + ylim(0, 1) +
-        labs(title = summary$facet_label, subtitle = subtitle) +
         theme_void(base_size = base_font) +
         theme(
-          plot.title = element_text(face = "bold", size = base_font + 1),
-          plot.subtitle = element_text(size = base_font - 1),
           plot.margin = margin(5, 5, 5, 5),
           panel.border = element_rect(fill = NA, color = "grey70", linewidth = 0.5)
         )
     )
   }
-  setorder(d, display_rank)
+  x_levels <- if (figure_value == "figure06") {
+    c("APOE e2", "APOE e33", "APOE e4")
+  } else {
+    c("Bottom 200", "Top 200")
+  }
+  setorder(d, plot_x_order, display_rank, pathway_id)
+  pathway_levels <- unique(d$pathway_label_wrapped)
+  d[, x_factor := factor(plot_x_label, levels = x_levels)]
   d[, pathway_factor := factor(
-    pathway_label_wrapped, levels = rev(unique(pathway_label_wrapped))
+    pathway_label_wrapped, levels = rev(pathway_levels)
   )]
+  color_limits <- range(d$neg_log10_tail_fdr, finite = TRUE)
+  size_limits <- range(d$gene_ratio, finite = TRUE)
+  if (diff(color_limits) == 0) color_limits <- color_limits + c(-0.1, 0.1)
+  if (diff(size_limits) == 0) size_limits <- size_limits + c(-0.001, 0.001)
   ggplot(d, aes(
-    x = gene_ratio, y = pathway_factor,
-    size = overlap_count, color = neg_log10_tail_fdr,
-    shape = tail_fdr_significant
+    x = x_factor, y = pathway_factor,
+    size = gene_ratio, color = neg_log10_tail_fdr
   )) +
-    geom_point(alpha = 1, stroke = 1.0) +
-    scale_x_continuous(
-      limits = limits$x,
-      labels = scales::percent_format(accuracy = 1),
-      expand = expansion(mult = c(0.01, 0.03))
+    geom_point(alpha = 1) +
+    scale_x_discrete(
+      limits = x_levels, drop = FALSE,
+      expand = expansion(add = 0.45)
     ) +
-    scale_color_viridis_c(
-      option = config$display$pathway_viridis_option,
-      limits = limits$color,
-      name = expression(-log[10]("BH FDR"))
+    scale_y_discrete(position = "right") +
+    scale_color_gradientn(
+      colors = c(
+        config$display$pathway_color_low,
+        config$display$pathway_color_mid,
+        config$display$pathway_color_high
+      ),
+      limits = color_limits,
+      name = expression(-log[10]("BH-adjusted P"))
     ) +
     scale_size_continuous(
-      limits = limits$size, range = c(3.0, 6.0), name = "Overlap"
+      limits = size_limits, range = c(2.5, 7.0), name = "GeneRatio",
+      labels = scales::number_format(accuracy = 0.01)
     ) +
-    scale_shape_manual(
-      values = c(`FALSE` = 1, `TRUE` = 16),
-      limits = c("FALSE", "TRUE"),
-      breaks = c("FALSE", "TRUE"),
-      labels = c("No", "Yes"),
-      drop = FALSE,
-      name = "BH FDR < 0.05"
-    ) +
-    labs(
-      title = summary$facet_label, subtitle = subtitle,
-      x = "Gene ratio (overlap / query)", y = NULL
-    ) +
+    labs(x = NULL, y = NULL) +
     theme_bw(base_size = base_font) +
     theme(
-      plot.title = element_text(face = "bold", size = base_font + 1),
-      plot.subtitle = element_text(size = base_font - 1),
+      axis.text.x = element_text(face = "bold", size = base_font),
       axis.text.y = element_text(size = base_font - 2),
-      panel.grid.major.y = element_blank(),
-      legend.position = if (show_legend) "right" else "none",
+      axis.ticks = element_blank(),
+      panel.grid.major.x = element_line(color = "grey82", linewidth = 0.4),
+      panel.grid.major.y = element_line(color = "grey90", linewidth = 0.3),
+      panel.grid.minor = element_blank(),
+      legend.position = "right",
       plot.margin = margin(5, 5, 5, 5)
+    ) +
+    guides(
+      color = guide_colorbar(order = 1),
+      size = guide_legend(order = 2)
     )
 }
 
@@ -914,17 +937,13 @@ build_figure <- function(figure_value) {
       subtitle = "Same (green), Different (orange), and Opposite (purple)"
     )
 
-  b_defs_fig <- b_defs[figure_id == figure_value][order(facet_order)]
-  limits <- plot_limits_for_figure(figure_value)
-  b_plots <- lapply(seq_len(nrow(b_defs_fig)), function(i) {
-    make_pathway_plot(
-      b_defs_fig$query_id[[i]], limits,
-      show_legend = i == nrow(b_defs_fig)
-    )
-  })
-  b_ncol <- if (figure_value == "figure06") 2L else length(b_plots)
-  b_panel <- wrap_plots(b_plots, ncol = b_ncol) +
-    plot_annotation(title = "B. C2:CP pathway matches for 200-gene score tails")
+  b_title <- if (figure_value == "figure06") {
+    "B. C2:CP pathway matches for bottom-200 sex-divergent genes"
+  } else {
+    "B. C2:CP pathway matches for Bottom 200 and Top 200 score tails"
+  }
+  b_panel <- make_pathway_panel(figure_value) +
+    plot_annotation(title = b_title)
 
   subtitle <- paste0(
     "core_mito; mitochondrial-restricted Yu analogue; ",
@@ -933,9 +952,9 @@ build_figure <- function(figure_value) {
   short_caption <- paste0(
     "Panel A: green = Same, orange = Different, purple = Opposite; (0,0) ",
     "remains in the score denominator but is not tiled. Missing states are ",
-    "excluded; * denotes directional BH FDR <= 0.05. Panel B shows the ",
-    "top stored pathway matches for both 200-gene tails regardless of FDR; ",
-    "x = gene ratio, size = overlap, color = FDR, filled = FDR < 0.05."
+    "excluded; * denotes directional BH FDR <= 0.05. Panel B uses categorical ",
+    "Yu-style score-tail/APOE positions; dot size = GeneRatio and color = ",
+    "-log10(BH-adjusted P)."
   )
   short_caption <- wrap_text(
     short_caption, if (figure_value == "figure06") 220L else 175L
@@ -1002,6 +1021,17 @@ caption_for <- function(figure_value) {
     b$matched_pathways, " pathway matches; ",
     b$displayed_pathways, " displayed)"
   )
+  panel_b_scope <- if (figure_value == "figure06") {
+    paste0(
+      "the stored bottom-200 most-divergent query within each APOE group, ",
+      "shown at categorical APOE e2, e33, and e4 positions"
+    )
+  } else {
+    paste0(
+      "the stored top-200 and bottom-200 score-tail queries, shown at ",
+      "categorical `Top 200` and `Bottom 200` positions"
+    )
+  }
   paste0(
     "**Figure ", f$figure_number, ". ", f$title, ".** ",
     "Mitochondrial-restricted Yu analogue using the Phase 10 `core_mito` ",
@@ -1013,16 +1043,17 @@ caption_for <- function(figure_value) {
     "not a displayed tile; missing states are excluded rather than assigned ",
     "to `(0,0)`. Row labels give ",
     "the stored score and observed/nominal coverage; `*` marks stored ",
-    "directional BH FDR <= 0.05. Panel B uses the stored top and bottom 200 ",
-    "score-tail queries and Phase 11 one-sided ORA for Human MSigDB C2:CP v",
+    "directional BH FDR <= 0.05. Panel B uses ", panel_b_scope,
+    ", and stored Phase 11 one-sided ORA for Human MSigDB C2:CP v",
     primary$collection_release,
     ". GeneRatio = k/n, BackgroundRatio = M/N, and fold enrichment = ",
-    "(k/n)/(M/N); point x, size, and color show GeneRatio, overlap k, and ",
-    "within-query BH FDR. Filled points pass BH FDR < 0.05 and open points ",
-    "do not. The first ", display_cap,
+    "(k/n)/(M/N). Each point lies on one categorical x-position; point size ",
+    "shows GeneRatio and color shows -log10 within-query BH-adjusted P. The ",
+    "first ", display_cap,
     " tested pathways with at least one matched query gene are displayed in ",
     "stored statistical order regardless of FDR, so a highest-similarity ",
-    "tail remains visible even when none of its pathways passes FDR. Queries: ",
+    "tail remains visible even when none of its pathways passes FDR; such ",
+    "nonsignificant matches are not described as enriched. Queries: ",
     paste(queries, collapse = "; "),
     ". `all_mito_related` and MitoPathways are sensitivity profiles and are ",
     "not used in this primary figure."
