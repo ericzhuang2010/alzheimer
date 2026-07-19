@@ -138,7 +138,21 @@ yu_contrast_label <- function(sex, apoe) {
   paste0(label, "_AD_vs_", label, "_NCI")
 }
 
-build_yu_manifest <- function(metadata, rds_id, analysis, expected_cell_types) {
+small_group_reason <- function(cells_ad, cells_nci, min_cells_group) {
+  counts <- c(AD = as.integer(cells_ad), NCI = as.integer(cells_nci))
+  zero_arms <- names(counts)[counts < 1L]
+  if (length(zero_arms)) {
+    return(paste0("zero_cells_in_arm:", paste(zero_arms, collapse = ",")))
+  }
+  small_arms <- names(counts)[counts < min_cells_group]
+  paste0(
+    "seurat_min_cells_group_not_met:min_cells_group=", min_cells_group,
+    ",arms=", paste0(small_arms, "(", counts[small_arms], ")", collapse = ",")
+  )
+}
+
+build_yu_manifest <- function(
+    metadata, rds_id, analysis, expected_cell_types, min_cells_group) {
   numerator <- as.character(analysis$contrasts$numerator %||% "AD")
   denominator <- as.character(analysis$contrasts$denominator %||% "NCI")
   sexes <- as.character(unlist(
@@ -190,10 +204,8 @@ build_yu_manifest <- function(metadata, rds_id, analysis, expected_cell_types) {
         donors_nci <- length(unique(
           selected$projid[selected$diagnosis == denominator]
         ))
-        missing_arms <- c(
-          if (cells_ad < 1L) numerator else character(),
-          if (cells_nci < 1L) denominator else character()
-        )
+        group_too_small <- cells_ad < min_cells_group ||
+          cells_nci < min_cells_group
         contrast_name <- paste("AD_vs_NCI", sex, apoe, sep = "__")
         rows[[length(rows) + 1L]] <- data.frame(
           schema_version = "yu_mast_contrast_manifest_v2",
@@ -215,9 +227,9 @@ build_yu_manifest <- function(metadata, rds_id, analysis, expected_cell_types) {
           donors_ad_expected = as.integer(donors_ad),
           donors_nci_expected = as.integer(donors_nci),
           analysis_population = "yu_all_cohort_included_nuclei",
-          modeling_status = if (length(missing_arms)) "not_estimable" else "estimable",
-          modeling_reason = if (length(missing_arms)) {
-            paste0("zero_cells_in_arm:", paste(missing_arms, collapse = ","))
+          modeling_status = if (group_too_small) "not_estimable" else "estimable",
+          modeling_reason = if (group_too_small) {
+            small_group_reason(cells_ad, cells_nci, min_cells_group)
           } else {
             ""
           },
@@ -386,6 +398,9 @@ if (!identical(analysis_population, "yu_all_cohort_included_nuclei")) {
 }
 min_pct <- as.numeric(mast_config$min_pct %||% 0.10)
 logfc_threshold <- as.numeric(mast_config$logfc_threshold %||% 0)
+# FindMarkers.default enforces this threshold before dispatching to MAST. Keep
+# it explicit so manifest estimability and model execution cannot disagree.
+seurat_min_cells_group <- 3L
 alpha <- as.numeric(analysis$multiple_testing$alpha %||% 0.05)
 paper_fold_change <- as.numeric(
   analysis$multiple_testing$yu_absolute_fold_change_threshold %||% 1.3
@@ -410,7 +425,8 @@ if (!is.null(args$manifest)) {
   yu_manifest <- yu_manifest[yu_manifest$rds_id == rds_id, , drop = FALSE]
 } else {
   yu_manifest <- build_yu_manifest(
-    metadata, rds_id, analysis, expected_cell_types
+    metadata, rds_id, analysis, expected_cell_types,
+    seurat_min_cells_group
   )
 }
 
@@ -437,6 +453,25 @@ if (anyDuplicated(yu_manifest$contrast_id) ||
 if (!all(yu_manifest$schema_version == "yu_mast_contrast_manifest_v2") ||
     !all(yu_manifest$analysis_population == analysis_population)) {
   stop("Unsupported Yu manifest schema or population", call. = FALSE)
+}
+
+# Normalize older/external v2 manifests to the minimum that the exact Seurat
+# method can fit. The observed counts are checked against these expected counts
+# before any contrast is assigned a terminal outcome below.
+small_manifest_groups <-
+  as.integer(yu_manifest$cells_ad_expected) < seurat_min_cells_group |
+  as.integer(yu_manifest$cells_nci_expected) < seurat_min_cells_group
+if (any(small_manifest_groups)) {
+  yu_manifest$modeling_status[small_manifest_groups] <- "not_estimable"
+  yu_manifest$modeling_reason[small_manifest_groups] <- vapply(
+    which(small_manifest_groups),
+    function(i) small_group_reason(
+      yu_manifest$cells_ad_expected[[i]],
+      yu_manifest$cells_nci_expected[[i]],
+      seurat_min_cells_group
+    ),
+    character(1)
+  )
 }
 
 result_list <- list()
@@ -630,6 +665,7 @@ for (row_index in seq_len(nrow(yu_manifest))) {
       slot = data_slot,
       test.use = "MAST",
       min.pct = min_pct,
+      min.cells.group = seurat_min_cells_group,
       logfc.threshold = logfc_threshold,
       latent.vars = latent_vars,
       densify = FALSE,
@@ -1027,6 +1063,11 @@ cat(
 cat(
   "Not-estimable contrasts: ",
   sum(statuses$terminal_status == "not_estimable"), "\n",
+  sep = ""
+)
+cat(
+  "Failed contrasts: ",
+  sum(statuses$terminal_status == "failed"), "\n",
   sep = ""
 )
 cat("Result rows: ", nrow(results), "\n", sep = "")
