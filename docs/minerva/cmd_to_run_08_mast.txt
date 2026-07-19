@@ -13,16 +13,20 @@ export OPENBLAS_NUM_THREADS=1
 
 unset LD_DEBUG LD_DEBUG_OUTPUT
 
-RDS_ID=excitatory_set3
+# RDS_ID=astrocytes
+# RDS_ID=excitatory_set1
+# RDS_ID=excitatory_set2
+# RDS_ID=excitatory_set3
+# RDS_ID=immune
+# RDS_ID=inhibitory
+# RDS_ID=opcs
+# RDS_ID=oligodendrocytes
+RDS_ID=vasculature
 
 LD_PRELOAD="$MKL_PRELOAD" \
 Rscript scripts/run_pipeline.R \
   --config config/minerva_shared.yml \
   --execution-config config/minerva_production_execution.yml \
-  --phase mast --dry-run
-
-LD_PRELOAD="$MKL_PRELOAD" \
-Rscript scripts/run_pipeline.R \
-  --config config/minerva_shared.yml \
-  --execution-config config/minerva_production_execution.yml \
-  --phase mast
+  --phase mast \
+  --rds-id "$RDS_ID" \
+  --force
