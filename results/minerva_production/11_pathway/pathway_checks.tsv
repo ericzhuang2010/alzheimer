@@ -1,0 +1,30 @@
+schema_version	check_name	blocking	passed	observed	expected	details
+pathway_checks_v1	phase10_status	TRUE	TRUE	validated_complete	validated_complete	
+pathway_checks_v1	phase10_blocking_checks	TRUE	TRUE	25	25	
+pathway_checks_v1	phase10_artifact_hashes	TRUE	TRUE	10	10	
+pathway_checks_v1	phase10_artifact_bytes	TRUE	TRUE	10	10	
+pathway_checks_v1	phase10_artifact_rows_and_schemas	TRUE	TRUE	10/10	10/10	
+pathway_checks_v1	six_frozen_comparisons	TRUE	TRUE	6	6	
+pathway_checks_v1	phase10_keys_unique	TRUE	TRUE	result/rank/state-pair	all unique	
+pathway_checks_v1	msigdb_checksum	TRUE	TRUE	af1b31c091f5d296438f6ca20fba0286ca31fd8ae84efd6317675e6579968093	af1b31c091f5d296438f6ca20fba0286ca31fd8ae84efd6317675e6579968093	
+pathway_checks_v1	msigdb_pathways	TRUE	TRUE	4115	4115	
+pathway_checks_v1	mitocarta_checksum	TRUE	TRUE	e6ada0ae8dcd5447a5efb6f77c69a1c10b1ffa66521540a1e81b92c61e5505f2	e6ada0ae8dcd5447a5efb6f77c69a1c10b1ffa66521540a1e81b92c61e5505f2	
+pathway_checks_v1	mitocarta_invariants	TRUE	TRUE	149/3904/1035/5	149/3904/1035/5	
+pathway_checks_v1	reference_keys_and_memberships	TRUE	TRUE	183531	unique nonempty memberships	
+pathway_checks_v1	background_count_and_keys	TRUE	TRUE	12	12	
+pathway_checks_v1	query_count_and_keys	TRUE	TRUE	24	24	
+pathway_checks_v1	query_sizes_and_subsets	TRUE	TRUE	200-200	stored selected_k and subset of background	
+pathway_checks_v1	cross_tail_symbol_ambiguity	TRUE	TRUE	0	0	
+pathway_checks_v1	complete_ora_grid	TRUE	TRUE	102336	102336	
+pathway_checks_v1	ora_contingency_cells	TRUE	TRUE	102336	102336	
+pathway_checks_v1	ora_p_values	TRUE	TRUE	14942	all tested rows reproduce phyper	
+pathway_checks_v1	zero_overlap_p_value	TRUE	TRUE	2077	p_value=1	
+pathway_checks_v1	fisher_exact_audit	TRUE	TRUE	20	up to 20 tested nonzero-overlap rows	
+pathway_checks_v1	tail_fdr_recalculation	TRUE	TRUE	0	0	
+pathway_checks_v1	global_fdr_recalculation	TRUE	TRUE	0	0	
+pathway_checks_v1	not_testable_inference_missing	TRUE	TRUE	87394	all inferential values NA	
+pathway_checks_v1	similarity_panel_counts	TRUE	TRUE	3780	all counts reconcile to Phase 10 state pairs	
+pathway_checks_v1	downstream_profiles	TRUE	TRUE	3/27	3 profiles/27 query-profile rows	
+pathway_checks_v1	figure6_low_tail	TRUE	TRUE	low_score	low_score	
+pathway_checks_v1	toy_hypergeometric_cases	TRUE	TRUE	4	4	
+pathway_checks_v1	no_figure_outputs	TRUE	TRUE	tabular Phase 11 bundle	no PDF/PNG/SVG	
