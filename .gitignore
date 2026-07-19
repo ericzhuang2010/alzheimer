@@ -45,7 +45,12 @@ Thumbs.db
 # Large inputs, documentation, local environments, and scratch directories.
 .venv/
 __pycache__/
-data/
+# Ignore local data except the reference assets maintained in Git.
+data/*
+!data/reference/
+data/reference/*
+!data/reference/hgnc/
+!data/reference/mitochondrial_extended/
 untracked/
 ad_research/
 
