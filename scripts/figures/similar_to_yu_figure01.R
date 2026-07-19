@@ -5,23 +5,41 @@ options(stringsAsFactors = FALSE, warn = 1)
 `%||%` <- function(x, y) if (is.null(x)) y else x
 
 parse_args <- function(args) {
-  out <- list(output = "results/11_similar_to_yu_figure01.pdf")
+  out <- list(
+    output = paste0(
+      "results/minerva_production/15_figures/",
+      "11_all_mito_related_mast_deg_landscape.pdf"
+    ),
+    gene_scope = "all_mito_related"
+  )
   i <- 1L
   while (i <= length(args)) {
     key <- args[[i]]
     if (key %in% c("--help", "-h")) {
       cat(
-        "Usage: Rscript scripts/plot_similar_to_yu_figure01.R ",
-        "[--output results/11_similar_to_yu_figure01.pdf]\n",
+        "Usage: Rscript scripts/figures/similar_to_yu_figure01.R ",
+        "[--output PATH] ",
+        "[--gene-scope all_mito_related|core_mito]\n",
         sep = ""
       )
       quit(status = 0L)
     }
-    if (!identical(key, "--output") || i == length(args)) {
+    if (!key %in% c("--output", "--gene-scope") || i == length(args)) {
       stop("Unknown option or missing value: ", key, call. = FALSE)
     }
-    out$output <- args[[i + 1L]]
+    value <- args[[i + 1L]]
+    if (identical(key, "--output")) {
+      out$output <- value
+    } else {
+      out$gene_scope <- value
+    }
     i <- i + 2L
+  }
+  if (!out$gene_scope %in% c("all_mito_related", "core_mito")) {
+    stop(
+      "--gene-scope must be all_mito_related or core_mito",
+      call. = FALSE
+    )
   }
   out
 }
@@ -44,6 +62,10 @@ atomic_write_tsv <- function(x, path, gzip = FALSE) {
   if (!file.rename(tmp, path)) stop("Could not publish ", path, call. = FALSE)
 }
 
+sha256_file <- function(path) {
+  digest::digest(file = path, algo = "sha256")
+}
+
 shade_color <- function(base_color, fraction) {
   fraction <- min(max(as.numeric(fraction), 0), 1)
   if (fraction <= 0) return("#FFFFFF")
@@ -58,74 +80,73 @@ short_group <- function(sex, apoe) {
 }
 
 args <- parse_args(commandArgs(trailingOnly = TRUE))
-if (!requireNamespace("data.table", quietly = TRUE)) {
-  stop("Package 'data.table' is required", call. = FALSE)
+for (package in c("data.table", "digest")) {
+  if (!requireNamespace(package, quietly = TRUE)) {
+    stop("Package '", package, "' is required", call. = FALSE)
+  }
 }
 
 project_root <- normalizePath(getwd(), mustWork = TRUE)
 output_path <- absolute_path(args$output, project_root)
 dir.create(dirname(output_path), recursive = TRUE, showWarnings = FALSE)
 
-mast_dir <- file.path(project_root, "results", "minerva_production", "08_mast")
-annotation_path <- file.path(
-  project_root, "results", "minerva_production", "03_annotations",
-  "tested_gene_universe.tsv"
+phase09_dir <- file.path(
+  project_root, "results", "minerva_production", "09_annotate_genes"
+)
+phase09_paths <- c(
+  status = file.path(phase09_dir, "annotation_status.tsv"),
+  checks = file.path(phase09_dir, "annotation_checks.tsv"),
+  artifacts = file.path(phase09_dir, "annotation_artifacts.tsv"),
+  annotated = file.path(phase09_dir, "deg_all_annotated.tsv.gz")
 )
 manifest_path <- file.path(project_root, "config", "minerva_rds_manifest.tsv")
 
-mast_paths <- sort(list.files(
-  mast_dir, pattern = "[.]mast_de[.]tsv[.]gz$", full.names = TRUE
-))
-contrast_status_paths <- sort(list.files(
-  mast_dir, pattern = "[.]mast_contrast_status[.]tsv$", full.names = TRUE
-))
-mast_status_paths <- sort(list.files(
-  mast_dir, pattern = "[.]mast_de_status[.]tsv$", full.names = TRUE
-))
-
-if (length(mast_paths) != 9L || length(contrast_status_paths) != 9L ||
-    length(mast_status_paths) != 9L) {
-  stop(
-    "Expected nine Phase 08 MAST result, contrast-status, and task-status files",
-    call. = FALSE
-  )
-}
-if (!file.exists(annotation_path) || !file.exists(manifest_path)) {
-  stop("Required annotation or RDS manifest is missing", call. = FALSE)
+if (!all(file.exists(phase09_paths)) || !file.exists(manifest_path)) {
+  stop("Required Phase 09 annotation input or RDS manifest is missing", call. = FALSE)
 }
 
-read_many <- function(paths) {
-  data.table::rbindlist(
-    lapply(paths, data.table::fread, showProgress = FALSE),
-    fill = TRUE, use.names = TRUE
-  )
+message("Validating Phase 09 annotation bundle")
+annotation_status <- data.table::fread(phase09_paths[["status"]])
+annotation_checks <- data.table::fread(phase09_paths[["checks"]])
+annotation_artifacts <- data.table::fread(phase09_paths[["artifacts"]])
+if (
+  nrow(annotation_status) != 1L ||
+    annotation_status$schema_version[[1L]] != "mitochondrial_annotation_status_v1" ||
+    annotation_status$validation_status[[1L]] != "validated_complete"
+) {
+  stop("Phase 09 annotation status is not validated_complete", call. = FALSE)
 }
-
-message("Reading Phase 08 MAST task statuses")
-mast_status <- read_many(mast_status_paths)
-if (nrow(mast_status) != 9L ||
-    !all(mast_status$validation_status == "validated_complete")) {
-  stop("Every Phase 08 MAST task must be validated_complete", call. = FALSE)
+if (
+  !nrow(annotation_checks) ||
+    !all(as_logical(annotation_checks$passed))
+) {
+  stop("At least one Phase 09 annotation check failed", call. = FALSE)
 }
-
-message("Reading Phase 08 MAST contrast statuses")
-status <- read_many(contrast_status_paths)
-status[, paper_matched := as_logical(paper_matched)]
-direct_status <- status[
-  paper_matched & contrast_family == "AD_vs_NCI" &
-    grepl("^AD_vs_NCI__(Female|Male)__(e2|e33|e4)$", contrast_name)
+if (
+  !nrow(annotation_artifacts) ||
+    !all(annotation_artifacts$validation_status == "validated_complete")
+) {
+  stop("Phase 09 artifact manifest is not validated_complete", call. = FALSE)
+}
+annotated_artifact <- annotation_artifacts[
+  artifact == "deg_all_annotated.tsv.gz"
 ]
-direct_status[, sex := sub(
-  "^AD_vs_NCI__([^_]+)__.*$", "\\1", contrast_name
-)]
-direct_status[, apoe_group := sub(
-  "^AD_vs_NCI__[^_]+__(.*)$", "\\1", contrast_name
-)]
-direct_status[, group_id := paste(sex, apoe_group, sep = "__")]
-direct_status[, eligible := terminal_status == "validated_complete"]
-
-if (any(direct_status$terminal_status == "failed")) {
-  stop("At least one paper-matched MAST contrast failed", call. = FALSE)
+if (nrow(annotated_artifact) != 1L) {
+  stop("Phase 09 artifact manifest lacks one annotated DEG table", call. = FALSE)
+}
+annotated_size_before <- as.numeric(
+  file.info(phase09_paths[["annotated"]])$size
+)
+annotated_sha256_before <- sha256_file(phase09_paths[["annotated"]])
+annotated_artifact_valid <- (
+  annotated_size_before ==
+    as.numeric(annotated_artifact$bytes[[1L]])
+) && (
+  annotated_sha256_before ==
+    annotated_artifact$sha256[[1L]]
+)
+if (!annotated_artifact_valid) {
+  stop("Phase 09 annotated DEG artifact fails size or SHA-256 validation", call. = FALSE)
 }
 
 rds_manifest <- data.table::fread(manifest_path)
@@ -136,6 +157,52 @@ preferred_rds_order <- c(
 )
 if (!setequal(rds_manifest$rds_id, preferred_rds_order)) {
   stop("Production RDS manifest differs from the expected nine RDS IDs", call. = FALSE)
+}
+
+phase09_columns <- c(
+  "schema_version", "rds_id", "contrast_id", "cell_type_high_resolution",
+  "sex", "apoe_group", "contrast_family", "contrast_name",
+  "terminal_status", "contrast_donors_ad", "contrast_donors_nci",
+  "contrast_status_message", "feature_id_original", "reference_only_id",
+  "reference_only", "symbol_hgnc_current", "hgnc_id",
+  "ensembl_id_stable", "mapping_status", "mito_tier", "genome_origin",
+  "tested_status", "deg_state", "phase08_row_present", "logFC", "pct_ad",
+  "pct_nci", "fdr_bh_within_contrast", "paper_effect_threshold_log2",
+  "paper_deg"
+)
+message("Reading validated Phase 09 annotated DEG rows")
+annotated <- data.table::fread(
+  phase09_paths[["annotated"]],
+  select = phase09_columns,
+  showProgress = FALSE
+)
+if (
+  !nrow(annotated) ||
+    !all(annotated$schema_version == "annotated_yu_mast_results_v1")
+) {
+  stop("Unexpected or empty Phase 09 annotated DEG schema", call. = FALSE)
+}
+annotated[, `:=`(
+  reference_only = as_logical(reference_only),
+  phase08_row_present = as_logical(phase08_row_present),
+  paper_deg = as_logical(paper_deg)
+)]
+direct <- annotated[
+  contrast_family == "AD_vs_NCI" &
+    grepl("^AD_vs_NCI__(Female|Male)__(e2|e33|e4)$", contrast_name)
+]
+direct[, group_id := paste(sex, apoe_group, sep = "__")]
+
+direct_status <- unique(direct[, .(
+  rds_id, cell_type_high_resolution, contrast_id, contrast_name,
+  sex, apoe_group, group_id, terminal_status,
+  donors_ad = contrast_donors_ad,
+  donors_nci = contrast_donors_nci,
+  status_message = contrast_status_message
+)])
+direct_status[, eligible := terminal_status == "validated_complete"]
+if (any(direct_status$terminal_status == "failed")) {
+  stop("At least one paper-matched Phase 09 contrast failed", call. = FALSE)
 }
 
 cell_meta <- unique(direct_status[, .(rds_id, cell_type_high_resolution)])
@@ -157,97 +224,78 @@ status_key <- paste(
   direct_status$cell_type_high_resolution, direct_status$group_id, sep = "\r"
 )
 if (anyDuplicated(status_key) || !setequal(unique(direct_status$group_id), group_order)) {
-  stop("Direct MAST status keys or group definitions are invalid", call. = FALSE)
+  stop("Direct Phase 09 status keys or group definitions are invalid", call. = FALSE)
 }
 
-message("Reading Phase 08 MAST differential-expression rows")
-mast <- read_many(mast_paths)
-mast <- mast[
-  contrast_family == "AD_vs_NCI" &
-    grepl("^AD_vs_NCI__(Female|Male)__(e2|e33|e4)$", contrast_name)
+returned <- direct[phase08_row_present == TRUE]
+paper_rule <- is.finite(returned$fdr_bh_within_contrast) &
+  returned$fdr_bh_within_contrast < 0.05 &
+  is.finite(returned$logFC) &
+  abs(returned$logFC) > returned$paper_effect_threshold_log2 &
+  (returned$pct_ad >= 0.10 | returned$pct_nci >= 0.10)
+if (!identical(as.logical(returned$paper_deg), as.logical(paper_rule))) {
+  mismatch <- sum(returned$paper_deg != paper_rule, na.rm = TRUE)
+  stop("Phase 09 paper_deg validation failed for ", mismatch, " rows", call. = FALSE)
+}
+
+allowed_tiers <- c("core_mito_protein", "mtdna_noncoding", "mito_extended")
+scope_tiers <- if (args$gene_scope == "core_mito") {
+  "core_mito_protein"
+} else {
+  allowed_tiers
+}
+scope_label <- if (args$gene_scope == "core_mito") {
+  "core MitoCarta"
+} else {
+  "all mitochondrial-related"
+}
+mito <- direct[mito_tier %in% scope_tiers]
+if (!nrow(mito)) stop("No Phase 09 rows belong to the selected scope", call. = FALSE)
+
+tested_statuses <- c(
+  "tested_not_significant", "significant_up", "significant_down"
+)
+state_mapping_ok <- (
+  mito$tested_status == "significant_up" & mito$deg_state == 1L
+) | (
+  mito$tested_status == "significant_down" & mito$deg_state == -1L
+) | (
+  mito$tested_status == "tested_not_significant" & mito$deg_state == 0L
+) | (
+  !mito$tested_status %in% tested_statuses & is.na(mito$deg_state)
+)
+if (!all(state_mapping_ok)) {
+  stop("Phase 09 tested_status-to-state mapping is invalid", call. = FALSE)
+}
+
+tested <- mito[
+  tested_status %in% tested_statuses & phase08_row_present == TRUE &
+    reference_only == FALSE
 ]
-mast[, paper_deg := as_logical(paper_deg)]
-mast[, sex := sub("^AD_vs_NCI__([^_]+)__.*$", "\\1", contrast_name)]
-mast[, apoe_group := sub("^AD_vs_NCI__[^_]+__(.*)$", "\\1", contrast_name)]
-mast[, group_id := paste(sex, apoe_group, sep = "__")]
-
-paper_rule <- is.finite(mast$fdr_bh_within_contrast) &
-  mast$fdr_bh_within_contrast < 0.05 &
-  is.finite(mast$logFC) &
-  abs(mast$logFC) > mast$paper_effect_threshold_log2 &
-  (mast$pct_ad >= 0.10 | mast$pct_nci >= 0.10)
-if (!identical(as.logical(mast$paper_deg), as.logical(paper_rule))) {
-  mismatch <- sum(mast$paper_deg != paper_rule, na.rm = TRUE)
-  stop("Phase 08 paper_deg validation failed for ", mismatch, " rows", call. = FALSE)
+if (!nrow(tested)) stop("No tested genes remain in the selected scope", call. = FALSE)
+tested[, feature_state := as.integer(deg_state)]
+tested_key <- paste(tested$rds_id, tested$contrast_id, tested$feature_id_original, sep = "\r")
+if (anyDuplicated(tested_key)) {
+  stop("Phase 09 tested assay-feature keys are not unique", call. = FALSE)
 }
 
-result_key <- paste(mast$rds_id, mast$contrast_id, mast$gene, sep = "\r")
-if (anyDuplicated(result_key)) {
-  stop("Phase 08 MAST result keys are not unique", call. = FALSE)
-}
-
-message("Reading frozen MitoCarta annotations")
-annotations <- data.table::fread(
-  annotation_path,
-  select = c("rds_id", "feature", "mitocarta_symbol", "is_mitocarta"),
-  showProgress = FALSE
-)
-annotations[, is_mitocarta := as_logical(is_mitocarta)]
-mitocarta_map <- annotations[
-  is_mitocarta & !is.na(mitocarta_symbol) & nzchar(mitocarta_symbol),
-  .(rds_id, gene = feature, canonical_gene = mitocarta_symbol)
-]
-if (anyDuplicated(paste(mitocarta_map$rds_id, mitocarta_map$gene, sep = "\r"))) {
-  stop("MitoCarta feature keys are not unique", call. = FALSE)
-}
-
-mito <- merge(
-  mast, mitocarta_map,
-  by = c("rds_id", "gene"), all = FALSE, sort = FALSE
-)
-if (!nrow(mito)) stop("No Phase 08 genes mapped to MitoCarta", call. = FALSE)
-mito[, feature_state := data.table::fcase(
-  paper_deg & logFC > 0, 1L,
-  paper_deg & logFC < 0, -1L,
-  default = 0L
-)]
-
-# Count each canonical MitoCarta gene once per contrast. If several assayed
-# aliases map to one canonical gene, a canonical DEG is called when at least
-# one mapped Phase 08 feature is a paper DEG. Opposite significant aliases are
-# recorded as direction conflicts and excluded from directional summaries.
-canonical <- mito[, .(
-  source_features = paste(sort(unique(gene)), collapse = ";"),
-  source_feature_count = data.table::uniqueN(gene),
-  any_up = any(feature_state == 1L),
-  any_down = any(feature_state == -1L)
-), by = .(
-  rds_id, cell_type_high_resolution, contrast_id, contrast_name,
-  sex, apoe_group, group_id, canonical_gene
-)]
-canonical[, canonical_state := data.table::fcase(
-  any_up & !any_down, 1L,
-  any_down & !any_up, -1L,
-  !any_up & !any_down, 0L,
-  default = NA_integer_
-)]
-canonical[, direction_conflict := is.na(canonical_state)]
-conflicts <- canonical[direction_conflict == TRUE]
-message("Canonical alias-direction conflicts recorded: ", nrow(conflicts))
-
-canonical_key <- paste(
-  canonical$contrast_id, canonical$canonical_gene, sep = "\r"
-)
-if (anyDuplicated(canonical_key)) {
-  stop("Canonical MitoCarta contrast keys are not unique", call. = FALSE)
-}
-
-direct_summary <- canonical[, .(
-  tested_mitocarta = .N,
-  direction_conflicts = sum(direction_conflict),
-  up_degs = sum(canonical_state == 1L, na.rm = TRUE),
-  down_degs = sum(canonical_state == -1L, na.rm = TRUE),
-  unchanged = sum(canonical_state == 0L, na.rm = TRUE)
+# Phase 09 defines the exact assayed feature as the analysis identity.
+# Stable HGNC and Ensembl annotations are retained, but many-to-one mappings
+# are not silently collapsed to one canonical symbol.
+direct_summary <- tested[, .(
+  tested_mito_features = .N,
+  tested_core_mito = sum(mito_tier == "core_mito_protein"),
+  tested_mtdna_noncoding = sum(mito_tier == "mtdna_noncoding"),
+  tested_mito_extended = sum(mito_tier == "mito_extended"),
+  up_degs = sum(feature_state == 1L),
+  down_degs = sum(feature_state == -1L),
+  unchanged = sum(feature_state == 0L),
+  up_core_mito = sum(feature_state == 1L & mito_tier == "core_mito_protein"),
+  down_core_mito = sum(feature_state == -1L & mito_tier == "core_mito_protein"),
+  up_mtdna_noncoding = sum(feature_state == 1L & mito_tier == "mtdna_noncoding"),
+  down_mtdna_noncoding = sum(feature_state == -1L & mito_tier == "mtdna_noncoding"),
+  up_mito_extended = sum(feature_state == 1L & mito_tier == "mito_extended"),
+  down_mito_extended = sum(feature_state == -1L & mito_tier == "mito_extended")
 ), by = .(
   rds_id, cell_type_high_resolution, contrast_id, contrast_name,
   sex, apoe_group, group_id
@@ -257,7 +305,7 @@ main_tiles <- merge(
   direct_status[, .(
     rds_id, cell_type_high_resolution, contrast_id, contrast_name,
     sex, apoe_group, group_id, eligible, terminal_status,
-    donors_ad, donors_nci, status_message = message
+    donors_ad, donors_nci, status_message
   )],
   direct_summary,
   by = c(
@@ -266,15 +314,15 @@ main_tiles <- merge(
   ),
   all.x = TRUE, sort = FALSE
 )
-if (any(main_tiles$eligible & is.na(main_tiles$tested_mitocarta))) {
-  stop("At least one eligible MAST contrast has no tested MitoCarta genes", call. = FALSE)
+if (any(main_tiles$eligible & is.na(main_tiles$tested_mito_features))) {
+  stop("At least one eligible contrast has no tested mitochondrial genes", call. = FALSE)
 }
 if (any(
   main_tiles$eligible &
-    main_tiles$up_degs + main_tiles$down_degs + main_tiles$unchanged +
-      main_tiles$direction_conflicts != main_tiles$tested_mitocarta
+    main_tiles$up_degs + main_tiles$down_degs + main_tiles$unchanged !=
+      main_tiles$tested_mito_features
 )) {
-  stop("Direct MitoCarta state counts do not sum to tested denominators", call. = FALSE)
+  stop("Direct mitochondrial state counts do not sum to tested denominators", call. = FALSE)
 }
 main_tiles[, donor_label := ifelse(
   eligible, paste0(donors_ad, "/", donors_nci), ""
@@ -314,21 +362,38 @@ build_pair_panel <- function(panel_id, definitions) {
         second_status$donors_ad[[1L]], "/", second_status$donors_nci[[1L]]
       ) else ""
       if (eligible) {
-        first <- canonical[
+        first <- tested[
           cell_type_high_resolution == cell_type & group_id == first_group,
-          .(canonical_gene, first_state = canonical_state)
+          .(
+            feature_id_original, symbol_hgnc_current, hgnc_id,
+            ensembl_id_stable, mapping_status, mito_tier, genome_origin,
+            first_tested_status = tested_status,
+            first_state = feature_state, first_logFC = logFC,
+            first_fdr_bh_within_contrast = fdr_bh_within_contrast,
+            first_paper_deg = paper_deg
+          )
         ]
-        second <- canonical[
+        second <- tested[
           cell_type_high_resolution == cell_type & group_id == second_group,
-          .(canonical_gene, second_state = canonical_state)
+          .(
+            feature_id_original, second_mito_tier = mito_tier,
+            second_tested_status = tested_status,
+            second_state = feature_state, second_logFC = logFC,
+            second_fdr_bh_within_contrast = fdr_bh_within_contrast,
+            second_paper_deg = paper_deg
+          )
         ]
-        paired <- merge(first, second, by = "canonical_gene", all = FALSE)
+        paired <- merge(first, second, by = "feature_id_original", all = FALSE)
         if (!nrow(paired)) {
-          stop("No jointly tested MitoCarta genes for ", pair_id, " / ", cell_type)
+          stop(
+            "No jointly tested mitochondrial features for ",
+            pair_id, " / ", cell_type
+          )
+        }
+        if (any(paired$mito_tier != paired$second_mito_tier)) {
+          stop("Mitochondrial tier changed between paired contrasts")
         }
         paired[, category := data.table::fcase(
-          is.na(first_state) | is.na(second_state),
-          "direction_conflict_excluded",
           first_state != 0L & second_state != 0L & first_state == second_state,
           "same_direction",
           first_state != 0L & second_state == 0L, "first_only",
@@ -338,16 +403,22 @@ build_pair_panel <- function(panel_id, definitions) {
           default = "neither"
         )]
         jointly_tested <- nrow(paired)
-        direction_conflicts_excluded <- sum(
-          paired$category == "direction_conflict_excluded"
+        denominator <- jointly_tested
+        jointly_tested_core_mito <- sum(
+          paired$mito_tier == "core_mito_protein"
         )
-        denominator <- jointly_tested - direction_conflicts_excluded
+        jointly_tested_mtdna_noncoding <- sum(
+          paired$mito_tier == "mtdna_noncoding"
+        )
+        jointly_tested_mito_extended <- sum(
+          paired$mito_tier == "mito_extended"
+        )
         if (denominator <= 0L) {
-          stop("No direction-classifiable MitoCarta genes for ", pair_id,
+          stop("No jointly tested mitochondrial features for ", pair_id,
                " / ", cell_type)
         }
         counts <- table(factor(
-          paired$category[paired$category != "direction_conflict_excluded"],
+          paired$category,
           levels = c(comparison_categories, "neither")
         ))
         if (sum(counts) != denominator) {
@@ -358,18 +429,23 @@ build_pair_panel <- function(panel_id, definitions) {
           panel = panel_id,
           pair_id = pair_id,
           pair_label = definition$pair_label,
+          rds_id = first_status$rds_id[[1L]],
           cell_type_high_resolution = cell_type,
           first_group = first_group,
           second_group = second_group,
-          jointly_tested_mitocarta = jointly_tested,
-          direction_conflicts_excluded = direction_conflicts_excluded,
-          jointly_classifiable_mitocarta = denominator
+          jointly_tested_mito_features = jointly_tested,
+          jointly_tested_core_mito = sum(mito_tier == "core_mito_protein"),
+          jointly_tested_mtdna_noncoding = sum(mito_tier == "mtdna_noncoding"),
+          jointly_tested_mito_extended = sum(mito_tier == "mito_extended")
         )]
+        paired[, second_mito_tier := NULL]
         gene_rows[[length(gene_rows) + 1L]] <- paired
       } else {
         denominator <- NA_integer_
         jointly_tested <- NA_integer_
-        direction_conflicts_excluded <- NA_integer_
+        jointly_tested_core_mito <- NA_integer_
+        jointly_tested_mtdna_noncoding <- NA_integer_
+        jointly_tested_mito_extended <- NA_integer_
         counts <- stats::setNames(rep(NA_integer_, 5L), c(
           comparison_categories, "neither"
         ))
@@ -397,9 +473,11 @@ build_pair_panel <- function(panel_id, definitions) {
           second_contrast_id = second_status$contrast_id[[1L]],
           eligible = eligible,
           count = if (eligible) as.integer(counts[[category]]) else NA_integer_,
-          tested_mitocarta = denominator,
-          jointly_tested_mitocarta = jointly_tested,
-          direction_conflicts_excluded = direction_conflicts_excluded,
+          tested_mito_features = denominator,
+          jointly_tested_mito_features = jointly_tested,
+          jointly_tested_core_mito = jointly_tested_core_mito,
+          jointly_tested_mtdna_noncoding = jointly_tested_mtdna_noncoding,
+          jointly_tested_mito_extended = jointly_tested_mito_extended,
           donor_label = donor_label,
           first_terminal_status = first_status$terminal_status[[1L]],
           second_terminal_status = second_status$terminal_status[[1L]]
@@ -445,7 +523,7 @@ sex_definitions <- data.table::data.table(
   second_short = c("M e2", "M e33", "M e4")
 )
 
-message("Building pairwise MitoCarta DEG classifications")
+message("Building pairwise mitochondrial DEG classifications")
 female_panel <- build_pair_panel("C", female_definitions)
 male_panel <- build_pair_panel("D", male_definitions)
 sex_panel <- build_pair_panel("E", sex_definitions)
@@ -456,7 +534,7 @@ pair_genes <- data.table::rbindlist(list(
   female_panel$genes, male_panel$genes, sex_panel$genes
 ), use.names = TRUE, fill = TRUE)
 
-if (any(pair_tiles$eligible & !is.finite(pair_tiles$tested_mitocarta))) {
+if (any(pair_tiles$eligible & !is.finite(pair_tiles$tested_mito_features))) {
   stop("Eligible pairwise tiles lack tested-gene denominators", call. = FALSE)
 }
 if (any(!pair_tiles$category %in% comparison_categories)) {
@@ -528,7 +606,7 @@ draw_heatmap <- function(
       } else {
         fill <- shade_color(row_colors[[row_id]], tile$count[[1L]] / max_count)
         label <- paste0(
-          tile$count[[1L]], "/", tile$tested_mitocarta[[1L]], "\n",
+          tile$count[[1L]], "/", tile$tested_mito_features[[1L]], "\n",
           tile$donor_label[[1L]]
         )
         text_color <- if (tile$count[[1L]] / max_count > 0.45) "white" else "#222222"
@@ -600,8 +678,7 @@ make_main_plot_table <- function(direction) {
   table <- data.table::copy(main_tiles)
   table[, `:=`(
     row_id = group_id,
-    count = get(value_column),
-    tested_mitocarta = tested_mitocarta
+    count = get(value_column)
   )]
   table
 }
@@ -643,52 +720,75 @@ main_tile_output <- data.table::rbindlist(list(
 ), use.names = TRUE, fill = TRUE)
 main_tile_output[, category := ifelse(panel == "A", "upregulated", "downregulated")]
 main_tile_output[, percent := ifelse(
-  eligible, 100 * count / tested_mitocarta, NA_real_
+  eligible, 100 * count / tested_mito_features, NA_real_
 )]
 pair_tile_output <- data.table::copy(pair_tiles)
 pair_tile_output[, percent := ifelse(
-  eligible, 100 * count / tested_mitocarta, NA_real_
+  eligible, 100 * count / tested_mito_features, NA_real_
 )]
 tile_output <- data.table::rbindlist(list(
   main_tile_output,
   pair_tile_output
 ), use.names = TRUE, fill = TRUE)
 tile_output[, `:=`(
-  schema_version = "mitocarta_mast_yu_tiles_v1",
+  schema_version = "mito_related_mast_yu_tiles_v2",
   method_branch = "mast",
   deg_rule = "phase08_paper_deg",
-  annotation_source = "Human_MitoCarta3.0"
+  annotation_source = "validated_phase09_mitochondrial_tiers",
+  phase09_annotated_sha256 = annotated_sha256_before,
+  analysis_universe = args$gene_scope,
+  included_mito_tiers = paste(scope_tiers, collapse = ";")
 )]
 data.table::setcolorder(tile_output, c(
-  "schema_version", "panel", "method_branch", "category",
+  "schema_version", "analysis_universe", "included_mito_tiers",
+  "panel", "method_branch", "category",
   "rds_id", "cell_type_high_resolution", "row_id", "row_label",
-  "eligible", "count", "tested_mitocarta", "percent", "donor_label"
+  "eligible", "count", "tested_mito_features", "percent", "donor_label"
 ))
 atomic_write_tsv(tile_output, tile_output_path)
 
-direct_gene_output <- canonical[, .(
-  schema_version = "mitocarta_mast_yu_genes_v1",
+direct_gene_output <- tested[, .(
+  schema_version = "mito_related_mast_yu_genes_v2",
+  phase09_annotated_sha256 = annotated_sha256_before,
+  analysis_universe = args$gene_scope,
+  included_mito_tiers = paste(scope_tiers, collapse = ";"),
   record_type = "direct_state",
   panel = "A_B",
   rds_id, cell_type_high_resolution, contrast_id, contrast_name,
-  group_id, canonical_gene, canonical_state,
-  direction_conflict, source_features, source_feature_count,
+  group_id, feature_id_original, symbol_hgnc_current, hgnc_id,
+  ensembl_id_stable, mapping_status, mito_tier, genome_origin,
+  tested_status, feature_state, paper_deg, logFC, fdr_bh_within_contrast,
+  first_group = NA_character_, second_group = NA_character_,
+  first_tested_status = NA_character_, second_tested_status = NA_character_,
   pair_id = NA_character_, first_state = NA_integer_,
   second_state = NA_integer_, category = NA_character_,
-  jointly_tested_mitocarta = NA_integer_,
-  direction_conflicts_excluded = NA_integer_,
-  jointly_classifiable_mitocarta = NA_integer_
+  first_logFC = NA_real_, second_logFC = NA_real_,
+  first_fdr_bh_within_contrast = NA_real_,
+  second_fdr_bh_within_contrast = NA_real_,
+  first_paper_deg = NA, second_paper_deg = NA,
+  jointly_tested_mito_features = NA_integer_,
+  jointly_tested_core_mito = NA_integer_,
+  jointly_tested_mtdna_noncoding = NA_integer_,
+  jointly_tested_mito_extended = NA_integer_
 )]
 pair_gene_output <- pair_genes[, .(
-  schema_version = "mitocarta_mast_yu_genes_v1",
+  schema_version = "mito_related_mast_yu_genes_v2",
+  phase09_annotated_sha256 = annotated_sha256_before,
+  analysis_universe = args$gene_scope,
+  included_mito_tiers = paste(scope_tiers, collapse = ";"),
   record_type, panel,
-  rds_id = NA_character_, cell_type_high_resolution,
+  rds_id, cell_type_high_resolution,
   contrast_id = NA_character_, contrast_name = NA_character_,
-  group_id = NA_character_, canonical_gene,
-  canonical_state = NA_integer_, direction_conflict = NA,
-  source_features = NA_character_, source_feature_count = NA_integer_, pair_id,
-  first_state, second_state, category, jointly_tested_mitocarta,
-  direction_conflicts_excluded, jointly_classifiable_mitocarta
+  group_id = NA_character_, feature_id_original, symbol_hgnc_current,
+  hgnc_id, ensembl_id_stable, mapping_status, mito_tier, genome_origin,
+  tested_status = NA_character_, feature_state = NA_integer_,
+  paper_deg = NA, logFC = NA_real_, fdr_bh_within_contrast = NA_real_,
+  first_group, second_group, first_tested_status, second_tested_status,
+  pair_id, first_state, second_state, category,
+  first_logFC, second_logFC, first_fdr_bh_within_contrast,
+  second_fdr_bh_within_contrast, first_paper_deg, second_paper_deg,
+  jointly_tested_mito_features, jointly_tested_core_mito,
+  jointly_tested_mtdna_noncoding, jointly_tested_mito_extended
 )]
 gene_output <- data.table::rbindlist(list(
   direct_gene_output, pair_gene_output
@@ -706,14 +806,20 @@ tryCatch({
   graphics::layout(matrix(1:2, nrow = 2L), heights = c(1, 1.15))
   draw_heatmap(
     make_main_plot_table("up"), group_order, main_row_labels, up_row_colors,
-    "Upregulated MitoCarta genes in AD", "A",
-    "Phase 08 MAST paper_deg; label line 1 = DEGs/tested canonical MitoCarta genes; line 2 = AD/NCI donors",
+    paste0("Upregulated ", scope_label, " genes in AD"), "A",
+    paste0(
+      "Validated Phase 09 tiers; Phase 08 MAST paper_deg; ",
+      "line 1 = DEGs/tested assay features; line 2 = AD/NCI donors"
+    ),
     show_x_labels = FALSE, label_cex = 0.29
   )
   draw_heatmap(
     make_main_plot_table("down"), group_order, main_row_labels, down_row_colors,
-    "Downregulated MitoCarta genes in AD", "B",
-    "Phase 08 MAST paper_deg; label line 1 = DEGs/tested canonical MitoCarta genes; line 2 = AD/NCI donors",
+    paste0("Downregulated ", scope_label, " genes in AD"), "B",
+    paste0(
+      "Validated Phase 09 tiers; Phase 08 MAST paper_deg; ",
+      "line 1 = DEGs/tested assay features; line 2 = AD/NCI donors"
+    ),
     show_x_labels = TRUE, label_cex = 0.29
   )
 
@@ -722,7 +828,10 @@ tryCatch({
     female_panel$tiles, pair_row_orders[["C"]], pair_row_labels[["C"]],
     pair_row_colors[["C"]],
     "APOE comparisons within females", "C",
-    "Joint direction-classifiable Phase 08 MAST universe; alias-direction conflicts excluded; line 2 = first AD/NCI donors | second AD/NCI donors",
+    paste0(
+      "Jointly tested Phase 09 assay features in ", args$gene_scope,
+      "; line 2 = first AD/NCI donors | second AD/NCI donors"
+    ),
     show_x_labels = TRUE, label_cex = 0.245
   )
 
@@ -731,7 +840,10 @@ tryCatch({
     male_panel$tiles, pair_row_orders[["D"]], pair_row_labels[["D"]],
     pair_row_colors[["D"]],
     "APOE comparisons within males", "D",
-    "Joint direction-classifiable Phase 08 MAST universe; alias-direction conflicts excluded; line 2 = first AD/NCI donors | second AD/NCI donors",
+    paste0(
+      "Jointly tested Phase 09 assay features in ", args$gene_scope,
+      "; line 2 = first AD/NCI donors | second AD/NCI donors"
+    ),
     show_x_labels = TRUE, label_cex = 0.245
   )
 
@@ -740,7 +852,10 @@ tryCatch({
     sex_panel$tiles, pair_row_orders[["E"]], pair_row_labels[["E"]],
     pair_row_colors[["E"]],
     "Female-versus-male comparisons within APOE groups", "E",
-    "Joint direction-classifiable Phase 08 MAST universe; alias-direction conflicts excluded; line 2 = female AD/NCI donors | male AD/NCI donors",
+    paste0(
+      "Jointly tested Phase 09 assay features in ", args$gene_scope,
+      "; line 2 = female AD/NCI donors | male AD/NCI donors"
+    ),
     show_x_labels = TRUE, label_cex = 0.245
   )
 }, error = function(e) {
@@ -755,63 +870,100 @@ if (!file.rename(tmp_pdf, output_path)) {
   stop("Could not publish final PDF", call. = FALSE)
 }
 
+phase09_input_unchanged <- (
+  as.numeric(file.info(phase09_paths[["annotated"]])$size) ==
+    annotated_size_before
+) && (
+  sha256_file(phase09_paths[["annotated"]]) == annotated_sha256_before
+)
+
 checks <- data.table::data.table(
-  schema_version = "mitocarta_mast_yu_checks_v1",
+  schema_version = "mito_related_mast_yu_checks_v2",
   check = c(
-    "nine_phase08_tasks_validated",
+    "phase09_status_validated",
+    "phase09_checks_pass",
+    "phase09_annotated_artifact_valid",
+    "phase09_annotated_input_unchanged",
     "direct_status_grid_54_by_6",
     "no_failed_direct_contrasts",
     "phase08_paper_deg_rule_reproduced",
-    "all_plotted_genes_mitocarta",
-    "canonical_direction_conflicts_recorded",
+    "selected_mito_tiers_exact",
+    "tested_feature_keys_unique",
     "direct_states_partition_tested_genes",
+    "direct_tier_denominators_sum",
     "pairwise_intersections_have_denominators",
+    "pairwise_tier_denominators_sum",
     "all_panels_present",
     "pdf_exists_nonempty",
     "companion_tables_exist_nonempty"
   ),
   passed = c(
-    nrow(mast_status) == 9L && all(mast_status$validation_status == "validated_complete"),
+    nrow(annotation_status) == 1L &&
+      annotation_status$validation_status[[1L]] == "validated_complete",
+    nrow(annotation_checks) > 0L && all(as_logical(annotation_checks$passed)),
+    annotated_artifact_valid,
+    phase09_input_unchanged,
     nrow(direct_status) == 54L * 6L,
     !any(direct_status$terminal_status == "failed"),
-    identical(as.logical(mast$paper_deg), as.logical(paper_rule)),
-    nrow(mito) > 0L,
-    sum(canonical$direction_conflict) == nrow(conflicts),
+    identical(as.logical(returned$paper_deg), as.logical(paper_rule)),
+    setequal(unique(mito$mito_tier), scope_tiers),
+    !anyDuplicated(tested_key),
     all(
       main_tiles$up_degs[main_tiles$eligible] +
         main_tiles$down_degs[main_tiles$eligible] +
-        main_tiles$unchanged[main_tiles$eligible] +
-        main_tiles$direction_conflicts[main_tiles$eligible] ==
-        main_tiles$tested_mitocarta[main_tiles$eligible]
+        main_tiles$unchanged[main_tiles$eligible] ==
+        main_tiles$tested_mito_features[main_tiles$eligible]
     ),
-    all(is.finite(pair_tiles$tested_mitocarta[pair_tiles$eligible])),
+    all(
+      main_tiles$tested_core_mito[main_tiles$eligible] +
+        main_tiles$tested_mtdna_noncoding[main_tiles$eligible] +
+        main_tiles$tested_mito_extended[main_tiles$eligible] ==
+        main_tiles$tested_mito_features[main_tiles$eligible]
+    ),
+    all(is.finite(pair_tiles$tested_mito_features[pair_tiles$eligible])),
+    all(
+      pair_tiles$jointly_tested_core_mito[pair_tiles$eligible] +
+        pair_tiles$jointly_tested_mtdna_noncoding[pair_tiles$eligible] +
+        pair_tiles$jointly_tested_mito_extended[pair_tiles$eligible] ==
+        pair_tiles$jointly_tested_mito_features[pair_tiles$eligible]
+    ),
     identical(sort(unique(tile_output$panel)), c("A", "B", "C", "D", "E")),
     file.exists(output_path) && file.info(output_path)$size > 0,
     file.exists(tile_output_path) && file.info(tile_output_path)$size > 0 &&
       file.exists(gene_output_path) && file.info(gene_output_path)$size > 0
   ),
   observed = c(
-    nrow(mast_status),
+    annotation_status$validation_status[[1L]],
+    sum(as_logical(annotation_checks$passed)),
+    annotated_artifact_valid,
+    phase09_input_unchanged,
     nrow(direct_status),
     sum(direct_status$terminal_status == "failed"),
-    sum(mast$paper_deg != paper_rule, na.rm = TRUE),
-    data.table::uniqueN(canonical$canonical_gene),
-    nrow(conflicts),
+    sum(returned$paper_deg != paper_rule, na.rm = TRUE),
+    paste(sort(unique(mito$mito_tier)), collapse = ";"),
+    anyDuplicated(tested_key),
     sum(main_tiles$eligible),
+    sum(main_tiles$eligible),
+    sum(pair_tiles$eligible),
     sum(pair_tiles$eligible),
     paste(sort(unique(tile_output$panel)), collapse = ";"),
     if (file.exists(output_path)) file.info(output_path)$size else 0,
     sum(file.exists(c(tile_output_path, gene_output_path)))
   ),
   expected = c(
-    "9 validated_complete",
+    "validated_complete",
+    "all Phase 09 checks pass",
+    "TRUE",
+    "TRUE",
     "324",
     "0",
     "0 mismatches",
-    ">0 canonical MitoCarta genes",
-    "all conflicts explicitly recorded",
+    paste(scope_tiers, collapse = ";"),
+    "0 duplicate keys",
     "all eligible direct contrasts partitioned",
+    "all eligible direct tier totals",
     "all eligible pairwise tiles",
+    "all eligible pairwise tier totals",
     "A;B;C;D;E",
     ">0 bytes",
     "2"
@@ -828,10 +980,10 @@ if (any(!checks$passed)) {
 cat("Figure: ", output_path, "\n", sep = "")
 cat("Pages: 4\n")
 cat("Fine cell types: ", length(cell_order), "\n", sep = "")
-cat("Unique canonical MitoCarta genes represented: ",
-    data.table::uniqueN(canonical$canonical_gene), "\n", sep = "")
-cat("Canonical alias-direction conflict rows excluded from direction calls: ",
-    nrow(conflicts), "\n", sep = "")
+cat("Analysis universe: ", args$gene_scope, "\n", sep = "")
+cat("Included mitochondrial tiers: ", paste(scope_tiers, collapse = ";"), "\n", sep = "")
+cat("Unique tested assay features represented: ",
+    data.table::uniqueN(tested$feature_id_original), "\n", sep = "")
 cat("Eligible direct MAST contrasts: ", sum(main_tiles$eligible), " of ",
     nrow(main_tiles), "\n", sep = "")
 cat("Tile table: ", tile_output_path, "\n", sep = "")
