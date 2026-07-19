@@ -566,16 +566,109 @@ rds_colors <- c(
 
 cell_rds <- stats::setNames(cell_meta$rds_id, cell_meta$cell_type_high_resolution)
 
+panel_legend_items <- list(
+  A = c("Upregulated DEG count" = "#CB181D"),
+  B = c("Downregulated DEG count" = "#2171B5"),
+  C = c(
+    "Same direction" = category_colors[["same_direction"]],
+    "First group only" = category_colors[["first_only"]],
+    "Second group only" = category_colors[["second_only"]],
+    "Opposite directions" = category_colors[["opposite_direction"]]
+  ),
+  D = c(
+    "Same direction" = category_colors[["same_direction"]],
+    "First group only" = category_colors[["first_only"]],
+    "Second group only" = category_colors[["second_only"]],
+    "Opposite directions" = category_colors[["opposite_direction"]]
+  ),
+  E = c(
+    "Same direction" = category_colors[["same_direction"]],
+    "First group only" = category_colors[["first_only"]],
+    "Second group only" = category_colors[["second_only"]],
+    "Opposite directions" = category_colors[["opposite_direction"]]
+  )
+)
+
+draw_color_legend <- function(
+    nc, nr, item_colors, max_count, pairwise = FALSE) {
+  if (!length(item_colors) || is.null(names(item_colors))) {
+    stop("A named color vector is required for each panel legend")
+  }
+  shade_steps <- seq(0, 1, length.out = 5L)
+  x_start <- nc + 1.1
+  swatch_width <- 0.72
+  swatch_gap <- 0.08
+  legend_y <- nr + 0.25
+  item_gap <- if (length(item_colors) > 1L) 2.05 else 1.80
+
+  graphics::text(
+    x_start, legend_y, labels = "Color legend",
+    adj = c(0, 0.5), cex = 0.62, font = 2
+  )
+  legend_y <- legend_y - 0.72
+  for (item_label in names(item_colors)) {
+    base_color <- unname(item_colors[[item_label]])
+    graphics::text(
+      x_start, legend_y, labels = item_label,
+      adj = c(0, 0.5), cex = 0.50, font = 2
+    )
+    bar_top <- legend_y - 0.30
+    bar_bottom <- legend_y - 0.68
+    for (shade_index in seq_along(shade_steps)) {
+      left <- x_start + (shade_index - 1L) * (swatch_width + swatch_gap)
+      graphics::rect(
+        left, bar_bottom, left + swatch_width, bar_top,
+        col = shade_color(base_color, shade_steps[[shade_index]]),
+        border = "#8A8A8A", lwd = 0.45
+      )
+    }
+    bar_end <- x_start + length(shade_steps) * swatch_width +
+      (length(shade_steps) - 1L) * swatch_gap
+    graphics::text(
+      x_start, bar_bottom - 0.12, labels = "0",
+      adj = c(0, 1), cex = 0.44
+    )
+    graphics::text(
+      bar_end, bar_bottom - 0.12, labels = as.character(max_count),
+      adj = c(1, 1), cex = 0.44
+    )
+    legend_y <- legend_y - item_gap
+  }
+
+  graphics::rect(
+    x_start, legend_y - 0.03, x_start + 0.56, legend_y + 0.35,
+    col = "#D9D9D9", border = "#8A8A8A", lwd = 0.45
+  )
+  graphics::text(
+    x_start + 0.72, legend_y + 0.16,
+    labels = "NE = contrast not estimable",
+    adj = c(0, 0.5), cex = 0.47
+  )
+  legend_y <- legend_y - 0.72
+  graphics::text(
+    x_start, legend_y,
+    labels = "White to full color = increasing count",
+    adj = c(0, 1), cex = 0.45
+  )
+  if (pairwise) {
+    graphics::text(
+      x_start, legend_y - 0.56,
+      labels = "First/second group follows each row label",
+      adj = c(0, 1), cex = 0.45
+    )
+  }
+}
+
 draw_heatmap <- function(
     tile_table, row_order, row_labels, row_colors,
     title, panel_label, subtitle, show_x_labels = TRUE,
-    label_cex = 0.27) {
+    label_cex = 0.27, legend_items, pairwise_legend = FALSE) {
   nr <- length(row_order)
   nc <- length(cell_order)
   if (show_x_labels) {
-    graphics::par(mar = c(10.2, 15.5, 4.2, 3.5), xpd = NA)
+    graphics::par(mar = c(10.2, 15.5, 4.2, 13.0), xpd = NA)
   } else {
-    graphics::par(mar = c(1.2, 15.5, 4.2, 3.5), xpd = NA)
+    graphics::par(mar = c(1.2, 15.5, 4.2, 13.0), xpd = NA)
   }
   graphics::plot.new()
   graphics::plot.window(
@@ -666,9 +759,9 @@ draw_heatmap <- function(
     adj = 0, font = 2, cex = 0.92
   )
   graphics::mtext(subtitle, side = 3, line = 1.15, adj = 0, cex = 0.60)
-  graphics::mtext(
-    paste0("Color intensity scales with category count (page maximum = ", max_count, ")"),
-    side = 4, line = 1.2, cex = 0.53
+  draw_color_legend(
+    nc = nc, nr = nr, item_colors = legend_items,
+    max_count = max_count, pairwise = pairwise_legend
   )
 }
 
@@ -811,7 +904,8 @@ tryCatch({
       "Validated Phase 09 tiers; Phase 08 MAST paper_deg; ",
       "line 1 = DEGs/tested assay features; line 2 = AD/NCI donors"
     ),
-    show_x_labels = FALSE, label_cex = 0.29
+    show_x_labels = FALSE, label_cex = 0.29,
+    legend_items = panel_legend_items[["A"]]
   )
   draw_heatmap(
     make_main_plot_table("down"), group_order, main_row_labels, down_row_colors,
@@ -820,7 +914,8 @@ tryCatch({
       "Validated Phase 09 tiers; Phase 08 MAST paper_deg; ",
       "line 1 = DEGs/tested assay features; line 2 = AD/NCI donors"
     ),
-    show_x_labels = TRUE, label_cex = 0.29
+    show_x_labels = TRUE, label_cex = 0.29,
+    legend_items = panel_legend_items[["B"]]
   )
 
   graphics::layout(matrix(1L))
@@ -832,7 +927,8 @@ tryCatch({
       "Jointly tested Phase 09 assay features in ", args$gene_scope,
       "; line 2 = first AD/NCI donors | second AD/NCI donors"
     ),
-    show_x_labels = TRUE, label_cex = 0.245
+    show_x_labels = TRUE, label_cex = 0.245,
+    legend_items = panel_legend_items[["C"]], pairwise_legend = TRUE
   )
 
   graphics::layout(matrix(1L))
@@ -844,7 +940,8 @@ tryCatch({
       "Jointly tested Phase 09 assay features in ", args$gene_scope,
       "; line 2 = first AD/NCI donors | second AD/NCI donors"
     ),
-    show_x_labels = TRUE, label_cex = 0.245
+    show_x_labels = TRUE, label_cex = 0.245,
+    legend_items = panel_legend_items[["D"]], pairwise_legend = TRUE
   )
 
   graphics::layout(matrix(1L))
@@ -856,7 +953,8 @@ tryCatch({
       "Jointly tested Phase 09 assay features in ", args$gene_scope,
       "; line 2 = female AD/NCI donors | male AD/NCI donors"
     ),
-    show_x_labels = TRUE, label_cex = 0.245
+    show_x_labels = TRUE, label_cex = 0.245,
+    legend_items = panel_legend_items[["E"]], pairwise_legend = TRUE
   )
 }, error = function(e) {
   render_error <<- conditionMessage(e)
