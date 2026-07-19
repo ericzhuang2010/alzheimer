@@ -540,6 +540,43 @@ may expose input issues that must be corrected upstream.
 This preflight demonstrates why coverage must accompany every score. It also
 shows why requested 200-gene tails may need local capping to remain disjoint.
 
+### Observed validated Minerva production result
+
+The completed Minerva production bundle under
+`results/minerva_production/10_similarity/` has
+`validation_status = validated_complete`. Its feature manifest contains 1,300
+`all_mito_related` features:
+
+| Mitochondrial tier | Manifest features | Scoreable source features |
+|---|---:|---:|
+| `core_mito_protein` | 1,196 | 1,194 |
+| `mito_extended` | 80 | 80 |
+| `mtdna_noncoding` | 24 | 0 |
+| **Total `all_mito_related`** | **1,300** | **1,274** |
+
+The two non-scoreable core records and all 24 noncoding records are
+reference-only features absent from the expression matrices. They remain in
+the manifest for completeness but cannot enter a similarity ranking.
+
+Applying the frozen paired-state coverage rule further reduces the
+`all_mito_related` ranking universe separately for each comparison:
+
+| Comparison | Ranking-eligible `all_mito_related` features |
+|---|---:|
+| `female_vs_male_all_apoe` | 766 |
+| `e2_vs_e33_all_sexes` | 775 |
+| `e4_vs_e33_all_sexes` | 751 |
+| `female_vs_male_e2` | 798 |
+| `female_vs_male_e33` | 770 |
+| `female_vs_male_e4` | 743 |
+
+Thus, the completed Phase 10 analysis contains 1,300 mitochondrial-related
+manifest features, not approximately 2,000, and its comparison-specific
+ranking pools contain 743–798 features. Downstream pathway enrichment of a
+Phase 10 high- or low-score tail must use the corresponding
+`comparison_id × analysis_universe` ranking-eligible set as its background,
+not all measured transcriptome genes and not a nominal 2,000-gene set.
+
 ### Required configuration
 
 Add:
