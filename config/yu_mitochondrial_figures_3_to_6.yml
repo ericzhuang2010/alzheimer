@@ -1,0 +1,220 @@
+schema_version: yu_mitochondrial_figures_config_v1
+
+inputs:
+  expected_similarity_status_schema: mitochondrial_similarity_status_v1
+  expected_similarity_checks_schema: similarity_checks_v1
+  expected_similarity_artifacts_schema: similarity_artifacts_v1
+  expected_pathway_status_schema: mitochondrial_pathway_status_v1
+  expected_pathway_checks_schema: pathway_checks_v1
+  expected_pathway_artifacts_schema: pathway_artifacts_v1
+  expected_similarity_panel_schema: mitochondrial_similarity_panel_data_v1
+  expected_pathway_panel_schema: mitochondrial_pathway_panel_data_v1
+  expected_downstream_manifest_schema: downstream_panel_manifest_v1
+  expected_reference_manifest_schema: pathway_reference_manifest_v1
+  expected_validation_status: validated_complete
+  expected_similarity_permutations: 10000
+  expected_comparison_families: 6
+  expected_downstream_definitions: 27
+  expected_similarity_panel_rows: 3780
+  expected_pathway_panel_rows: 75411
+
+primary:
+  profile_id: primary_yu_mito
+  analysis_universe: core_mito
+  pathway_collection: msigdb_c2_cp_v2026_1
+  collection_release: 2026.1.Hs
+  execution_label: minerva_production
+
+display:
+  pathway_fdr_threshold: 0.05
+  max_pathways_per_query: 15
+  pathway_label_width: 42
+  score_digits: 3
+  base_font_size: 8
+  heatmap_viridis_option: C
+  pathway_viridis_option: D
+  empty_pathway_message: "No C2:CP pathways at BH FDR < 0.05"
+
+state_pairs:
+  - pair_column: S_pos1_pos1
+    pair_label: "(+1,+1)"
+    pair_group: Same direction
+    pair_order: 1
+  - pair_column: S_neg1_neg1
+    pair_label: "(-1,-1)"
+    pair_group: Same direction
+    pair_order: 2
+  - pair_column: S_pos1_0
+    pair_label: "(+1,0)"
+    pair_group: Different
+    pair_order: 3
+  - pair_column: S_neg1_0
+    pair_label: "(-1,0)"
+    pair_group: Different
+    pair_order: 4
+  - pair_column: S_0_pos1
+    pair_label: "(0,+1)"
+    pair_group: Different
+    pair_order: 5
+  - pair_column: S_0_neg1
+    pair_label: "(0,-1)"
+    pair_group: Different
+    pair_order: 6
+  - pair_column: S_pos1_neg1
+    pair_label: "(+1,-1)"
+    pair_group: Opposite
+    pair_order: 7
+  - pair_column: S_neg1_pos1
+    pair_label: "(-1,+1)"
+    pair_group: Opposite
+    pair_order: 8
+  - pair_column: S_0_0
+    pair_label: "(0,0)"
+    pair_group: Neither significant
+    pair_order: 9
+
+figures:
+  - figure_id: figure03
+    figure_number: 3
+    title: Sex-shared and sex-divergent mitochondrial transcriptional responses in AD
+    width_in: 11
+    height_in: 15
+    panel_a_fraction: 0.64
+    panel_b_fraction: 0.36
+    pdf_filename: figure03_mitochondrial_yu_analogue.pdf
+    png_filename: figure03_mitochondrial_yu_analogue.png
+  - figure_id: figure04
+    figure_number: 4
+    title: APOE e2-shared and e2-divergent mitochondrial transcriptional responses in AD
+    width_in: 11
+    height_in: 15
+    panel_a_fraction: 0.64
+    panel_b_fraction: 0.36
+    pdf_filename: figure04_mitochondrial_yu_analogue.pdf
+    png_filename: figure04_mitochondrial_yu_analogue.png
+  - figure_id: figure05
+    figure_number: 5
+    title: APOE e4-shared and e4-divergent mitochondrial transcriptional responses in AD
+    width_in: 11
+    height_in: 15
+    panel_a_fraction: 0.64
+    panel_b_fraction: 0.36
+    pdf_filename: figure05_mitochondrial_yu_analogue.pdf
+    png_filename: figure05_mitochondrial_yu_analogue.png
+  - figure_id: figure06
+    figure_number: 6
+    title: APOE-dependent sex divergence in mitochondrial transcriptional responses in AD
+    width_in: 12
+    height_in: 22
+    panel_a_fraction: 0.56
+    panel_b_fraction: 0.44
+    pdf_filename: figure06_mitochondrial_yu_analogue.pdf
+    png_filename: figure06_mitochondrial_yu_analogue.png
+
+panel_a_blocks:
+  - figure_id: figure03
+    block_order: 1
+    comparison_id: female_vs_male_all_apoe
+    requested_k: 25
+    nominal_dimensions: 162
+    block_label: Female versus Male across APOE groups
+  - figure_id: figure04
+    block_order: 1
+    comparison_id: e2_vs_e33_all_sexes
+    requested_k: 25
+    nominal_dimensions: 108
+    block_label: APOE e2 versus e33 across sexes
+  - figure_id: figure05
+    block_order: 1
+    comparison_id: e4_vs_e33_all_sexes
+    requested_k: 25
+    nominal_dimensions: 108
+    block_label: APOE e4 versus e33 across sexes
+  - figure_id: figure06
+    block_order: 1
+    comparison_id: female_vs_male_e2
+    requested_k: 10
+    nominal_dimensions: 54
+    block_label: APOE e2
+  - figure_id: figure06
+    block_order: 2
+    comparison_id: female_vs_male_e33
+    requested_k: 10
+    nominal_dimensions: 54
+    block_label: APOE e33
+  - figure_id: figure06
+    block_order: 3
+    comparison_id: female_vs_male_e4
+    requested_k: 10
+    nominal_dimensions: 54
+    block_label: APOE e4
+
+panel_b_queries:
+  - figure_id: figure03
+    facet_order: 1
+    comparison_id: female_vs_male_all_apoe
+    tail: high_score
+    facet_label: Highest similarity
+    expected_significant: 0
+  - figure_id: figure03
+    facet_order: 2
+    comparison_id: female_vs_male_all_apoe
+    tail: low_score
+    facet_label: Lowest similarity
+    expected_significant: 81
+  - figure_id: figure04
+    facet_order: 1
+    comparison_id: e2_vs_e33_all_sexes
+    tail: high_score
+    facet_label: Highest similarity
+    expected_significant: 0
+  - figure_id: figure04
+    facet_order: 2
+    comparison_id: e2_vs_e33_all_sexes
+    tail: low_score
+    facet_label: Lowest similarity
+    expected_significant: 58
+  - figure_id: figure05
+    facet_order: 1
+    comparison_id: e4_vs_e33_all_sexes
+    tail: high_score
+    facet_label: Highest similarity
+    expected_significant: 0
+  - figure_id: figure05
+    facet_order: 2
+    comparison_id: e4_vs_e33_all_sexes
+    tail: low_score
+    facet_label: Lowest similarity
+    expected_significant: 53
+  - figure_id: figure06
+    facet_order: 1
+    comparison_id: female_vs_male_e2
+    tail: low_score
+    facet_label: APOE e2 — lowest similarity
+    expected_significant: 39
+  - figure_id: figure06
+    facet_order: 2
+    comparison_id: female_vs_male_e33
+    tail: low_score
+    facet_label: APOE e33 — lowest similarity
+    expected_significant: 52
+  - figure_id: figure06
+    facet_order: 3
+    comparison_id: female_vs_male_e4
+    tail: low_score
+    facet_label: APOE e4 — lowest similarity
+    expected_significant: 29
+
+export:
+  dpi: 300
+  pdf_device: cairo_pdf
+  png_type: cairo
+  background: white
+
+schemas:
+  displayed_similarity: yu_mitochondrial_displayed_similarity_v1
+  displayed_pathway: yu_mitochondrial_displayed_pathway_v1
+  pathway_display_summary: yu_mitochondrial_pathway_display_summary_v1
+  figure_manifest: yu_mitochondrial_figure_manifest_v1
+  figure_checks: yu_mitochondrial_figure_checks_v1
+  figure_status: yu_mitochondrial_figure_status_v1
