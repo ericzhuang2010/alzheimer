@@ -1,4 +1,0 @@
-schema_version	rds_id	cell_type_high_resolution	inventory_genes	measured_genes	tested_genes	unmatched_genes	genes_detected_in_analytic_nuclei	fraction_of_inventory_measured	fraction_of_measured_detected	analytic_nuclei	analytic_donors
-descriptive_mitocarta_coverage_v1	astrocytes	Ast CHI3L1	1136	1134	1100	2	1093	0.998239436619718	0.963844797178131	16545	254
-descriptive_mitocarta_coverage_v1	astrocytes	Ast DPP10	1136	1134	1100	2	1089	0.998239436619718	0.96031746031746	21731	274
-descriptive_mitocarta_coverage_v1	astrocytes	Ast GRM3	1136	1134	1100	2	1098	0.998239436619718	0.968253968253968	60758	276

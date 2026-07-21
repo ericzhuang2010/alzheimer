@@ -734,7 +734,7 @@ draw_heatmap <- function(
   y_positions <- nr - seq_along(row_order) + 1L
   graphics::axis(
     2, at = y_positions, labels = row_labels[row_order],
-    las = 1, tick = FALSE, cex.axis = 0.60, line = -0.3
+    las = 1, tick = FALSE, cex.axis = 0.78, line = -0.3
   )
   for (i in seq_along(row_order)) {
     y <- y_positions[[i]]
@@ -747,7 +747,7 @@ draw_heatmap <- function(
   if (show_x_labels) {
     graphics::text(
       seq_len(nc), 0.36, labels = cell_order,
-      srt = 90, adj = c(1, 0.5), cex = 0.42
+      srt = 90, adj = c(1, 0.5), cex = 0.56
     )
   }
 
@@ -756,13 +756,14 @@ draw_heatmap <- function(
   starts <- c(1L, head(ends, -1L) + 1L)
   for (i in seq_along(group_runs$values)) {
     rds_id <- group_runs$values[[i]]
+    group_label_y <- nr + 1.13 + ifelse(rds_id == "opcs", 0.20, 0)
     graphics::rect(
       starts[[i]] - 0.5, nr + 0.68, ends[[i]] + 0.5, nr + 0.92,
       col = rds_colors[[rds_id]], border = "white", lwd = 0.5
     )
     graphics::text(
-      mean(c(starts[[i]], ends[[i]])), nr + 1.13,
-      labels = rds_display[[rds_id]], cex = 0.49, font = 2
+      mean(c(starts[[i]], ends[[i]])), group_label_y,
+      labels = rds_display[[rds_id]], cex = 0.70, font = 2
     )
     if (i < length(group_runs$values)) {
       boundary <- ends[[i]] + 0.5

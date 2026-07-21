@@ -1,7 +1,0 @@
-schema_version	rds_id	cell_type_high_resolution	sex	apoe_group	contrast	minimum_donors_per_side	nci_nuclei	ad_nuclei	nci_primary_eligible_donors	ad_primary_eligible_donors	nci_sensitivity_eligible_donors	ad_sensitivity_eligible_donors	primary_contrast_eligible	sensitivity_contrast_eligible	primary_ineligibility_reason
-descriptive_contrast_coverage_v1	opcs	OPC	Female	e2	AD_vs_NCI	5	3748	1325	15	8	14	7	TRUE	TRUE	
-descriptive_contrast_coverage_v1	opcs	OPC	Female	e33	AD_vs_NCI	5	10650	8923	45	37	44	36	TRUE	TRUE	
-descriptive_contrast_coverage_v1	opcs	OPC	Female	e4	AD_vs_NCI	5	2760	5248	11	24	11	24	TRUE	TRUE	
-descriptive_contrast_coverage_v1	opcs	OPC	Male	e2	AD_vs_NCI	5	1404	1320	5	7	5	5	TRUE	TRUE	
-descriptive_contrast_coverage_v1	opcs	OPC	Male	e33	AD_vs_NCI	5	14431	4876	53	28	52	24	TRUE	TRUE	
-descriptive_contrast_coverage_v1	opcs	OPC	Male	e4	AD_vs_NCI	5	2083	5115	10	25	8	25	TRUE	TRUE	

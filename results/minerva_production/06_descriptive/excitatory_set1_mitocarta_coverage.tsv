@@ -1,2 +1,0 @@
-schema_version	rds_id	cell_type_high_resolution	inventory_genes	measured_genes	tested_genes	unmatched_genes	genes_detected_in_analytic_nuclei	fraction_of_inventory_measured	fraction_of_measured_detected	analytic_nuclei	analytic_donors
-descriptive_mitocarta_coverage_v1	excitatory_set1	Exc L2-3 CBLN2 LINC02306	1136	1134	1102	2	1101	0.998239436619718	0.970899470899471	203994	276

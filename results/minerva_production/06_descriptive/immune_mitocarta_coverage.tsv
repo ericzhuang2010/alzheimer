@@ -1,6 +1,0 @@
-schema_version	rds_id	cell_type_high_resolution	inventory_genes	measured_genes	tested_genes	unmatched_genes	genes_detected_in_analytic_nuclei	fraction_of_inventory_measured	fraction_of_measured_detected	analytic_nuclei	analytic_donors
-descriptive_mitocarta_coverage_v1	immune	CAMs	1136	1134	1094	2	1046	0.998239436619718	0.922398589065256	1516	231
-descriptive_mitocarta_coverage_v1	immune	Mic MKI67	1136	1134	1094	2	1036	0.998239436619718	0.91358024691358	524	110
-descriptive_mitocarta_coverage_v1	immune	Mic P2RY12	1136	1134	1094	2	1092	0.998239436619718	0.962962962962963	48676	275
-descriptive_mitocarta_coverage_v1	immune	Mic TPT1	1136	1134	1094	2	1069	0.998239436619718	0.942680776014109	3449	245
-descriptive_mitocarta_coverage_v1	immune	T cells	1136	1134	1094	2	1051	0.998239436619718	0.926807760141093	1740	239

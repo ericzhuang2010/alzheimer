@@ -1,6 +1,0 @@
-schema_version	rds_id	cell_type_high_resolution	inventory_genes	measured_genes	tested_genes	unmatched_genes	genes_detected_in_analytic_nuclei	fraction_of_inventory_measured	fraction_of_measured_detected	analytic_nuclei	analytic_donors
-descriptive_mitocarta_coverage_v1	vasculature	End	1136	1134	1088	2	1074	0.998239436619718	0.947089947089947	4756	263
-descriptive_mitocarta_coverage_v1	vasculature	Fib FLRT2	1136	1134	1088	2	1058	0.998239436619718	0.932980599647266	2592	262
-descriptive_mitocarta_coverage_v1	vasculature	Fib SLC4A4	1136	1134	1088	2	1041	0.998239436619718	0.917989417989418	588	78
-descriptive_mitocarta_coverage_v1	vasculature	Per	1136	1134	1088	2	1070	0.998239436619718	0.943562610229277	3800	250
-descriptive_mitocarta_coverage_v1	vasculature	SMC	1136	1134	1088	2	1052	0.998239436619718	0.927689594356261	1168	200
