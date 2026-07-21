@@ -70,6 +70,28 @@ For all 101 Yu-only genes:
 
 For example, Yu reports `ABCD3` with raw p-value `0.000209` and FDR `0.0221`. The local run produced the identical log2FC and detection fractions but raw p-value `0.00169` and FDR `0.0995`, so it was not called as a DEG.
 
+## Raw p-value comparison before adjustment
+
+Yes—the unadjusted MAST p-values were also compared directly. Every Yu DEG row could be paired to a Phase 08 tested row by cell type, contrast, and gene. This comparison is necessarily one-sided because Supplemental Table S1 contains only Yu's reported DEGs; it does not provide raw p-values for Yu non-DEGs, so a paired p-value comparison is not possible for Phase-08-only genes.
+
+| Scope and subset | Paired Yu rows | Phase 08 raw `p < 0.05` | Phase 08 p-value larger than Yu | Median Phase-08/Yu p-value ratio | Spearman correlation of raw p-values | Pearson correlation of `-log10(p)` |
+|---|---:|---:|---:|---:|---:|---:|
+| Full production, all Yu DEGs | 118,297 | 113,668 (96.1%) | 76,548 (64.7%) | 1.84 | 0.939 | 0.957 |
+| Full production, Yu-only DEGs | 11,698 | 7,069 (60.4%) | 11,595 (99.1%) | 4.54 | 0.596 | 0.426 |
+| Local Vasculature, all Yu DEGs | 716 | 716 (100%) | 460 (64.2%) | 1.24 | 0.948 | 0.970 |
+| Local Vasculature, Yu-only DEGs | 101 | 101 (100%) | 98 (97.0%) | 2.35 | 0.603 | 0.701 |
+
+Across all Yu rows, raw p-values are strongly correlated, but Phase 08 tends to produce larger values. That tendency is much stronger in the actual mismatches: Phase 08 has the larger raw p-value for 99.1% of the full-production Yu-only calls and 97.0% of the local Yu-only calls. In full production, 4,629 of the 11,698 Yu-only rows do not even pass raw `p < 0.05`; in the local Vasculature analysis all 101 do pass raw `p < 0.05`, but their upward-shifted values become non-significant after BH correction. The p-value ratios and log-scale correlation exclude 149 full-production pairs with a zero p-value in either result; the raw-p Spearman correlation and cutoff counts retain them.
+
+The DEG sets were also recalculated by replacing only `FDR < 0.05` with raw `p < 0.05`, while retaining the same absolute-fold-change and detection-fraction criteria:
+
+| Scope | Yu DEGs | Phase 08 raw-p calls | Shared | Recall | Precision | Jaccard similarity |
+|---|---:|---:|---:|---:|---:|---:|
+| Full production | 118,297 | 201,724 | 113,668 | 96.1% | 56.3% | 55.1% |
+| Local Vasculature | 716 | 8,445 | 716 | 100% | 8.5% | 8.5% |
+
+Thus, using unadjusted `p < 0.05` improves recall but does not reproduce Yu's DEG set: it introduces 88,056 full-production and 7,729 local calls absent from Yu Table S1. The raw-p comparison strengthens the conclusion that the mismatch begins in the MAST p-values and is then amplified by multiple-testing correction; it does not support replacing the paper's adjusted-p-value criterion with an unadjusted cutoff.
+
 ## Likely source of the difference
 
 The most likely source is an incompletely specified inferential implementation detail. The [Yu paper](../../yu_paper/Yu_sex_apoe.pdf) specifies Seurat v5, MAST, `min.pct = 0.1`, and the `nCount_RNA`, PMI, and age covariates, but it does not freeze exact Seurat/MAST versions or fully describe covariate encoding. The local run used Seurat 5.5.1 and MAST 1.28.0.
