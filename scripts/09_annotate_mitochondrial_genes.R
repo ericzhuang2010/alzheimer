@@ -90,9 +90,15 @@ write_tsv <- function(x, path) {
 }
 
 write_tsv_gz <- function(x, path) {
-  data.table::fwrite(
-    x, path, sep = "\t", quote = FALSE, na = "NA", compress = "gzip"
-  )
+  plain <- paste0(path, ".plain.", Sys.getpid())
+  data.table::fwrite(x, plain, sep = "\t", quote = FALSE, na = "NA")
+  status <- system2("gzip", c("-n", "-f", plain))
+  compressed <- paste0(plain, ".gz")
+  if (status != 0L || !file.exists(compressed) ||
+      !file.rename(compressed, path)) {
+    unlink(c(plain, compressed))
+    stop("Could not write gzip-compressed TSV: ", path, call. = FALSE)
+  }
 }
 
 build_lookup <- function(pairs) {

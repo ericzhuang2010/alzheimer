@@ -338,6 +338,15 @@ missing_cohort_fields <- setdiff(cohort_fields, names(cohort))
 if (length(missing_cohort_fields)) {
   stop("Cohort fields missing: ", paste(missing_cohort_fields, collapse = ", "), call. = FALSE)
 }
+if (!identical(
+  as.logical(cohort$age_90plus),
+  as.logical(cohort$age_death_numeric >= 90)
+) || !any(cohort$age_death_numeric > 90)) {
+  stop(
+    "Phase 02 cohort must retain exact uncensored ages above 90",
+    call. = FALSE
+  )
+}
 qc_fields <- c(
   "nCount_RNA", "nFeature_RNA", "nCount_MT", "percent_mt", "nFeature_MT",
   "nCount_MitoCarta", "percent_mitocarta", "flag_low_nCount_RNA",

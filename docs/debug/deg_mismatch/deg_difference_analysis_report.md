@@ -103,9 +103,34 @@ The median absolute p-value difference is `0.0000524`. The 75th percentile is `0
 
 *Figure 2. Number and percentage of the 118,297 matched Yu rows within each cumulative absolute raw p-value difference tolerance.*
 
-## Potential source of the mismatch
+## Source of the mismatch
 
-### 1. Exact software environment
+The mismatch was resolved on 2026-07-22. The previous pipeline read
+`ROSMAP_clinical.csv`, where 99 eligible donors had top-coded `90+` ages, and
+converted every one of those ages to 90. Yu's code instead reads
+`dataset_707_basic_02-08-2022.clean.txt`, which contains donor-specific exact
+ages from 90.04 through 108.28.
+
+Replacing only the age covariate with Yu's exact values reproduced every
+Vasculature result. Across all 29 estimable comparisons:
+
+| Metric | Corrected local pilot |
+|---|---:|
+| Yu DEG rows | 716 |
+| Corrected Phase 08 DEG rows | 716 |
+| Shared DEG rows | 716 |
+| Recall | 100% |
+| Precision | 100% |
+| Median absolute raw-p difference | `8.47e-18` |
+| Median absolute adjusted-p difference | `1.21e-15` |
+| Raw-p Spearman correlation | 1.0 |
+
+PMI differed only by text-rounding noise (maximum `3.33e-09`), while diagnosis,
+sex, and APOE group matched for all 276 donors. A probe using Yu's exact ages
+with the existing PMI values also reproduced all panel results, isolating exact
+age at death as the cause.
+
+### Ruled-out hypothesis: exact software environment
 
 Yu reports Seurat version 5 but does not report the exact Seurat, MAST, R, Matrix, or supporting-package versions. My code used:
 
@@ -169,21 +194,16 @@ p-value agreement. The unregularized `glm` fit emitted convergence warnings and
 did not improve overall agreement. None is a defensible replacement for the
 paper-specified Seurat `FindMarkers(..., test.use = "MAST")` default.
 
-### Revised interpretation
+### Final interpretation
 
-The mismatch is not explained by Seurat 5.0 versus 5.5, MAST 1.26 through 1.32,
-R 4.3 versus 4.5, or Matrix 1.6 versus 1.7. The leading remaining explanation
-is an unreported difference in the exact covariate vectors or source metadata
-(especially the authors' age-at-death, PMI, and per-cell RNA-count values), or
-an unpublished analysis call that differs from the stated Seurat defaults.
-
-The appropriate next evidence to request from the authors is their DEG script,
-`sessionInfo()`, and the exact per-cell/per-donor covariate table. The BH cutoff
-or adjustment family should not be changed to force agreement because the
-discrepancy is already present in the raw p-values.
+The mismatch was caused by age-data censoring, not Seurat, MAST, R, Matrix,
+the MAST invocation, or BH adjustment. The corrected pipeline freezes Yu's
+2022 clinical file by SHA-256, requires exact uncensored numeric ages, and
+rejects a clinical source containing top-coded `+` ages.
 
 Supporting files:
 
 - `scripts/08_probe_mast_versions.R`
 - `docs/debug/deg_mismatch/mast_version_probe_summary.tsv`
 - `results/debug/deg_mismatch/version_matrix/probe/`
+- `results/debug/deg_mismatch/version_matrix/full/yu_exact_2022_all_vasculature_overall.tsv`

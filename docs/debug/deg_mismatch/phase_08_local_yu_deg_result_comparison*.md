@@ -1,6 +1,17 @@
 # Phase 08 Comparison with Yu Supplemental Table S1
 
-This document combines the full Minerva production comparison with the detailed local Vasculature mismatch investigation. Across both scopes, the difference comes from MAST p-values and Benjamini–Hochberg-adjusted FDR, not from fold changes, effect direction, or the fold-change threshold.
+This document preserves the original full-production and local mismatch
+investigation. The mismatch was resolved on 2026-07-22: the previous cohort
+source top-coded 99 eligible ages as `90+` and Phase 02 converted them to 90,
+whereas Yu used donor-specific exact ages from 90.04 to 108.28.
+
+After switching Phase 02 to the checksum-frozen Yu 2022 clinical table and
+rerunning local Phases 02, 05, and 08, Vasculature has 716 Yu DEGs, 716 Phase
+08 DEGs, and 716 shared DEGs. Recall, precision, and Jaccard are all 100%, and
+the alignment tier is `exact`. The older counts below remain useful as a
+record of how the age-censoring defect propagated from raw MAST p-values into
+BH FDR. Full Minerva production outputs remain historical until all nine RDS
+branches are regenerated with the corrected cohort.
 
 ## Full Minerva production comparison
 

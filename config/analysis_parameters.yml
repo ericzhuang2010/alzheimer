@@ -45,12 +45,14 @@ cohort:
   apoe_e4_values: [34, 44]
   excluded_apoe_values: [24]
   pmi_field: pmi
+  age_death_handling: exact_uncensored_numeric
   excluded_sex_discordant_projids:
     - "50301963"
     - "11326252"
     - "15114174"
     - "10277308"
   expected_global_donors: 276
+  expected_age_90plus_donors: 99
   expected_phase1_donors: 274
   expected_phase1_absent_projids: ["20261901", "11072071"]
 

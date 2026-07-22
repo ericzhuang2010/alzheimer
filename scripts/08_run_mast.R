@@ -369,13 +369,24 @@ latent_vars <- as.character(unlist(
 ))
 required_metadata <- c(
   "projid", "cell_type_high_resolution", "cohort_included",
-  "diagnosis", "sex", "apoe_group", latent_vars
+  "diagnosis", "sex", "apoe_group", "age_death_numeric", "age_90plus",
+  latent_vars
 )
 missing_metadata <- setdiff(required_metadata, names(metadata))
 if (length(missing_metadata)) {
   stop(
     "Normalized metadata fields missing: ",
     paste(missing_metadata, collapse = ", "),
+    call. = FALSE
+  )
+}
+analytic_age <- metadata[as_logical(metadata$cohort_included), , drop = FALSE]
+if (!identical(
+  as.logical(analytic_age$age_90plus),
+  as.logical(analytic_age$age_death_numeric >= 90)
+) || !any(analytic_age$age_death_numeric > 90)) {
+  stop(
+    "Normalized metadata must retain exact uncensored ages above 90",
     call. = FALSE
   )
 }

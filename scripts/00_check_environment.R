@@ -107,9 +107,24 @@ add_check <- function(check, passed, detail, required = TRUE) {
 add_check("project_root", identical(project_root, invocation_root), project_root)
 add_check("analysis_config_exists", file.exists(analysis_path), analysis_path)
 add_check("manifest_exists", file.exists(manifest_path), manifest_path)
-add_check("clinical_csv_exists", file.exists(absolute_path(config$inputs$clinical_csv, project_root)),
+add_check("clinical_source_exists", file.exists(absolute_path(config$inputs$clinical_csv, project_root)),
   absolute_path(config$inputs$clinical_csv, project_root)
 )
+clinical_path <- absolute_path(config$inputs$clinical_csv, project_root)
+expected_clinical_sha <- as.character(config$inputs$clinical_sha256 %||% "")
+add_check(
+  "clinical_source_sha256_configured",
+  nzchar(expected_clinical_sha),
+  if (nzchar(expected_clinical_sha)) expected_clinical_sha else "MISSING"
+)
+if (file.exists(clinical_path) && nzchar(expected_clinical_sha)) {
+  observed_clinical_sha <- sha256_file(clinical_path)
+  add_check(
+    "clinical_source_sha256",
+    identical(observed_clinical_sha, expected_clinical_sha),
+    observed_clinical_sha
+  )
+}
 add_check("cell_metadata_exists", file.exists(absolute_path(config$inputs$cell_metadata_tsv, project_root)),
   absolute_path(config$inputs$cell_metadata_tsv, project_root)
 )

@@ -96,10 +96,10 @@ The supporting metadata are also available locally:
 
 | Local file | Estimated size | Pseudobulk role |
 | --- | ---: | --- |
-| `data/processed/ROSMAP_clinical.csv` | ~328 KB | Supplies diagnosis, sex, APOE genotype, age at death, PMI, and `individualID`. |
+| `data/processed/dataset_707_basic_02-08-2022.clean.txt` | ~2.7 MB | Checksum-frozen Yu clinical source supplying diagnosis, sex, APOE genotype, exact uncensored age at death, and PMI. |
 | `data/processed/cell.meta.data.tsv` | ~168 MB | Supplies master cell barcodes, RNA counts, detected features, clusters, and fine/broad cell types. |
 
-The clinical file has already been checked against the 427 donor IDs in the cell metadata. After normalizing `projid` to an eight-character string, all 427 donors match.
+The clinical file has already been checked against the 427 donor IDs in the cell metadata. After normalizing `projid` to an eight-character string, all 427 donors match. Its SHA-256 is `76a71814b43c9fa3e84b9bbb119dddc3fd4b08743948f75ca38400e9bcb7425e`.
 
 ## 5. Is the Local Data Sufficient?
 

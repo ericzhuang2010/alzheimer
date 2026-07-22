@@ -172,6 +172,18 @@ analysis <- yaml::read_yaml(analysis_path)
 cohort_parameters <- analysis$cohort
 join_key <- cohort_parameters$join_key %||% "projid"
 projid_width <- as.integer(cohort_parameters$projid_width %||% 8L)
+expected_clinical_sha <- as.character(config$inputs$clinical_sha256 %||% "")
+if (!nzchar(expected_clinical_sha)) {
+  stop("inputs.clinical_sha256 is required", call. = FALSE)
+}
+clinical_sha <- sha256_file(clinical_path)
+if (!identical(clinical_sha, expected_clinical_sha)) {
+  stop(
+    "Clinical source SHA-256 mismatch: observed ", clinical_sha,
+    ", expected ", expected_clinical_sha,
+    call. = FALSE
+  )
+}
 
 cohort_dir <- file.path(output_root, "02_cohort")
 dir.create(cohort_dir, recursive = TRUE, showWarnings = FALSE)
@@ -284,8 +296,23 @@ sex_value <- as_numeric_clean(joined[[sex_field]])
 apoe_value <- as_numeric_clean(joined[[apoe_field]])
 pmi_value <- as_numeric_clean(joined[[pmi_field]])
 age_raw <- trimws(as.character(joined$age_death))
-age_numeric <- suppressWarnings(as.numeric(sub("[+]$", "", age_raw)))
-age_90plus <- grepl("[+]$", age_raw)
+age_death_handling <- as.character(
+  cohort_parameters$age_death_handling %||% ""
+)
+if (!identical(age_death_handling, "exact_uncensored_numeric")) {
+  stop(
+    "cohort.age_death_handling must be exact_uncensored_numeric",
+    call. = FALSE
+  )
+}
+if (any(grepl("[+]$", age_raw), na.rm = TRUE)) {
+  stop(
+    "Exact Yu-compatible age source must not contain top-coded '+' ages",
+    call. = FALSE
+  )
+}
+age_numeric <- suppressWarnings(as.numeric(age_raw))
+age_90plus <- !is.na(age_numeric) & age_numeric >= 90
 
 active <- rep(TRUE, nrow(joined))
 flow_rows <- list()
@@ -527,6 +554,28 @@ add_check(
   cohort_parameters$expected_global_donors
 )
 add_check(
+  "clinical_source_sha256",
+  identical(clinical_sha, expected_clinical_sha),
+  clinical_sha,
+  expected_clinical_sha
+)
+expected_age_90plus <- as.integer(
+  cohort_parameters$expected_age_90plus_donors %||% NA_integer_
+)
+add_check(
+  "exact_age_90plus_donor_count",
+  is.finite(expected_age_90plus) &&
+    sum(cohort$age_90plus) == expected_age_90plus,
+  sum(cohort$age_90plus),
+  expected_age_90plus
+)
+add_check(
+  "exact_age_values_above_90_retained",
+  any(cohort$age_death_numeric > 90),
+  max(cohort$age_death_numeric),
+  ">90"
+)
+add_check(
   "global_group_counts",
   identical(group_counts$donors[group_counts$scope == "global"], expected_global_group_counts),
   group_counts$donors[group_counts$scope == "global"],
@@ -632,6 +681,9 @@ status <- data.frame(
   run_id = run_id,
   stable_task_id = "global:cohort",
   source_rds = paste(audit_table$source_rds, collapse = ";"),
+  clinical_source = sub(paste0("^", project_root, "/?"), "", clinical_path),
+  clinical_source_sha256 = clinical_sha,
+  age_death_handling = age_death_handling,
   scientific_script = "scripts/02_build_cohort.R",
   scientific_code_bundle_sha256 = sha256_file(file.path(
     project_root, "scripts/02_build_cohort.R"

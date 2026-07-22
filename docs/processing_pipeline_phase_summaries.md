@@ -52,15 +52,18 @@ and attaches consistently derived clinical covariates. The global production
 cohort contains 276 eligible donors; each RDS also receives its own
 intersection with those donors.
 
-**Inputs.** The phase uses the clinical table, master cell metadata, validated
-Phase 01 audit summaries, and the Phase 01 donor inventories.
+**Inputs.** The phase uses Yu's checksum-frozen 2022 ROSMAP clinical table,
+master cell metadata, validated Phase 01 audit summaries, and the Phase 01
+donor inventories. The clinical input retains exact ages above 90.
 
 **Main processing.** Donor identifiers are normalized to fixed-width
 `projid` values and joined by key rather than row order. The phase derives
 diagnosis, sex, APOE group, age-at-death variables, PMI variables, and scaled
 model covariates. It applies the prespecified diagnosis, sex-concordance, APOE,
 age, and PMI rules; verifies one clinical row per retained donor; and performs
-a donor-aggregated XIST/UTY expression check for reported sex.
+a donor-aggregated XIST/UTY expression check for reported sex. Exact numeric
+age is preserved before scaling; ages are never collapsed to a `90+ = 90`
+value.
 
 **Outputs and handoff.** Phase 02 writes the global 276-donor cohort,
 RDS-specific cohort tables, the exclusion flow, sex-by-APOE-by-diagnosis donor
@@ -121,7 +124,8 @@ but remains an input to the metadata attachment step.
 sex, APOE, age, and PMI are joined by key, and mitochondrial QC fields are
 attached separately. Seurat `NormalizeData` then applies RNA `LogNormalize`
 with scale factor 10,000. All source nuclei are retained; `cohort_included`
-marks the analytic subset rather than physically removing other nuclei.
+marks the analytic subset rather than physically removing other nuclei. The
+exact Phase 02 age is attached to every nucleus from that donor.
 
 **Validation and handoff.** The phase verifies unchanged feature/cell
 dimensions, exact preservation of the serialized raw-count matrix, agreement
@@ -157,7 +161,8 @@ before Seurat dispatches the MAST fit.
 for RNA depth, scaled age at death, and scaled PMI. Effects are always AD minus
 NCI. Within each completed contrast, BH FDR is calculated over the genes
 returned by `FindMarkers`; a Yu-compatible DEG requires `FDR < 0.05` and
-`abs(logFC) > log2(1.3)`.
+`abs(logFC) > log2(1.3)`. Scaling changes covariate units but preserves the
+model space; the underlying age values are Yu's exact uncensored ages.
 
 **Outputs and handoff.** Per-RDS outputs under
 `results/<environment>/08_mast/` include the contrast manifest, complete DEG

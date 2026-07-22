@@ -83,15 +83,23 @@ peak_ram_gib <- function() {
 
 atomic_fwrite <- function(x, path) {
   dir.create(dirname(path), recursive = TRUE, showWarnings = FALSE)
-  tmp <- file.path(
-    dirname(path),
-    paste0(".", basename(path), ".tmp.", Sys.getpid())
-  )
-  compress <- if (grepl("\\.gz$", path)) "gzip" else "none"
+  gzip <- grepl("\\.gz$", path)
+  tmp <- file.path(dirname(path), paste0(
+    ".", basename(path), ".tmp.", Sys.getpid(), if (gzip) ".plain" else ""
+  ))
   data.table::fwrite(
     x, tmp, sep = "\t", quote = FALSE, na = "NA",
-    logical01 = FALSE, compress = compress
+    logical01 = FALSE
   )
+  if (gzip) {
+    status <- system2("gzip", c("-n", "-f", tmp))
+    compressed <- paste0(tmp, ".gz")
+    if (status != 0L || !file.exists(compressed)) {
+      unlink(c(tmp, compressed))
+      stop("Could not gzip temporary output for ", path, call. = FALSE)
+    }
+    tmp <- compressed
+  }
   if (!file.rename(tmp, path)) stop("Could not atomically write ", path, call. = FALSE)
 }
 

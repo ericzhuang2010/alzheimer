@@ -102,6 +102,7 @@ The comparisons are strict: `< 0.05` and `> log2(1.3)`. Supplemental Table S1 is
 
 | Input | Local pilot | Minerva production | Role |
 |---|---|---|---|
+| Frozen Yu clinical table | `data/processed/dataset_707_basic_02-08-2022.clean.txt` | The same tracked file and SHA-256 | Supplies exact uncensored age at death and PMI through Phase 02. |
 | Phase 05 normalized RDS | `results/local_pilot/05_normalized/Vasculature_cells.normalized.rds` | One `*.normalized.rds` per enabled manifest row under `results/minerva_production/05_normalized/` | Normalized RNA values and cell metadata. |
 | Phase 05 status | Matching `*.normalization_status.tsv` | Nine matching status files | Must be `validated_complete`; freezes normalized-object provenance. |
 | RDS manifest | `config/local_pilot_rds_manifest.tsv` | `config/minerva_rds_manifest.tsv` | Selects the source object and expected fine-cell-type count. |
@@ -123,10 +124,17 @@ The normalized RDS must contain:
 
 Phase 08 builds its own six-stratum manifest from these Phase 05 metadata. Phase 06 group-coverage tables may be used only as an independent reconciliation check; they do not control model eligibility.
 
+`age_death_scaled` is derived from the exact numeric `age_death` values in the
+frozen 2022 table. The prior public `ROSMAP_clinical.csv` represented 99
+eligible ages as `90+`; replacing those exact ages with 90 changes MAST
+p-values and must not be used for Yu replication. Centering and scaling the
+exact values is an affine transformation and does not change the diagnosis LRT.
+
 ### Yu validation inputs
 
 | Input | SHA-256 | Role |
 |---|---|---|
+| `data/processed/dataset_707_basic_02-08-2022.clean.txt` | `76a71814b43c9fa3e84b9bbb119dddc3fd4b08743948f75ca38400e9bcb7425e` | Exact Yu clinical covariates, including uncensored ages above 90. |
 | `docs/yu_paper/ALZ-22-e71463-s002.xlsx` | `333898a4c1b89a484b56f51164bdc2fd553a43f7938fc1db2e19b1b8a7dc1ff0` | Supplemental Table S1 DEG acceptance oracle. |
 | `docs/yu_paper/ALZ-22-e71463-s001.docx` | `731176fd5947403bc72115be2c34fa55fc49dd7d697e7aadfa86ca67ac620aaf` | Supporting supplemental figures; not a model input. |
 

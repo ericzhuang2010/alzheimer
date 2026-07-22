@@ -8,7 +8,8 @@ project:
 
 inputs:
   expression_root: /sc/arion/projects/zhangb03a/shared/ROSMAP/Synapse/snRNAseq_MIT/GeneExpression/10x/processed
-  clinical_csv: data/processed/ROSMAP_clinical.csv
+  clinical_csv: data/processed/dataset_707_basic_02-08-2022.clean.txt
+  clinical_sha256: 76a71814b43c9fa3e84b9bbb119dddc3fd4b08743948f75ca38400e9bcb7425e
   cell_metadata_tsv: data/processed/cell.meta.data.tsv
 
 outputs:

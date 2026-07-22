@@ -2,9 +2,15 @@
 
 All 16 files in `results/minerva_production/02_cohort` are tab-separated tables. This directory contains donor selection and donor-level clinical covariates—not gene-expression matrices, individual nuclei, specimens, or sequencing libraries.
 
+The authoritative clinical source is Yu's frozen 2022 ROSMAP table:
+`data/processed/dataset_707_basic_02-08-2022.clean.txt` (SHA-256
+`76a71814b43c9fa3e84b9bbb119dddc3fd4b08743948f75ca38400e9bcb7425e`).
+Phase 02 refuses to run if this checksum changes. This source retains exact
+ages above 90 and is required for reproducing Yu's MAST p-values.
+
 ## Main analytic cohort
 
-[`global_cohort_276.tsv`](../results/minerva_production/02_cohort/global_cohort_276.tsv) — **276 donors × 28 columns**
+[`global_cohort_276.tsv`](../results/minerva_production/02_cohort/global_cohort_276.tsv) — **276 donors × 228 columns after regeneration**
 
 This is the authoritative analytic cohort. Each row is one donor identified by `projid`.
 
@@ -13,13 +19,17 @@ The principal model-ready columns are:
 - `diagnosis`: `NCI` or `AD`
 - `sex`: `Female` or `Male`
 - `apoe_group`: `e2`, `e33`, or `e4`
-- `age_death_numeric`: numeric age at death
-- `age_90plus`: whether age was originally recorded as 90+
+- `age_death_numeric`: exact uncensored numeric age at death
+- `age_90plus`: whether exact age at death is at least 90
 - `pmi_numeric`: postmortem interval
 - `pmi_log1p`: `log(1 + PMI)`
 - `age_death_scaled`, `pmi_scaled`: standardized covariates used in models
 
-It also retains the original clinical columns, including `Study`, `msex`, `educ`, `race`, `spanish`, `apoe_genotype`, age variables, MMSE variables, `braaksc`, `ceradsc`, `cogdx`, `dcfdx_lv`, and `individualID`.
+It also retains the original columns from the frozen 2022 clinical table. Of
+the 276 donors, 99 have exact ages above 90 (range among those donors:
+90.04–108.28 years). The previous `ROSMAP_clinical.csv` input top-coded these
+99 ages as `90+`; converting all of them to 90 caused the Phase 08 p-value
+mismatch.
 
 The cohort was constructed as follows:
 
@@ -35,7 +45,7 @@ The cohort was constructed as follows:
 
 ## RDS-specific cohort files
 
-Each of the following has the same 28 donor-level columns as the global cohort. It is the intersection of the 276 eligible donors with donors represented in that RDS file.
+Each of the following has the same donor-level columns as the global cohort. It is the intersection of the 276 eligible donors with donors represented in that RDS file.
 
 | Cohort file | Donors in source RDS | Eligible donors retained | Eligible donor(s) absent |
 |---|---:|---:|---|
@@ -113,22 +123,26 @@ There are 423 concordant and 4 discordant donors. The discordant `projid` values
 
 ### `cohort_checks.tsv`
 
-[`cohort_checks.tsv`](../results/minerva_production/02_cohort/cohort_checks.tsv) has **5 rows × 5 columns**. It contains machine-readable validation tests covering:
+[`cohort_checks.tsv`](../results/minerva_production/02_cohort/cohort_checks.tsv) contains machine-readable validation tests covering:
 
 - 427 starting metadata donors
 - 276 final global donors
 - expected diagnosis/sex/APOE group counts
+- the frozen clinical-source SHA-256
+- exactly 99 donors aged at least 90
+- retention of exact ages above 90
 - no duplicate global `projid`
 - no missing required derived fields
 
-All five checks passed.
+All required checks must pass.
 
 ### `cohort_status.tsv`
 
-[`cohort_status.tsv`](../results/minerva_production/02_cohort/cohort_status.tsv) has **1 row × 18 columns**. It records run provenance rather than scientific observations:
+[`cohort_status.tsv`](../results/minerva_production/02_cohort/cohort_status.tsv) has one row. It records run provenance rather than scientific observations:
 
 - execution phase, backend, and run ID
 - nine input RDS files
+- the clinical source path, checksum, and `exact_uncensored_numeric` age rule
 - generating script
 - configuration and code hashes
 - Git revision
