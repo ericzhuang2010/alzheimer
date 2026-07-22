@@ -116,3 +116,74 @@ Yu reports Seurat version 5 but does not report the exact Seurat, MAST, R, Matri
 - Matrix 1.6.5.
 
 Differences in Seurat's MAST library version, MAST likelihood-ratio calculations, convergence handling, or supporting numerical libraries could change p-values and adjusted p-value while leaving log2FC unchanged.
+
+## Controlled local software-version probe
+
+On 2026-07-21, I tested the software-version hypothesis with the validated local
+Vasculature normalized object. The probe held the cells, expression matrix,
+covariates, `min.pct`, fold-change threshold, MAST call, and within-contrast BH
+adjustment fixed. It used three contrasts selected before comparing candidates:
+
+- End, female APOE-e33;
+- Per, male APOE-e2; and
+- End, female APOE-e4.
+
+Together these contrasts contained 16,051 returned gene tests and 209 Yu DEG
+rows. The current method produced 185 calls, of which 173 matched Yu (recall
+82.78%, precision 93.51%). The median absolute raw-p difference from Yu was
+`2.65e-05`; the median absolute adjusted-p difference was `0.00299`.
+
+### Version results
+
+| Environment change | Result relative to the current method |
+|---|---|
+| MAST 1.26.0, 1.28.0, 1.30.0, or 1.32.0 | Identical tested genes, DEG calls, overlap, and p-value agreement |
+| Seurat/SeuratObject 5.0.1 instead of 5.5.1/5.4.0 | Identical tested genes, DEG calls, overlap, and p-value agreement |
+| R 4.5.3/Matrix 1.7.4 instead of the stored R 4.3.3/Matrix 1.6.5 baseline | Median absolute p-value change `5.66e-15`; maximum `7.74e-12` |
+
+The Seurat MAST wrapper is also functionally unchanged across the examined
+Seurat 5 releases: it constructs the same `condition + latent variables`
+formula, calls `MAST::zlm`, and performs the same likelihood-ratio test.
+
+These results reject the tested package-version range as a material source of
+the mismatch. Running the full 29 estimable Vasculature contrasts under every
+candidate would repeat an unchanged model implementation and is not expected to
+improve agreement.
+
+### Follow-up implementation probes
+
+Two plausible age-at-death encodings and two MAST fitting changes were also
+tested on the same fixed panel:
+
+| Variant | Calls | Shared | Recall | Precision | Median absolute raw-p difference |
+|---|---:|---:|---:|---:|---:|
+| Current defaults | 185 | 173 | 82.78% | 93.51% | `2.65e-05` |
+| Encode `90+` as 92.5 | 182 | 172 | 82.30% | 94.51% | `3.33e-05` |
+| Encode `90+` as 95 | 204 | 184 | 88.04% | 90.20% | `4.11e-05` |
+| Use unregularized `glm` fitting | 195 | 179 | 85.65% | 91.79% | `2.46e-05` |
+| Disable empirical-Bayes variance regularization | 548 | 204 | 97.61% | 37.23% | `4.14e-05` |
+
+Encoding `90+` as 95 or disabling empirical Bayes increased recall by making
+many more calls, but worsened precision, p-value correlation, and adjusted
+p-value agreement. The unregularized `glm` fit emitted convergence warnings and
+did not improve overall agreement. None is a defensible replacement for the
+paper-specified Seurat `FindMarkers(..., test.use = "MAST")` default.
+
+### Revised interpretation
+
+The mismatch is not explained by Seurat 5.0 versus 5.5, MAST 1.26 through 1.32,
+R 4.3 versus 4.5, or Matrix 1.6 versus 1.7. The leading remaining explanation
+is an unreported difference in the exact covariate vectors or source metadata
+(especially the authors' age-at-death, PMI, and per-cell RNA-count values), or
+an unpublished analysis call that differs from the stated Seurat defaults.
+
+The appropriate next evidence to request from the authors is their DEG script,
+`sessionInfo()`, and the exact per-cell/per-donor covariate table. The BH cutoff
+or adjustment family should not be changed to force agreement because the
+discrepancy is already present in the raw p-values.
+
+Supporting files:
+
+- `scripts/08_probe_mast_versions.R`
+- `docs/debug/deg_mismatch/mast_version_probe_summary.tsv`
+- `results/debug/deg_mismatch/version_matrix/probe/`
