@@ -1,0 +1,2529 @@
+---
+title: "mathys_DEG_analysis_subcluster_sex-cogdx_apoe-cogdx"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(ggpubr)
+library(ggplot2) 
+library(ggrepel)
+library(dplyr)
+library(EnhancedVolcano)
+library(clusterProfiler)
+library(org.Hs.eg.db)
+# library(AnnotationHub)
+library(patchwork)
+library(scales)
+library(VennDiagram)
+library(data.table)
+library(RColorBrewer)
+library(stringr)
+library(ReactomePA)
+library(ComplexHeatmap)
+library(colorRamp2)
+library(reshape2)
+library(ggdendro)
+library(tidyr)
+library(grid)
+library(GOtest)
+library(circlize)
+
+source("/sc/arion/work/yug03/functions.R")
+```
+
+
+```{r}
+processed.path <- "/sc/arion/projects/zhangb03a/shared/ROSMAP/Synapse/snRNAseq_MIT/GeneExpression/10x/processed/"
+all.meta.data <- readRDS("/sc/arion/projects/zhangb03a/yug03/mathys/snRNA/merged_all_celltype_meta.RDS")
+all.meta.data
+
+processed.ls <- c("Astrocytes", "Excitatory_neurons_set1", "Excitatory_neurons_set2", "Excitatory_neurons_set3", "Inhibitory_neurons", "Oligodendrocytes", "OPCs", "Immune_cells", "Vasculature_cells")
+
+mathys_annot_table <- read.table("/sc/arion/projects/zhangb03a/shared/ROSMAP/Synapse/snRNAseq_MIT/GeneExpression/10x/processed/Raw/genes.tsv", sep="\t", header = T)
+
+celltype.df <- read.csv("/sc/arion/work/yug03/mathys/snRNA/celltype_df.txt", sep="\t")
+celltype.df
+```
+```{r}
+length(unique(all.meta.data$projid))
+
+traits <- read.csv("/sc/arion/projects/zhangb03a/shared/ROSMAP/Synapse/Metadata/dataset_707_basic_02-08-2022.clean.txt", sep="\t")
+rownames(traits) <- traits$projid
+traits$sex <- ifelse(traits$msex == 0, "F", "M")
+# traits$apoe2 <- ifelse(traits$apoe_genotype == "24", "4x", ifelse(traits$apoe_genotype == "34", "4x", ifelse(traits$apoe_genotype == "44", "4x", ifelse(traits$apoe_genotype == "22", "2x", ifelse(traits$apoe_genotype == "23", "2x", traits$apoe_genotype)))))
+traits$apoe2 <- ifelse(traits$apoe_genotype == "24", "24", ifelse(traits$apoe_genotype == "34", "4x", ifelse(traits$apoe_genotype == "44", "4x", ifelse(traits$apoe_genotype == "22", "2x", ifelse(traits$apoe_genotype == "23", "2x", traits$apoe_genotype)))))
+traits$apoe2 <- paste0("e", traits$apoe2)
+traits$cogdx2 <- ifelse(traits$cogdx == 1, "NCI", ifelse(traits$cogdx == 2, "MCI", ifelse(traits$cogdx == "4", "AD", traits$cogdx)))
+# traits$cogdx2 <- factor(traits$cogdx2 , levels = c("NCI", "MCI", "AD"))
+traits$sex_apoe2 <- paste(traits$sex, traits$apoe2, sep = '_') #sample meta data
+traits$sex_apoe2_cogdx <- paste(traits$sex, traits$apoe2, traits$cogdx2, sep = '_')
+traits$sex_cogdx2 <- paste(traits$sex, traits$cogdx2, sep = '_') #sample meta data
+traits$apoe2_cogdx2 <- paste(traits$apoe2, traits$cogdx2, sep = '_') #sample meta data
+
+all.meta.data <- left_join(all.meta.data,traits[, c("projid","sex","apoe2","cogdx2","sex_apoe2", "sex_apoe2_cogdx", "sex_cogdx2", "apoe2_cogdx2", "pmi", "age_death")],by="projid")
+all.meta.data
+```
+
+
+
+
+# load original data for plotting
+```{r}
+ori.ls <- list()
+for (cellfile in unique(celltype.df$processed.ls3)[c(1,2,4)]){
+# for (cellfile in unique(celltype.df$processed.ls3)[c(2,6,8)]){
+  print(cellfile)
+  pbmc.ori <- readRDS(paste0(processed.path, cellfile, ".rds"))
+  print(dim(pbmc.ori[["RNA"]]@data))
+  print(table(pbmc.ori@meta.data$cell_type_high_resolution))
+  print(paste("Num total sample: ", length(unique(pbmc.ori@meta.data$projid))))
+  
+  pbmc <- CreateSeuratObject(pbmc.ori[["RNA"]]@counts, meta.data = pbmc.ori@meta.data)
+  print(dim(pbmc[["RNA"]]@counts))
+  print(table(pbmc@meta.data$cell_type_high_resolution))
+  print(paste("Num total sample: ", length(unique(pbmc@meta.data$projid))))
+  
+  # normalize 
+  pbmc <- NormalizeData(pbmc, normalization.method = "LogNormalize", scale.factor = 10000)
+  print(rowSums(pbmc[["RNA"]]@data)[1:5])
+  
+  print(unique(as.character(pbmc@meta.data$cell_type_high_resolution)))
+  pbmc@meta.data$celltype <- gsub( " .*$", "", pbmc@meta.data$cell_type_high_resolution)
+  print(unique(pbmc@meta.data$celltype))
+  
+  Idents(pbmc) <- "cell_type_high_resolution"
+  
+  print(table(Idents(pbmc)))
+  print(head(pbmc@meta.data))
+  
+  df <- left_join(pbmc@meta.data,traits[, c("projid","sex","apoe2","cogdx2","sex_apoe2", "sex_apoe2_cogdx", "sex_cogdx2", "apoe2_cogdx2", "pmi", "age_death")],by="projid")
+  rownames(df) <- rownames(pbmc@meta.data)
+  pbmc <- AddMetaData(pbmc, df)
+  # print(head(pbmc@meta.data))
+  
+  
+  print(table(pbmc@meta.data$sex_apoe2_cogdx))
+  
+  print(paste("Num  sample NA for pmi:",  length(unique(pbmc@meta.data[is.na(pbmc@meta.data$pmi), "projid"]))))
+  print(paste("Num  cell NA for pmi:",  sum(is.na(pbmc@meta.data$pmi))))
+  print(paste("Sample details NA for pmi:",  unique(pbmc@meta.data[is.na(pbmc@meta.data$pmi), "sex_apoe2_cogdx"])))
+  
+  # pbmc.sub <- pbmc[, pbmc$cogdx2 %in% c("AD", "MCI", "NCI") & !is.na(pbmc$pmi) & pbmc$apoe2 != "eNA" & pbmc$apoe2 != "e24"]
+  pbmc.sub <- pbmc[, pbmc$cogdx2 %in% c("AD", "NCI") & !is.na(pbmc$pmi) & pbmc$apoe2 != "eNA" & pbmc$apoe2 != "e24"]
+  
+  print(table(pbmc.sub@meta.data$sex_apoe2_cogdx))
+  print(table(pbmc.sub@meta.data$sex_cogdx))
+  print(table(pbmc.sub@meta.data$apoe2_cogdx2))
+  print(dim(pbmc.sub[["RNA"]]@data))
+  print(length(unique(pbmc.sub@meta.data$projid)))
+  print(head(pbmc.sub@meta.data))
+  
+  ori.ls[[cellfile]] <- pbmc.sub
+}
+```
+
+
+
+# load results
+
+```{r}
+load_tsv <-function(main_dir, grouping, list){
+  file.ls <- list()
+  for(compare in list){
+    group1 <- strsplit(compare, " ")[[1]][1]
+    group2 <- strsplit(compare, " ")[[1]][2]
+    comparison <- paste0(group1, "_vs_", group2)
+    print(comparison)
+    file <- NULL
+    for (c in processed.ls){
+      if(!file.exists(paste0(main_dir, grouping, "/", comparison, "/", comparison, ".DEG.", c, ".tsv"))){
+        print(which(processed.ls == c))
+      }
+      else{
+        f <- read.csv(paste0(main_dir, grouping, "/", comparison, "/", comparison, ".DEG.", c, ".tsv"), sep="\t")
+        # for (cluster in unique(f$Celltype)){
+        #   f$p_val_adj[f$Celltype == cluster] <- p.adjust(f$p_val[f$Celltype == cluster], n = nrow(f[f$Celltype == cluster, ]), method = "BH")
+        # }
+        file <- rbind(file, f)
+      }
+      
+    }
+    # print(file)
+    cat("\n")
+    
+    nam <- paste0(strsplit(grouping, "/")[[1]][2], '.', comparison)
+    file.ls[[nam]] <- file
+    
+  }
+
+return(file.ls)
+}
+
+main_dir = "/sc/arion/projects/zhangb03a/yug03/mathys/snRNA/DEGs/"
+```
+
+
+
+sex_cogdx2
+
+```{r}
+# sex_cogdx2 <- c("F_AD F_NCI sex_cogdx2", "F_AD M_AD sex_cogdx2", "F_NCI M_NCI sex_cogdx2")
+sex_cogdx2 <- c("F_AD F_NCI sex_cogdx2", "M_AD M_NCI sex_cogdx2", "F_AD M_AD sex_cogdx2", "F_NCI M_NCI sex_cogdx2")
+sex_cogdx2.res <- load_tsv(main_dir, "subcluster.s5/sex_cogdx", sex_cogdx2)
+sex_cogdx2.res
+
+r1 <- sex_cogdx2.res$sex_cogdx.F_NCI_vs_M_NCI
+r1 <- r1[r1$Celltype == "Ast CHI3L1", ]
+
+r1[r1$p_val_adj < 0.05 & abs(r1$avg_log2FC) > log2(1.3), ]
+
+r.deg <- r1[r1$p_val_adj < 0.05 & abs(r1$avg_log2FC) > log2(1.3), ]$Symbol
+r.up <- r1[r1$p_val_adj < 0.05 & r1$avg_log2FC > log2(1.3), ]$Symbol
+r.down <- r1[r1$p_val_adj < 0.05 & r1$avg_log2FC < -log2(1.3), ]$Symbol
+```
+```{r}
+sex_cogdx2.res$sex_cogdx.F_AD_vs_M_AD[sex_cogdx2.res$sex_cogdx.F_AD_vs_M_AD$Symbol == "NAMPT", ]
+sex_cogdx2.res$sex_cogdx.F_NCI_vs_M_NCI[sex_cogdx2.res$sex_cogdx.F_NCI_vs_M_NCI$Symbol == "NAMPT", ]
+```
+
+
+apoe2_cogdx2
+
+```{r}
+# apoe2_cogdx2 <- c("e2x_NCI e33_NCI apoe2_cogdx2", "e2x_AD e33_AD apoe2_cogdx2", "e4x_NCI e33_NCI apoe2_cogdx2", "e2x_AD e2x_NCI apoe2_cogdx2", "e33_AD e33_NCI apoe2_cogdx2", "e4x_AD e4x_NCI apoe2_cogdx2")
+apoe2_cogdx2 <- c("e2x_NCI e33_NCI apoe2_cogdx2", "e2x_AD e33_AD apoe2_cogdx2", "e4x_NCI e33_NCI apoe2_cogdx2", "e4x_AD e33_AD apoe2_cogdx2", "e2x_AD e2x_NCI apoe2_cogdx2", "e33_AD e33_NCI apoe2_cogdx2", "e4x_AD e4x_NCI apoe2_cogdx2")
+apoe2_cogdx2.res <- load_tsv(main_dir, "subcluster.s5/apoe2_cogdx2", apoe2_cogdx2)
+apoe2_cogdx2.res
+
+# r1 <- apoe2_cogdx2$cogdx.AD.NCI.subcluster.s5.F_e4x_AD_vs_F_e4x_NCI
+# r1 <- r1[r1$Celltype == "Ast CHI3L1", ]
+# 
+# r1[r1$p_val_adj < 0.05 & abs(r1$avg_log2FC) > log2(1.3), ]
+```
+
+
+# Plot Volcano 
+
+```{r plot_volcano}
+plot_volcano <- function(list, FC, bar_ylim = c(5000, 5000, 5000, 5000)){
+
+  output_dir <- paste0("/sc/arion/work/yug03/mathys/sex_apoe_snRNA_manuscript/figures/DEGs_sex-cogdx_apoe-cogdx/")
+
+  if (!dir.exists(output_dir)){
+    dir.create(output_dir)
+  }else{
+    print("dir exists")
+  }
+  
+  all.res <- do.call(rbind, list)
+  print(all.res)
+  
+  sig.genes <<- list()
+  DEG.count.ls <<- list()
+  barplot.ls <<- list()
+  barplot.exc.ls <<- list()
+  barplot.inh.ls <<- list()
+  barplot.nonneuron.ls <<- list()
+  heatmap.up.ma <<- matrix(nrow = length(list), ncol = length(unique(celltype.df$subcluster)))
+  rownames(heatmap.up.ma) <<- unique(all.res$Contrast)
+  colnames(heatmap.up.ma) <<- unique(celltype.df$subcluster)[order(unique(celltype.df$subcluster))]
+  heatmap.down.ma <<- matrix(nrow = length(list), ncol = length(unique(celltype.df$subcluster)))
+  rownames(heatmap.down.ma) <<- unique(all.res$Contrast)
+  colnames(heatmap.down.ma) <<- unique(celltype.df$subcluster)
+  
+  for (res in list){
+
+    print(res)
+    name <- res[1, "Contrast"]
+    print(name)
+
+    res$diffexpressed <- "NO"
+    res$diffexpressed[res$avg_log2FC > FC & res$p_val_adj < 0.05] <- "UP"
+    res$diffexpressed[res$avg_log2FC < -FC & res$p_val_adj < 0.05] <- "DOWN"
+
+    res$delabel <- NA
+    res$delabel[res$diffexpressed != "NO"] <- res$Symbol[res$diffexpressed != "NO"]
+
+    DEG.count <- c()
+    volcano.ls <- list()
+    
+    bar.df <- as.data.frame(matrix(nrow=length(unique(celltype.df$subcluster))*2, ncol=3))
+    colnames(bar.df) <- c("Celltype", "Group", "Count")
+    bar.df$Celltype <- rep(unique(celltype.df$subcluster), each=2)
+    bar.df$Group <- rep(c("Up-regulated", "Down-regulated"), 2)
+    
+    for(celltype in unique(celltype.df$subcluster)){
+    # for(celltype in unique(res$Celltype)){
+      res.sub <- res[res$Celltype == celltype, ]
+      print(paste(celltype, nrow(res.sub[res.sub$p_val_adj < 0.05 & abs(res.sub$avg_log2FC) > FC, ])))
+      # print(res.sub[res.sub$p_val_adj < 0.05 & abs(res.sub$avg_log2FC) > FC, ])
+
+      res.sub.DEG <- res.sub[res.sub$p_val_adj < 0.05 & abs(res.sub$avg_log2FC) > FC, ]
+      res.sub.DEG$FC.color <- ifelse(res.sub.DEG$avg_log2FC <= 0, 'negative', 'positive')
+      count <- nrow(res.sub.DEG)
+      DEG.count <- c(DEG.count, count)
+
+      
+      bar.df[bar.df$Celltype==celltype & bar.df$Group=="Up-regulated", "Count"] <- nrow(res.sub.DEG[res.sub.DEG$FC.color=="positive", ])
+      bar.df[bar.df$Celltype==celltype & bar.df$Group=="Down-regulated", "Count"] <- nrow(res.sub.DEG[res.sub.DEG$FC.color=="negative", ])
+
+      sig.genes[[paste0(name, "_", celltype, ".up")]] <- res.sub.DEG[res.sub.DEG$FC.color=="positive", ]$Symbol
+      sig.genes[[paste0(name, "_", celltype, ".down")]] <- res.sub.DEG[res.sub.DEG$FC.color=="negative", ]$Symbol
+    }
+    
+    DEG.count.ls[[paste0(name)]] <<- DEG.count
+    
+    bar.df <- bar.df %>%
+      group_by(Celltype) %>%
+      mutate(label_y = cumsum(Count))
+    bar.df$Group <- factor(bar.df$Group, levels = c("Up-regulated", "Down-regulated"))
+    bar.df$Celltype <- factor(bar.df$Celltype, levels = unique(celltype.df$subcluster))
+    print(bar.df)
+
+    b <- ggplot(bar.df, aes(x = Celltype, y = Count, fill = Group)) + geom_col(colour = "black",lwd = 0.2)  + ylim(0,bar_ylim[1]) + scale_fill_brewer(palette = "Pastel1") + ggtitle(name)  + theme_classic() + theme(plot.title = element_text(hjust = 0.5), legend.title=element_blank(), axis.text.x = element_text(size=9, face="bold", angle = 30, hjust=1, vjust = 1), legend.text = element_text(size=12), legend.box.margin = margin(r = 12)) + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+panel.background = element_blank(), axis.line = element_line(colour = "black"))
+    # print(b)
+    barplot.ls[[name]] <<- b
+    
+    print(paste("hihihihihihihihi ", max(bar.df[grepl("Exc", bar.df$Celltype), ]$Count)))
+    
+    barplot.exc.ls[[name]] <<- ggplot(bar.df[grepl("Exc", bar.df$Celltype), ], aes(x = Celltype, y = Count, fill = Group)) + geom_col(colour = "black",lwd = 0.2)  + ylim(0,bar_ylim[2]) + scale_fill_brewer(palette = "Pastel1") + ggtitle(name)  + theme_classic() + theme(plot.title = element_text(hjust = 0.5), legend.title=element_blank(), axis.text.x = element_text(size=9, face="bold", angle = 15, hjust=1, vjust = 1), legend.text = element_text(size=12), legend.box.margin = margin(r = 12)) + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+panel.background = element_blank(), axis.line = element_line(colour = "black"))
+    barplot.inh.ls[[name]] <<- ggplot(bar.df[grepl("Inh", bar.df$Celltype), ], aes(x = Celltype, y = Count, fill = Group)) + geom_col(colour = "black",lwd = 0.2)  + ylim(0,bar_ylim[3]) + scale_fill_brewer(palette = "Pastel1") + ggtitle(name)  + theme_classic() + theme(plot.title = element_text(hjust = 0.5), legend.title=element_blank(), axis.text.x = element_text(size=9, face="bold", angle = 15, hjust=1, vjust = 1), legend.text = element_text(size=12), legend.box.margin = margin(r = 12)) + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+panel.background = element_blank(), axis.line = element_line(colour = "black"))
+    barplot.nonneuron.ls[[name]] <<- ggplot(bar.df[!grepl("Exc|Inh", bar.df$Celltype), ], aes(x = Celltype, y = Count, fill = Group)) + geom_col(colour = "black",lwd = 0.2)  + ylim(0,bar_ylim[4]) + scale_fill_brewer(palette = "Pastel1") + ggtitle(name)  + theme_classic() + theme(plot.title = element_text(hjust = 0.5), legend.title=element_blank(), axis.text.x = element_text(size=9, face="bold", angle = 15, hjust=1, vjust = 1), legend.text = element_text(size=12), legend.box.margin = margin(r = 12)) + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+panel.background = element_blank(), axis.line = element_line(colour = "black"))
+    
+    heatmap.up.ma[name, ] <<- bar.df[bar.df$Group == "Up-regulated", ]$Count
+    heatmap.down.ma[name, ] <<- bar.df[bar.df$Group == "Down-regulated", ]$Count
+
+  }
+  # png(paste0(output_dir, "cogdx.AD.NCI.summary.bar.subcluster.png"),width=9000, height=5000, res=300)
+  # print(ggarrange(plotlist=barplot.ls, ncol=1, nrow=6, common.legend = TRUE, legend = "right"))
+  # dev.off()
+  # png(paste0(output_dir, "cogdx.AD.NCI.summary.bar.subcluster.Exc.png"),width=7000, height=4200, res=300)
+  # print(ggarrange(plotlist=barplot.exc.ls, ncol=1, nrow=6, common.legend = TRUE, legend = "right"))
+  # dev.off()
+  # png(paste0(output_dir, "cogdx.AD.NCI.summary.bar.subcluster.Inh.png"),width=7200, height=4200, res=300)
+  # print(ggarrange(plotlist=barplot.inh.ls, ncol=1, nrow=6, common.legend = TRUE, legend = "right"))
+  # dev.off()
+  # png(paste0(output_dir, "cogdx.AD.NCI.summary.bar.subcluster.nonneuron.png"),width=7000, height=4200, res=300)
+  # print(ggarrange(plotlist=barplot.nonneuron.ls, ncol=1, nrow=6, common.legend = TRUE, legend = "right"))
+  # dev.off()
+  
+  heatmap.up.ma[is.na(heatmap.up.ma)] <<- 0 ## CAMs in M_e2x is NA
+  rownames(heatmap.up.ma) <<- gsub("_vs_", " vs ", rownames(heatmap.up.ma))
+  heatmap.down.ma[is.na(heatmap.down.ma)] <<- 0 ## CAMs in M_e2x is NA
+  rownames(heatmap.down.ma) <<- gsub("_vs_", " vs ", rownames(heatmap.down.ma))
+  
+  ## do column clustering in each cell typefor the heatmap
+  data <- t(rbind(heatmap.up.ma, heatmap.down.ma))
+  data_scaled <- scale(data)
+  all_otter_order <<- c()
+  for (celltype in unique(celltype.df$celltype)){
+    # print(celltype)
+    clusters <- unique(celltype.df[celltype.df$celltype == celltype, "subcluster"])
+    if (length(clusters) == 1){
+      all_otter_order <<- c(all_otter_order, as.character(clusters))
+    }
+    if (length(clusters) > 1){
+      data_scaled.sub <- data_scaled[rownames(data_scaled) %in% clusters, ]
+      otter_dendro <- as.dendrogram(stats::hclust( dist(data_scaled.sub, method = "euclidean"), method = "complete" ))
+      dendro_plot <- ggdendrogram(data = otter_dendro, rotate = TRUE)
+      # print(dendro_plot)
+      otter_order <- order.dendrogram(otter_dendro)
+      otter_order_cluster <- rownames(data_scaled.sub)[otter_order]
+      # print(otter_order_cluster)
+      if (celltype %in% c("Inh", "Ast")){ otter_order_cluster <- rev(otter_order_cluster)}
+      all_otter_order <<- c(all_otter_order, otter_order_cluster)
+    }
+    # cat("\n\n")
+  }
+  # print("hi")
+  # print(all_otter_order)
+  # print("--------------")
+  
+  # png(paste0(output_dir, "cogdx.AD.NCI.summary.heatmap.subcluster.png"),width=5000, height=3000, res=300)
+  # par(mfrow = c(2, 1))
+  h1 <- Heatmap(heatmap.up.ma[,all_otter_order],  row_names_side = "left", cluster_rows = FALSE, cluster_columns = FALSE, column_title=paste(""), show_row_dend = F, col = RColorBrewer::brewer.pal(name = "Reds", n = 9), 
+             heatmap_legend_param = list(title = "# DEGs", title_gp = gpar(fontsize = 9, fontface = "plain"),title_position = "leftcenter-rot",labels_gp = gpar(fontsize = 9)), rect_gp = gpar(col = "white", lwd = 2),
+             column_split = celltype.df$celltype[match(colnames(heatmap.up.ma), celltype.df$subcluster)], column_gap = unit(7, "mm")
+             )
+  
+  h2 <- Heatmap(heatmap.down.ma[,all_otter_order],  row_names_side = "left", cluster_rows = FALSE, cluster_columns = FALSE, column_title=paste(""), show_row_dend = F, col = RColorBrewer::brewer.pal(name = "Blues", n = 9), 
+  heatmap_legend_param = list(title = "# DEGs", title_gp = gpar(fontsize = 9, fontface = "plain"),title_position = "leftcenter-rot",labels_gp = gpar(fontsize = 9)), rect_gp = gpar(col = "white", lwd = 2),
+             column_split = celltype.df$celltype[match(colnames(heatmap.down.ma), celltype.df$subcluster)], column_gap = unit(7, "mm")
+             )
+
+  h_list = h1 %v% h2
+  draw(h_list, ht_gap = unit(c(6, 2), "mm"), padding = unit(c(3, 2, 2, 2), "mm"))
+  # dev.off()
+  
+  # draw(h1)
+  # draw(h2)
+  return(sig.genes)
+}
+
+```
+
+```{r warning=FALSE, fig.width=15, fig.height=7}
+sig.genes <- plot_volcano(sex_cogdx2.res, log2(1.3), c(3500, 3500, 3000, 2700))
+```
+```{r warning=FALSE, fig.width=15, fig.height=9}
+sig.genes <- plot_volcano(apoe2_cogdx2.res, log2(1.3), c(3500, 3500, 3000, 2700))
+```
+
+# plot functions
+```{r plot_FC_bar}
+plot_FC_bar <- function(res, cluster, gene, FC, return.plot = FALSE){
+  res <- res[res$Celltype == cluster & res$Symbol == gene, ]
+  res$Color <- ifelse(res$p_val_adj > 0.05, "grey", ifelse(res$avg_log2FC < 0, "skyblue", "tomato"))
+  res$Color <- factor(res$Color, levels = c("grey", "skyblue", "tomato"))
+  res$Contrast <- factor(res$Contrast, levels = rev(res$Contrast))
+  print(res)
+  
+  b.1 <- ggplot(data=res, aes(x=Contrast, y=avg_log2FC, fill = Color)) + geom_bar(stat="identity")+ theme_classic()+ coord_flip() + ylab("log2FC")  + theme(axis.text.x = element_text(angle = 0, vjust = 1, hjust=1), axis.title.y = element_blank(), legend.position = "top", legend.direction = "horizontal", plot.title = element_text(hjust = 0.5)) + ggtitle("") + scale_fill_manual(
+        values = c("grey", "skyblue", "tomato"),
+        labels = c("grey" = "Not significant", "skyblue" = "Negative", "tomato" = "Positive"),name = NULL, drop = FALSE) + geom_hline(yintercept= FC, linetype="dashed") + geom_hline(yintercept= -FC, linetype="dashed")
+  # print(b.1)
+  
+  if(return.plot == FALSE){print(b.1)}else{return(b.1)}
+}
+# plot_FC_bar(res.sex.c, "Exc RELN CHD7", "SPARCL1", FC = log2(1.3))
+```
+
+```{r plot_vln}
+plot_vln <- function(ori.ls, cluster, gene, group, return.plot = FALSE){
+  cellfile <- celltype.df$processed.ls3[match(cluster, celltype.df$subcluster)]
+  ori <- ori.ls[[cellfile]]
+  v <- VlnPlot(ori, features = c(gene), group.by = group, idents = cluster, pt.size = 0) + geom_boxplot(width = 0.1) + theme(legend.position="none", axis.title.x=element_blank())
+  # print(v)
+  if(return.plot == FALSE){print(v)}else{return(v)}
+}
+plot_vln(ori.ls, "Exc RELN CHD7", "SPARCL1", "sex_codx2")
+```
+
+```{r plot_both}
+plot_both <- function(res, cluster, gene, group, FC){
+  p1 <- plot_FC_bar(res, cluster, gene, FC, return.plot = T)
+  p2 <- plot_vln(ori.ls, cluster, gene, group, return.plot = T)
+  print(ggarrange(p1, p2, nrow = 1, ncol = 2))
+}
+```
+
+
+# sex_cogdx2
+
+```{r}
+# sex_cogdx2.res
+
+res.sex.ls <- list()
+res.sex.c <- do.call(rbind, sex_cogdx2.res)
+res.sex.c <- res.sex.c[res.sex.c$Celltype == "Exc RELN CHD7", ]
+for(res.sex in sex_cogdx2.res){
+  res.sex <- res.sex[res.sex$Celltype == "Exc RELN CHD7", ]
+  print(res.sex)
+  res.sex.up <- res.sex[res.sex$p_val_adj < 0.05 & res.sex$avg_log2FC > log2(1.3), ]
+  res.sex.down <- res.sex[res.sex$p_val_adj < 0.05 & res.sex$avg_log2FC < -log2(1.3), ]
+  print(res.sex.up)
+  print(res.sex.down)
+  
+  res.sex.ls[[paste0(res.sex$Contrast[1])]] <- res.sex
+  res.sex.ls[[paste0(res.sex$Contrast[1], ".Up")]] <- res.sex.up
+  res.sex.ls[[paste0(res.sex$Contrast[1], ".Down")]] <- res.sex.down
+}
+```
+F_AD_vs_M_AD - F_NCI_vs_M_NCI
+
+F_AD - M_AD = pos
+5 - 1 = 4
+F_NCI - M_NCI = neg
+2 - 4 = -2
+
+F_AD_vs_F_NCI - M_AD_vs_M_NCI
+
+F_AD - F_NCI = pos
+5 - 2 = 3
+M_AD - M_NCI = neg
+1 - 4 = -3
+
+```{r}
+res.sex.ls$F_AD_vs_M_AD.Up
+res.sex.ls$F_AD_vs_M_AD.Down
+res.sex.ls$F_NCI_vs_M_NCI.Up
+res.sex.ls$F_NCI_vs_M_NCI.Down
+
+cat("opposite: \n")
+oppo <- c(intersect(res.sex.ls$F_AD_vs_M_AD.Up$Symbol, res.sex.ls$F_NCI_vs_M_NCI.Down$Symbol), 
+          intersect(res.sex.ls$F_AD_vs_M_AD.Down$Symbol, res.sex.ls$F_NCI_vs_M_NCI.Up$Symbol))
+length(oppo)
+oppo[1:5]
+
+cat("not both up: \n")
+e4x.more_up <- union(setdiff(res.sex.ls$F_AD_vs_M_AD.Up$Symbol, res.sex.ls$F_NCI_vs_M_NCI.Up$Symbol), 
+                     setdiff(res.sex.ls$F_NCI_vs_M_NCI.Up$Symbol, res.sex.ls$F_AD_vs_M_AD.Up$Symbol))
+e4x.more_up <- setdiff(e4x.more_up, oppo)
+length(e4x.more_up)
+e4x.more_up[1:5]
+
+cat("not both down: \n")
+e4x.more_down <- union(setdiff(res.sex.ls$F_AD_vs_M_AD.Down$Symbol, res.sex.ls$F_NCI_vs_M_NCI.Down$Symbol), 
+                     setdiff(res.sex.ls$F_NCI_vs_M_NCI.Down$Symbol, res.sex.ls$F_AD_vs_M_AD.Down$Symbol))
+e4x.more_down <- setdiff(e4x.more_down, oppo)
+length(e4x.more_down)
+e4x.more_down[1:5]
+```
+
+```{r}
+res.sex.ls$F_AD_vs_F_NCI.Up
+res.sex.ls$F_AD_vs_F_NCI.Down
+res.sex.ls$M_AD_vs_M_NCI.Up
+res.sex.ls$M_AD_vs_M_NCI.Down
+
+cat("opposite: \n")
+oppo2 <- c(intersect(res.sex.ls$F_AD_vs_F_NCI.Up$Symbol, res.sex.ls$M_AD_vs_M_NCI.Down$Symbol), 
+          intersect(res.sex.ls$F_AD_vs_F_NCI.Down$Symbol, res.sex.ls$M_AD_vs_M_NCI.Up$Symbol))
+length(oppo2)
+oppo2[1:5]
+
+cat("not both up: \n")
+e4x.more_up2 <- union(setdiff(res.sex.ls$F_AD_vs_F_NCI.Up$Symbol, res.sex.ls$M_AD_vs_M_NCI.Up$Symbol), 
+                     setdiff(res.sex.ls$M_AD_vs_M_NCI.Up$Symbol, res.sex.ls$F_AD_vs_F_NCI.Up$Symbol))
+e4x.more_up2 <- setdiff(e4x.more_up2, oppo2)
+length(e4x.more_up2)
+e4x.more_up2[1:5]
+
+cat("not both down: \n")
+e4x.more_down2 <- union(setdiff(res.sex.ls$F_AD_vs_F_NCI.Down$Symbol, res.sex.ls$M_AD_vs_M_NCI.Down$Symbol), 
+                     setdiff(res.sex.ls$M_AD_vs_M_NCI.Down$Symbol, res.sex.ls$F_AD_vs_F_NCI.Down$Symbol))
+e4x.more_down2 <- setdiff(e4x.more_down2, oppo2)
+length(e4x.more_down2)
+e4x.more_down2[1:5]
+```
+
+```{r}
+length(oppo)
+length(oppo2)
+length(intersect(oppo, oppo2))
+
+length(c(oppo, e4x.more_up, e4x.more_down))
+length(c(oppo2, e4x.more_up2, e4x.more_down2))
+length(intersect(c(oppo, e4x.more_up, e4x.more_down), c(oppo2, e4x.more_up2, e4x.more_down2)))
+```
+
+```{r}
+length(oppo)
+length(oppo2)
+intersect(oppo, oppo2)[1:5]
+setdiff(oppo2, oppo)[1:5]
+setdiff(oppo, oppo2)[1:5]
+
+setdiff(c(oppo, not_both_up, not_both_down), c(oppo2, not_both_up2, not_both_down2))[1:5]
+```
+
+```{r}
+gene <- "SYN3"
+res.sex.c[res.sex.c$Symbol == gene, ]
+```
+
+
+New
+```{r}
+res.sex.ls$F_AD_vs_M_AD.Up
+res.sex.ls$F_AD_vs_M_AD.Down
+res.sex.ls$F_NCI_vs_M_NCI.Up
+res.sex.ls$F_NCI_vs_M_NCI.Down
+
+cat("opposite: \n")
+sex.oppo <- c(intersect(res.sex.ls$F_AD_vs_M_AD.Up$Symbol, res.sex.ls$F_NCI_vs_M_NCI.Down$Symbol), 
+          intersect(res.sex.ls$F_AD_vs_M_AD.Down$Symbol, res.sex.ls$F_NCI_vs_M_NCI.Up$Symbol))
+length(sex.oppo)
+sex.oppo[1:5]
+
+cat("F_AD more up: \n")
+sex.more_up <- res.sex.c[, c(1,2,3,4,6)] %>% dplyr::filter(Contrast %in% c("F_AD_vs_M_AD", "F_NCI_vs_M_NCI")) %>% group_by(Symbol) %>%
+  pivot_wider(names_from = Contrast, values_from = avg_log2FC, values_fill = list(avg_log2FC = 0)) %>%
+  dplyr::filter(F_AD_vs_M_AD - F_NCI_vs_M_NCI > log2(1.3))
+sex.more_up <- sex.more_up$Symbol
+sex.more_up <- setdiff(sex.more_up, sex.oppo)
+length(sex.more_up)
+sex.more_up[1:5]
+
+cat("F_AD more down: \n")
+sex.more_down <- res.sex.c[, c(1,2,3,4,6)] %>% dplyr::filter(Contrast %in% c("F_AD_vs_M_AD", "F_NCI_vs_M_NCI")) %>% group_by(Symbol) %>%
+  pivot_wider(names_from = Contrast, values_from = avg_log2FC, values_fill = list(avg_log2FC = 0)) %>%
+  dplyr::filter(F_AD_vs_M_AD - F_NCI_vs_M_NCI < -log2(1.3))
+sex.more_down <- sex.more_down$Symbol
+sex.more_down <- setdiff(sex.more_down, sex.oppo)
+length(sex.more_down)
+sex.more_down[1:5]
+
+```
+
+```{r}
+res.sex.ls$F_AD_vs_F_NCI.Up
+res.sex.ls$F_AD_vs_F_NCI.Down
+res.sex.ls$M_AD_vs_M_NCI.Up
+res.sex.ls$M_AD_vs_M_NCI.Down
+
+cat("opposite: \n")
+sex.oppo2 <- c(intersect(res.sex.ls$F_AD_vs_F_NCI.Up$Symbol, res.sex.ls$M_AD_vs_M_NCI.Down$Symbol), 
+          intersect(res.sex.ls$F_AD_vs_F_NCI.Down$Symbol, res.sex.ls$M_AD_vs_M_NCI.Up$Symbol))
+length(sex.oppo2)
+sex.oppo2[1:5]
+
+cat("F_AD more up: \n")
+sex.more_up2 <- res.sex.c[, c(1,2,3,4,6)] %>% dplyr::filter(Contrast %in% c("F_AD_vs_F_NCI", "M_AD_vs_M_NCI")) %>% group_by(Symbol) %>%
+  pivot_wider(names_from = Contrast, values_from = avg_log2FC, values_fill = list(avg_log2FC = 0)) %>%
+  dplyr::filter(F_AD_vs_F_NCI - M_AD_vs_M_NCI > log2(1.3))
+sex.more_up2 <- sex.more_up2$Symbol
+sex.more_up2 <- setdiff(sex.more_up2, sex.oppo2)
+length(sex.more_up2)
+sex.more_up2[1:5]
+
+cat("F_AD more down: \n")
+sex.more_down2 <- res.sex.c[, c(1,2,3,4,6)] %>% dplyr::filter(Contrast %in% c("F_AD_vs_F_NCI", "M_AD_vs_M_NCI")) %>% group_by(Symbol) %>%
+  pivot_wider(names_from = Contrast, values_from = avg_log2FC, values_fill = list(avg_log2FC = 0)) %>%
+  dplyr::filter(F_AD_vs_F_NCI - M_AD_vs_M_NCI < -log2(1.3))
+sex.more_down2 <- sex.more_down2$Symbol
+sex.more_down2 <- setdiff(sex.more_down2, sex.oppo2)
+length(sex.more_down2)
+sex.more_down2[1:5]
+```
+
+```{r}
+length(sex.oppo)
+length(sex.oppo2)
+length(intersect(sex.oppo, sex.oppo2))
+
+length(c(sex.oppo, sex.more_up, sex.more_down))
+length(c(sex.oppo2, sex.more_up2, sex.more_down2))
+length(intersect(c(sex.oppo, sex.more_up, sex.more_down), c(sex.oppo2, sex.more_up2, sex.more_down2)))
+```
+
+```{r}
+setdiff(c(sex.oppo, sex.more_up, sex.more_down), c(sex.oppo2, sex.more_up2, sex.more_down2))[1:5]
+```
+
+```{r}
+res.sex.c[res.sex.c$Symbol == "P2RY14", ]
+table(res.sex.c$Contrast)
+```
+```{r}
+is.element("P2RY14", oppo)
+is.element("P2RY14", not_both_up)
+is.element("P2RY14", not_both_down)
+```
+
+
+
+The num- bers of up- and down-regulated DEGs between female AD versus female control were much larger than those between male AD versus male control
+
+```{r}
+paper_F_AD <- c("TTLL4", "ZNF516", "FAM107A", "CGNL1", "ARAP1-AS2", "SNORA8", "GNA12", "Z98256.1", "ITPKB", "CTC-479C5.17", "C4B-AS1", "FYN", "ZBED1", "CD99", "TBL1X")
+length(paper_F_AD)
+length(intersect(paper_F_AD, c(res.sex.ls$F_AD_vs_F_NCI.Up$Symbol, res.sex.ls$F_AD_vs_F_NCI.Down$Symbol)))
+# setdiff(paper_F_AD, mathys_annot_table$Symbol)
+
+paper_M_AD <- c("POP7", "AC010890.1", "AC067945.4", "RP11-486F17.1", "HNRNPA1P16", "RP5-855F14.1", "ADPRHL1", "ZFHX3", "NHSL1", "CSTF2", "FYCO1", "RP11-195F19.30", "RP11-195F19.5", "RP11-686G8.1", "PELI2")
+length(paper_M_AD)
+length(intersect(paper_M_AD, c(res.sex.ls$M_AD_vs_M_NCI.Up$Symbol, res.sex.ls$M_AD_vs_M_NCI.Down$Symbol)))
+# setdiff(paper_M_AD, mathys_annot_table$Symbol)
+```
+```{r}
+res.sex.ls$F_AD_vs_F_NCI[res.sex.ls$F_AD_vs_F_NCI$Symbol %in% paper_F_AD, ]
+
+sex_cogdx2.res$sex_cogdx.F_AD_vs_F_NCI[sex_cogdx2.res$sex_cogdx.F_AD_vs_F_NCI$Symbol %in% paper_F_AD & sex_cogdx2.res$sex_cogdx.F_AD_vs_F_NCI$p_val_adj < 0.05, ]
+
+length(unique(sex_cogdx2.res$sex_cogdx.F_AD_vs_F_NCI[sex_cogdx2.res$sex_cogdx.F_AD_vs_F_NCI$p_val_adj < 0.05 & abs(sex_cogdx2.res$sex_cogdx.F_AD_vs_F_NCI$avg_log2FC) > log2(1.3), ]$Symbol))
+length(intersect(paper_F_AD, unique(sex_cogdx2.res$sex_cogdx.F_AD_vs_F_NCI[sex_cogdx2.res$sex_cogdx.F_AD_vs_F_NCI$p_val_adj < 0.05 & abs(sex_cogdx2.res$sex_cogdx.F_AD_vs_F_NCI$avg_log2FC) > log2(1.3), ]$Symbol) ))
+length(intersect(paper_F_AD, sex_cogdx2.res$sex_cogdx.F_AD_vs_F_NCI$Symbol ))
+```
+
+
+```{r, fig.width=10, fig.height=5}
+# plot_both(res=res.sex.c, cluster="Exc RELN CHD7", gene="SPARCL1", group="sex_cogdx2", FC=log2(1.3))
+plot_both(res=res.sex.c, cluster="Exc RELN CHD7", gene="CNTNAP2", group="sex_cogdx2", FC=log2(1.3))
+```
+
+
+
+# Apoe
+
+```{r}
+# apoe2_cogdx2.res
+
+res.apoe2.ls <- list()
+res.apoe2.c <- do.call(rbind, apoe2_cogdx2.res)
+res.apoe2.c <- res.apoe2.c[res.apoe2.c$Celltype == "Exc RELN CHD7", ]
+for(res.apoe2 in apoe2_cogdx2.res){
+  res.apoe2 <- res.apoe2[res.apoe2$Celltype == "Exc RELN CHD7", ]
+  print(res.apoe2)
+  res.apoe2.up <- res.apoe2[res.apoe2$p_val_adj < 0.05 & res.apoe2$avg_log2FC > log2(1.3), ]
+  res.apoe2.down <- res.apoe2[res.apoe2$p_val_adj < 0.05 & res.apoe2$avg_log2FC < -log2(1.3), ]
+  print(res.apoe2.up)
+  print(res.apoe2.down)
+  
+  res.apoe2.ls[[paste0(res.apoe2$Contrast[1])]] <- res.apoe2
+  res.apoe2.ls[[paste0(res.apoe2$Contrast[1], ".Up")]] <- res.apoe2.up
+  res.apoe2.ls[[paste0(res.apoe2$Contrast[1], ".Down")]] <- res.apoe2.down
+}
+```
+```{r}
+table(res.apoe2.c$Contrast)
+```
+e2x
+
+(e2x_AD - e33_AD) - (e2x_NCI - e33_NCI)
+(e2x_AD - e2x_NCI) - (e33_AD - e33_NCI)
+
+```{r}
+res.apoe2.ls$e2x_AD_vs_e33_AD.Up
+res.apoe2.ls$e2x_AD_vs_e33_AD.Down
+res.apoe2.ls$e2x_NCI_vs_e33_NCI.Up
+res.apoe2.ls$e2x_NCI_vs_e33_NCI.Down
+
+cat("e2x.opposite: \n")
+e2x.oppo <- c(intersect(res.apoe2.ls$e2x_AD_vs_e33_AD.Up$Symbol, res.apoe2.ls$e2x_NCI_vs_e33_NCI.Down$Symbol), 
+          intersect(res.apoe2.ls$e2x_AD_vs_e33_AD.Down$Symbol, res.apoe2.ls$e2x_NCI_vs_e33_NCI.Up$Symbol))
+length(e2x.oppo)
+e2x.oppo[1:5]
+
+cat("e2x_AD up: \n")
+e2x.more_up <- res.apoe2.c[, c(1,2,3,4,6)] %>% dplyr::filter(Contrast %in% c("e2x_AD_vs_e33_AD", "e2x_NCI_vs_e33_NCI")) %>% group_by(Symbol) %>%
+  pivot_wider(names_from = Contrast, values_from = avg_log2FC, values_fill = list(avg_log2FC = 0)) %>%
+  dplyr::filter(e2x_AD_vs_e33_AD - e2x_NCI_vs_e33_NCI > log2(1.3))
+e2x.more_up <- e2x.more_up$Symbol
+e2x.more_up <- setdiff(e2x.more_up, e2x.oppo)
+length(e2x.more_up)
+e2x.more_up[1:5]
+
+cat("e2x_AD down: \n")
+e2x.more_down <- res.apoe2.c[, c(1,2,3,4,6)] %>% dplyr::filter(Contrast %in% c("e2x_AD_vs_e33_AD", "e2x_NCI_vs_e33_NCI")) %>% group_by(Symbol) %>%
+  pivot_wider(names_from = Contrast, values_from = avg_log2FC, values_fill = list(avg_log2FC = 0)) %>%
+  dplyr::filter(e2x_AD_vs_e33_AD - e2x_NCI_vs_e33_NCI < -log2(1.3))
+e2x.more_down <- e2x.more_down$Symbol
+e2x.more_down <- setdiff(e2x.more_down, e2x.oppo)
+length(e2x.more_down)
+e2x.more_down[1:5]
+
+```
+
+```{r}
+res.apoe2.ls$e2x_AD_vs_e2x_NCI.Up
+res.apoe2.ls$e2x_AD_vs_e2x_NCI.Down
+res.apoe2.ls$e33_AD_vs_e33_NCI.Up
+res.apoe2.ls$e33_AD_vs_e33_NCI.Down
+
+cat("opposite: \n")
+e2x.oppo2 <- c(intersect(res.apoe2.ls$e2x_AD_vs_e2x_NCI.Up$Symbol, res.apoe2.ls$e33_AD_vs_e33_NCI.Down$Symbol), 
+          intersect(res.apoe2.ls$e2x_AD_vs_e2x_NCI.Down$Symbol, res.apoe2.ls$e33_AD_vs_e33_NCI.Up$Symbol))
+length(e2x.oppo2)
+e2x.oppo2[1:5]
+
+cat("e2x_AD up: \n")
+e2x.more_up2 <- res.apoe2.c[, c(1,2,3,4,6)] %>% dplyr::filter(Contrast %in% c("e2x_AD_vs_e2x_NCI", "e33_AD_vs_e33_NCI")) %>% group_by(Symbol) %>%
+  pivot_wider(names_from = Contrast, values_from = avg_log2FC, values_fill = list(avg_log2FC = 0)) %>%
+  dplyr::filter(e2x_AD_vs_e2x_NCI - e33_AD_vs_e33_NCI > log2(1.3))
+e2x.more_up2 <- e2x.more_up2$Symbol
+e2x.more_up2 <- setdiff(e2x.more_up2, e2x.oppo2)
+length(e2x.more_up2)
+e2x.more_up2[1:5]
+
+cat("e2x_AD down: \n")
+e2x.more_down2 <- res.apoe2.c[, c(1,2,3,4,6)] %>% dplyr::filter(Contrast %in% c("e2x_AD_vs_e2x_NCI", "e33_AD_vs_e33_NCI")) %>% group_by(Symbol) %>%
+  pivot_wider(names_from = Contrast, values_from = avg_log2FC, values_fill = list(avg_log2FC = 0)) %>%
+  dplyr::filter(e2x_AD_vs_e2x_NCI - e33_AD_vs_e33_NCI < -log2(1.3))
+e2x.more_down2 <- e2x.more_down2$Symbol
+e2x.more_down2 <- setdiff(e2x.more_down2, e2x.oppo2)
+length(e2x.more_down2)
+e2x.more_down2[1:5]
+```
+
+```{r}
+length(e2x.oppo)
+length(e2x.oppo2)
+length(intersect(e2x.oppo, e2x.oppo2))
+
+length(c(e2x.oppo, e2x.more_up, e2x.more_down))
+length(c(e2x.oppo2, e2x.more_up2, e2x.more_down2))
+length(intersect(c(e2x.oppo, e2x.more_up, e2x.more_down), c(e2x.oppo2, e2x.more_up2, e2x.more_down2)))
+```
+
+
+
+e4x
+
+(e4x_AD - e33_AD) - (e4x_NCI - e33_NCI)
+(e4x_AD - e4x_NCI) - (e33_AD - e33_NCI)
+
+```{r}
+res.apoe2.ls$e4x_AD_vs_e33_AD.Up
+res.apoe2.ls$e4x_AD_vs_e33_AD.Down
+res.apoe2.ls$e4x_NCI_vs_e33_NCI.Up
+res.apoe2.ls$e4x_NCI_vs_e33_NCI.Down
+
+cat("opposite: \n")
+e4x.oppo <- c(intersect(res.apoe2.ls$e4x_AD_vs_e33_AD.Up$Symbol, res.apoe2.ls$e4x_NCI_vs_e33_NCI.Down$Symbol), 
+          intersect(res.apoe2.ls$e4x_AD_vs_e33_AD.Down$Symbol, res.apoe2.ls$e4x_NCI_vs_e33_NCI.Up$Symbol))
+length(e4x.oppo)
+e4x.oppo[1:5]
+
+cat("e4x_AD up: \n")
+not_both_up <- res.apoe2.c[, c(1,2,3,4,6)] %>% dplyr::filter(Contrast %in% c("e4x_AD_vs_e33_AD", "e4x_NCI_vs_e33_NCI")) %>% group_by(Symbol) %>%
+  pivot_wider(names_from = Contrast, values_from = avg_log2FC, values_fill = list(avg_log2FC = 0)) %>%
+  dplyr::filter(e4x_AD_vs_e33_AD - e4x_NCI_vs_e33_NCI > log2(1.3))
+not_both_up <- not_both_up$Symbol
+not_both_up <- setdiff(not_both_up, e4x.oppo)
+length(not_both_up)
+not_both_up[1:5]
+
+cat("e4x_AD down: \n")
+not_both_down <- res.apoe2.c[, c(1,2,3,4,6)] %>% dplyr::filter(Contrast %in% c("e4x_AD_vs_e33_AD", "e4x_NCI_vs_e33_NCI")) %>% group_by(Symbol) %>%
+  pivot_wider(names_from = Contrast, values_from = avg_log2FC, values_fill = list(avg_log2FC = 0)) %>%
+  dplyr::filter(e4x_AD_vs_e33_AD - e4x_NCI_vs_e33_NCI < -log2(1.3))
+not_both_down <- not_both_down$Symbol
+not_both_down <- setdiff(not_both_down, e4x.oppo)
+length(not_both_down)
+not_both_down[1:5]
+
+```
+
+```{r}
+res.apoe2.ls$e4x_AD_vs_e4x_NCI.Up
+res.apoe2.ls$e4x_AD_vs_e4x_NCI.Down
+res.apoe2.ls$e33_AD_vs_e33_NCI.Up
+res.apoe2.ls$e33_AD_vs_e33_NCI.Down
+
+cat("opposite: \n")
+e4x.oppo2 <- c(intersect(res.apoe2.ls$e4x_AD_vs_e4x_NCI.Up$Symbol, res.apoe2.ls$e33_AD_vs_e33_NCI.Down$Symbol), 
+          intersect(res.apoe2.ls$e4x_AD_vs_e4x_NCI.Down$Symbol, res.apoe2.ls$e33_AD_vs_e33_NCI.Up$Symbol))
+length(e4x.oppo2)
+e4x.oppo2[1:5]
+
+cat("not both up: \n")
+not_both_up2 <- res.apoe2.c[, c(1,2,3,4,6)] %>% dplyr::filter(Contrast %in% c("e4x_AD_vs_e4x_NCI", "e33_AD_vs_e33_NCI")) %>% group_by(Symbol) %>%
+  pivot_wider(names_from = Contrast, values_from = avg_log2FC, values_fill = list(avg_log2FC = 0)) %>%
+  dplyr::filter(e4x_AD_vs_e4x_NCI - e33_AD_vs_e33_NCI > log2(1.3))
+not_both_up2 <- not_both_up2$Symbol
+not_both_up2 <- setdiff(not_both_up2, e4x.oppo2)
+length(not_both_up2)
+not_both_up2[1:5]
+
+cat("not both down: \n")
+not_both_down2 <- res.apoe2.c[, c(1,2,3,4,6)] %>% dplyr::filter(Contrast %in% c("e4x_AD_vs_e4x_NCI", "e33_AD_vs_e33_NCI")) %>% group_by(Symbol) %>%
+  pivot_wider(names_from = Contrast, values_from = avg_log2FC, values_fill = list(avg_log2FC = 0)) %>%
+  dplyr::filter(e4x_AD_vs_e4x_NCI - e33_AD_vs_e33_NCI < -log2(1.3))
+not_both_down2 <- not_both_down2$Symbol
+not_both_down2 <- setdiff(not_both_down2, e4x.oppo2)
+length(not_both_down2)
+not_both_down2[1:5]
+```
+
+```{r}
+length(e4x.oppo)
+length(e4x.oppo2)
+length(intersect(e4x.oppo, e4x.oppo2))
+
+length(c(e4x.oppo, not_both_up, not_both_down))
+length(c(e4x.oppo2, not_both_up2, not_both_down2))
+length(intersect(c(e4x.oppo, not_both_up, not_both_down), c(e4x.oppo2, not_both_up2, not_both_down2)))
+```
+
+
+```{r}
+all.sex <- unique(c(sex.oppo, sex.more_up, sex.more_down, sex.oppo2, sex.more_up2, sex.more_down2))
+length(all.sex)
+all.e2x <- unique(c(e2x.oppo, e2x.more_up, e2x.more_down, e2x.oppo2, e2x.more_up2, e2x.more_down2))
+length(all.e2x)
+all.e4x <- unique(c(e4x.oppo, not_both_up, not_both_down, e4x.oppo2, not_both_up2, not_both_down2))
+length(all.e4x)
+
+length(intersect(all.sex, all.e2x))
+length(intersect(all.sex, all.e4x))
+```
+
+```{r}
+Reduce(intersect, list(all.sex, all.e2x, all.e4x, risk_genes))
+
+Reduce(intersect, list(all.e2x, all.e4x, risk_genes))
+```
+```{r, fig.width=10, fig.height=5}
+plot_both(res=res.sex.c, cluster="Exc RELN CHD7", gene="CLU", group="sex_cogdx2", FC=log2(1.3))
+plot_both(res=res.apoe2.c, cluster="Exc RELN CHD7", gene="CLU", group="apoe2_cogdx2", FC=log2(1.3))
+
+VlnPlot(ori.ls[["Excitatory_neurons_set3"]], features = c("CLU"), group.by = "sex_apoe2_cogdx", idents = "Exc RELN CHD7", pt.size = 0) + geom_boxplot(width = 0.1) + theme(legend.position="none", axis.title.x=element_blank())
+# plot_vln(ori.ls, "Exc RELN CHD7", "SPARCL1", "sex_cogdx2")
+```
+
+
+## Test MAST
+
+```{r}
+library(MAST)
+```
+
+```{r my_MASTDETest and my_IdentsToCells}
+my_MASTDETest <- function(
+  data.use,
+  cells.1,
+  cells.2,
+  latent.vars = NULL,
+  verbose = TRUE,
+  ...
+) {
+  # Check for MAST
+  if (!PackageCheck('MAST', error = FALSE)) {
+    stop("Please install MAST - learn more at https://github.com/RGLab/MAST")
+  }
+  group.info <- data.frame(row.names = c(cells.1, cells.2))
+  latent.vars <- latent.vars %||% group.info
+  group.info[cells.1, "group"] <- "Group1"
+  group.info[cells.2, "group"] <- "Group2"
+  group.info[, "group"] <- factor(x = group.info[, "group"])
+  latent.vars.names <- c("condition", colnames(x = latent.vars))
+  latent.vars <- cbind(latent.vars, group.info)
+  latent.vars$wellKey <- rownames(x = latent.vars)
+  fdat <- data.frame(rownames(x = data.use))
+  colnames(x = fdat)[1] <- "primerid"
+  rownames(x = fdat) <- fdat[, 1]
+  sca <- MAST::FromMatrix(
+    exprsArray = as.matrix(x = data.use),
+    check_sanity = FALSE,
+    cData = latent.vars,
+    fData = fdat
+  )
+  cond <- factor(x = SummarizedExperiment::colData(sca)$group)
+  cond <- relevel(x = cond, ref = "Group1")
+  SummarizedExperiment::colData(sca)$condition <- cond
+  fmla <- as.formula(
+    object = paste0(" ~ ", paste(latent.vars.names, collapse = "+"))
+  )
+  zlmCond <- MAST::zlm(formula = fmla, sca = sca)
+  summaryCond <- MAST::summary(object = zlmCond, doLRT = 'conditionGroup2')
+  summaryDt <- summaryCond$datatable
+  summaryDt <- as.data.frame(summaryDt)
+  p_val <- summaryDt[summaryDt[, "component"] == "H", 4]
+  genes.return <- summaryDt[summaryDt[, "component"] == "H", 1]
+  to.return <- data.frame(p_val, row.names = genes.return)
+  return(to.return)
+}
+
+my_IdentsToCells <- function(
+  object,
+  ident.1,
+  ident.2,
+  cellnames.use
+) {
+  #
+  if (is.null(x = ident.1)) {
+    stop("Please provide ident.1")
+  } else if ((length(x = ident.1) == 1 && ident.1[1] == 'clustertree') || is(object = ident.1, class2 = 'phylo')) {
+    if (is.null(x = ident.2)) {
+      stop("Please pass a node to 'ident.2' to run FindMarkers on a tree")
+    }
+    tree <- if (is(object = ident.1, class2 = 'phylo')) {
+      ident.1
+    } else {
+      Tool(object = object, slot = 'BuildClusterTree')
+    }
+    if (is.null(x = tree)) {
+      stop("Please run 'BuildClusterTree' or pass an object of class 'phylo' as 'ident.1'")
+    }
+    ident.1 <- tree$tip.label[GetLeftDescendants(tree = tree, node = ident.2)]
+    ident.2 <- tree$tip.label[GetRightDescendants(tree = tree, node = ident.2)]
+  }
+  if (length(x = as.vector(x = ident.1)) > 1 &&
+      any(as.character(x = ident.1) %in% cellnames.use)) {
+    bad.cells <- cellnames.use[which(x = !as.character(x = ident.1) %in% cellnames.use)]
+    if (length(x = bad.cells) > 0) {
+      stop(paste0("The following cell names provided to ident.1 are not present in the object: ", paste(bad.cells, collapse = ", ")))
+    }
+  } else {
+    ident.1 <- WhichCells(object = object, idents = ident.1)
+  }
+  # if NULL for ident.2, use all other cells
+  if (length(x = as.vector(x = ident.2)) > 1 &&
+      any(as.character(x = ident.2) %in% cellnames.use)) {
+    bad.cells <- cellnames.use[which(!as.character(x = ident.2) %in% cellnames.use)]
+    if (length(x = bad.cells) > 0) {
+      stop(paste0("The following cell names provided to ident.2 are not present in the object: ", paste(bad.cells, collapse = ", ")))
+    }
+  } else {
+    if (is.null(x = ident.2)) {
+      ident.2 <- setdiff(x = cellnames.use, y = ident.1)
+    } else {
+      ident.2 <- WhichCells(object = object, idents = ident.2)
+    }
+  }
+  return(list(cells.1 = ident.1, cells.2 = ident.2))
+}
+```
+
+```{r}
+pbmc <- ori.ls$Immune_cells
+pbmc@meta.data
+table(pbmc@meta.data$cell_type_high_resolution)
+```
+
+
+```{r}
+r <- sex_cogdx2.res$sex_cogdx.F_NCI_vs_M_NCI[sex_cogdx2.res$sex_cogdx.F_NCI_vs_M_NCI$Celltype == "T cells", ]
+r
+r[r$p_val_adj < 0.05, ]
+# r[r$p_val_adj < 0.05 & abs(r$avg_log2FC) > log2(1.3), ]
+```
+
+The FC is different because in Rstudio, it use seurat 4 and above use R command line Seurat (v5). Seurat v5 tends to have higher FC
+```{r}
+logfc.threshold <- log(1)
+latent.vars <- c('nCount_RNA','pmi','age_death')
+result1 <- FindMarkers(object = pbmc, slot = "data", assay = NULL, ident.1 = "F_NCI", ident.2 = "M_NCI", group.by = "sex_cogdx2", subset.ident = "T cells", logfc.threshold = logfc.threshold, test.use = 'MAST', latent.vars = latent.vars, min.pct = 0.1)
+names(result1)[names(result1) == 'p_val_adj'] <- 'p_val_adj_bonferroni'
+print(nrow(result1))
+result1$p_val_adj <- p.adjust(result1$p_val, n=nrow(result1), method = "BH")
+result1
+result1[result1$p_val_adj < 0.05, ]
+# result1[result1$p_val_adj < 0.05 & abs(result1$avg_log2FC) > log2(1.3),]
+```
+
+
+
+mimic FindMarkers.Seurat 
+```{r}
+pbmc.sub <- pbmc[, pbmc@meta.data$cell_type_high_resolution == "T cells"]
+data.use.1 <- pbmc.sub[["RNA"]]
+Idents(pbmc.sub) <- "sex_cogdx2"
+latent.vars <- c('nCount_RNA','pmi','age_death')
+
+cellnames.use.1 <- colnames(data.use.1)
+
+cells_1 <- my_IdentsToCells(
+    object = pbmc.sub,
+    ident.1 = "F_NCI",
+    ident.2 = "M_NCI",
+    cellnames.use = cellnames.use.1
+  )
+
+cells_1 <- sapply(
+  X = cells_1,
+  FUN = intersect,
+  y = cellnames.use.1,
+  simplify = FALSE,
+  USE.NAMES = TRUE
+)
+
+latent.vars.1 <- FetchData(
+      object = pbmc.sub,
+      vars = latent.vars,
+      cells = c(cells_1$cells.1, cells_1$cells.2)
+    )
+
+# my_MASTDETest(data.use.1@data[, c(cells_1$cells.1, cells_1$cells.2)], cells.1 = cells_1$cells.1, cells.2 = cells_1$cells.2, latent.vars = latent.vars.1, norm.method = "LogNormalize")
+
+```
+
+```{r my_FindMarkers.Seurat}
+my_FindMarkers.Seurat <- function(
+  object,
+  ident.1 = NULL,
+  ident.2 = NULL,
+  latent.vars = NULL,
+  group.by = NULL,
+  subset.ident = NULL,
+  assay = NULL,
+  reduction = NULL,
+  ...
+) {
+  if (!is.null(x = group.by)) {
+    if (!is.null(x = subset.ident)) {
+      object <- subset(x = object, idents = subset.ident)
+    }
+    Idents(object = object) <- group.by
+  }
+  if (!is.null(x = assay) && !is.null(x = reduction)) {
+    stop("Please only specify either assay or reduction.")
+  }
+  if (length(x = ident.1) == 0) {
+    stop("At least 1 ident must be specified in `ident.1`")
+  }
+
+  # select which data to use
+  if (is.null(x = reduction)) {
+    assay <- assay %||% DefaultAssay(object = object)
+    data.use <- object[[assay]]
+    cellnames.use <-  colnames(x = data.use)
+  } else {
+    data.use <- object[[reduction]]
+    cellnames.use <- rownames(x = data.use)
+  }
+  cells <- my_IdentsToCells(
+    object = object,
+    ident.1 = ident.1,
+    ident.2 = ident.2,
+    cellnames.use = cellnames.use
+  )
+  cells <- sapply(
+    X = cells,
+    FUN = intersect,
+    y = cellnames.use,
+    simplify = FALSE,
+    USE.NAMES = TRUE
+  )
+  if (!all(vapply(X = cells, FUN = length, FUN.VALUE = integer(length = 1L)))) {
+    abort(
+      message = "Cells in one or both identity groups are not present in the data requested"
+    )
+  }
+
+  # fetch latent.vars
+  if (!is.null(x = latent.vars)) {
+    latent.vars <- FetchData(
+      object = object,
+      vars = latent.vars,
+      cells = c(cells$cells.1, cells$cells.2)
+    )
+  }
+
+  # check normalization method
+  norm.command <- paste0("NormalizeData.", assay)
+  norm.method <- if (norm.command %in% Command(object = object) && is.null(x = reduction)) {
+    Command(
+      object = object,
+      command = norm.command,
+      value = "normalization.method"
+    )
+  } else if (length(x = intersect(x = c("FindIntegrationAnchors", "FindTransferAnchors"), y = Command(object = object)))) {
+    command <- intersect(x = c("FindIntegrationAnchors", "FindTransferAnchors"), y = Command(object = object))[1]
+    Command(
+      object = object,
+      command = command,
+      value = "normalization.method"
+      )
+    } else {
+    NULL
+  }
+  
+  cat("data.use: ", identical(data.use.1, data.use), "\n")
+  cat("latent.vars: ", identical(latent.vars.1, latent.vars), "\n")
+  cat("cells$cells.1: ", identical(cells_1$cells.1, cells$cells.1), "\n")
+  cat("cells$cells.2: ", identical(cells_1$cells.2, cells$cells.2), "\n")
+  print(norm.method)
+  
+  # This actually calles FindMarkers.default!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  print(class(data.use))
+  getS3method("FindMarkers", class(data.use)[1])
+  de.results <- my_unknown_function(
+    object = data.use,
+    latent.vars = latent.vars,
+    cells.1 = cells$cells.1,
+    cells.2 = cells$cells.2,
+    norm.method = norm.method,
+    ...
+  )
+  return(de.results)
+}
+
+my_FindMarkers.Seurat(pbmc[, pbmc@meta.data$cell_type_high_resolution == "T cells"],
+  ident.1 = "F_NCI",
+    ident.2 = "M_NCI",
+  group.by = "sex_cogdx2",
+  latent.vars = c('nCount_RNA','pmi','age_death'), min.pct = 0.1, slot = "data", logfc.threshold = 0, test.use = 'MAST')
+```
+
+wrong!
+without using unknown_function and  FindMarkers.default
+```{r}
+logfc.threshold <- log(1)
+latent.vars <- latent.vars.1
+cells.1 <- cells_1$cells.1
+cells.2 <- cells_1$cells.2
+
+group.info <- data.frame(row.names = c(cells.1, cells.2))
+latent.vars <- latent.vars %||% group.info
+group.info[cells.1, "group"] <- "Group1"
+group.info[cells.2, "group"] <- "Group2"
+group.info[, "group"] <- factor(x = group.info[, "group"])
+group.info
+
+latent.vars.names <- c("condition", colnames(x = latent.vars))
+latent.vars <- cbind(latent.vars, group.info)
+latent.vars$wellKey <- rownames(x = latent.vars)
+latent.vars
+
+fdat <- data.frame(rownames(x = data.use.1@data))
+colnames(x = fdat)[1] <- "primerid"
+rownames(x = fdat) <- fdat[, 1]
+
+data.use <- data.use.1@data[, rownames(latent.vars)]
+
+sca <- MAST::FromMatrix(
+  exprsArray = as.matrix(x = data.use),
+  check_sanity = FALSE,
+  cData = latent.vars,
+  fData = fdat
+)
+
+cond <- factor(x = SummarizedExperiment::colData(sca)$group)
+cond <- relevel(x = cond, ref = "Group1")
+SummarizedExperiment::colData(sca)$condition <- cond
+fmla <- as.formula(
+  object = paste0(" ~ ", paste(latent.vars.names, collapse = "+"))
+)
+zlmCond <- MAST::zlm(formula = fmla, sca = sca)
+summaryCond <- MAST::summary(object = zlmCond, doLRT = 'conditionGroup2')
+summaryDt <- summaryCond$datatable
+summaryDt <- as.data.frame(summaryDt)
+p_val <- summaryDt[summaryDt[, "component"] == "H", 4]
+genes.return <- summaryDt[summaryDt[, "component"] == "H", 1]
+to.return <- data.frame(genes.return, p_val, row.names = genes.return)
+to.return[order(to.return$p_val), ]
+
+```
+
+test unknown_function and FindMarkers.default 
+```{r my_FindMarkers.default}
+my_FindMarkers.default <- function(
+  object,
+  slot = "data",
+  cells.1 = NULL,
+  cells.2 = NULL,
+  features = NULL,
+  logfc.threshold = 0.1,
+  test.use = "wilcox",
+  min.pct = 0.01,
+  min.diff.pct = -Inf,
+  verbose = TRUE,
+  only.pos = FALSE,
+  max.cells.per.ident = Inf,
+  random.seed = 1,
+  latent.vars = NULL,
+  min.cells.feature = 3,
+  min.cells.group = 3,
+  fc.results = NULL,
+  densify = FALSE,
+  ...
+) {
+  features <- features %||% rownames(x = object)
+  # reset parameters so no feature filtering is performed
+  if (test.use %in% DEmethods_noprefilter()) {
+    features <- rownames(x = object)
+    min.diff.pct <- -Inf
+    logfc.threshold <- 0
+  }
+  # feature selection (based on percentages)
+  alpha.min <- pmax(fc.results$pct.1, fc.results$pct.2)
+  names(x = alpha.min) <- rownames(x = fc.results)
+  features <- names(x = which(x = alpha.min >= min.pct))
+  if (length(x = features) == 0) {
+    warning("No features pass min.pct threshold; returning empty data.frame")
+    return(fc.results[features, ])
+  }
+  alpha.diff <- alpha.min - pmin(fc.results$pct.1, fc.results$pct.2)
+  features <- names(
+    x = which(x = alpha.min >= min.pct & alpha.diff >= min.diff.pct)
+  )
+  if (length(x = features) == 0) {
+    warning("No features pass min.diff.pct threshold; returning empty data.frame")
+    return(fc.results[features, ])
+  }
+
+  # feature selection (based on logFC)
+  if (slot != "scale.data") {
+    total.diff <- fc.results[, 1] #first column is logFC
+    names(total.diff) <- rownames(fc.results)
+    features.diff <- if (only.pos) {
+      names(x = which(x = total.diff >= logfc.threshold))
+    } else {
+      names(x = which(x = abs(x = total.diff) >= logfc.threshold))
+    }
+    features <- intersect(x = features, y = features.diff)
+    if (length(x = features) == 0) {
+      warning("No features pass logfc.threshold threshold; returning empty data.frame")
+      return(fc.results[features, ])
+    }
+  }
+
+  # subsample cell groups if they are too large
+  if (max.cells.per.ident < Inf) {
+    set.seed(seed = random.seed)
+    if (length(x = cells.1) > max.cells.per.ident) {
+      cells.1 <- sample(x = cells.1, size = max.cells.per.ident)
+    }
+    if (length(x = cells.2) > max.cells.per.ident) {
+      cells.2 <- sample(x = cells.2, size = max.cells.per.ident)
+    }
+    if (!is.null(x = latent.vars)) {
+      latent.vars <- latent.vars[c(cells.1, cells.2), , drop = FALSE]
+    }
+  }
+  if (inherits(x = object, what = "IterableMatrix")){
+    if(test.use != "wilcox"){
+      stop("Differential expression with BPCells currently only supports the 'wilcox' method.",
+           " Please rerun with test.use = 'wilcox'")
+    }
+    data.use <- object[features, c(cells.1, cells.2), drop = FALSE]
+    groups <- c(rep("foreground", length(cells.1)), rep("background", length(cells.2)))
+    de.results <- suppressMessages(
+      BPCells::marker_features(data.use, group = groups, method = "wilcoxon")
+    )
+    de.results <- subset(de.results, de.results$foreground == "foreground")
+    de.results <- data.frame(feature = de.results$feature,
+                             p_val = de.results$p_val_raw)
+    rownames(de.results) <- de.results$feature
+    de.results$feature <- NULL
+  } else {
+    de.results <- my_PerformDE(
+      object = object,
+      cells.1 = cells.1,
+      cells.2 = cells.2,
+      features = features,
+      test.use = test.use,
+      verbose = verbose,
+      min.cells.feature = min.cells.feature,
+      latent.vars = latent.vars,
+      densify = densify,
+      ...
+    )
+  }
+  de.results <- cbind(de.results, fc.results[rownames(x = de.results), , drop = FALSE])
+  if (only.pos) {
+    de.results <- de.results[de.results[, 2] > 0, , drop = FALSE]
+  }
+  if (test.use %in% DEmethods_nocorrect()) {
+    de.results <- de.results[order(-de.results$power, -de.results[, 1]), ]
+  } else {
+    de.results <- de.results[order(de.results$p_val, -abs(de.results$pct.1-de.results$pct.2)), ]
+    de.results$p_val_adj = p.adjust(
+      p = de.results$p_val,
+      method = "bonferroni",
+      n = nrow(x = object)
+    )
+  }
+  return(de.results)
+}
+DEmethods_noprefilter <- function() {
+  c("DESeq2")
+}
+DEmethods_counts <- function() {
+  c("negbinom", "poisson", "DESeq2")
+}
+DEmethods_latent <- function() {
+  c('negbinom', 'poisson', 'MAST', "LR")
+}
+DEmethods_checkdots <- function() {
+  c('wilcox', 'wilcox_limma', 'MAST', 'DESeq2')
+}
+DEmethods_nocorrect <- function() {
+  c('roc')
+}
+my_PerformDE <- function(
+  object,
+  cells.1,
+  cells.2,
+  features,
+  test.use,
+  verbose,
+  min.cells.feature,
+  latent.vars,
+  densify,
+  ...
+) {
+  if (!(test.use %in% DEmethods_latent()) && !is.null(x = latent.vars)) {
+    warning(
+      "'latent.vars' is only used for the following tests: ",
+      paste(DEmethods_latent(), collapse=", "),
+      call. = FALSE,
+      immediate. = TRUE
+    )
+  }
+  if (!test.use %in% DEmethods_checkdots()) {
+    CheckDots(...)
+  }
+  data.use <- object[features, c(cells.1, cells.2), drop = FALSE]
+  if (densify){
+    data.use <- as.matrix(x = data.use)
+  }
+  de.results <- switch(
+    EXPR = test.use,
+    'wilcox' = WilcoxDETest(
+      data.use = data.use,
+      cells.1 = cells.1,
+      cells.2 = cells.2,
+      verbose = verbose,
+      ...
+    ),
+    'wilcox_limma' = WilcoxDETest(
+      data.use = data.use,
+      cells.1 = cells.1,
+      cells.2 = cells.2,
+      verbose = verbose,
+      limma = TRUE,
+      ...
+    ),
+    'MAST' = my_MASTDETest(
+      data.use = data.use,
+      cells.1 = cells.1,
+      cells.2 = cells.2,
+      latent.vars = latent.vars,
+      verbose = verbose,
+      ...
+    ),
+    stop("Unknown test: ", test.use)
+  )
+  return(de.results)
+}
+
+my_unknown_function <- function (object, slot = "data", cells.1 = NULL, cells.2 = NULL, 
+    features = NULL, logfc.threshold = 0.25, test.use = "wilcox", 
+    min.pct = 0.1, min.diff.pct = -Inf, verbose = TRUE, only.pos = FALSE, 
+    max.cells.per.ident = Inf, random.seed = 1, latent.vars = NULL, 
+    min.cells.feature = 3, min.cells.group = 3, pseudocount.use = 1, 
+    mean.fxn = NULL, fc.name = NULL, base = 2, densify = FALSE, 
+    norm.method = NULL, ...) 
+{
+    pseudocount.use <- pseudocount.use %||% 1
+    data.slot <- ifelse(test = test.use %in% DEmethods_counts(), 
+        yes = "counts", no = slot)
+    data.use <- GetAssayData(object = object, slot = data.slot)
+    counts <- switch(EXPR = data.slot, scale.data = GetAssayData(object = object, 
+        slot = "counts"), numeric())
+    fc.results <- FoldChange(object = object, slot = data.slot, 
+        cells.1 = cells.1, cells.2 = cells.2, features = features, 
+        pseudocount.use = pseudocount.use, mean.fxn = mean.fxn, 
+        fc.name = fc.name, base = base, norm.method = norm.method)
+    
+    cat("data.use: ", identical(data.use.1@data, data.use), "\n")
+    cat("latent.vars: ", identical(latent.vars.1, latent.vars), "\n")
+    cat("cells$cells.1: ", identical(cells_1$cells.1, cells.1), "\n")
+    cat("cells$cells.2: ", identical(cells_1$cells.2, cells.2), "\n")
+    print(class(data.use))
+    print(pseudocount.use)
+    print(features)
+  
+    de.results <- my_FindMarkers.default(object = data.use, slot = data.slot,
+        counts = counts, cells.1 = cells.1, cells.2 = cells.2,
+        features = features, logfc.threshold = logfc.threshold,
+        test.use = test.use, min.pct = min.pct, min.diff.pct = min.diff.pct,
+        verbose = verbose, only.pos = only.pos, max.cells.per.ident = max.cells.per.ident,
+        random.seed = random.seed, latent.vars = latent.vars,
+        min.cells.feature = min.cells.feature, min.cells.group = min.cells.group,
+        pseudocount.use = pseudocount.use, fc.results = fc.results,
+        densify = densify, ...)
+    return(de.results)
+}
+
+my_unknown_function(object = data.use.1,
+    latent.vars = latent.vars.1,
+    cells.1 = cells_1$cells.1,
+    cells.2 = cells_1$cells.2,
+    norm.method = "LogNormalize", test.use = "MAST", logfc.threshold = 0, min.pct = 0.1)
+
+
+fc.results.1 <- FoldChange(object = data.use.1, slot = "data", 
+        cells.1 = cells_1$cells.1, cells.2 = cells_1$cells.2, features = NULL, 
+        pseudocount.use = 1, norm.method = "LogNormalize")
+result2 <- my_FindMarkers.default(object = data.use.1@data, features = NULL,
+    latent.vars = latent.vars.1,
+    cells.1 = cells_1$cells.1,
+    cells.2 = cells_1$cells.2,
+    norm.method = "LogNormalize", test.use = "MAST", logfc.threshold = 0, min.pct = 0.1, pseudocount.use = 1, fc.results = fc.results.1)
+result2
+
+identical(result1$p_val, result2$p_val)
+identical(result1$avg_log2FC, result2$avg_log2FC)
+```
+
+with FoldChange and FindMarkers.default
+part 1 -still using PerformDE
+```{r}
+min.pct <- 0.1
+min.diff.pct <- -Inf
+slot <- "data"
+only.pos <- FALSE
+max.cells.per.ident <-  Inf
+fc.results.1 <- FoldChange(object = data.use.1, slot = "data", 
+        cells.1 = cells_1$cells.1, cells.2 = cells_1$cells.2, features = NULL, 
+        pseudocount.use = 1, norm.method = "LogNormalize")
+
+features <- NULL
+features <- features %||% rownames(x = data.use.1@data)
+
+# feature selection (based on percentages)
+alpha.min <- pmax(fc.results.1$pct.1, fc.results.1$pct.2)
+names(x = alpha.min) <- rownames(x = fc.results.1)
+features <- names(x = which(x = alpha.min >= min.pct))
+if (length(x = features) == 0) {
+  warning("No features pass min.pct threshold; returning empty data.frame")
+  return(fc.results.1[features, ])
+}
+alpha.diff <- alpha.min - pmin(fc.results.1$pct.1, fc.results.1$pct.2)
+features <- names(
+  x = which(x = alpha.min >= min.pct & alpha.diff >= min.diff.pct)
+)
+if (length(x = features) == 0) {
+  warning("No features pass min.diff.pct threshold; returning empty data.frame")
+  return(fc.results[features, ])
+}
+
+# feature selection (based on logFC)
+if (slot != "scale.data") {
+  total.diff <- fc.results.1[, 1] #first column is logFC
+  names(total.diff) <- rownames(fc.results.1)
+  features.diff <- if (only.pos) {
+    names(x = which(x = total.diff >= logfc.threshold))
+  } else {
+    names(x = which(x = abs(x = total.diff) >= logfc.threshold))
+  }
+  features <- intersect(x = features, y = features.diff)
+  if (length(x = features) == 0) {
+    warning("No features pass logfc.threshold threshold; returning empty data.frame")
+    return(fc.results.1[features, ])
+  }
+}
+
+de.results <- my_PerformDE(
+  object = data.use.1@data,
+  cells.1 = cells_1$cells.1, cells.2 = cells_1$cells.2,
+  features = features,
+  test.use = "MAST",
+  min.cells.feature = 3,
+  latent.vars = latent.vars.1,
+  densify = FALSE
+)
+de.results <- cbind(de.results, fc.results.1[rownames(x = de.results), , drop = FALSE])
+
+de.results <- de.results[order(de.results$p_val, -abs(de.results$pct.1-de.results$pct.2)), ]
+de.results$p_val_adj = p.adjust(
+  p = de.results$p_val,
+  method = "bonferroni",
+  n = nrow(x = data.use.1@data)
+)
+de.results
+identical(de.results, result2)
+```
+part 2 - using plain codes
+```{r}
+logfc.threshold <- log(1)
+latent.vars <- latent.vars.1
+cells.1 <- cells_1$cells.1
+cells.2 <- cells_1$cells.2
+
+data.use.2 <- data.use.1@data[features, c(cells.1, cells.2), drop = FALSE]
+
+group.info <- data.frame(row.names = c(cells.1, cells.2))
+latent.vars <- latent.vars %||% group.info
+group.info[cells.1, "group"] <- "Group1"
+group.info[cells.2, "group"] <- "Group2"
+group.info[, "group"] <- factor(x = group.info[, "group"])
+group.info
+
+latent.vars.names <- c("condition", colnames(x = latent.vars))
+latent.vars <- cbind(latent.vars, group.info)
+latent.vars$wellKey <- rownames(x = latent.vars)
+latent.vars
+
+fdat <- data.frame(rownames(x = data.use.2))
+colnames(x = fdat)[1] <- "primerid"
+rownames(x = fdat) <- fdat[, 1]
+
+sca <- MAST::FromMatrix(
+  exprsArray = as.matrix(x = data.use.2),
+  check_sanity = FALSE,
+  cData = latent.vars,
+  fData = fdat
+)
+
+cond <- factor(x = SummarizedExperiment::colData(sca)$group)
+cond <- relevel(x = cond, ref = "Group1")
+SummarizedExperiment::colData(sca)$condition <- cond
+fmla <- as.formula(
+  object = paste0(" ~ ", paste(latent.vars.names, collapse = "+"))
+)
+zlmCond <- MAST::zlm(formula = fmla, sca = sca)
+summaryCond <- MAST::summary(object = zlmCond, doLRT = 'conditionGroup2')
+summaryDt <- summaryCond$datatable
+summaryDt <- as.data.frame(summaryDt)
+p_val <- summaryDt[summaryDt[, "component"] == "H", 4]
+genes.return <- summaryDt[summaryDt[, "component"] == "H", 1]
+to.return <- data.frame(p_val, row.names = genes.return)
+
+de.result <- cbind(to.return, fc.results.1[rownames(x = to.return), , drop = FALSE])
+
+de.result <- de.result[order(de.result$p_val, -abs(de.result$pct.1-de.result$pct.2)), ]
+de.result$p_val_adj = p.adjust(
+  p = de.result$p_val,
+  # method = "bonferroni",
+  # n = nrow(x = data.use.1@data)
+  method = "BH",
+  n = nrow(x = de.result)
+)
+de.result
+identical(de.result$p_val_adj, result1$p_val_adj)
+```
+
+
+summarize:
+FindMarkers.Seurat -> unknown_function -> FoldChange -> FindMarkers.default -> PerformDE -> MASTDETest
+
+
+
+### All in one
+
+```{r}
+pbmc <- ori.ls$Immune_cells
+pbmc.sub <- pbmc[, pbmc@meta.data$cell_type_high_resolution == "T cells"]
+data.use.1 <- pbmc.sub[["RNA"]]
+Idents(pbmc.sub) <- "sex_cogdx2"
+latent.vars <- c('nCount_RNA','pmi','age_death')
+
+cellnames.use.1 <- colnames(data.use.1)
+
+cells_1 <- my_IdentsToCells(object = pbmc.sub,ident.1 = "F_NCI",ident.2 = "M_NCI",cellnames.use = cellnames.use.1)
+
+cells_1 <- sapply(X = cells_1,FUN = intersect,y = cellnames.use.1,simplify = FALSE,USE.NAMES = TRUE)
+
+latent.vars.1 <- FetchData(object = pbmc.sub,vars = latent.vars,cells = c(cells_1$cells.1, cells_1$cells.2))
+
+min.pct <- 0.1
+logfc.threshold <- log(1)
+min.diff.pct <- -Inf
+slot <- "data"
+only.pos <- FALSE
+max.cells.per.ident <-  Inf
+fc.results.1 <- FoldChange(object = data.use.1, slot = "data", 
+        cells.1 = cells_1$cells.1, cells.2 = cells_1$cells.2, features = NULL, 
+        pseudocount.use = 1, norm.method = "LogNormalize")
+
+features <- NULL
+features <- features %||% rownames(x = data.use.1@data)
+
+# feature selection (based on percentages)
+alpha.min <- pmax(fc.results.1$pct.1, fc.results.1$pct.2)
+names(x = alpha.min) <- rownames(x = fc.results.1)
+features <- names(x = which(x = alpha.min >= min.pct))
+if (length(x = features) == 0) {
+  warning("No features pass min.pct threshold; returning empty data.frame")
+  return(fc.results.1[features, ])
+}
+alpha.diff <- alpha.min - pmin(fc.results.1$pct.1, fc.results.1$pct.2)
+features <- names(
+  x = which(x = alpha.min >= min.pct & alpha.diff >= min.diff.pct)
+)
+if (length(x = features) == 0) {
+  warning("No features pass min.diff.pct threshold; returning empty data.frame")
+  return(fc.results[features, ])
+}
+
+# feature selection (based on logFC)
+if (slot != "scale.data") {
+  total.diff <- fc.results.1[, 1] #first column is logFC
+  names(total.diff) <- rownames(fc.results.1)
+  features.diff <- if (only.pos) {
+    names(x = which(x = total.diff >= logfc.threshold))
+  } else {
+    names(x = which(x = abs(x = total.diff) >= logfc.threshold))
+  }
+  features <- intersect(x = features, y = features.diff)
+  if (length(x = features) == 0) {
+    warning("No features pass logfc.threshold threshold; returning empty data.frame")
+    return(fc.results.1[features, ])
+  }
+}
+
+
+logfc.threshold <- log(1)
+latent.vars <- latent.vars.1
+cells.1 <- cells_1$cells.1
+cells.2 <- cells_1$cells.2
+
+data.use.2 <- data.use.1@data[features, c(cells.1, cells.2), drop = FALSE]
+
+group.info <- data.frame(row.names = c(cells.1, cells.2))
+latent.vars <- latent.vars %||% group.info
+group.info[cells.1, "group"] <- "Group1"
+group.info[cells.2, "group"] <- "Group2"
+group.info[, "group"] <- factor(x = group.info[, "group"])
+group.info
+
+latent.vars.names <- c("condition", colnames(x = latent.vars))
+latent.vars <- cbind(latent.vars, group.info)
+latent.vars$wellKey <- rownames(x = latent.vars)
+latent.vars
+
+fdat <- data.frame(rownames(x = data.use.2))
+colnames(x = fdat)[1] <- "primerid"
+rownames(x = fdat) <- fdat[, 1]
+
+sca <- MAST::FromMatrix(
+  exprsArray = as.matrix(x = data.use.2),
+  check_sanity = FALSE,
+  cData = latent.vars,
+  fData = fdat
+)
+
+cond <- factor(x = SummarizedExperiment::colData(sca)$group)
+cond <- relevel(x = cond, ref = "Group1")
+SummarizedExperiment::colData(sca)$condition <- cond
+fmla <- as.formula(
+  object = paste0(" ~ ", paste(latent.vars.names, collapse = "+"))
+)
+zlmCond <- MAST::zlm(formula = fmla, sca = sca)
+summaryCond <- MAST::summary(object = zlmCond, doLRT = 'conditionGroup2')
+summaryDt <- summaryCond$datatable
+summaryDt <- as.data.frame(summaryDt)
+p_val <- summaryDt[summaryDt[, "component"] == "H", 4]
+genes.return <- summaryDt[summaryDt[, "component"] == "H", 1]
+to.return <- data.frame(p_val, row.names = genes.return)
+
+de.result <- cbind(to.return, fc.results.1[rownames(x = to.return), , drop = FALSE])
+
+de.result <- de.result[order(de.result$p_val, -abs(de.result$pct.1-de.result$pct.2)), ]
+de.result$p_val_adj = p.adjust(
+  p = de.result$p_val,
+  method = "BH",
+  n = nrow(x = de.result)
+)
+de.result
+identical(de.result$p_val_adj, result1$p_val_adj)
+```
+
+```{r}
+fmla
+print(colnames(zlmCond@coefC))
+```
+
+
+```{r}
+summaryDt[summaryDt[, "component"] == "H", ]
+to.return
+```
+
+
+
+```{r}
+summaryDt[summaryDt[, "component"] == "H", ]
+summaryDt
+table(summaryDt$component)
+```
+The hurdle model in MAST (Model-based Analysis of Single-cell Transcriptomics) is a statistical framework designed to account for the unique characteristics of single-cell RNA-seq data, particularly zero inflation (an excess of zero values) and variability in expression levels. It consists of two components: a logistic regression for the probability of expression and a linear regression for the magnitude of expression.
+
+Key Features of the Hurdle Model in MAST
+Zero Inflation:
+
+Single-cell RNA-seq data often has many zero values due to technical dropouts or true biological absence of gene expression.
+The hurdle model separates the analysis of whether a gene is expressed (non-zero) from how much it is expressed (continuous expression levels).
+Two-Part Model:
+
+The hurdle model combines:
+Discrete Component (H Component):
+A logistic regression that models the probability of a gene being expressed (non-zero values).
+Predictors (e.g., condition, covariates) explain whether a gene is "on" or "off."
+Continuous Component (C Component):
+A linear regression that models the expression levels of a gene, conditional on it being expressed (non-zero values only).
+Predictors explain the magnitude of expression.
+
+
+
+H Component (Logistic Regression):
+Significant terms indicate that a condition or covariate affects the probability of a gene being expressed.
+
+C Component (Linear Regression):
+Significant terms indicate that a condition or covariate affects the magnitude of gene expression among cells where it is expressed.
+
+D Component (Combined Effect):
+Combines the effects of detection and magnitude, providing an overall measure of differential expression.
+
+
+### interaction
+
+
+```{r}
+logfc.threshold <- log(1)
+latent.vars <- c('nCount_RNA','pmi','age_death', 'sex', 'apoe2', "cogdx2")
+result1 <- FindMarkers(object = pbmc, slot = "data", assay = NULL, ident.1 = "F", ident.2 = "M", group.by = "sex", subset.ident = "T cells", logfc.threshold = logfc.threshold, test.use = 'MAST', latent.vars = latent.vars, min.pct = 0.1)
+names(result1)[names(result1) == 'p_val_adj'] <- 'p_val_adj_bonferroni'
+print(nrow(result1))
+result1$p_val_adj <- p.adjust(result1$p_val, n=nrow(result1), method = "BH")
+result1
+result1[result1$p_val_adj < 0.05, ]
+
+logfc.threshold <- log(1)
+latent.vars <- c('nCount_RNA','pmi','age_death', 'apoe2', "cogdx2")
+result1 <- FindMarkers(object = pbmc, slot = "data", assay = NULL, ident.1 = "F", ident.2 = "M", group.by = "sex", subset.ident = "T cells", logfc.threshold = logfc.threshold, test.use = 'MAST', latent.vars = latent.vars, min.pct = 0.1)
+names(result1)[names(result1) == 'p_val_adj'] <- 'p_val_adj_bonferroni'
+print(nrow(result1))
+result1$p_val_adj <- p.adjust(result1$p_val, n=nrow(result1), method = "BH")
+result1
+result1[result1$p_val_adj < 0.05, ]
+```
+
+with Fold change
+```{r}
+pbmc.sub <- pbmc[, pbmc@meta.data$cell_type_high_resolution == "T cells"]
+data.use.1 <- pbmc.sub[["RNA"]]
+Idents(pbmc.sub) <- "sex"
+latent.vars <- c('nCount_RNA','pmi','age_death', 'sex', 'apoe2', "cogdx2")
+
+cellnames.use.1 <- colnames(data.use.1)
+
+cells_1 <- my_IdentsToCells(object = pbmc.sub,ident.1 = "F",ident.2 = "M",cellnames.use = cellnames.use.1)
+
+cells_1 <- sapply(X = cells_1,FUN = intersect,y = cellnames.use.1,simplify = FALSE,USE.NAMES = TRUE)
+
+latent.vars.1 <- FetchData(object = pbmc.sub,vars = latent.vars,cells = c(cells_1$cells.1, cells_1$cells.2))
+
+min.pct <- 0.1
+min.diff.pct <- -Inf
+slot <- "data"
+only.pos <- FALSE
+max.cells.per.ident <-  Inf
+fc.results.1 <- FoldChange(object = data.use.1, slot = "data",
+        cells.1 = cells_1$cells.1, cells.2 = cells_1$cells.2, features = NULL,
+        pseudocount.use = 1, norm.method = "LogNormalize")
+
+features <- NULL
+features <- features %||% rownames(x = data.use.1@data)
+
+# feature selection (based on percentages)
+alpha.min <- pmax(fc.results.1$pct.1, fc.results.1$pct.2)
+names(x = alpha.min) <- rownames(x = fc.results.1)
+features <- names(x = which(x = alpha.min >= min.pct))
+if (length(x = features) == 0) {
+  warning("No features pass min.pct threshold; returning empty data.frame")
+  return(fc.results.1[features, ])
+}
+alpha.diff <- alpha.min - pmin(fc.results.1$pct.1, fc.results.1$pct.2)
+features <- names(
+  x = which(x = alpha.min >= min.pct & alpha.diff >= min.diff.pct)
+)
+if (length(x = features) == 0) {
+  warning("No features pass min.diff.pct threshold; returning empty data.frame")
+  return(fc.results[features, ])
+}
+
+# feature selection (based on logFC)
+if (slot != "scale.data") {
+  total.diff <- fc.results.1[, 1] #first column is logFC
+  names(total.diff) <- rownames(fc.results.1)
+  features.diff <- if (only.pos) {
+    names(x = which(x = total.diff >= logfc.threshold))
+  } else {
+    names(x = which(x = abs(x = total.diff) >= logfc.threshold))
+  }
+  features <- intersect(x = features, y = features.diff)
+  if (length(x = features) == 0) {
+    warning("No features pass logfc.threshold threshold; returning empty data.frame")
+    return(fc.results.1[features, ])
+  }
+}
+
+logfc.threshold <- log(1)
+latent.vars <- latent.vars.1
+cells.1 <- cells_1$cells.1
+cells.2 <- cells_1$cells.2
+
+data.use.2 <- data.use.1@data[features, c(cells.1, cells.2), drop = FALSE]
+
+group.info <- data.frame(row.names = c(cells.1, cells.2))
+latent.vars <- latent.vars %||% group.info
+group.info[cells.1, "group"] <- "Group1"
+group.info[cells.2, "group"] <- "Group2"
+group.info[, "group"] <- factor(x = group.info[, "group"])
+# group.info
+
+latent.vars.names <- c("condition", colnames(x = latent.vars))
+latent.vars <- cbind(latent.vars, group.info)
+latent.vars$wellKey <- rownames(x = latent.vars)
+# latent.vars
+
+fdat <- data.frame(rownames(x = data.use.2))
+colnames(x = fdat)[1] <- "primerid"
+rownames(x = fdat) <- fdat[, 1]
+
+sca <- MAST::FromMatrix(
+  exprsArray = as.matrix(x = data.use.2),
+  check_sanity = FALSE,
+  cData = latent.vars,
+  fData = fdat
+)
+
+cond <- factor(x = SummarizedExperiment::colData(sca)$group)
+cond <- relevel(x = cond, ref = "Group1")
+SummarizedExperiment::colData(sca)$condition <- cond
+# fmla <- as.formula(
+#   object = paste0(" ~ ", paste(latent.vars.names, collapse = "+"))
+# )
+
+sex_col <- factor(x = SummarizedExperiment::colData(sca)$sex)
+sex_col <- relevel(x = sex_col, ref = "M")
+SummarizedExperiment::colData(sca)$sex <- sex_col
+apoe2_col <- factor(x = SummarizedExperiment::colData(sca)$apoe2)
+apoe2_col <- relevel(x = apoe2_col, ref = "e33")
+SummarizedExperiment::colData(sca)$apoe2 <- apoe2_col
+cogdx2_col <- factor(x = SummarizedExperiment::colData(sca)$cogdx2)
+cogdx2_col <- relevel(x = cogdx2_col, ref = "NCI")
+SummarizedExperiment::colData(sca)$cogdx2 <- cogdx2_col
+fmla <- as.formula(
+  object = paste0(" ~ nCount_RNA + pmi + age_death + sex + apoe2 + cogdx2 + sex*apoe2*cogdx2")
+)
+fmla
+zlmCond <- MAST::zlm(formula = fmla, sca = sca)
+summaryCond <- MAST::summary(object = zlmCond, doLRT = 'sexF:apoe2e2x:cogdx2AD')
+summaryDt <- summaryCond$datatable
+summaryDt <- as.data.frame(summaryDt)
+p_val <- summaryDt[summaryDt[, "component"] == "H", 4]
+genes.return <- summaryDt[summaryDt[, "component"] == "H", 1]
+to.return <- data.frame(p_val, row.names = genes.return)
+
+de.result <- cbind(to.return, fc.results.1[rownames(x = to.return), , drop = FALSE])
+
+de.result <- de.result[order(de.result$p_val, -abs(de.result$pct.1-de.result$pct.2)), ]
+de.result$p_val_adj = p.adjust(
+  p = de.result$p_val,
+  method = "BH",
+  n = nrow(x = de.result)
+)
+de.result
+```
+
+without foldchange - try to get coef
+here i used F vs M but it does not matter. its the same as using AD vs NCI
+```{r}
+# pbmc <- ori.ls$Oligodendrocytes
+# pbmc.sub <- pbmc[, pbmc@meta.data$cell_type_high_resolution == "Oli"]
+# pbmc <- ori.ls$Excitatory_neurons_set3
+# pbmc.sub <- pbmc[, pbmc@meta.data$cell_type_high_resolution == "Exc RELN CHD7"]
+pbmc <- ori.ls$Immune_cells
+pbmc.sub <- pbmc[, pbmc@meta.data$cell_type_high_resolution == "Mic P2RY12"]
+data.use.1 <- pbmc.sub[["RNA"]]
+Idents(pbmc.sub) <- "sex"
+latent.vars <- c('nCount_RNA','pmi','age_death', 'sex', 'apoe2', "cogdx2")
+
+cellnames.use.1 <- colnames(data.use.1)
+
+cells_1 <- my_IdentsToCells(object = pbmc.sub,ident.1 = "F",ident.2 = "M",cellnames.use = cellnames.use.1)
+
+cells_1 <- sapply(X = cells_1,FUN = intersect,y = cellnames.use.1,simplify = FALSE,USE.NAMES = TRUE)
+
+latent.vars.1 <- FetchData(object = pbmc.sub,vars = latent.vars,cells = c(cells_1$cells.1, cells_1$cells.2))
+
+min.pct <- 0.1
+## not calculating FC (is not relevant, add coef result instead)
+# min.diff.pct <- -Inf
+# slot <- "data"
+# only.pos <- FALSE
+# max.cells.per.ident <-  Inf
+# fc.results.1 <- FoldChange(object = data.use.1, slot = "data", 
+#         cells.1 = cells_1$cells.1, cells.2 = cells_1$cells.2, features = NULL, 
+#         pseudocount.use = 1, norm.method = "LogNormalize")
+# 
+# features <- NULL
+# features <- features %||% rownames(x = data.use.1@data)
+# 
+# # feature selection (based on percentages)
+# alpha.min <- pmax(fc.results.1$pct.1, fc.results.1$pct.2)
+# names(x = alpha.min) <- rownames(x = fc.results.1)
+# features <- names(x = which(x = alpha.min >= min.pct))
+# if (length(x = features) == 0) {
+#   warning("No features pass min.pct threshold; returning empty data.frame")
+#   return(fc.results.1[features, ])
+# }
+# alpha.diff <- alpha.min - pmin(fc.results.1$pct.1, fc.results.1$pct.2)
+# features <- names(
+#   x = which(x = alpha.min >= min.pct & alpha.diff >= min.diff.pct)
+# )
+# if (length(x = features) == 0) {
+#   warning("No features pass min.diff.pct threshold; returning empty data.frame")
+#   return(fc.results[features, ])
+# }
+# 
+# # feature selection (based on logFC)
+# if (slot != "scale.data") {
+#   total.diff <- fc.results.1[, 1] #first column is logFC
+#   names(total.diff) <- rownames(fc.results.1)
+#   features.diff <- if (only.pos) {
+#     names(x = which(x = total.diff >= logfc.threshold))
+#   } else {
+#     names(x = which(x = abs(x = total.diff) >= logfc.threshold))
+#   }
+#   features <- intersect(x = features, y = features.diff)
+#   if (length(x = features) == 0) {
+#     warning("No features pass logfc.threshold threshold; returning empty data.frame")
+#     return(fc.results.1[features, ])
+#   }
+# }
+r0.df <- as.data.frame(t(data.use.1@data))
+keep <- which(colSums(r0.df) != 0 )
+r0.df <- r0.df[, keep]
+dim(r0.df)
+r0.df$sex_apoe2_cogdx <- pbmc@meta.data$sex_apoe2_cogdx[match(rownames(r0.df), rownames(pbmc@meta.data))]
+table(r0.df$sex_apoe2_cogdx)
+# genes_to_keep <- r0.df %>%
+#   dplyr::select(-sex_apoe2_cogdx) %>%  # Select all gene columns
+#   dplyr::mutate(sex_apoe2_cogdx = r0.df$sex_apoe2_cogdx) %>%  # Add sex_apoe2_cogdx back for context
+#   tidyr::pivot_longer(
+#     cols = -sex_apoe2_cogdx,  # Reshape gene columns to long format
+#     names_to = "gene",
+#     values_to = "expression"
+#   ) %>%
+#   dplyr::filter(expression != 0) %>%  # Keep only non-zero expression values
+#   dplyr::group_by(gene, sex_apoe2_cogdx) %>%  # Group by gene and sex_apoe2_cogdx
+#   dplyr::summarise(
+#     count = dplyr::n(),  # Count non-zero samples per group
+#     total = sum(r0.df$sex_apoe2_cogdx == sex_apoe2_cogdx[1]),  # Total samples in each group
+#     .groups = "drop"
+#   ) %>%
+#   dplyr::mutate(prop = count / total) %>%  # Calculate proportion of non-zero samples
+#   dplyr::group_by(gene) %>%  # Group by gene for the next step
+#   dplyr::filter(any(prop >= min.pct)) %>%  # Check if any group has proportion >= 0.1
+#   dplyr::ungroup() %>%  # Ungroup for final distinct operation
+#   dplyr::distinct(gene) %>%  # Extract unique genes
+#   dplyr::pull(gene)  # Get the list of gene names
+
+process_chunk <- function(chunk) {
+  chunk %>%
+    tidyr::pivot_longer(
+      cols = -sex_apoe2_cogdx,
+      names_to = "gene",
+      values_to = "expression"
+    ) %>%
+    dplyr::filter(expression != 0) %>%
+    dplyr::group_by(gene, sex_apoe2_cogdx) %>%
+    dplyr::summarise(
+      count = dplyr::n(),
+      total = sum(chunk$sex_apoe2_cogdx == sex_apoe2_cogdx[1]),
+      .groups = "drop"
+    ) %>%
+    dplyr::mutate(prop = count / total) %>%
+    dplyr::group_by(gene) %>%
+    dplyr::filter(any(prop >= 0.1)) %>%
+    dplyr::ungroup() %>%
+    dplyr::distinct(gene) %>%
+    dplyr::pull(gene)
+}
+
+# Split the data into chunks
+chunk_size <- 100  # Adjust the chunk size based on your memory limits
+gene_chunks <- split(names(r0.df)[!names(r0.df) %in% "sex_apoe2_cogdx"], 
+                     ceiling(seq_along(names(r0.df)[!names(r0.df) %in% "sex_apoe2_cogdx"]) / chunk_size))
+
+# Process each chunk and combine the results
+genes_to_keep <- lapply(gene_chunks, function(chunk) {
+  process_chunk(r0.df[, c(chunk, "sex_apoe2_cogdx")])
+}) %>%
+  unlist() %>%
+  unique()
+
+length(genes_to_keep)
+features <- genes_to_keep
+
+
+logfc.threshold <- log(1)
+latent.vars <- latent.vars.1
+cells.1 <- cells_1$cells.1
+cells.2 <- cells_1$cells.2
+
+data.use.2 <- data.use.1@data[features, c(cells.1, cells.2), drop = FALSE]
+
+group.info <- data.frame(row.names = c(cells.1, cells.2))
+latent.vars <- latent.vars %||% group.info
+group.info[cells.1, "group"] <- "Group1"
+group.info[cells.2, "group"] <- "Group2"
+group.info[, "group"] <- factor(x = group.info[, "group"])
+# group.info
+
+latent.vars.names <- c("condition", colnames(x = latent.vars))
+latent.vars <- cbind(latent.vars, group.info)
+latent.vars$wellKey <- rownames(x = latent.vars)
+# latent.vars
+
+fdat <- data.frame(rownames(x = data.use.2))
+colnames(x = fdat)[1] <- "primerid"
+rownames(x = fdat) <- fdat[, 1]
+
+sca <- MAST::FromMatrix(
+  exprsArray = as.matrix(x = data.use.2),
+  check_sanity = FALSE,
+  cData = latent.vars,
+  fData = fdat
+)
+
+cond <- factor(x = SummarizedExperiment::colData(sca)$group)
+cond <- relevel(x = cond, ref = "Group1")
+SummarizedExperiment::colData(sca)$condition <- cond
+# fmla <- as.formula(
+#   object = paste0(" ~ ", paste(latent.vars.names, collapse = "+"))
+# )
+
+sex_col <- factor(x = SummarizedExperiment::colData(sca)$sex)
+sex_col <- relevel(x = sex_col, ref = "M")
+SummarizedExperiment::colData(sca)$sex <- sex_col
+apoe2_col <- factor(x = SummarizedExperiment::colData(sca)$apoe2)
+apoe2_col <- relevel(x = apoe2_col, ref = "e33")
+SummarizedExperiment::colData(sca)$apoe2 <- apoe2_col
+cogdx2_col <- factor(x = SummarizedExperiment::colData(sca)$cogdx2)
+cogdx2_col <- relevel(x = cogdx2_col, ref = "NCI")
+SummarizedExperiment::colData(sca)$cogdx2 <- cogdx2_col
+fmla <- as.formula(
+  object = paste0(" ~ nCount_RNA + pmi + age_death + sex + apoe2 + cogdx2 + sex*apoe2*cogdx2")
+)
+fmla
+zlmCond <- MAST::zlm(formula = fmla, sca = sca)
+summaryCond <- MAST::summary(object = zlmCond, doLRT = 'sexF:apoe2e2x:cogdx2AD')
+# summaryCond <- MAST::summary(object = zlmCond, doLRT = 'cogdx2AD')
+summaryDt <- summaryCond$datatable
+summaryDt <- as.data.frame(summaryDt)
+p_val <- summaryDt[summaryDt[, "component"] == "H", 4]
+coef <- summaryDt[summaryDt[, "component"] == "H", 7]
+genes.return <- summaryDt[summaryDt[, "component"] == "H", 1]
+to.return <- data.frame(p_val, coef, row.names = genes.return)
+
+de.result <- to.return
+
+de.result <- de.result[order(de.result$p_val), ]
+de.result$p_val_adj = p.adjust(
+  p = de.result$p_val,
+  method = "BH",
+  n = nrow(x = de.result)
+)
+de.result
+```
+Here, doLRT = "sex:apoe:condition" performs a likelihood ratio test for the interaction term across all genes 
+Interpret the Results:
+Genes with significant p-values for the interaction term (sex:condition) are those where the effect of sex on expression levels depends on the condition (or vice versa).
+This means that for these genes, there’s a significant difference in how sex affects gene expression in one condition compared to the other.
+
+
+
+new: doLRT = 'cogdx2AD'
+even with not complicated term, H still has no coef
+```{r}
+table(summaryDt$component)
+for (conp in unique(summaryDt$component)){
+  print(summaryDt[summaryDt$component == conp, ])
+}
+```
+
+
+```{r}
+de.result[de.result$p_val_adj < 0.05, ]
+```
+
+
+```{r}
+sca@colData
+print(colnames(zlmCond@coefC))
+```
+
+
+
+
+```{r}
+r0.df <- as.data.frame(t(data.use.1@data))
+keep <- which(colSums(r0.df) != 0 )
+r0.df <- r0.df[, keep]
+dim(r0.df)
+r0.df$sex_apoe2_cogdx <- pbmc@meta.data$sex_apoe2_cogdx[match(rownames(r0.df), rownames(pbmc@meta.data))]
+table(r0.df$sex_apoe2_cogdx)
+genes_to_keep <- r0.df %>%
+  dplyr::select(-sex_apoe2_cogdx) %>%  # Select all gene columns
+  dplyr::mutate(sex_apoe2_cogdx = r0.df$sex_apoe2_cogdx) %>%  # Add sex_apoe2_cogdx back for context
+  tidyr::pivot_longer(
+    cols = -sex_apoe2_cogdx,  # Reshape gene columns to long format
+    names_to = "gene",
+    values_to = "expression"
+  ) %>%
+  dplyr::filter(expression != 0) %>%  # Keep only non-zero expression values
+  dplyr::group_by(gene, sex_apoe2_cogdx) %>%  # Group by gene and sex_apoe2_cogdx
+  dplyr::summarise(
+    count = dplyr::n(),  # Count non-zero samples per group
+    total = sum(r0.df$sex_apoe2_cogdx == sex_apoe2_cogdx[1]),  # Total samples in each group
+    .groups = "drop"
+  ) %>%
+  dplyr::mutate(prop = count / total) %>%  # Calculate proportion of non-zero samples
+  dplyr::group_by(gene) %>%  # Group by gene for the next step
+  dplyr::filter(any(prop >= 0.1)) %>%  # Check if any group has proportion >= 0.1
+  dplyr::ungroup() %>%  # Ungroup for final distinct operation
+  dplyr::distinct(gene) %>%  # Extract unique genes
+  dplyr::pull(gene)  # Get the list of gene names
+
+length(genes_to_keep)
+setdiff(names(keep), genes_to_keep)[1:10]
+```
+
+```{r}
+setdiff(names(keep), genes_to_keep)[1:10]
+```
+
+
+```{r}
+non_zero_samples <- r0.df[r0.df[["FAM41C"]] != 0, ]
+dim(non_zero_samples)
+group_counts <- table(non_zero_samples$sex_apoe2_cogdx)
+group_counts <- group_counts / sapply(names(group_counts), function(x) sum(r0.df$sex_apoe2_cogdx == x))
+
+group_counts
+```
+
+
+
+
+```{r}
+library(SeuratDisk)
+seuratObject <- LoadH5Seurat("/sc/arion/projects/adineto/sea_ad/Data/snRNAseq/PFC/SEAAD_A9_RNAseq_final-nuclei.2024-02-13.h5ad")
+```
+
+
+
+# After analysis:
+
+```{r}
+all.res <- NULL
+
+for (c in processed.ls){
+  if(!file.exists(paste0("/sc/arion/projects/zhangb03a/yug03/mathys/snRNA/interaction_regression/MAST/", c, ".tsv"))){
+    print(which(processed.ls == c))
+    print(c)
+  }
+  else{
+    f <- read.csv(paste0("/sc/arion/projects/zhangb03a/yug03/mathys/snRNA/interaction_regression/MAST/", c, ".tsv"), sep="\t")
+    all.res <- rbind(all.res, f)
+  }
+  
+}
+# print(file)
+cat("\n")
+  
+
+all.res
+```
+
+```{r}
+all.res$Symbol_Celltype <- paste0(all.res$Symbol, "_", all.res$Celltype)
+
+all.res.e2x <- all.res[all.res$Contrast == "sexF:apoe2e2x:cogdx2AD", ]
+all.res.e2x
+all.res.e4x <- all.res[all.res$Contrast == "sexF:apoe2e4x:cogdx2AD", ]
+all.res.e4x
+
+all.res.e2x.sig <- all.res.e2x[all.res.e2x$p_val_adj < 0.05, ]
+all.res.e2x.sig
+length(unique(all.res.e2x.sig$Symbol))
+all.res.e4x.sig <- all.res.e4x[all.res.e4x$p_val_adj < 0.05, ]
+all.res.e4x.sig
+length(unique(all.res.e4x.sig$Symbol))
+```
+
+```{r}
+table(all.res.e2x.sig$Celltype)
+all.res.e4x.sig[all.res.e4x.sig$Symbol == "CLU", ]
+```
+
+```{r, fig.height=7.5, fig.width=12}
+all.res.e2x.sig
+
+celltype_counts.e2x <- all.res.e2x.sig %>%
+  group_by(Celltype) %>%
+  summarise(SymbolCount = n(), .groups = "drop") %>%
+  right_join(celltype.df, by = c("Celltype" = "subcluster")) %>%  # Join with all cell types from `celltype.df`
+  mutate(SymbolCount = ifelse(is.na(SymbolCount), 0, SymbolCount)) 
+celltype_counts.e2x$C <- celltype.df$celltype[match(celltype_counts.e2x$Celltype, celltype.df$subcluster)]
+celltype_counts.e2x
+
+p1 <- ggplot(celltype_counts.e2x, aes(x = Celltype, y = SymbolCount, fill = C)) +
+  geom_bar(stat = "identity") + theme_minimal() + facet_grid(.~C, scales="free", space = "free") + 
+  labs(
+    title = "sexF:apoee2x:cogdxAD", x = "", y = "# Significant Genes") +
+  theme(legend.position = "none", axis.text.x = element_blank()) 
+
+
+all.res.e4x.sig
+
+celltype_counts.e4x <- all.res.e4x.sig %>%
+ group_by(Celltype) %>%
+  summarise(SymbolCount = n(), .groups = "drop") %>%
+  right_join(celltype.df, by = c("Celltype" = "subcluster")) %>%  # Join with all cell types from `celltype.df`
+  mutate(SymbolCount = ifelse(is.na(SymbolCount), 0, SymbolCount)) 
+celltype_counts.e4x$C <- celltype.df$celltype[match(celltype_counts.e4x$Celltype, celltype.df$subcluster)]
+celltype_counts.e4x
+
+p2 <- ggplot(celltype_counts.e4x, aes(x = Celltype, y = SymbolCount, fill = C)) +
+  geom_bar(stat = "identity") + theme_minimal() + facet_grid(.~C, scales="free", space = "free") + 
+  labs(
+    title = "sexF:apoee4x:cogdxAD", x = "", y = "# Significant Genes") +
+  theme(legend.position = "none", axis.text.x = element_text(angle = 90, hjust = 1)) 
+
+p1 / p2 + plot_layout(heights = c(1, 1)) 
+```
+```{r}
+celltype.df
+```
+
+
+
+
+maybe use C / D results to further filter sig genes? 
+```{r}
+all.summaryDt <- NULL
+
+for (c in processed.ls){
+  if(!file.exists(paste0("/sc/arion/projects/zhangb03a/yug03/mathys/snRNA/interaction_regression/MAST/", c, "_summaryDt.RDS"))){
+    print(which(processed.ls == c))
+    print(c)
+  }
+  else{
+    f <- readRDS(paste0("/sc/arion/projects/zhangb03a/yug03/mathys/snRNA/interaction_regression/MAST/", c, "_summaryDt.RDS"))
+    all.summaryDt <- rbind(all.summaryDt, f)
+  }
+  
+}
+# print(file)
+cat("\n")
+  
+
+all.summaryDt
+```
+
+```{r}
+# all.summaryDt$p_val_adj <- NA
+# for(c in unique(all.summaryDt$Celltype)){
+#   for (contrast in c("sexF:apoe2e2x:cogdx2AD", "sexF:apoe2e4x:cogdx2AD")){
+#     for (comp in unique(all.summaryDt$component)){
+#       all.summaryDt[all.summaryDt$Celltype == c & 
+#                     all.summaryDt$contrast == contrast & 
+#                     all.summaryDt$component == comp, "p_val_adj"] <- p.adjust(all.summaryDt[all.summaryDt$Celltype == c &
+#                                                                                            all.summaryDt$contrast == contrast &
+#                                                                                           all.summaryDt$component == comp, ]$`Pr(>Chisq)`, method = "BH")
+#     }
+#   }
+# }
+# sum(is.na(all.summaryDt$p_val_adj))
+# all.summaryDt
+# 
+# saveRDS(all.summaryDt, file = paste0("/sc/arion/projects/zhangb03a/yug03/mathys/snRNA/interaction_regression/MAST/all_summaryDt_adjp.RDS"))
+```
+
+```{r}
+all.summaryDt <- readRDS("/sc/arion/projects/zhangb03a/yug03/mathys/snRNA/interaction_regression/MAST/all_summaryDt_adjp.RDS")
+all.summaryDt
+```
+
+
+```{r}
+table(all.summaryDt$component)
+all.summaryDt[all.summaryDt$component == "H" & all.summaryDt$primerid== "MRO", ]
+```
+
+
+```{r}
+all.summaryDt$Symbol_Celltype <- paste0(all.summaryDt$primerid, "_", all.summaryDt$Celltype)
+
+all.summaryDt.e2x <- all.summaryDt[all.summaryDt$component == "H" & all.summaryDt$contrast == "sexF:apoe2e2x:cogdx2AD", ]
+all.summaryDt.e2x
+all.summaryDt.e4x <- all.summaryDt[all.summaryDt$component == "H" & all.summaryDt$contrast == "sexF:apoe2e4x:cogdx2AD", ]
+all.summaryDt.e4x
+
+all.summaryDt.e2x.sig <- all.summaryDt.e2x[all.summaryDt.e2x$p_val_adj < 0.05, ]
+all.summaryDt.e2x.sig
+length(unique(all.summaryDt.e2x.sig$primerid))
+all.summaryDt.e4x.sig <- all.summaryDt.e4x[all.summaryDt.e4x$p_val_adj < 0.05, ]
+all.summaryDt.e4x.sig
+length(unique(all.summaryDt.e4x.sig$primerid))
+```
+
+
+(MAST::summary(object = zlmCond, doLRT = 'sexF:apoe2e2x:cogdx2AD') also have "sexF:apoe2e4x:cogdx2AD" term but has no p value
+MAST::summary(object = zlmCond, doLRT = 'sexF:apoe2e4x:cogdx2AD') also have "sexF:apoe2e2x:cogdx2AD" term but has no p value 
+so I need to exclude the redundent results)
+```{r}
+all.summaryDt.e2x.c <- all.summaryDt[all.summaryDt$component == "C" & all.summaryDt$contrast == "sexF:apoe2e2x:cogdx2AD" & !is.na(all.summaryDt$`Pr(>Chisq)`), ]
+all.summaryDt.e2x.c
+all.summaryDt.e4x.c <- all.summaryDt[all.summaryDt$component == "C" & all.summaryDt$contrast == "sexF:apoe2e4x:cogdx2AD"& !is.na(all.summaryDt$`Pr(>Chisq)`), ]
+all.summaryDt.e4x.c
+
+# all.summaryDt.e2x.c.sig <- all.summaryDt.e2x.c[all.summaryDt.e2x.c$p_val_adj < 0.05 , ]
+all.summaryDt.e2x.c.sig <- all.summaryDt.e2x.c[all.summaryDt.e2x.c$p_val_adj < 0.05 & abs(all.summaryDt.e2x.c$coef) > 0.2, ]
+length(unique(all.summaryDt.e2x.c.sig$primerid))
+all.summaryDt.e2x.c.sig
+
+# all.summaryDt.e4x.c.sig <- all.summaryDt.e4x.c[all.summaryDt.e4x.c$p_val_adj < 0.05 , ]
+all.summaryDt.e4x.c.sig <- all.summaryDt.e4x.c[all.summaryDt.e4x.c$p_val_adj < 0.05 & abs(all.summaryDt.e2x.c$coef) > 0.2, ]
+length(unique(all.summaryDt.e4x.c.sig$primerid))
+all.summaryDt.e4x.c.sig
+```
+
+
+```{r}
+all.summaryDt.e2x.d <- all.summaryDt[all.summaryDt$component == "D" & all.summaryDt$contrast == "sexF:apoe2e2x:cogdx2AD" & !is.na(all.summaryDt$`Pr(>Chisq)`), ]
+all.summaryDt.e2x.d
+all.summaryDt.e4x.d <- all.summaryDt[all.summaryDt$component == "D" & all.summaryDt$contrast == "sexF:apoe2e4x:cogdx2AD"& !is.na(all.summaryDt$`Pr(>Chisq)`), ]
+all.summaryDt.e4x.d
+
+all.summaryDt.e2x.d.sig <- all.summaryDt.e2x.d[all.summaryDt.e2x.d$p_val_adj < 0.05, ]
+length(unique(all.summaryDt.e2x.d.sig$primerid))
+all.summaryDt.e2x.d.sig
+
+all.summaryDt.e4x.d.sig <- all.summaryDt.e4x.d[all.summaryDt.e4x.d$p_val_adj < 0.05, ]
+length(unique(all.summaryDt.e4x.d.sig$primerid))
+all.summaryDt.e4x.d.sig
+```
+
+```{r}
+e2x.cd.sig <- intersect(all.summaryDt.e2x.c.sig$Symbol_Celltype, all.summaryDt.e2x.d.sig$Symbol_Celltype)
+e4x.cd.sig <- intersect(all.summaryDt.e4x.c.sig$Symbol_Celltype, all.summaryDt.e4x.d.sig$Symbol_Celltype)
+
+
+all.summaryDt.e2x.sig.cd <- all.summaryDt.e2x.sig[all.summaryDt.e2x.sig$Symbol_Celltype %in% e2x.cd.sig, ]
+table(all.summaryDt.e2x.sig.cd$Celltype)
+all.summaryDt.e4x.sig.cd <- all.summaryDt.e4x.sig[all.summaryDt.e4x.sig$Symbol_Celltype %in% e2x.cd.sig, ]
+table(all.summaryDt.e4x.sig.cd$Celltype)
+```
+
+```{r}
+r <- all.summaryDt.e4x.c.sig[all.summaryDt.e4x.c.sig$Symbol_Celltype %in% e4x.cd.sig, ]
+r[order(abs(r$coef), decreasing = T), ]
+intersect(r$primerid, risk_genes)
+```
+
+
+```{r}
+length(intersect(all.summaryDt.e2x.sig$Symbol_Celltype, all.summaryDt.e4x.sig$Symbol_Celltype))
+length(intersect(all.summaryDt.e2x.c.sig$Symbol_Celltype, all.summaryDt.e4x.c.sig$Symbol_Celltype))
+length(intersect(intersect(all.summaryDt.e2x.sig$Symbol_Celltype, all.summaryDt.e4x.sig$Symbol_Celltype), intersect(all.summaryDt.e2x.c.sig$Symbol_Celltype, all.summaryDt.e4x.c.sig$Symbol_Celltype)))
+
+r <- all.summaryDt.e4x[all.summaryDt.e4x$Symbol_Celltype %in% intersect(intersect(all.summaryDt.e2x.sig$Symbol_Celltype, all.summaryDt.e4x.sig$Symbol_Celltype), intersect(all.summaryDt.e2x.c.sig$Symbol_Celltype, all.summaryDt.e4x.c.sig$Symbol_Celltype)), ]
+r[order(r$p_val_adj), ]
+```
+
+```{r}
+all.summaryDt.e4x.sig <- all.summaryDt.e4x[all.summaryDt.e4x$p_val_adj < 0.01, ]
+# all.summaryDt.e4x.sig
+length(unique(all.summaryDt.e4x.sig$primerid))
+
+all.summaryDt.e4x.sig[order(all.summaryDt.e4x.sig$p_val_adj, decreasing = T), ]
+# table(all.summaryDt.e4x.sig$Celltype)
+
+all.summaryDt.e4x.c.sig[all.summaryDt.e4x.c.sig$Symbol_Celltype == "AC105942.1_Ast GRM3", ]
+```
+
+
+```{r, fig.width=7, fig.height=5}
+gene_interaction <- function(gene, cluster){
+  cellfile <- celltype.df[celltype.df$subcluster == cluster, "processed.ls3"]
+  pbmc <- ori.ls[[cellfile]]
+  pbmc.sub <- pbmc[, pbmc@meta.data$cell_type_high_resolution == cluster]
+  
+  v <- VlnPlot(pbmc.sub, features = gene, group.by = "sex_apoe2", split.by = "cogdx2", pt.size = 0) + geom_boxplot(width=0.1, position=position_dodge(.9)) + ggtitle(paste(cluster, gene))
+  print(v)
+}
+gene_interaction("HSPH1", "Mic P2RY12")
+gene_interaction("CLU", "Exc L2-3 CBLN2 LINC02306")
+gene_interaction("HSPH1", "Exc L2-3 CBLN2 LINC02306")
+gene_interaction("AC105942.1", "Ast GRM3")
+```
+
+
+
+
+
+
+
+
+```{r gene_FC_heatmap}
+all.res.merged <- do.call(rbind, diff.con.cogdx.AD.NCI.s5.res)
+
+gene_FC_heatmap <- function(all.res, the.gene, c){
+  gene.df <- as.data.frame(matrix(nrow = 6, ncol = length(unique(grep(c, all.meta.data$cell_type_high_resolution, value = T)))))
+  gene.df.anno <- as.data.frame(matrix(nrow = 6, ncol = length(unique(grep(c, all.meta.data$cell_type_high_resolution, value = T)))))
+  rownames(gene.df) <- c("F_e2x", "F_e33", "F_e4x", "M_e2x", "M_e33", "M_e4x")
+  rownames(gene.df.anno) <- c("F_e2x", "F_e33", "F_e4x", "M_e2x", "M_e33", "M_e4x")
+  colnames(gene.df) <- unique(grep(c, all.meta.data$cell_type_high_resolution, value = T))
+  colnames(gene.df.anno) <- unique(grep(c, all.meta.data$cell_type_high_resolution, value = T))
+  
+  for (i in 1:nrow(gene.df)){
+    contrast <- paste0(rownames(gene.df)[i], "_AD_vs_", rownames(gene.df)[i], "_NCI" )
+    for (cluster in colnames(gene.df)){
+      if (nrow(all.res[all.res$Contrast == contrast & all.res$Symbol == the.gene & all.res$Celltype == cluster, ]) > 0){
+        gene.df[i, cluster] <- all.res[all.res$Contrast == contrast & all.res$Symbol == the.gene & all.res$Celltype == cluster, "avg_log2FC"]
+        adjp <- all.res[all.res$Contrast == contrast & all.res$Symbol == the.gene & all.res$Celltype == cluster, "p_val_adj"]
+        gene.df.anno[i, cluster] <- ifelse(adjp < 0.05 & abs(gene.df[i, cluster]) > log2(1.3), TRUE, FALSE)
+      }
+      else{
+        gene.df[i, cluster] <- 0
+        gene.df.anno[i, cluster] <- FALSE
+      }
+    }
+  }
+  gene.df <- as.matrix(gene.df)
+  h <- Heatmap(gene.df,  row_names_side = "left", cluster_rows = T, cluster_columns = T, column_title=paste(the.gene, c), 
+               heatmap_legend_param = list(title = "log2FC", title_gp = gpar(fontsize = 15, fontface = "plain"),title_position = "leftcenter-rot",labels_gp = gpar(fontsize = 15)), 
+               cell_fun = function(j, i, x, y, w, h, fill) {
+                 if(gene.df.anno[i, j] == TRUE) { grid.text("*", x, y) }  }
+               )
+  print(h) 
+}
+```
+
+```{r}
+gene_FC_heatmap(all.res.merged, "CHD7", "Exc RELN CHD7")
+```
+
+
+```{r, fig.height=7.5, fig.width=12}
+all.summaryDt.e2x.sig.cd
+
+celltype_counts.e2x <- all.summaryDt.e2x.sig.cd %>%
+  group_by(Celltype) %>%
+  summarise(SymbolCount = n(), .groups = "drop") %>%
+  right_join(celltype.df, by = c("Celltype" = "subcluster")) %>%  # Join with all cell types from `celltype.df`
+  mutate(SymbolCount = ifelse(is.na(SymbolCount), 0, SymbolCount)) 
+celltype_counts.e2x$C <- celltype.df$celltype[match(celltype_counts.e2x$Celltype, celltype.df$subcluster)]
+celltype_counts.e2x
+
+p1 <- ggplot(celltype_counts.e2x, aes(x = Celltype, y = SymbolCount, fill = C)) +
+  geom_bar(stat = "identity") + theme_minimal() + facet_grid(.~C, scales="free", space = "free") + 
+  labs(
+    title = "sexF:apoee2x:cogdxAD", x = "", y = "# Significant Genes") +
+  theme(legend.position = "none", axis.text.x = element_blank()) 
+
+
+all.summaryDt.e4x.sig.cd
+
+celltype_counts.e4x <- all.summaryDt.e4x.sig.cd %>%
+ group_by(Celltype) %>%
+  summarise(SymbolCount = n(), .groups = "drop") %>%
+  right_join(celltype.df, by = c("Celltype" = "subcluster")) %>%  # Join with all cell types from `celltype.df`
+  mutate(SymbolCount = ifelse(is.na(SymbolCount), 0, SymbolCount)) 
+celltype_counts.e4x$C <- celltype.df$celltype[match(celltype_counts.e4x$Celltype, celltype.df$subcluster)]
+celltype_counts.e4x
+
+p2 <- ggplot(celltype_counts.e4x, aes(x = Celltype, y = SymbolCount, fill = C)) +
+  geom_bar(stat = "identity") + theme_minimal() + facet_grid(.~C, scales="free", space = "free") + 
+  labs(
+    title = "sexF:apoee4x:cogdxAD", x = "", y = "# Significant Genes") +
+  theme(legend.position = "none", axis.text.x = element_text(angle = 90, hjust = 1)) 
+
+p1 / p2 + plot_layout(heights = c(1, 1)) 
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
