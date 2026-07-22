@@ -1,0 +1,41 @@
+The strongest remaining cause is now the clinical covariate data, not Seurat, MAST, or BH adjustment.
+
+Key findings:
+
+Yu uses dataset_707_basic_02-08-2022.clean.txt for pmi and age_death; we use ROSMAP_clinical.csv. These are different metadata sources/revisions.
+Yu’s effective model is: diagnosis + nCount_RNA + pmi + age_death
+Running our data with Yu’s raw numeric covariate names/order produced the same p-values as our current scaled model. Scaling is therefore not the mismatch.
+Treating Yu’s age_death literally as a character/factor because of 90+ made agreement dramatically worse: 8.1% recall and median absolute p-value difference 0.099. Yu almost certainly used a numeric-cleaned age variable.
+Yu recomputes BH exactly as we do:
+
+mathys_DEG_analysis_subcluster_sex-cogdx_apoe-cogdx.Rmd
+Lines 983-988
+latent.vars <- c('nCount_RNA','pmi','age_death')
+result1 <- FindMarkers(..., test.use = 'MAST',
+  latent.vars = latent.vars, min.pct = 0.1)
+names(result1)[names(result1) == 'p_val_adj'] <- 'p_val_adj_bonferroni'
+result1$p_val_adj <- p.adjust(result1$p_val, n=nrow(result1), method = "BH")
+Therefore, adjusted-p differences are propagated from raw MAST p-values; BH itself is not different.
+
+Important limitation: these notebooks load precomputed DEG TSVs rather than showing the production loop that generated Table S1. They also reference an unavailable functions.R and do not explicitly exclude the three AD/NCI sex-discordant donors described in the paper. This indicates the supplied code is incomplete.
+
+The decisive next step is to obtain:
+
+dataset_707_basic_02-08-2022.clean.txt
+/sc/arion/work/yug03/functions.R
+The script that wrote DEGs/subcluster.s5/.../*.DEG.*.tsv
+With the 2022 clinical file, we can directly compare all 276 donors’ PMI and age values and rerun Vasculature using Yu’s exact covariates.
+
+Yu’s documented pipeline applies BH FDR within each cell-type × contrast on genes returned after min.pct pre-filtering (not after fold-change filtering), renames Seurat’s Bonferroni p_val_adj to p_val_adj_bonferroni, and exports Table S1 only after p_val_adj < 0.05 and |avg_log2FC| > log2(1.3). Phase 08 matches that scope; 08_compare_yu_table_s1.R maps columns correctly but compares pre-filtered DEG sets. Notable Yu-code issues: copy-paste bugs in interaction filtering (lines 1623, 1651) and commented—but unused—per-celltype re-adjustment on merge.
+
+The Yu code under docs/yu_paper/code is primarily a downstream analysis + MAST reverse-engineering notebook set, not the production DEG runner. The inferred paper pipeline is Seurat v5 FindMarkers(test.use="MAST") on sex_apoe2_cogdx strata with min.pct=0.1, latent covariates nCount_RNA/pmi/age_death, BH adjustment over tested genes (n=nrow(result)), and DEG filtering at p_val_adj<0.05 & |avg_log2FC|>log2(1.3). The notebooks explicitly replace Seurat's default Bonferroni p_val_adj with BH. Top mismatch candidates: covariate/value differences, re-normalization from counts, min.pct implementation details, and missing cohort filters (sex discordance) not present in the loading code.
+
+placeholder
+
+All reviews agree:
+
+Yu and Phase 08 use the same MAST test, gene filter, BH scope, and DEG thresholds.
+Version differences and covariate scaling are ruled out.
+The main unresolved difference is Yu’s exact 2022 clinical covariate file and missing production DEG runner.
+The supplied notebooks analyze precomputed TSVs; they are not sufficient to reproduce Table S1 directly.
+Obtaining dataset_707_basic_02-08-2022.clean.txt is now the highest-value next step.

@@ -11,17 +11,19 @@ options(stringsAsFactors = FALSE, warn = 1)
 parse_cli <- function(args) {
   out <- list(
     label = NULL, output_dir = NULL, age90_value = NULL,
-    zlm_method = NULL, ebayes = NULL
+    age_mode = "continuous", zlm_method = NULL, ebayes = NULL
   )
   i <- 1L
   while (i <= length(args)) {
     key <- args[[i]]
     if (!key %in% c(
-      "--label", "--output-dir", "--age90-value", "--zlm-method", "--ebayes"
+      "--label", "--output-dir", "--age90-value", "--age-mode",
+      "--zlm-method", "--ebayes"
     ) ||
         i == length(args)) {
       stop("Usage: Rscript scripts/08_probe_mast_versions.R ",
            "--label LABEL --output-dir DIR [--age90-value NUMBER] ",
+           "[--age-mode continuous|yu_numeric|yu_raw] ",
            "[--zlm-method NAME] [--ebayes TRUE|FALSE]",
            call. = FALSE)
     }
@@ -112,6 +114,21 @@ if (!is.null(args$age90_value)) {
   metadata <- object[[]]
   message("Re-encoded age 90+ as ", age90_value)
 }
+if (!args$age_mode %in% c("continuous", "yu_numeric", "yu_raw")) {
+  stop(
+    "--age-mode must be continuous, yu_numeric, or yu_raw",
+    call. = FALSE
+  )
+}
+if (identical(args$age_mode, "yu_raw")) {
+  object$age_death_yu_raw <- ifelse(
+    as.logical(metadata$age_90plus),
+    "90+",
+    as.character(metadata$age_death_numeric)
+  )
+  metadata <- object[[]]
+  message("Using Yu-style raw age_death character covariate")
+}
 
 message("Reading Yu Table S1 and baseline")
 yu_raw <- suppressWarnings(as.data.frame(readxl::read_excel(
@@ -131,7 +148,13 @@ baseline <- as.data.frame(data.table::fread(baseline_path))
 pair_rows <- list()
 call_rows <- list()
 summary_rows <- list()
-latent_vars <- c("nCount_RNA", "age_death_scaled", "pmi_scaled")
+latent_vars <- if (identical(args$age_mode, "yu_raw")) {
+  c("nCount_RNA", "pmi_scaled", "age_death_yu_raw")
+} else if (identical(args$age_mode, "yu_numeric")) {
+  c("nCount_RNA", "pmi_numeric", "age_death_numeric")
+} else {
+  c("nCount_RNA", "age_death_scaled", "pmi_scaled")
+}
 effect_threshold <- log2(1.3)
 
 for (i in seq_len(nrow(panel))) {
@@ -306,6 +329,7 @@ overall <- data.frame(
   } else {
     as.character(args$age90_value)
   },
+  age_mode = args$age_mode,
   zlm_method = args$zlm_method %||% "bayesglm_default",
   ebayes = args$ebayes %||% "TRUE_default",
   panel_comparisons = nrow(panel),
