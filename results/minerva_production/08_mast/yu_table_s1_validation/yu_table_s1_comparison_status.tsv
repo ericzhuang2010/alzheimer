@@ -1,0 +1,2 @@
+schema_version	validation_status	alignment_tier	scope	rds_id	yu_supplement	yu_supplement_sha256	yu_sheet	fine_cell_types	planned_comparisons	estimable_comparisons	completed_comparisons	not_estimable_comparisons	yu_degs_in_scope	phase08_degs_in_scope	shared_degs	failed_checks	timestamp_utc
+yu_table_s1_comparison_status_v2	validated_complete	exact	all_phase08_cell_types	all	docs/yu_paper/ALZ-22-e71463-s002.xlsx	333898a4c1b89a484b56f51164bdc2fd553a43f7938fc1db2e19b1b8a7dc1ff0	Table S1. DEGs	54	324	321	321	3	118297	118297	118297		2026-07-23 15:00:57 UTC

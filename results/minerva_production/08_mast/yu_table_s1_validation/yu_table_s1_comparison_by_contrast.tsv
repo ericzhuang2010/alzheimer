@@ -1,0 +1,7 @@
+schema_version	scope	group	value	yu_degs	phase08_degs	shared_degs	yu_only_degs	phase08_only_degs	recall	precision	jaccard	direction_agreement	pearson_logFC	spearman_logFC	median_abs_logFC_difference	max_abs_logFC_difference
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	yu_contrast	F_e2x_AD_vs_F_e2x_NCI	10952	10952	10952	0	0	1	1	1	1	1	1	0	9.99200722162641e-16
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	yu_contrast	F_e33_AD_vs_F_e33_NCI	11236	11236	11236	0	0	1	1	1	1	1	1	0	9.99200722162641e-16
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	yu_contrast	F_e4x_AD_vs_F_e4x_NCI	20942	20942	20942	0	0	1	1	1	1	1	1	0	9.99200722162641e-16
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	yu_contrast	M_e2x_AD_vs_M_e2x_NCI	45781	45781	45781	0	0	1	1	1	1	1	1	0	9.99200722162641e-16
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	yu_contrast	M_e33_AD_vs_M_e33_NCI	13120	13120	13120	0	0	1	1	1	1	1	1	0	9.99200722162641e-16
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	yu_contrast	M_e4x_AD_vs_M_e4x_NCI	16266	16266	16266	0	0	1	1	1	1	1	1	0	9.99200722162641e-16

@@ -1,0 +1,55 @@
+schema_version	scope	group	value	yu_degs	phase08_degs	shared_degs	yu_only_degs	phase08_only_degs	recall	precision	jaccard	direction_agreement	pearson_logFC	spearman_logFC	median_abs_logFC_difference	max_abs_logFC_difference
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	cell_type_high_resolution	Ast CHI3L1	4624	4624	4624	0	0	1	1	1	1	1	1	0	9.99200722162641e-16
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	cell_type_high_resolution	Ast DPP10	3885	3885	3885	0	0	1	1	1	1	1	1	0	0
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	cell_type_high_resolution	Ast GRM3	5164	5164	5164	0	0	1	1	1	1	1	1	0	9.99200722162641e-16
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	cell_type_high_resolution	CAMs	12	12	12	0	0	1	1	1	1	1	1	0	0
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	cell_type_high_resolution	End	371	371	371	0	0	1	1	1	1	1	1	0	0
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	cell_type_high_resolution	Exc L2-3 CBLN2 LINC02306	7483	7483	7483	0	0	1	1	1	1	1	1	0	9.99200722162641e-16
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	cell_type_high_resolution	Exc L3-4 RORB CUX2	6115	6115	6115	0	0	1	1	1	1	1	1	0	9.99200722162641e-16
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	cell_type_high_resolution	Exc L3-5 RORB PLCH1	5472	5472	5472	0	0	1	1	1	1	1	1	0	9.99200722162641e-16
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	cell_type_high_resolution	Exc L4-5 RORB GABRG1	4766	4766	4766	0	0	1	1	1	1	1	1	0	9.99200722162641e-16
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	cell_type_high_resolution	Exc L4-5 RORB IL1RAPL2	5089	5089	5089	0	0	1	1	1	1	1	1	0	9.99200722162641e-16
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	cell_type_high_resolution	Exc L5 ET	2970	2970	2970	0	0	1	1	1	1	1	1	0	0
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	cell_type_high_resolution	Exc L5-6 RORB LINC02196	2816	2816	2816	0	0	1	1	1	1	1	1	0	9.99200722162641e-16
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	cell_type_high_resolution	Exc L5/6 IT Car3	5044	5044	5044	0	0	1	1	1	1	1	1	0	9.99200722162641e-16
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	cell_type_high_resolution	Exc L5/6 NP	2014	2014	2014	0	0	1	1	1	1	1	1	0	9.99200722162641e-16
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	cell_type_high_resolution	Exc L6 CT	3002	3002	3002	0	0	1	1	1	1	1	1	0	9.99200722162641e-16
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	cell_type_high_resolution	Exc L6 THEMIS NFIA	5335	5335	5335	0	0	1	1	1	1	1	1	0	9.99200722162641e-16
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	cell_type_high_resolution	Exc L6b	5901	5901	5901	0	0	1	1	1	1	1	1	0	9.99200722162641e-16
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	cell_type_high_resolution	Exc NRGN	8504	8504	8504	0	0	1	1	1	1	1	1	0	1.11022302462516e-16
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	cell_type_high_resolution	Exc RELN CHD7	10442	10442	10442	0	0	1	1	1	1	1	1	0	9.99200722162641e-16
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	cell_type_high_resolution	Fib FLRT2	42	42	42	0	0	1	1	1	1	1	1	0	9.99200722162641e-16
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	cell_type_high_resolution	Fib SLC4A4	1	1	1	0	0	1	1	1	1	NA	NA	0	0
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	cell_type_high_resolution	Inh ALCAM TRPM3	367	367	367	0	0	1	1	1	1	1	1	0	0
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	cell_type_high_resolution	Inh CUX2 MSR1	2985	2985	2985	0	0	1	1	1	1	1	1	0	9.99200722162641e-16
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	cell_type_high_resolution	Inh ENOX2 SPHKAP	504	504	504	0	0	1	1	1	1	1	1	0	0
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	cell_type_high_resolution	Inh FBN2 EPB41L4A	161	161	161	0	0	1	1	1	1	1	1	0	9.99200722162641e-16
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	cell_type_high_resolution	Inh GPC5 RIT2	16	16	16	0	0	1	1	1	1	1	1	0	0
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	cell_type_high_resolution	Inh L1 PAX6 CA4	12	12	12	0	0	1	1	1	1	1	1	0	0
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	cell_type_high_resolution	Inh L1-2 PAX6 SCGN	2	2	2	0	0	1	1	1	1	1	1	0	0
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	cell_type_high_resolution	Inh L1-6 LAMP5 CA13	866	866	866	0	0	1	1	1	1	1	1	0	0
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	cell_type_high_resolution	Inh L3-5 SST MAFB	2768	2768	2768	0	0	1	1	1	1	1	1	0	9.99200722162641e-16
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	cell_type_high_resolution	Inh L5-6 PVALB STON2	71	71	71	0	0	1	1	1	1	1	1	0	0
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	cell_type_high_resolution	Inh L5-6 SST TH	32	32	32	0	0	1	1	1	1	1	1	0	0
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	cell_type_high_resolution	Inh L6 SST NPY	175	175	175	0	0	1	1	1	1	1	1	0	0
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	cell_type_high_resolution	Inh LAMP5 NRG1 (Rosehip)	3077	3077	3077	0	0	1	1	1	1	1	1	0	0
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	cell_type_high_resolution	Inh LAMP5 RELN	76	76	76	0	0	1	1	1	1	1	1	0	0
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	cell_type_high_resolution	Inh PTPRK FAM19A1	58	58	58	0	0	1	1	1	1	1	1	0	0
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	cell_type_high_resolution	Inh PVALB CA8 (Chandelier)	604	604	604	0	0	1	1	1	1	1	1	0	0
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	cell_type_high_resolution	Inh PVALB HTR4	5345	5345	5345	0	0	1	1	1	1	1	1	0	9.99200722162641e-16
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	cell_type_high_resolution	Inh PVALB SULF1	1280	1280	1280	0	0	1	1	1	1	1	1	0	9.99200722162641e-16
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	cell_type_high_resolution	Inh RYR3 TSHZ2	1139	1139	1139	0	0	1	1	1	1	1	1	0	0
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	cell_type_high_resolution	Inh SGCD PDE3A	7	7	7	0	0	1	1	1	1	1	1	0	0
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	cell_type_high_resolution	Inh SORCS1 TTN	60	60	60	0	0	1	1	1	1	1	1	0	0
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	cell_type_high_resolution	Inh VIP ABI3BP	314	314	314	0	0	1	1	1	1	1	1	0	0
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	cell_type_high_resolution	Inh VIP CLSTN2	499	499	499	0	0	1	1	1	1	1	1	0	2.22044604925031e-16
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	cell_type_high_resolution	Inh VIP THSD7B	42	42	42	0	0	1	1	1	1	1	1	0	0
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	cell_type_high_resolution	Inh VIP TSHZ2	108	108	108	0	0	1	1	1	1	1	1	0	0
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	cell_type_high_resolution	Mic MKI67	20	20	20	0	0	1	1	1	1	1	1	0	0
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	cell_type_high_resolution	Mic P2RY12	2842	2842	2842	0	0	1	1	1	1	1	1	0	5.55111512312578e-17
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	cell_type_high_resolution	Mic TPT1	403	403	403	0	0	1	1	1	1	1	1	0	0
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	cell_type_high_resolution	Oli	1586	1586	1586	0	0	1	1	1	1	1	1	0	1.11022302462516e-16
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	cell_type_high_resolution	OPC	3479	3479	3479	0	0	1	1	1	1	1	1	0	9.99200722162641e-16
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	cell_type_high_resolution	Per	300	300	300	0	0	1	1	1	1	1	1	0	0
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	cell_type_high_resolution	SMC	2	2	2	0	0	1	1	1	1	1	1	0	0
+yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	cell_type_high_resolution	T cells	45	45	45	0	0	1	1	1	1	1	1	0	0
