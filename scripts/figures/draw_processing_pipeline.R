@@ -5,8 +5,7 @@ options(stringsAsFactors = FALSE, warn = 1)
 parse_args <- function(args) {
   out <- list(
     output_dir = "results/figures/processing_pipeline",
-    basename = "processing_pipeline",
-    dpi = 300L
+    basename = "processing_pipeline"
   )
 
   i <- 1L
@@ -15,12 +14,12 @@ parse_args <- function(args) {
     if (key %in% c("--help", "-h")) {
       cat(
         "Usage: Rscript scripts/figures/draw_processing_pipeline.R ",
-        "[--output-dir PATH] [--basename NAME] [--dpi INTEGER]\n",
+        "[--output-dir PATH] [--basename NAME]\n",
         sep = ""
       )
       quit(status = 0L)
     }
-    if (!key %in% c("--output-dir", "--basename", "--dpi") || i == length(args)) {
+    if (!key %in% c("--output-dir", "--basename") || i == length(args)) {
       stop("Unknown option or missing value: ", key, call. = FALSE)
     }
 
@@ -29,8 +28,6 @@ parse_args <- function(args) {
       out$output_dir <- value
     } else if (identical(key, "--basename")) {
       out$basename <- value
-    } else {
-      out$dpi <- suppressWarnings(as.integer(value))
     }
     i <- i + 2L
   }
@@ -43,9 +40,6 @@ parse_args <- function(args) {
       "--basename may contain only letters, numbers, dots, underscores, and hyphens",
       call. = FALSE
     )
-  }
-  if (is.na(out$dpi) || out$dpi < 72L || out$dpi > 1200L) {
-    stop("--dpi must be an integer between 72 and 1200", call. = FALSE)
   }
   out
 }
@@ -245,28 +239,38 @@ project_root <- normalizePath(getwd(), mustWork = TRUE)
 output_dir <- absolute_path(args$output_dir, project_root)
 dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
 
-pdf_path <- file.path(output_dir, paste0(args$basename, ".pdf"))
-png_path <- file.path(output_dir, paste0(args$basename, ".png"))
-
-message("Writing ", pdf_path)
-grDevices::cairo_pdf(pdf_path, width = 18, height = 7.15, bg = "white", family = "sans")
-draw_pipeline()
-grDevices::dev.off()
-
 if (!capabilities("cairo")) {
-  stop("This R installation lacks Cairo support required for the PNG output", call. = FALSE)
+  stop("This R installation lacks Cairo support required for SVG output", call. = FALSE)
 }
-message("Writing ", png_path)
-grDevices::png(
-  png_path,
-  width = 18 * args$dpi,
-  height = 7.15 * args$dpi,
-  res = args$dpi,
-  units = "px",
-  type = "cairo",
-  bg = "white"
+
+svg_path <- file.path(output_dir, paste0(args$basename, ".svg"))
+tmp_svg <- paste0(svg_path, ".tmp.", Sys.getpid(), ".svg")
+device_open <- FALSE
+on.exit({
+  if (device_open && grDevices::dev.cur() > 1L) {
+    grDevices::dev.off()
+  }
+  if (file.exists(tmp_svg)) {
+    unlink(tmp_svg)
+  }
+}, add = TRUE)
+
+message("Writing ", svg_path)
+grDevices::svg(
+  tmp_svg,
+  width = 18,
+  height = 7.15,
+  bg = "white",
+  family = "sans",
+  antialias = "subpixel"
 )
+device_open <- TRUE
 draw_pipeline()
 grDevices::dev.off()
+device_open <- FALSE
+
+if (!file.rename(tmp_svg, svg_path)) {
+  stop("Could not publish SVG output: ", svg_path, call. = FALSE)
+}
 
 message("Pipeline figure complete")

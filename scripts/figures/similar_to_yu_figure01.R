@@ -6,10 +6,7 @@ options(stringsAsFactors = FALSE, warn = 1)
 
 parse_args <- function(args) {
   out <- list(
-    output = paste0(
-      "results/figures/figure01/",
-      "figure01_mitochondrial_yu_analogue.pdf"
-    ),
+    output_root = "results/figures/figure01",
     gene_scope = "all_mito_related"
   )
   i <- 1L
@@ -18,18 +15,18 @@ parse_args <- function(args) {
     if (key %in% c("--help", "-h")) {
       cat(
         "Usage: Rscript scripts/figures/similar_to_yu_figure01.R ",
-        "[--output PATH] ",
+        "[--output-root DIR] ",
         "[--gene-scope all_mito_related|core_mito]\n",
         sep = ""
       )
       quit(status = 0L)
     }
-    if (!key %in% c("--output", "--gene-scope") || i == length(args)) {
+    if (!key %in% c("--output-root", "--gene-scope") || i == length(args)) {
       stop("Unknown option or missing value: ", key, call. = FALSE)
     }
     value <- args[[i + 1L]]
-    if (identical(key, "--output")) {
-      out$output <- value
+    if (identical(key, "--output-root")) {
+      out$output_root <- value
     } else {
       out$gene_scope <- value
     }
@@ -103,8 +100,8 @@ for (package in c("data.table", "digest")) {
 }
 
 project_root <- normalizePath(getwd(), mustWork = TRUE)
-output_path <- absolute_path(args$output, project_root)
-dir.create(dirname(output_path), recursive = TRUE, showWarnings = FALSE)
+output_root <- absolute_path(args$output_root, project_root)
+dir.create(output_root, recursive = TRUE, showWarnings = FALSE)
 
 phase09_dir <- file.path(
   project_root, "results", "minerva_production", "09_annotate_genes"
@@ -824,9 +821,18 @@ for (panel in c("C", "D", "E")) {
 }
 
 message("Writing companion tile and gene-classification tables")
-tile_output_path <- sub("[.]pdf$", "_tiles.tsv", output_path, ignore.case = TRUE)
-gene_output_path <- sub("[.]pdf$", "_genes.tsv.gz", output_path, ignore.case = TRUE)
-checks_output_path <- sub("[.]pdf$", "_checks.tsv", output_path, ignore.case = TRUE)
+base_stem <- file.path(output_root, "figure01_mitochondrial_yu_analogue")
+tile_output_path <- paste0(base_stem, "_tiles.tsv")
+gene_output_path <- paste0(base_stem, "_genes.tsv.gz")
+checks_output_path <- paste0(base_stem, "_checks.tsv")
+panel_ids <- LETTERS[1:5]
+panel_paths <- stats::setNames(
+  file.path(
+    output_root,
+    paste0("figure01", panel_ids, "_mitochondrial_yu_analogue.svg")
+  ),
+  panel_ids
+)
 
 main_tile_output <- data.table::rbindlist(list(
   make_main_plot_table("up")[, panel := "A"],
@@ -909,15 +915,42 @@ gene_output <- data.table::rbindlist(list(
 ), use.names = TRUE, fill = TRUE)
 atomic_write_tsv(gene_output, gene_output_path, gzip = TRUE)
 
-message("Rendering four-page PDF: ", output_path)
-tmp_pdf <- paste0(output_path, ".tmp.", Sys.getpid(), ".pdf")
-grDevices::pdf(
-  tmp_pdf, width = 24, height = 14, onefile = TRUE,
-  family = "Helvetica", useDingbats = FALSE
-)
-render_error <- NULL
-tryCatch({
-  graphics::layout(matrix(1:2, nrow = 2L), heights = c(1, 1.15))
+message("Rendering five standalone SVG panels")
+render_svg <- function(path, width, height, draw_panel) {
+  tmp <- file.path(
+    dirname(path),
+    paste0(".", tools::file_path_sans_ext(basename(path)),
+           ".tmp.", Sys.getpid(), ".svg")
+  )
+  render_error <- NULL
+  device_open <- FALSE
+  tryCatch({
+    grDevices::svg(
+      filename = tmp, width = width, height = height, pointsize = 12,
+      onefile = TRUE, family = "sans", bg = "white", antialias = "subpixel"
+    )
+    device_open <- TRUE
+    draw_panel()
+  }, error = function(e) {
+    render_error <<- conditionMessage(e)
+  })
+  if (device_open && grDevices::dev.cur() > 1L) grDevices::dev.off()
+  if (!is.null(render_error)) {
+    if (file.exists(tmp)) unlink(tmp)
+    stop("Figure rendering failed for ", basename(path), ": ",
+         render_error, call. = FALSE)
+  }
+  if (!file.exists(tmp) || file.info(tmp)$size <= 0) {
+    stop("SVG renderer produced an empty artifact: ", basename(path),
+         call. = FALSE)
+  }
+  if (!file.rename(tmp, path)) {
+    stop("Could not publish standalone SVG: ", path, call. = FALSE)
+  }
+}
+
+render_svg(panel_paths[["A"]], 24, 8, function() {
+  graphics::layout(matrix(1L))
   draw_heatmap(
     make_main_plot_table("up"), group_order, main_row_labels, up_row_colors,
     paste0("Number of ", scope_label, " genes upregulated in AD"), "A",
@@ -925,9 +958,13 @@ tryCatch({
       "Validated Phase 09 tiers; Phase 08 MAST paper_deg; ",
       "line 1 = DEGs/tested assay features; line 2 = AD/NCI donors"
     ),
-    show_x_labels = FALSE, label_cex = 0.29,
+    show_x_labels = TRUE, label_cex = 0.29,
     legend_items = panel_legend_items[["A"]]
   )
+})
+
+render_svg(panel_paths[["B"]], 24, 8, function() {
+  graphics::layout(matrix(1L))
   draw_heatmap(
     make_main_plot_table("down"), group_order, main_row_labels, down_row_colors,
     paste0("Number of ", scope_label, " genes downregulated in AD"), "B",
@@ -938,7 +975,9 @@ tryCatch({
     show_x_labels = TRUE, label_cex = 0.29,
     legend_items = panel_legend_items[["B"]]
   )
+})
 
+render_svg(panel_paths[["C"]], 24, 14, function() {
   graphics::layout(matrix(1L))
   draw_heatmap(
     female_panel$tiles, pair_row_orders[["C"]], pair_row_labels[["C"]],
@@ -951,7 +990,9 @@ tryCatch({
     show_x_labels = TRUE, label_cex = 0.245,
     legend_items = panel_legend_items[["C"]], pairwise_legend = TRUE
   )
+})
 
+render_svg(panel_paths[["D"]], 24, 14, function() {
   graphics::layout(matrix(1L))
   draw_heatmap(
     male_panel$tiles, pair_row_orders[["D"]], pair_row_labels[["D"]],
@@ -964,7 +1005,9 @@ tryCatch({
     show_x_labels = TRUE, label_cex = 0.245,
     legend_items = panel_legend_items[["D"]], pairwise_legend = TRUE
   )
+})
 
+render_svg(panel_paths[["E"]], 24, 14, function() {
   graphics::layout(matrix(1L))
   draw_heatmap(
     sex_panel$tiles, pair_row_orders[["E"]], pair_row_labels[["E"]],
@@ -977,18 +1020,7 @@ tryCatch({
     show_x_labels = TRUE, label_cex = 0.245,
     legend_items = panel_legend_items[["E"]], pairwise_legend = TRUE
   )
-}, error = function(e) {
-  render_error <<- conditionMessage(e)
 })
-grDevices::dev.off()
-if (!is.null(render_error)) {
-  if (file.exists(tmp_pdf)) unlink(tmp_pdf)
-  stop("Figure rendering failed: ", render_error, call. = FALSE)
-}
-if (!file.rename(tmp_pdf, output_path)) {
-  stop("Could not publish final PDF", call. = FALSE)
-}
-
 phase09_input_unchanged <- (
   as.numeric(file.info(phase09_paths[["annotated"]])$size) ==
     annotated_size_before
@@ -1013,7 +1045,7 @@ checks <- data.table::data.table(
     "pairwise_intersections_have_denominators",
     "pairwise_tier_denominators_sum",
     "all_panels_present",
-    "pdf_exists_nonempty",
+    "five_standalone_svgs_exist_nonempty",
     "companion_tables_exist_nonempty"
   ),
   passed = c(
@@ -1047,7 +1079,8 @@ checks <- data.table::data.table(
         pair_tiles$jointly_tested_mito_features[pair_tiles$eligible]
     ),
     identical(sort(unique(tile_output$panel)), c("A", "B", "C", "D", "E")),
-    file.exists(output_path) && file.info(output_path)$size > 0,
+    length(panel_paths) == 5L && all(file.exists(panel_paths)) &&
+      all(file.info(panel_paths)$size > 0),
     file.exists(tile_output_path) && file.info(tile_output_path)$size > 0 &&
       file.exists(gene_output_path) && file.info(gene_output_path)$size > 0
   ),
@@ -1066,7 +1099,7 @@ checks <- data.table::data.table(
     sum(pair_tiles$eligible),
     sum(pair_tiles$eligible),
     paste(sort(unique(tile_output$panel)), collapse = ";"),
-    if (file.exists(output_path)) file.info(output_path)$size else 0,
+    paste(as.numeric(file.info(panel_paths)$size), collapse = ";"),
     sum(file.exists(c(tile_output_path, gene_output_path)))
   ),
   expected = c(
@@ -1096,8 +1129,10 @@ if (any(!checks$passed)) {
   )
 }
 
-cat("Figure: ", output_path, "\n", sep = "")
-cat("Pages: 4\n")
+cat("Standalone SVG panels:\n")
+for (panel_id in names(panel_paths)) {
+  cat("  Figure 1", panel_id, ": ", panel_paths[[panel_id]], "\n", sep = "")
+}
 cat("Fine cell types: ", length(cell_order), "\n", sep = "")
 cat("Analysis universe: ", args$gene_scope, "\n", sep = "")
 cat("Included mitochondrial tiers: ", paste(scope_tiers, collapse = ";"), "\n", sep = "")

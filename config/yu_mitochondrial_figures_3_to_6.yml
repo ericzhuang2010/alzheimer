@@ -109,8 +109,7 @@ figures:
     height_in: 15
     panel_a_fraction: 0.64
     panel_b_fraction: 0.36
-    pdf_filename: figure03_mitochondrial_yu_analogue.pdf
-    png_filename: figure03_mitochondrial_yu_analogue.png
+    svg_filename: figure03_mitochondrial_yu_analogue.svg
   - figure_id: figure04
     figure_number: 4
     title: APOE e2-shared and e2-divergent mitochondrial transcriptional responses in AD
@@ -118,8 +117,7 @@ figures:
     height_in: 15
     panel_a_fraction: 0.64
     panel_b_fraction: 0.36
-    pdf_filename: figure04_mitochondrial_yu_analogue.pdf
-    png_filename: figure04_mitochondrial_yu_analogue.png
+    svg_filename: figure04_mitochondrial_yu_analogue.svg
   - figure_id: figure05
     figure_number: 5
     title: APOE e4-shared and e4-divergent mitochondrial transcriptional responses in AD
@@ -127,8 +125,7 @@ figures:
     height_in: 15
     panel_a_fraction: 0.64
     panel_b_fraction: 0.36
-    pdf_filename: figure05_mitochondrial_yu_analogue.pdf
-    png_filename: figure05_mitochondrial_yu_analogue.png
+    svg_filename: figure05_mitochondrial_yu_analogue.svg
   - figure_id: figure06
     figure_number: 6
     title: APOE-dependent sex divergence in mitochondrial transcriptional responses in AD
@@ -136,8 +133,7 @@ figures:
     height_in: 22
     panel_a_fraction: 0.56
     panel_b_fraction: 0.44
-    pdf_filename: figure06_mitochondrial_yu_analogue.pdf
-    png_filename: figure06_mitochondrial_yu_analogue.png
+    svg_filename: figure06_mitochondrial_yu_analogue.svg
 
 panel_a_blocks:
   - figure_id: figure03
@@ -183,64 +179,64 @@ panel_b_queries:
     comparison_id: female_vs_male_all_apoe
     tail: high_score
     facet_label: Highest similarity
-    expected_significant: 0
-    expected_matched: 241
+    expected_significant: 1
+    expected_matched: 242
   - figure_id: figure03
     facet_order: 2
     comparison_id: female_vs_male_all_apoe
     tail: low_score
     facet_label: Lowest similarity
-    expected_significant: 81
-    expected_matched: 292
+    expected_significant: 64
+    expected_matched: 286
   - figure_id: figure04
     facet_order: 1
     comparison_id: e2_vs_e33_all_sexes
     tail: high_score
     facet_label: Highest similarity
     expected_significant: 0
-    expected_matched: 283
+    expected_matched: 285
   - figure_id: figure04
     facet_order: 2
     comparison_id: e2_vs_e33_all_sexes
     tail: low_score
     facet_label: Lowest similarity
-    expected_significant: 58
-    expected_matched: 294
+    expected_significant: 62
+    expected_matched: 299
   - figure_id: figure05
     facet_order: 1
     comparison_id: e4_vs_e33_all_sexes
     tail: high_score
     facet_label: Highest similarity
     expected_significant: 0
-    expected_matched: 231
+    expected_matched: 226
   - figure_id: figure05
     facet_order: 2
     comparison_id: e4_vs_e33_all_sexes
     tail: low_score
     facet_label: Lowest similarity
-    expected_significant: 53
-    expected_matched: 295
+    expected_significant: 35
+    expected_matched: 293
   - figure_id: figure06
     facet_order: 1
     comparison_id: female_vs_male_e2
     tail: low_score
     facet_label: APOE e2
-    expected_significant: 39
+    expected_significant: 41
     expected_matched: 301
   - figure_id: figure06
     facet_order: 2
     comparison_id: female_vs_male_e33
     tail: low_score
     facet_label: APOE e33
-    expected_significant: 52
-    expected_matched: 310
+    expected_significant: 35
+    expected_matched: 307
   - figure_id: figure06
     facet_order: 3
     comparison_id: female_vs_male_e4
     tail: low_score
     facet_label: APOE e4
-    expected_significant: 29
-    expected_matched: 273
+    expected_significant: 32
+    expected_matched: 283
 
 export:
   dpi: 300

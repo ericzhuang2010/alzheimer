@@ -204,8 +204,8 @@ if (!file.exists(config_path)) stop("Config does not exist: ", config_path, call
 if (!dir.exists(input_root)) stop("Input root does not exist: ", input_root, call. = FALSE)
 if (!file.exists(script_path)) stop("Figure script path is missing", call. = FALSE)
 if (!file.exists(plan_path)) stop("Figure plan path is missing", call. = FALSE)
-if (!capabilities("cairo") || !capabilities("png")) {
-  stop("Local R lacks required Cairo or PNG graphics capability", call. = FALSE)
+if (!capabilities("cairo")) {
+  stop("Local R lacks the Cairo graphics capability required for SVG output")
 }
 
 config <- yaml::read_yaml(config_path)
@@ -699,7 +699,7 @@ assert_check(
   sum(!is.na(unlist(current_hashes))), length(current_hashes)
 )
 
-planned_image_names <- c(figures$pdf_filename, figures$png_filename)
+planned_image_names <- figures$svg_filename
 companion_names <- c(
   "displayed_similarity_data.tsv.gz", "displayed_pathway_data.tsv.gz",
   "pathway_display_summary.tsv", "figure_captions.md", "figure_manifest.tsv",
@@ -725,7 +725,7 @@ if (!args$dry_run && !args$force && file.exists(file.path(output_root, "figure_s
     old_manifest <- fread(old_manifest_path)
     old_paths <- vapply(old_manifest$artifact_path, absolute_path, character(1),
                         root = project_root)
-    resumable <- nrow(old_manifest) == 8L && all(file.exists(old_paths)) &&
+    resumable <- nrow(old_manifest) == 4L && all(file.exists(old_paths)) &&
       all(vapply(old_paths, sha256_file, character(1)) == old_manifest$sha256)
   }
   if (resumable) {
@@ -975,41 +975,39 @@ build_figure <- function(figure_value) {
   combined
 }
 
-save_plot <- function(plot, path, format, width, height, dpi) {
+save_plot <- function(plot, path, width, height) {
   tmp <- file.path(
     dirname(path),
     paste0(".", tools::file_path_sans_ext(basename(path)), ".tmp.",
-           Sys.getpid(), ".", format)
+           Sys.getpid(), ".svg")
   )
   render_error <- NULL
+  device_open <- FALSE
   tryCatch({
-    if (format == "pdf") {
-      grDevices::cairo_pdf(
-        tmp, width = width, height = height, onefile = TRUE,
-        family = "sans", bg = config$export$background
-      )
-    } else {
-      grDevices::png(
-        tmp, width = width, height = height, units = "in", res = dpi,
-        type = config$export$png_type, antialias = "subpixel",
-        bg = config$export$background
-      )
-    }
+    grDevices::svg(
+      filename = tmp, width = width, height = height, pointsize = 12,
+      onefile = TRUE, family = "sans", antialias = "subpixel",
+      bg = config$export$background
+    )
+    device_open <- TRUE
     print(plot)
   }, error = function(e) {
     render_error <<- conditionMessage(e)
   })
-  if (grDevices::dev.cur() > 1L) grDevices::dev.off()
+  if (device_open && grDevices::dev.cur() > 1L) grDevices::dev.off()
   if (!is.null(render_error)) {
     if (file.exists(tmp)) unlink(tmp)
-    stop("Rendering failed for ", basename(path), ": ", render_error, call. = FALSE)
+    stop("Rendering failed for ", basename(path), ": ", render_error,
+         call. = FALSE)
   }
   if (!file.exists(tmp) || file.info(tmp)$size <= 0) {
-    stop("Renderer produced an empty artifact: ", basename(path), call. = FALSE)
+    stop("Renderer produced an empty SVG artifact: ", basename(path),
+         call. = FALSE)
   }
-  if (!file.rename(tmp, path)) stop("Could not publish staged image: ", path, call. = FALSE)
+  if (!file.rename(tmp, path)) {
+    stop("Could not publish staged SVG image: ", path, call. = FALSE)
+  }
 }
-
 caption_for <- function(figure_value) {
   f <- figures[figure_id == figure_value]
   a <- panel_a_cfg[figure_id == figure_value][order(block_order)]
@@ -1064,98 +1062,85 @@ staging_root <- file.path(output_root, paste0("yu_figures_3_to_6.staging.", Sys.
 dir.create(staging_root, recursive = TRUE, showWarnings = FALSE)
 on.exit(if (dir.exists(staging_root)) unlink(staging_root, recursive = TRUE), add = TRUE)
 
-message("Rendering four composite figures")
+message("Rendering four composite SVG figures")
 manifest_rows <- list()
-dpi <- as.integer(config$export$dpi)
 for (i in seq_len(nrow(figures))) {
   def <- figures[i]
   figure_value <- def$figure_id[[1L]]
   message("  ", figure_value)
   plot <- build_figure(figure_value)
-  pdf_stage <- file.path(staging_root, def$pdf_filename[[1L]])
-  png_stage <- file.path(staging_root, def$png_filename[[1L]])
+  svg_stage <- file.path(staging_root, def$svg_filename[[1L]])
   save_plot(
-    plot, pdf_stage, "pdf", def$width_in[[1L]], def$height_in[[1L]], dpi
+    plot, svg_stage, def$width_in[[1L]], def$height_in[[1L]]
   )
-  save_plot(
-    plot, png_stage, "png", def$width_in[[1L]], def$height_in[[1L]], dpi
+  comparison_ids <- panel_a_cfg[
+    figure_id == figure_value, paste(comparison_id, collapse = ";")
+  ]
+  query_ids <- b_defs[
+    figure_id == figure_value, paste(query_id, collapse = ";")
+  ]
+  manifest_rows[[length(manifest_rows) + 1L]] <- data.table(
+    schema_version = config$schemas$figure_manifest,
+    figure_id = figure_value,
+    figure_number = def$figure_number[[1L]],
+    format = "svg",
+    artifact_path = relative_path(
+      file.path(output_root, def$svg_filename[[1L]]), project_root
+    ),
+    width_in = def$width_in[[1L]],
+    height_in = def$height_in[[1L]],
+    dpi = NA_integer_,
+    page_count = NA_integer_,
+    pixel_width = NA_integer_,
+    pixel_height = NA_integer_,
+    bytes = file.info(svg_stage)$size,
+    sha256 = sha256_file(svg_stage),
+    profile_id = primary$profile_id,
+    analysis_universe = primary$analysis_universe,
+    pathway_collection = primary$pathway_collection,
+    source_comparison_ids = comparison_ids,
+    source_query_ids = query_ids,
+    script_sha256 = current_hashes$script_sha256,
+    config_sha256 = current_hashes$config_sha256,
+    similarity_status_sha256 = current_hashes$similarity_status_sha256,
+    similarity_panel_sha256 = current_hashes$similarity_panel_sha256,
+    pathway_status_sha256 = current_hashes$pathway_status_sha256,
+    pathway_panel_sha256 = current_hashes$pathway_panel_sha256,
+    pathway_ora_sha256 = current_hashes$pathway_ora_sha256,
+    query_manifest_sha256 = current_hashes$query_manifest_sha256,
+    r_version = as.character(getRversion()),
+    ggplot2_version = as.character(packageVersion("ggplot2")),
+    patchwork_version = as.character(packageVersion("patchwork")),
+    created_utc = format(Sys.time(), tz = "UTC", usetz = TRUE),
+    validation_status = "validated_complete"
   )
-  comparison_ids <- panel_a_cfg[figure_id == figure_value,
-                                paste(comparison_id, collapse = ";")]
-  query_ids <- b_defs[figure_id == figure_value, paste(query_id, collapse = ";")]
-  for (format in c("pdf", "png")) {
-    stage_path <- if (format == "pdf") pdf_stage else png_stage
-    final_name <- if (format == "pdf") def$pdf_filename[[1L]] else def$png_filename[[1L]]
-    manifest_rows[[length(manifest_rows) + 1L]] <- data.table(
-      schema_version = config$schemas$figure_manifest,
-      figure_id = figure_value,
-      figure_number = def$figure_number[[1L]],
-      format = format,
-      artifact_path = relative_path(file.path(output_root, final_name), project_root),
-      width_in = def$width_in[[1L]],
-      height_in = def$height_in[[1L]],
-      dpi = if (format == "png") dpi else NA_integer_,
-      page_count = if (format == "pdf") pdf_pages(stage_path) else NA_integer_,
-      pixel_width = if (format == "png") png_dimensions(stage_path)[["width"]] else NA_integer_,
-      pixel_height = if (format == "png") png_dimensions(stage_path)[["height"]] else NA_integer_,
-      bytes = file.info(stage_path)$size,
-      sha256 = sha256_file(stage_path),
-      profile_id = primary$profile_id,
-      analysis_universe = primary$analysis_universe,
-      pathway_collection = primary$pathway_collection,
-      source_comparison_ids = comparison_ids,
-      source_query_ids = query_ids,
-      script_sha256 = current_hashes$script_sha256,
-      config_sha256 = current_hashes$config_sha256,
-      similarity_status_sha256 = current_hashes$similarity_status_sha256,
-      similarity_panel_sha256 = current_hashes$similarity_panel_sha256,
-      pathway_status_sha256 = current_hashes$pathway_status_sha256,
-      pathway_panel_sha256 = current_hashes$pathway_panel_sha256,
-      pathway_ora_sha256 = current_hashes$pathway_ora_sha256,
-      query_manifest_sha256 = current_hashes$query_manifest_sha256,
-      r_version = as.character(getRversion()),
-      ggplot2_version = as.character(packageVersion("ggplot2")),
-      patchwork_version = as.character(packageVersion("patchwork")),
-      created_utc = format(Sys.time(), tz = "UTC", usetz = TRUE),
-      validation_status = "validated_complete"
-    )
-  }
   rm(plot)
   invisible(gc())
 }
 figure_manifest <- rbindlist(manifest_rows, use.names = TRUE)
-figure_manifest[format == "pdf", page_count := vapply(
-  basename(artifact_path),
-  function(filename) pdf_pages(file.path(staging_root, filename)),
-  integer(1)
-)]
-
 assert_check(
-  "eight_primary_images", nrow(figure_manifest) == 8L &&
-    all(figure_manifest$bytes > 0) && all(!is.na(figure_manifest$sha256)),
-  nrow(figure_manifest), 8L
+  "four_primary_svg_images",
+  nrow(figure_manifest) == 4L &&
+    all(figure_manifest$format == "svg") &&
+    all(figure_manifest$bytes > 0) &&
+    all(!is.na(figure_manifest$sha256)),
+  nrow(figure_manifest), 4L
+)
+svg_stage_paths <- file.path(staging_root, basename(figure_manifest$artifact_path))
+svg_headers <- vapply(svg_stage_paths, function(path) {
+  any(grepl("<svg", readLines(path, n = 20L, warn = FALSE), fixed = TRUE))
+}, logical(1))
+assert_check(
+  "svg_documents",
+  all(svg_headers), sum(svg_headers), 4L
 )
 assert_check(
-  "pdf_page_counts",
-  all(figure_manifest[format == "pdf", page_count] == 1L),
-  paste(figure_manifest[format == "pdf", page_count], collapse = ","), "1,1,1,1"
+  "svg_dimensions_recorded",
+  all(figure_manifest$width_in > 0) && all(figure_manifest$height_in > 0),
+  paste(figure_manifest$width_in, figure_manifest$height_in,
+        sep = "x", collapse = ","),
+  "four positive width-by-height pairs"
 )
-png_manifest <- figure_manifest[format == "png"]
-expected_pixels <- figures[, .(
-  figure_id,
-  expected_width = as.integer(round(width_in * dpi)),
-  expected_height = as.integer(round(height_in * dpi))
-)]
-png_check <- merge(png_manifest, expected_pixels, by = "figure_id")
-assert_check(
-  "png_dimensions",
-  all(png_check$pixel_width == png_check$expected_width) &&
-    all(png_check$pixel_height == png_check$expected_height),
-  paste(png_check$pixel_width, png_check$pixel_height, sep = "x", collapse = ","),
-  paste(png_check$expected_width, png_check$expected_height,
-        sep = "x", collapse = ",")
-)
-
 caption_lines <- c("# Figure captions", "")
 for (figure_value in figures$figure_id) {
   number <- figures[figure_id == figure_value, figure_number]
