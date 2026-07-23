@@ -1,6 +1,9 @@
 schema_version	check	passed	observed	expected
 cohort_checks_v1	metadata_donor_count	TRUE	427	427
 cohort_checks_v1	global_cohort_count	TRUE	276	276
+cohort_checks_v1	clinical_source_sha256	TRUE	76a71814b43c9fa3e84b9bbb119dddc3fd4b08743948f75ca38400e9bcb7425e	76a71814b43c9fa3e84b9bbb119dddc3fd4b08743948f75ca38400e9bcb7425e
+cohort_checks_v1	exact_age_90plus_donor_count	TRUE	99	99
+cohort_checks_v1	exact_age_values_above_90_retained	TRUE	108.2819986	>90
 cohort_checks_v1	global_group_counts	TRUE	17;8;45;37;11;26;6;7;53;29;10;27	17;8;45;37;11;26;6;7;53;29;10;27
 cohort_checks_v1	unique_global_projids	TRUE	0	0
 cohort_checks_v1	required_derived_fields_complete	TRUE	0	0
