@@ -18,7 +18,7 @@ pathway_checks_v1	cross_tail_symbol_ambiguity	TRUE	TRUE	0	0
 pathway_checks_v1	complete_ora_grid	TRUE	TRUE	102336	102336	
 pathway_checks_v1	ora_contingency_cells	TRUE	TRUE	102336	102336	
 pathway_checks_v1	ora_p_values	TRUE	TRUE	14942	all tested rows reproduce phyper	
-pathway_checks_v1	zero_overlap_p_value	TRUE	TRUE	2077	p_value=1	
+pathway_checks_v1	zero_overlap_p_value	TRUE	TRUE	2080	p_value=1	
 pathway_checks_v1	fisher_exact_audit	TRUE	TRUE	20	up to 20 tested nonzero-overlap rows	
 pathway_checks_v1	tail_fdr_recalculation	TRUE	TRUE	0	0	
 pathway_checks_v1	global_fdr_recalculation	TRUE	TRUE	0	0	
