@@ -78,7 +78,8 @@ results/minerva_production/*
 results/minerva_production/05_normalized/**/*.rds
 !results/minerva_production/06_descriptive
 !results/minerva_production/08_mast
-# !results/minerva_production/09_annotate_genes
+!results/minerva_production/09_annotate_genes
+results/minerva_production/09_annotate_genes/deg_all_annotated.tsv.gz
 !results/minerva_production/10_similarity
 !results/minerva_production/11_pathway
 

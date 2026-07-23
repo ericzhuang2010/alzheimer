@@ -1,0 +1,325 @@
+schema_version	rds_id	manifest_row	contrast_id	cell_type_high_resolution	sex	apoe_group	yu_stratum	terminal_status	total_rows	assay_feature_rows	reference_only_rows	phase08_returned_rows	filtered_rows	tested_not_significant	significant_up	significant_down	not_in_expression_matrix	contrast_not_estimable	mitocarta_core_rows	mtdna_noncoding_rows	extended_tier_rows
+mitochondrial_annotation_qc_v1	astrocytes	1	astrocytes::Ast CHI3L1::AD_vs_NCI__Female__e2	Ast CHI3L1	Female	e2	F_e2x	validated_complete	33564	33538	26	8300	25238	8084	149	67	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	astrocytes	2	astrocytes::Ast CHI3L1::AD_vs_NCI__Female__e33	Ast CHI3L1	Female	e33	F_e33	validated_complete	33564	33538	26	8465	25073	7525	538	402	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	astrocytes	3	astrocytes::Ast CHI3L1::AD_vs_NCI__Female__e4	Ast CHI3L1	Female	e4	F_e4x	validated_complete	33564	33538	26	8448	25090	6867	668	913	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	astrocytes	4	astrocytes::Ast CHI3L1::AD_vs_NCI__Male__e2	Ast CHI3L1	Male	e2	M_e2x	validated_complete	33564	33538	26	6843	26695	6541	169	133	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	astrocytes	5	astrocytes::Ast CHI3L1::AD_vs_NCI__Male__e33	Ast CHI3L1	Male	e33	M_e33	validated_complete	33564	33538	26	8438	25100	7855	284	299	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	astrocytes	6	astrocytes::Ast CHI3L1::AD_vs_NCI__Male__e4	Ast CHI3L1	Male	e4	M_e4x	validated_complete	33564	33538	26	7185	26353	6183	532	470	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	astrocytes	7	astrocytes::Ast DPP10::AD_vs_NCI__Female__e2	Ast DPP10	Female	e2	F_e2x	validated_complete	33564	33538	26	6381	27157	5971	200	210	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	astrocytes	8	astrocytes::Ast DPP10::AD_vs_NCI__Female__e33	Ast DPP10	Female	e33	F_e33	validated_complete	33564	33538	26	6650	26888	6353	108	189	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	astrocytes	9	astrocytes::Ast DPP10::AD_vs_NCI__Female__e4	Ast DPP10	Female	e4	F_e4x	validated_complete	33564	33538	26	6979	26559	6432	168	379	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	astrocytes	10	astrocytes::Ast DPP10::AD_vs_NCI__Male__e2	Ast DPP10	Male	e2	M_e2x	validated_complete	33564	33538	26	6336	27202	4866	1111	359	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	astrocytes	11	astrocytes::Ast DPP10::AD_vs_NCI__Male__e33	Ast DPP10	Male	e33	M_e33	validated_complete	33564	33538	26	6567	26971	6382	84	101	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	astrocytes	12	astrocytes::Ast DPP10::AD_vs_NCI__Male__e4	Ast DPP10	Male	e4	M_e4x	validated_complete	33564	33538	26	6836	26702	5860	572	404	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	astrocytes	13	astrocytes::Ast GRM3::AD_vs_NCI__Female__e2	Ast GRM3	Female	e2	F_e2x	validated_complete	33564	33538	26	7462	26076	6413	677	372	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	astrocytes	14	astrocytes::Ast GRM3::AD_vs_NCI__Female__e33	Ast GRM3	Female	e33	F_e33	validated_complete	33564	33538	26	7335	26203	7180	105	50	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	astrocytes	15	astrocytes::Ast GRM3::AD_vs_NCI__Female__e4	Ast GRM3	Female	e4	F_e4x	validated_complete	33564	33538	26	8349	25189	7630	250	469	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	astrocytes	16	astrocytes::Ast GRM3::AD_vs_NCI__Male__e2	Ast GRM3	Male	e2	M_e2x	validated_complete	33564	33538	26	6983	26555	4433	1669	881	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	astrocytes	17	astrocytes::Ast GRM3::AD_vs_NCI__Male__e33	Ast GRM3	Male	e33	M_e33	validated_complete	33564	33538	26	6791	26747	6592	92	107	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	astrocytes	18	astrocytes::Ast GRM3::AD_vs_NCI__Male__e4	Ast GRM3	Male	e4	M_e4x	validated_complete	33564	33538	26	6759	26779	6267	282	210	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set1	1	excitatory_set1::Exc L2-3 CBLN2 LINC02306::AD_vs_NCI__Female__e2	Exc L2-3 CBLN2 LINC02306	Female	e2	F_e2x	validated_complete	33564	33538	26	10468	23070	9622	531	315	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set1	2	excitatory_set1::Exc L2-3 CBLN2 LINC02306::AD_vs_NCI__Female__e33	Exc L2-3 CBLN2 LINC02306	Female	e33	F_e33	validated_complete	33564	33538	26	10586	22952	10324	90	172	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set1	3	excitatory_set1::Exc L2-3 CBLN2 LINC02306::AD_vs_NCI__Female__e4	Exc L2-3 CBLN2 LINC02306	Female	e4	F_e4x	validated_complete	33564	33538	26	10680	22858	7618	632	2430	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set1	4	excitatory_set1::Exc L2-3 CBLN2 LINC02306::AD_vs_NCI__Male__e2	Exc L2-3 CBLN2 LINC02306	Male	e2	M_e2x	validated_complete	33564	33538	26	10846	22692	8193	1418	1235	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set1	5	excitatory_set1::Exc L2-3 CBLN2 LINC02306::AD_vs_NCI__Male__e33	Exc L2-3 CBLN2 LINC02306	Male	e33	M_e33	validated_complete	33564	33538	26	10428	23110	10264	99	65	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set1	6	excitatory_set1::Exc L2-3 CBLN2 LINC02306::AD_vs_NCI__Male__e4	Exc L2-3 CBLN2 LINC02306	Male	e4	M_e4x	validated_complete	33564	33538	26	10325	23213	9829	213	283	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set2	1	excitatory_set2::Exc L3-4 RORB CUX2::AD_vs_NCI__Female__e2	Exc L3-4 RORB CUX2	Female	e2	F_e2x	validated_complete	33564	33538	26	11871	21667	10801	798	272	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set2	2	excitatory_set2::Exc L3-4 RORB CUX2::AD_vs_NCI__Female__e33	Exc L3-4 RORB CUX2	Female	e33	F_e33	validated_complete	33564	33538	26	12076	21462	11627	72	377	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set2	3	excitatory_set2::Exc L3-4 RORB CUX2::AD_vs_NCI__Female__e4	Exc L3-4 RORB CUX2	Female	e4	F_e4x	validated_complete	33564	33538	26	12373	21165	11653	150	570	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set2	4	excitatory_set2::Exc L3-4 RORB CUX2::AD_vs_NCI__Male__e2	Exc L3-4 RORB CUX2	Male	e2	M_e2x	validated_complete	33564	33538	26	12118	21420	9046	1335	1737	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set2	5	excitatory_set2::Exc L3-4 RORB CUX2::AD_vs_NCI__Male__e33	Exc L3-4 RORB CUX2	Male	e33	M_e33	validated_complete	33564	33538	26	11784	21754	11682	46	56	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set2	6	excitatory_set2::Exc L3-4 RORB CUX2::AD_vs_NCI__Male__e4	Exc L3-4 RORB CUX2	Male	e4	M_e4x	validated_complete	33564	33538	26	11793	21745	11091	330	372	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set2	7	excitatory_set2::Exc L3-5 RORB PLCH1::AD_vs_NCI__Female__e2	Exc L3-5 RORB PLCH1	Female	e2	F_e2x	validated_complete	33564	33538	26	12276	21262	11893	292	91	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set2	8	excitatory_set2::Exc L3-5 RORB PLCH1::AD_vs_NCI__Female__e33	Exc L3-5 RORB PLCH1	Female	e33	F_e33	validated_complete	33564	33538	26	11713	21825	11327	210	176	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set2	9	excitatory_set2::Exc L3-5 RORB PLCH1::AD_vs_NCI__Female__e4	Exc L3-5 RORB PLCH1	Female	e4	F_e4x	validated_complete	33564	33538	26	11827	21711	11085	139	603	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set2	10	excitatory_set2::Exc L3-5 RORB PLCH1::AD_vs_NCI__Male__e2	Exc L3-5 RORB PLCH1	Male	e2	M_e2x	validated_complete	33564	33538	26	11644	21894	8696	1344	1604	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set2	11	excitatory_set2::Exc L3-5 RORB PLCH1::AD_vs_NCI__Male__e33	Exc L3-5 RORB PLCH1	Male	e33	M_e33	validated_complete	33564	33538	26	11218	22320	10917	96	205	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set2	12	excitatory_set2::Exc L3-5 RORB PLCH1::AD_vs_NCI__Male__e4	Exc L3-5 RORB PLCH1	Male	e4	M_e4x	validated_complete	33564	33538	26	11258	22280	10546	518	194	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set2	13	excitatory_set2::Exc L4-5 RORB GABRG1::AD_vs_NCI__Female__e2	Exc L4-5 RORB GABRG1	Female	e2	F_e2x	validated_complete	33564	33538	26	11080	22458	10418	323	339	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set2	14	excitatory_set2::Exc L4-5 RORB GABRG1::AD_vs_NCI__Female__e33	Exc L4-5 RORB GABRG1	Female	e33	F_e33	validated_complete	33564	33538	26	10995	22543	10695	94	206	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set2	15	excitatory_set2::Exc L4-5 RORB GABRG1::AD_vs_NCI__Female__e4	Exc L4-5 RORB GABRG1	Female	e4	F_e4x	validated_complete	33564	33538	26	10995	22543	10100	80	815	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set2	16	excitatory_set2::Exc L4-5 RORB GABRG1::AD_vs_NCI__Male__e2	Exc L4-5 RORB GABRG1	Male	e2	M_e2x	validated_complete	33564	33538	26	10778	22760	8467	976	1335	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set2	17	excitatory_set2::Exc L4-5 RORB GABRG1::AD_vs_NCI__Male__e33	Exc L4-5 RORB GABRG1	Male	e33	M_e33	validated_complete	33564	33538	26	10403	23135	10207	101	95	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set2	18	excitatory_set2::Exc L4-5 RORB GABRG1::AD_vs_NCI__Male__e4	Exc L4-5 RORB GABRG1	Male	e4	M_e4x	validated_complete	33564	33538	26	10463	23075	10061	178	224	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set2	19	excitatory_set2::Exc L4-5 RORB IL1RAPL2::AD_vs_NCI__Female__e2	Exc L4-5 RORB IL1RAPL2	Female	e2	F_e2x	validated_complete	33564	33538	26	11874	21664	10938	668	268	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set2	20	excitatory_set2::Exc L4-5 RORB IL1RAPL2::AD_vs_NCI__Female__e33	Exc L4-5 RORB IL1RAPL2	Female	e33	F_e33	validated_complete	33564	33538	26	11857	21681	11537	82	238	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set2	21	excitatory_set2::Exc L4-5 RORB IL1RAPL2::AD_vs_NCI__Female__e4	Exc L4-5 RORB IL1RAPL2	Female	e4	F_e4x	validated_complete	33564	33538	26	11934	21604	10755	63	1116	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set2	22	excitatory_set2::Exc L4-5 RORB IL1RAPL2::AD_vs_NCI__Male__e2	Exc L4-5 RORB IL1RAPL2	Male	e2	M_e2x	validated_complete	33564	33538	26	11811	21727	9873	983	955	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set2	23	excitatory_set2::Exc L4-5 RORB IL1RAPL2::AD_vs_NCI__Male__e33	Exc L4-5 RORB IL1RAPL2	Male	e33	M_e33	validated_complete	33564	33538	26	11548	21990	11428	44	76	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set2	24	excitatory_set2::Exc L4-5 RORB IL1RAPL2::AD_vs_NCI__Male__e4	Exc L4-5 RORB IL1RAPL2	Male	e4	M_e4x	validated_complete	33564	33538	26	11595	21943	10999	344	252	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set3	1	excitatory_set3::Exc L5 ET::AD_vs_NCI__Female__e2	Exc L5 ET	Female	e2	F_e2x	validated_complete	33564	33538	26	14178	19360	14178	0	0	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set3	2	excitatory_set3::Exc L5 ET::AD_vs_NCI__Female__e33	Exc L5 ET	Female	e33	F_e33	validated_complete	33564	33538	26	13173	20365	13083	57	33	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set3	3	excitatory_set3::Exc L5 ET::AD_vs_NCI__Female__e4	Exc L5 ET	Female	e4	F_e4x	validated_complete	33564	33538	26	13661	19877	13639	4	18	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set3	4	excitatory_set3::Exc L5 ET::AD_vs_NCI__Male__e2	Exc L5 ET	Male	e2	M_e2x	validated_complete	33564	33538	26	13660	19878	13532	38	90	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set3	5	excitatory_set3::Exc L5 ET::AD_vs_NCI__Male__e33	Exc L5 ET	Male	e33	M_e33	validated_complete	33564	33538	26	13054	20484	10395	1510	1149	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set3	6	excitatory_set3::Exc L5 ET::AD_vs_NCI__Male__e4	Exc L5 ET	Male	e4	M_e4x	validated_complete	33564	33538	26	13646	19892	13575	51	20	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set3	7	excitatory_set3::Exc L5-6 RORB LINC02196::AD_vs_NCI__Female__e2	Exc L5-6 RORB LINC02196	Female	e2	F_e2x	validated_complete	33564	33538	26	12026	21512	11595	356	75	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set3	8	excitatory_set3::Exc L5-6 RORB LINC02196::AD_vs_NCI__Female__e33	Exc L5-6 RORB LINC02196	Female	e33	F_e33	validated_complete	33564	33538	26	11858	21680	11527	145	186	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set3	9	excitatory_set3::Exc L5-6 RORB LINC02196::AD_vs_NCI__Female__e4	Exc L5-6 RORB LINC02196	Female	e4	F_e4x	validated_complete	33564	33538	26	12189	21349	11615	118	456	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set3	10	excitatory_set3::Exc L5-6 RORB LINC02196::AD_vs_NCI__Male__e2	Exc L5-6 RORB LINC02196	Male	e2	M_e2x	validated_complete	33564	33538	26	11684	21854	11162	139	383	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set3	11	excitatory_set3::Exc L5-6 RORB LINC02196::AD_vs_NCI__Male__e33	Exc L5-6 RORB LINC02196	Male	e33	M_e33	validated_complete	33564	33538	26	11510	22028	11233	136	141	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set3	12	excitatory_set3::Exc L5-6 RORB LINC02196::AD_vs_NCI__Male__e4	Exc L5-6 RORB LINC02196	Male	e4	M_e4x	validated_complete	33564	33538	26	11606	21932	10925	369	312	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set3	13	excitatory_set3::Exc L5/6 IT Car3::AD_vs_NCI__Female__e2	Exc L5/6 IT Car3	Female	e2	F_e2x	validated_complete	33564	33538	26	12591	20947	12020	500	71	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set3	14	excitatory_set3::Exc L5/6 IT Car3::AD_vs_NCI__Female__e33	Exc L5/6 IT Car3	Female	e33	F_e33	validated_complete	33564	33538	26	12291	21247	11756	188	347	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set3	15	excitatory_set3::Exc L5/6 IT Car3::AD_vs_NCI__Female__e4	Exc L5/6 IT Car3	Female	e4	F_e4x	validated_complete	33564	33538	26	12579	20959	11307	135	1137	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set3	16	excitatory_set3::Exc L5/6 IT Car3::AD_vs_NCI__Male__e2	Exc L5/6 IT Car3	Male	e2	M_e2x	validated_complete	33564	33538	26	12412	21126	10903	971	538	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set3	17	excitatory_set3::Exc L5/6 IT Car3::AD_vs_NCI__Male__e33	Exc L5/6 IT Car3	Male	e33	M_e33	validated_complete	33564	33538	26	11783	21755	10911	425	447	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set3	18	excitatory_set3::Exc L5/6 IT Car3::AD_vs_NCI__Male__e4	Exc L5/6 IT Car3	Male	e4	M_e4x	validated_complete	33564	33538	26	12279	21259	11994	126	159	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set3	19	excitatory_set3::Exc L5/6 NP::AD_vs_NCI__Female__e2	Exc L5/6 NP	Female	e2	F_e2x	validated_complete	33564	33538	26	11426	22112	11238	121	67	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set3	20	excitatory_set3::Exc L5/6 NP::AD_vs_NCI__Female__e33	Exc L5/6 NP	Female	e33	F_e33	validated_complete	33564	33538	26	11017	22521	10631	214	172	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set3	21	excitatory_set3::Exc L5/6 NP::AD_vs_NCI__Female__e4	Exc L5/6 NP	Female	e4	F_e4x	validated_complete	33564	33538	26	11458	22080	11213	78	167	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set3	22	excitatory_set3::Exc L5/6 NP::AD_vs_NCI__Male__e2	Exc L5/6 NP	Male	e2	M_e2x	validated_complete	33564	33538	26	11068	22470	10396	246	426	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set3	23	excitatory_set3::Exc L5/6 NP::AD_vs_NCI__Male__e33	Exc L5/6 NP	Male	e33	M_e33	validated_complete	33564	33538	26	10941	22597	10670	175	96	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set3	24	excitatory_set3::Exc L5/6 NP::AD_vs_NCI__Male__e4	Exc L5/6 NP	Male	e4	M_e4x	validated_complete	33564	33538	26	10832	22706	10580	109	143	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set3	25	excitatory_set3::Exc L6 CT::AD_vs_NCI__Female__e2	Exc L6 CT	Female	e2	F_e2x	validated_complete	33564	33538	26	10952	22586	10745	90	117	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set3	26	excitatory_set3::Exc L6 CT::AD_vs_NCI__Female__e33	Exc L6 CT	Female	e33	F_e33	validated_complete	33564	33538	26	11011	22527	10354	419	238	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set3	27	excitatory_set3::Exc L6 CT::AD_vs_NCI__Female__e4	Exc L6 CT	Female	e4	F_e4x	validated_complete	33564	33538	26	11372	22166	10919	87	366	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set3	28	excitatory_set3::Exc L6 CT::AD_vs_NCI__Male__e2	Exc L6 CT	Male	e2	M_e2x	validated_complete	33564	33538	26	11040	22498	10136	479	425	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set3	29	excitatory_set3::Exc L6 CT::AD_vs_NCI__Male__e33	Exc L6 CT	Male	e33	M_e33	validated_complete	33564	33538	26	10709	22829	10241	346	122	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set3	30	excitatory_set3::Exc L6 CT::AD_vs_NCI__Male__e4	Exc L6 CT	Male	e4	M_e4x	validated_complete	33564	33538	26	11173	22365	10860	133	180	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set3	31	excitatory_set3::Exc L6 THEMIS NFIA::AD_vs_NCI__Female__e2	Exc L6 THEMIS NFIA	Female	e2	F_e2x	validated_complete	33564	33538	26	12451	21087	11428	680	343	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set3	32	excitatory_set3::Exc L6 THEMIS NFIA::AD_vs_NCI__Female__e33	Exc L6 THEMIS NFIA	Female	e33	F_e33	validated_complete	33564	33538	26	12341	21197	11918	131	292	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set3	33	excitatory_set3::Exc L6 THEMIS NFIA::AD_vs_NCI__Female__e4	Exc L6 THEMIS NFIA	Female	e4	F_e4x	validated_complete	33564	33538	26	12778	20760	12019	131	628	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set3	34	excitatory_set3::Exc L6 THEMIS NFIA::AD_vs_NCI__Male__e2	Exc L6 THEMIS NFIA	Male	e2	M_e2x	validated_complete	33564	33538	26	12446	21092	10257	1707	482	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set3	35	excitatory_set3::Exc L6 THEMIS NFIA::AD_vs_NCI__Male__e33	Exc L6 THEMIS NFIA	Male	e33	M_e33	validated_complete	33564	33538	26	12109	21429	11889	102	118	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set3	36	excitatory_set3::Exc L6 THEMIS NFIA::AD_vs_NCI__Male__e4	Exc L6 THEMIS NFIA	Male	e4	M_e4x	validated_complete	33564	33538	26	12342	21196	11621	384	337	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set3	37	excitatory_set3::Exc L6b::AD_vs_NCI__Female__e2	Exc L6b	Female	e2	F_e2x	validated_complete	33564	33538	26	12691	20847	12336	208	147	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set3	38	excitatory_set3::Exc L6b::AD_vs_NCI__Female__e33	Exc L6b	Female	e33	F_e33	validated_complete	33564	33538	26	12197	21341	11406	358	433	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set3	39	excitatory_set3::Exc L6b::AD_vs_NCI__Female__e4	Exc L6b	Female	e4	F_e4x	validated_complete	33564	33538	26	12798	20740	11860	102	836	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set3	40	excitatory_set3::Exc L6b::AD_vs_NCI__Male__e2	Exc L6b	Male	e2	M_e2x	validated_complete	33564	33538	26	12439	21099	10263	1526	650	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set3	41	excitatory_set3::Exc L6b::AD_vs_NCI__Male__e33	Exc L6b	Male	e33	M_e33	validated_complete	33564	33538	26	11765	21773	10865	532	368	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set3	42	excitatory_set3::Exc L6b::AD_vs_NCI__Male__e4	Exc L6b	Male	e4	M_e4x	validated_complete	33564	33538	26	12447	21091	11706	335	406	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set3	43	excitatory_set3::Exc NRGN::AD_vs_NCI__Female__e2	Exc NRGN	Female	e2	F_e2x	validated_complete	33564	33538	26	4830	28708	4825	1	4	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set3	44	excitatory_set3::Exc NRGN::AD_vs_NCI__Female__e33	Exc NRGN	Female	e33	F_e33	validated_complete	33564	33538	26	4461	29077	4130	244	87	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set3	45	excitatory_set3::Exc NRGN::AD_vs_NCI__Female__e4	Exc NRGN	Female	e4	F_e4x	validated_complete	33564	33538	26	4552	28986	4493	28	31	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set3	46	excitatory_set3::Exc NRGN::AD_vs_NCI__Male__e2	Exc NRGN	Male	e2	M_e2x	validated_complete	33564	33538	26	5155	28383	1806	1652	1697	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set3	47	excitatory_set3::Exc NRGN::AD_vs_NCI__Male__e33	Exc NRGN	Male	e33	M_e33	validated_complete	33564	33538	26	4637	28901	1848	1450	1339	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set3	48	excitatory_set3::Exc NRGN::AD_vs_NCI__Male__e4	Exc NRGN	Male	e4	M_e4x	validated_complete	33564	33538	26	6308	27230	4337	1021	950	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set3	49	excitatory_set3::Exc RELN CHD7::AD_vs_NCI__Female__e2	Exc RELN CHD7	Female	e2	F_e2x	validated_complete	33564	33538	26	9439	24099	9061	215	163	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set3	50	excitatory_set3::Exc RELN CHD7::AD_vs_NCI__Female__e33	Exc RELN CHD7	Female	e33	F_e33	validated_complete	33564	33538	26	7584	25954	5060	1312	1212	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set3	51	excitatory_set3::Exc RELN CHD7::AD_vs_NCI__Female__e4	Exc RELN CHD7	Female	e4	F_e4x	validated_complete	33564	33538	26	8697	24841	6331	987	1379	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set3	52	excitatory_set3::Exc RELN CHD7::AD_vs_NCI__Male__e2	Exc RELN CHD7	Male	e2	M_e2x	validated_complete	33564	33538	26	7646	25892	6623	466	557	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set3	53	excitatory_set3::Exc RELN CHD7::AD_vs_NCI__Male__e33	Exc RELN CHD7	Male	e33	M_e33	validated_complete	33564	33538	26	5606	27932	4514	609	483	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	excitatory_set3	54	excitatory_set3::Exc RELN CHD7::AD_vs_NCI__Male__e4	Exc RELN CHD7	Male	e4	M_e4x	validated_complete	33564	33538	26	6936	26602	3877	1789	1270	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	immune	1	immune::CAMs::AD_vs_NCI__Female__e2	CAMs	Female	e2	F_e2x	validated_complete	33564	33538	26	4213	29325	4213	0	0	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	immune	2	immune::CAMs::AD_vs_NCI__Female__e33	CAMs	Female	e33	F_e33	validated_complete	33564	33538	26	4381	29157	4380	1	0	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	immune	3	immune::CAMs::AD_vs_NCI__Female__e4	CAMs	Female	e4	F_e4x	validated_complete	33564	33538	26	4232	29306	4231	1	0	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	immune	4	immune::CAMs::AD_vs_NCI__Male__e2	CAMs	Male	e2	M_e2x	not_estimable	33564	33538	26	0	0	0	0	0	0	33564	1196	24	80
+mitochondrial_annotation_qc_v1	immune	5	immune::CAMs::AD_vs_NCI__Male__e33	CAMs	Male	e33	M_e33	validated_complete	33564	33538	26	4037	29501	4027	4	6	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	immune	6	immune::CAMs::AD_vs_NCI__Male__e4	CAMs	Male	e4	M_e4x	validated_complete	33564	33538	26	4492	29046	4492	0	0	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	immune	7	immune::Mic MKI67::AD_vs_NCI__Female__e2	Mic MKI67	Female	e2	F_e2x	validated_complete	33564	33538	26	9155	24383	9155	0	0	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	immune	8	immune::Mic MKI67::AD_vs_NCI__Female__e33	Mic MKI67	Female	e33	F_e33	validated_complete	33564	33538	26	8126	25412	8120	4	2	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	immune	9	immune::Mic MKI67::AD_vs_NCI__Female__e4	Mic MKI67	Female	e4	F_e4x	validated_complete	33564	33538	26	7665	25873	7652	1	12	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	immune	10	immune::Mic MKI67::AD_vs_NCI__Male__e2	Mic MKI67	Male	e2	M_e2x	not_estimable	33564	33538	26	0	0	0	0	0	0	33564	1196	24	80
+mitochondrial_annotation_qc_v1	immune	11	immune::Mic MKI67::AD_vs_NCI__Male__e33	Mic MKI67	Male	e33	M_e33	validated_complete	33564	33538	26	6878	26660	6877	0	1	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	immune	12	immune::Mic MKI67::AD_vs_NCI__Male__e4	Mic MKI67	Male	e4	M_e4x	validated_complete	33564	33538	26	8404	25134	8404	0	0	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	immune	13	immune::Mic P2RY12::AD_vs_NCI__Female__e2	Mic P2RY12	Female	e2	F_e2x	validated_complete	33564	33538	26	4654	28884	4239	165	250	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	immune	14	immune::Mic P2RY12::AD_vs_NCI__Female__e33	Mic P2RY12	Female	e33	F_e33	validated_complete	33564	33538	26	5145	28393	5050	41	54	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	immune	15	immune::Mic P2RY12::AD_vs_NCI__Female__e4	Mic P2RY12	Female	e4	F_e4x	validated_complete	33564	33538	26	5385	28153	5074	168	143	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	immune	16	immune::Mic P2RY12::AD_vs_NCI__Male__e2	Mic P2RY12	Male	e2	M_e2x	validated_complete	33564	33538	26	4337	29201	2860	959	518	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	immune	17	immune::Mic P2RY12::AD_vs_NCI__Male__e33	Mic P2RY12	Male	e33	M_e33	validated_complete	33564	33538	26	4705	28833	4545	66	94	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	immune	18	immune::Mic P2RY12::AD_vs_NCI__Male__e4	Mic P2RY12	Male	e4	M_e4x	validated_complete	33564	33538	26	4966	28572	4582	217	167	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	immune	19	immune::Mic TPT1::AD_vs_NCI__Female__e2	Mic TPT1	Female	e2	F_e2x	validated_complete	33564	33538	26	5604	27934	5604	0	0	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	immune	20	immune::Mic TPT1::AD_vs_NCI__Female__e33	Mic TPT1	Female	e33	F_e33	validated_complete	33564	33538	26	5685	27853	5642	16	27	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	immune	21	immune::Mic TPT1::AD_vs_NCI__Female__e4	Mic TPT1	Female	e4	F_e4x	validated_complete	33564	33538	26	5761	27777	5619	83	59	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	immune	22	immune::Mic TPT1::AD_vs_NCI__Male__e2	Mic TPT1	Male	e2	M_e2x	validated_complete	33564	33538	26	4586	28952	4586	0	0	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	immune	23	immune::Mic TPT1::AD_vs_NCI__Male__e33	Mic TPT1	Male	e33	M_e33	validated_complete	33564	33538	26	5309	28229	5270	7	32	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	immune	24	immune::Mic TPT1::AD_vs_NCI__Male__e4	Mic TPT1	Male	e4	M_e4x	validated_complete	33564	33538	26	5751	27787	5572	74	105	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	immune	25	immune::T cells::AD_vs_NCI__Female__e2	T cells	Female	e2	F_e2x	validated_complete	33564	33538	26	4632	28906	4632	0	0	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	immune	26	immune::T cells::AD_vs_NCI__Female__e33	T cells	Female	e33	F_e33	validated_complete	33564	33538	26	4758	28780	4737	1	20	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	immune	27	immune::T cells::AD_vs_NCI__Female__e4	T cells	Female	e4	F_e4x	validated_complete	33564	33538	26	4705	28833	4705	0	0	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	immune	28	immune::T cells::AD_vs_NCI__Male__e2	T cells	Male	e2	M_e2x	validated_complete	33564	33538	26	5221	28317	5221	0	0	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	immune	29	immune::T cells::AD_vs_NCI__Male__e33	T cells	Male	e33	M_e33	validated_complete	33564	33538	26	3934	29604	3924	10	0	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	immune	30	immune::T cells::AD_vs_NCI__Male__e4	T cells	Male	e4	M_e4x	validated_complete	33564	33538	26	4389	29149	4375	2	12	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	1	inhibitory::Inh ALCAM TRPM3::AD_vs_NCI__Female__e2	Inh ALCAM TRPM3	Female	e2	F_e2x	validated_complete	33564	33538	26	10495	23043	10395	64	36	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	2	inhibitory::Inh ALCAM TRPM3::AD_vs_NCI__Female__e33	Inh ALCAM TRPM3	Female	e33	F_e33	validated_complete	33564	33538	26	10624	22914	10567	20	37	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	3	inhibitory::Inh ALCAM TRPM3::AD_vs_NCI__Female__e4	Inh ALCAM TRPM3	Female	e4	F_e4x	validated_complete	33564	33538	26	10315	23223	10283	4	28	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	4	inhibitory::Inh ALCAM TRPM3::AD_vs_NCI__Male__e2	Inh ALCAM TRPM3	Male	e2	M_e2x	validated_complete	33564	33538	26	10209	23329	10172	5	32	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	5	inhibitory::Inh ALCAM TRPM3::AD_vs_NCI__Male__e33	Inh ALCAM TRPM3	Male	e33	M_e33	validated_complete	33564	33538	26	10138	23400	10045	52	41	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	6	inhibitory::Inh ALCAM TRPM3::AD_vs_NCI__Male__e4	Inh ALCAM TRPM3	Male	e4	M_e4x	validated_complete	33564	33538	26	10023	23515	9975	21	27	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	7	inhibitory::Inh CUX2 MSR1::AD_vs_NCI__Female__e2	Inh CUX2 MSR1	Female	e2	F_e2x	validated_complete	33564	33538	26	7644	25894	7619	14	11	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	8	inhibitory::Inh CUX2 MSR1::AD_vs_NCI__Female__e33	Inh CUX2 MSR1	Female	e33	F_e33	validated_complete	33564	33538	26	7390	26148	7363	7	20	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	9	inhibitory::Inh CUX2 MSR1::AD_vs_NCI__Female__e4	Inh CUX2 MSR1	Female	e4	F_e4x	validated_complete	33564	33538	26	7565	25973	7395	43	127	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	10	inhibitory::Inh CUX2 MSR1::AD_vs_NCI__Male__e2	Inh CUX2 MSR1	Male	e2	M_e2x	validated_complete	33564	33538	26	8202	25336	5537	1696	969	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	11	inhibitory::Inh CUX2 MSR1::AD_vs_NCI__Male__e33	Inh CUX2 MSR1	Male	e33	M_e33	validated_complete	33564	33538	26	7784	25754	7755	13	16	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	12	inhibitory::Inh CUX2 MSR1::AD_vs_NCI__Male__e4	Inh CUX2 MSR1	Male	e4	M_e4x	validated_complete	33564	33538	26	6780	26758	6711	21	48	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	13	inhibitory::Inh ENOX2 SPHKAP::AD_vs_NCI__Female__e2	Inh ENOX2 SPHKAP	Female	e2	F_e2x	validated_complete	33564	33538	26	9295	24243	9289	4	2	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	14	inhibitory::Inh ENOX2 SPHKAP::AD_vs_NCI__Female__e33	Inh ENOX2 SPHKAP	Female	e33	F_e33	validated_complete	33564	33538	26	8634	24904	8596	13	25	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	15	inhibitory::Inh ENOX2 SPHKAP::AD_vs_NCI__Female__e4	Inh ENOX2 SPHKAP	Female	e4	F_e4x	validated_complete	33564	33538	26	8676	24862	8670	3	3	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	16	inhibitory::Inh ENOX2 SPHKAP::AD_vs_NCI__Male__e2	Inh ENOX2 SPHKAP	Male	e2	M_e2x	validated_complete	33564	33538	26	9946	23592	9549	227	170	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	17	inhibitory::Inh ENOX2 SPHKAP::AD_vs_NCI__Male__e33	Inh ENOX2 SPHKAP	Male	e33	M_e33	validated_complete	33564	33538	26	8619	24919	8591	9	19	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	18	inhibitory::Inh ENOX2 SPHKAP::AD_vs_NCI__Male__e4	Inh ENOX2 SPHKAP	Male	e4	M_e4x	validated_complete	33564	33538	26	8218	25320	8189	14	15	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	19	inhibitory::Inh FBN2 EPB41L4A::AD_vs_NCI__Female__e2	Inh FBN2 EPB41L4A	Female	e2	F_e2x	validated_complete	33564	33538	26	10907	22631	10903	2	2	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	20	inhibitory::Inh FBN2 EPB41L4A::AD_vs_NCI__Female__e33	Inh FBN2 EPB41L4A	Female	e33	F_e33	validated_complete	33564	33538	26	10601	22937	10556	30	15	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	21	inhibitory::Inh FBN2 EPB41L4A::AD_vs_NCI__Female__e4	Inh FBN2 EPB41L4A	Female	e4	F_e4x	validated_complete	33564	33538	26	10620	22918	10609	5	6	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	22	inhibitory::Inh FBN2 EPB41L4A::AD_vs_NCI__Male__e2	Inh FBN2 EPB41L4A	Male	e2	M_e2x	validated_complete	33564	33538	26	11054	22484	11054	0	0	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	23	inhibitory::Inh FBN2 EPB41L4A::AD_vs_NCI__Male__e33	Inh FBN2 EPB41L4A	Male	e33	M_e33	validated_complete	33564	33538	26	10235	23303	10140	46	49	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	24	inhibitory::Inh FBN2 EPB41L4A::AD_vs_NCI__Male__e4	Inh FBN2 EPB41L4A	Male	e4	M_e4x	validated_complete	33564	33538	26	10431	23107	10425	3	3	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	25	inhibitory::Inh GPC5 RIT2::AD_vs_NCI__Female__e2	Inh GPC5 RIT2	Female	e2	F_e2x	validated_complete	33564	33538	26	10884	22654	10883	0	1	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	26	inhibitory::Inh GPC5 RIT2::AD_vs_NCI__Female__e33	Inh GPC5 RIT2	Female	e33	F_e33	validated_complete	33564	33538	26	10283	23255	10274	5	4	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	27	inhibitory::Inh GPC5 RIT2::AD_vs_NCI__Female__e4	Inh GPC5 RIT2	Female	e4	F_e4x	validated_complete	33564	33538	26	10731	22807	10727	1	3	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	28	inhibitory::Inh GPC5 RIT2::AD_vs_NCI__Male__e2	Inh GPC5 RIT2	Male	e2	M_e2x	validated_complete	33564	33538	26	11279	22259	11279	0	0	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	29	inhibitory::Inh GPC5 RIT2::AD_vs_NCI__Male__e33	Inh GPC5 RIT2	Male	e33	M_e33	validated_complete	33564	33538	26	10030	23508	10028	1	1	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	30	inhibitory::Inh GPC5 RIT2::AD_vs_NCI__Male__e4	Inh GPC5 RIT2	Male	e4	M_e4x	validated_complete	33564	33538	26	10498	23040	10498	0	0	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	31	inhibitory::Inh L1 PAX6 CA4::AD_vs_NCI__Female__e2	Inh L1 PAX6 CA4	Female	e2	F_e2x	validated_complete	33564	33538	26	9092	24446	9091	1	0	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	32	inhibitory::Inh L1 PAX6 CA4::AD_vs_NCI__Female__e33	Inh L1 PAX6 CA4	Female	e33	F_e33	validated_complete	33564	33538	26	8998	24540	8996	0	2	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	33	inhibitory::Inh L1 PAX6 CA4::AD_vs_NCI__Female__e4	Inh L1 PAX6 CA4	Female	e4	F_e4x	validated_complete	33564	33538	26	8576	24962	8567	0	9	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	34	inhibitory::Inh L1 PAX6 CA4::AD_vs_NCI__Male__e2	Inh L1 PAX6 CA4	Male	e2	M_e2x	validated_complete	33564	33538	26	8656	24882	8656	0	0	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	35	inhibitory::Inh L1 PAX6 CA4::AD_vs_NCI__Male__e33	Inh L1 PAX6 CA4	Male	e33	M_e33	validated_complete	33564	33538	26	8828	24710	8828	0	0	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	36	inhibitory::Inh L1 PAX6 CA4::AD_vs_NCI__Male__e4	Inh L1 PAX6 CA4	Male	e4	M_e4x	validated_complete	33564	33538	26	7944	25594	7944	0	0	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	37	inhibitory::Inh L1-2 PAX6 SCGN::AD_vs_NCI__Female__e2	Inh L1-2 PAX6 SCGN	Female	e2	F_e2x	validated_complete	33564	33538	26	12491	21047	12491	0	0	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	38	inhibitory::Inh L1-2 PAX6 SCGN::AD_vs_NCI__Female__e33	Inh L1-2 PAX6 SCGN	Female	e33	F_e33	validated_complete	33564	33538	26	11099	22439	11099	0	0	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	39	inhibitory::Inh L1-2 PAX6 SCGN::AD_vs_NCI__Female__e4	Inh L1-2 PAX6 SCGN	Female	e4	F_e4x	validated_complete	33564	33538	26	11181	22357	11180	0	1	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	40	inhibitory::Inh L1-2 PAX6 SCGN::AD_vs_NCI__Male__e2	Inh L1-2 PAX6 SCGN	Male	e2	M_e2x	validated_complete	33564	33538	26	11314	22224	11314	0	0	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	41	inhibitory::Inh L1-2 PAX6 SCGN::AD_vs_NCI__Male__e33	Inh L1-2 PAX6 SCGN	Male	e33	M_e33	validated_complete	33564	33538	26	10868	22670	10868	0	0	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	42	inhibitory::Inh L1-2 PAX6 SCGN::AD_vs_NCI__Male__e4	Inh L1-2 PAX6 SCGN	Male	e4	M_e4x	validated_complete	33564	33538	26	11061	22477	11060	0	1	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	43	inhibitory::Inh L1-6 LAMP5 CA13::AD_vs_NCI__Female__e2	Inh L1-6 LAMP5 CA13	Female	e2	F_e2x	validated_complete	33564	33538	26	10582	22956	10542	24	16	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	44	inhibitory::Inh L1-6 LAMP5 CA13::AD_vs_NCI__Female__e33	Inh L1-6 LAMP5 CA13	Female	e33	F_e33	validated_complete	33564	33538	26	10323	23215	10124	37	162	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	45	inhibitory::Inh L1-6 LAMP5 CA13::AD_vs_NCI__Female__e4	Inh L1-6 LAMP5 CA13	Female	e4	F_e4x	validated_complete	33564	33538	26	10413	23125	10225	35	153	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	46	inhibitory::Inh L1-6 LAMP5 CA13::AD_vs_NCI__Male__e2	Inh L1-6 LAMP5 CA13	Male	e2	M_e2x	validated_complete	33564	33538	26	10621	22917	10397	80	144	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	47	inhibitory::Inh L1-6 LAMP5 CA13::AD_vs_NCI__Male__e33	Inh L1-6 LAMP5 CA13	Male	e33	M_e33	validated_complete	33564	33538	26	10188	23350	10058	62	68	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	48	inhibitory::Inh L1-6 LAMP5 CA13::AD_vs_NCI__Male__e4	Inh L1-6 LAMP5 CA13	Male	e4	M_e4x	validated_complete	33564	33538	26	9874	23664	9789	23	62	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	49	inhibitory::Inh L3-5 SST MAFB::AD_vs_NCI__Female__e2	Inh L3-5 SST MAFB	Female	e2	F_e2x	validated_complete	33564	33538	26	7932	25606	7902	19	11	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	50	inhibitory::Inh L3-5 SST MAFB::AD_vs_NCI__Female__e33	Inh L3-5 SST MAFB	Female	e33	F_e33	validated_complete	33564	33538	26	7614	25924	7521	65	28	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	51	inhibitory::Inh L3-5 SST MAFB::AD_vs_NCI__Female__e4	Inh L3-5 SST MAFB	Female	e4	F_e4x	validated_complete	33564	33538	26	7610	25928	7403	71	136	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	52	inhibitory::Inh L3-5 SST MAFB::AD_vs_NCI__Male__e2	Inh L3-5 SST MAFB	Male	e2	M_e2x	validated_complete	33564	33538	26	8917	24621	6601	1342	974	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	53	inhibitory::Inh L3-5 SST MAFB::AD_vs_NCI__Male__e33	Inh L3-5 SST MAFB	Male	e33	M_e33	validated_complete	33564	33538	26	7854	25684	7824	7	23	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	54	inhibitory::Inh L3-5 SST MAFB::AD_vs_NCI__Male__e4	Inh L3-5 SST MAFB	Male	e4	M_e4x	validated_complete	33564	33538	26	6685	26853	6593	38	54	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	55	inhibitory::Inh L5-6 PVALB STON2::AD_vs_NCI__Female__e2	Inh L5-6 PVALB STON2	Female	e2	F_e2x	validated_complete	33564	33538	26	11000	22538	11000	0	0	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	56	inhibitory::Inh L5-6 PVALB STON2::AD_vs_NCI__Female__e33	Inh L5-6 PVALB STON2	Female	e33	F_e33	validated_complete	33564	33538	26	10505	23033	10485	6	14	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	57	inhibitory::Inh L5-6 PVALB STON2::AD_vs_NCI__Female__e4	Inh L5-6 PVALB STON2	Female	e4	F_e4x	validated_complete	33564	33538	26	10930	22608	10907	4	19	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	58	inhibitory::Inh L5-6 PVALB STON2::AD_vs_NCI__Male__e2	Inh L5-6 PVALB STON2	Male	e2	M_e2x	validated_complete	33564	33538	26	11163	22375	11145	4	14	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	59	inhibitory::Inh L5-6 PVALB STON2::AD_vs_NCI__Male__e33	Inh L5-6 PVALB STON2	Male	e33	M_e33	validated_complete	33564	33538	26	10426	23112	10418	5	3	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	60	inhibitory::Inh L5-6 PVALB STON2::AD_vs_NCI__Male__e4	Inh L5-6 PVALB STON2	Male	e4	M_e4x	validated_complete	33564	33538	26	10562	22976	10560	0	2	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	61	inhibitory::Inh L5-6 SST TH::AD_vs_NCI__Female__e2	Inh L5-6 SST TH	Female	e2	F_e2x	validated_complete	33564	33538	26	11089	22449	11087	1	1	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	62	inhibitory::Inh L5-6 SST TH::AD_vs_NCI__Female__e33	Inh L5-6 SST TH	Female	e33	F_e33	validated_complete	33564	33538	26	10309	23229	10294	3	12	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	63	inhibitory::Inh L5-6 SST TH::AD_vs_NCI__Female__e4	Inh L5-6 SST TH	Female	e4	F_e4x	validated_complete	33564	33538	26	10398	23140	10396	2	0	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	64	inhibitory::Inh L5-6 SST TH::AD_vs_NCI__Male__e2	Inh L5-6 SST TH	Male	e2	M_e2x	validated_complete	33564	33538	26	11119	22419	11107	2	10	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	65	inhibitory::Inh L5-6 SST TH::AD_vs_NCI__Male__e33	Inh L5-6 SST TH	Male	e33	M_e33	validated_complete	33564	33538	26	10119	23419	10119	0	0	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	66	inhibitory::Inh L5-6 SST TH::AD_vs_NCI__Male__e4	Inh L5-6 SST TH	Male	e4	M_e4x	validated_complete	33564	33538	26	10244	23294	10243	0	1	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	67	inhibitory::Inh L6 SST NPY::AD_vs_NCI__Female__e2	Inh L6 SST NPY	Female	e2	F_e2x	validated_complete	33564	33538	26	11358	22180	11358	0	0	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	68	inhibitory::Inh L6 SST NPY::AD_vs_NCI__Female__e33	Inh L6 SST NPY	Female	e33	F_e33	validated_complete	33564	33538	26	10997	22541	10997	0	0	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	69	inhibitory::Inh L6 SST NPY::AD_vs_NCI__Female__e4	Inh L6 SST NPY	Female	e4	F_e4x	validated_complete	33564	33538	26	10858	22680	10858	0	0	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	70	inhibitory::Inh L6 SST NPY::AD_vs_NCI__Male__e2	Inh L6 SST NPY	Male	e2	M_e2x	validated_complete	33564	33538	26	10986	22552	10986	0	0	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	71	inhibitory::Inh L6 SST NPY::AD_vs_NCI__Male__e33	Inh L6 SST NPY	Male	e33	M_e33	validated_complete	33564	33538	26	10274	23264	10099	120	55	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	72	inhibitory::Inh L6 SST NPY::AD_vs_NCI__Male__e4	Inh L6 SST NPY	Male	e4	M_e4x	validated_complete	33564	33538	26	10770	22768	10770	0	0	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	73	inhibitory::Inh LAMP5 NRG1 (Rosehip)::AD_vs_NCI__Female__e2	Inh LAMP5 NRG1 (Rosehip)	Female	e2	F_e2x	validated_complete	33564	33538	26	9593	23945	9509	47	37	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	74	inhibitory::Inh LAMP5 NRG1 (Rosehip)::AD_vs_NCI__Female__e33	Inh LAMP5 NRG1 (Rosehip)	Female	e33	F_e33	validated_complete	33564	33538	26	9583	23955	9501	19	63	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	75	inhibitory::Inh LAMP5 NRG1 (Rosehip)::AD_vs_NCI__Female__e4	Inh LAMP5 NRG1 (Rosehip)	Female	e4	F_e4x	validated_complete	33564	33538	26	9198	24340	8553	85	560	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	76	inhibitory::Inh LAMP5 NRG1 (Rosehip)::AD_vs_NCI__Male__e2	Inh LAMP5 NRG1 (Rosehip)	Male	e2	M_e2x	validated_complete	33564	33538	26	9514	24024	7841	854	819	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	77	inhibitory::Inh LAMP5 NRG1 (Rosehip)::AD_vs_NCI__Male__e33	Inh LAMP5 NRG1 (Rosehip)	Male	e33	M_e33	validated_complete	33564	33538	26	9504	24034	9319	26	159	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	78	inhibitory::Inh LAMP5 NRG1 (Rosehip)::AD_vs_NCI__Male__e4	Inh LAMP5 NRG1 (Rosehip)	Male	e4	M_e4x	validated_complete	33564	33538	26	9032	24506	8624	67	341	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	79	inhibitory::Inh LAMP5 RELN::AD_vs_NCI__Female__e2	Inh LAMP5 RELN	Female	e2	F_e2x	validated_complete	33564	33538	26	9130	24408	9130	0	0	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	80	inhibitory::Inh LAMP5 RELN::AD_vs_NCI__Female__e33	Inh LAMP5 RELN	Female	e33	F_e33	validated_complete	33564	33538	26	7914	25624	7910	3	1	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	81	inhibitory::Inh LAMP5 RELN::AD_vs_NCI__Female__e4	Inh LAMP5 RELN	Female	e4	F_e4x	validated_complete	33564	33538	26	7395	26143	7346	22	27	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	82	inhibitory::Inh LAMP5 RELN::AD_vs_NCI__Male__e2	Inh LAMP5 RELN	Male	e2	M_e2x	validated_complete	33564	33538	26	7811	25727	7811	0	0	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	83	inhibitory::Inh LAMP5 RELN::AD_vs_NCI__Male__e33	Inh LAMP5 RELN	Male	e33	M_e33	validated_complete	33564	33538	26	8267	25271	8245	10	12	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	84	inhibitory::Inh LAMP5 RELN::AD_vs_NCI__Male__e4	Inh LAMP5 RELN	Male	e4	M_e4x	validated_complete	33564	33538	26	7149	26389	7148	0	1	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	85	inhibitory::Inh PTPRK FAM19A1::AD_vs_NCI__Female__e2	Inh PTPRK FAM19A1	Female	e2	F_e2x	validated_complete	33564	33538	26	7403	26135	7399	3	1	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	86	inhibitory::Inh PTPRK FAM19A1::AD_vs_NCI__Female__e33	Inh PTPRK FAM19A1	Female	e33	F_e33	validated_complete	33564	33538	26	7926	25612	7893	13	20	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	87	inhibitory::Inh PTPRK FAM19A1::AD_vs_NCI__Female__e4	Inh PTPRK FAM19A1	Female	e4	F_e4x	validated_complete	33564	33538	26	7637	25901	7631	2	4	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	88	inhibitory::Inh PTPRK FAM19A1::AD_vs_NCI__Male__e2	Inh PTPRK FAM19A1	Male	e2	M_e2x	validated_complete	33564	33538	26	7504	26034	7503	1	0	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	89	inhibitory::Inh PTPRK FAM19A1::AD_vs_NCI__Male__e33	Inh PTPRK FAM19A1	Male	e33	M_e33	validated_complete	33564	33538	26	8085	25453	8074	4	7	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	90	inhibitory::Inh PTPRK FAM19A1::AD_vs_NCI__Male__e4	Inh PTPRK FAM19A1	Male	e4	M_e4x	validated_complete	33564	33538	26	7307	26231	7304	3	0	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	91	inhibitory::Inh PVALB CA8 (Chandelier)::AD_vs_NCI__Female__e2	Inh PVALB CA8 (Chandelier)	Female	e2	F_e2x	validated_complete	33564	33538	26	8678	24860	8662	11	5	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	92	inhibitory::Inh PVALB CA8 (Chandelier)::AD_vs_NCI__Female__e33	Inh PVALB CA8 (Chandelier)	Female	e33	F_e33	validated_complete	33564	33538	26	9083	24455	8945	20	118	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	93	inhibitory::Inh PVALB CA8 (Chandelier)::AD_vs_NCI__Female__e4	Inh PVALB CA8 (Chandelier)	Female	e4	F_e4x	validated_complete	33564	33538	26	8770	24768	8627	22	121	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	94	inhibitory::Inh PVALB CA8 (Chandelier)::AD_vs_NCI__Male__e2	Inh PVALB CA8 (Chandelier)	Male	e2	M_e2x	validated_complete	33564	33538	26	9232	24306	9048	65	119	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	95	inhibitory::Inh PVALB CA8 (Chandelier)::AD_vs_NCI__Male__e33	Inh PVALB CA8 (Chandelier)	Male	e33	M_e33	validated_complete	33564	33538	26	8659	24879	8612	4	43	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	96	inhibitory::Inh PVALB CA8 (Chandelier)::AD_vs_NCI__Male__e4	Inh PVALB CA8 (Chandelier)	Male	e4	M_e4x	validated_complete	33564	33538	26	8362	25176	8286	27	49	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	97	inhibitory::Inh PVALB HTR4::AD_vs_NCI__Female__e2	Inh PVALB HTR4	Female	e2	F_e2x	validated_complete	33564	33538	26	10720	22818	10109	370	241	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	98	inhibitory::Inh PVALB HTR4::AD_vs_NCI__Female__e33	Inh PVALB HTR4	Female	e33	F_e33	validated_complete	33564	33538	26	10344	23194	10106	31	207	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	99	inhibitory::Inh PVALB HTR4::AD_vs_NCI__Female__e4	Inh PVALB HTR4	Female	e4	F_e4x	validated_complete	33564	33538	26	10318	23220	9189	101	1028	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	100	inhibitory::Inh PVALB HTR4::AD_vs_NCI__Male__e2	Inh PVALB HTR4	Male	e2	M_e2x	validated_complete	33564	33538	26	11144	22394	8373	1888	883	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	101	inhibitory::Inh PVALB HTR4::AD_vs_NCI__Male__e33	Inh PVALB HTR4	Male	e33	M_e33	validated_complete	33564	33538	26	10283	23255	10154	27	102	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	102	inhibitory::Inh PVALB HTR4::AD_vs_NCI__Male__e4	Inh PVALB HTR4	Male	e4	M_e4x	validated_complete	33564	33538	26	10116	23422	9649	95	372	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	103	inhibitory::Inh PVALB SULF1::AD_vs_NCI__Female__e2	Inh PVALB SULF1	Female	e2	F_e2x	validated_complete	33564	33538	26	10300	23238	10170	83	47	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	104	inhibitory::Inh PVALB SULF1::AD_vs_NCI__Female__e33	Inh PVALB SULF1	Female	e33	F_e33	validated_complete	33564	33538	26	10091	23447	9958	20	113	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	105	inhibitory::Inh PVALB SULF1::AD_vs_NCI__Female__e4	Inh PVALB SULF1	Female	e4	F_e4x	validated_complete	33564	33538	26	10133	23405	9945	33	155	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	106	inhibitory::Inh PVALB SULF1::AD_vs_NCI__Male__e2	Inh PVALB SULF1	Male	e2	M_e2x	validated_complete	33564	33538	26	10516	23022	9882	314	320	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	107	inhibitory::Inh PVALB SULF1::AD_vs_NCI__Male__e33	Inh PVALB SULF1	Male	e33	M_e33	validated_complete	33564	33538	26	9907	23631	9811	40	56	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	108	inhibitory::Inh PVALB SULF1::AD_vs_NCI__Male__e4	Inh PVALB SULF1	Male	e4	M_e4x	validated_complete	33564	33538	26	9915	23623	9816	29	70	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	109	inhibitory::Inh RYR3 TSHZ2::AD_vs_NCI__Female__e2	Inh RYR3 TSHZ2	Female	e2	F_e2x	validated_complete	33564	33538	26	8144	25394	8082	41	21	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	110	inhibitory::Inh RYR3 TSHZ2::AD_vs_NCI__Female__e33	Inh RYR3 TSHZ2	Female	e33	F_e33	validated_complete	33564	33538	26	8580	24958	8518	29	33	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	111	inhibitory::Inh RYR3 TSHZ2::AD_vs_NCI__Female__e4	Inh RYR3 TSHZ2	Female	e4	F_e4x	validated_complete	33564	33538	26	8574	24964	8502	10	62	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	112	inhibitory::Inh RYR3 TSHZ2::AD_vs_NCI__Male__e2	Inh RYR3 TSHZ2	Male	e2	M_e2x	validated_complete	33564	33538	26	7999	25539	7155	504	340	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	113	inhibitory::Inh RYR3 TSHZ2::AD_vs_NCI__Male__e33	Inh RYR3 TSHZ2	Male	e33	M_e33	validated_complete	33564	33538	26	8205	25333	8169	11	25	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	114	inhibitory::Inh RYR3 TSHZ2::AD_vs_NCI__Male__e4	Inh RYR3 TSHZ2	Male	e4	M_e4x	validated_complete	33564	33538	26	7724	25814	7661	18	45	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	115	inhibitory::Inh SGCD PDE3A::AD_vs_NCI__Female__e2	Inh SGCD PDE3A	Female	e2	F_e2x	validated_complete	33564	33538	26	11251	22287	11249	2	0	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	116	inhibitory::Inh SGCD PDE3A::AD_vs_NCI__Female__e33	Inh SGCD PDE3A	Female	e33	F_e33	validated_complete	33564	33538	26	10946	22592	10943	2	1	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	117	inhibitory::Inh SGCD PDE3A::AD_vs_NCI__Female__e4	Inh SGCD PDE3A	Female	e4	F_e4x	validated_complete	33564	33538	26	10940	22598	10939	1	0	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	118	inhibitory::Inh SGCD PDE3A::AD_vs_NCI__Male__e2	Inh SGCD PDE3A	Male	e2	M_e2x	validated_complete	33564	33538	26	10817	22721	10817	0	0	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	119	inhibitory::Inh SGCD PDE3A::AD_vs_NCI__Male__e33	Inh SGCD PDE3A	Male	e33	M_e33	validated_complete	33564	33538	26	10798	22740	10797	1	0	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	120	inhibitory::Inh SGCD PDE3A::AD_vs_NCI__Male__e4	Inh SGCD PDE3A	Male	e4	M_e4x	validated_complete	33564	33538	26	10715	22823	10715	0	0	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	121	inhibitory::Inh SORCS1 TTN::AD_vs_NCI__Female__e2	Inh SORCS1 TTN	Female	e2	F_e2x	validated_complete	33564	33538	26	7459	26079	7455	2	2	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	122	inhibitory::Inh SORCS1 TTN::AD_vs_NCI__Female__e33	Inh SORCS1 TTN	Female	e33	F_e33	validated_complete	33564	33538	26	7744	25794	7724	15	5	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	123	inhibitory::Inh SORCS1 TTN::AD_vs_NCI__Female__e4	Inh SORCS1 TTN	Female	e4	F_e4x	validated_complete	33564	33538	26	7129	26409	7124	1	4	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	124	inhibitory::Inh SORCS1 TTN::AD_vs_NCI__Male__e2	Inh SORCS1 TTN	Male	e2	M_e2x	validated_complete	33564	33538	26	7621	25917	7621	0	0	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	125	inhibitory::Inh SORCS1 TTN::AD_vs_NCI__Male__e33	Inh SORCS1 TTN	Male	e33	M_e33	validated_complete	33564	33538	26	7820	25718	7800	10	10	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	126	inhibitory::Inh SORCS1 TTN::AD_vs_NCI__Male__e4	Inh SORCS1 TTN	Male	e4	M_e4x	validated_complete	33564	33538	26	7382	26156	7371	7	4	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	127	inhibitory::Inh VIP ABI3BP::AD_vs_NCI__Female__e2	Inh VIP ABI3BP	Female	e2	F_e2x	validated_complete	33564	33538	26	9838	23700	9804	26	8	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	128	inhibitory::Inh VIP ABI3BP::AD_vs_NCI__Female__e33	Inh VIP ABI3BP	Female	e33	F_e33	validated_complete	33564	33538	26	10015	23523	9904	42	69	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	129	inhibitory::Inh VIP ABI3BP::AD_vs_NCI__Female__e4	Inh VIP ABI3BP	Female	e4	F_e4x	validated_complete	33564	33538	26	10063	23475	10006	21	36	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	130	inhibitory::Inh VIP ABI3BP::AD_vs_NCI__Male__e2	Inh VIP ABI3BP	Male	e2	M_e2x	validated_complete	33564	33538	26	10144	23394	10112	11	21	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	131	inhibitory::Inh VIP ABI3BP::AD_vs_NCI__Male__e33	Inh VIP ABI3BP	Male	e33	M_e33	validated_complete	33564	33538	26	9675	23863	9664	4	7	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	132	inhibitory::Inh VIP ABI3BP::AD_vs_NCI__Male__e4	Inh VIP ABI3BP	Male	e4	M_e4x	validated_complete	33564	33538	26	9333	24205	9264	22	47	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	133	inhibitory::Inh VIP CLSTN2::AD_vs_NCI__Female__e2	Inh VIP CLSTN2	Female	e2	F_e2x	validated_complete	33564	33538	26	9724	23814	9686	20	18	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	134	inhibitory::Inh VIP CLSTN2::AD_vs_NCI__Female__e33	Inh VIP CLSTN2	Female	e33	F_e33	validated_complete	33564	33538	26	9482	24056	9423	37	22	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	135	inhibitory::Inh VIP CLSTN2::AD_vs_NCI__Female__e4	Inh VIP CLSTN2	Female	e4	F_e4x	validated_complete	33564	33538	26	9420	24118	9374	11	35	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	136	inhibitory::Inh VIP CLSTN2::AD_vs_NCI__Male__e2	Inh VIP CLSTN2	Male	e2	M_e2x	validated_complete	33564	33538	26	9529	24009	9260	79	190	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	137	inhibitory::Inh VIP CLSTN2::AD_vs_NCI__Male__e33	Inh VIP CLSTN2	Male	e33	M_e33	validated_complete	33564	33538	26	8956	24582	8942	5	9	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	138	inhibitory::Inh VIP CLSTN2::AD_vs_NCI__Male__e4	Inh VIP CLSTN2	Male	e4	M_e4x	validated_complete	33564	33538	26	9046	24492	8973	42	31	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	139	inhibitory::Inh VIP THSD7B::AD_vs_NCI__Female__e2	Inh VIP THSD7B	Female	e2	F_e2x	validated_complete	33564	33538	26	9227	24311	9224	3	0	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	140	inhibitory::Inh VIP THSD7B::AD_vs_NCI__Female__e33	Inh VIP THSD7B	Female	e33	F_e33	validated_complete	33564	33538	26	9029	24509	9007	16	6	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	141	inhibitory::Inh VIP THSD7B::AD_vs_NCI__Female__e4	Inh VIP THSD7B	Female	e4	F_e4x	validated_complete	33564	33538	26	9011	24527	9004	4	3	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	142	inhibitory::Inh VIP THSD7B::AD_vs_NCI__Male__e2	Inh VIP THSD7B	Male	e2	M_e2x	validated_complete	33564	33538	26	9312	24226	9305	3	4	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	143	inhibitory::Inh VIP THSD7B::AD_vs_NCI__Male__e33	Inh VIP THSD7B	Male	e33	M_e33	validated_complete	33564	33538	26	9238	24300	9236	0	2	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	144	inhibitory::Inh VIP THSD7B::AD_vs_NCI__Male__e4	Inh VIP THSD7B	Male	e4	M_e4x	validated_complete	33564	33538	26	8819	24719	8818	1	0	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	145	inhibitory::Inh VIP TSHZ2::AD_vs_NCI__Female__e2	Inh VIP TSHZ2	Female	e2	F_e2x	validated_complete	33564	33538	26	8750	24788	8734	14	2	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	146	inhibitory::Inh VIP TSHZ2::AD_vs_NCI__Female__e33	Inh VIP TSHZ2	Female	e33	F_e33	validated_complete	33564	33538	26	8779	24759	8768	7	4	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	147	inhibitory::Inh VIP TSHZ2::AD_vs_NCI__Female__e4	Inh VIP TSHZ2	Female	e4	F_e4x	validated_complete	33564	33538	26	8800	24738	8735	28	37	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	148	inhibitory::Inh VIP TSHZ2::AD_vs_NCI__Male__e2	Inh VIP TSHZ2	Male	e2	M_e2x	validated_complete	33564	33538	26	8259	25279	8259	0	0	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	149	inhibitory::Inh VIP TSHZ2::AD_vs_NCI__Male__e33	Inh VIP TSHZ2	Male	e33	M_e33	validated_complete	33564	33538	26	8534	25004	8527	4	3	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	inhibitory	150	inhibitory::Inh VIP TSHZ2::AD_vs_NCI__Male__e4	Inh VIP TSHZ2	Male	e4	M_e4x	validated_complete	33564	33538	26	7852	25686	7843	2	7	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	oligodendrocytes	1	oligodendrocytes::Oli::AD_vs_NCI__Female__e2	Oli	Female	e2	F_e2x	validated_complete	33564	33538	26	6274	27264	6050	115	109	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	oligodendrocytes	2	oligodendrocytes::Oli::AD_vs_NCI__Female__e33	Oli	Female	e33	F_e33	validated_complete	33564	33538	26	5712	27826	5556	132	24	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	oligodendrocytes	3	oligodendrocytes::Oli::AD_vs_NCI__Female__e4	Oli	Female	e4	F_e4x	validated_complete	33564	33538	26	6054	27484	5818	79	157	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	oligodendrocytes	4	oligodendrocytes::Oli::AD_vs_NCI__Male__e2	Oli	Male	e2	M_e2x	validated_complete	33564	33538	26	5054	28484	4455	333	266	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	oligodendrocytes	5	oligodendrocytes::Oli::AD_vs_NCI__Male__e33	Oli	Male	e33	M_e33	validated_complete	33564	33538	26	5546	27992	5402	38	106	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	oligodendrocytes	6	oligodendrocytes::Oli::AD_vs_NCI__Male__e4	Oli	Male	e4	M_e4x	validated_complete	33564	33538	26	5644	27894	5417	153	74	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	opcs	1	opcs::OPC::AD_vs_NCI__Female__e2	OPC	Female	e2	F_e2x	validated_complete	33564	33538	26	8808	24730	8453	288	67	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	opcs	2	opcs::OPC::AD_vs_NCI__Female__e33	OPC	Female	e33	F_e33	validated_complete	33564	33538	26	8084	25454	7889	169	26	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	opcs	3	opcs::OPC::AD_vs_NCI__Female__e4	OPC	Female	e4	F_e4x	validated_complete	33564	33538	26	8622	24916	7695	315	612	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	opcs	4	opcs::OPC::AD_vs_NCI__Male__e2	OPC	Male	e2	M_e2x	validated_complete	33564	33538	26	7649	25889	6004	867	778	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	opcs	5	opcs::OPC::AD_vs_NCI__Male__e33	OPC	Male	e33	M_e33	validated_complete	33564	33538	26	7647	25891	7537	3	107	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	opcs	6	opcs::OPC::AD_vs_NCI__Male__e4	OPC	Male	e4	M_e4x	validated_complete	33564	33538	26	7903	25635	7656	148	99	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	vasculature	1	vasculature::End::AD_vs_NCI__Female__e2	End	Female	e2	F_e2x	validated_complete	33564	33538	26	4981	28557	4981	0	0	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	vasculature	2	vasculature::End::AD_vs_NCI__Female__e33	End	Female	e33	F_e33	validated_complete	33564	33538	26	5186	28352	5133	28	25	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	vasculature	3	vasculature::End::AD_vs_NCI__Female__e4	End	Female	e4	F_e4x	validated_complete	33564	33538	26	5930	27608	5876	27	27	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	vasculature	4	vasculature::End::AD_vs_NCI__Male__e2	End	Male	e2	M_e2x	validated_complete	33564	33538	26	4924	28614	4766	31	127	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	vasculature	5	vasculature::End::AD_vs_NCI__Male__e33	End	Male	e33	M_e33	validated_complete	33564	33538	26	5089	28449	5056	22	11	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	vasculature	6	vasculature::End::AD_vs_NCI__Male__e4	End	Male	e4	M_e4x	validated_complete	33564	33538	26	5540	27998	5467	38	35	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	vasculature	7	vasculature::Fib FLRT2::AD_vs_NCI__Female__e2	Fib FLRT2	Female	e2	F_e2x	validated_complete	33564	33538	26	5417	28121	5412	1	4	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	vasculature	8	vasculature::Fib FLRT2::AD_vs_NCI__Female__e33	Fib FLRT2	Female	e33	F_e33	validated_complete	33564	33538	26	5638	27900	5624	10	4	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	vasculature	9	vasculature::Fib FLRT2::AD_vs_NCI__Female__e4	Fib FLRT2	Female	e4	F_e4x	validated_complete	33564	33538	26	5583	27955	5583	0	0	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	vasculature	10	vasculature::Fib FLRT2::AD_vs_NCI__Male__e2	Fib FLRT2	Male	e2	M_e2x	validated_complete	33564	33538	26	4901	28637	4901	0	0	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	vasculature	11	vasculature::Fib FLRT2::AD_vs_NCI__Male__e33	Fib FLRT2	Male	e33	M_e33	validated_complete	33564	33538	26	5449	28089	5447	1	1	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	vasculature	12	vasculature::Fib FLRT2::AD_vs_NCI__Male__e4	Fib FLRT2	Male	e4	M_e4x	validated_complete	33564	33538	26	5299	28239	5278	10	11	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	vasculature	13	vasculature::Fib SLC4A4::AD_vs_NCI__Female__e2	Fib SLC4A4	Female	e2	F_e2x	validated_complete	33564	33538	26	6135	27403	6135	0	0	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	vasculature	14	vasculature::Fib SLC4A4::AD_vs_NCI__Female__e33	Fib SLC4A4	Female	e33	F_e33	validated_complete	33564	33538	26	6168	27370	6168	0	0	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	vasculature	15	vasculature::Fib SLC4A4::AD_vs_NCI__Female__e4	Fib SLC4A4	Female	e4	F_e4x	validated_complete	33564	33538	26	6690	26848	6690	0	0	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	vasculature	16	vasculature::Fib SLC4A4::AD_vs_NCI__Male__e2	Fib SLC4A4	Male	e2	M_e2x	not_estimable	33564	33538	26	0	0	0	0	0	0	33564	1196	24	80
+mitochondrial_annotation_qc_v1	vasculature	17	vasculature::Fib SLC4A4::AD_vs_NCI__Male__e33	Fib SLC4A4	Male	e33	M_e33	validated_complete	33564	33538	26	4695	28843	4694	1	0	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	vasculature	18	vasculature::Fib SLC4A4::AD_vs_NCI__Male__e4	Fib SLC4A4	Male	e4	M_e4x	validated_complete	33564	33538	26	6231	27307	6231	0	0	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	vasculature	19	vasculature::Per::AD_vs_NCI__Female__e2	Per	Female	e2	F_e2x	validated_complete	33564	33538	26	5637	27901	5627	7	3	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	vasculature	20	vasculature::Per::AD_vs_NCI__Female__e33	Per	Female	e33	F_e33	validated_complete	33564	33538	26	5526	28012	5473	30	23	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	vasculature	21	vasculature::Per::AD_vs_NCI__Female__e4	Per	Female	e4	F_e4x	validated_complete	33564	33538	26	6039	27499	5980	35	24	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	vasculature	22	vasculature::Per::AD_vs_NCI__Male__e2	Per	Male	e2	M_e2x	validated_complete	33564	33538	26	4935	28603	4833	51	51	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	vasculature	23	vasculature::Per::AD_vs_NCI__Male__e33	Per	Male	e33	M_e33	validated_complete	33564	33538	26	5445	28093	5404	24	17	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	vasculature	24	vasculature::Per::AD_vs_NCI__Male__e4	Per	Male	e4	M_e4x	validated_complete	33564	33538	26	5487	28051	5452	24	11	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	vasculature	25	vasculature::SMC::AD_vs_NCI__Female__e2	SMC	Female	e2	F_e2x	validated_complete	33564	33538	26	5269	28269	5269	0	0	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	vasculature	26	vasculature::SMC::AD_vs_NCI__Female__e33	SMC	Female	e33	F_e33	validated_complete	33564	33538	26	4824	28714	4823	1	0	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	vasculature	27	vasculature::SMC::AD_vs_NCI__Female__e4	SMC	Female	e4	F_e4x	validated_complete	33564	33538	26	5643	27895	5643	0	0	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	vasculature	28	vasculature::SMC::AD_vs_NCI__Male__e2	SMC	Male	e2	M_e2x	validated_complete	33564	33538	26	4400	29138	4400	0	0	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	vasculature	29	vasculature::SMC::AD_vs_NCI__Male__e33	SMC	Male	e33	M_e33	validated_complete	33564	33538	26	5277	28261	5277	0	0	26	0	1196	24	80
+mitochondrial_annotation_qc_v1	vasculature	30	vasculature::SMC::AD_vs_NCI__Male__e4	SMC	Male	e4	M_e4x	validated_complete	33564	33538	26	4970	28568	4969	0	1	26	0	1196	24	80
