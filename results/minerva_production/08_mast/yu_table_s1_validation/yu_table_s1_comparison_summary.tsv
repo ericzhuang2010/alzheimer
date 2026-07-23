@@ -1,2 +1,0 @@
-schema_version	scope	group	value	yu_degs	phase08_degs	shared_degs	yu_only_degs	phase08_only_degs	recall	precision	jaccard	direction_agreement	pearson_logFC	spearman_logFC	median_abs_logFC_difference	max_abs_logFC_difference
-yu_table_s1_comparison_metrics_v2	all_phase08_cell_types	overall	all	118297	111601	106599	11698	5002	0.90111329957649	0.955179613085904	0.864556890161315	1	1	1	0	9.99200722162641e-16
