@@ -1,9 +1,18 @@
 Hi Eric,
 
-The figures look much better than previous ones. One suggestion is that you can increase the font size in the plots to the extent that they are readable without zooming in.
-
-Your project will be to firstly evaluate if and how mitochondrial pathways are different by sex and APOE in AD patients, and then identify/prioritize the most interesting key regulator genes in mitochondrial pathways for experiment validation.
+Your project will be to firstly evaluate if and how mitochondrial pathways are different by sex and APOE in AD patients, 
+and then identify/prioritize the most interesting key regulator genes in mitochondrial pathways for experiment validation.
 
 Your current analysis works on the first part very well. Please continue polishing the results, especially make summary and conclusions.
 
-For the second part, please explore strategies. We may need to integrate different approaches and all kinds of relevant useful data (eg, AD GWAS signals). One approach we usually do is to project mitochondrial pathways differentially expressed genes (DEGs) onto gene regulatory networks and then identify network hubs (key drivers) that regulatory a significant set of the DEGs. Such hubs will be the targets of interest. Please see attached paper for example network key driver analysis. A previous lab member had constructed cell-type-specific gene coexpression and Bayesian networks (BNs) from the same snRNA-seq data. You can find the BNs at /sc/arion/projects/zhangb03a/abbey/Data/ROSMAP/Mathys/By_cluster/BN/, eg the Microglia-specific BN is located at /sc/arion/projects/zhangb03a/abbey/Data/ROSMAP/Mathys/By_cluster/BN/Microglia/result.links3.links.txt . Please check the reference paper for network key driver analysis and let me know if you have any questions. Meanwhile, please also explore other complementary approaches and useful data.
+
+
+For the second part, please explore strategies. We may need to integrate different approaches and all kinds of relevant useful data 
+(eg, AD GWAS signals). One approach we usually do is to project mitochondrial pathways differentially expressed genes (DEGs) onto 
+gene regulatory networks and then identify network hubs (key drivers) that regulatory a significant set of the DEGs. Such hubs will 
+be the targets of interest. Please see attached paper for example network key driver analysis. A previous lab member had constructed 
+cell-type-specific gene coexpression and Bayesian networks (BNs) from the same snRNA-seq data. You can find the BNs at 
+/sc/arion/projects/zhangb03a/abbey/Data/ROSMAP/Mathys/By_cluster/BN/, eg the Microglia-specific BN is located at 
+/sc/arion/projects/zhangb03a/abbey/Data/ROSMAP/Mathys/By_cluster/BN/Microglia/result.links3.links.txt . Please check the reference 
+paper for network key driver analysis and let me know if you have any questions. Meanwhile, please also explore other complementary 
+approaches and useful data.

@@ -1,0 +1,305 @@
+shortlist_rank	priority_tier	gene	context_effect_rank	contrast_id	rds_id	cell_type	sex	apoe_group	yu_stratum	logFC	fdr	cells_ad	cells_nci	donors_ad	donors_nci
+1	A	ATP5IF1	1	excitatory_set1::Exc L2-3 CBLN2 LINC02306::AD_vs_NCI__Female__e4	excitatory_set1	Exc L2-3 CBLN2 LINC02306	Female	e4	F_e4x	-1.45219	4.22487e-95	15950	14571	26	11
+1	A	ATP5IF1	2	inhibitory::Inh CUX2 MSR1::AD_vs_NCI__Male__e2	inhibitory	Inh CUX2 MSR1	Male	e2	M_e2x	-1.30382	0.000388814	342	322	7	6
+1	A	ATP5IF1	3	opcs::OPC::AD_vs_NCI__Male__e2	opcs	OPC	Male	e2	M_e2x	-1.17965	3.54048e-05	1320	1404	7	6
+1	A	ATP5IF1	4	inhibitory::Inh ENOX2 SPHKAP::AD_vs_NCI__Male__e4	inhibitory	Inh ENOX2 SPHKAP	Male	e4	M_e4x	-1.1061	0.00643561	711	240	25	10
+1	A	ATP5IF1	5	astrocytes::Ast DPP10::AD_vs_NCI__Female__e4	astrocytes	Ast DPP10	Female	e4	F_e4x	-1.10544	0.000103485	1824	916	26	11
+1	A	ATP5IF1	6	excitatory_set3::Exc RELN CHD7::AD_vs_NCI__Female__e4	excitatory_set3	Exc RELN CHD7	Female	e4	F_e4x	-1.02935	3.53852e-07	884	736	24	11
+1	A	ATP5IF1	7	excitatory_set2::Exc L3-4 RORB CUX2::AD_vs_NCI__Male__e2	excitatory_set2	Exc L3-4 RORB CUX2	Male	e2	M_e2x	-0.983795	1.75053e-12	2069	3140	7	6
+1	A	ATP5IF1	8	excitatory_set2::Exc L4-5 RORB GABRG1::AD_vs_NCI__Male__e2	excitatory_set2	Exc L4-5 RORB GABRG1	Male	e2	M_e2x	-0.919078	3.46241e-06	1249	1339	7	6
+1	A	ATP5IF1	9	excitatory_set2::Exc L3-5 RORB PLCH1::AD_vs_NCI__Male__e2	excitatory_set2	Exc L3-5 RORB PLCH1	Male	e2	M_e2x	-0.914092	0.000330876	732	581	7	6
+1	A	ATP5IF1	10	oligodendrocytes::Oli::AD_vs_NCI__Male__e2	oligodendrocytes	Oli	Male	e2	M_e2x	-0.865828	2.55015e-20	9717	5807	7	6
+1	A	ATP5IF1	11	excitatory_set1::Exc L2-3 CBLN2 LINC02306::AD_vs_NCI__Male__e2	excitatory_set1	Exc L2-3 CBLN2 LINC02306	Male	e2	M_e2x	-0.856005	1.08067e-37	4010	3277	7	6
+1	A	ATP5IF1	12	excitatory_set3::Exc NRGN::AD_vs_NCI__Male__e4	excitatory_set3	Exc NRGN	Male	e4	M_e4x	-0.814412	0.00036669	4828	461	27	10
+1	A	ATP5IF1	13	excitatory_set3::Exc L5/6 IT Car3::AD_vs_NCI__Female__e4	excitatory_set3	Exc L5/6 IT Car3	Female	e4	F_e4x	-0.814281	1.37082e-05	1113	561	25	11
+1	A	ATP5IF1	14	excitatory_set3::Exc RELN CHD7::AD_vs_NCI__Male__e4	excitatory_set3	Exc RELN CHD7	Male	e4	M_e4x	0.801142	0.0221107	5746	397	26	10
+1	A	ATP5IF1	15	excitatory_set3::Exc NRGN::AD_vs_NCI__Male__e33	excitatory_set3	Exc NRGN	Male	e33	M_e33	-0.755276	7.6605e-09	4383	6868	28	52
+1	A	ATP5IF1	16	inhibitory::Inh PVALB HTR4::AD_vs_NCI__Female__e4	inhibitory	Inh PVALB HTR4	Female	e4	F_e4x	-0.701559	0.00669088	2139	1553	25	11
+1	A	ATP5IF1	17	excitatory_set3::Exc NRGN::AD_vs_NCI__Male__e2	excitatory_set3	Exc NRGN	Male	e2	M_e2x	0.652498	0.0216958	545	1905	7	6
+1	A	ATP5IF1	18	inhibitory::Inh CUX2 MSR1::AD_vs_NCI__Male__e4	inhibitory	Inh CUX2 MSR1	Male	e4	M_e4x	-0.623361	0.0240104	1387	534	27	10
+1	A	ATP5IF1	19	excitatory_set3::Exc RELN CHD7::AD_vs_NCI__Male__e33	excitatory_set3	Exc RELN CHD7	Male	e33	M_e33	-0.61494	4.81679e-20	22508	8393	28	51
+1	A	ATP5IF1	20	inhibitory::Inh L3-5 SST MAFB::AD_vs_NCI__Male__e2	inhibitory	Inh L3-5 SST MAFB	Male	e2	M_e2x	-0.58118	0.00260651	364	292	7	6
+1	A	ATP5IF1	21	excitatory_set3::Exc L6b::AD_vs_NCI__Male__e2	excitatory_set3	Exc L6b	Male	e2	M_e2x	0.543334	5.60479e-06	363	383	7	6
+1	A	ATP5IF1	22	excitatory_set3::Exc L5-6 RORB LINC02196::AD_vs_NCI__Female__e2	excitatory_set3	Exc L5-6 RORB LINC02196	Female	e2	F_e2x	0.526598	4.302e-08	266	899	8	16
+1	A	ATP5IF1	23	excitatory_set2::Exc L4-5 RORB IL1RAPL2::AD_vs_NCI__Female__e4	excitatory_set2	Exc L4-5 RORB IL1RAPL2	Female	e4	F_e4x	-0.518647	3.80706e-09	6768	4054	26	11
+1	A	ATP5IF1	24	inhibitory::Inh ENOX2 SPHKAP::AD_vs_NCI__Male__e2	inhibitory	Inh ENOX2 SPHKAP	Male	e2	M_e2x	0.512344	0.0108346	196	198	7	6
+1	A	ATP5IF1	25	excitatory_set2::Exc L4-5 RORB IL1RAPL2::AD_vs_NCI__Male__e2	excitatory_set2	Exc L4-5 RORB IL1RAPL2	Male	e2	M_e2x	-0.497477	1.33186e-10	1690	1874	7	6
+1	A	ATP5IF1	26	excitatory_set3::Exc L6 THEMIS NFIA::AD_vs_NCI__Female__e2	excitatory_set3	Exc L6 THEMIS NFIA	Female	e2	F_e2x	0.467206	1.1636e-11	839	2594	8	16
+1	A	ATP5IF1	27	excitatory_set2::Exc L3-5 RORB PLCH1::AD_vs_NCI__Female__e4	excitatory_set2	Exc L3-5 RORB PLCH1	Female	e4	F_e4x	-0.44847	0.000587437	2439	1115	26	11
+1	A	ATP5IF1	28	excitatory_set2::Exc L4-5 RORB GABRG1::AD_vs_NCI__Female__e4	excitatory_set2	Exc L4-5 RORB GABRG1	Female	e4	F_e4x	-0.438857	0.014409	4249	2234	25	11
+1	A	ATP5IF1	29	excitatory_set3::Exc L5/6 IT Car3::AD_vs_NCI__Female__e2	excitatory_set3	Exc L5/6 IT Car3	Female	e2	F_e2x	0.429053	0.000357332	174	699	8	16
+1	A	ATP5IF1	30	excitatory_set3::Exc L6b::AD_vs_NCI__Female__e4	excitatory_set3	Exc L6b	Female	e4	F_e4x	-0.424503	0.00953393	1520	846	25	11
+1	A	ATP5IF1	31	excitatory_set2::Exc L4-5 RORB IL1RAPL2::AD_vs_NCI__Female__e2	excitatory_set2	Exc L4-5 RORB IL1RAPL2	Female	e2	F_e2x	0.420122	9.42435e-20	1430	4990	8	17
+1	A	ATP5IF1	32	oligodendrocytes::Oli::AD_vs_NCI__Male__e33	oligodendrocytes	Oli	Male	e33	M_e33	-0.410393	1.3982e-14	35873	94184	29	53
+1	A	ATP5IF1	33	excitatory_set3::Exc L5 ET::AD_vs_NCI__Male__e33	excitatory_set3	Exc L5 ET	Male	e33	M_e33	-0.393047	0.000457263	280	511	24	50
+1	A	ATP5IF1	34	immune::Mic P2RY12::AD_vs_NCI__Female__e4	immune	Mic P2RY12	Female	e4	F_e4x	-0.383896	0.000233344	5261	2621	26	11
+2	A	TUFM	1	astrocytes::Ast CHI3L1::AD_vs_NCI__Male__e4	astrocytes	Ast CHI3L1	Male	e4	M_e4x	-1.28443	0.0215927	1655	412	24	9
+2	A	TUFM	2	excitatory_set2::Exc L4-5 RORB GABRG1::AD_vs_NCI__Male__e2	excitatory_set2	Exc L4-5 RORB GABRG1	Male	e2	M_e2x	-1.16633	1.29609e-11	1249	1339	7	6
+2	A	TUFM	3	inhibitory::Inh L3-5 SST MAFB::AD_vs_NCI__Male__e2	inhibitory	Inh L3-5 SST MAFB	Male	e2	M_e2x	-1.09862	0.010141	364	292	7	6
+2	A	TUFM	4	astrocytes::Ast GRM3::AD_vs_NCI__Male__e2	astrocytes	Ast GRM3	Male	e2	M_e2x	-0.939184	2.44527e-09	1411	1186	7	6
+2	A	TUFM	5	excitatory_set3::Exc NRGN::AD_vs_NCI__Male__e33	excitatory_set3	Exc NRGN	Male	e33	M_e33	-0.936866	1.0689e-10	4383	6868	28	52
+2	A	TUFM	6	excitatory_set2::Exc L3-4 RORB CUX2::AD_vs_NCI__Male__e2	excitatory_set2	Exc L3-4 RORB CUX2	Male	e2	M_e2x	-0.927918	4.51091e-08	2069	3140	7	6
+2	A	TUFM	7	excitatory_set2::Exc L3-5 RORB PLCH1::AD_vs_NCI__Male__e2	excitatory_set2	Exc L3-5 RORB PLCH1	Male	e2	M_e2x	-0.907376	2.8016e-05	732	581	7	6
+2	A	TUFM	8	astrocytes::Ast DPP10::AD_vs_NCI__Male__e2	astrocytes	Ast DPP10	Male	e2	M_e2x	-0.799272	0.0279813	659	305	7	6
+2	A	TUFM	9	excitatory_set1::Exc L2-3 CBLN2 LINC02306::AD_vs_NCI__Male__e2	excitatory_set1	Exc L2-3 CBLN2 LINC02306	Male	e2	M_e2x	-0.779781	1.57238e-28	4010	3277	7	6
+2	A	TUFM	10	inhibitory::Inh LAMP5 NRG1 (Rosehip)::AD_vs_NCI__Male__e2	inhibitory	Inh LAMP5 NRG1 (Rosehip)	Male	e2	M_e2x	-0.65934	0.0197415	420	333	7	6
+2	A	TUFM	11	inhibitory::Inh PVALB HTR4::AD_vs_NCI__Male__e4	inhibitory	Inh PVALB HTR4	Male	e4	M_e4x	-0.600419	4.39465e-05	2593	877	27	10
+2	A	TUFM	12	excitatory_set1::Exc L2-3 CBLN2 LINC02306::AD_vs_NCI__Female__e4	excitatory_set1	Exc L2-3 CBLN2 LINC02306	Female	e4	F_e4x	-0.577737	2.38474e-17	15950	14571	26	11
+2	A	TUFM	13	excitatory_set2::Exc L4-5 RORB IL1RAPL2::AD_vs_NCI__Male__e2	excitatory_set2	Exc L4-5 RORB IL1RAPL2	Male	e2	M_e2x	-0.558202	4.95643e-06	1690	1874	7	6
+2	A	TUFM	14	opcs::OPC::AD_vs_NCI__Male__e2	opcs	OPC	Male	e2	M_e2x	-0.543542	1.34329e-08	1320	1404	7	6
+2	A	TUFM	15	astrocytes::Ast GRM3::AD_vs_NCI__Female__e2	astrocytes	Ast GRM3	Female	e2	F_e2x	0.505573	4.27621e-06	957	2720	8	17
+2	A	TUFM	16	oligodendrocytes::Oli::AD_vs_NCI__Male__e2	oligodendrocytes	Oli	Male	e2	M_e2x	-0.494356	4.21478e-19	9717	5807	7	6
+2	A	TUFM	17	astrocytes::Ast CHI3L1::AD_vs_NCI__Female__e33	astrocytes	Ast CHI3L1	Female	e33	F_e33	0.441004	7.99219e-06	1974	3186	35	43
+2	A	TUFM	18	excitatory_set3::Exc L5/6 IT Car3::AD_vs_NCI__Female__e2	excitatory_set3	Exc L5/6 IT Car3	Female	e2	F_e2x	0.432901	0.00788426	174	699	8	16
+2	A	TUFM	19	excitatory_set3::Exc RELN CHD7::AD_vs_NCI__Female__e4	excitatory_set3	Exc RELN CHD7	Female	e4	F_e4x	-0.432348	0.00159139	884	736	24	11
+3	A	HSPD1	1	inhibitory::Inh LAMP5 NRG1 (Rosehip)::AD_vs_NCI__Female__e4	inhibitory	Inh LAMP5 NRG1 (Rosehip)	Female	e4	F_e4x	-2.57357	1.59365e-10	1329	914	24	11
+3	A	HSPD1	2	excitatory_set1::Exc L2-3 CBLN2 LINC02306::AD_vs_NCI__Female__e4	excitatory_set1	Exc L2-3 CBLN2 LINC02306	Female	e4	F_e4x	-2.38939	3.99194e-290	15950	14571	26	11
+3	A	HSPD1	3	inhibitory::Inh L3-5 SST MAFB::AD_vs_NCI__Female__e4	inhibitory	Inh L3-5 SST MAFB	Female	e4	F_e4x	-1.98842	1.57706e-06	1075	850	25	11
+3	A	HSPD1	4	inhibitory::Inh PVALB CA8 (Chandelier)::AD_vs_NCI__Female__e4	inhibitory	Inh PVALB CA8 (Chandelier)	Female	e4	F_e4x	-1.57329	0.00102107	812	488	25	11
+3	A	HSPD1	5	astrocytes::Ast CHI3L1::AD_vs_NCI__Female__e4	astrocytes	Ast CHI3L1	Female	e4	F_e4x	-1.55221	1.67571e-05	1193	1298	22	11
+3	A	HSPD1	6	inhibitory::Inh CUX2 MSR1::AD_vs_NCI__Female__e4	inhibitory	Inh CUX2 MSR1	Female	e4	F_e4x	-1.50403	0.000616266	1105	666	26	11
+3	A	HSPD1	7	excitatory_set3::Exc L5/6 IT Car3::AD_vs_NCI__Female__e4	excitatory_set3	Exc L5/6 IT Car3	Female	e4	F_e4x	-1.4173	3.74466e-13	1113	561	25	11
+3	A	HSPD1	8	inhibitory::Inh L1-6 LAMP5 CA13::AD_vs_NCI__Female__e4	inhibitory	Inh L1-6 LAMP5 CA13	Female	e4	F_e4x	-1.34793	0.0445076	941	505	26	11
+3	A	HSPD1	9	inhibitory::Inh ALCAM TRPM3::AD_vs_NCI__Female__e4	inhibitory	Inh ALCAM TRPM3	Female	e4	F_e4x	-1.32264	0.0376704	605	329	24	11
+3	A	HSPD1	10	vasculature::Per::AD_vs_NCI__Female__e4	vasculature	Per	Female	e4	F_e4x	-1.30715	0.02036	308	217	22	11
+3	A	HSPD1	11	inhibitory::Inh PVALB HTR4::AD_vs_NCI__Female__e4	inhibitory	Inh PVALB HTR4	Female	e4	F_e4x	-1.21864	1.75857e-15	2139	1553	25	11
+3	A	HSPD1	12	excitatory_set3::Exc RELN CHD7::AD_vs_NCI__Female__e4	excitatory_set3	Exc RELN CHD7	Female	e4	F_e4x	-1.19196	1.14273e-07	884	736	24	11
+3	A	HSPD1	13	vasculature::End::AD_vs_NCI__Female__e4	vasculature	End	Female	e4	F_e4x	-1.07381	0.0415015	445	220	25	11
+3	A	HSPD1	14	excitatory_set3::Exc L6 CT::AD_vs_NCI__Female__e4	excitatory_set3	Exc L6 CT	Female	e4	F_e4x	-0.915886	0.000128685	1402	835	25	11
+3	A	HSPD1	15	astrocytes::Ast GRM3::AD_vs_NCI__Female__e4	astrocytes	Ast GRM3	Female	e4	F_e4x	-0.806394	3.41631e-19	5204	1797	26	11
+3	A	HSPD1	16	excitatory_set3::Exc L6b::AD_vs_NCI__Female__e4	excitatory_set3	Exc L6b	Female	e4	F_e4x	-0.752578	4.8134e-05	1520	846	25	11
+3	A	HSPD1	17	immune::Mic P2RY12::AD_vs_NCI__Male__e2	immune	Mic P2RY12	Male	e2	M_e2x	-0.739457	0.0265763	1175	390	7	6
+3	A	HSPD1	18	excitatory_set2::Exc L4-5 RORB GABRG1::AD_vs_NCI__Female__e4	excitatory_set2	Exc L4-5 RORB GABRG1	Female	e4	F_e4x	-0.731502	2.91736e-08	4249	2234	25	11
+3	A	HSPD1	19	opcs::OPC::AD_vs_NCI__Female__e4	opcs	OPC	Female	e4	F_e4x	-0.7136	6.34204e-19	5248	2760	26	11
+3	A	HSPD1	20	excitatory_set2::Exc L4-5 RORB IL1RAPL2::AD_vs_NCI__Female__e4	excitatory_set2	Exc L4-5 RORB IL1RAPL2	Female	e4	F_e4x	-0.699751	3.28351e-22	6768	4054	26	11
+3	A	HSPD1	21	astrocytes::Ast GRM3::AD_vs_NCI__Male__e33	astrocytes	Ast GRM3	Male	e33	M_e33	-0.659486	1.70425e-30	5946	14440	29	53
+3	A	HSPD1	22	excitatory_set2::Exc L3-5 RORB PLCH1::AD_vs_NCI__Female__e4	excitatory_set2	Exc L3-5 RORB PLCH1	Female	e4	F_e4x	-0.658795	0.000153088	2439	1115	26	11
+3	A	HSPD1	23	excitatory_set3::Exc RELN CHD7::AD_vs_NCI__Male__e4	excitatory_set3	Exc RELN CHD7	Male	e4	M_e4x	0.653254	0.000561097	5746	397	26	10
+3	A	HSPD1	24	excitatory_set3::Exc L5-6 RORB LINC02196::AD_vs_NCI__Female__e4	excitatory_set3	Exc L5-6 RORB LINC02196	Female	e4	F_e4x	-0.630535	0.0155051	1237	683	26	11
+3	A	HSPD1	25	inhibitory::Inh L3-5 SST MAFB::AD_vs_NCI__Male__e2	inhibitory	Inh L3-5 SST MAFB	Male	e2	M_e2x	0.615095	0.0194204	364	292	7	6
+3	A	HSPD1	26	inhibitory::Inh LAMP5 NRG1 (Rosehip)::AD_vs_NCI__Male__e33	inhibitory	Inh LAMP5 NRG1 (Rosehip)	Male	e33	M_e33	-0.560035	0.000337728	1647	4297	27	53
+3	A	HSPD1	27	immune::Mic P2RY12::AD_vs_NCI__Male__e33	immune	Mic P2RY12	Male	e33	M_e33	-0.551782	8.28048e-13	4009	11074	29	52
+3	A	HSPD1	28	excitatory_set3::Exc L5/6 IT Car3::AD_vs_NCI__Female__e2	excitatory_set3	Exc L5/6 IT Car3	Female	e2	F_e2x	0.519899	0.00635707	174	699	8	16
+3	A	HSPD1	29	inhibitory::Inh PVALB CA8 (Chandelier)::AD_vs_NCI__Male__e33	inhibitory	Inh PVALB CA8 (Chandelier)	Male	e33	M_e33	-0.517417	0.00432286	838	2277	27	52
+3	A	HSPD1	30	excitatory_set3::Exc NRGN::AD_vs_NCI__Male__e33	excitatory_set3	Exc NRGN	Male	e33	M_e33	-0.467254	2.94284e-05	4383	6868	28	52
+3	A	HSPD1	31	excitatory_set2::Exc L3-4 RORB CUX2::AD_vs_NCI__Female__e4	excitatory_set2	Exc L3-4 RORB CUX2	Female	e4	F_e4x	-0.458755	6.72251e-09	9664	4753	26	11
+3	A	HSPD1	32	astrocytes::Ast GRM3::AD_vs_NCI__Male__e2	astrocytes	Ast GRM3	Male	e2	M_e2x	-0.443598	2.61807e-09	1411	1186	7	6
+3	A	HSPD1	33	excitatory_set3::Exc L6b::AD_vs_NCI__Male__e2	excitatory_set3	Exc L6b	Male	e2	M_e2x	0.43761	0.0173131	363	383	7	6
+3	A	HSPD1	34	astrocytes::Ast DPP10::AD_vs_NCI__Male__e33	astrocytes	Ast DPP10	Male	e33	M_e33	-0.423419	1.17234e-07	1859	5177	27	53
+3	A	HSPD1	35	opcs::OPC::AD_vs_NCI__Male__e33	opcs	OPC	Male	e33	M_e33	-0.40884	7.7122e-13	4876	14431	29	53
+3	A	HSPD1	36	astrocytes::Ast GRM3::AD_vs_NCI__Female__e33	astrocytes	Ast GRM3	Female	e33	F_e33	0.387259	4.9783e-29	9577	10462	37	45
+3	A	HSPD1	37	oligodendrocytes::Oli::AD_vs_NCI__Male__e33	oligodendrocytes	Oli	Male	e33	M_e33	-0.383832	3.01418e-80	35873	94184	29	53
+4	A	TOMM7	1	excitatory_set3::Exc RELN CHD7::AD_vs_NCI__Male__e2	excitatory_set3	Exc RELN CHD7	Male	e2	M_e2x	-3.34677	0.00165742	202	673	7	6
+4	A	TOMM7	2	excitatory_set1::Exc L2-3 CBLN2 LINC02306::AD_vs_NCI__Female__e4	excitatory_set1	Exc L2-3 CBLN2 LINC02306	Female	e4	F_e4x	-1.74828	5.0736e-72	15950	14571	26	11
+4	A	TOMM7	3	astrocytes::Ast CHI3L1::AD_vs_NCI__Male__e4	astrocytes	Ast CHI3L1	Male	e4	M_e4x	-1.54883	0.0299918	1655	412	24	9
+4	A	TOMM7	4	excitatory_set2::Exc L4-5 RORB GABRG1::AD_vs_NCI__Male__e2	excitatory_set2	Exc L4-5 RORB GABRG1	Male	e2	M_e2x	-1.1396	6.54236e-12	1249	1339	7	6
+4	A	TOMM7	5	excitatory_set1::Exc L2-3 CBLN2 LINC02306::AD_vs_NCI__Male__e2	excitatory_set1	Exc L2-3 CBLN2 LINC02306	Male	e2	M_e2x	-1.09474	2.29418e-33	4010	3277	7	6
+4	A	TOMM7	6	inhibitory::Inh CUX2 MSR1::AD_vs_NCI__Male__e2	inhibitory	Inh CUX2 MSR1	Male	e2	M_e2x	-1.04917	0.00805697	342	322	7	6
+4	A	TOMM7	7	inhibitory::Inh VIP TSHZ2::AD_vs_NCI__Female__e4	inhibitory	Inh VIP TSHZ2	Female	e4	F_e4x	1.03318	0.0282758	650	377	26	11
+4	A	TOMM7	8	excitatory_set3::Exc RELN CHD7::AD_vs_NCI__Female__e4	excitatory_set3	Exc RELN CHD7	Female	e4	F_e4x	-0.931455	9.50294e-05	884	736	24	11
+4	A	TOMM7	9	excitatory_set3::Exc L5-6 RORB LINC02196::AD_vs_NCI__Male__e2	excitatory_set3	Exc L5-6 RORB LINC02196	Male	e2	M_e2x	-0.875272	0.0210733	363	318	7	6
+4	A	TOMM7	10	inhibitory::Inh PVALB HTR4::AD_vs_NCI__Female__e4	inhibitory	Inh PVALB HTR4	Female	e4	F_e4x	-0.866703	0.00102259	2139	1553	25	11
+4	A	TOMM7	11	excitatory_set2::Exc L3-4 RORB CUX2::AD_vs_NCI__Male__e2	excitatory_set2	Exc L3-4 RORB CUX2	Male	e2	M_e2x	-0.837188	4.58778e-08	2069	3140	7	6
+4	A	TOMM7	12	immune::Mic TPT1::AD_vs_NCI__Male__e4	immune	Mic TPT1	Male	e4	M_e4x	-0.763047	0.0119757	217	283	24	8
+4	A	TOMM7	13	excitatory_set2::Exc L3-5 RORB PLCH1::AD_vs_NCI__Male__e2	excitatory_set2	Exc L3-5 RORB PLCH1	Male	e2	M_e2x	-0.762368	0.000129019	732	581	7	6
+4	A	TOMM7	14	excitatory_set2::Exc L4-5 RORB IL1RAPL2::AD_vs_NCI__Female__e2	excitatory_set2	Exc L4-5 RORB IL1RAPL2	Female	e2	F_e2x	0.619072	1.76807e-31	1430	4990	8	17
+4	A	TOMM7	15	inhibitory::Inh LAMP5 NRG1 (Rosehip)::AD_vs_NCI__Male__e2	inhibitory	Inh LAMP5 NRG1 (Rosehip)	Male	e2	M_e2x	-0.598209	0.0408072	420	333	7	6
+4	A	TOMM7	16	excitatory_set3::Exc L6 THEMIS NFIA::AD_vs_NCI__Female__e2	excitatory_set3	Exc L6 THEMIS NFIA	Female	e2	F_e2x	0.593821	2.762e-14	839	2594	8	16
+4	A	TOMM7	17	excitatory_set2::Exc L4-5 RORB IL1RAPL2::AD_vs_NCI__Male__e2	excitatory_set2	Exc L4-5 RORB IL1RAPL2	Male	e2	M_e2x	-0.58209	2.39668e-08	1690	1874	7	6
+4	A	TOMM7	18	inhibitory::Inh L3-5 SST MAFB::AD_vs_NCI__Female__e33	inhibitory	Inh L3-5 SST MAFB	Female	e33	F_e33	0.549801	0.0322885	1924	3338	35	45
+4	A	TOMM7	19	inhibitory::Inh PVALB HTR4::AD_vs_NCI__Male__e2	inhibitory	Inh PVALB HTR4	Male	e2	M_e2x	-0.523127	0.000276082	612	545	7	6
+4	A	TOMM7	20	opcs::OPC::AD_vs_NCI__Female__e2	opcs	OPC	Female	e2	F_e2x	0.519871	0.000106617	1325	3748	8	17
+4	A	TOMM7	21	astrocytes::Ast GRM3::AD_vs_NCI__Female__e2	astrocytes	Ast GRM3	Female	e2	F_e2x	0.517681	0.00868015	957	2720	8	17
+4	A	TOMM7	22	excitatory_set2::Exc L4-5 RORB IL1RAPL2::AD_vs_NCI__Female__e4	excitatory_set2	Exc L4-5 RORB IL1RAPL2	Female	e4	F_e4x	-0.513538	0.000290644	6768	4054	26	11
+4	A	TOMM7	23	inhibitory::Inh PVALB SULF1::AD_vs_NCI__Male__e2	inhibitory	Inh PVALB SULF1	Male	e2	M_e2x	-0.467656	0.0137368	331	368	7	6
+4	A	TOMM7	24	excitatory_set2::Exc L3-4 RORB CUX2::AD_vs_NCI__Female__e2	excitatory_set2	Exc L3-4 RORB CUX2	Female	e2	F_e2x	0.459658	1.68672e-19	2049	7715	8	16
+4	A	TOMM7	25	excitatory_set3::Exc L5/6 IT Car3::AD_vs_NCI__Male__e33	excitatory_set3	Exc L5/6 IT Car3	Male	e33	M_e33	-0.417596	2.41682e-10	1386	2592	27	53
+5	A	FKBP8	1	astrocytes::Ast CHI3L1::AD_vs_NCI__Female__e2	astrocytes	Ast CHI3L1	Female	e2	F_e2x	1.05741	0.0333922	105	1104	6	16
+5	A	FKBP8	2	excitatory_set3::Exc RELN CHD7::AD_vs_NCI__Male__e4	excitatory_set3	Exc RELN CHD7	Male	e4	M_e4x	1.01809	2.59309e-07	5746	397	26	10
+5	A	FKBP8	3	excitatory_set3::Exc NRGN::AD_vs_NCI__Male__e33	excitatory_set3	Exc NRGN	Male	e33	M_e33	-0.866926	1.40917e-50	4383	6868	28	52
+5	A	FKBP8	4	inhibitory::Inh RYR3 TSHZ2::AD_vs_NCI__Male__e2	inhibitory	Inh RYR3 TSHZ2	Male	e2	M_e2x	-0.808852	0.0494314	362	297	7	6
+5	A	FKBP8	5	excitatory_set3::Exc NRGN::AD_vs_NCI__Male__e2	excitatory_set3	Exc NRGN	Male	e2	M_e2x	0.790427	1.11328e-06	545	1905	7	6
+5	A	FKBP8	6	excitatory_set3::Exc NRGN::AD_vs_NCI__Male__e4	excitatory_set3	Exc NRGN	Male	e4	M_e4x	-0.713643	5.14969e-08	4828	461	27	10
+5	A	FKBP8	7	excitatory_set2::Exc L3-4 RORB CUX2::AD_vs_NCI__Male__e2	excitatory_set2	Exc L3-4 RORB CUX2	Male	e2	M_e2x	-0.685306	7.43525e-09	2069	3140	7	6
+5	A	FKBP8	8	excitatory_set2::Exc L4-5 RORB GABRG1::AD_vs_NCI__Male__e2	excitatory_set2	Exc L4-5 RORB GABRG1	Male	e2	M_e2x	-0.676679	0.000558872	1249	1339	7	6
+5	A	FKBP8	9	opcs::OPC::AD_vs_NCI__Male__e2	opcs	OPC	Male	e2	M_e2x	-0.618433	0.00188464	1320	1404	7	6
+5	A	FKBP8	10	excitatory_set2::Exc L4-5 RORB IL1RAPL2::AD_vs_NCI__Male__e2	excitatory_set2	Exc L4-5 RORB IL1RAPL2	Male	e2	M_e2x	-0.556434	1.77358e-09	1690	1874	7	6
+5	A	FKBP8	11	inhibitory::Inh PVALB SULF1::AD_vs_NCI__Male__e2	inhibitory	Inh PVALB SULF1	Male	e2	M_e2x	-0.549626	0.0351249	331	368	7	6
+5	A	FKBP8	12	excitatory_set1::Exc L2-3 CBLN2 LINC02306::AD_vs_NCI__Female__e4	excitatory_set1	Exc L2-3 CBLN2 LINC02306	Female	e4	F_e4x	-0.536781	3.72821e-30	15950	14571	26	11
+5	A	FKBP8	13	excitatory_set2::Exc L3-5 RORB PLCH1::AD_vs_NCI__Male__e2	excitatory_set2	Exc L3-5 RORB PLCH1	Male	e2	M_e2x	-0.525399	0.00015607	732	581	7	6
+5	A	FKBP8	14	excitatory_set3::Exc RELN CHD7::AD_vs_NCI__Female__e33	excitatory_set3	Exc RELN CHD7	Female	e33	F_e33	0.525189	1.65962e-05	2001	4024	35	44
+5	A	FKBP8	15	inhibitory::Inh CUX2 MSR1::AD_vs_NCI__Male__e2	inhibitory	Inh CUX2 MSR1	Male	e2	M_e2x	-0.521685	0.00340014	342	322	7	6
+5	A	FKBP8	16	excitatory_set1::Exc L2-3 CBLN2 LINC02306::AD_vs_NCI__Male__e2	excitatory_set1	Exc L2-3 CBLN2 LINC02306	Male	e2	M_e2x	-0.517967	2.82963e-46	4010	3277	7	6
+5	A	FKBP8	17	excitatory_set3::Exc L6 THEMIS NFIA::AD_vs_NCI__Female__e2	excitatory_set3	Exc L6 THEMIS NFIA	Female	e2	F_e2x	0.483904	3.10185e-25	839	2594	8	16
+5	A	FKBP8	18	excitatory_set2::Exc L3-4 RORB CUX2::AD_vs_NCI__Female__e2	excitatory_set2	Exc L3-4 RORB CUX2	Female	e2	F_e2x	0.475843	4.81468e-40	2049	7715	8	16
+5	A	FKBP8	19	excitatory_set3::Exc L6b::AD_vs_NCI__Female__e33	excitatory_set3	Exc L6b	Female	e33	F_e33	0.44667	1.68004e-42	2695	3137	36	45
+5	A	FKBP8	20	excitatory_set3::Exc L5/6 IT Car3::AD_vs_NCI__Female__e2	excitatory_set3	Exc L5/6 IT Car3	Female	e2	F_e2x	0.446565	1.7252e-05	174	699	8	16
+5	A	FKBP8	21	excitatory_set3::Exc L6 THEMIS NFIA::AD_vs_NCI__Male__e4	excitatory_set3	Exc L6 THEMIS NFIA	Male	e4	M_e4x	0.445389	1.40464e-22	3580	1566	27	10
+5	A	FKBP8	22	excitatory_set2::Exc L3-5 RORB PLCH1::AD_vs_NCI__Male__e4	excitatory_set2	Exc L3-5 RORB PLCH1	Male	e4	M_e4x	0.441637	1.73651e-11	2238	987	26	10
+5	A	FKBP8	23	excitatory_set3::Exc L5-6 RORB LINC02196::AD_vs_NCI__Male__e4	excitatory_set3	Exc L5-6 RORB LINC02196	Male	e4	M_e4x	0.435753	2.34335e-06	1275	493	27	10
+5	A	FKBP8	24	excitatory_set2::Exc L4-5 RORB IL1RAPL2::AD_vs_NCI__Female__e2	excitatory_set2	Exc L4-5 RORB IL1RAPL2	Female	e2	F_e2x	0.428171	7.35018e-35	1430	4990	8	17
+5	A	FKBP8	25	excitatory_set3::Exc L6b::AD_vs_NCI__Male__e4	excitatory_set3	Exc L6b	Male	e4	M_e4x	0.415161	1.05912e-05	1260	480	27	10
+5	A	FKBP8	26	astrocytes::Ast GRM3::AD_vs_NCI__Male__e2	astrocytes	Ast GRM3	Male	e2	M_e2x	-0.403286	1.53541e-08	1411	1186	7	6
+5	A	FKBP8	27	excitatory_set2::Exc L3-4 RORB CUX2::AD_vs_NCI__Female__e4	excitatory_set2	Exc L3-4 RORB CUX2	Female	e4	F_e4x	-0.390482	1.31644e-24	9664	4753	26	11
+5	A	FKBP8	28	excitatory_set3::Exc L6b::AD_vs_NCI__Male__e2	excitatory_set3	Exc L6b	Male	e2	M_e2x	-0.379117	2.1828e-06	363	383	7	6
+6	A	UQCC2	1	excitatory_set3::Exc L5/6 NP::AD_vs_NCI__Male__e2	excitatory_set3	Exc L5/6 NP	Male	e2	M_e2x	1.13713	0.00945694	295	285	7	6
+6	A	UQCC2	2	opcs::OPC::AD_vs_NCI__Male__e2	opcs	OPC	Male	e2	M_e2x	0.927067	0.00042907	1320	1404	7	6
+6	A	UQCC2	3	inhibitory::Inh PVALB HTR4::AD_vs_NCI__Male__e2	inhibitory	Inh PVALB HTR4	Male	e2	M_e2x	0.869422	0.0191361	612	545	7	6
+6	A	UQCC2	4	excitatory_set2::Exc L3-5 RORB PLCH1::AD_vs_NCI__Male__e2	excitatory_set2	Exc L3-5 RORB PLCH1	Male	e2	M_e2x	0.656086	6.18217e-09	732	581	7	6
+6	A	UQCC2	5	excitatory_set3::Exc L6 THEMIS NFIA::AD_vs_NCI__Male__e2	excitatory_set3	Exc L6 THEMIS NFIA	Male	e2	M_e2x	0.638288	0.000111305	1323	1024	7	6
+6	A	UQCC2	6	excitatory_set1::Exc L2-3 CBLN2 LINC02306::AD_vs_NCI__Female__e4	excitatory_set1	Exc L2-3 CBLN2 LINC02306	Female	e4	F_e4x	-0.563549	1.33052e-15	15950	14571	26	11
+6	A	UQCC2	7	astrocytes::Ast DPP10::AD_vs_NCI__Male__e4	astrocytes	Ast DPP10	Male	e4	M_e4x	0.502071	0.047702	1565	979	27	10
+6	A	UQCC2	8	excitatory_set2::Exc L4-5 RORB IL1RAPL2::AD_vs_NCI__Male__e2	excitatory_set2	Exc L4-5 RORB IL1RAPL2	Male	e2	M_e2x	0.501371	5.46406e-06	1690	1874	7	6
+6	A	UQCC2	9	excitatory_set3::Exc L5/6 IT Car3::AD_vs_NCI__Male__e2	excitatory_set3	Exc L5/6 IT Car3	Male	e2	M_e2x	0.476538	0.0398761	297	298	7	6
+6	A	UQCC2	10	excitatory_set2::Exc L3-5 RORB PLCH1::AD_vs_NCI__Male__e4	excitatory_set2	Exc L3-5 RORB PLCH1	Male	e4	M_e4x	0.428761	0.0299976	2238	987	26	10
+6	A	UQCC2	11	excitatory_set3::Exc L5 ET::AD_vs_NCI__Male__e33	excitatory_set3	Exc L5 ET	Male	e33	M_e33	-0.424311	0.00503042	280	511	24	50
+6	A	UQCC2	12	excitatory_set1::Exc L2-3 CBLN2 LINC02306::AD_vs_NCI__Male__e2	excitatory_set1	Exc L2-3 CBLN2 LINC02306	Male	e2	M_e2x	0.414483	6.29082e-24	4010	3277	7	6
+7	A	DMAC1	1	inhibitory::Inh L3-5 SST MAFB::AD_vs_NCI__Male__e2	inhibitory	Inh L3-5 SST MAFB	Male	e2	M_e2x	1.34694	0.00585433	364	292	7	6
+7	A	DMAC1	2	inhibitory::Inh CUX2 MSR1::AD_vs_NCI__Male__e2	inhibitory	Inh CUX2 MSR1	Male	e2	M_e2x	-0.959885	0.0216317	342	322	7	6
+7	A	DMAC1	3	excitatory_set2::Exc L3-5 RORB PLCH1::AD_vs_NCI__Male__e2	excitatory_set2	Exc L3-5 RORB PLCH1	Male	e2	M_e2x	-0.739681	0.000432179	732	581	7	6
+7	A	DMAC1	4	excitatory_set3::Exc RELN CHD7::AD_vs_NCI__Female__e4	excitatory_set3	Exc RELN CHD7	Female	e4	F_e4x	-0.711085	0.00283201	884	736	24	11
+7	A	DMAC1	5	excitatory_set1::Exc L2-3 CBLN2 LINC02306::AD_vs_NCI__Female__e4	excitatory_set1	Exc L2-3 CBLN2 LINC02306	Female	e4	F_e4x	-0.584261	5.4813e-16	15950	14571	26	11
+7	A	DMAC1	6	excitatory_set3::Exc L5 ET::AD_vs_NCI__Male__e33	excitatory_set3	Exc L5 ET	Male	e33	M_e33	0.566992	0.00743171	280	511	24	50
+7	A	DMAC1	7	excitatory_set2::Exc L3-4 RORB CUX2::AD_vs_NCI__Male__e2	excitatory_set2	Exc L3-4 RORB CUX2	Male	e2	M_e2x	-0.547726	1.57505e-05	2069	3140	7	6
+7	A	DMAC1	8	excitatory_set2::Exc L3-5 RORB PLCH1::AD_vs_NCI__Male__e4	excitatory_set2	Exc L3-5 RORB PLCH1	Male	e4	M_e4x	0.53447	0.00732831	2238	987	26	10
+7	A	DMAC1	9	excitatory_set2::Exc L4-5 RORB IL1RAPL2::AD_vs_NCI__Female__e2	excitatory_set2	Exc L4-5 RORB IL1RAPL2	Female	e2	F_e2x	0.532303	8.83823e-08	1430	4990	8	17
+7	A	DMAC1	10	excitatory_set1::Exc L2-3 CBLN2 LINC02306::AD_vs_NCI__Male__e2	excitatory_set1	Exc L2-3 CBLN2 LINC02306	Male	e2	M_e2x	-0.464003	1.08615e-16	4010	3277	7	6
+7	A	DMAC1	11	excitatory_set2::Exc L4-5 RORB GABRG1::AD_vs_NCI__Male__e2	excitatory_set2	Exc L4-5 RORB GABRG1	Male	e2	M_e2x	-0.459958	0.000656999	1249	1339	7	6
+7	A	DMAC1	12	excitatory_set3::Exc L6b::AD_vs_NCI__Male__e2	excitatory_set3	Exc L6b	Male	e2	M_e2x	0.388837	0.00766243	363	383	7	6
+8	A	TMEM126B	1	excitatory_set3::Exc RELN CHD7::AD_vs_NCI__Male__e4	excitatory_set3	Exc RELN CHD7	Male	e4	M_e4x	0.920405	0.00126472	5746	397	26	10
+8	A	TMEM126B	2	inhibitory::Inh ENOX2 SPHKAP::AD_vs_NCI__Male__e33	inhibitory	Inh ENOX2 SPHKAP	Male	e33	M_e33	0.690508	0.0303497	700	2076	27	52
+8	A	TMEM126B	3	excitatory_set2::Exc L3-4 RORB CUX2::AD_vs_NCI__Male__e2	excitatory_set2	Exc L3-4 RORB CUX2	Male	e2	M_e2x	-0.543883	1.11871e-12	2069	3140	7	6
+8	A	TMEM126B	4	excitatory_set1::Exc L2-3 CBLN2 LINC02306::AD_vs_NCI__Male__e2	excitatory_set1	Exc L2-3 CBLN2 LINC02306	Male	e2	M_e2x	-0.525061	2.37792e-23	4010	3277	7	6
+8	A	TMEM126B	5	excitatory_set2::Exc L4-5 RORB GABRG1::AD_vs_NCI__Male__e2	excitatory_set2	Exc L4-5 RORB GABRG1	Male	e2	M_e2x	-0.473213	0.0186593	1249	1339	7	6
+8	A	TMEM126B	6	excitatory_set3::Exc L5 ET::AD_vs_NCI__Male__e2	excitatory_set3	Exc L5 ET	Male	e2	M_e2x	0.461199	0.0391286	51	43	7	5
+8	A	TMEM126B	7	inhibitory::Inh PVALB HTR4::AD_vs_NCI__Male__e4	inhibitory	Inh PVALB HTR4	Male	e4	M_e4x	-0.450006	0.00739598	2593	877	27	10
+8	A	TMEM126B	8	excitatory_set3::Exc L5/6 IT Car3::AD_vs_NCI__Female__e2	excitatory_set3	Exc L5/6 IT Car3	Female	e2	F_e2x	0.443732	0.0152045	174	699	8	16
+8	A	TMEM126B	9	excitatory_set2::Exc L3-5 RORB PLCH1::AD_vs_NCI__Male__e2	excitatory_set2	Exc L3-5 RORB PLCH1	Male	e2	M_e2x	-0.415757	0.0252552	732	581	7	6
+8	A	TMEM126B	10	excitatory_set2::Exc L3-5 RORB PLCH1::AD_vs_NCI__Male__e33	excitatory_set2	Exc L3-5 RORB PLCH1	Male	e33	M_e33	-0.403468	0.00929834	2425	6074	28	53
+8	A	TMEM126B	11	excitatory_set3::Exc RELN CHD7::AD_vs_NCI__Female__e4	excitatory_set3	Exc RELN CHD7	Female	e4	F_e4x	-0.385112	0.00154361	884	736	24	11
+9	B	APOO	1	immune::Mic P2RY12::AD_vs_NCI__Male__e2	immune	Mic P2RY12	Male	e2	M_e2x	-1.26872	1.56619e-07	1175	390	7	6
+9	B	APOO	2	inhibitory::Inh CUX2 MSR1::AD_vs_NCI__Male__e2	inhibitory	Inh CUX2 MSR1	Male	e2	M_e2x	-1.03534	2.14854e-05	342	322	7	6
+9	B	APOO	3	excitatory_set2::Exc L3-4 RORB CUX2::AD_vs_NCI__Male__e2	excitatory_set2	Exc L3-4 RORB CUX2	Male	e2	M_e2x	-0.99166	1.89275e-11	2069	3140	7	6
+9	B	APOO	4	excitatory_set1::Exc L2-3 CBLN2 LINC02306::AD_vs_NCI__Male__e2	excitatory_set1	Exc L2-3 CBLN2 LINC02306	Male	e2	M_e2x	-0.925731	1.33876e-30	4010	3277	7	6
+9	B	APOO	5	excitatory_set2::Exc L4-5 RORB GABRG1::AD_vs_NCI__Male__e2	excitatory_set2	Exc L4-5 RORB GABRG1	Male	e2	M_e2x	-0.904843	6.56974e-05	1249	1339	7	6
+9	B	APOO	6	astrocytes::Ast GRM3::AD_vs_NCI__Male__e2	astrocytes	Ast GRM3	Male	e2	M_e2x	-0.900892	8.23989e-11	1411	1186	7	6
+9	B	APOO	7	excitatory_set3::Exc NRGN::AD_vs_NCI__Male__e33	excitatory_set3	Exc NRGN	Male	e33	M_e33	-0.856459	1.31435e-09	4383	6868	28	52
+9	B	APOO	8	inhibitory::Inh VIP CLSTN2::AD_vs_NCI__Male__e2	inhibitory	Inh VIP CLSTN2	Male	e2	M_e2x	-0.843264	0.04844	249	209	7	6
+9	B	APOO	9	immune::Mic TPT1::AD_vs_NCI__Male__e4	immune	Mic TPT1	Male	e4	M_e4x	-0.839407	0.00971516	217	283	24	8
+9	B	APOO	10	oligodendrocytes::Oli::AD_vs_NCI__Male__e2	oligodendrocytes	Oli	Male	e2	M_e2x	-0.727614	1.4562e-34	9717	5807	7	6
+9	B	APOO	11	opcs::OPC::AD_vs_NCI__Male__e2	opcs	OPC	Male	e2	M_e2x	-0.684694	1.26057e-07	1320	1404	7	6
+9	B	APOO	12	inhibitory::Inh L1-6 LAMP5 CA13::AD_vs_NCI__Male__e4	inhibitory	Inh L1-6 LAMP5 CA13	Male	e4	M_e4x	-0.672025	0.00136593	892	335	26	10
+9	B	APOO	13	inhibitory::Inh PVALB HTR4::AD_vs_NCI__Male__e2	inhibitory	Inh PVALB HTR4	Male	e2	M_e2x	-0.649745	0.00402698	612	545	7	6
+9	B	APOO	14	inhibitory::Inh LAMP5 NRG1 (Rosehip)::AD_vs_NCI__Female__e4	inhibitory	Inh LAMP5 NRG1 (Rosehip)	Female	e4	F_e4x	-0.633592	0.00077068	1329	914	24	11
+9	B	APOO	15	excitatory_set1::Exc L2-3 CBLN2 LINC02306::AD_vs_NCI__Female__e4	excitatory_set1	Exc L2-3 CBLN2 LINC02306	Female	e4	F_e4x	-0.59533	1.49652e-31	15950	14571	26	11
+9	B	APOO	16	excitatory_set2::Exc L4-5 RORB IL1RAPL2::AD_vs_NCI__Male__e2	excitatory_set2	Exc L4-5 RORB IL1RAPL2	Male	e2	M_e2x	-0.551386	1.39064e-08	1690	1874	7	6
+9	B	APOO	17	inhibitory::Inh LAMP5 NRG1 (Rosehip)::AD_vs_NCI__Male__e2	inhibitory	Inh LAMP5 NRG1 (Rosehip)	Male	e2	M_e2x	-0.540966	0.0123963	420	333	7	6
+9	B	APOO	18	excitatory_set3::Exc RELN CHD7::AD_vs_NCI__Female__e4	excitatory_set3	Exc RELN CHD7	Female	e4	F_e4x	-0.486118	0.00019851	884	736	24	11
+9	B	APOO	19	excitatory_set3::Exc RELN CHD7::AD_vs_NCI__Male__e33	excitatory_set3	Exc RELN CHD7	Male	e33	M_e33	-0.475049	6.33759e-23	22508	8393	28	51
+9	B	APOO	20	immune::Mic P2RY12::AD_vs_NCI__Male__e4	immune	Mic P2RY12	Male	e4	M_e4x	-0.465578	0.0017391	4158	1439	27	10
+9	B	APOO	21	inhibitory::Inh LAMP5 NRG1 (Rosehip)::AD_vs_NCI__Male__e4	inhibitory	Inh LAMP5 NRG1 (Rosehip)	Male	e4	M_e4x	-0.422483	0.00789946	1537	575	26	10
+10	B	MRPS7	1	inhibitory::Inh L3-5 SST MAFB::AD_vs_NCI__Male__e2	inhibitory	Inh L3-5 SST MAFB	Male	e2	M_e2x	0.842959	0.00697568	364	292	7	6
+10	B	MRPS7	2	excitatory_set2::Exc L3-4 RORB CUX2::AD_vs_NCI__Male__e2	excitatory_set2	Exc L3-4 RORB CUX2	Male	e2	M_e2x	-0.778043	4.68035e-07	2069	3140	7	6
+10	B	MRPS7	3	inhibitory::Inh CUX2 MSR1::AD_vs_NCI__Male__e2	inhibitory	Inh CUX2 MSR1	Male	e2	M_e2x	-0.73338	0.0196781	342	322	7	6
+10	B	MRPS7	4	excitatory_set3::Exc RELN CHD7::AD_vs_NCI__Female__e4	excitatory_set3	Exc RELN CHD7	Female	e4	F_e4x	-0.684567	0.00994559	884	736	24	11
+10	B	MRPS7	5	excitatory_set2::Exc L4-5 RORB GABRG1::AD_vs_NCI__Male__e2	excitatory_set2	Exc L4-5 RORB GABRG1	Male	e2	M_e2x	-0.683816	4.03198e-05	1249	1339	7	6
+10	B	MRPS7	6	excitatory_set1::Exc L2-3 CBLN2 LINC02306::AD_vs_NCI__Female__e4	excitatory_set1	Exc L2-3 CBLN2 LINC02306	Female	e4	F_e4x	-0.602187	2.7775e-10	15950	14571	26	11
+10	B	MRPS7	7	inhibitory::Inh PVALB SULF1::AD_vs_NCI__Female__e33	inhibitory	Inh PVALB SULF1	Female	e33	F_e33	-0.601498	0.00826043	2133	2480	37	45
+10	B	MRPS7	8	excitatory_set2::Exc L3-5 RORB PLCH1::AD_vs_NCI__Male__e2	excitatory_set2	Exc L3-5 RORB PLCH1	Male	e2	M_e2x	-0.590553	0.000265844	732	581	7	6
+10	B	MRPS7	9	excitatory_set1::Exc L2-3 CBLN2 LINC02306::AD_vs_NCI__Male__e2	excitatory_set1	Exc L2-3 CBLN2 LINC02306	Male	e2	M_e2x	-0.463909	1.23126e-29	4010	3277	7	6
+10	B	MRPS7	10	excitatory_set3::Exc L6 THEMIS NFIA::AD_vs_NCI__Male__e2	excitatory_set3	Exc L6 THEMIS NFIA	Male	e2	M_e2x	0.434464	2.85296e-06	1323	1024	7	6
+10	B	MRPS7	11	inhibitory::Inh VIP ABI3BP::AD_vs_NCI__Female__e4	inhibitory	Inh VIP ABI3BP	Female	e4	F_e4x	-0.416732	0.0261721	743	480	26	11
+10	B	MRPS7	12	opcs::OPC::AD_vs_NCI__Female__e2	opcs	OPC	Female	e2	F_e2x	0.387921	0.00479658	1325	3748	8	17
+10	B	MRPS7	13	inhibitory::Inh LAMP5 NRG1 (Rosehip)::AD_vs_NCI__Male__e33	inhibitory	Inh LAMP5 NRG1 (Rosehip)	Male	e33	M_e33	-0.385831	0.0189022	1647	4297	27	53
+11	B	TIMM13	1	inhibitory::Inh ENOX2 SPHKAP::AD_vs_NCI__Male__e4	inhibitory	Inh ENOX2 SPHKAP	Male	e4	M_e4x	-2.19923	0.0394012	711	240	25	10
+11	B	TIMM13	2	excitatory_set1::Exc L2-3 CBLN2 LINC02306::AD_vs_NCI__Female__e4	excitatory_set1	Exc L2-3 CBLN2 LINC02306	Female	e4	F_e4x	-1.44075	3.20544e-25	15950	14571	26	11
+11	B	TIMM13	3	excitatory_set2::Exc L4-5 RORB GABRG1::AD_vs_NCI__Male__e2	excitatory_set2	Exc L4-5 RORB GABRG1	Male	e2	M_e2x	-1.33478	2.66153e-10	1249	1339	7	6
+11	B	TIMM13	4	excitatory_set3::Exc RELN CHD7::AD_vs_NCI__Female__e4	excitatory_set3	Exc RELN CHD7	Female	e4	F_e4x	-1.04516	0.00511499	884	736	24	11
+11	B	TIMM13	5	excitatory_set1::Exc L2-3 CBLN2 LINC02306::AD_vs_NCI__Male__e2	excitatory_set1	Exc L2-3 CBLN2 LINC02306	Male	e2	M_e2x	-1.00444	1.19776e-18	4010	3277	7	6
+11	B	TIMM13	6	excitatory_set2::Exc L3-4 RORB CUX2::AD_vs_NCI__Male__e2	excitatory_set2	Exc L3-4 RORB CUX2	Male	e2	M_e2x	-0.974624	3.21442e-09	2069	3140	7	6
+11	B	TIMM13	7	excitatory_set3::Exc L6b::AD_vs_NCI__Male__e2	excitatory_set3	Exc L6b	Male	e2	M_e2x	0.913775	0.00627228	363	383	7	6
+11	B	TIMM13	8	excitatory_set2::Exc L3-5 RORB PLCH1::AD_vs_NCI__Male__e2	excitatory_set2	Exc L3-5 RORB PLCH1	Male	e2	M_e2x	-0.86335	0.00287485	732	581	7	6
+11	B	TIMM13	9	excitatory_set2::Exc L4-5 RORB IL1RAPL2::AD_vs_NCI__Male__e2	excitatory_set2	Exc L4-5 RORB IL1RAPL2	Male	e2	M_e2x	-0.660029	5.97469e-10	1690	1874	7	6
+11	B	TIMM13	10	excitatory_set3::Exc L6b::AD_vs_NCI__Female__e4	excitatory_set3	Exc L6b	Female	e4	F_e4x	-0.618096	0.00787185	1520	846	25	11
+11	B	TIMM13	11	excitatory_set2::Exc L4-5 RORB IL1RAPL2::AD_vs_NCI__Female__e4	excitatory_set2	Exc L4-5 RORB IL1RAPL2	Female	e4	F_e4x	-0.611123	1.47985e-05	6768	4054	26	11
+11	B	TIMM13	12	excitatory_set3::Exc L5/6 IT Car3::AD_vs_NCI__Female__e4	excitatory_set3	Exc L5/6 IT Car3	Female	e4	F_e4x	-0.609133	0.0100805	1113	561	25	11
+11	B	TIMM13	13	excitatory_set3::Exc L5/6 NP::AD_vs_NCI__Female__e33	excitatory_set3	Exc L5/6 NP	Female	e33	F_e33	0.511081	0.0428852	1752	2067	36	45
+11	B	TIMM13	14	inhibitory::Inh LAMP5 NRG1 (Rosehip)::AD_vs_NCI__Male__e33	inhibitory	Inh LAMP5 NRG1 (Rosehip)	Male	e33	M_e33	-0.450558	0.0142084	1647	4297	27	53
+11	B	TIMM13	15	excitatory_set3::Exc L6 CT::AD_vs_NCI__Female__e4	excitatory_set3	Exc L6 CT	Female	e4	F_e4x	-0.397678	0.0470899	1402	835	25	11
+11	B	TIMM13	16	excitatory_set3::Exc L5/6 IT Car3::AD_vs_NCI__Male__e2	excitatory_set3	Exc L5/6 IT Car3	Male	e2	M_e2x	0.397054	0.00463382	297	298	7	6
+11	B	TIMM13	17	inhibitory::Inh PVALB HTR4::AD_vs_NCI__Male__e4	inhibitory	Inh PVALB HTR4	Male	e4	M_e4x	-0.386221	0.000294779	2593	877	27	10
+12	B	FIS1	1	excitatory_set3::Exc RELN CHD7::AD_vs_NCI__Male__e2	excitatory_set3	Exc RELN CHD7	Male	e2	M_e2x	-1.88929	0.00644211	202	673	7	6
+12	B	FIS1	2	excitatory_set1::Exc L2-3 CBLN2 LINC02306::AD_vs_NCI__Female__e4	excitatory_set1	Exc L2-3 CBLN2 LINC02306	Female	e4	F_e4x	-1.51903	3.73615e-58	15950	14571	26	11
+12	B	FIS1	3	inhibitory::Inh PVALB HTR4::AD_vs_NCI__Female__e4	inhibitory	Inh PVALB HTR4	Female	e4	F_e4x	-1.20255	1.28674e-05	2139	1553	25	11
+12	B	FIS1	4	excitatory_set3::Exc RELN CHD7::AD_vs_NCI__Female__e4	excitatory_set3	Exc RELN CHD7	Female	e4	F_e4x	-0.929361	0.00607399	884	736	24	11
+12	B	FIS1	5	excitatory_set2::Exc L3-4 RORB CUX2::AD_vs_NCI__Male__e2	excitatory_set2	Exc L3-4 RORB CUX2	Male	e2	M_e2x	-0.802436	4.66329e-08	2069	3140	7	6
+12	B	FIS1	6	excitatory_set2::Exc L4-5 RORB GABRG1::AD_vs_NCI__Male__e2	excitatory_set2	Exc L4-5 RORB GABRG1	Male	e2	M_e2x	-0.798693	0.000108192	1249	1339	7	6
+12	B	FIS1	7	excitatory_set2::Exc L4-5 RORB GABRG1::AD_vs_NCI__Female__e4	excitatory_set2	Exc L4-5 RORB GABRG1	Female	e4	F_e4x	-0.773338	5.60261e-07	4249	2234	25	11
+12	B	FIS1	8	excitatory_set3::Exc RELN CHD7::AD_vs_NCI__Male__e4	excitatory_set3	Exc RELN CHD7	Male	e4	M_e4x	0.756706	0.0070306	5746	397	26	10
+12	B	FIS1	9	excitatory_set3::Exc NRGN::AD_vs_NCI__Male__e33	excitatory_set3	Exc NRGN	Male	e33	M_e33	-0.753066	1.61077e-06	4383	6868	28	52
+12	B	FIS1	10	excitatory_set3::Exc L6 CT::AD_vs_NCI__Female__e4	excitatory_set3	Exc L6 CT	Female	e4	F_e4x	-0.74194	0.00975333	1402	835	25	11
+12	B	FIS1	11	excitatory_set3::Exc L5/6 NP::AD_vs_NCI__Male__e2	excitatory_set3	Exc L5/6 NP	Male	e2	M_e2x	-0.697534	0.0147095	295	285	7	6
+12	B	FIS1	12	excitatory_set2::Exc L4-5 RORB IL1RAPL2::AD_vs_NCI__Female__e4	excitatory_set2	Exc L4-5 RORB IL1RAPL2	Female	e4	F_e4x	-0.688557	1.08621e-12	6768	4054	26	11
+12	B	FIS1	13	excitatory_set2::Exc L3-5 RORB PLCH1::AD_vs_NCI__Male__e2	excitatory_set2	Exc L3-5 RORB PLCH1	Male	e2	M_e2x	-0.673076	3.02441e-05	732	581	7	6
+12	B	FIS1	14	opcs::OPC::AD_vs_NCI__Male__e2	opcs	OPC	Male	e2	M_e2x	-0.664283	0.00899067	1320	1404	7	6
+12	B	FIS1	15	excitatory_set3::Exc L6b::AD_vs_NCI__Female__e4	excitatory_set3	Exc L6b	Female	e4	F_e4x	-0.589208	0.00191374	1520	846	25	11
+12	B	FIS1	16	inhibitory::Inh LAMP5 NRG1 (Rosehip)::AD_vs_NCI__Female__e4	inhibitory	Inh LAMP5 NRG1 (Rosehip)	Female	e4	F_e4x	-0.563181	0.0382432	1329	914	24	11
+12	B	FIS1	17	excitatory_set1::Exc L2-3 CBLN2 LINC02306::AD_vs_NCI__Male__e2	excitatory_set1	Exc L2-3 CBLN2 LINC02306	Male	e2	M_e2x	-0.560176	4.52098e-29	4010	3277	7	6
+12	B	FIS1	18	inhibitory::Inh LAMP5 NRG1 (Rosehip)::AD_vs_NCI__Male__e4	inhibitory	Inh LAMP5 NRG1 (Rosehip)	Male	e4	M_e4x	-0.556954	0.0212112	1537	575	26	10
+12	B	FIS1	19	excitatory_set2::Exc L3-5 RORB PLCH1::AD_vs_NCI__Female__e4	excitatory_set2	Exc L3-5 RORB PLCH1	Female	e4	F_e4x	-0.485444	0.0242049	2439	1115	26	11
+12	B	FIS1	20	excitatory_set3::Exc L5/6 IT Car3::AD_vs_NCI__Female__e4	excitatory_set3	Exc L5/6 IT Car3	Female	e4	F_e4x	-0.432305	0.0134081	1113	561	25	11
+12	B	FIS1	21	excitatory_set3::Exc L6 THEMIS NFIA::AD_vs_NCI__Female__e4	excitatory_set3	Exc L6 THEMIS NFIA	Female	e4	F_e4x	-0.421774	3.8515e-08	4415	1837	25	11
+12	B	FIS1	22	excitatory_set3::Exc L5/6 IT Car3::AD_vs_NCI__Female__e2	excitatory_set3	Exc L5/6 IT Car3	Female	e2	F_e2x	0.399503	0.0114872	174	699	8	16
+13	B	SLIRP	1	excitatory_set3::Exc RELN CHD7::AD_vs_NCI__Male__e2	excitatory_set3	Exc RELN CHD7	Male	e2	M_e2x	-1.69088	0.0254653	202	673	7	6
+13	B	SLIRP	2	excitatory_set1::Exc L2-3 CBLN2 LINC02306::AD_vs_NCI__Female__e4	excitatory_set1	Exc L2-3 CBLN2 LINC02306	Female	e4	F_e4x	-1.22382	5.99169e-59	15950	14571	26	11
+13	B	SLIRP	3	inhibitory::Inh LAMP5 NRG1 (Rosehip)::AD_vs_NCI__Male__e2	inhibitory	Inh LAMP5 NRG1 (Rosehip)	Male	e2	M_e2x	-1.10214	0.0119133	420	333	7	6
+13	B	SLIRP	4	excitatory_set3::Exc NRGN::AD_vs_NCI__Male__e2	excitatory_set3	Exc NRGN	Male	e2	M_e2x	-1.06571	5.25152e-08	545	1905	7	6
+13	B	SLIRP	5	inhibitory::Inh PVALB SULF1::AD_vs_NCI__Male__e2	inhibitory	Inh PVALB SULF1	Male	e2	M_e2x	-1.03268	0.000707157	331	368	7	6
+13	B	SLIRP	6	inhibitory::Inh L3-5 SST MAFB::AD_vs_NCI__Male__e2	inhibitory	Inh L3-5 SST MAFB	Male	e2	M_e2x	-0.922482	0.000123175	364	292	7	6
+13	B	SLIRP	7	excitatory_set3::Exc L5/6 IT Car3::AD_vs_NCI__Female__e4	excitatory_set3	Exc L5/6 IT Car3	Female	e4	F_e4x	-0.896007	0.0447744	1113	561	25	11
+13	B	SLIRP	8	excitatory_set2::Exc L3-4 RORB CUX2::AD_vs_NCI__Male__e2	excitatory_set2	Exc L3-4 RORB CUX2	Male	e2	M_e2x	-0.661531	2.51983e-06	2069	3140	7	6
+13	B	SLIRP	9	excitatory_set2::Exc L4-5 RORB IL1RAPL2::AD_vs_NCI__Female__e4	excitatory_set2	Exc L4-5 RORB IL1RAPL2	Female	e4	F_e4x	-0.65713	0.00997135	6768	4054	26	11
+13	B	SLIRP	10	immune::Mic P2RY12::AD_vs_NCI__Male__e4	immune	Mic P2RY12	Male	e4	M_e4x	0.629023	0.0185358	4158	1439	27	10
+13	B	SLIRP	11	excitatory_set2::Exc L3-5 RORB PLCH1::AD_vs_NCI__Male__e2	excitatory_set2	Exc L3-5 RORB PLCH1	Male	e2	M_e2x	-0.609945	1.29178e-06	732	581	7	6
+13	B	SLIRP	12	excitatory_set1::Exc L2-3 CBLN2 LINC02306::AD_vs_NCI__Male__e2	excitatory_set1	Exc L2-3 CBLN2 LINC02306	Male	e2	M_e2x	-0.59648	4.23165e-24	4010	3277	7	6
+13	B	SLIRP	13	excitatory_set2::Exc L4-5 RORB GABRG1::AD_vs_NCI__Male__e2	excitatory_set2	Exc L4-5 RORB GABRG1	Male	e2	M_e2x	-0.565709	9.42886e-07	1249	1339	7	6
+13	B	SLIRP	14	excitatory_set2::Exc L4-5 RORB GABRG1::AD_vs_NCI__Female__e4	excitatory_set2	Exc L4-5 RORB GABRG1	Female	e4	F_e4x	-0.559252	0.0302518	4249	2234	25	11
+13	B	SLIRP	15	astrocytes::Ast GRM3::AD_vs_NCI__Male__e2	astrocytes	Ast GRM3	Male	e2	M_e2x	-0.506509	9.77898e-08	1411	1186	7	6
+13	B	SLIRP	16	excitatory_set3::Exc L5-6 RORB LINC02196::AD_vs_NCI__Male__e2	excitatory_set3	Exc L5-6 RORB LINC02196	Male	e2	M_e2x	-0.472231	0.0405503	363	318	7	6
+13	B	SLIRP	17	opcs::OPC::AD_vs_NCI__Male__e2	opcs	OPC	Male	e2	M_e2x	-0.430203	0.00885437	1320	1404	7	6
+13	B	SLIRP	18	inhibitory::Inh PVALB HTR4::AD_vs_NCI__Male__e2	inhibitory	Inh PVALB HTR4	Male	e2	M_e2x	-0.426419	0.000123255	612	545	7	6
+13	B	SLIRP	19	excitatory_set2::Exc L4-5 RORB IL1RAPL2::AD_vs_NCI__Male__e2	excitatory_set2	Exc L4-5 RORB IL1RAPL2	Male	e2	M_e2x	-0.411548	9.77465e-06	1690	1874	7	6
+13	B	SLIRP	20	excitatory_set3::Exc RELN CHD7::AD_vs_NCI__Female__e4	excitatory_set3	Exc RELN CHD7	Female	e4	F_e4x	-0.398907	0.0046741	884	736	24	11
+14	B	NDUFAF4	1	excitatory_set3::Exc NRGN::AD_vs_NCI__Male__e4	excitatory_set3	Exc NRGN	Male	e4	M_e4x	-0.805616	0.00110751	4828	461	27	10
+14	B	NDUFAF4	2	excitatory_set2::Exc L3-5 RORB PLCH1::AD_vs_NCI__Male__e4	excitatory_set2	Exc L3-5 RORB PLCH1	Male	e4	M_e4x	0.566858	0.000220377	2238	987	26	10
+14	B	NDUFAF4	3	excitatory_set3::Exc L6 CT::AD_vs_NCI__Male__e33	excitatory_set3	Exc L6 CT	Male	e33	M_e33	0.566626	2.69559e-05	1546	3559	27	53
+14	B	NDUFAF4	4	excitatory_set3::Exc L5/6 IT Car3::AD_vs_NCI__Male__e4	excitatory_set3	Exc L5/6 IT Car3	Male	e4	M_e4x	0.521698	0.0013977	1124	427	27	10
+14	B	NDUFAF4	5	excitatory_set3::Exc NRGN::AD_vs_NCI__Male__e33	excitatory_set3	Exc NRGN	Male	e33	M_e33	-0.500555	0.0414974	4383	6868	28	52
+14	B	NDUFAF4	6	excitatory_set3::Exc L5-6 RORB LINC02196::AD_vs_NCI__Male__e4	excitatory_set3	Exc L5-6 RORB LINC02196	Male	e4	M_e4x	0.478683	0.0106933	1275	493	27	10
+14	B	NDUFAF4	7	excitatory_set2::Exc L4-5 RORB GABRG1::AD_vs_NCI__Male__e2	excitatory_set2	Exc L4-5 RORB GABRG1	Male	e2	M_e2x	-0.478174	3.36293e-09	1249	1339	7	6
+14	B	NDUFAF4	8	inhibitory::Inh PVALB HTR4::AD_vs_NCI__Male__e2	inhibitory	Inh PVALB HTR4	Male	e2	M_e2x	0.472723	2.04511e-06	612	545	7	6
+14	B	NDUFAF4	9	excitatory_set3::Exc L6 THEMIS NFIA::AD_vs_NCI__Male__e4	excitatory_set3	Exc L6 THEMIS NFIA	Male	e4	M_e4x	0.437514	1.82879e-07	3580	1566	27	10
+14	B	NDUFAF4	10	excitatory_set2::Exc L3-5 RORB PLCH1::AD_vs_NCI__Female__e4	excitatory_set2	Exc L3-5 RORB PLCH1	Female	e4	F_e4x	0.411619	0.0126671	2439	1115	26	11
+14	B	NDUFAF4	11	excitatory_set2::Exc L4-5 RORB IL1RAPL2::AD_vs_NCI__Male__e4	excitatory_set2	Exc L4-5 RORB IL1RAPL2	Male	e4	M_e4x	0.402977	2.12333e-11	6930	2820	27	10
+14	B	NDUFAF4	12	excitatory_set1::Exc L2-3 CBLN2 LINC02306::AD_vs_NCI__Male__e4	excitatory_set1	Exc L2-3 CBLN2 LINC02306	Male	e4	M_e4x	0.379352	1.04528e-06	15661	6766	27	10
+15	B	PARK7	1	astrocytes::Ast CHI3L1::AD_vs_NCI__Female__e2	astrocytes	Ast CHI3L1	Female	e2	F_e2x	1.12496	0.0421388	105	1104	6	16
+15	B	PARK7	2	excitatory_set2::Exc L4-5 RORB GABRG1::AD_vs_NCI__Male__e2	excitatory_set2	Exc L4-5 RORB GABRG1	Male	e2	M_e2x	-0.958306	2.7627e-07	1249	1339	7	6
+15	B	PARK7	3	excitatory_set2::Exc L3-4 RORB CUX2::AD_vs_NCI__Male__e2	excitatory_set2	Exc L3-4 RORB CUX2	Male	e2	M_e2x	-0.921759	6.74098e-15	2069	3140	7	6
+15	B	PARK7	4	excitatory_set1::Exc L2-3 CBLN2 LINC02306::AD_vs_NCI__Female__e4	excitatory_set1	Exc L2-3 CBLN2 LINC02306	Female	e4	F_e4x	-0.858464	5.59557e-37	15950	14571	26	11
+15	B	PARK7	5	excitatory_set2::Exc L3-5 RORB PLCH1::AD_vs_NCI__Male__e2	excitatory_set2	Exc L3-5 RORB PLCH1	Male	e2	M_e2x	-0.856745	0.000129133	732	581	7	6
+15	B	PARK7	6	excitatory_set3::Exc NRGN::AD_vs_NCI__Male__e33	excitatory_set3	Exc NRGN	Male	e33	M_e33	-0.789959	4.06528e-07	4383	6868	28	52
+15	B	PARK7	7	opcs::OPC::AD_vs_NCI__Male__e2	opcs	OPC	Male	e2	M_e2x	-0.777019	0.00377985	1320	1404	7	6
+15	B	PARK7	8	inhibitory::Inh L3-5 SST MAFB::AD_vs_NCI__Male__e2	inhibitory	Inh L3-5 SST MAFB	Male	e2	M_e2x	-0.736033	0.000921735	364	292	7	6
+15	B	PARK7	9	inhibitory::Inh CUX2 MSR1::AD_vs_NCI__Male__e2	inhibitory	Inh CUX2 MSR1	Male	e2	M_e2x	-0.725067	0.0208616	342	322	7	6
+15	B	PARK7	10	astrocytes::Ast GRM3::AD_vs_NCI__Male__e2	astrocytes	Ast GRM3	Male	e2	M_e2x	-0.709685	5.05821e-06	1411	1186	7	6
+15	B	PARK7	11	excitatory_set3::Exc RELN CHD7::AD_vs_NCI__Female__e4	excitatory_set3	Exc RELN CHD7	Female	e4	F_e4x	-0.705985	0.000245763	884	736	24	11
+15	B	PARK7	12	excitatory_set3::Exc L5/6 IT Car3::AD_vs_NCI__Female__e2	excitatory_set3	Exc L5/6 IT Car3	Female	e2	F_e2x	0.686974	5.44721e-05	174	699	8	16
+15	B	PARK7	13	excitatory_set1::Exc L2-3 CBLN2 LINC02306::AD_vs_NCI__Male__e2	excitatory_set1	Exc L2-3 CBLN2 LINC02306	Male	e2	M_e2x	-0.676176	1.27128e-25	4010	3277	7	6
+15	B	PARK7	14	excitatory_set3::Exc L5-6 RORB LINC02196::AD_vs_NCI__Female__e2	excitatory_set3	Exc L5-6 RORB LINC02196	Female	e2	F_e2x	0.622546	0.000748246	266	899	8	16
+15	B	PARK7	15	inhibitory::Inh PVALB SULF1::AD_vs_NCI__Male__e2	inhibitory	Inh PVALB SULF1	Male	e2	M_e2x	-0.602609	0.00313873	331	368	7	6
+15	B	PARK7	16	oligodendrocytes::Oli::AD_vs_NCI__Male__e2	oligodendrocytes	Oli	Male	e2	M_e2x	-0.582831	1.33315e-16	9717	5807	7	6
+15	B	PARK7	17	excitatory_set3::Exc L6 THEMIS NFIA::AD_vs_NCI__Female__e2	excitatory_set3	Exc L6 THEMIS NFIA	Female	e2	F_e2x	0.536238	1.18006e-12	839	2594	8	16
+15	B	PARK7	18	excitatory_set2::Exc L4-5 RORB IL1RAPL2::AD_vs_NCI__Female__e2	excitatory_set2	Exc L4-5 RORB IL1RAPL2	Female	e2	F_e2x	0.531574	1.6387e-16	1430	4990	8	17
+15	B	PARK7	19	excitatory_set3::Exc L5/6 IT Car3::AD_vs_NCI__Male__e2	excitatory_set3	Exc L5/6 IT Car3	Male	e2	M_e2x	0.484072	0.0406577	297	298	7	6
+15	B	PARK7	20	excitatory_set2::Exc L4-5 RORB IL1RAPL2::AD_vs_NCI__Male__e2	excitatory_set2	Exc L4-5 RORB IL1RAPL2	Male	e2	M_e2x	-0.441838	1.13557e-10	1690	1874	7	6
+15	B	PARK7	21	excitatory_set2::Exc L3-4 RORB CUX2::AD_vs_NCI__Female__e2	excitatory_set2	Exc L3-4 RORB CUX2	Female	e2	F_e2x	0.424481	2.34865e-18	2049	7715	8	16
