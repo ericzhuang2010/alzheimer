@@ -6,7 +6,6 @@
 logs/
 tmp/
 archive/
-bayesian_network/
 *.log
 *.out
 *.err
@@ -49,8 +48,6 @@ __pycache__/
 # Ignore local data except the reference assets maintained in Git.
 data/*
 !data/reference
-!data/bayesian_network/
-!data/bayesian_network/**
 !data/processed/
 data/processed/*
 !data/processed/dataset_707_basic_02-08-2022.clean.txt
