@@ -438,6 +438,22 @@
       "Author": "Hervé Pagès [aut, cre], Patrick Aboyoun [aut], Michael Lawrence [aut]",
       "Maintainer": "Hervé Pagès <hpages.on.github@gmail.com>"
     },
+    "KDA": {
+      "Package": "KDA",
+      "Version": "0.2",
+      "Source": "Local",
+      "Type": "Package",
+      "Title": "Performs Key Driver Analysis",
+      "Depends": [],
+      "Date": "2014-07-29",
+      "Author": "Bin Zhang",
+      "Maintainer": "Bin Zhang <Bin.Zhang@mssm.edu>",
+      "Description": "More about what it does (maybe more than one line)",
+      "License": "Artistic-2.0",
+      "LazyLoad": "yes",
+      "RemoteType": "local",
+      "RemoteUrl": "archive/wang_kda_code/KDA_analysis/KDA-0.2.tar.gz"
+    },
     "KernSmooth": {
       "Package": "KernSmooth",
       "Version": "2.23-22",

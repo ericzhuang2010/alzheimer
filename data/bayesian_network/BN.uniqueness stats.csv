@@ -1,0 +1,10 @@
+"Celltype","Total genes","Unique genes","Total edges","Unique Edges"
+"Astrocytes",8285,2080,8893,8456
+"CAMs",15260,8610,15608,15568
+"Excitatory_neurons",10441,3752,13825,13046
+"Inhibitory_neurons",9579,2394,10544,9717
+"Microglia",6604,1868,6832,6588
+"OPCs",8190,2192,9076,8598
+"Oligodendrocytes",8249,1861,8615,8109
+"T_cells",10360,3970,10484,10437
+"Vasculature_cells",5290,949,5267,5062
