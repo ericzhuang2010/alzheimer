@@ -1,0 +1,19 @@
+Regarding the network hubs (or key drivers) identification, you can use the call_key_drivers from my R package NetWeaver https://github.com/mw201608/NetWeaver
+
+ 
+
+To use this function, you need provide a network and a data.frame of gene signature (eg DEGs). Eg,
+
+ 
+
+net <- data.frame(from = c("A", "B", "C"), to = c("B", "C", "D"))
+
+signatures <- data.frame(Var = c("C", "D", "A", "B"), Group = rep(c("Male_vs_Female", "Apoe4_vs_Apoe3"), each = 2))
+
+call_key_drivers(net, signatures)
+
+ 
+Besides using the BNs that were constructed from pseudobulk data, you may also need to build cluster-specific gene coexpression networks for each of the 54 cell clusters using approaches like MEGENA (see example pipeline https://htmlpreview.github.io/?https://github.com/mw201608/mnml-public/blob/master/MEGENA_pipeline.html). One caveat is that you need to filter genes with low expression or expressed in a small number of cells before MEGRNA. We can discuss this tomorrow.
+
+
+Minghui

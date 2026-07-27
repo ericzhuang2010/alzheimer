@@ -1,0 +1,22 @@
+#!/bin/bash
+#BSUB -J kda_vasc_global
+#BSUB -P acc_zhangb03a
+#BSUB -q express
+#BSUB -n 1
+#BSUB -W 04:00
+#BSUB -R "rusage[mem=16000]"
+#BSUB -R "span[hosts=1]"
+#BSUB -L /bin/bash
+#BSUB -oo results/minerva_production/12_kda/logs/%J.out
+#BSUB -eo results/minerva_production/12_kda/logs/%J.err
+
+set -euo pipefail
+
+cd /sc/arion/work/zhuane01/alzheimer
+source docs/minerva/cmd_to_run_after_logging_in.txt
+export RENV_PATHS_CACHE=/sc/arion/work/zhuane01/.cache/renv
+
+Rscript scripts/analysis/kda/run_global_kda.R \
+  --network-id Vasculature_cells \
+  --network data/bayesian_network/Vasculature_cells/result.links3.links.txt \
+  --output-dir results/minerva_production/12_kda/global
