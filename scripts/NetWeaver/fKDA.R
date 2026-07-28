@@ -78,7 +78,8 @@ predictKeyDrivers = function(net, signature = NULL, nLayerToTest = 3, nLayersToE
         tab = cbind(tab, n = M - tab[, 'm'], k = length(signature))
         tab = cbind(tab, FE = round(tab[, 'q'] * M / tab[, 'm'] / tab[, 'k'], 2))
         tab = cbind(tab, log.P.Value = apply(as.matrix(tab[, ! colnames(tab) %in% c('BestLayer', 'Items'), drop = FALSE]), 1, function(x){
-            phyper(max(0, x[1] - 1), x[2], x[3], x[4], lower.tail = FALSE, log.p = TRUE)
+            # q = 0 must have an upper-tail enrichment P value of 1.
+            phyper(x[1] - 1, x[2], x[3], x[4], lower.tail = FALSE, log.p = TRUE)
         }))
         data.frame(Keydriver = x, tab, stringsAsFactors = FALSE)
     }, net = net, signature = expandedSigs, nLayerToTest = nLayerToTest, M = bg.size, directed = directed, return.overlap = return.overlap))

@@ -384,6 +384,11 @@ phase12_main <- function(cli_args = commandArgs(trailingOnly = TRUE)) {
           if (nzchar(kda_error)) reason <- "kda_error"
         }
         normalized <- normalize_kda_result(kda_result, meta, phase12$schemas$results)
+        if (nrow(normalized) && any(normalized$overlap_count < 1L)) {
+          kda_error <- "fKDA returned a significant key driver with zero signature overlap"
+          reason <- "kda_error"
+          normalized <- empty_results()
+        }
         terminal <- if (reason == "eligible") {
           if (nrow(normalized)) "completed_significant" else "completed_no_significant"
         } else if (reason == "kda_error") {

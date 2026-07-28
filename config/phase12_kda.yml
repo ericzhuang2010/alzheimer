@@ -31,7 +31,7 @@ eligibility:
 
 kda:
   source: scripts/NetWeaver/fKDA.R
-  source_sha256: 15d1708803310bd66720e089ffb02a30352c1d1ef556602ed867e1662b86efa0
+  source_sha256: fed8f89f35a3f08f38a420eb9b26c590cdc5f13a12064af1b9fa4a4cb1168550
   nLayerToTest: 3
   nLayersToExpand: 0
   directed: true

@@ -87,6 +87,8 @@ reverse_result <- suppressWarnings(capture.output({
 }))
 assert(!is.null(forward_kda) && "D" %in% forward_kda$Keydriver, "Directed positive-control KDA failed")
 assert(is.null(reverse_kda) || !"D" %in% reverse_kda$Keydriver, "Direction reversal did not remove driver D")
+assert(all(forward_kda$q > 0L), "KDA returned a zero-overlap key driver")
+assert(is.null(reverse_kda) || all(reverse_kda$q > 0L), "Reverse KDA returned a zero-overlap key driver")
 
 empty <- empty_results()
 assert(nrow(empty) == 0L && all(c("kda_run_id", "key_driver", "adjusted_p_value") %in% names(empty)),

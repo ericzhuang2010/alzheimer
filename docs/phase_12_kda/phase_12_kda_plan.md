@@ -360,7 +360,7 @@ bg.size   = length(B_primary)
 ```
 
 The plan deliberately does not pass a reduced scalar `bg.size` alongside an
-unrestricted full network. The unmodified `call_key_drivers()` function counts
+unrestricted full network. The reviewed `call_key_drivers()` function counts
 neighborhood nodes from the supplied network; using a smaller scalar without
 restricting network membership would make the neighborhood and background
 inconsistent.
@@ -894,6 +894,7 @@ The planned internal functions are:
 | `scripts/run_pipeline.R` | Register global task mode `kda` after `pathway`, resolve `project.phase12_kda_config`, add `kda` to the implemented global modes, pass no manifest row, and declare output schema `mitochondrial_kda_v1`. |
 | `config/local_pilot.yml` | Add `project.phase12_kda_config: config/phase12_kda.yml` and enable `kda` after `pathway`. |
 | `config/minerva_shared.yml` | Add `project.phase12_kda_config: config/phase12_kda.yml` and enable `kda` after `pathway`. |
+| `scripts/NetWeaver/fKDA.R` | Correct the upper-tail hypergeometric boundary from `phyper(max(0, q - 1), ...)` to `phyper(q - 1, ...)`, so a candidate with zero signature overlap has P = 1 rather than being tested as though it had one overlap. Freeze and verify the corrected SHA-256 from `config/phase12_kda.yml`. |
 | `renv.lock` | Change only if implementation requires a package that is not already pinned. |
 
 The pipeline must reject `--rds-id` for `kda`. Phase 12 is one global task in
@@ -901,9 +902,11 @@ each environment. It may parallelize eligible `run_id` rows internally, but
 temporary task shards remain outside the final phase directory and only one
 process performs the final combination and publication.
 
-### Files that remain unchanged
+### Files frozen after review or unchanged
 
-- `scripts/NetWeaver/fKDA.R` remains the frozen requested KDA source;
+- after the documented one-line statistical correction,
+  `scripts/NetWeaver/fKDA.R` is frozen by checksum and remains the requested
+  `call_key_drivers()` engine;
 - all existing files under `scripts/analysis/kda/` remain unchanged and are
   not the primary Phase 12 engine;
 - every Phase 00–11 scientific result and script remains unchanged;
