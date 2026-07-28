@@ -1,0 +1,110 @@
+schema_version: phase12_kda_config_v1
+
+query_universe:
+  profile: core_mito
+  mito_tiers: [core_mito_protein]
+
+primary_groups:
+  - {group_id: F_e2, sex: Female, apoe_group: e2}
+  - {group_id: F_e33, sex: Female, apoe_group: e33}
+  - {group_id: F_e4, sex: Female, apoe_group: e4}
+  - {group_id: M_e2, sex: Male, apoe_group: e2}
+  - {group_id: M_e33, sex: Male, apoe_group: e33}
+  - {group_id: M_e4, sex: Male, apoe_group: e4}
+
+secondary_pools:
+  female_pool: [F_e2, F_e33, F_e4]
+  male_pool: [M_e2, M_e33, M_e4]
+  e2_pool: [F_e2, M_e2]
+  e33_pool: [F_e33, M_e33]
+  e4_pool: [F_e4, M_e4]
+
+signature_directions: [AD_up_mito, AD_down_mito, AD_both_mito]
+
+background:
+  primary_policy: exact_contrast_tested_intersect_induced_network
+  pooled_policy: member_tested_intersection_intersect_induced_network
+
+eligibility:
+  minimum_effective_query_genes: 3
+  small_query_warning_below: 10
+
+kda:
+  source: scripts/NetWeaver/fKDA.R
+  source_sha256: 15d1708803310bd66720e089ffb02a30352c1d1ef556602ed867e1662b86efa0
+  nLayerToTest: 3
+  nLayersToExpand: 0
+  directed: true
+  reduce_within_nlayer: 2
+  fdr: 0.05
+  p_correction_method: BH
+  return_overlap: true
+
+networks:
+  Astrocytes:
+    path: data/bayesian_network/Astrocytes/result.links3.links.txt
+    sha256: 220c2dff6b1c95cb8654f9b19347f1c388ed539a369aa7c581cd748ff988634d
+  CAMs:
+    path: data/bayesian_network/CAMs/result.links3.links.txt
+    sha256: 8d0c911d1c6607d1ec21e28736c41875dc3f87947417a240763ce7a30cac7bf5
+  Excitatory_neurons:
+    path: data/bayesian_network/Excitatory_neurons/result.links3.links.txt
+    sha256: bfbb4859dd7298a1f1dfa9cb459e781b379ae4e57114e4858eacbcbf88786c8e
+  Inhibitory_neurons:
+    path: data/bayesian_network/Inhibitory_neurons/result.links3.links.txt
+    sha256: 9c2eb47351ece8af211487a8edb5143c594a59486da3a87af33555b4e3d41aa4
+  Microglia:
+    path: data/bayesian_network/Microglia/result.links3.links.txt
+    sha256: aa53b942e9496d5d91376f76045a3c29722c024f8bdfbe6b9b7a3a15950d21bb
+  OPCs:
+    path: data/bayesian_network/OPCs/result.links3.links.txt
+    sha256: 9660d52ed4d318cebdda93b42b8e57d79f6aadd21a1e0e50a5d0612ac5ed9683
+  Oligodendrocytes:
+    path: data/bayesian_network/Oligodendrocytes/result.links3.links.txt
+    sha256: e9f2dfb2d957368d4b98e96489c9ab9edc34cfa9f789a2490bf161c98e27b746
+  T_cells:
+    path: data/bayesian_network/T_cells/result.links3.links.txt
+    sha256: 8cfae0bbe2fcb296ace3c649e525201320439c4fc1ca8e942e2f9a446b8ed03c
+  Vasculature_cells:
+    path: data/bayesian_network/Vasculature_cells/result.links3.links.txt
+    sha256: 97e53fd2f9871d1e763b741aec5955556f7a9d12df94102fc4e623a906ac75c6
+
+expected:
+  local_pilot:
+    fine_cell_types: 5
+    primary_runs: 90
+    secondary_runs: 75
+    planned_runs: 165
+    networks: 1
+    validation_status: nonfinal_smoke_test
+  minerva_production:
+    fine_cell_types: 54
+    primary_runs: 972
+    secondary_runs: 810
+    planned_runs: 1782
+    networks: 9
+    validation_status: validated_complete
+
+outputs:
+  directory: 12_kda
+  files:
+    - kda_run_manifest.tsv
+    - kda_signature_members.tsv.gz
+    - kda_background_members.tsv.gz
+    - kda_results.tsv.gz
+    - kda_key_driver_summary.tsv
+    - kda_qc_summary.tsv
+    - kda_checks.tsv
+    - kda_artifacts.tsv
+    - kda_status.tsv
+
+schemas:
+  run_manifest: mitochondrial_kda_run_manifest_v1
+  signature_members: mitochondrial_kda_signature_members_v1
+  background_members: mitochondrial_kda_background_members_v1
+  results: mitochondrial_kda_results_v1
+  summary: mitochondrial_kda_key_driver_summary_v1
+  qc: mitochondrial_kda_qc_summary_v1
+  checks: mitochondrial_kda_checks_v1
+  artifacts: mitochondrial_kda_artifacts_v1
+  status: mitochondrial_kda_status_v1

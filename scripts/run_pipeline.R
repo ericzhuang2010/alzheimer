@@ -67,11 +67,11 @@ registry <- data.frame(
   task_mode = c(
     "environment", "parity", "audit", "cohort", "annotations", "qc",
     "normalize", "descriptive", "pseudobulk", "contrasts", "pseudobulk_de",
-    "mast", "annotate_genes", "similarity", "pathway"
+    "mast", "annotate_genes", "similarity", "pathway", "kda"
   ),
   scope = c(
     "global", "global", "rds", "global", "global", "rds", "rds", "rds",
-    "rds", "global", "rds", "rds", "global", "global", "global"
+    "rds", "global", "rds", "rds", "global", "global", "global", "global"
   ),
   script = c(
     "scripts/00_check_environment.R",
@@ -88,11 +88,12 @@ registry <- data.frame(
     "scripts/08_run_mast.R",
     "scripts/09_annotate_mitochondrial_genes.R",
     "scripts/10_calculate_mitochondrial_similarity.R",
-    "scripts/11_prepare_mitochondrial_pathway_data.R"
+    "scripts/11_prepare_mitochondrial_pathway_data.R",
+    "scripts/12_run_kda.R"
   ),
   argument_names = c(
     "config,execution-config,report,status",
-    rep("config,execution-config,manifest-row,task-mode", 14L)
+    rep("config,execution-config,manifest-row,task-mode", 15L)
   ),
   output_schema = c(
     "environment_checks_v1", "parity_v1", "rds_audit_v1", "cohort_v1",
@@ -100,7 +101,7 @@ registry <- data.frame(
     "descriptive_v1", "pseudobulk_v1", "contrast_manifest_v1",
     "pseudobulk_de_v1", "yu_mast_de_v2",
     "mitochondrial_annotation_status_v1", "mitochondrial_similarity_v1",
-    "mitochondrial_pathway_data_v1"
+    "mitochondrial_pathway_data_v1", "mitochondrial_kda_v1"
   ),
   stringsAsFactors = FALSE
 )
@@ -117,6 +118,9 @@ registry$argument_names[registry$task_mode == "similarity"] <- paste(
   c("config", "execution-config", "task-mode"), collapse = ","
 )
 registry$argument_names[registry$task_mode == "pathway"] <- paste(
+  c("config", "execution-config", "task-mode"), collapse = ","
+)
+registry$argument_names[registry$task_mode == "kda"] <- paste(
   c("config", "execution-config", "task-mode"), collapse = ","
 )
 
@@ -207,6 +211,12 @@ for (i in seq_len(nrow(selected_registry))) {
         stop("project.phase11_pathway_config is required for pathway", call. = FALSE)
       }
       absolute_path(phase11_config, root)
+    } else if (task$task_mode == "kda") {
+      phase12_config <- config$project$phase12_kda_config
+      if (is.null(phase12_config)) {
+        stop("project.phase12_kda_config is required for kda", call. = FALSE)
+      }
+      absolute_path(phase12_config, root)
     } else {
       analysis_path
     }
@@ -285,7 +295,7 @@ if (args$phase == "environment") {
 # scientific entry point in every execution stage.
 implemented_global_modes <- c(
   "cohort", "annotations", "contrasts", "annotate_genes", "similarity",
-  "pathway"
+  "pathway", "kda"
 )
 unsupported_global <- task_graph$task_mode[
   is.na(task_graph$manifest_row) &

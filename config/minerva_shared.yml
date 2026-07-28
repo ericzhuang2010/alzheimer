@@ -4,6 +4,7 @@ project:
   phase09_annotation_config: config/phase09_annotation.yml
   phase10_similarity_config: config/phase10_similarity.yml
   phase11_pathway_config: config/phase11_pathway.yml
+  phase12_kda_config: config/phase12_kda.yml
   manifest: config/minerva_rds_manifest.tsv
 
 inputs:
@@ -43,3 +44,4 @@ scope:
     - annotate_genes
     - similarity
     - pathway
+    - kda
