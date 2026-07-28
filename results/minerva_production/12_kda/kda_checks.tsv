@@ -1,0 +1,12 @@
+schema_version	check_id	severity	observed	expected	passed
+mitochondrial_kda_checks_v1	fine_cell_type_count	error	54	54	TRUE
+mitochondrial_kda_checks_v1	network_count	error	9	9	TRUE
+mitochondrial_kda_checks_v1	primary_run_count	error	972	972	TRUE
+mitochondrial_kda_checks_v1	secondary_run_count	error	810	810	TRUE
+mitochondrial_kda_checks_v1	planned_run_count	error	1782	1782	TRUE
+mitochondrial_kda_checks_v1	unique_run_ids	error	1782	1782	TRUE
+mitochondrial_kda_checks_v1	all_sources_represented	error	324	324	TRUE
+mitochondrial_kda_checks_v1	no_kda_failures	error	0	0	TRUE
+mitochondrial_kda_checks_v1	signatures_are_core_mito	error	0	0	TRUE
+mitochondrial_kda_checks_v1	effective_queries_in_background	error	0	0	TRUE
+mitochondrial_kda_checks_v1	networks_are_dags	error	9	9	TRUE
