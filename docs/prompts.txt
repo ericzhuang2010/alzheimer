@@ -1,0 +1,4 @@
+Please organize and add more content to /home/ericzhuang2010/VscodeProjects/alzheimer/docs/analysis/kda/phase12_driver_gene_discussion.md this way:
+1. For each discovery/hypothesis, create a section, in the seciont, first write the discovery, then conclusion followed by data-driven evidence. If this is something that was already confirmed by prior work, you should cite the prior paper with some discussions. So, do a literature review/search first. If it is a new discovery, please mark it in the section title.
+2. There should be summary at the beginning about all the discoveries, whether they are new or just a rediscovery
+3. in the end of the doc, list all the references.
