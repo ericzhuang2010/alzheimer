@@ -77,9 +77,9 @@ The default run creates:
 
 ```text
 results/figures/phase12_kda/
-├── phase12_kda_netweaver.svg
-├── phase12_kda_netweaver.png
-└── phase12_kda_netweaver_plotted_data.tsv
+├── phase12_kda_circular.svg
+├── phase12_kda_circular.png
+└── phase12_kda_circular_plotted_data.tsv
 ```
 
 The SVG is the editable vector figure. The PNG is 3600 by 3600 pixels at
@@ -130,7 +130,7 @@ The circular tracks run from outside to inside:
 
 `R` is a bar-height track. `T` is a two-color stacked composition track.
 `P` through `FE` use the same light-to-dark 0-to-1 heat scale. Exact values
-remain in `phase12_kda_netweaver_plotted_data.tsv`; caps affect display only.
+remain in `phase12_kda_circular_plotted_data.tsv`; caps affect display only.
 
 The eligible-run denominators are essential. Raw recurrence counts are not
 directly comparable across broad networks because the neuronal networks

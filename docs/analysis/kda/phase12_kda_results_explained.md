@@ -28,9 +28,9 @@ The generated files are:
 
 ```text
 results/figures/phase12_kda/
-├── phase12_kda_netweaver.svg
-├── phase12_kda_netweaver.png
-└── phase12_kda_netweaver_plotted_data.tsv
+├── phase12_kda_circular.svg
+├── phase12_kda_circular.png
+└── phase12_kda_circular_plotted_data.tsv
 ```
 
 The SVG and PNG contain the same figure. The SVG is an editable vector image.
@@ -433,6 +433,118 @@ skipped runs.
 | `is_root_node` | Whether the driver has no incoming edge in the run-specific directed network |
 | `global_key_driver` | NetWeaver's within-run reduction flag |
 | `overlap_items` | Semicolon-separated query genes covered by the driver's neighborhood |
+
+#### How `fold_enrichment` is calculated
+
+For each result row, define:
+
+| Symbol | Result column | Meaning |
+|---|---|---|
+| \(q\) | `overlap_count` | Effective signature genes in the selected neighborhood |
+| \(m\) | `neighborhood_size` | Background genes in the selected neighborhood |
+| \(n\) | `non_neighborhood_size` | Background genes outside the selected neighborhood |
+| \(k\) | `signature_size` | Effective signature genes in the complete run background |
+| \(M\) | `neighborhood_size + non_neighborhood_size` | Complete run-background size, \(m+n\) |
+
+The starting driver gene is included in its directed neighborhood.
+Consequently, when `is_signature = TRUE`, the driver itself can contribute
+one of the \(q\) overlapping genes.
+
+Fold enrichment compares the signature frequency inside the neighborhood
+with its frequency in the complete background:
+
+\[
+\mathrm{fold\ enrichment}
+=
+\frac{q/m}{k/M}
+=
+\frac{qM}{mk}.
+\]
+
+For the first production result, `RPL13`:
+
+```text
+q = 2
+m = 18
+n = 6,925
+M = 18 + 6,925 = 6,943
+k = 6
+```
+
+Therefore:
+
+\[
+\frac{2/18}{6/6943}
+=
+\frac{2 \times 6943}{18 \times 6}
+=
+128.574074\ldots
+\]
+
+The KDA implementation rounds this value to two decimal places, producing
+`fold_enrichment = 128.57`. This means that signature genes occur about
+128.57 times as frequently in the selected `RPL13` neighborhood as in the
+background for that run. It is an enrichment ratio, not an expression fold
+change or an odds ratio.
+
+#### How `log_p_value` is calculated
+
+NetWeaver tests whether the observed overlap is larger than expected if the
+signature genes were distributed randomly over the run background. If \(X\)
+is the random overlap, the raw one-sided P value is:
+
+\[
+P = P(X \ge q)
+=
+\sum_{x=q}^{\min(m,k)}
+\frac{\binom{m}{x}\binom{M-m}{k-x}}
+     {\binom{M}{k}}.
+\]
+
+The stored value is the natural logarithm of that raw P value:
+
+\[
+\texttt{log\_p\_value} = \ln\!\left(P(X \ge q)\right).
+\]
+
+The exact calculation, expressed using the result-table columns, is:
+
+```r
+phyper(
+  overlap_count - 1,
+  neighborhood_size,
+  non_neighborhood_size,
+  signature_size,
+  lower.tail = FALSE,
+  log.p = TRUE
+)
+```
+
+The `overlap_count - 1` boundary is required because the upper-tail call must
+calculate \(P(X \ge q)\). For the first `RPL13` row:
+
+```text
+raw P value = 9.46475915115303e-05
+log_p_value = ln(raw P value)
+            = -9.26535012689229
+```
+
+Thus, `log_p_value` is not a base-10 logarithm and is not negative-log
+evidence such as \(-\log_{10}(P)\). More-negative values correspond to
+smaller raw P values. The ordinary raw P value can be reconstructed with:
+
+```r
+exp(log_p_value)
+```
+
+For each candidate driver, NetWeaver tests the available cumulative directed
+neighborhood layers from 1 through 3 and retains the layer with the smallest
+raw P value as `best_layer`. It then converts the retained logged P values
+back to the ordinary P-value scale, applies Benjamini-Hochberg correction
+across candidate drivers within that run, and stores the result as
+`adjusted_p_value`. Only drivers with `adjusted_p_value <= 0.05` appear in
+`kda_results.tsv.gz`; `adjusted_p_value` itself is not logarithmically
+transformed.
 
 In directed mode, `global_key_driver = TRUE` means that the reported driver
 was not downstream, within the configured two-layer reduction window, of

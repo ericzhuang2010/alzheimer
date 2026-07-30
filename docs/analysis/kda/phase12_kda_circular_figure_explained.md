@@ -67,7 +67,7 @@ eligible analyses, to occupy nearly the entire figure.
 The complete list and its exact ordering are written to:
 
 ```text
-results/figures/phase12_kda/phase12_kda_netweaver_plotted_data.tsv
+results/figures/phase12_kda/phase12_kda_circular_plotted_data.tsv
 ```
 
 ## 6. How the eligible denominators are calculated
@@ -725,7 +725,7 @@ kda_key_driver_summary.tsv
     └── maximum fold enrichment
              │
              ▼
-phase12_kda_netweaver_plotted_data.tsv
+phase12_kda_circular_plotted_data.tsv
     │
     ├── one row per displayed network–driver sector
     ├── raw Phase 12 summary values
@@ -742,8 +742,8 @@ NetWeaver rc.* plotting functions
     └── same-gene cross-network links
              │
              ▼
-phase12_kda_netweaver.svg
-phase12_kda_netweaver.png
+phase12_kda_circular.svg
+phase12_kda_circular.png
 ```
 
 This separation is intentional: the validated Phase 12 bundle remains

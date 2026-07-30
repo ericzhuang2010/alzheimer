@@ -18,6 +18,29 @@ The central result is a **sex- and APOE-dependent switch in the AD-associated ox
 
 This is a strong pathway-level and descriptive cell-type pattern, but it is **not yet a demonstrated causal interaction**. No mitochondrial gene passed the Phase 10 directional similarity FDR, and the current MAST branch does not fit formal AD-by-sex or AD-by-APOE interaction terms. “Different between strata” below therefore means that the stratified AD-versus-NCI signatures differ; it does not mean that a direct interaction test is significant.
 
+## Summary: what is new versus what mostly matches prior work
+
+### Results that are not new and largely match previous work
+
+These findings are consistent with earlier analyses and should be treated as recapitulation or confirmation rather than as the main novelty of this report:
+
+- The broad presence of mitochondrial involvement in AD-related transcriptional change, including OXPHOS and respiratory-chain signals, is consistent with earlier Yu-style transcriptome-wide analyses.
+- The general observation that APOE ε4 and sex alter the magnitude or direction of AD-associated metabolic programs is also consistent with prior human and model-based literature.
+- The observation that mitochondrial genes can be differentially expressed in a cell-type-specific manner is not new by itself; this report mainly refines where and how that signal appears in the present dataset.
+
+### Results that are new or were not the main focus of previous work
+
+These are the elements that are genuinely new or more explicit in this analysis:
+
+- A stratified sex-by-APOE mitochondrial analysis that treats the mitochondrial response as a prespecified biological domain rather than an incidental transcriptome-wide signal.
+- A clear sex-by-APOE switch in OXPHOS direction, especially the female ε2 up / male ε2 down contrast and the female ε4 down / male ε4 mixed contrast.
+- A focused mitochondrial pathway analysis showing that OXPHOS is the dominant recurring program, with genotype-specific directionality rather than a single uniform effect.
+- A more explicit distinction between gene-level DEG recurrence and pathway-level convergence, showing that the pathway signal can be strong even when no individual mitochondrial gene passes the formal family-corrected threshold.
+- A proposed mitonuclear discordance framework and a more explicit discussion of mitochondrial maintenance, import, translation, and mitophagy as subgroup-sensitive processes.
+- A set of subgroup-specific hypotheses, such as the female ε2 up / male ε2 down OXPHOS switch and the female ε4 chaperone/import/mitophagy decrease, that are not framed as established causal mechanisms but as new mechanistic hypotheses to test.
+
+In short, the repository largely recapitulates the earlier finding that mitochondrial biology is relevant in AD, but it is new in making the sex-by-APOE mitochondrial response explicit, directional, and pathway-centered rather than only a broad transcriptome-wide observation.
+
 ## Analytical frame
 
 The cohort contains 276 donors after the Yu-compatible exclusions: 142 NCI and 134 AD. Six strata were analyzed:

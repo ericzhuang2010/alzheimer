@@ -7,7 +7,7 @@ parse_args <- function(args) {
     input_dir = "results/minerva_production/12_kda",
     netweaver_dir = "untracked/NetWeaver",
     output_dir = "results/figures/phase12_kda",
-    basename = "phase12_kda_netweaver",
+    basename = "phase12_kda_circular",
     top_per_network = 5L
   )
   value_options <- c(
