@@ -1,0 +1,35 @@
+
+
+The conclusion for DEG and similarity is too broad, based on visual examination (figures), 
+need more deep mining. what you said is just observation, not conclusion. 
+
+Figure out in what case, it is more like to have have differences than non-MT 
+which ones are consistently showing difference among sex groups.
+which ones are more important
+
+For KDA, there are can be common celltype driver vs. unique celltype driver
+
+
+Bayesian network many not be correct, there is noise, the prediction of the key driver
+is just prediction.
+
+We need to find other evidence to validate. For example: genetic disease, we know 
+many genetic variance, want to see if key driver has genetic signal or
+gene-wide signature
+Follow some tutorial and paper is the best to do the research of validation.
+
+Another approach is to predict driver with other approaches, for example some other MT
+studied in the past using mouse.
+
+THe third approach is to validate or repeat with other dataset.
+
+Figure out what group of MT showing more profound changes. Need to dig a little more deep, not just broad and general.
+Very likely you do not see any key driver. Network is sparse. Not a lot of network 
+connections. You may build a different network. 
+
+A lot of things may require you to dig deeper. 
+
+Not code is wrong. what kind of data processing is necesary. make sure you have
+the high quality, like gene filtering.
+Most time you can visualize the network and key driver.
+If have more question, we can have more meeting. We can schedule a meeting immediately.
