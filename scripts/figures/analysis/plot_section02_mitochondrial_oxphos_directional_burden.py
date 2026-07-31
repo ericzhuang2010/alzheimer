@@ -39,7 +39,10 @@ try:
 
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
+    from matplotlib import transforms
     from matplotlib.patches import Patch
+    from matplotlib.patches import Rectangle
+    from matplotlib.text import Text
     from matplotlib.ticker import FuncFormatter
 except ImportError as exc:
     raise SystemExit(
@@ -122,6 +125,16 @@ class PlotRow:
     ad_down_pct_tested: float
     significant_pct_tested: float
     ad_up_pct_significant: float
+
+
+@dataclass(frozen=True)
+class DirectionAnnotation:
+    """A directional count label and the bar that constrains its placement."""
+
+    text: Text
+    bar: Rectangle
+    direction: str
+    endpoint: float
 
 
 def parse_args() -> argparse.Namespace:
@@ -366,38 +379,134 @@ def atomic_write_text(text: str, destination: Path) -> None:
 
 def annotate_direction(
     ax: plt.Axes,
+    bar: Rectangle,
     y: float,
     count: int,
     percent: float,
     direction: str,
-) -> None:
+) -> DirectionAnnotation:
     signed_endpoint = percent if direction == "up" else -percent
     label = f"{count:,} ({percent:.2f}%)"
-    large_bar = percent >= 7.0
-    if large_bar:
-        inset = 0.35
-        x = signed_endpoint - inset if direction == "up" else signed_endpoint + inset
-        horizontal_alignment = "right" if direction == "up" else "left"
-        color = "white"
-        fontweight = "bold"
-    else:
-        offset = 0.28
-        x = signed_endpoint + offset if direction == "up" else signed_endpoint - offset
-        horizontal_alignment = "left" if direction == "up" else "right"
-        color = COLOR_TEXT
-        fontweight = "normal"
-    ax.text(
-        x,
+    horizontal_alignment = "left" if direction == "up" else "right"
+    text = ax.text(
+        signed_endpoint,
         y,
         label,
         ha=horizontal_alignment,
         va="center",
-        fontsize=8.4,
-        color=color,
-        fontweight=fontweight,
+        fontsize=9.6,
+        color=COLOR_TEXT,
+        fontweight="normal",
         clip_on=False,
         zorder=5,
     )
+    return DirectionAnnotation(
+        text=text,
+        bar=bar,
+        direction=direction,
+        endpoint=signed_endpoint,
+    )
+
+
+def place_direction_annotations(
+    fig: plt.Figure,
+    annotations: list[DirectionAnnotation],
+) -> None:
+    """Place labels inside bars only when a padded rendered fit is possible."""
+
+    # Work in physical points so the whitespace is preserved in every output
+    # format. Candidate labels are first inset into their bars; labels that do
+    # not fit with the required padding are moved fully outside instead.
+    inside_inset_points = 5.0
+    outside_offset_points = 4.5
+    minimum_horizontal_padding_points = 3.5
+    minimum_vertical_padding_points = 2.0
+    fig.canvas.draw()
+    renderer = fig.canvas.get_renderer()
+
+    for annotation in annotations:
+        direction_sign = 1 if annotation.direction == "up" else -1
+        annotation.text.set_position(
+            (annotation.endpoint, annotation.text.get_position()[1])
+        )
+        annotation.text.set_ha("right" if direction_sign > 0 else "left")
+        annotation.text.set_color("white")
+        annotation.text.set_fontweight("bold")
+        annotation.text.set_transform(
+            annotation.text.axes.transData
+            + transforms.ScaledTranslation(
+                -direction_sign * inside_inset_points / 72.0,
+                0,
+                fig.dpi_scale_trans,
+            )
+        )
+
+        text_bounds = annotation.text.get_window_extent(renderer=renderer)
+        bar_bounds = annotation.bar.get_window_extent(renderer=renderer)
+        horizontal_padding = minimum_horizontal_padding_points * fig.dpi / 72.0
+        vertical_padding = minimum_vertical_padding_points * fig.dpi / 72.0
+        fits_inside = (
+            text_bounds.x0 >= bar_bounds.x0 + horizontal_padding
+            and text_bounds.x1 <= bar_bounds.x1 - horizontal_padding
+            and text_bounds.y0 >= bar_bounds.y0 + vertical_padding
+            and text_bounds.y1 <= bar_bounds.y1 - vertical_padding
+        )
+        if fits_inside:
+            continue
+
+        annotation.text.set_ha("left" if direction_sign > 0 else "right")
+        annotation.text.set_color(COLOR_TEXT)
+        annotation.text.set_fontweight("normal")
+        annotation.text.set_transform(
+            annotation.text.axes.transData
+            + transforms.ScaledTranslation(
+                direction_sign * outside_offset_points / 72.0,
+                0,
+                fig.dpi_scale_trans,
+            )
+        )
+
+    fig.canvas.draw()
+
+
+def validate_layout(
+    fig: plt.Figure,
+    axes: Iterable[plt.Axes],
+    legend: matplotlib.legend.Legend,
+    annotations: list[DirectionAnnotation],
+) -> None:
+    """Fail loudly if the rendered typography violates key clearances."""
+
+    renderer = fig.canvas.get_renderer()
+    legend_bounds = legend.get_window_extent(renderer=renderer)
+    clearance_pixels = 5.0 * fig.dpi / 72.0
+    for ax in axes:
+        title_bounds = ax.title.get_window_extent(renderer=renderer)
+        if title_bounds.y1 + clearance_pixels > legend_bounds.y0:
+            raise RuntimeError(
+                f"Panel title {ax.get_title()!r} is too close to the legend"
+            )
+
+    for annotation in annotations:
+        text_bounds = annotation.text.get_window_extent(renderer=renderer)
+        bar_bounds = annotation.bar.get_window_extent(renderer=renderer)
+        horizontal_padding = 3.0 * fig.dpi / 72.0
+        vertical_padding = 1.5 * fig.dpi / 72.0
+        if annotation.text.get_color() == "white":
+            has_padding = (
+                text_bounds.x0 >= bar_bounds.x0 + horizontal_padding
+                and text_bounds.x1 <= bar_bounds.x1 - horizontal_padding
+                and text_bounds.y0 >= bar_bounds.y0 + vertical_padding
+                and text_bounds.y1 <= bar_bounds.y1 - vertical_padding
+            )
+        elif annotation.direction == "up":
+            has_padding = text_bounds.x0 >= bar_bounds.x1 + horizontal_padding
+        else:
+            has_padding = text_bounds.x1 <= bar_bounds.x0 - horizontal_padding
+        if not has_padding:
+            raise RuntimeError(
+                f"Bar label {annotation.text.get_text()!r} lacks boundary padding"
+            )
 
 
 def draw_panel(
@@ -405,7 +514,7 @@ def draw_panel(
     rows: list[PlotRow],
     title: str,
     show_y_labels: bool,
-) -> None:
+) -> list[DirectionAnnotation]:
     rows_by_stratum = {row.stratum: row for row in rows}
     ordered = [rows_by_stratum[stratum] for stratum in STRATUM_ORDER]
     y_values = [Y_POSITIONS[row.stratum] for row in ordered]
@@ -417,7 +526,7 @@ def draw_panel(
     for separator in (5.0, 2.0):
         ax.axhline(separator, color="#E5E5E5", linewidth=0.8, zorder=1)
 
-    ax.barh(
+    down_bars = ax.barh(
         y_values,
         down_values,
         height=0.64,
@@ -426,7 +535,7 @@ def draw_panel(
         linewidth=0.7,
         zorder=3,
     )
-    ax.barh(
+    up_bars = ax.barh(
         y_values,
         up_values,
         height=0.64,
@@ -436,20 +545,32 @@ def draw_panel(
         zorder=3,
     )
 
-    for row, y in zip(ordered, y_values):
-        annotate_direction(
-            ax,
-            y,
-            row.ad_down_occurrences,
-            row.ad_down_pct_tested,
-            "down",
+    annotations: list[DirectionAnnotation] = []
+    for row, y, down_bar, up_bar in zip(
+        ordered,
+        y_values,
+        down_bars.patches,
+        up_bars.patches,
+    ):
+        annotations.append(
+            annotate_direction(
+                ax,
+                down_bar,
+                y,
+                row.ad_down_occurrences,
+                row.ad_down_pct_tested,
+                "down",
+            )
         )
-        annotate_direction(
-            ax,
-            y,
-            row.ad_up_occurrences,
-            row.ad_up_pct_tested,
-            "up",
+        annotations.append(
+            annotate_direction(
+                ax,
+                up_bar,
+                y,
+                row.ad_up_occurrences,
+                row.ad_up_pct_tested,
+                "up",
+            )
         )
         ax.text(
             19.35,
@@ -457,7 +578,7 @@ def draw_panel(
             f"{row.significant_pct_tested:.2f}%",
             ha="right",
             va="center",
-            fontsize=8.5,
+            fontsize=9.7,
             fontweight="bold",
             color=COLOR_TEXT,
             zorder=5,
@@ -468,7 +589,7 @@ def draw_panel(
             f"{row.tested_occurrences:,} tested",
             ha="right",
             va="center",
-            fontsize=7.1,
+            fontsize=8.2,
             color=COLOR_MUTED,
             zorder=5,
         )
@@ -487,13 +608,13 @@ def draw_panel(
     )
     ax.grid(axis="x", color=COLOR_GRID, linewidth=0.7, alpha=0.85, zorder=0)
     ax.grid(axis="y", visible=False)
-    ax.tick_params(axis="x", labelsize=8.5, colors=COLOR_MUTED, length=0)
+    ax.tick_params(axis="x", labelsize=9.5, colors=COLOR_MUTED, length=0)
     ax.tick_params(axis="y", length=0, pad=7)
     ax.set_yticks(y_values)
     if show_y_labels:
         ax.set_yticklabels(
             [row.stratum for row in ordered],
-            fontsize=9.6,
+            fontsize=11.0,
             color=COLOR_TEXT,
         )
     else:
@@ -502,10 +623,10 @@ def draw_panel(
     ax.set_title(
         title,
         loc="left",
-        fontsize=12.2,
+        fontsize=14.0,
         fontweight="bold",
         color=COLOR_TEXT,
-        pad=25,
+        pad=18,
     )
     ax.text(
         -19.4,
@@ -513,7 +634,7 @@ def draw_panel(
         "← AD-down",
         ha="left",
         va="center",
-        fontsize=8.5,
+        fontsize=9.6,
         fontweight="bold",
         color=COLOR_DOWN,
     )
@@ -523,7 +644,7 @@ def draw_panel(
         "AD-up →",
         ha="right",
         va="center",
-        fontsize=8.5,
+        fontsize=9.6,
         fontweight="bold",
         color=COLOR_UP,
     )
@@ -533,7 +654,7 @@ def draw_panel(
         "Total DEG\nrate / tested",
         ha="right",
         va="center",
-        fontsize=7.3,
+        fontsize=8.4,
         fontweight="bold",
         color=COLOR_MUTED,
         linespacing=1.0,
@@ -543,13 +664,14 @@ def draw_panel(
         ax.spines[spine].set_visible(False)
     ax.spines["bottom"].set_color("#A8A8A8")
     ax.spines["bottom"].set_linewidth(0.8)
+    return annotations
 
 
 def make_figure(plot_rows: list[PlotRow]) -> plt.Figure:
     matplotlib.rcParams.update(
         {
             "font.family": "DejaVu Sans",
-            "font.size": 9,
+            "font.size": 10,
             "axes.unicode_minus": False,
             "svg.fonttype": "none",
             "pdf.fonttype": 42,
@@ -560,7 +682,7 @@ def make_figure(plot_rows: list[PlotRow]) -> plt.Figure:
     fig, axes = plt.subplots(
         nrows=1,
         ncols=2,
-        figsize=(13.2, 7.4),
+        figsize=(15.2, 8.8),
         sharey=True,
         gridspec_kw={"wspace": 0.07},
     )
@@ -571,73 +693,75 @@ def make_figure(plot_rows: list[PlotRow]) -> plt.Figure:
         row for row in plot_rows if row.gene_set == "OXPHOS subunits"
     ]
 
-    draw_panel(
+    annotations = draw_panel(
         axes[0],
         mitochondrial_rows,
         "All mitochondrial genes",
         show_y_labels=True,
     )
-    draw_panel(
-        axes[1],
-        oxphos_rows,
-        "OXPHOS subunits",
-        show_y_labels=False,
+    annotations.extend(
+        draw_panel(
+            axes[1],
+            oxphos_rows,
+            "OXPHOS subunits",
+            show_y_labels=False,
+        )
     )
 
     fig.suptitle(
         "Direction and burden of AD-associated mitochondrial transcription",
         x=0.5,
-        y=0.975,
-        fontsize=16,
+        y=0.972,
+        fontsize=18,
         fontweight="bold",
         color=COLOR_TEXT,
     )
     fig.text(
         0.5,
-        0.935,
+        0.925,
         "AD versus no cognitive impairment, stratified by sex and APOE genotype",
         ha="center",
         va="center",
-        fontsize=10.5,
+        fontsize=12.0,
         color=COLOR_MUTED,
     )
-    fig.legend(
+    legend = fig.legend(
         handles=[
             Patch(facecolor=COLOR_DOWN, edgecolor="none", label="AD-down"),
             Patch(facecolor=COLOR_UP, edgecolor="none", label="AD-up"),
         ],
         loc="upper center",
-        bbox_to_anchor=(0.5, 0.905),
+        bbox_to_anchor=(0.5, 0.878),
         ncol=2,
         frameon=False,
         handlelength=1.5,
         columnspacing=2.0,
-        fontsize=9.4,
+        fontsize=10.8,
     )
     fig.text(
         0.5,
-        0.095,
+        0.105,
         "Significant gene–fine-cell-type occurrences (% of all tested occurrences)",
         ha="center",
         va="center",
-        fontsize=10,
+        fontsize=11.5,
         color=COLOR_TEXT,
     )
     fig.text(
         0.5,
-        0.047,
+        0.058,
         (
             "Bar labels are occurrence count (percentage tested). Total DEG "
             "rate is the combined AD-up and AD-down percentage."
         ),
         ha="center",
         va="center",
-        fontsize=8.2,
+        fontsize=9.2,
         color=COLOR_MUTED,
     )
     fig.text(
         0.5,
-        0.022,
+        0.028,
         (
             "Occurrences can repeat a gene across fine cell types and are not "
             "unique genes or donors; strata are descriptive, not formal "
@@ -645,16 +769,18 @@ def make_figure(plot_rows: list[PlotRow]) -> plt.Figure:
         ),
         ha="center",
         va="center",
-        fontsize=8.2,
+        fontsize=9.2,
         color=COLOR_MUTED,
     )
     fig.subplots_adjust(
         left=0.12,
         right=0.985,
-        top=0.82,
-        bottom=0.14,
+        top=0.77,
+        bottom=0.16,
         wspace=0.07,
     )
+    place_direction_annotations(fig, annotations)
+    validate_layout(fig, axes, legend, annotations)
     return fig
 
 

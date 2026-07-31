@@ -2,3 +2,25 @@ Please organize and add more content to /home/ericzhuang2010/VscodeProjects/alzh
 1. For each discovery/hypothesis, create a section, in the seciont, first write the discovery, then conclusion followed by data-driven evidence. If this is something that was already confirmed by prior work, you should cite the prior paper with some discussions. So, do a literature review/search first. If it is a new discovery, please mark it in the section title.
 2. There should be summary at the beginning about all the discoveries, whether they are new or just a rediscovery
 3. in the end of the doc, list all the references.
+
+
+Please organize and add more content to docs/analysis/kda/phase12_driver_gene_discussion.md this way:
+For each discovery/hypothesis, create a section, in the seciont, first write the discovery, then conclusion followed by data-driven evidence. If this is something that was already confirmed by prior work, you should cite the prior paper with some discussions. So, do a literature review/search first. If it is a new discovery, please mark it in the section title.
+There should be summary at the beginning about all the discoveries, whether they are new or just a rediscovery
+in the end of the doc, list all the references.
+
+
+please look at both /Users/rzhuang/Documents/VscodeProjects/alzheimer/docs/analysis/kda/phase12_driver_gene_discussion.md and /Users/rzhuang/Documents/VscodeProjects/alzheimer/docs/analysis/mt_pathway/phase11_pathway_discussion.md
+to see there anything that can be connected/cross-referenced to discuss together?
+
+
+now combine both md files and produce a joint file that can be later used to write a publishable paper. The requirements are the same
+For each discovery/hypothesis, create a section, in the seciont, first write the discovery, then conclusion followed by data-driven evidence. If this is something that was already confirmed by prior work, you should cite the prior paper with some discussions. So, do a literature review/search first. If it is a new discovery, please mark it in the section title.
+There should be summary at the beginning about all the discoveries, whether they are new or just a rediscovery
+in the end of the doc, list all the references.
+Put the writeup as a md file under docs/analysis
+
+
+For figure /Users/rzhuang/Documents/VscodeProjects/alzheimer/results/figures/analysis/section02_mitochondrial_oxphos_directional_burden.pdf do
+increase the font size but make sure do not let the font cross the boundary of any bar or box, there is enough margin to the boundary
+make sure text do not overlap with each other. for example the title "OXPHOS subunits" overlaps with one the color legend
