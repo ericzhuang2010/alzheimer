@@ -24,3 +24,9 @@ Put the writeup as a md file under docs/analysis
 For figure /Users/rzhuang/Documents/VscodeProjects/alzheimer/results/figures/analysis/section02_mitochondrial_oxphos_directional_burden.pdf do
 increase the font size but make sure do not let the font cross the boundary of any bar or box, there is enough margin to the boundary
 make sure text do not overlap with each other. for example the title "OXPHOS subunits" overlaps with one the color legend
+
+
+In /Users/rzhuang/Documents/VscodeProjects/alzheimer/docs/analysis/phase11_phase12_joint_mitochondrial_discussion.md, there are 20 discoveries (section 2 to section 21). I want to find high priority ones which meet the following:
+1. it is relatively novel (not reported by prior paper or only small overlap)
+2. identifies a key driver
+Please tell me which ones are high priority
