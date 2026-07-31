@@ -552,17 +552,100 @@ separately.” It does not mean “prove the result.”
 
 > **“APOE-related clinical effects vary with sex and age.”**
 
-#### What kind of effects?
+#### Plain-language translation
 
-The cited studies concern outcomes such as AD risk and clinical progression.
-They show that an APOE association can depend on the participant's sex and age
-range.
+APOE genotype does not act as a fixed risk multiplier that is identical for
+every person. In the cited studies, the association between an APOE genotype
+and an AD-related outcome differed between women and men, and some of the sex
+difference appeared only within a particular age range.
+
+Here, **“effects” means statistical associations in groups of people**. It
+does not mean that these studies directly measured what APOE did to a
+mitochondrion.
+
+#### What is being compared?
+
+Each person has two APOE copies. The common combinations discussed here
+include:
+
+- **ε3/ε3**, generally used as the reference group;
+- **ε3/ε4**, which contains one ε4 copy and is associated with higher AD risk;
+  and
+- **ε2/ε3**, which contains one ε2 copy and is associated with lower AD risk
+  on average.
+
+A sex-specific estimate compares women with one genotype against women in the
+reference genotype, and separately makes the corresponding comparison among
+men. Researchers then use an **APOE-by-sex interaction test** to ask whether
+the two genotype associations differ by more than would be expected from
+sampling variation. A result being significant in women but not in men is not,
+by itself, proof of such a difference; the interaction is the relevant test.
+
+#### What Altmann et al. found
+
+Altmann and colleagues pooled longitudinal cohorts and asked whether carrying
+ε4 was associated with clinical conversion:
+
+- Among 5,496 initially cognitively normal participants, ε4 carriers had a
+  higher rate of conversion to mild cognitive impairment or AD. The estimated
+  hazard ratio was **1.81 in women** and **1.27 in men**, and the
+  APOE-by-sex interaction was significant (`p = 0.011`).
+- Among 2,588 participants who already had mild cognitive impairment, the
+  hazard ratios for conversion to AD were **2.16 in women** and **1.64 in
+  men**. In the full analysis, however, the interaction was not significant
+  (`p = 0.14`). This is an important reminder that two different-looking
+  estimates do not automatically establish a sex difference.
+- In a cerebrospinal-fluid subset with mild cognitive impairment, ε4 was
+  associated with a more AD-like total-tau level and tau-to-amyloid-β ratio in
+  women than in men.
+
+A hazard ratio of 1.81 does **not** mean that 81% of women developed AD. It
+means that, under that study's time-to-event model, the estimated conversion
+rate for female ε4 carriers was 1.81 times the rate for the female reference
+group during follow-up.
+
+#### What Neu et al. added about age
+
+Neu and colleagues combined 27 studies with nearly 58,000 participants. Their
+larger analysis made the sex result more specific:
+
+- Across the full **55–85-year** range, the AD odds associated with ε3/ε4 did
+  not differ significantly between women and men.
+- Within approximately **65–75 years**, ε3/ε4 was associated with higher AD
+  odds in women than in men.
+- ε2/ε3 was associated with lower AD odds in both sexes, but the association
+  was stronger in women: the odds ratio was **0.51 in women** and **0.71 in
+  men**, relative to ε3/ε3 in the same sex (`APOE-by-sex p = 0.01`).
+
+An odds ratio of 0.51 means approximately 49% lower **odds** than the reference
+group; it does not mean a 51% chance of AD or guarantee protection for an
+individual. Similarly, the 65–75 result does not mean that APOE suddenly
+switches on at age 65 or off at age 75. It means that the detectable sex
+difference was concentrated in that age window in those data.
+
+#### How to read the original sentence
+
+The sentence therefore says:
+
+> The clinical association of an APOE genotype is context-dependent; its
+> estimated size can differ by sex and by the ages included in the analysis.
+
+It does **not** say:
+
+- every female ε4 carrier has greater risk than every male ε4 carrier;
+- APOE genotype alone determines whether someone develops AD;
+- ε2 prevents AD in every carrier; or
+- sex and age have already been shown to cause the OXPHOS RNA directions in
+  this study.
 
 #### Why this is indirect evidence
 
 Clinical risk is not the same measurement as OXPHOS RNA in a particular brain
-cell. These studies support the possibility of biological context dependence
-but do not establish its mitochondrial mechanism.
+cell. The cited results justify keeping sex and APOE groups separate instead of
+assuming one universal APOE association. They do not show that the female-ε2
+OXPHOS-up pattern is protective, that the male-ε2 OXPHOS-down pattern is
+harmful, or that mitochondrial transcription explains the reported clinical
+risk differences.
 
 See [Altmann et al., 2014](https://doi.org/10.1002/ana.24135) and
 [Neu et al., 2017](https://doi.org/10.1001/jamaneurol.2017.2188).
