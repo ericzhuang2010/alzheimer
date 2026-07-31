@@ -20,7 +20,7 @@ coordinates.
 The reproducible adapter is:
 
 ```text
-scripts/figures/visualize_phase12_kda_netweaver.R
+scripts/figures/analysis/phease12_kda/visualize_phase12_kda_netweaver.R
 ```
 
 It sources only NetWeaver's circular plotting functions. It deliberately does
@@ -46,23 +46,23 @@ The figure uses:
 | `kda_key_driver_summary.tsv` | Select recurrent drivers and obtain recurrence, tier, global-driver, adjusted-P, and fold-enrichment summaries |
 
 The script writes figures outside the nine-file Phase 12 output bundle, under
-`results/figures/phase12_kda/`.
+`results/figures/analysis/phase12_kda/`.
 
 ## Run it
 
 From the project root:
 
 ```bash
-Rscript scripts/figures/visualize_phase12_kda_netweaver.R
+Rscript scripts/figures/analysis/phease12_kda/visualize_phase12_kda_netweaver.R
 ```
 
 Useful options:
 
 ```bash
-Rscript scripts/figures/visualize_phase12_kda_netweaver.R \
+Rscript scripts/figures/analysis/phease12_kda/visualize_phase12_kda_netweaver.R \
   --input-dir results/minerva_production/12_kda \
   --netweaver-dir untracked/NetWeaver \
-  --output-dir results/figures/phase12_kda \
+  --output-dir results/figures/analysis/phase12_kda \
   --basename phase12_kda_netweaver \
   --top-per-network 5
 ```
@@ -70,13 +70,13 @@ Rscript scripts/figures/visualize_phase12_kda_netweaver.R \
 Show the full option list with:
 
 ```bash
-Rscript scripts/figures/visualize_phase12_kda_netweaver.R --help
+Rscript scripts/figures/analysis/phease12_kda/visualize_phase12_kda_netweaver.R --help
 ```
 
 The default run creates:
 
 ```text
-results/figures/phase12_kda/
+results/figures/analysis/phase12_kda/
 ├── phase12_kda_circular.svg
 ├── phase12_kda_circular.png
 └── phase12_kda_circular_plotted_data.tsv
@@ -156,4 +156,3 @@ for example, OPCs or oligodendrocytes.
 - CAMs and T cells appear in the validated Phase 12 manifest but had no
   eligible KDA runs, so they cannot contribute driver sectors. The figure
   states this explicitly rather than treating them as negative results.
-

@@ -67,7 +67,7 @@ eligible analyses, to occupy nearly the entire figure.
 The complete list and its exact ordering are written to:
 
 ```text
-results/figures/phase12_kda/phase12_kda_circular_plotted_data.tsv
+results/figures/analysis/phase12_kda/phase12_kda_circular_plotted_data.tsv
 ```
 
 ## 6. How the eligible denominators are calculated
@@ -676,16 +676,16 @@ directions support the circular summary.
 Run this command from the project root:
 
 ```bash
-Rscript scripts/figures/visualize_phase12_kda_netweaver.R
+Rscript scripts/figures/analysis/phease12_kda/visualize_phase12_kda_netweaver.R
 ```
 
 The explicit equivalent is:
 
 ```bash
-Rscript scripts/figures/visualize_phase12_kda_netweaver.R \
+Rscript scripts/figures/analysis/phease12_kda/visualize_phase12_kda_netweaver.R \
   --input-dir results/minerva_production/12_kda \
   --netweaver-dir untracked/NetWeaver \
-  --output-dir results/figures/phase12_kda \
+  --output-dir results/figures/analysis/phase12_kda \
   --basename phase12_kda_netweaver \
   --top-per-network 5
 ```
@@ -694,7 +694,7 @@ To display a different number of drivers per result-producing network, change
 `--top-per-network`. For example:
 
 ```bash
-Rscript scripts/figures/visualize_phase12_kda_netweaver.R \
+Rscript scripts/figures/analysis/phease12_kda/visualize_phase12_kda_netweaver.R \
   --top-per-network 10 \
   --basename phase12_kda_netweaver_top10
 ```

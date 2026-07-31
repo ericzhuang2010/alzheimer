@@ -21,13 +21,13 @@ results/minerva_production/12_kda/
 The figure-generation code is:
 
 ```text
-scripts/figures/visualize_phase12_kda_netweaver.R
+scripts/figures/analysis/phease12_kda/visualize_phase12_kda_netweaver.R
 ```
 
 The generated files are:
 
 ```text
-results/figures/phase12_kda/
+results/figures/analysis/phase12_kda/
 ├── phase12_kda_circular.svg
 ├── phase12_kda_circular.png
 └── phase12_kda_circular_plotted_data.tsv
@@ -760,4 +760,3 @@ validation_status == validated_complete
 ```
 
 before it will plot the production data.
-

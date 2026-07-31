@@ -6,7 +6,7 @@ parse_args <- function(args) {
   out <- list(
     input_dir = "results/minerva_production/12_kda",
     netweaver_dir = "untracked/NetWeaver",
-    output_dir = "results/figures/phase12_kda",
+    output_dir = "results/figures/analysis/phase12_kda",
     basename = "phase12_kda_circular",
     top_per_network = 5L
   )
@@ -20,7 +20,8 @@ parse_args <- function(args) {
     key <- args[[i]]
     if (key %in% c("--help", "-h")) {
       cat(
-        "Usage: Rscript scripts/figures/visualize_phase12_kda_netweaver.R ",
+        "Usage: Rscript scripts/figures/analysis/phease12_kda/",
+        "visualize_phase12_kda_netweaver.R ",
         "[--input-dir DIR] [--netweaver-dir DIR] [--output-dir DIR] ",
         "[--basename NAME] [--top-per-network N]\n",
         sep = ""

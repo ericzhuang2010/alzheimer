@@ -1,0 +1,13 @@
+stratum	sex	apoe_group	gene_set	significant_occurrences	tested_occurrences	ad_up_occurrences	ad_down_occurrences	ad_up_pct_tested	ad_down_pct_tested	significant_pct_tested	ad_up_pct_significant
+Female ε2	Female	ε2	All mitochondrial genes	1128	37647	935	193	2.483598	0.512657	2.996255	82.890071
+Female ε2	Female	ε2	OXPHOS subunits	403	3736	398	5	10.653105	0.133833	10.786938	98.759305
+Male ε2	Male	ε2	All mitochondrial genes	3753	35380	1613	2140	4.559073	6.048615	10.607688	42.978950
+Male ε2	Male	ε2	OXPHOS subunits	659	3505	95	564	2.710414	16.091298	18.801712	14.415781
+Female ε3/ε3	Female	ε3/ε3	All mitochondrial genes	821	36775	554	267	1.506458	0.726037	2.232495	67.478685
+Female ε3/ε3	Female	ε3/ε3	OXPHOS subunits	332	3677	319	13	8.675551	0.353549	9.029100	96.084337
+Male ε3/ε3	Male	ε3/ε3	All mitochondrial genes	869	35304	377	492	1.067868	1.393610	2.461477	43.383199
+Male ε3/ε3	Male	ε3/ε3	OXPHOS subunits	171	3534	85	86	2.405207	2.433503	4.838710	49.707602
+Female ε4	Female	ε4	All mitochondrial genes	1633	37006	269	1364	0.726909	3.685889	4.412798	16.472750
+Female ε4	Female	ε4	OXPHOS subunits	324	3641	50	274	1.373249	7.525405	8.898654	15.432099
+Male ε4	Male	ε4	All mitochondrial genes	1058	35290	510	548	1.445169	1.552848	2.998016	48.204159
+Male ε4	Male	ε4	OXPHOS subunits	227	3589	141	86	3.928671	2.396211	6.324882	62.114537
