@@ -190,6 +190,10 @@ colours <- list(
   both_fill = "#EEE7F2"
 )
 
+figure_width <- 15.5
+figure_height <- 5.6
+figure_pointsize <- 18
+
 rounded_box <- function(
     x0, y0, x1, y1, fill = "white", border = "#93A2AC",
     radius = 0.10, lwd = 1.2, lty = 1) {
@@ -257,59 +261,61 @@ draw_panel_b <- function(values) {
   )
   on.exit(graphics::par(old), add = TRUE)
   graphics::plot.new()
-  graphics::plot.window(xlim = c(0, 18), ylim = c(0, 5.2), asp = NA)
+  graphics::plot.window(
+    xlim = c(0, figure_width), ylim = c(0, figure_height), asp = NA
+  )
 
   rounded_box(
-    0.35, 0.35, 17.65, 4.85,
+    0.35, 0.35, 15.15, 5.25,
     fill = "white", border = "#CBD3D8", radius = 0.16, lwd = 1.4
   )
-  graphics::rect(0.35, 4.15, 17.65, 4.85, col = "#EAF0F3", border = NA)
+  graphics::rect(0.35, 4.45, 15.15, 5.25, col = "#EAF0F3", border = NA)
   graphics::text(
-    0.65, 4.50, "B  |  Primary and Secondary Runs",
-    adj = c(0, 0.5), cex = 1.38, font = 2, col = colours$ink
+    0.65, 4.85, "Primary and Secondary Runs",
+    adj = c(0, 0.5), cex = 1.30, font = 2, col = colours$ink
   )
   draw_pill(
-    15.90, 4.50, 2.75, 0.47,
+    13.50, 4.85, 2.65, 0.50,
     paste0(format_count(values[["planned_runs"]]), " planned runs"),
     fill = "#F8FAFB", border = colours$ink, cex = 0.80
   )
 
   rounded_box(
-    0.72, 2.40, 17.28, 3.87,
+    0.72, 2.65, 14.78, 4.18,
     fill = colours$primary_fill, border = colours$primary,
     radius = 0.15, lwd = 1.8
   )
   graphics::text(
-    1.03, 3.55, "PRIMARY", adj = c(0, 0.5), cex = 1.02,
+    1.00, 3.85, "PRIMARY", adj = c(0, 0.5), cex = 1.02,
     font = 2, col = colours$primary
   )
   graphics::text(
-    1.03, 3.13, "six individual\nstrata", adj = c(0, 0.5),
+    1.00, 3.39, "six individual\nstrata", adj = c(0, 0.5),
     cex = 0.78, col = colours$text
   )
 
   groups <- c("F e2", "F e33", "F e4", "M e2", "M e33", "M e4")
-  gx <- seq(3.20, 9.15, length.out = length(groups))
+  gx <- seq(2.75, 7.85, length.out = length(groups))
   for (i in seq_along(groups)) {
     draw_pill(
-      gx[[i]], 3.33, 0.93, 0.54, groups[[i]],
+      gx[[i]], 3.55, 0.93, 0.56, groups[[i]],
       fill = "white", border = colours$primary, cex = 0.72
     )
   }
   graphics::text(
-    6.18, 2.72, "each AD–NCI contrast remains separate",
+    5.30, 2.96, "each AD–NCI contrast remains separate",
     cex = 0.72, col = colours$text, font = 3
   )
-  draw_arrow(9.75, 3.17, 10.38, 3.17, col = colours$primary)
-  draw_signature_badge(11.02, 3.33, "up", "AD-up", width = 1.13)
-  draw_signature_badge(12.27, 3.33, "down", "AD-down", width = 1.25)
-  draw_signature_badge(13.52, 3.33, "both", "Both", width = 1.08)
+  draw_arrow(8.36, 3.39, 8.83, 3.39, col = colours$primary)
+  draw_signature_badge(9.43, 3.55, "up", "AD-up", width = 1.13)
+  draw_signature_badge(10.63, 3.55, "down", "AD-down", width = 1.25)
+  draw_signature_badge(11.83, 3.55, "both", "Both", width = 1.08)
   graphics::text(
-    12.27, 2.72, "D_both = D_up ∪ D_down",
+    10.63, 2.96, "D_both = D_up ∪ D_down",
     cex = 0.72, col = colours$text
   )
   draw_pill(
-    15.95, 3.17, 2.15, 0.74,
+    13.65, 3.39, 2.05, 0.76,
     paste0(
       "54 × 6 × 3\n= ", format_count(values[["primary_planned_runs"]])
     ),
@@ -317,16 +323,16 @@ draw_panel_b <- function(values) {
   )
 
   rounded_box(
-    0.72, 0.65, 17.28, 2.10,
+    0.72, 0.65, 14.78, 2.34,
     fill = colours$secondary_fill, border = colours$secondary,
     radius = 0.15, lwd = 1.8, lty = 2
   )
   graphics::text(
-    1.03, 1.78, "SECONDARY", adj = c(0, 0.5), cex = 1.02,
+    1.00, 2.02, "SECONDARY", adj = c(0, 0.5), cex = 1.02,
     font = 2, col = colours$secondary
   )
   graphics::text(
-    1.03, 1.35, "five pooled\nsummaries", adj = c(0, 0.5),
+    1.00, 1.53, "five pooled\nsummaries", adj = c(0, 0.5),
     cex = 0.78, col = colours$text
   )
 
@@ -334,29 +340,29 @@ draw_panel_b <- function(values) {
     "Female\nF e2+e33+e4", "Male\nM e2+e33+e4",
     "e2\nF+M", "e33\nF+M", "e4\nF+M"
   )
-  px <- seq(3.15, 8.95, length.out = length(pool_labels))
+  px <- seq(2.73, 7.77, length.out = length(pool_labels))
   for (i in seq_along(pool_labels)) {
     rounded_box(
-      px[[i]] - 0.61, 1.01, px[[i]] + 0.61, 1.75,
+      px[[i]] - 0.58, 1.03, px[[i]] + 0.58, 1.86,
       fill = "white", border = colours$secondary, radius = 0.10,
       lwd = 1.25, lty = 2
     )
     graphics::text(
-      px[[i]], 1.38, pool_labels[[i]], cex = 0.66,
+      px[[i]], 1.45, pool_labels[[i]], cex = 0.66,
       font = 2, col = colours$ink
     )
   }
-  draw_arrow(9.65, 1.38, 10.27, 1.38, col = colours$secondary)
-  draw_signature_badge(10.91, 1.55, "up", "P-up", width = 1.04)
-  draw_signature_badge(12.08, 1.55, "down", "P-down", width = 1.15)
-  draw_signature_badge(13.24, 1.55, "both", "Both", width = 1.04)
+  draw_arrow(8.34, 1.45, 8.78, 1.45, col = colours$secondary)
+  draw_signature_badge(9.34, 1.61, "up", "P-up", width = 1.04)
+  draw_signature_badge(10.48, 1.61, "down", "P-down", width = 1.15)
+  draw_signature_badge(11.62, 1.61, "both", "Both", width = 1.04)
   graphics::text(
-    12.08, 0.89,
+    10.48, 0.89,
     "DEG set unions • no pooled model refit\ndirection discordance retained + flagged",
     cex = 0.66, col = colours$text
   )
   draw_pill(
-    15.95, 1.38, 2.15, 0.74,
+    13.65, 1.45, 2.05, 0.76,
     paste0(
       "54 × 5 × 3\n= ", format_count(values[["secondary_planned_runs"]])
     ),
@@ -415,7 +421,8 @@ message("Writing ", svg_path)
 write_graphic_atomic(
   svg_path,
   function(path) grDevices::svg(
-    path, width = 18, height = 5.2, pointsize = 15, onefile = TRUE,
+    path, width = figure_width, height = figure_height,
+    pointsize = figure_pointsize, onefile = TRUE,
     family = "sans", bg = "white", antialias = "subpixel"
   ),
   function() draw_panel_b(values)
@@ -425,7 +432,8 @@ message("Writing ", pdf_path)
 write_graphic_atomic(
   pdf_path,
   function(path) grDevices::cairo_pdf(
-    path, width = 18, height = 5.2, pointsize = 15,
+    path, width = figure_width, height = figure_height,
+    pointsize = figure_pointsize,
     family = "sans", bg = "white", onefile = TRUE
   ),
   function() draw_panel_b(values)
@@ -435,8 +443,9 @@ message("Writing ", png_path)
 write_graphic_atomic(
   png_path,
   function(path) grDevices::png(
-    path, width = 5400, height = 1560, units = "px", res = 300,
-    pointsize = 15, bg = "white", type = "cairo", antialias = "subpixel"
+    path, width = figure_width * 300, height = figure_height * 300,
+    units = "px", res = 300, pointsize = figure_pointsize, bg = "white",
+    type = "cairo", antialias = "subpixel"
   ),
   function() draw_panel_b(values)
 )
