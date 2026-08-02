@@ -435,6 +435,8 @@ make_recurrence_links <- function(selected) {
 }
 
 draw_phase12_circle <- function(selected, manifest) {
+  font_scale <- 1.8
+
   cyto <- data.frame(
     Chr = selected$sector_id,
     Start = 1,
@@ -464,7 +466,7 @@ draw_phase12_circle <- function(selected, manifest) {
     plot.chromosome.id = TRUE,
     chrom.alias = aliases,
     color.chromosome.id = label_colors,
-    cex.text = 0.49,
+    cex.text = 0.49 * font_scale,
     track.border = NA,
     polygon.border = "white"
   )
@@ -544,7 +546,7 @@ draw_phase12_circle <- function(selected, manifest) {
     labels = c("R", "T", "P", "S", "C", "G", "Q", "FE"),
     degree = 90,
     col = "#222222",
-    cex = 0.52,
+    cex = 0.52 * font_scale,
     font = 2
   )
 
@@ -559,7 +561,7 @@ draw_phase12_circle <- function(selected, manifest) {
   graphics::text(
     0, 0.16,
     labels = "Phase 12 KDA",
-    cex = 0.9,
+    cex = 0.9 * font_scale,
     font = 2,
     col = "#222222"
   )
@@ -569,13 +571,13 @@ draw_phase12_circle <- function(selected, manifest) {
       nrow(selected), " top drivers\n",
       length(unique(selected$broad_network)), " networks"
     ),
-    cex = 0.62,
+    cex = 0.62 * font_scale,
     col = "#4D4D4D"
   )
   graphics::text(
     0, -0.27,
     labels = "links = same driver\nacross networks",
-    cex = 0.46,
+    cex = 0.46 * font_scale,
     col = "#6B6B6B"
   )
 
@@ -592,7 +594,7 @@ draw_phase12_circle <- function(selected, manifest) {
     border = "#666666",
     title = "Network color\n(outer sectors and R bars)",
     bty = "n",
-    cex = 0.58,
+    cex = 0.58 * font_scale,
     xjust = 0,
     yjust = 1,
     xpd = NA
@@ -606,7 +608,7 @@ draw_phase12_circle <- function(selected, manifest) {
     border = "#666666",
     title = "T composition color",
     bty = "n",
-    cex = 0.58,
+    cex = 0.58 * font_scale,
     xjust = 0,
     yjust = 1,
     xpd = NA
@@ -620,7 +622,7 @@ draw_phase12_circle <- function(selected, manifest) {
     border = "#A0A0A0",
     title = "Heat-ring color\n(P, S, C, G, Q, FE)",
     bty = "n",
-    cex = 0.58,
+    cex = 0.58 * font_scale,
     xjust = 0,
     yjust = 1,
     xpd = NA
@@ -640,7 +642,7 @@ draw_phase12_circle <- function(selected, manifest) {
     ),
     title = "Tracks, outer to inner",
     bty = "n",
-    cex = 0.54,
+    cex = 0.54 * font_scale,
     text.col = "#333333",
     xjust = 1,
     yjust = 1,
@@ -667,7 +669,7 @@ draw_phase12_circle <- function(selected, manifest) {
     0,
     -params$radius / 0.72 + 0.15,
     labels = no_result_text,
-    cex = 0.56,
+    cex = 0.56 * font_scale,
     col = "#5A5A5A",
     xpd = NA
   )
@@ -675,7 +677,7 @@ draw_phase12_circle <- function(selected, manifest) {
     "Phase 12 mitochondrial key-driver overview",
     side = 3,
     line = 2.1,
-    cex = 1.15,
+    cex = 1.15 * font_scale,
     font = 2,
     col = "#222222"
   )
@@ -687,7 +689,7 @@ draw_phase12_circle <- function(selected, manifest) {
     ),
     side = 3,
     line = 0.8,
-    cex = 0.66,
+    cex = 0.66 * font_scale,
     col = "#555555"
   )
 }

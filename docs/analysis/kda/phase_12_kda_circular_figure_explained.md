@@ -52,6 +52,53 @@ Rows are sorted deterministically within a network by:
 3. decreasing `maximum_fold_enrichment`; and
 4. alphabetical `key_driver`.
 
+This order makes the overview recurrence-weighted. Within one broad network,
+all drivers use the same eligible-run denominator, so sorting by
+`significant_runs` is equivalent to sorting by the overall recurrence
+fraction described in Section 7.1. It favors drivers recovered across many
+Phase 12 runs over drivers supported by only one unusually strong result.
+
+The minimum adjusted P value is the first tie-breaker because it represents
+the strongest formal evidence among a driver's significant calls. Maximum
+fold enrichment is a later tie-breaker because it measures the greatest
+concentration of signature genes observed in any one call, not recurrence or
+replication. Alphabetical order makes any remaining tie reproducible.
+
+Ranking first by `maximum_fold_enrichment`, even after requiring adjusted
+P <= 0.05, would answer a different question: which drivers had the most
+extreme single-run enrichment? It would not identify the most recurrent
+drivers. The significance requirement also adds no new filter at this stage:
+the summary is constructed only from key-driver result rows that already
+passed the within-run adjusted-P threshold.
+
+The production results show why fold enrichment is not the primary sort key:
+
+| Network and driver | Significant runs | Fine cell types | Minimum adjusted P | Maximum fold enrichment |
+|---|---:|---:|---:|---:|
+| Astrocytes, `MT-ND4L` | 1 | 1 | 0.0285 | 1,157.17 |
+| Excitatory neurons, `MUTYH` | 2 | 1 | 0.0436 | 1,631.33 |
+| Oligodendrocytes, `NUP153` | 1 | 1 | 0.0291 | 524.00 |
+| Astrocytes, `MT-CO2` | 38 | 3 | \(9.05 \times 10^{-17}\) | 315.53 |
+
+A fold-enrichment-first selection would elevate the first three sparse
+examples and could exclude the much more recurrent astrocyte `MT-CO2` result.
+Very high fold enrichment can arise from a small signature, a small
+neighborhood, only one or two overlapping genes, inclusion of the candidate
+itself in the signature, or taking the maximum across many runs. Sections
+12.5 and 12.7 describe these cautions in more detail.
+
+The current rule is therefore appropriate for this cross-run overview, but it
+is not a definitive biological-priority score. A separate display intended to
+highlight concentrated context-specific effects could rank significant rows
+by fold enrichment, provided it also reports overlap counts, signature and
+neighborhood sizes, candidate-self membership, and recurrence. For stricter
+scientific prioritization, a useful future ranking would first consider the
+number of unique primary directional contexts and fine-cell-type coverage,
+then total recurrence and adjusted P, and finally a robust fold-enrichment
+summary such as the median rather than the maximum. That would reduce the
+influence of derived `AD_both_mito` calls, overlapping secondary pools, and
+single-run extremes.
+
 The first five rows are retained.
 
 This creates:

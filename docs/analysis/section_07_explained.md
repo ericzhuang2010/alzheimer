@@ -101,6 +101,43 @@ ATP5IF1 occurs in 28 primary LAMTOR5 neighborhoods across 11 fine cell types:
 15 are directional and 13 are derived `AD_both_mito` unions. The 13 unions are
 useful summaries but should not be treated as 13 independent confirmations.
 
+Here, “directional” describes the complete gene signature used in a KDA run;
+it does not imply that ATP5IF1 lacks a direction in the other 13 rows. In every
+primary Phase 08 contrast, each DEG has a definite AD-minus-NCI direction:
+ATP5IF1 is either AD-up or AD-down. Phase 12 constructs three signatures from
+that contrast:
+
+```text
+AD_up_mito   = mitochondrial DEGs higher in AD
+AD_down_mito = mitochondrial DEGs lower in AD
+AD_both_mito = union(AD_up_mito, AD_down_mito)
+```
+
+If ATP5IF1 is AD-up in a contrast, for example, it is passed to
+`call_key_drivers()` once in the `AD_up_mito` signature and again in the
+derived `AD_both_mito` signature. The same duplication occurs through
+`AD_down_mito` when ATP5IF1 is AD-down. All 28 reported calls therefore pass
+ATP5IF1 as a signature member. The distinction is that 15 calls use a
+single-direction signature—4 `AD_up_mito` and 11 `AD_down_mito`—whereas 13
+calls use a combined signature containing genes of either direction.
+
+The KDA input contains gene names and a run-group label, but no per-gene
+log-fold change or up/down label. Consequently, an `AD_both_mito` call knows
+that ATP5IF1 belongs to its signature but does not use ATP5IF1's original
+direction. Those 13 union calls reanalyze 13 of the same source contrasts,
+rather than adding new donors, experiments, or networks. They remain useful
+for asking whether a LAMTOR5 neighborhood is enriched for mitochondrial
+dysregulation of either sign, and their enrichment statistics can differ
+because the combined signature is larger, but they are not independent
+replications. The most conservative count is therefore 15 direction-specific
+contrast contexts, represented by 28 KDA output rows across 11 fine cell
+types.
+
+Finally, this use of “directional” is separate from `directed = TRUE` in KDA.
+That option makes the algorithm follow the Bayesian network from upstream to
+downstream. It does not preserve AD-up versus AD-down labels and does not show
+whether LAMTOR5 activates or inhibits ATP5IF1.
+
 ATP5IF1 does not appear in the Phase 12 candidate summary. That is compatible
 with ATP5IF1 acting as a downstream mediator or readout rather than an upstream
 network driver, but absence from the candidate table cannot prove that role.

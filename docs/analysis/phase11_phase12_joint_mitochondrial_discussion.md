@@ -51,6 +51,7 @@ publication concerning a gene:
 | Microglial `SLC11A1` connects `ACSL1` to mitochondrial iron importer `SLC25A37` | **Expression-level rediscovery plus new network extension** | The exact male-ε4 microglial three-gene relationship is new and should not be conflated with the male-ε2 pathway signal. |
 | `RPL11` connects ribosomal stress to `APOO`, `TOMM7`, and `SLIRP` | **Established ribosomal-stress biology plus new mitochondrial-network extension** | Phase 12 places several Phase 11 maintenance candidates below a strong but hub-prone cross-lineage candidate. |
 | `RPS15` is a recurrent cross-network candidate | **New in AD mitochondrial networks** | Prior p53 and Parkinsonian stress biology supplies plausibility, but direct AD-specific upstream evidence is absent. |
+| Astrocytic `RPL13` appears in the circular overview | **Annotation-constrained, low-confidence network hypothesis** | One candidate-self-independent primary directional neighborhood remains potentially informative, but most displayed recurrence depends on a likely `RPL13`/`MRPL13` synonym-mapping error and must be reanalyzed. |
 | Excitatory `WDR82` connects chromatin regulation to an mtRNA/OXPHOS motif | **Prior bulk-AD nomination plus new fine-cell-signature placement** | WDR82 may link chromatin state to mitonuclear balance, although repeated mtDNA motifs may be fixed-network artifacts. |
 | Excitatory `TMEM147` connects ER/cholesterol machinery to mitochondrial signatures | **New AD network hypothesis** | Known ER translocon and sterol functions provide a plausible bridge, but no direct AD mitochondrial perturbation study was found. |
 | `BEX3` connects neural-death signaling to neuronal/OPC mitochondrial maintenance | **New AD network hypothesis** | Neural-death biology is established; its human AD mitochondrial topology is not. |
@@ -134,6 +135,14 @@ reported layer is the one- to three-layer neighborhood with the smallest raw
 P value for that candidate. **Global** is only a within-run redundancy flag:
 a significant candidate is global when it is not within two downstream layers
 of another significant candidate in that run.
+
+The Phase 12 circular overview is a descriptive display of the **unfiltered**
+KDA summary, not the conservative screen above. It shows the five candidates
+with the most significant calls in each broad network; ties are ordered by the
+smallest adjusted P value, then the largest fold enrichment, then gene symbol.
+Its call counts combine primary and secondary runs, directional signatures,
+and derived `AD_both_mito` unions, which should not be read as independent
+confirmations or as a causal-driver ranking.
 
 KDA provides neither edge sign nor experimental causality. A candidate may not
 itself be differentially expressed, and an `AD_up_mito` call describes the
@@ -275,6 +284,19 @@ recovers the same endpoint at the topology level: `MT-CO2` has 550 calls,
 `MT-ND4` 402, `MT-CO3` 399, and `MT-CYB` 397. However, 3,036 of all 10,172 KDA
 rows have an mtDNA driver and 5,349 contain the candidate in its own query.
 `COX4I1` appears 169 times but is a query member in 149 calls.
+
+The [Phase 12 circular overview](../../results/figures/analysis/phase12_kda/phase12_kda_circular.png)
+makes this structural dominance visually explicit. Of its 35 displayed
+network-by-candidate sectors, 28 have mtDNA-encoded candidates and 29 are
+structural respiratory-gene sectors when nuclear `COX4I1` is included. The
+unique structural genes shown are `MT-ATP6`, `MT-CO2`, `MT-CO3`, `MT-CYB`,
+`MT-ND1`, `MT-ND4`, `MT-ND4L`, `MT-ND5`, and `COX4I1`. `MT-CO2` occurs in
+the top five of all seven broad networks, and every displayed excitatory,
+inhibitory, and vascular candidate is mtDNA encoded. The oligodendrocyte
+`COX4I1` sector ranks fourth with eight calls, but all eight contain `COX4I1`
+in the query and all eight are global. Thus the figure strengthens the shared
+respiratory-sentinel interpretation; it does not make the structural genes
+upstream or candidate-self-independent regulators.
 
 **Prior work and interpretation.** Laser-captured posterior-cingulate neurons
 showed lower electron-transport and energy-metabolism transcripts in AD
@@ -585,6 +607,9 @@ iron sequestration rather than a pathogenic regulator.
   other lineages.
 - Phase 12: `FTL` has 12 total and four primary OPC calls; all primary calls
   are candidate-self-independent, and no call is global.
+- The circular overview also contains `FTL` as the fourth-ranked OPC sector:
+  12 calls (four primary and eight secondary), minimum adjusted P =
+  2.09×10^-6, and maximum fold enrichment 23.44.
 - Female-ε3/ε3 AD-up covers 7 of 22 query genes in a 146-gene neighborhood
   (fold enrichment 15.53; adjusted P = 1.89×10^-5).
 - Male-ε2 AD-down covers 12 of 81 query genes in a 123-gene neighborhood
@@ -633,6 +658,9 @@ perturbation distinguishes them.
 
 - `ANKRD11` has 12 total and four primary calls; every call is global and all
   primary calls are candidate-self-independent.
+- The circular overview contains `ANKRD11` as the fifth-ranked OPC sector:
+  12 calls (four primary and eight secondary), minimum adjusted P =
+  8.81×10^-6, and maximum fold enrichment 16.48.
 - Female-ε3/ε3 AD-up covers 7 of 22 genes (adjusted P = 9.37×10^-5).
 - Male-ε2 AD-down covers 13 of 81 genes (adjusted P = 8.81×10^-6).
 - Covered genes include `FTH1`, `GPX4`, `PARK7`, `FIS1`, `ATP5IF1`, and
@@ -674,6 +702,9 @@ with ferroptosis enzyme ACSL4.
   occurrences among 23 tested, 11 AD-down.
 - Phase 12: `SLC11A1` has nine calls, including three primary rows in two
   microglial fine types.
+- The circular overview contains `SLC11A1` as the fifth-ranked microglial
+  sector: nine calls (three primary and six secondary), five global calls,
+  minimum adjusted P = 1.24×10^-4, and maximum fold enrichment 616.67.
 - Only one primary row is candidate-self-independent and directional; the
   other two are derived `AD_both_mito` unions.
 - The candidate-self-independent male-ε4 `Mic P2RY12` AD-up call covers
@@ -721,6 +752,11 @@ mechanism.
 - `RPL11` has 131 total and 53 primary calls across four networks and 17 fine
   cell types; 118 calls are global and every primary call is
   candidate-self-independent.
+- In the circular overview, `RPL11` is the fifth-ranked oligodendrocyte sector
+  with six calls (two primary and four secondary), all global, a minimum
+  adjusted P of 3.59×10^-4, and a maximum fold enrichment of 28.46. This is
+  only its oligodendrocyte figure entry, not the full cross-network evidence
+  summarized above.
 - Twenty-nine conservative directional calls span 16 fine cell types and all
   six sex/APOE strata.
 - `APOO` occurs in 15 primary `RPL11` neighborhoods across seven fine cell
@@ -769,6 +805,10 @@ fraction and ribosomal-hub risk place it below RPL11 for mechanistic testing.
 
 - `RPS15` has 123 total and 50 primary calls across five networks and 22 fine
   cell types.
+- In the circular overview, `RPS15` is the third-ranked OPC sector with 12
+  calls (four primary and eight secondary), all global, a minimum adjusted P
+  of 4.57×10^-14, and a maximum fold enrichment of 19.06. This is only its
+  OPC figure entry, not its full cross-network evidence.
 - Twenty-six conservative directional calls span 19 fine cell types, with
   minimum within-run adjusted P values as low as 4.57×10^-14.
 - Every primary call is candidate-self-independent, and individual
@@ -1087,7 +1127,66 @@ pair per axis in matched cell systems, then ask whether distinct perturbations
 converge on the same complex-level respiratory phenotype without converging on
 general toxicity.
 
-## 22. Joint limitations and claims that should not be made
+## 22. Astrocytic RPL13 appears in the circular overview but requires annotation correction — [Annotation-constrained, low-confidence network hypothesis]
+
+**Discovery.** `RPL13` is the one displayed non-mtDNA candidate that did not
+already have a dedicated discussion in this document. It is the fifth-ranked
+astrocyte sector in the circular overview and recurs across three fine
+astrocyte types. Most of that recurrence, however, is entangled with a likely
+cross-gene synonym-mapping error between `RPL13` and `MRPL13`.
+
+**Conclusion.** The displayed recurrence should not currently be interpreted
+as evidence that RPL13 is a mitochondrial structural gene or a validated
+mitochondrial key driver. Seventeen of its 21 plotted calls contain `RPL13`
+itself in the effective mitochondrial query. Of the four primary directional
+calls, only the female-ε4 `Ast DPP10` AD-down result is
+candidate-self-independent. That one result supports a low-confidence
+astrocytic network hypothesis that can survive correction in principle, but
+the Phase 09 annotation and affected Phase 12 runs should be repaired and
+rerun before prioritizing RPL13 experimentally.
+
+**Data-driven evidence.**
+
+- The circular overview reports 21 astrocyte calls across three fine cell
+  types: eight primary, 13 secondary, and 19 global. Its minimum adjusted P is
+  9.76×10^-6 and its maximum fold enrichment is 128.57.
+- The four primary directional contexts are female-ε2 `Ast CHI3L1` AD-up,
+  female-ε4 `Ast DPP10` AD-down, female-ε2 `Ast GRM3` AD-up, and male-ε2
+  `Ast GRM3` AD-down. Their four `AD_both_mito` rows reuse those directional
+  inputs and are summaries, not four extra confirmations.
+- Exact-overlap reconstruction shows candidate-self overlap in 17 of the 21
+  plotted calls. Three of the four primary directional calls are among those
+  self-containing results.
+- The candidate-self-independent female-ε4 `Ast DPP10` AD-down call uses a
+  layer-3 RPL13 neighborhood of 24 genes and covers four of 25 query genes:
+  `COX4I1`, `SLC25A3`, `ATP5F1B`, and `NDUFV1` (fold enrichment 40.66;
+  adjusted P = 2.51×10^-4). This is the most defensible RPL13-specific signal
+  behind the figure, but it is one primary directional context in one fixed
+  astrocyte network.
+
+**Prior work and interpretation.** Phase 09 annotated measured `RPL13` as a
+MitoCarta gene through a `unique_synonym` match to `MRPL13`. These are distinct
+official genes: NCBI describes [RPL13 (Gene ID 6137)](https://www.ncbi.nlm.nih.gov/gene/6137)
+as a cytoplasmic 60S ribosomal protein and [MRPL13 (Gene ID 28998)](https://www.ncbi.nlm.nih.gov/gene/28998)
+as a protein of the mitochondrial 39S large ribosomal subunit. A synonym match
+that crosses those records can incorrectly admit RPL13 to a mitochondrial
+query, making candidate-self enrichment especially easy. This annotation
+problem does not automatically disqualify RPL13 as a *network candidate*:
+KDA candidates may be non-mitochondrial genes whose downstream neighborhoods
+are enriched for a mitochondrial query. The targeted review found no primary
+study establishing the specific RPL13-to-OXPHOS relationship in AD astrocytes.
+
+**Limits and decisive test.** Replace synonym-only gene matching with stable
+gene identifiers, distinguish `RPL13` from `MRPL13`, and rerun the affected
+Phase 09 signatures and Phase 12 enrichments. RPL13 should be removed from the
+mitochondrial query unless its own identifier has independent mitochondrial
+evidence, while remaining eligible as a non-mitochondrial network candidate.
+Then reassess the self-independent `Ast DPP10` result with expression-,
+degree-, and ribosomal-status-matched nulls and an independently inferred
+astrocyte network. Perturbation is justified only if a corrected,
+candidate-self-independent relationship survives those tests.
+
+## 23. Joint limitations and claims that should not be made
 
 The synthesis is stronger than either phase alone for hypothesis organization,
 but it does not remove the limitations inherited from either analysis:
@@ -1150,9 +1249,9 @@ enriched for an AD-up or AD-down signature, that a network edge is activating
 or inhibitory, or that these data demonstrate ferroptosis, mitonuclear
 imbalance, or therapeutic benefit.
 
-## 23. Confirmation and experimental sequence
+## 24. Confirmation and experimental sequence
 
-### 23.1 Confirm the phenotype at donor level
+### 24.1 Confirm the phenotype at donor level
 
 1. Build donor-by-fine-cell-type pseudobulk profiles for the leading
    superficial/RELN-positive excitatory clusters, `Ast GRM3`, OPC,
@@ -1166,7 +1265,7 @@ imbalance, or therapeutic benefit.
    copy number.
 5. Replicate the leading effect directions in an independent brain cohort.
 
-### 23.2 Stress-test the network nominations
+### 24.2 Stress-test the network nominations
 
 1. Exclude signature genes from the candidate set before testing and repeat BH
    correction, rather than filtering significant rows afterward.
@@ -1179,7 +1278,7 @@ imbalance, or therapeutic benefit.
 6. Add orthogonal AD genetics, cell-type eQTL/sQTL colocalization, proteomics,
    phosphoproteomics, and chromatin-accessibility evidence.
 
-### 23.3 Use a staged perturbation design
+### 24.3 Use a staged perturbation design
 
 Because the network does not supply edge sign, use paired loss- and
 gain-of-function, rescue, and dose-response designs.
@@ -1203,9 +1302,9 @@ only if perturbation moves multiple predicted genes, changes mitochondrial
 function, and alters an AD-relevant phenotype in the predicted cell context
 without nonspecific toxicity.
 
-## 24. Manuscript-ready synthesis
+## 25. Manuscript-ready synthesis
 
-### 24.1 Candidate Results paragraph
+### 25.1 Candidate Results paragraph
 
 > Sex/APOE-stratified single-nucleus analysis identified OXPHOS as the
 > dominant divergent mitochondrial program in AD, with predominantly AD-up
@@ -1227,7 +1326,7 @@ without nonspecific toxicity.
 > therefore remain hypotheses requiring donor-aware confirmation,
 > independent-cohort replication, and perturbation.
 
-### 24.2 Candidate Discussion paragraph
+### 25.2 Candidate Discussion paragraph
 
 > The joint findings support a model in which cell-specific lipid support,
 > nutrient sensing/autophagy, iron/redox control, and
@@ -1243,7 +1342,7 @@ without nonspecific toxicity.
 > context-matched perturbation are required before using “key driver” without
 > qualification.
 
-### 24.3 Central paper claim
+### 25.3 Central paper claim
 
 The defensible central claim is:
 
@@ -1255,7 +1354,7 @@ The present evidence does **not** support the stronger claims that the full
 pattern is independently replicated, that any Phase 12 candidate is a causal
 driver, or that changing a candidate will necessarily be therapeutic.
 
-## 25. Reproducibility and source map
+## 26. Reproducibility and source map
 
 Phase 11 inputs and outputs:
 
@@ -1277,6 +1376,8 @@ Phase 12 inputs, outputs, and methods:
 - [KDA run manifest](../../results/minerva_production/12_kda/kda_run_manifest.tsv)
 - [KDA results](../../results/minerva_production/12_kda/kda_results.tsv.gz)
 - [KDA candidate summary](../../results/minerva_production/12_kda/kda_key_driver_summary.tsv)
+- [Phase 12 circular overview](../../results/figures/analysis/phase12_kda/phase12_kda_circular.png)
+- [Exact data plotted in the circular overview](../../results/figures/analysis/phase12_kda/phase12_kda_circular_plotted_data.tsv)
 - [KDA signature members](../../results/minerva_production/12_kda/kda_signature_members.tsv.gz)
 - [KDA background members](../../results/minerva_production/12_kda/kda_background_members.tsv.gz)
 - [Phase 12 configuration](../../config/phase12_kda.yml)
@@ -1290,7 +1391,7 @@ claims use the stored query-specific Phase 11 BH FDR, and all KDA claims use
 the stored Phase 12 results and the conservative interpretive screen defined
 in Section 1.2.
 
-## 26. References
+## 27. References
 
 - Altmann A, Tian L, Henderson VW, Greicius MD. Sex modifies the APOE-related
   risk of developing Alzheimer disease. *Annals of Neurology*.
