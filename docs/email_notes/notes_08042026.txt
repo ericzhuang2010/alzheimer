@@ -1,0 +1,17 @@
+Respiration, fatty-acid support etc.
+
+We know APOE4 is involved in many places, want to know which pathways were related, not just the OXPHOS
+
+First key conclusion.
+Try to visualize, try to see there are any ATP related gene on it. The paper I sent you before.
+Each node is gene, can be colored by something, DEG, size of node can be network connectivity. Lot of things can be visualized. 
+
+Third key conclusion.
+Circular graph
+Sorting order: usually a combined p-value and the mean of ?
+Significant of the enrichment, some might be unique in certain signature, 
+e.g. sex specific driver, maybe more focused summary
+Next step is to separate different groups, sex difference, e2 unique pathway, key driver
+Also include genetic difference, what is more informative, need to check literature
+Look for protein-network, additional data, that will give us more confidence the key driver is important.
+Check some paper, how to include genetic information. Pull out genetic, like Gwas study, gene label, can be integrated with the 
