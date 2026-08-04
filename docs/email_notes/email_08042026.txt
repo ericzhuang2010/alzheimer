@@ -1,0 +1,4 @@
+Regarding the three highlighted key drivers, including APOE, can you 
+please generate their subnetwork plots, illustrating the mitochondrial 
+DEGs in their layer-3 networks? You may use Cytoscape or any other tools 
+for plotting.
