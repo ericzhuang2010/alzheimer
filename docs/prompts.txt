@@ -30,3 +30,10 @@ In /Users/rzhuang/Documents/VscodeProjects/alzheimer/docs/analysis/phase11_phas
 1. it is relatively novel (not reported by prior paper or only small overlap)
 2. identifies a key driver
 Please tell me which ones are high priority
+
+
+The prof has provide some requirements as in /Users/rzhuang/Documents/VscodeProjects/alzheimer/docs/email_notes/notes_08042026.txt
+Essentially, I need to dig deeper to find more interesting results for the alzheimer research. I have got some data for DEG, pathway and KDA analysis. My focus is on Alzheimer disease with focus on things related to Mitochandrial genes. studying sex/apoe might be a possibilities. I am still unclear what to do next. Please read the notes above, also related papers /Users/rzhuang/Documents/VscodeProjects/alzheimer/docs/related_papers
+and my most recent presentation  /Users/rzhuang/Documents/VscodeProjects/alzheimer/docs/presentations
+I guess the main goal is to figure out interesting results such as some genes or pathways and get some conclusion and come up with figures cross-validation etc. You have some writeup also (/Users/rzhuang/Documents/VscodeProjects/alzheimer/docs/analysis/phase11_phase12_joint_mitochondrial_discussion.md)
+Please help me find what to do next by looking at the materials I have provided. Write a plan (md file) for things to try as the next steps.

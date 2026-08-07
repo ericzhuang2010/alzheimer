@@ -1,37 +1,35 @@
 Respiration, fatty-acid support etc.
 
-We know APOE4 is involved in many places, want to know which pathways were related, not just the
-OXPHOS
+We know APOE4 is involved in many places, want to know which pathways were related, 
+not just the OXPHOS
 
-==========================First key conclusion=========================
+
+############First key conclusion in "docs/presentations/DEG-KDA Final Results v2.pdf"
 Try to visualize, try to see there are any ATP related gene on it. The paper I sent you 
 before.
 Each node is gene, can be colored by something, DEG, size of node can be network connectivity. 
 Lot of things can be visualized. 
 
 
-===========================Circular figure===============================
-Sorting order: Usually its mean of the -log 10 p value of occurrences
-
-The legend is not very clear and there are too many colors
-Leave some empty space in the middle to fit a better legend
-
-Check prior research where there have been many interesting genes and see how 
-they rank them
-
-Separate the different sex-APOE groups
-
-
-Make more focused figures, looking more at individual contrasts
-Pathways here seem to refer to just the key driver
-Look into additional data including protein networks
-
-=========================Third key conclusion===========================
+#############General comments for more discoveries
 Significant of the enrichment, some might be unique in certain signature, 
 e.g. sex specific driver, maybe more focused summary
 Next step is to separate different groups, sex difference, e2 unique pathway, key driver
 Also include genetic difference, what is more informative, need to check literature
 Look for protein-network, additional data, that will give us more confidence the key driver is 
 important.
-Check some paper, how to include genetic information. Pull out genetic, like Gwas study, 
+Check some paper, how to include genetic information. Pull out genetic, like GWAS study, 
 gene label, can be integrated with the 
+Look into additional data including protein networks
+
+
+############Circular Figure and generally for other/more figures
+Sorting order: Usually its mean of the -log 10 p value of occurrences
+The legend is not very clear and there are too many colors
+Leave some empty space in the middle to fit a better legend
+Check prior research where there have been many interesting genes and see how 
+they rank them
+Separate the different sex-APOE groups
+
+Make more focused figures, looking more at individual contrasts
+Pathways here seem to refer to just the key driver
