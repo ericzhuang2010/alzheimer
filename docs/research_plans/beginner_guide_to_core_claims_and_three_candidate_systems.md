@@ -8,9 +8,11 @@
 
 **Status:** planning document; it does not report new experimental results
 
+**Relationship to the main plan:** this is a teaching companion, not a replacement. It proposes one additional donor-level bridge analysis. That addition must be copied into the main plan and frozen before it becomes an official decision rule.
+
 ## The answer in everyday language
 
-The main mitochondrial finding and the three proposed gene systems are two separate parts of the project.
+The main proposed finding about cellular energy and the three suggested groups of DNA instructions are two separate parts of the project.
 
 First, use one measurement per person to test whether Alzheimer disease is related to a change in how two groups of energy-related DNA instructions work together. Also test whether that change differs between genetic groups, females and males, or kinds of brain cells.
 
@@ -20,11 +22,11 @@ One gene system does not need to account for the entire result. If all three pas
 
 ## How to use this guide
 
-Start with Section 1. It defines the words used in every later section. The guide intentionally delays the main answer until after those definitions.
+Read the everyday-language answer above first. Then use Section 1 as a glossary whenever a word is unfamiliar; you do not need to memorize it before continuing.
 
-- Read Sections 1–5 for the main scientific idea.
-- Read Sections 6–9 for the evidence and decision rules.
-- Read Sections 10–15 for common mistakes, figures, checklists, writing, and the final recap.
+- Read Sections 2–6 for the main explanation.
+- Sections 7–9 contain optional technical details and decision rules.
+- Sections 10–15 contain common mistakes, figures, checklists, writing, and the final recap.
 
 The guide is detailed so that you can return to one section at a time. You do not need to memorize it.
 
@@ -80,9 +82,9 @@ Mitochondria contain a small amount of their own DNA. Human mtDNA contains 13 ge
 
 A molecule that cells use as an immediate source of energy.
 
-**Respiratory chain, respiratory complex, and ATP synthase**
+**Respiratory chain, ETC, respiratory complex, and ATP synthase**
 
-The respiratory chain is a set of protein machines in mitochondria that helps convert energy from food. Each large protein machine is called a **complex**. ATP synthase, also called complex V, uses this process to make ATP.
+The respiratory chain, also called the electron transport chain or **ETC**, is a set of protein machines in mitochondria that helps convert energy from food. Each large protein machine is called a **complex**. ATP synthase, also called complex V, uses this process to make ATP.
 
 **OXPHOS**
 
@@ -166,7 +168,7 @@ A gene suggested for further testing. “Candidate” means that evidence is sti
 
 **Named partner or readout**
 
-The named gene linked to a highlighted candidate gene in the network hypothesis. A **readout** is a measurement used to represent a biological process. Examples are `TUFM`, `ATP5IF1`, and `CHCHD2`. Older project notes sometimes call these genes “mediators,” but that label does **not** prove that a gene sits in a cause-and-effect chain.
+The named gene paired with a highlighted candidate in the earlier computer-generated gene map. A **readout** is a measurement used to represent a biological process. Examples are `TUFM`, `ATP5IF1`, and `CHCHD2`. Older project notes sometimes call these genes “mediators,” but that label does **not** prove that a gene sits in a cause-and-effect chain.
 
 **Target-excluded module score**
 
@@ -264,7 +266,7 @@ A number describing how two measurements tend to change together. Correlation do
 
 **Differentially expressed gene, or DEG**
 
-A gene whose measured RNA abundance differs between compared groups. Being a DEG does not prove that the gene is a driver.
+A gene whose measured RNA abundance differs between compared groups. Being a DEG does not prove that the gene controls the change.
 
 ### 1.4 Words used to judge reliability
 
@@ -282,7 +284,27 @@ A number used to judge evidence against “no effect” for one test.
 
 **q value**
 
-A P value corrected because many tests were performed. This correction reduces false discoveries. The main plan usually uses `q ≤ 0.05` as the statistical rule.
+A P value adjusted because many tests were performed. This adjustment reduces results that appear real only by chance. The main plan usually uses `q ≤ 0.05` as the statistical rule.
+
+**Expected direction**
+
+Whether a measurement is predicted to increase or decrease. The expected direction must be written down before looking at the new result.
+
+**Minimum meaningful effect**
+
+The smallest change considered large enough to matter scientifically. It is chosen before viewing the new results.
+
+**Eligibility and nucleus-count threshold**
+
+Eligibility means that a donor profile has enough required information to be used. A nucleus-count threshold is the minimum number of nuclei needed to build that donor's cell-context profile.
+
+**RNA-quality measurement**
+
+A recorded feature used to check whether technical sample quality might explain a result.
+
+**Robust or stable result**
+
+A result that remains similar under the planned reasonable repeat analyses, such as leaving out one donor or changing a quality threshold.
 
 **Bootstrap**
 
@@ -299,6 +321,10 @@ Repeat an analysis using another reasonable quality threshold or scoring method.
 **Independent replication**
 
 Repeat the planned test in a different group of people. Repeating several analyses in the same people is not independent replication.
+
+**Random seed**
+
+A saved number that makes a computer's random resampling or simulation reproducible.
 
 ### 1.5 Network words
 
@@ -426,20 +452,20 @@ LEVEL A: First establish the biological event
 
 LEVEL B: Then test possible systems connected to that event
 
-    APOE–TUFM               LAMTOR5–ATP5IF1
-    in astrocytes            in neurons
-             \                 /
-              \               /
-               same shared outcome
-                      ↑
-                      |
-          GABARAPL2–CHCHD2/PARK7
-          in excitatory neurons
+    APOE–TUFM in astrocytes -------------------\
+                                                \
+    LAMTOR5–ATP5IF1 in neurons -----------------[ same shared outcome ]
+                                                /
+    GABARAPL2–CHCHD2/PARK7 --------------------/
+    in excitatory neurons
+
+    Every line means “tested association.”
+    No line is a causal arrow.
 ```
 
 Level A asks whether the event exists. Level B asks whether particular gene systems are reliably associated with it.
 
-This order matters. A network result cannot be used to manufacture the biological event that it is supposed to explain.
+The downward arrow shows analysis order, not biological cause. This order matters: a network result cannot be used to manufacture the biological event that it is supposed to explain.
 
 ---
 
@@ -463,7 +489,10 @@ A **structural-subunit gene** makes a physical piece of an OXPHOS protein comple
 
 C3 is not allowed to pass because one residual test looks interesting. The full Gate 2 rule from the main plan is:
 
-- calculate all three planned measurements of the mtDNA–nuclear relationship;
+- calculate all three planned measurements of the mtDNA–nuclear relationship:
+  1. the difference between the NCI-scaled mtDNA and nuclear scores;
+  2. the NCI-reference residual explained earlier;
+  3. whether the strength of the mtDNA-versus-nuclear relationship changes between the planned groups;
 - require at least two of the three to point in a compatible direction and have `q ≤ 0.05`;
 - require one of those two to be the NCI-reference residual or the change in how strongly the mtDNA and nuclear scores move together;
 - require the planned alternative scoring and RNA-quality checks to agree.
@@ -474,7 +503,7 @@ If the final claim says the mitonuclear change is modified by sex or APOE, C3 mu
 
 **No.**
 
-C1–C3 must be tested using the full donor data and the prespecified respiratory measurements. They establish the event before candidate systems are considered.
+C1–C3 must be tested using the full donor data and the prespecified respiratory measurements. They test separate parts of the event before candidate systems are considered. The final sentence can use only the core clauses whose tests passed.
 
 The candidate systems have a different job. They ask whether a particular local gene program, in a particular cell context, is reliably connected to that event.
 
@@ -573,6 +602,28 @@ There is one further rule for sex/APOE wording. All named systems must use the s
 
 Use the same evidence chain for all three systems. Do not give one candidate an easier rule because it looks interesting.
 
+```text
+relevant core claim passes
+    → candidate's local phenotype passes
+    → non-circular donor bridge passes
+    → candidate's network checks pass
+    → candidate counts toward the convergence sentence
+```
+
+Failure of one candidate does not invalidate C1–C3. However, failure of the relevant C1 or C3 clause prevents the proposed convergence sentence even if the network plots look strong.
+
+Two phrases used below have precise meanings:
+
+- **local phenotype:** the predicted named-partner and gene-module expression pattern in the planned cell context;
+- **non-circular bridge:** a comparison in which the two measurements do not reuse the same genes, so the answer is not partly built into the calculation.
+
+Keep these two outcomes separate:
+
+| Label used in this guide | What it is | Can it earn the strict convergence sentence? |
+|---|---|---|
+| **Primary convergence outcome** | The unchanged frozen NCI-reference residual used for every system | Yes; it is required |
+| **Optional non-overlap sensitivity outcome** | An altered bridge-only residual, such as one that leaves ATP-synthase genes out of the nuclear score | No; it is supporting evidence only |
+
 ### Evidence 1. The core mitochondrial event exists without using the candidates
 
 First test C1–C3 using donor-level data.
@@ -581,7 +632,7 @@ Why this matters: if the shared mitonuclear event is not supported, candidate sy
 
 Minimum requirement for the full claim:
 
-- C1 passes for the exact sex/APOE comparison used in the final convergence sentence, with adequate donor numbers;
+- C1 passes for the exact sex/APOE comparison used in the final convergence sentence. Five donors in every required group permits estimation, but a headline comparison should have at least 10 per group. A below-10 comparison, especially male ε2, remains provisional unless the same direct modifier is replicated in an independent cohort;
 - C3 passes its full Gate 2 rule, and the chosen residual bridge passes for that same comparison;
 - C2 passes only if the final sentence uses “cell-type-specific.”
 
@@ -611,27 +662,9 @@ First, test the two measurements separately:
 
 This is the primary evidence that both results match the same group pattern. A correlation alone does not test the sex/APOE modifier.
 
-### Evidence 4. A separate donor-level association supports the bridge
+For `LAMTOR5–ATP5IF1`, ATP-synthase genes are part of nuclear OXPHOS. Therefore, the matching group pattern is a consistency check, not an independent confirmation. The separate nonoverlapping bridge in Evidence 4 is especially important for this system.
 
-For each donor, calculate:
-
-1. a candidate or upstream-program measurement that does not reuse genes from the shared outcome;
-2. the shared NCI-reference mitonuclear residual.
-
-Then ask whether the two measurements tend to move together in the planned cell context after accounting for:
-
-- AD/NCI, sex, and APOE group;
-- age;
-- PMI;
-- planned RNA-quality measurements.
-
-This adjusted association asks whether the two measurements are related among donors even after differences between the AD, sex, and APOE groups have been accounted for. It is supporting evidence. It does not itself test the AD-by-sex or AD-by-APOE modifier.
-
-If the scientific question specifically asks whether this donor-level association changes between groups, freeze and test an additional `local measurement × group` comparison. Do not add it after seeing the result.
-
-Also test the candidate gene's relationship with its named partner or target-excluded local program. This keeps the candidate itself in the evidence chain. The local-program score alone should not be mislabeled as a direct measurement of `APOE`, `LAMTOR5`, or `GABARAPL2`.
-
-### Evidence 5. Prevent the two compared measurements from reusing the same genes
+### Evidence 4. Prevent the two compared measurements from reusing the same genes
 
 If two scores contain some of the same genes, they can correlate automatically. That would be **circular evidence**, meaning that part of the answer was built into the test itself.
 
@@ -646,7 +679,31 @@ Before viewing the new candidate results:
 
 Do **not** automatically remove all nuclear OXPHOS genes from the ATP-synthase module. ATP synthase is OXPHOS complex V, so that rule could destroy the module.
 
-If a separate program score is scientifically required for `LAMTOR5–ATP5IF1`, freeze one workable non-circular solution before outcome testing. For example, keep the full endpoint for C3 but build a bridge-only nuclear score that leaves out ATP-synthase genes. Clearly label this as a bridge-only version, report how many genes remain, and do not pretend it is numerically identical to the full C3 endpoint.
+If a separate program score is scientifically required for `LAMTOR5–ATP5IF1`, freeze one workable non-circular solution before outcome testing. For example, keep the full endpoint for C3 but build the **Optional non-overlap sensitivity outcome** by leaving ATP-synthase genes out of its nuclear score. Report how many genes remain and do not pretend it is numerically identical to the full C3 endpoint.
+
+For the strict phrase “the same endpoint,” the **Primary convergence outcome** must remain unchanged. The optional sensitivity outcome cannot by itself earn the convergence sentence.
+
+### Evidence 5. A separate donor-level association supports the bridge
+
+For each donor, calculate:
+
+1. a candidate or upstream-program measurement that does not reuse genes from the shared outcome;
+2. the unchanged **Primary convergence outcome**.
+
+Then ask whether the two measurements tend to move together in the planned cell context after accounting for:
+
+- AD/NCI, sex, and APOE group;
+- age;
+- PMI;
+- planned RNA-quality measurements.
+
+This adjusted association asks whether the two measurements are related among donors even after differences between the AD, sex, and APOE groups have been accounted for. It is supporting evidence. It does not itself test the AD-by-sex or AD-by-APOE modifier.
+
+Do not put mitochondrial-read fraction into the primary model automatically because the outcome itself contains mitochondrial RNA. Add it only as a prespecified sensitivity check. Add another technical quality measurement to the primary model only if it is available for nearly all required donors and does not nearly duplicate group membership or another model variable.
+
+If the scientific question specifically asks whether this donor-level association changes between groups, freeze and test an additional `local measurement × group` comparison. Do not add it after seeing the result.
+
+Also test the candidate gene's relationship with its named partner or target-excluded local program. This keeps the candidate itself in the evidence chain. The local-program score alone should not be mislabeled as a direct measurement of `APOE`, `LAMTOR5`, or `GABARAPL2`.
 
 ### Evidence 6. The donor-level bridge is stable
 
@@ -662,12 +719,17 @@ For each candidate system:
 A useful planned rule is:
 
 - `q ≤ 0.05` for each named system;
+- the standardized relationship size reaches the minimum meaningful size chosen before testing;
 - the 95% CI excludes zero in the direction chosen before looking at the result, or it passes another minimum-meaningful-effect rule frozen in the main plan;
 - at least 80% of bootstrap repeats keep that direction;
 - no leave-one-donor-out run reverses the result;
 - reasonable quality and scoring changes keep the conclusion.
 
 Bootstrap whole donors, never individual nuclei. A stable direction with a very wide CI is still inconclusive.
+
+In every bootstrap and leave-one-donor-out repeat, recalculate the NCI averages and variation, refit the NCI reference model, rebuild the residual, and rebuild the bridge measurement. Freeze the formulas and gene lists, not the original fitted numbers. If an NCI donor is left out, that donor must be excluded from both the NCI scaling and the NCI reference fit.
+
+A **standardized relationship size**, or standardized slope, tells us how much the outcome changes, in comparable units, when the bridge measurement changes by one comparable unit. Its minimum meaningful size must be written down before viewing the results.
 
 Correcting only three tests is valid only if there is exactly one primary cell context, comparison, outcome, and bridge measurement per system. If more primary versions are tested, all candidate × context × comparison × outcome tests must be corrected together. Secondary analyses must be labeled secondary.
 
@@ -685,30 +747,31 @@ Each candidate must pass its own Round 2 network tests:
 
 Why this matters: a candidate may be nominated because the query was mitochondrial or because the candidate is a large hub. These controls test those two problems separately.
 
+The alternative donor-level network should be built by comparing expression patterns across donors, treating donors rather than nuclei as the independent samples. Agreement supports robustness to network construction. It still does not prove the direction of biological control.
+
 ### Evidence 8. The systems remain distinguishable after shared genes are removed
 
 After removing the KDA query genes and the genes used in the shared endpoint, inspect the remaining network neighborhoods.
 
-The three systems should retain their different local biology:
+The three systems should retain their different local context:
 
 - mitochondrial translation for `APOE–TUFM`;
-- ATP synthase for `LAMTOR5–ATP5IF1`;
+- `ATP5IF1` and its upstream signaling or regulatory context for `LAMTOR5–ATP5IF1` after shared ATP-synthase structural genes are removed;
 - stress or quality control for `GABARAPL2–CHCHD2/PARK7`.
 
-Also compare how many remaining neighborhood genes are shared between the systems. Compare that overlap with size- and connectedness-matched candidate pairs. The observed overlap should not fall within the most extreme 5% of matched overlaps.
+Also compare how many remaining neighborhood genes are shared between the systems. Compare that overlap with size- and connectedness-matched candidate pairs. The observed overlap must not exceed the 95th percentile of matched overlaps. In plain language, it must not be among the largest 5% of overlaps seen for fair comparison pairs.
 
 If the three “systems” mostly contain the same remaining genes, they may be three labels for one recurrent network module. A **network module** is a cluster of genes that are close or strongly connected in the network. Report one shared network module instead of claiming three distinct candidate-associated programs.
 
 ### Evidence 9. The result is checked outside the discovery data
 
-The strongest version of the claim also needs:
+Keep three kinds of evidence separate:
 
-- an independent RNA dataset containing different donors;
-- protein measurements for the programs or named genes when available.
+- RNA from different donors is **independent RNA replication**;
+- protein from different donors is independent support from a different kind of measurement;
+- protein from the same ROSMAP donors is same-cohort support from a different kind of measurement.
 
-Independent RNA data test whether the shared endpoint and candidate links appear in other people. Protein data provide a different measurement type.
-
-Protein data from the same ROSMAP donors are useful support, but they are not an independent group of people.
+Independent RNA data test whether the shared endpoint and candidate links appear in other people. Protein data test a different biological layer. A protein that was not measured must be labeled `not_measured`, not failed.
 
 ---
 
@@ -727,7 +790,7 @@ Use:
 - the frozen nuclear OXPHOS gene list;
 - the frozen local module for each candidate system;
 - the frozen cell context and direct sex/APOE comparison for each system;
-- a new manifest that lists the single primary bridge test for each system.
+- a new small rules table, called a **manifest**, that lists the single primary bridge test for each system.
 
 The manifest should be saved before outcome testing:
 
@@ -735,9 +798,9 @@ The manifest should be saved before outcome testing:
 results/<version>/candidates/candidate_common_endpoint_manifest.tsv
 ```
 
-### 7.2 Build the shared outcome
+### 7.2 Build the Primary convergence outcome
 
-1. Within each cell context, use NCI donors to set the reference values used to standardize the mtDNA ETC and nuclear OXPHOS scores.
+1. Within each cell context, use NCI donors to put the mtDNA ETC and nuclear OXPHOS scores onto comparable scales. Do this by subtracting the NCI average and dividing by the amount of donor-to-donor variation in NCI. This scaling step is called **standardization**.
 2. Within that cell context, use NCI donors to fit this reference:
 
    ```text
@@ -745,11 +808,12 @@ results/<version>/candidates/candidate_common_endpoint_manifest.tsv
        estimated from nuclear OXPHOS score, sex, APOE, age, and PMI
    ```
 
-3. Freeze the fitted reference. Do not refit it separately in AD groups.
+3. Freeze the fitted reference for scoring the main dataset. Do not refit it separately in AD groups.
 4. Use it to predict each eligible donor's mtDNA ETC score.
 5. Subtract the predicted score from the observed score.
-6. For NCI donors, repeat the prediction while leaving that donor out of the reference fitting. This checks that an NCI donor does not help predict itself.
+6. For NCI donors, repeat both the NCI scaling and reference fitting while leaving that donor out. This checks that an NCI donor does not help set the scale or predict itself.
 7. Save the residual for every donor and eligible cell context.
+8. During every donor bootstrap or leave-one-donor-out stability repeat, recalculate the NCI scale and refit the NCI reference inside that repeat. The formula and gene lists stay frozen; the fitted numbers do not.
 
 Output:
 
@@ -767,7 +831,7 @@ Each row should include donor ID, cell context, observed mtDNA score, nuclear OX
    - expression of the candidate gene itself; or
    - a prespecified upstream network-neighborhood score that shares no genes with the outcome.
 4. If a local-program score must be used, remove overlapping genes only after checking that the remaining genes still represent the program reliably.
-5. For the ATP-synthase system, do not empty the module by removing all complex-V genes. Use a prespecified disjoint candidate/upstream score, or create and clearly label a bridge-only nuclear reference that excludes complex V.
+5. For the ATP-synthase system, do not empty the module by removing all complex-V genes. Use a prespecified disjoint candidate/upstream score, or create and clearly label the **Optional non-overlap sensitivity outcome** using a nuclear reference that excludes complex V.
 6. Record all included and excluded genes, the reason for exclusion, the number and fraction remaining, and a reliability check.
 7. If no scientifically meaningful nonoverlapping measurement remains, label the bridge `not_testable`.
 8. Calculate one bridge measurement per donor in the planned cell context.
@@ -787,19 +851,22 @@ For each system, save two different tests. They answer different questions.
 
 **Primary pattern-matching test**
 
-Check whether the target-excluded local program and the residual bridge outcome both show the same frozen direct AD-by-sex or AD-by-APOE comparison in compatible directions.
+Check whether the target-excluded local program and the **Primary convergence outcome** both show the same frozen direct AD-by-sex or AD-by-APOE comparison in compatible directions.
 
 **Supporting donor-association test**
 
 Estimate this relationship:
 
 ```text
-shared mitonuclear residual
+Primary convergence outcome
     associated with the nonoverlapping candidate or upstream measurement
-    while accounting for biological group, age, PMI, and planned RNA quality
+    while accounting for biological group, age, PMI,
+    and preapproved, sufficiently complete technical-quality measurements
 ```
 
 This asks whether the two donor measurements are related after recorded group differences are accounted for. It does not test the sex/APOE modifier. If a group-specific association is a primary question, write down and test that additional comparison in advance.
+
+Repeat the bridge with mitochondrial-read fraction only as a sensitivity analysis, not as an automatic primary adjustment.
 
 Save:
 
@@ -844,12 +911,14 @@ The main plan already has separate rows for C1–C9. The table below proposes a 
 | Core event | C1 | Does sex or APOE change the AD respiratory effect? | Direct donor-level modifier and stability tests | Gate 1A |
 | Core event | C2 | Does that modifier differ between cell types? | Direct between-cell comparison and stability tests | Gate 1B |
 | Core event | C3 | Does the mtDNA–nuclear relationship change? | Full three-endpoint Gate 2 test; residual bridge must also pass for convergence | Gate 2 |
-| Candidate 1 phenotype | C4 | Does `APOE–TUFM` show its predicted astrocyte pattern? | Mediator, target-excluded translation module, correct context and comparison | Gate 3A |
-| Candidate 2 phenotype | C5 | Does `LAMTOR5–ATP5IF1` show its predicted neuronal pattern? | Mediator, target-excluded ATP-synthase module, correct context and comparison | Gate 3B |
+| Candidate 1 phenotype | C4 | Does `APOE–TUFM` show its predicted astrocyte pattern? | Named partner/readout, target-excluded translation module, correct context and comparison | Gate 3A |
+| Candidate 2 phenotype | C5 | Does `LAMTOR5–ATP5IF1` show its predicted neuronal pattern? | Named partner/readout, target-excluded ATP-synthase module, correct context and comparison | Gate 3B |
 | Candidate 3 phenotype | C6 | Does `GABARAPL2–CHCHD2/PARK7` show its predicted excitatory-neuron pattern? | Primary `CHCHD2`, target-excluded quality-control module, correct context and comparison | Gate 3C |
 | Candidate 1 network | C7a | Does `APOE–TUFM` beat fair network controls? | Both null comparisons, network stability, alternative network | Candidate-specific Gate 4 |
 | Candidate 2 network | C7b | Does `LAMTOR5–ATP5IF1` beat fair network controls? | Both null comparisons, network stability, alternative network | Candidate-specific Gate 4 |
 | Candidate 3 network | C7c | Does `GABARAPL2–CHCHD2/PARK7` beat fair network controls? | Both null comparisons, network stability, alternative network | Candidate-specific Gate 4 |
+| Independent RNA | C8 | Does the frozen endpoint appear in a different group of donors? | Frozen independent-cohort RNA test | Gate 5A |
+| Protein support | C9 | Does a passing program receive support from protein measurements? | Frozen protein test with measurement coverage reported | Gate 5B |
 | Derived summary | Cross-system convergence | How many separately supported systems connect to the same frozen endpoint definition and modifier comparison? | Relevant core gates, candidate phenotype gates, donor bridge, and candidate network gates | Count only systems that pass every required part |
 
 For each candidate, the matrix should also contain these columns:
@@ -859,7 +928,8 @@ system
 exact_cell_context
 planned_modifier_comparison
 local_process
-shared_endpoint
+primary_convergence_outcome
+optional_sensitivity_outcome
 phenotype_status
 donor_bridge_status
 network_status
@@ -913,7 +983,7 @@ All of the following must be true:
 2. C3 passes for the shared mitonuclear endpoint.
 3. C2 passes if the sentence says “cell-type-specific.”
 4. C4, C5, and C6 each pass separately.
-5. Each system has a stable, non-circular donor-level bridge using the same frozen endpoint definition, modifier comparison, and compatible endpoint direction.
+5. Each system has a stable, non-circular donor-level bridge using the unchanged Primary convergence outcome, the same modifier comparison, and a compatible endpoint direction.
 6. C7a, C7b, and C7c each pass their own network controls.
 7. The three remaining network neighborhoods retain distinguishable local programs after shared genes are removed.
 8. The number of systems named in the sentence equals the number that passed every required step.
@@ -968,7 +1038,7 @@ None of the following proves three-system convergence:
 - one candidate is strong and a combined test across all three is significant;
 - several analyses agree but use the same donors and the same network;
 - network arrows point from a candidate toward a mitochondrial gene;
-- the result is reproduced only after changing the endpoint or direction after viewing the data.
+- the result appears only after changing the endpoint or direction after viewing the data.
 
 ---
 
@@ -1015,11 +1085,11 @@ Include one main effect size and CI in each box.
 
 Use one row per candidate:
 
-| System | Cell context | Local module and named readout | Donor bridge to shared endpoint | Network nulls | Alternative network | Contributes to convergence? |
+| System | Cell context | Frozen modifier and endpoint direction | Local module and named readout | Donor bridge | Network controls | Contributes? |
 |---|---|---|---|---|---|---|
-| `APOE–TUFM` | Astrocytes | status | status | status | status | yes/no/inconclusive |
-| `LAMTOR5–ATP5IF1` | Neurons | status | status | status | status | yes/no/inconclusive |
-| `GABARAPL2–CHCHD2/PARK7` | Excitatory neurons | status | status | status | status | yes/no/inconclusive |
+| `APOE–TUFM` | Astrocytes | planned comparison/direction | status | status | status | yes/no/inconclusive |
+| `LAMTOR5–ATP5IF1` | Neurons | planned comparison/direction | status | status | status | yes/no/inconclusive |
+| `GABARAPL2–CHCHD2/PARK7` | Excitatory neurons | planned comparison/direction | status | status | status | yes/no/inconclusive |
 
 Show failed and inconclusive boxes in gray or another clear color. Do not hide them.
 
@@ -1043,7 +1113,8 @@ Do these steps in this order.
 
 ### Before looking at new candidate results
 
-- [ ] Choose the one shared endpoint.
+- [ ] Freeze the unchanged Primary convergence outcome.
+- [ ] If needed, separately define the Optional non-overlap sensitivity outcome and label it supporting only.
 - [ ] Freeze the mtDNA and nuclear OXPHOS gene lists.
 - [ ] Freeze the exact sex/APOE comparison for the shared claim.
 - [ ] Freeze the main cell context for each candidate.
@@ -1114,16 +1185,20 @@ Do **not** write the following without direct perturbation and functional experi
 
 ### Question 1: How do we show that the three systems point to the same biological change?
 
-First establish one shared mitochondrial event using donor-level data without using the candidates. Then require each candidate system to show:
+Use two stages.
 
-1. the predicted local program in the correct cell context;
-2. a stable, non-circular association with that same shared endpoint;
+**Stage 1: test the core event once, without using any candidate.** The full C3 Gate 2 rule must pass, not just one residual result. C1 must also pass for the exact modifier wording, and C2 must pass only if we use “cell-type-specific.”
+
+**Stage 2: test each candidate separately.** Each one must show:
+
+1. the predicted local program in the correct cell context and frozen modifier comparison;
+2. a stable, non-circular donor-level bridge using the Primary convergence outcome;
 3. a network result that beats query-matched and topology-matched chance results;
 4. support in an alternative network;
-5. distinct local biology after shared genes are removed;
+5. a distinguishable local program after shared genes are removed;
 6. outside support when suitable independent RNA or protein data are available.
 
-All three must pass individually before the sentence can say “three systems.”
+All three must pass separately for the same planned comparison and compatible endpoint direction before the sentence can say “three systems.”
 
 ### Question 2: Must one candidate system explain C1, C2, and C3?
 
