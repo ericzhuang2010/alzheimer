@@ -168,7 +168,152 @@ A gene suggested for further testing. “Candidate” means that evidence is sti
 
 **Named partner or readout**
 
-The named gene paired with a highlighted candidate in the earlier computer-generated gene map. A **readout** is a measurement used to represent a biological process. Examples are `TUFM`, `ATP5IF1`, and `CHCHD2`. Older project notes sometimes call these genes “mediators,” but that label does **not** prove that a gene sits in a cause-and-effect chain.
+This phrase combines two related ideas.
+
+A **named partner** is a specific gene paired with a candidate in the earlier computer-generated gene network, which is a map of estimated relationships among genes. The partner gives us a concrete gene-level prediction to test. For example, `TUFM` is the named partner in the `APOE–TUFM` hypothesis.
+
+A **readout** is a measurement used as a sign of what may be happening in a biological process. Here, the measured RNA expression of `TUFM` is a readout of the `APOE–TUFM` hypothesis. The larger mitochondrial-translation gene module is a second, broader readout of that local process.
+
+The same gene can therefore have both roles:
+
+- it is the **partner** because the network paired it with the candidate;
+- it is a **readout** because its measured RNA is used to test the prediction.
+
+The word “partner” does **not** mean that the two proteins physically touch. The genes may be connected through one or more steps in the network rather than by one direct link. It also does not prove that the candidate controls the partner. The dash in `APOE–TUFM` means “a network-nominated relationship that we plan to test,” not a causal arrow.
+
+Older project notes sometimes call these genes “mediators.” That label is too strong unless a cause-and-effect chain is tested directly. This guide therefore uses the safer phrase **named partner/readout**.
+
+An **association** means that two measurements vary together in a repeatable way. It does not mean that one causes the other.
+
+#### What “Primary convergence outcome” means
+
+Break the phrase into three parts:
+
+- **Primary:** this is the main version chosen before looking at the new candidate results. We do not switch to a different outcome because it gives a more exciting answer.
+- **Convergence:** all candidate systems are tested against the same scientific yardstick. This lets us ask whether they point toward one measured change instead of merely being related to mitochondria in different ways.
+- **Outcome:** the number being studied. Each eligible donor receives an outcome value within each planned cell context.
+
+In this project, the Primary convergence outcome is the **NCI-reference mitonuclear residual**. That long name means:
+
+> How much higher or lower a donor's observed mtDNA respiratory-expression score is than the value predicted from that donor's nuclear OXPHOS-expression score using the relationship estimated in the NCI comparison group.
+
+It is calculated in four basic steps:
+
+1. Calculate a nuclear OXPHOS score for each donor.
+2. In NCI donors, learn how the mtDNA respiratory score is related to the nuclear OXPHOS score while accounting for the planned sex, APOE, age, and PMI information.
+3. Use that NCI relationship to predict the mtDNA score expected for each donor.
+4. Subtract the predicted mtDNA score from the observed mtDNA score.
+
+```text
+Primary convergence outcome
+    = observed mtDNA respiratory score
+      − NCI-reference predicted mtDNA respiratory score
+```
+
+For an invented example:
+
+```text
+predicted mtDNA score = 0.7
+observed mtDNA score  = 0.2
+
+outcome = 0.2 − 0.7 = −0.5
+```
+
+Here, `−0.5` means that the donor's mtDNA respiratory-expression score is lower than predicted from the NCI reference. A positive value means it is higher than predicted. A value near zero means it is close to the prediction.
+
+Positive does not automatically mean healthy, and negative does not automatically mean harmful. The sign describes an RNA-expression relationship, not mitochondrial performance.
+
+Why use one common outcome? Imagine testing three study methods with three completely different exams. Their scores would not show that all three methods improve the same skill. Giving all three the same exam creates a common yardstick. Here, the Primary convergence outcome is that common yardstick.
+
+For the strict convergence claim:
+
+- the outcome itself must show the planned, stable AD-by-sex or AD-by-APOE result;
+- `APOE–TUFM`, `LAMTOR5–ATP5IF1`, and `GABARAPL2–CHCHD2/PARK7` must each be separately associated with this unchanged outcome;
+- they must use the same frozen sex/APOE comparison and a compatible outcome direction;
+- changing the outcome definition for one system would prevent a strict “same outcome” claim.
+
+Important limits:
+
+- This is an RNA-expression outcome. It does not directly measure oxygen consumption, ATP production, mitochondrial number, or cell health.
+- This one outcome cannot pass C3 by itself. C3 requires agreement from at least two of the three planned measurements of the mtDNA–nuclear relationship.
+- The same formula and gene rules are used across cell contexts, but the NCI reference is estimated separately within each cell context.
+- An altered outcome made only as a gene-overlap sensitivity check is supporting evidence. It is not the unchanged Primary convergence outcome and cannot earn the strict convergence claim by itself.
+
+#### The four different pieces of a candidate-system hypothesis
+
+Do not treat these four pieces as if they were the same thing:
+
+| Piece | Role in this analysis, explained simply | Examples |
+|---|---|---|
+| **Candidate gene** | The gene highlighted by the network as potentially important | `APOE`, `LAMTOR5`, `GABARAPL2` |
+| **Named partner/readout** | The specific mitochondrial-related gene paired with that candidate and measured as a concrete prediction | `TUFM`, `ATP5IF1`, `CHCHD2`; `PARK7` is secondary |
+| **Local gene module** | A larger group of genes representing the partner's biological process | Mitochondrial translation, ATP synthase, or mitochondrial stress/quality control |
+| **Primary convergence outcome** | The common mtDNA-versus-nuclear OXPHOS measurement that all passing systems must connect to | How far mtDNA expression lies above or below the value predicted from nuclear OXPHOS using the NCI comparison group |
+
+The exact candidate-to-partner mapping is:
+
+| Candidate | Named partner/readout | Main local process | Important note |
+|---|---|---|---|
+| `APOE` | `TUFM` | Mitochondrial translation | `APOE` here is the gene/network node, not the donor's APOE genotype group |
+| `LAMTOR5` | `ATP5IF1` | ATP synthase | The ATP-synthase module must be scored without `ATP5IF1` for the confirmation test |
+| `GABARAPL2` | `CHCHD2` | Mitochondrial stress/quality control | `CHCHD2` is primary; `PARK7` is secondary and cannot rescue an unsupported `CHCHD2` result |
+
+The logic is:
+
+```text
+network candidate
+    associated with a named partner/readout
+        associated with a local biological program
+            associated with the shared mitochondrial outcome
+```
+
+Every line above means “an association to test.” It does not mean proven biological control.
+
+#### Why not test only the candidate gene?
+
+A network candidate does not have to show different average RNA abundance between groups. A gene that does show such a difference is later called a DEG. The candidate's average RNA might remain similar even if its network relationships are biologically interesting.
+
+The named partner/readout makes the hypothesis more specific and easier to disprove. The local module then asks whether the partner is accompanied by a broader biological program rather than being one isolated gene result.
+
+For a named system to receive donor-level support, we therefore want all of the following:
+
+1. The named partner/readout has a compatible estimated direction in the planned cell context and sex/APOE comparison.
+2. The local module also changes after the named partner/readout is removed from the module score.
+3. The candidate gene has a planned relationship with the partner or local module. This is supporting evidence, not proof that the candidate controls them.
+4. The candidate or another nonoverlapping network-neighborhood measurement—a score made from genes close to the candidate in the gene map—is associated with the Primary convergence outcome.
+5. The candidate later beats fair comparisons with similar random gene lists and similarly connected network genes, and it remains stable after small network changes.
+
+A significant named partner by itself is not enough. It could be an isolated gene result. A significant module by itself may support the biological program but not the named candidate–partner system.
+
+#### Worked example: `LAMTOR5–ATP5IF1`
+
+In this label:
+
+- `LAMTOR5` is the network-nominated candidate;
+- `ATP5IF1` is the named partner/readout;
+- the ATP-synthase module represents the local biological program;
+- the NCI-reference mitonuclear residual is the shared outcome.
+
+The donor-level test asks:
+
+1. Does `ATP5IF1` show a compatible effect in the planned neuronal comparison?
+2. Does the rest of the ATP-synthase module show the pattern after `ATP5IF1` is removed from its score?
+3. Is `LAMTOR5` related to `ATP5IF1` or the local program across donors after the planned adjustments?
+4. Does a non-circular `LAMTOR5` or network-neighborhood measurement connect to the unchanged Primary convergence outcome?
+5. Does the original network nomination survive fair network controls?
+
+Possible interpretations are:
+
+- If only `ATP5IF1` changes, report an interesting gene result, not a supported system.
+- If the ATP-synthase module changes but `ATP5IF1` is incompatible, report the broader ATP-synthase result, not the full named system.
+- If `LAMTOR5` is not a DEG, the system does not automatically fail; the partner, module, donor relationship, and network checks still determine support.
+- If all required pieces pass, call it a **supported network-nominated system associated with the mitochondrial outcome**. Do not call it a proven regulator or cause.
+
+#### RNA readout versus functional readout
+
+The current project mainly has **RNA readouts**, such as `ATP5IF1` RNA abundance or an ATP-synthase RNA module score.
+
+A **functional readout** would directly measure what mitochondria do, such as oxygen consumption or ATP production. The current RNA and network analyses cannot replace those functional measurements.
 
 **Target-excluded module score**
 
