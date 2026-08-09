@@ -12,7 +12,7 @@ source(common_path)
 usage <- function() {
   cat(
     "Usage: Rscript scripts/figures/analysis/phease12_kda/",
-    "visualize_phase12_kda_panel_b_sex_apoe.R ",
+    "visualize_phase12_kda_sex_apoe.R ",
     "[--input-dir DIR] [--output-dir DIR] [--basename NAME] ",
     "[--maximum-rows N] [--maximum-per-network N] ",
     "[--minimum-ranking-coverage FRACTION]\n",
@@ -25,7 +25,7 @@ args <- parse_value_args(
   defaults = list(
     input_dir = "results/figures/analysis/phase12_kda",
     output_dir = "results/figures/analysis/phase12_kda",
-    basename = "phase12_kda_panel_b_sex_apoe",
+    basename = "phase12_kda_sex_apoe",
     maximum_rows = "20",
     maximum_per_network = "3",
     minimum_ranking_coverage = "0.50"
@@ -448,7 +448,7 @@ atomic_write_table(
   data.frame(
     schema_version = "phase12_kda_figure_generation_log_v1",
     generated_at_utc = format(Sys.time(), "%Y-%m-%dT%H:%M:%SZ", tz = "UTC"),
-    figure_script = "scripts/figures/analysis/phease12_kda/visualize_phase12_kda_panel_b_sex_apoe.R",
+    figure_script = "scripts/figures/analysis/phease12_kda/visualize_phase12_kda_sex_apoe.R",
     input_mean_summary = mean_path,
     input_conservative_summary = conservative_path,
     input_group_summary = group_path,

@@ -12,7 +12,7 @@ source(common_path)
 usage <- function() {
   cat(
     "Usage: Rscript scripts/figures/analysis/phease12_kda/",
-    "visualize_phase12_kda_panel_a_circular.R ",
+    "visualize_phase12_kda_reduced_circular.R ",
     "[--input-dir DIR] [--output-dir DIR] [--basename NAME] ",
     "[--top-per-network N] [--minimum-ranking-coverage FRACTION]\n",
     sep = ""
@@ -24,7 +24,7 @@ args <- parse_value_args(
   defaults = list(
     input_dir = "results/figures/analysis/phase12_kda",
     output_dir = "results/figures/analysis/phase12_kda",
-    basename = "phase12_kda_panel_a_circular",
+    basename = "phase12_kda_reduced_circular",
     top_per_network = "3",
     minimum_ranking_coverage = "0.80"
   ),
@@ -332,7 +332,7 @@ atomic_write_table(
   data.frame(
     schema_version = "phase12_kda_figure_generation_log_v1",
     generated_at_utc = format(Sys.time(), "%Y-%m-%dT%H:%M:%SZ", tz = "UTC"),
-    figure_script = "scripts/figures/analysis/phease12_kda/visualize_phase12_kda_panel_a_circular.R",
+    figure_script = "scripts/figures/analysis/phease12_kda/visualize_phase12_kda_reduced_circular.R",
     input_summary = summary_path,
     input_checks = checks_path,
     figure_basename = args$basename,
