@@ -65,6 +65,11 @@ assert(length(phase_cfg$contexts) == 7L, "Expected seven contexts")
 assert(length(phase_cfg$contrasts) == 7L, "Expected seven contrasts")
 assert(length(phase_cfg$groups) == 12L, "Expected twelve groups")
 
+assert(is.na(scheduler_core_limit(c(PATH = "/usr/bin"))),
+       "Missing scheduler variables must not fail core detection")
+assert(scheduler_core_limit(c(LSB_DJOB_NUMPROC = "8")) == 8L,
+       "LSF core allocation was not detected")
+
 worker_fixture <- resolve_stability_workers(
   list(max_total_cores = 48L, phase13_stability_workers = 32L),
   available_cores = 24L, scheduler_cores = 16L, os_type = "unix"

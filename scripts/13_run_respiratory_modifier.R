@@ -219,7 +219,7 @@ positive_core_count <- function(x) {
 scheduler_core_limit <- function(environment = Sys.getenv()) {
   keys <- c("LSB_DJOB_NUMPROC", "SLURM_CPUS_PER_TASK", "NSLOTS")
   values <- vapply(keys, function(key) {
-    positive_core_count(environment[[key]] %||% NA_character_)
+    positive_core_count(unname(environment[key]))
   }, integer(1))
   values <- values[!is.na(values)]
   if (length(values)) min(values) else NA_integer_
