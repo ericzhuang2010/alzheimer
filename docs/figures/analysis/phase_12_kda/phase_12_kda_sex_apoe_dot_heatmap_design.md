@@ -530,7 +530,7 @@ Primary figure script:
 
 ```text
 scripts/figures/analysis/phease12_kda/
-  visualize_phase12_kda_panel_b_sex_apoe.R
+  visualize_phase12_kda_sex_apoe.R
 ```
 
 Shared preparation and helper scripts:
@@ -545,11 +545,11 @@ Generated Panel B files:
 
 ```text
 results/figures/analysis/phase12_kda/
-  phase12_kda_panel_b_sex_apoe.png
-  phase12_kda_panel_b_sex_apoe.pdf
-  phase12_kda_panel_b_sex_apoe.svg
-  phase12_kda_panel_b_sex_apoe_plotted_data.tsv
-  phase12_kda_panel_b_sex_apoe_generation_log.tsv
+  phase12_kda_sex_apoe.png
+  phase12_kda_sex_apoe.pdf
+  phase12_kda_sex_apoe.svg
+  phase12_kda_sex_apoe_plotted_data.tsv
+  phase12_kda_sex_apoe_generation_log.tsv
 ```
 
 The implemented panel contains 16 prioritized network-driver rows and 192

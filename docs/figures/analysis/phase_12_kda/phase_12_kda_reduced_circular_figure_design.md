@@ -450,7 +450,7 @@ Primary figure script:
 
 ```text
 scripts/figures/analysis/phease12_kda/
-  visualize_phase12_kda_panel_a_circular.R
+  visualize_phase12_kda_reduced_circular.R
 ```
 
 Shared preparation and helper scripts:
@@ -465,11 +465,11 @@ Generated Panel A files:
 
 ```text
 results/figures/analysis/phase12_kda/
-  phase12_kda_panel_a_circular.png
-  phase12_kda_panel_a_circular.pdf
-  phase12_kda_panel_a_circular.svg
-  phase12_kda_panel_a_circular_plotted_data.tsv
-  phase12_kda_panel_a_circular_generation_log.tsv
+  phase12_kda_reduced_circular.png
+  phase12_kda_reduced_circular.pdf
+  phase12_kda_reduced_circular.svg
+  phase12_kda_reduced_circular_plotted_data.tsv
+  phase12_kda_reduced_circular_generation_log.tsv
 ```
 
 The implemented panel contains 21 network-driver sectors: exactly three for
