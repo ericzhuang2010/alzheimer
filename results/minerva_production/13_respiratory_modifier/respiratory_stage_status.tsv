@@ -1,0 +1,10 @@
+schema_version	stage_order	stage_id	dependencies	analysis_fingerprint	planned_shards	completed_shards	reused_shards	skipped_shards	failed_shards	started_utc	finished_utc	terminal_status
+phase13_stage_status_v1	1	definitions		d6fc492e5440c1f2d10b7434fd151cc57b8898cb03bb9ad096e17b3154cb236a	1	1	0	0	0	2026-08-09 01:43:56	2026-08-09 20:09:44	completed
+phase13_stage_status_v1	2	input_validation	definitions	d6fc492e5440c1f2d10b7434fd151cc57b8898cb03bb9ad096e17b3154cb236a	1	1	0	0	0	2026-08-09 01:43:56	2026-08-09 20:09:44	completed
+phase13_stage_status_v1	3	broad_aggregation	input_validation	d6fc492e5440c1f2d10b7434fd151cc57b8898cb03bb9ad096e17b3154cb236a	1	1	0	0	0	2026-08-09 01:43:56	2026-08-09 20:09:44	completed
+phase13_stage_status_v1	4	test_manifest	broad_aggregation	d6fc492e5440c1f2d10b7434fd151cc57b8898cb03bb9ad096e17b3154cb236a	1	1	0	0	0	2026-08-09 01:43:56	2026-08-09 20:09:44	completed
+phase13_stage_status_v1	5	primary_models	test_manifest	d6fc492e5440c1f2d10b7434fd151cc57b8898cb03bb9ad096e17b3154cb236a	1	1	0	0	0	2026-08-09 01:43:56	2026-08-09 20:09:44	completed
+phase13_stage_status_v1	6	camera	primary_models	d6fc492e5440c1f2d10b7434fd151cc57b8898cb03bb9ad096e17b3154cb236a	1	1	0	0	0	2026-08-09 01:43:56	2026-08-09 20:09:44	completed
+phase13_stage_status_v1	7	stability	primary_models|camera	d6fc492e5440c1f2d10b7434fd151cc57b8898cb03bb9ad096e17b3154cb236a	1	1	0	0	0	2026-08-09 01:43:56	2026-08-09 20:09:44	completed
+phase13_stage_status_v1	8	gate	stability	d6fc492e5440c1f2d10b7434fd151cc57b8898cb03bb9ad096e17b3154cb236a	1	1	0	0	0	2026-08-09 01:43:56	2026-08-09 20:09:44	completed
+phase13_stage_status_v1	9	publication	gate	d6fc492e5440c1f2d10b7434fd151cc57b8898cb03bb9ad096e17b3154cb236a	1	1	0	0	0	2026-08-09 01:43:56	2026-08-09 20:09:44	completed
