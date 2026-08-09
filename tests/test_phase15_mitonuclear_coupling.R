@@ -31,6 +31,7 @@ assert <- function(value, message) {
 
 root <- normalizePath(getwd(), mustWork = TRUE)
 source(file.path(root, "scripts/15_run_mitonuclear_coupling.R"), local = FALSE)
+source(file.path(root, "scripts/15_run_mitonuclear_coupling_production.R"), local = FALSE)
 args <- parse_test_cli(commandArgs(trailingOnly = TRUE))
 
 required <- c("yaml", "data.table", "sandwich", "digest")
@@ -61,8 +62,16 @@ assert(identical(as.integer(table(factor(members$module_id, levels = modules$mod
                  c(13L, 86L)), "C3 module sizes changed")
 assert(length(unlist(cfg$outputs$declared_files)) == 36L,
        "Phase 15 must declare exactly 36 outputs")
-assert(!isTRUE(cfg$analysis$production_approved),
-       "Local pilot approval must not authorize production")
+unauthorized_cfg <- cfg
+unauthorized_cfg$analysis$production_approved <- FALSE
+authorization_error <- tryCatch({
+  phase15_production_authorized(unauthorized_cfg)
+  NULL
+}, error = function(e) e)
+assert(inherits(authorization_error, "error"),
+       "Production authorization gate did not reject an unapproved configuration")
+authorized_cfg <- cfg
+authorized_cfg$analysis$production_approved <- TRUE
 
 scores <- build_pilot_score_pairs(cfg, phase13, contexts)
 assert(!anyDuplicated(scores$donor_context_id), "Donor/context score keys are duplicated")
@@ -150,6 +159,66 @@ worker_fixture <- phase15_worker_plan(list(max_total_cores = 8L,
                                             phase15_stability_workers = 6L))
 assert(worker_fixture$effective >= 1L && worker_fixture$effective <= 6L,
        "Phase 15 worker resolution exceeded its limits")
+
+phase13_production_dir <- file.path(
+  root, "results/minerva_production/13_respiratory_modifier"
+)
+if (dir.exists(phase13_production_dir)) {
+  invisible(validate_phase13_production_bundle(phase13_production_dir, cfg))
+  production_contexts <- production_context_manifest(phase13, cfg)
+  assert(nrow(production_contexts) == 7L,
+         "Production must contain seven Phase 13 contexts")
+  assert(sum(production_contexts$context_role == "primary_confirmatory") == 3L &&
+           sum(production_contexts$context_role == "secondary_extension") == 4L,
+         "Production context roles must remain three primary plus four secondary")
+  production_scores <- load_phase13_production_scores(
+    phase13_production_dir, production_contexts
+  )
+  assert(is.character(production_scores$projid) &&
+           any(startsWith(production_scores$projid, "0")),
+         "Production projid lost character type or leading zeroes")
+  reconstruction_error <- reconstruct_phase13_score_error(
+    phase13_production_dir, production_scores
+  )
+  assert(is.finite(reconstruction_error) && reconstruction_error <= 1e-8,
+         "Stored Phase 13 scores do not reconstruct from validated inputs")
+  production_analysis <- analyze_scores(
+    production_scores, cfg, phase13, production_contexts, endpoints,
+    "phase15_local_integration_test", production = TRUE
+  )
+  assert(nrow(production_analysis$results$general) == 21L &&
+           nrow(production_analysis$results$modifier) == 147L &&
+           nrow(production_analysis$results$strata) == 126L,
+         "Production primary result dimensions changed")
+  assert(all(production_analysis$endpoint_bundle$context_status$reference_success),
+         "A production NCI cross-fit reference failed")
+  assert(setequal(unique(production_analysis$results$general$family_id),
+                  c(cfg$multiple_testing$families$general_primary,
+                    cfg$multiple_testing$families$general_secondary)),
+         "Primary and secondary general FDR families were not separated")
+  production_inputs <- load_phase15_resampling_inputs(
+    phase13_production_dir, production_contexts, phase13
+  )
+  astro_input <- production_inputs$astrocytes
+  rebuilt <- rebuild_phase15_context_scores(
+    astro_input, astro_input$samples$projid, astro_input$samples$projid
+  )
+  rebuilt_nci <- rebuilt$diagnosis == "NCI"
+  assert(abs(mean(rebuilt$M[rebuilt_nci])) < 1e-10 &&
+           abs(stats::sd(rebuilt$M[rebuilt_nci]) - 1) < 1e-10 &&
+           abs(mean(rebuilt$N[rebuilt_nci])) < 1e-10 &&
+           abs(stats::sd(rebuilt$N[rebuilt_nci]) - 1) < 1e-10,
+         "Count-level production score rebuilding is not NCI standardized")
+  production_grid <- build_phase15_production_prediction_grid(
+    production_analysis$endpoint_bundle$data, phase13
+  )
+  assert(nrow(production_grid) > 0L &&
+           all(production_grid$nuclear_score >= production_grid$common_range_low) &&
+           all(production_grid$nuclear_score <= production_grid$common_range_high),
+         "Production slope grid escaped the frozen common predictor range")
+  assert(length(phase15_influence_definitions(production_inputs)) == 23L,
+         "The frozen 13+5+1+4 influence analysis set changed")
+}
 
 if (!is.null(args$validate_output)) {
   number <- function(name) as.integer(args[[name]])

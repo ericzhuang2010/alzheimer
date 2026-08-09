@@ -5,8 +5,8 @@ analysis:
   title: Donor-level test of AD-associated mitonuclear expression coupling
   definitions_approved: true
   definitions_frozen: true
-  approval_basis: explicit_user_local_pilot_execution_request_2026-08-09
-  production_approved: false
+  approval_basis: explicit_user_phase15_production_authorization_after_local_validation_2026-08-09
+  production_approved: true
   task_mode: mitonuclear_coupling
   stable_task_id: global:mitonuclear_coupling
   output_schema: mitochondrial_mitonuclear_coupling_v1
@@ -19,6 +19,28 @@ paths:
   module_members: config/phase13_respiratory_modules.tsv
   phase13_relative: 13_respiratory_modifier
   output_relative: 15_mitonuclear_coupling
+
+production:
+  required_phase13_validation_status: validated_complete
+  primary_contexts: [astrocytes, excitatory_neurons, inhibitory_neurons]
+  secondary_contexts: [immune_cells, opcs, oligodendrocytes, vasculature]
+  bootstrap_repetitions: 1000
+  balance_repetitions: 1000
+  reference_fold_assignments: 50
+  local_validation_repetitions: 1
+  terminal_validation_status: validated_complete
+  phase13_required_dimensions:
+    contexts: 7
+    modules: 4
+    module_memberships: 273
+    modifier_contrasts: 7
+    planned_primary_tests: 196
+  output_dimensions:
+    general_rows: 21
+    modifier_rows: 147
+    stratum_rows: 126
+    general_gates: 7
+    modifier_gates: 49
 
 pilot:
   fixture_id: phase15_three_context_coupling_v1
