@@ -68,12 +68,12 @@ registry <- data.frame(
     "environment", "parity", "audit", "cohort", "annotations", "qc",
     "normalize", "descriptive", "pseudobulk", "contrasts", "pseudobulk_de",
     "mast", "annotate_genes", "similarity", "pathway", "kda",
-    "respiratory_modifier", "modifier_heterogeneity"
+    "respiratory_modifier", "modifier_heterogeneity", "mitonuclear_coupling"
   ),
   scope = c(
     "global", "global", "rds", "global", "global", "rds", "rds", "rds",
     "rds", "global", "rds", "rds", "global", "global", "global", "global",
-    "global", "global"
+    "global", "global", "global"
   ),
   script = c(
     "scripts/00_check_environment.R",
@@ -93,11 +93,12 @@ registry <- data.frame(
     "scripts/11_prepare_mitochondrial_pathway_data.R",
     "scripts/12_run_kda.R",
     "scripts/13_run_respiratory_modifier.R",
-    "scripts/14_run_modifier_heterogeneity.R"
+    "scripts/14_run_modifier_heterogeneity.R",
+    "scripts/15_run_mitonuclear_coupling.R"
   ),
   argument_names = c(
     "config,execution-config,report,status",
-    rep("config,execution-config,manifest-row,task-mode", 17L)
+    rep("config,execution-config,manifest-row,task-mode", 18L)
   ),
   output_schema = c(
     "environment_checks_v1", "parity_v1", "rds_audit_v1", "cohort_v1",
@@ -107,7 +108,8 @@ registry <- data.frame(
     "mitochondrial_annotation_status_v1", "mitochondrial_similarity_v1",
     "mitochondrial_pathway_data_v1", "mitochondrial_kda_v1",
     "mitochondrial_respiratory_modifier_v1",
-    "mitochondrial_modifier_heterogeneity_v1"
+    "mitochondrial_modifier_heterogeneity_v1",
+    "mitochondrial_mitonuclear_coupling_v1"
   ),
   stringsAsFactors = FALSE
 )
@@ -136,6 +138,9 @@ registry$argument_names[registry$task_mode == "modifier_heterogeneity"] <- paste
   c("config", "execution-config", "task-mode"), collapse = ","
 )
 
+registry$argument_names[registry$task_mode == "mitonuclear_coupling"] <- paste(
+  c("config", "execution-config", "task-mode"), collapse = ","
+)
 args <- parse_cli(commandArgs(trailingOnly = TRUE))
 if (!requireNamespace("yaml", quietly = TRUE)) stop("Package 'yaml' is required", call. = FALSE)
 
@@ -241,6 +246,12 @@ for (i in seq_len(nrow(selected_registry))) {
         stop("project.phase14_modifier_heterogeneity_config is required for modifier_heterogeneity", call. = FALSE)
       }
       absolute_path(phase14_config, root)
+    } else if (task$task_mode == "mitonuclear_coupling") {
+      phase15_config <- config$project$phase15_mitonuclear_coupling_config
+      if (is.null(phase15_config)) {
+        stop("project.phase15_mitonuclear_coupling_config is required for mitonuclear_coupling", call. = FALSE)
+      }
+      absolute_path(phase15_config, root)
     } else {
       analysis_path
     }
@@ -319,7 +330,8 @@ if (args$phase == "environment") {
 # scientific entry point in every execution stage.
 implemented_global_modes <- c(
   "cohort", "annotations", "contrasts", "annotate_genes", "similarity",
-  "pathway", "kda", "respiratory_modifier", "modifier_heterogeneity"
+  "pathway", "kda", "respiratory_modifier", "modifier_heterogeneity",
+  "mitonuclear_coupling"
 )
 unsupported_global <- task_graph$task_mode[
   is.na(task_graph$manifest_row) &

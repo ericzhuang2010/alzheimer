@@ -136,11 +136,55 @@ positive <- linear_test(model_fit$beta, model_fit$covariance,
 assert(positive$success && positive$estimate > 0.5,
        "Known positive heterogeneity was not recovered")
 
+assert(is.na(phase14_scheduler_core_limit(c(PATH = "/usr/bin"))),
+       "Missing scheduler variables must not fail Phase 14 core detection")
+assert(phase14_scheduler_core_limit(c(LSB_DJOB_NUMPROC = "8")) == 8L,
+       "Phase 14 did not detect the LSF core allocation")
+
 worker_fixture <- phase14_worker_plan(list(
   max_total_cores = 8L, phase14_stability_workers = 6L
-))
-assert(worker_fixture$effective >= 1L && worker_fixture$effective <= 6L,
-       "Phase 14 worker resolution exceeded its limits")
+), available_cores = 24L, scheduler_cores = 4L, os_type = "unix")
+assert(worker_fixture$effective == 4L,
+       "Phase 14 workers must respect the scheduler allocation")
+assert(worker_fixture$backend == "fork",
+       "Phase 14 Unix multicore execution must use fork workers")
+sequential_worker_fixture <- phase14_worker_plan(list(
+  max_total_cores = 8L, phase14_stability_workers = 6L
+), available_cores = 24L, scheduler_cores = 4L, os_type = "windows")
+assert(sequential_worker_fixture$effective == 1L,
+       "Phase 14 non-Unix execution must fall back to one worker")
+
+parallel_fixture_fun <- function(repetition) {
+  seed <- seed_for(phase_cfg, paste0("phase14-parallel-fixture::", repetition))
+  set.seed(seed)
+  data.frame(repetition = repetition, seed = seed, value = stats::runif(1))
+}
+parallel_fixture_tasks <- as.list(seq_len(8L))
+parallel_fixture_serial <- ordered_lapply(
+  parallel_fixture_tasks, parallel_fixture_fun, workers = 1L,
+  label = "Phase 14 test serial"
+)
+parallel_fixture_multicore <- ordered_lapply(
+  parallel_fixture_tasks, parallel_fixture_fun, workers = 2L,
+  label = "Phase 14 test multicore"
+)
+assert(identical(parallel_fixture_serial, parallel_fixture_multicore),
+       "Phase 14 multicore scheduling changed seeded results or task order")
+if (identical(.Platform$OS.type, "unix") &&
+    positive_core_count(parallel::detectCores(logical = TRUE)) >= 2L) {
+  fork_pids <- ordered_lapply(
+    as.list(seq_len(4L)), function(i) Sys.getpid(), workers = 2L,
+    label = "Phase 14 fork verification"
+  )
+  assert(length(unique(unlist(fork_pids))) == 2L,
+         "Phase 14 multicore verification did not start two fork workers")
+}
+
+minerva_execution <- yaml::read_yaml(
+  file.path(root, "config/minerva_production_execution.yml")
+)$execution
+assert(as.integer(minerva_execution$phase14_stability_workers) == 8L,
+       "Minerva must explicitly request eight Phase 14 stability workers")
 
 if (!is.null(args$validate_output)) {
   numeric_value <- function(name) as.integer(args[[name]])

@@ -1,0 +1,128 @@
+schema_version: phase15_mitonuclear_coupling_v1
+
+analysis:
+  analysis_id: phase15_mitonuclear_coupling_c3_v1
+  title: Donor-level test of AD-associated mitonuclear expression coupling
+  definitions_approved: true
+  definitions_frozen: true
+  approval_basis: explicit_user_local_pilot_execution_request_2026-08-09
+  production_approved: false
+  task_mode: mitonuclear_coupling
+  stable_task_id: global:mitonuclear_coupling
+  output_schema: mitochondrial_mitonuclear_coupling_v1
+  covariance: HC3
+  profile_threshold: 20
+  sensitivity_profile_threshold: 50
+
+paths:
+  phase13_config: config/phase13_respiratory_modifier.yml
+  module_members: config/phase13_respiratory_modules.tsv
+  phase13_relative: 13_respiratory_modifier
+  output_relative: 15_mitonuclear_coupling
+
+pilot:
+  fixture_id: phase15_three_context_coupling_v1
+  contexts: [astrocytes, excitatory_neurons, inhibitory_neurons]
+  donors_per_group: 9
+  low_count_suffix: Male__e2
+  low_count_donors: 6
+  bootstrap_repetitions: 6
+  balance_repetitions: 6
+  repeated_fold_assignments: 5
+  validation_status: nonfinal_smoke_test
+  scientific_decision: not_applicable_pilot
+
+endpoints:
+  - endpoint_order: 1
+    endpoint_id: standardized_difference
+    label: Standardized compartment difference
+    definition: M_minus_N
+    sesoi: 0.25
+    unit: mtDNA_NCI_SD_minus_nuclear_NCI_SD
+  - endpoint_order: 2
+    endpoint_id: nci_reference_residual
+    label: Cross-fitted NCI-reference residual
+    definition: observed_M_minus_NCI_predicted_M
+    sesoi: 0.25
+    unit: cross_fitted_NCI_residual_SD
+  - endpoint_order: 3
+    endpoint_id: coupling_slope_change
+    label: Coupling-slope change
+    definition: AD_minus_NCI_change_in_M_on_N_slope
+    sesoi: 0.25
+    unit: mtDNA_NCI_SD_per_nuclear_NCI_SD
+
+crossfit:
+  folds: 5
+  minimum_nci_estimable: 30
+  minimum_nci_confirmatory: 50
+  minimum_reference_df: 20
+
+eligibility:
+  minimum_general_ad: 20
+  minimum_general_nci: 30
+  confirmatory_general_ad: 30
+  confirmatory_general_nci: 50
+  minimum_modifier_cell: 5
+  confirmatory_modifier_cell: 10
+  minimum_slope_distinct_values: 5
+  slope_range_overlap_fraction: 0.50
+
+multiple_testing:
+  method: BH
+  q_threshold: 0.05
+  families:
+    general_primary: M15-general-primary
+    modifier_primary: M15-modifier-primary
+    general_secondary: M15-general-secondary
+    modifier_secondary: M15-modifier-secondary
+
+stability:
+  minimum_success_fraction: 0.95
+  minimum_direction_fraction: 0.80
+  minimum_relative_magnitude: 0.50
+  pc1_minimum_correlation: 0.70
+  zero_loo_sign_reversals_required: true
+
+randomization:
+  rng_kind: "L'Ecuyer-CMRG"
+  base_seed: 1515001
+
+outputs:
+  declared_files:
+    - mitonuclear_analysis_manifest.tsv
+    - mitonuclear_context_manifest.tsv
+    - mitonuclear_endpoint_manifest.tsv
+    - mitonuclear_contrast_manifest.tsv
+    - mitonuclear_module_manifest.tsv
+    - mitonuclear_module_members.tsv
+    - mitonuclear_input_inventory.tsv
+    - mitonuclear_source_checks.tsv
+    - mitonuclear_donor_eligibility.tsv
+    - mitonuclear_score_pairs.tsv.gz
+    - mitonuclear_crossfit_folds.tsv
+    - mitonuclear_nci_reference_models.tsv
+    - mitonuclear_reference_predictions.tsv.gz
+    - mitonuclear_donor_endpoints.tsv.gz
+    - mitonuclear_general_test_manifest.tsv
+    - mitonuclear_modifier_test_manifest.tsv
+    - mitonuclear_general_results.tsv
+    - mitonuclear_modifier_results.tsv
+    - mitonuclear_stratum_effects.tsv
+    - mitonuclear_group_slopes.tsv
+    - mitonuclear_prediction_grid.tsv.gz
+    - mitonuclear_model_diagnostics.tsv
+    - mitonuclear_score_reliability.tsv
+    - mitonuclear_stability_replicates.tsv.gz
+    - mitonuclear_general_stability_summary.tsv
+    - mitonuclear_modifier_stability_summary.tsv
+    - mitonuclear_gene_complex_influence.tsv
+    - mitonuclear_qc_normalization_sensitivity.tsv
+    - mitonuclear_general_gate_decisions.tsv
+    - mitonuclear_modifier_gate_decisions.tsv
+    - mitonuclear_claim_summary.tsv
+    - mitonuclear_figure_data.tsv.gz
+    - mitonuclear_stage_status.tsv
+    - mitonuclear_checks.tsv
+    - mitonuclear_artifacts.tsv
+    - mitonuclear_status.tsv

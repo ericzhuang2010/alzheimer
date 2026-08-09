@@ -5,7 +5,8 @@
 This document defines the scientific, implementation, execution, output, and
 completion plan for Phase 15.
 
-Plan status: **draft for review; not approved for execution**.
+Plan status: **local pilot approved and executed on 2026-08-09;
+Minerva production remains unapproved**.
 
 Phase 15 tests **Claim 3 (C3), Mitonuclear coupling**:
 
@@ -13,14 +14,17 @@ Phase 15 tests **Claim 3 (C3), Mitonuclear coupling**:
 > mitochondrial-DNA respiratory genes and nuclear-DNA OXPHOS structural genes,
 > and does that alteration differ by sex or APOE group?
 
-Phase 15 requires a complete, independently validated Phase 13 production
-bundle. It must not run on partial, pilot, or manually copied Phase 13 outputs.
+Phase 15 production requires a complete, independently validated Phase 13
+production bundle. It must not run on partial, pilot, or manually copied Phase
+13 outputs. The local pilot is the explicit exception defined below: it uses a
+deterministic synthetic Phase 13-compatible fixture and cannot produce C3
+evidence.
 The context tiers, three endpoints, reference model, direct contrasts,
 effect-size thresholds, multiple-testing families, stability rules, and C3
 gates must be approved before anyone opens the Phase 15 effect estimates.
 
-Creating this plan does not run Phase 15 and does not change results from any
-earlier phase.
+Executing the local pilot does not change earlier-phase results or authorize
+Phase 15 production.
 
 ### Short names
 
@@ -2063,7 +2067,7 @@ scientific_decision = not_applicable_pilot
 Planned commands:
 
 ```bash
-cd /Users/rzhuang/Documents/VscodeProjects/alzheimer
+cd /home/ericzhuang2010/VscodeProjects/alzheimer
 
 Rscript tests/test_phase15_mitonuclear_coupling.R
 
@@ -2090,6 +2094,41 @@ Rscript tests/test_phase15_mitonuclear_coupling.R \
 ```
 
 Pilot estimates are synthetic and cannot be used as C3 evidence.
+
+### Local pilot execution record
+
+The local pilot was executed on 2026-08-09 after explicit user authorization.
+Synthetic/unit tests, leakage tests, HC3 covariance checks, the pipeline dry
+run, the full pilot, and independent output-only validation all passed. The
+atomically published bundle is:
+
+```text
+results/local_pilot/15_mitonuclear_coupling/
+```
+
+Validated dimensions and terminal labels were:
+
+```text
+contexts = 3
+primary_contexts = 3
+secondary_contexts = 0
+modules = 2
+module_memberships = 99
+endpoints = 3
+modifier_contrasts = 7
+general result rows = 9
+modifier result rows = 63
+stratum rows = 54
+general gate rows = 3
+modifier gate rows = 21
+declared files = 36
+validation_status = nonfinal_smoke_test
+scientific_decision = not_applicable_pilot
+```
+
+All nine HC3 endpoint models converged, all five-fold NCI train/holdout sets
+were leakage-free, and all 30 blocking pilot checks passed. This execution is
+technical validation only and is not C3 evidence.
 
 ## Minerva production
 
@@ -2402,9 +2441,9 @@ The figure should show donor counts and mark `not_testable` separately from
 
 ### Validate and execute
 
-- [ ] Pass known-positive, known-null, crossing-slope, leakage, low-count,
+- [x] Pass known-positive, known-null, crossing-slope, leakage, low-count,
   compatibility, range, PC1, normalization, BH, and gate synthetic tests.
-- [ ] Validate the three-context local pilot as `nonfinal_smoke_test`.
+- [x] Validate the three-context local pilot as `nonfinal_smoke_test`.
 - [ ] Complete and validate all nine Phase 07 production pseudobulk bundles.
 - [ ] Complete and independently validate Phase 13 production.
 - [ ] Confirm all Phase 15 definitions remain frozen and no effects were opened.

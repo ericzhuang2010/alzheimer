@@ -7,6 +7,7 @@ project:
   phase12_kda_config: config/phase12_kda.yml
   phase13_respiratory_modifier_config: config/phase13_respiratory_modifier.yml
   phase14_modifier_heterogeneity_config: config/phase14_modifier_heterogeneity.yml
+  phase15_mitonuclear_coupling_config: config/phase15_mitonuclear_coupling.yml
   manifest: config/minerva_rds_manifest.tsv
 
 inputs:
@@ -51,3 +52,4 @@ scope:
     - kda
     - respiratory_modifier
     - modifier_heterogeneity
+    - mitonuclear_coupling

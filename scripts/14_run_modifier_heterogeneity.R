@@ -91,28 +91,97 @@ positive_core_count <- function(value) {
   if (length(value) != 1L || is.na(value) || value < 1L) NA_integer_ else value
 }
 
-phase14_worker_plan <- function(execution, os_type = .Platform$OS.type) {
-  requested <- positive_core_count(
-    execution$phase14_stability_workers %||% execution$max_total_cores
-  )
-  maximum <- positive_core_count(execution$max_total_cores)
-  detected <- positive_core_count(parallel::detectCores(logical = TRUE))
-  scheduler <- suppressWarnings(as.integer(c(
-    Sys.getenv("LSB_DJOB_NUMPROC", unset = NA_character_),
-    Sys.getenv("SLURM_CPUS_PER_TASK", unset = NA_character_),
-    Sys.getenv("NSLOTS", unset = NA_character_)
-  )))
-  scheduler <- scheduler[is.finite(scheduler) & scheduler > 0L]
-  limits <- c(requested, maximum, detected, if (length(scheduler)) min(scheduler) else NA)
-  workers <- min(limits[is.finite(limits)])
-  if (!identical(os_type, "unix")) workers <- 1L
-  list(requested = requested, effective = as.integer(workers),
-       backend = if (workers > 1L) "fork" else "sequential")
+phase14_scheduler_core_limit <- function(environment = Sys.getenv()) {
+  keys <- c("LSB_DJOB_NUMPROC", "SLURM_CPUS_PER_TASK", "NSLOTS")
+  values <- vapply(keys, function(key) {
+    positive_core_count(unname(environment[key]))
+  }, integer(1))
+  values <- values[!is.na(values)]
+  if (length(values)) min(values) else NA_integer_
 }
 
-ordered_lapply <- function(x, fun, workers) {
-  if (workers > 1L) parallel::mclapply(x, fun, mc.cores = workers,
-                                       mc.preschedule = TRUE) else lapply(x, fun)
+phase14_worker_plan <- function(execution, available_cores = NULL,
+                                scheduler_cores = NULL,
+                                os_type = .Platform$OS.type) {
+  maximum <- positive_core_count(execution$max_total_cores)
+  if (is.na(maximum)) {
+    stop("execution.max_total_cores must be a positive integer", call. = FALSE)
+  }
+  requested <- positive_core_count(
+    execution$phase14_stability_workers %||% maximum
+  )
+  if (is.na(requested)) {
+    stop("execution.phase14_stability_workers must be a positive integer",
+         call. = FALSE)
+  }
+  if (is.null(available_cores)) {
+    available_cores <- positive_core_count(parallel::detectCores(logical = TRUE))
+  } else {
+    available_cores <- positive_core_count(available_cores)
+  }
+  if (is.null(scheduler_cores)) {
+    scheduler_cores <- phase14_scheduler_core_limit()
+  }
+  scheduler_cores <- positive_core_count(scheduler_cores)
+  limits <- c(requested, maximum, available_cores, scheduler_cores)
+  limits <- limits[!is.na(limits)]
+  workers <- if (length(limits)) min(limits) else 1L
+  if (!identical(os_type, "unix")) workers <- 1L
+  list(
+    requested = requested,
+    effective = max(1L, as.integer(workers)),
+    max_total = maximum,
+    available = available_cores,
+    scheduler = scheduler_cores,
+    backend = if (identical(os_type, "unix") && workers > 1L) {
+      "fork"
+    } else "sequential"
+  )
+}
+
+ordered_lapply <- function(x, fun, workers = 1L, label = "tasks") {
+  if (!length(x)) return(list())
+  workers <- positive_core_count(workers)
+  if (is.na(workers)) workers <- 1L
+  workers <- min(workers, length(x))
+  if (workers <= 1L || !identical(.Platform$OS.type, "unix")) {
+    return(lapply(x, fun))
+  }
+  started <- proc.time()[["elapsed"]]
+  cat("  ", label, ": ", length(x), " tasks on ", workers,
+      " fork workers\n", sep = "")
+  wrapped <- function(task) {
+    tryCatch(
+      list(success = TRUE, value = fun(task), message = ""),
+      error = function(e) list(
+        success = FALSE, value = NULL,
+        message = paste0(class(e)[[1L]], ": ", conditionMessage(e))
+      )
+    )
+  }
+  results <- parallel::mclapply(
+    x, wrapped, mc.cores = workers, mc.preschedule = TRUE,
+    mc.set.seed = FALSE, mc.silent = FALSE
+  )
+  process_failures <- vapply(results, inherits, logical(1), what = "try-error")
+  task_failures <- !process_failures & !vapply(
+    results, function(result) is.list(result) && isTRUE(result$success), logical(1)
+  )
+  if (any(process_failures | task_failures)) {
+    failed <- which(process_failures | task_failures)
+    messages <- vapply(failed, function(i) {
+      if (process_failures[[i]]) {
+        as.character(results[[i]])
+      } else results[[i]]$message
+    }, character(1))
+    stop(
+      "Parallel ", label, " failed for task(s) ", paste(failed, collapse = ", "),
+      ": ", paste(unique(messages), collapse = " | "), call. = FALSE
+    )
+  }
+  elapsed <- proc.time()[["elapsed"]] - started
+  cat("  ", label, " completed in ", round(elapsed, 1), " seconds\n", sep = "")
+  lapply(results, `[[`, "value")
 }
 
 context_manifest_from_phase13 <- function(phase13, ids) {
@@ -755,6 +824,9 @@ run_stability <- function(scores, phase_cfg, phase13, contexts, pairs, modules,
     lapply(seq_along(donors), function(i) list(type = "leave_one_donor_out", id = i,
                                                donor = donors[[i]]))
   )
+  cat("Phase 14 stability: ", bootstrap_n, " donor bootstrap + ", balance_n,
+      " group-balanced + ", length(donors), " leave-one-donor-out tasks\n",
+      sep = "")
   worker <- function(task) {
     d <- if (task$type == "bootstrap") {
       resample_whole_donors(scores, phase_cfg, task$id, FALSE)
@@ -766,7 +838,9 @@ run_stability <- function(scores, phase_cfg, phase13, contexts, pairs, modules,
     extract_stability(analysis, task$type, task$id,
                       task$donor %||% NA_character_)
   }
-  bind_rows(ordered_lapply(tasks, worker, workers))
+  bind_rows(ordered_lapply(
+    tasks, worker, workers, label = "joint-model stability"
+  ))
 }
 
 stability_summary <- function(primary, stability, test_type) {
