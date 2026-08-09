@@ -48,7 +48,175 @@ Here:
 Phase 14 is therefore a difference between two
 **difference-of-differences**.
 
-## 2. Where the 588 pairwise tests come from
+## 2. Does Phase 14 simply subtract saved Phase 13 values?
+
+### The conceptual answer is yes
+
+The scientific quantity is a subtraction:
+
+```text
+H = modifier in context 1 − modifier in context 2
+```
+
+For example, suppose Phase 13 reports:
+
+```text
+astrocyte modifier         = +0.40
+excitatory-neuron modifier = −0.50
+```
+
+The intuitive Phase 14 difference is:
+
+```text
+H = +0.40 − (−0.50) = +0.90
+```
+
+This arithmetic explains the meaning of `H`.
+
+### The computational answer is no
+
+Phase 14 must not copy two displayed Phase 13 numbers into a spreadsheet and
+subtract them. It uses the validated Phase 13 data and definitions, rebuilds
+comparable scores, and estimates the pairwise difference inside a joint
+statistical model.
+
+There are three main reasons.
+
+### Reason 1: Phase 13 scores may use different genes in different contexts
+
+Phase 13 determines usable genes separately in each context. For example, a
+nuclear OXPHOS score might use:
+
+```text
+astrocytes:          80 usable genes
+excitatory neurons:  74 usable genes
+```
+
+Those two Phase 13 scores represent slightly different measured gene sets. A
+strict context comparison should compare the same program definition.
+
+Before viewing the Phase 14 heterogeneity results, Phase 14 finds the module
+genes that are usable in all seven contexts. It then rebuilds each context's
+donor scores using that common gene set.
+
+### Reason 2: the same donors can appear in multiple contexts
+
+One person may contribute both an astrocyte profile and an excitatory-neuron
+profile. These are not observations from two unrelated people:
+
+```text
+astrocyte profile from Donor A
+excitatory-neuron profile from Donor A
+```
+
+Phase 14 fits a joint mixed-effects model with a donor random intercept. This
+tells the model that several context profiles can belong to the same person.
+
+### Reason 3: the shared uncertainty, or covariance, matters
+
+The pairwise point estimate is:
+
+```text
+H = M1 − M2
+```
+
+Its variance is:
+
+```text
+Var(H)
+    = Var(M1)
+      + Var(M2)
+      − 2 × Cov(M1,M2)
+```
+
+`Cov(M1,M2)` describes how the two estimates move together, partly because
+many of the same donors contribute to both contexts.
+
+Therefore, Phase 14 must not calculate uncertainty as:
+
+```text
+SE(H) = sqrt[SE(M1)^2 + SE(M2)^2]
+```
+
+That shortcut assumes the two estimates are independent and ignores the
+shared-donor information. Phase 14 instead obtains the covariance and the
+correct confidence interval directly from the joint model.
+
+### What Phase 14 actually does
+
+Phase 14 performs the following workflow:
+
+1. Read and validate the Phase 13 counts, donor information, modules, context
+   definitions, contrast definitions, and result statuses.
+2. Find a common usable gene set for each module across all seven contexts.
+3. Recalculate comparable donor module scores using those common genes.
+4. Stack the context profiles into one repeated-donor dataset.
+5. Fit one joint mixed-effects model for each of the four modules.
+6. Estimate the inherited Phase 13-style modifier in every context from that
+   joint model.
+7. Subtract each frozen context pair within the joint model.
+8. Calculate the standard error, confidence interval, and P value using the
+   exact model covariance.
+9. Correct all 588 pairwise tests as one prespecified family.
+10. Run paired-donor, bootstrap, leave-one-donor-out, alternative-score, and
+    quality-control checks.
+
+Thus, Phase 14 fits four primary joint module models. It derives all 588
+pairwise comparisons from those models; it does not fit 588 unrelated models.
+
+### Why the Phase 14 numbers may differ slightly from Phase 13
+
+Suppose Phase 13 reports:
+
+```text
+astrocytes:          +0.40
+excitatory neurons:  −0.50
+simple difference:   +0.90
+```
+
+After using common genes and the joint repeated-donor model, Phase 14 might
+estimate:
+
+```text
+astrocytes:          +0.37
+excitatory neurons:  −0.46
+Phase 14 H:           +0.83
+95% CI:              [+0.30, +1.36]
+```
+
+This small difference is not automatically an error. The Phase 14 values come
+from the deliberately more comparable score and joint model. Phase 14 still
+checks whether the rebuilt context effects are directionally compatible with
+the carried Phase 13 result.
+
+### What is inherited and what is recalculated?
+
+| Inherited from Phase 13 | Recalculated in Phase 14 |
+|---|---|
+| Donor-level counts and metadata | Common-gene module scores |
+| Seven broad context definitions | Joint-model context modifier estimates |
+| Seven modifier definitions and subtraction signs | Pairwise `H` estimates |
+| Four frozen module definitions | Exact standard errors and confidence intervals |
+| Donor eligibility and quality information | Omnibus and pairwise P/q values |
+| Phase 13 row statuses | Phase 14 stability evidence and final statuses |
+
+Phase 14 does not subtract:
+
+- P values;
+- q values;
+- DEG counts; or
+- significance labels.
+
+It subtracts model-estimated sex/APOE modifier effects.
+
+The best summary is:
+
+> Phase 14 is mathematically based on subtracting pairs of Phase 13-style
+> modifier effects, but it rebuilds comparable scores and estimates those
+> differences in a joint repeated-donor model rather than merely subtracting
+> the saved Phase 13 table values.
+
+## 3. Where the 588 pairwise tests come from
 
 Seven broad cell contexts produce 21 unique context pairs:
 
@@ -84,7 +252,7 @@ The seven contexts are:
 6. Oligodendrocytes
 7. Vasculature cells
 
-## 3. How to interpret the sign
+## 4. How to interpret the sign
 
 The context order is frozen before testing:
 
@@ -123,7 +291,7 @@ Delta(Female,e4) − Delta(Female,e33)
 a positive modifier means the female e4 AD effect is more positive, or less
 negative, than the female e33 AD effect.
 
-## 4. Example 1: opposite sex patterns across cell contexts
+## 5. Example 1: opposite sex patterns across cell contexts
 
 Consider this planned row:
 
@@ -190,7 +358,7 @@ reverses direction. It still needs a confidence interval, q value, adequate
 paired donor counts, and all stability checks before it can be called
 supported.
 
-## 5. Example 2: similar effects in both contexts
+## 6. Example 2: similar effects in both contexts
 
 Suppose:
 
@@ -210,7 +378,7 @@ Phase 14 pairwise difference is approximately zero. This would suggest that
 the modifier may be shared across the two contexts rather than different
 between them.
 
-## 6. Example 3: negative APOE pairwise result
+## 7. Example 3: negative APOE pairwise result
 
 Consider:
 
@@ -244,7 +412,7 @@ The negative sign does not mean that OXPHOS expression is generally lower in
 excitatory neurons. It refers specifically to the e4-versus-e33 difference in
 the AD effect.
 
-## 7. Example 4: “significant here, not significant there” is insufficient
+## 8. Example 4: “significant here, not significant there” is insufficient
 
 Suppose the Phase 13-style context results are:
 
@@ -274,7 +442,7 @@ biological effects.
 
 This is why Phase 14 tests the difference directly.
 
-## 8. What one pairwise result row contains
+## 9. What one pairwise result row contains
 
 Each of the 588 rows should include:
 
@@ -298,7 +466,7 @@ The primary estimate is reported in standardized module-score units. Phase 14
 uses the same admitted genes across all seven contexts for a module before
 testing context differences, which makes the program definitions comparable.
 
-## 9. What is the parent omnibus result?
+## 10. What is the parent omnibus result?
 
 For each of the seven modifiers and four modules, Phase 14 first asks whether
 the modifier differs anywhere among the seven contexts:
@@ -317,7 +485,7 @@ individual pair passes its complete gate, the correct conclusion is:
 > The modifier differs somewhere among the seven analyzed contexts, but the
 > study did not reliably localize that difference to one named pair.
 
-## 10. When can a pair be called supported?
+## 11. When can a pair be called supported?
 
 A Phase 14 pair is supported only when all major requirements pass:
 
@@ -337,7 +505,7 @@ A Phase 14 pair is supported only when all major requirements pass:
 
 A large `H` estimate by itself is therefore insufficient.
 
-## 11. Why paired donor counts matter
+## 12. Why paired donor counts matter
 
 Many donors contribute profiles for more than one cell context. Phase 14 uses
 a repeated-donor model so those profiles are not treated as observations from
@@ -356,7 +524,7 @@ The word “pairwise” refers to a pair of cell contexts. “Paired donors” r
 to donors measured in both of those contexts. These are related but different
 ideas.
 
-## 12. Possible final statuses
+## 13. Possible final statuses
 
 | Status | Interpretation |
 |---|---|
@@ -370,7 +538,7 @@ ideas.
 A q value above `0.05` is not automatically a precise null. A wide confidence
 interval means the result may simply be inconclusive.
 
-## 13. Direct respiratory modules versus supporting modules
+## 14. Direct respiratory modules versus supporting modules
 
 Only pairwise results for these two modules can directly support headline
 wording about respiratory-modifier heterogeneity:
@@ -393,7 +561,7 @@ mib_micos_inner_membrane_19
 Translation-only or membrane-only results cannot be renamed as OXPHOS
 heterogeneity.
 
-## 14. A simple reading order for one pairwise result
+## 15. A simple reading order for one pairwise result
 
 When examining one Phase 14 pairwise row, use this order:
 
@@ -414,7 +582,7 @@ When examining one Phase 14 pairwise row, use this order:
 10. **What wording is allowed?** Use the frozen final status rather than visual
     judgment.
 
-## 15. Main point to remember
+## 16. Main point to remember
 
 A Phase 14 pairwise result does not ask:
 
