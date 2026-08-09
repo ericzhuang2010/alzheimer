@@ -5,21 +5,25 @@
 This document defines the scientific, implementation, execution, output, and
 completion plan for Phase 14.
 
-Plan status: **draft for review; not approved for execution**.
+Plan status: **local pilot approved and executed on 2026-08-08;
+Minerva production remains unapproved**.
 
 Phase 14 tests **Claim 2 (C2), Modifier heterogeneity**:
 
 > Does the sex/APOE modification of an AD-associated mitochondrial respiratory
 > expression program differ between broad brain cell contexts?
 
-Phase 14 depends on a complete, independently validated Phase 13 production
-bundle. It must not run on partial, pilot, or manually copied Phase 13 outputs.
+Phase 14 production depends on a complete, independently validated Phase 13
+production bundle. It must not run on partial, pilot, or manually copied Phase
+13 outputs. The local pilot is the explicit exception described below: it uses
+only a deterministic synthetic Phase 13-compatible fixture and cannot produce
+scientific evidence.
 The context comparisons, score-comparability rules, effect-size threshold,
 multiple-testing families, and gate rules must be approved before anyone opens
 the new Phase 14 results.
 
-Creating this plan does not run the analysis and does not change Phase 13
-results.
+Executing the local pilot does not change Phase 13 results or authorize Phase
+14 production.
 
 ### Short names
 
@@ -947,7 +951,7 @@ failure, sign reversal, singular covariance, PC1 orientation, and BH examples.
 Planned commands:
 
 ```bash
-cd /Users/rzhuang/Documents/VscodeProjects/alzheimer
+cd /home/ericzhuang2010/VscodeProjects/alzheimer
 
 Rscript tests/test_phase14_modifier_heterogeneity.R
 
@@ -971,6 +975,36 @@ Rscript tests/test_phase14_modifier_heterogeneity.R \
 ```
 
 Pilot results cannot be used as Claim 2 evidence.
+
+### Local pilot execution record
+
+The local pilot was executed on 2026-08-08 after the user explicitly requested
+local execution. Synthetic/unit tests, the pipeline dry run, the full pilot,
+and independent output-only validation all passed. The atomically published
+bundle is:
+
+```text
+results/local_pilot/14_modifier_heterogeneity/
+```
+
+Validated dimensions and terminal labels were:
+
+```text
+contexts = 3
+context_pairs = 3
+modules = 4
+modifiers = 7
+omnibus rows = 28
+pairwise rows = 84
+context modifier rows = 84
+context stratum rows = 72
+declared files = 31
+validation_status = nonfinal_smoke_test
+scientific_decision = not_applicable_pilot
+```
+
+All four pilot mixed models converged. All 24 blocking pilot checks passed.
+This execution record is technical validation only and is not Claim 2 evidence.
 
 ## Minerva production
 
@@ -1122,8 +1156,8 @@ testable.
 
 ### Validate and execute
 
-- [ ] Pass deterministic synthetic tests.
-- [ ] Validate the three-context, 84-pair-row local pilot as nonfinal.
+- [x] Pass deterministic synthetic tests locally.
+- [x] Validate the three-context, 84-pair-row local pilot as nonfinal.
 - [ ] Confirm Phase 13 Minerva production is complete and immutable.
 - [ ] Run Minerva tests and the Phase 14 dry run.
 - [ ] Execute or resume the four-model production analysis and stability shards.

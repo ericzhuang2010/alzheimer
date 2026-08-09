@@ -1,0 +1,94 @@
+schema_version: phase14_modifier_heterogeneity_v1
+
+analysis:
+  analysis_id: phase14_modifier_heterogeneity_c2_v1
+  title: Donor-level test of respiratory modifier heterogeneity across broad cell contexts
+  definitions_approved: true
+  definitions_frozen: true
+  approval_basis: explicit_user_local_pilot_execution_request_2026-08-08
+  production_approved: false
+  task_mode: modifier_heterogeneity
+  stable_task_id: global:modifier_heterogeneity
+  output_schema: mitochondrial_modifier_heterogeneity_v1
+  model_formula: "~ 0 + context:diagnosis_sex_APOE_group + age_death_scaled + pmi_scaled + study"
+  random_formula: "~ 1 | projid"
+  residual_variance: "varIdent(~ 1 | context)"
+  method: REML
+  sesoi_nci_sd: 0.25
+
+paths:
+  phase13_config: config/phase13_respiratory_modifier.yml
+  module_members: config/phase13_respiratory_modules.tsv
+  phase13_relative: 13_respiratory_modifier
+  scratch_relative: 14_modifier_heterogeneity
+  output_relative: 14_modifier_heterogeneity
+
+pilot:
+  fixture_id: phase14_three_context_repeated_donor_v1
+  contexts: [astrocytes, excitatory_neurons, vasculature]
+  donors_per_group: 8
+  low_overlap_group: Male__e2
+  bootstrap_repetitions: 8
+  balance_repetitions: 8
+  validation_status: nonfinal_smoke_test
+  scientific_decision: not_applicable_pilot
+
+eligibility:
+  primary_min_nuclei: 20
+  sensitivity_min_nuclei: 50
+  minimum_estimable_donors_per_group: 5
+  minimum_confirmatory_donors_per_group: 10
+  common_minimum_fraction: 0.70
+  common_minimum_genes: 5
+  mtdna_minimum_genes: 10
+
+multiple_testing:
+  omnibus_family: H14-omnibus
+  pairwise_family: H14-pairwise
+  method: BH
+  q_threshold: 0.05
+
+stability:
+  minimum_success_fraction: 0.95
+  minimum_direction_fraction: 0.80
+  minimum_relative_magnitude: 0.50
+  pc1_minimum_correlation: 0.70
+  zero_loo_sign_reversals_required: true
+
+randomization:
+  rng_kind: "L'Ecuyer-CMRG"
+  base_seed: 1414001
+
+outputs:
+  declared_files:
+    - heterogeneity_analysis_manifest.tsv
+    - heterogeneity_cell_context_manifest.tsv
+    - heterogeneity_context_pair_manifest.tsv
+    - heterogeneity_contrast_manifest.tsv
+    - heterogeneity_module_manifest.tsv
+    - heterogeneity_common_module_members.tsv
+    - heterogeneity_input_inventory.tsv
+    - heterogeneity_source_checks.tsv
+    - heterogeneity_donor_context_overlap.tsv
+    - heterogeneity_omnibus_test_manifest.tsv
+    - heterogeneity_pairwise_test_manifest.tsv
+    - heterogeneity_common_scores.tsv.gz
+    - heterogeneity_nci_reference_parameters.tsv.gz
+    - heterogeneity_context_modifier_effects.tsv
+    - heterogeneity_context_stratum_effects.tsv
+    - heterogeneity_omnibus_results.tsv
+    - heterogeneity_pairwise_results.tsv
+    - heterogeneity_model_diagnostics.tsv
+    - heterogeneity_pc1_loadings.tsv.gz
+    - heterogeneity_score_reliability.tsv
+    - heterogeneity_complete_case_results.tsv
+    - heterogeneity_stability_replicates.tsv.gz
+    - heterogeneity_omnibus_stability_summary.tsv
+    - heterogeneity_pairwise_stability_summary.tsv
+    - heterogeneity_gate_decisions.tsv
+    - heterogeneity_global_decisions.tsv
+    - heterogeneity_claim_summary.tsv
+    - heterogeneity_stage_status.tsv
+    - heterogeneity_checks.tsv
+    - heterogeneity_artifacts.tsv
+    - heterogeneity_status.tsv

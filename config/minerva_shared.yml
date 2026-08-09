@@ -6,6 +6,7 @@ project:
   phase11_pathway_config: config/phase11_pathway.yml
   phase12_kda_config: config/phase12_kda.yml
   phase13_respiratory_modifier_config: config/phase13_respiratory_modifier.yml
+  phase14_modifier_heterogeneity_config: config/phase14_modifier_heterogeneity.yml
   manifest: config/minerva_rds_manifest.tsv
 
 inputs:
@@ -49,3 +50,4 @@ scope:
     - pathway
     - kda
     - respiratory_modifier
+    - modifier_heterogeneity
