@@ -1827,7 +1827,7 @@ output_schema: mitochondrial_respiratory_modifier_v1
 
 The validated Phase 07 bundles may use a different results root from the new
 Phase 13 publication. Minerva sets
-`inputs.phase13_pseudobulk_root: results/07_pseudobulk` while retaining
+`inputs.phase13_pseudobulk_root: results/minerva_production/07_pseudobulk` while retaining
 `outputs.root: results/minerva_production`. Phase 02, Phase 03, and Phase 04
 prerequisites continue to resolve below the production stage root; only the
 Phase 07 pseudobulk bundle uses the explicit input override. The local pilot

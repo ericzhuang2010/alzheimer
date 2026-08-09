@@ -9,7 +9,7 @@ project:
   manifest: config/minerva_rds_manifest.tsv
 
 inputs:
-  phase13_pseudobulk_root: results/07_pseudobulk
+  phase13_pseudobulk_root: results/minerva_production/07_pseudobulk
 
   expression_root: /sc/arion/projects/zhangb03a/shared/ROSMAP/Synapse/snRNAseq_MIT/GeneExpression/10x/processed
   clinical_csv: data/processed/dataset_707_basic_02-08-2022.clean.txt
