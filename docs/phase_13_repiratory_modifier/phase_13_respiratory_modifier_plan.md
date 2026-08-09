@@ -1825,6 +1825,14 @@ output_schema: mitochondrial_respiratory_modifier_v1
 6. cap numeric-library threads at one; and
 7. inspect the one-task dry-run graph and analysis fingerprint.
 
+The validated Phase 07 bundles may use a different results root from the new
+Phase 13 publication. Minerva sets
+`inputs.phase13_pseudobulk_root: results/07_pseudobulk` while retaining
+`outputs.root: results/minerva_production`. Phase 02, Phase 03, and Phase 04
+prerequisites continue to resolve below the production stage root; only the
+Phase 07 pseudobulk bundle uses the explicit input override. The local pilot
+omits the override and keeps its existing stage-relative behavior.
+
 Phase 13 reads the much smaller Phase 07 pseudobulk bundles. If Phase 07 must
 first be rerun from raw RDS files, its own resource plan must process the large
 source objects safely; that prerequisite is not a Phase 13 stability analysis.

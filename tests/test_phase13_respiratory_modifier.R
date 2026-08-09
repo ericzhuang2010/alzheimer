@@ -65,6 +65,39 @@ assert(length(phase_cfg$contexts) == 7L, "Expected seven contexts")
 assert(length(phase_cfg$contrasts) == 7L, "Expected seven contrasts")
 assert(length(phase_cfg$groups) == 12L, "Expected twelve groups")
 
+explicit_pseudobulk_root <- phase13_pseudobulk_root(
+  list(
+    inputs = list(phase13_pseudobulk_root = "results/07_pseudobulk"),
+    outputs = list(root = "results/minerva_production")
+  ),
+  phase_cfg, "/project"
+)
+assert(identical(explicit_pseudobulk_root, "/project/results/07_pseudobulk"),
+       "Explicit Phase 13 pseudobulk root was not respected")
+fallback_pseudobulk_root <- phase13_pseudobulk_root(
+  list(inputs = list(), outputs = list(root = "results/local_pilot")),
+  phase_cfg, "/project"
+)
+assert(identical(
+  fallback_pseudobulk_root, "/project/results/local_pilot/07_pseudobulk"
+), "Default Phase 13 pseudobulk root did not follow the output stage")
+
+separated_input_paths <- input_paths_for_source(
+  "/project/results/minerva_production",
+  "/project/results/07_pseudobulk",
+  "astrocytes", "Astrocytes"
+)
+assert(identical(
+  separated_input_paths$counts,
+  "/project/results/07_pseudobulk/Astrocytes.pseudobulk_counts.rds"
+), "Phase 07 counts did not use the explicit pseudobulk root")
+assert(identical(
+  separated_input_paths$qc,
+  "/project/results/minerva_production/04_qc/astrocytes_cell_qc.tsv.gz"
+), "Phase 04 QC did not remain under the production stage root")
+
+
+
 assert(is.na(scheduler_core_limit(c(PATH = "/usr/bin"))),
        "Missing scheduler variables must not fail core detection")
 assert(scheduler_core_limit(c(LSB_DJOB_NUMPROC = "8")) == 8L,

@@ -36,6 +36,14 @@ absolute_path <- function(path, root) {
   if (grepl("^/", path)) path else file.path(root, path)
 }
 
+phase13_pseudobulk_root <- function(config, phase_cfg, root) {
+  configured <- config$inputs$phase13_pseudobulk_root
+  relative_default <- file.path(
+    config$outputs$root, phase_cfg$paths$pseudobulk_relative
+  )
+  absolute_path(configured %||% relative_default, root)
+}
+
 sha256_file <- function(path) {
   if (!file.exists(path)) return(NA_character_)
   x <- suppressWarnings(system2("sha256sum", path, stdout = TRUE, stderr = TRUE))
@@ -318,8 +326,8 @@ add_check_factory <- function() {
   list(add = add, value = function() as.data.frame(bind_rows(rows)))
 }
 
-input_paths_for_source <- function(stage_root, phase_cfg, rds_id, stem) {
-  pb_root <- file.path(stage_root, phase_cfg$paths$pseudobulk_relative)
+input_paths_for_source <- function(stage_root, pseudobulk_root, rds_id, stem) {
+  pb_root <- pseudobulk_root
   list(
     counts = file.path(pb_root, paste0(stem, ".pseudobulk_counts.rds")),
     samples = file.path(pb_root, paste0(stem, ".pseudobulk_samples.tsv")),
@@ -331,8 +339,8 @@ input_paths_for_source <- function(stage_root, phase_cfg, rds_id, stem) {
   )
 }
 
-validate_and_load_inputs <- function(project_root, stage_root, phase_cfg,
-                                     context_manifest, check) {
+validate_and_load_inputs <- function(project_root, stage_root, pseudobulk_root,
+                                     phase_cfg, context_manifest, check) {
   cohort_path <- file.path(stage_root, phase_cfg$paths$cohort_relative)
   cohort_status_path <- file.path(stage_root, phase_cfg$paths$cohort_status_relative)
   annotation_status_path <- file.path(stage_root, phase_cfg$paths$annotation_status_relative)
@@ -382,7 +390,9 @@ validate_and_load_inputs <- function(project_root, stage_root, phase_cfg,
     stems <- strsplit(context_manifest$source_stems[[i]], "|", fixed = TRUE)[[1L]]
     source_objects[[context_id]] <- list()
     for (j in seq_along(ids)) {
-      paths <- input_paths_for_source(stage_root, phase_cfg, ids[[j]], stems[[j]])
+      paths <- input_paths_for_source(
+        stage_root, pseudobulk_root, ids[[j]], stems[[j]]
+      )
       required <- unlist(paths[c("counts", "samples", "conservation", "manifest",
                                  "status", "qc", "qc_status")])
       missing <- required[!file.exists(required)]
@@ -1917,6 +1927,9 @@ main <- function() {
   module_members <- data.table::fread(module_path, data.table = FALSE)
   pilot <- isTRUE(config$scope$pilot)
   stage_root <- absolute_path(config$outputs$root, root)
+  pseudobulk_root <- phase13_pseudobulk_root(config, phase_cfg, root)
+  cat("Phase 13 Phase 07 pseudobulk root: ", pseudobulk_root, "\n", sep = "")
+  cat("Phase 13 publication root: ", stage_root, "\n", sep = "")
   final_dir <- file.path(stage_root, phase_cfg$paths$output_relative)
   declared <- unlist(phase_cfg$outputs$declared_files)
   expected_contexts <- if (pilot) 1L else 7L
@@ -1969,7 +1982,9 @@ main <- function() {
   check("contrast_vectors_hand_verified", "definitions", "global", "contrasts",
         TRUE, hand_ok, hand_ok, TRUE)
 
-  input <- validate_and_load_inputs(root, stage_root, phase_cfg, context_manifest, check)
+  input <- validate_and_load_inputs(
+    root, stage_root, pseudobulk_root, phase_cfg, context_manifest, check
+  )
   input_hashes <- paste(input$inventory$sha256, collapse = "|")
   fingerprint <- digest::digest(paste(
     sha256_file(phase_path), sha256_file(module_path),
