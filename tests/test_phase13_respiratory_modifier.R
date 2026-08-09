@@ -95,7 +95,26 @@ assert(identical(
   separated_input_paths$qc,
   "/project/results/minerva_production/04_qc/astrocytes_cell_qc.tsv.gz"
 ), "Phase 04 QC did not remain under the production stage root")
-
+source_count_fixture <- lapply(seq_len(3L), function(source_index) {
+  Matrix::Matrix(
+    matrix(source_index, nrow = 2L, ncol = 2L),
+    sparse = TRUE,
+    dimnames = list(
+      c("gene_1", "gene_2"),
+      paste0("source_", source_index, "_sample_", seq_len(2L))
+    )
+  )
+})
+combined_count_fixture <- combine_source_counts(source_count_fixture)
+assert(identical(dim(combined_count_fixture), c(2L, 6L)),
+       "Three-source count combination dropped columns")
+assert(identical(
+  colnames(combined_count_fixture),
+  unlist(lapply(source_count_fixture, colnames), use.names = FALSE)
+), "Three-source count combination changed column order")
+assert(identical(
+  as.numeric(combined_count_fixture[1L, ]), as.numeric(rep(seq_len(3L), each = 2L))
+), "Three-source count combination changed values")
 
 
 assert(is.na(scheduler_core_limit(c(PATH = "/usr/bin"))),

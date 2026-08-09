@@ -473,6 +473,14 @@ validate_and_load_inputs <- function(project_root, stage_root, pseudobulk_root,
        identity = as.data.frame(bind_rows(identity)))
 }
 
+combine_source_counts <- function(source_counts) {
+  if (!length(source_counts)) {
+    stop("At least one source count matrix is required", call. = FALSE)
+  }
+  if (length(source_counts) == 1L) return(source_counts[[1L]])
+  Reduce(Matrix::cbind2, source_counts)
+}
+
 aggregate_context <- function(context_id, sources, cohort, phase_cfg, check) {
   source_counts <- lapply(sources, function(x) x$counts)
   source_samples <- lapply(sources, function(x) x$samples)
@@ -480,9 +488,7 @@ aggregate_context <- function(context_id, sources, cohort, phase_cfg, check) {
   if (!all(vapply(source_counts, function(x) identical(rownames(x), features), logical(1)))) {
     stop("Feature order differs within context ", context_id, call. = FALSE)
   }
-  counts <- if (length(source_counts) == 1L) {
-    source_counts[[1L]]
-  } else do.call(Matrix::cbind2, source_counts)
+  counts <- combine_source_counts(source_counts)
   samples <- as.data.frame(bind_rows(source_samples))
   if (!identical(colnames(counts), as.character(samples$pseudobulk_id))) {
     stop("Combined count/sample order differs in context ", context_id, call. = FALSE)

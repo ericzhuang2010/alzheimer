@@ -3,8 +3,8 @@ execution:
   execution_phase: 2
   backend: direct
   run_id: minerva_production_192gb_001
-  max_total_cores: 8
-  phase13_stability_workers: 8
+  max_total_cores: 3
+  phase13_stability_workers: 3
   total_memory_gib: 192
   reserve_memory_gib: 32
   walltime_hours: 12
