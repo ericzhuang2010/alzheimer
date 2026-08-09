@@ -58,4 +58,4 @@ This is a **prioritized, descriptive evidence map**, not a comprehensive screen:
 
 The most defensible conclusion is therefore: **male ε2 AD-down and female ε2 AD-up are the broadest recurring patterns, with additional APOE- and cell-network-specific signals that should be treated as hypotheses for donor-aware interaction testing and experimental validation.**
 
-The exact values are available in the [plotted-data table](../../../../results/figures/analysis/phase12_kda/phase12_kda_panel_b_sex_apoe_plotted_data.tsv), with the full definitions in the [figure design document](../../../analysis/kda/phase_12_kda_panel_b_sex_apoe_dot_heatmap_design.md).
+The exact values are available in the [plotted-data table](../../../../results/figures/analysis/phase12_kda/phase12_kda_sex_apoe_plotted_data.tsv), with the full definitions in the [figure design document](phase_12_kda_sex_apoe_dot_heatmap_design.md).
