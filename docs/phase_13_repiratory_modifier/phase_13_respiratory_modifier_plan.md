@@ -1822,16 +1822,18 @@ output_schema: mitochondrial_respiratory_modifier_v1
 3. pass tests and the local pilot;
 4. verify Git/config/lockfile parity;
 5. verify memory and scratch space;
-6. cap numeric-library threads at one; and
+6. initialize the matching Intel Parallel Studio XE 2019 MKL link group,
+   require a representative edgeR fit to pass, and cap numeric-library threads
+   at one; and
 7. inspect the one-task dry-run graph and analysis fingerprint.
 
-The validated Phase 07 bundles may use a different results root from the new
-Phase 13 publication. Minerva sets
-`inputs.phase13_pseudobulk_root: results/minerva_production/07_pseudobulk` while retaining
-`outputs.root: results/minerva_production`. Phase 02, Phase 03, and Phase 04
-prerequisites continue to resolve below the production stage root; only the
-Phase 07 pseudobulk bundle uses the explicit input override. The local pilot
-omits the override and keeps its existing stage-relative behavior.
+The Phase 07 bundle directory is configured independently from the new Phase 13
+publication directory. Minerva sets
+`inputs.phase13_pseudobulk_root: results/minerva_production/07_pseudobulk`
+while retaining `outputs.root: results/minerva_production`. Phase 02, Phase 03,
+and Phase 04 prerequisites continue to resolve below the production stage root.
+The local pilot omits the override and keeps its existing stage-relative
+behavior.
 
 Phase 13 reads the much smaller Phase 07 pseudobulk bundles. If Phase 07 must
 first be rerun from raw RDS files, its own resource plan must process the large
@@ -1882,28 +1884,98 @@ Rscript scripts/run_pipeline.R --config config/minerva_shared.yml \
 Then require all nine matching `*.pseudobulk_status.tsv` files to report
 `validated_complete`.
 
-### Commands
+### MKL runtime and mandatory edgeR preflight
+
+Phase 13 invokes edgeR during every primary context analysis and repeatedly
+during stability resampling. On Minerva, this uses the same MKL workaround as
+`docs/minerva/cmd_to_run_08_mast.txt`. Defining `LD_LIBRARY_PATH` alone is
+not sufficient: start the controller with the scoped
+`LD_PRELOAD="$MKL_PRELOAD"` prefix so every child and fork worker inherits the
+working link group. Do not load a newer standalone MKL module, and do not export
+`LD_PRELOAD` globally for unrelated commands.
+
+Initialize the runtime and run a representative edgeR fit on every new
+node/session:
 
 ```bash
 cd /sc/arion/work/zhuane01/alzheimer
 
+export MKLROOT=/hpc/packages/minerva-centos7/intel/parallel_studio_xe_2019/compilers_and_libraries/linux/mkl
+export MKL_LIB="$MKLROOT/lib/intel64_lin"
+export MKL_PRELOAD="$MKL_LIB/libmkl_gf_lp64.so:$MKL_LIB/libmkl_gnu_thread.so:$MKL_LIB/libmkl_core.so"
+
+export LD_LIBRARY_PATH="$MKL_LIB${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+export LD_RUN_PATH="$LD_LIBRARY_PATH"
+export MKL_ENABLE_INSTRUCTIONS=AVX2
+export MKL_NUM_THREADS=1
 export OMP_NUM_THREADS=1
 export OPENBLAS_NUM_THREADS=1
-export MKL_NUM_THREADS=1
 
+unset LD_DEBUG LD_DEBUG_OUTPUT
+
+for library in \
+  "$MKL_LIB/libmkl_gf_lp64.so" \
+  "$MKL_LIB/libmkl_gnu_thread.so" \
+  "$MKL_LIB/libmkl_core.so" \
+  "$MKL_LIB/libmkl_avx2.so"
+do
+  test -r "$library" || {
+    echo "Required MKL library is missing or unreadable: $library" >&2
+    exit 1
+  }
+done
+
+LD_PRELOAD="$MKL_PRELOAD" Rscript -e '
+suppressPackageStartupMessages(library(edgeR))
+
+set.seed(123)
+counts <- matrix(
+  rnbinom(2000L * 120L, mu = 20, size = 5),
+  nrow = 2000L
+)
+group <- factor(rep(paste0("group", 1:6), each = 20))
+design <- model.matrix(~ 0 + group)
+
+y <- DGEList(counts)
+keep <- filterByExpr(y, design)
+y <- y[keep, , keep.lib.sizes = FALSE]
+y <- calcNormFactors(y)
+y <- estimateDisp(y, design, robust = TRUE)
+fit <- glmQLFit(y, design, robust = TRUE)
+
+stopifnot(nrow(fit$counts) > 0)
+cat("Representative edgeR/MKL test succeeded\n")
+'
+```
+
+The preflight must print `Representative edgeR/MKL test succeeded`. The
+`rl_readline_state` warning is non-blocking when R continues, but any
+`Intel MKL FATAL ERROR`, missing library, undefined symbol, or nonzero exit is
+blocking.
+
+### Commands
+
+After the preflight passes, use the same initialized shell and the scoped
+preload for both the controller dry run and execution:
+
+```bash
+LD_PRELOAD="$MKL_PRELOAD" \
 Rscript tests/test_phase13_respiratory_modifier.R
 
+LD_PRELOAD="$MKL_PRELOAD" \
 Rscript scripts/run_pipeline.R \
   --config config/minerva_shared.yml \
   --execution-config config/minerva_production_execution.yml \
   --phase respiratory_modifier \
   --dry-run
 
+LD_PRELOAD="$MKL_PRELOAD" \
 Rscript scripts/run_pipeline.R \
   --config config/minerva_shared.yml \
   --execution-config config/minerva_production_execution.yml \
   --phase respiratory_modifier
 
+LD_PRELOAD="$MKL_PRELOAD" \
 Rscript tests/test_phase13_respiratory_modifier.R \
   --validate-output results/minerva_production/13_respiratory_modifier \
   --expected-contexts 7 --expected-tests 196 \
@@ -1911,7 +1983,8 @@ Rscript tests/test_phase13_respiratory_modifier.R \
   --expected-status validated_complete
 ```
 
-Rerun the identical command to resume a hash-compatible incomplete run.
+Rerun the identical preload-prefixed execution command to resume a
+hash-compatible incomplete run.
 Checkpoint location:
 
 ```text
@@ -1922,9 +1995,10 @@ Phase 13 uses `execution.phase13_stability_workers` fork workers for the
 independent donor-bootstrap, leave-one-donor-out, and group-size-balanced
 repetitions. The effective count is capped by `max_total_cores`, the cores
 visible on the host, and the LSF/Slurm/SGE allocation when one is reported.
-Minerva production requests 48 workers; the local pilot keeps one. Every job
-sets its frozen identifier-derived seed, and results are restored to canonical
-task order before they are combined, so changing the worker count does not
+Minerva production uses the configured worker count; the local pilot keeps one.
+Every job sets its frozen identifier-derived seed, and results are restored to
+canonical task order before they are combined, so changing the worker count
+does not
 change the scientific result. BLAS/OpenMP thread counts remain one to avoid
 nested oversubscription. Completed stability contexts are checkpointed
 separately and reused by a hash-compatible resumed run.
