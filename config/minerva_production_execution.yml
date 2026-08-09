@@ -6,6 +6,7 @@ execution:
   max_total_cores: 8
   phase13_stability_workers: 8
   phase14_stability_workers: 8
+  phase15_stability_workers: 8
   total_memory_gib: 192
   reserve_memory_gib: 32
   walltime_hours: 12

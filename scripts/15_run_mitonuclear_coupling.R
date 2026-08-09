@@ -111,15 +111,17 @@ ordered_lapply <- function(x, fun, workers) {
                                        mc.preschedule = TRUE) else lapply(x, fun)
 }
 
-context_manifest_from_phase13 <- function(phase13, ids) {
+context_manifest_from_phase13 <- function(phase13, ids, primary_ids = ids,
+                                          pilot = TRUE) {
   entries <- Filter(function(x) x$context_id %in% ids, phase13$contexts)
   entries <- entries[match(ids, vapply(entries, function(x) x$context_id, character(1)))]
   bind_rows(lapply(seq_along(entries), function(i) data.frame(
     context_order = i, inherited_context_order = as.integer(entries[[i]]$context_order),
     context_id = entries[[i]]$context_id, context_label = entries[[i]]$label,
-    context_role = "primary_confirmatory", source_rds_ids = paste(
+    context_role = if (entries[[i]]$context_id %in% primary_ids)
+      "primary_confirmatory" else "secondary_extension", source_rds_ids = paste(
       unlist(entries[[i]]$source_rds_ids), collapse = "|"
-    ), pilot_fixture_context = TRUE
+    ), pilot_fixture_context = isTRUE(pilot)
   )))
 }
 
@@ -439,24 +441,41 @@ build_endpoints <- function(scores, cfg, assignment_id = 0L) {
        context_status = bind_rows(context_status))
 }
 
-build_level_design <- function(d, groups) {
+append_design_covariates <- function(X, d, extra_covariates = character()) {
+  if (!length(extra_covariates)) return(X)
+  missing <- setdiff(extra_covariates, names(d))
+  if (length(missing)) {
+    stop("Missing requested sensitivity covariates: ",
+         paste(missing, collapse = ", "), call. = FALSE)
+  }
+  extra <- as.matrix(d[, extra_covariates, drop = FALSE])
+  storage.mode(extra) <- "double"
+  colnames(extra) <- paste0("sensitivity__", extra_covariates)
+  cbind(X, extra)
+}
+
+build_level_design <- function(d, groups, extra_covariates = character()) {
   group <- factor(d$group_id, levels = groups)
   G <- stats::model.matrix(~ 0 + group)
   colnames(G) <- paste0("G__", groups)
   study <- as.numeric(d$study == "ROS")
-  X <- cbind(G, age_death_scaled = d$age_death_scaled,
-             pmi_scaled = d$pmi_scaled, studyROS = study)
-  X
+  append_design_covariates(
+    cbind(G, age_death_scaled = d$age_death_scaled,
+          pmi_scaled = d$pmi_scaled, studyROS = study), d, extra_covariates
+  )
 }
 
-build_slope_design <- function(d, groups) {
+build_slope_design <- function(d, groups, extra_covariates = character()) {
   group <- factor(d$group_id, levels = groups)
   G <- stats::model.matrix(~ 0 + group)
   colnames(G) <- paste0("I__", groups)
   S <- G * d$N
   colnames(S) <- paste0("S__", groups)
-  cbind(G, S, age_death_scaled = d$age_death_scaled,
-        pmi_scaled = d$pmi_scaled, studyROS = as.numeric(d$study == "ROS"))
+  append_design_covariates(
+    cbind(G, S, age_death_scaled = d$age_death_scaled,
+          pmi_scaled = d$pmi_scaled, studyROS = as.numeric(d$study == "ROS")),
+    d, extra_covariates
+  )
 }
 
 fit_hc3 <- function(y, X) {
@@ -471,7 +490,9 @@ fit_hc3 <- function(y, X) {
                 observations = length(y), rank = if (inherits(fit, "error")) NA else fit$rank,
                 residual_df = if (inherits(fit, "error")) NA else stats::df.residual(fit)))
   }
-  covariance <- tryCatch(sandwich::vcovHC(fit, type = "HC3"), error = function(e) e)
+  covariance <- suppressWarnings(tryCatch(
+    sandwich::vcovHC(fit, type = "HC3"), error = function(e) e
+  ))
   if (inherits(covariance, "error") || any(!is.finite(covariance))) {
     return(list(success = FALSE, failure_reason = "nonfinite_HC3_covariance",
                 observations = length(y), rank = fit$rank,
@@ -500,6 +521,7 @@ modifier_vector <- function(contrast, coefficient_names, slope = FALSE) {
   coefficients <- unlist(contrast$coefficients)
   names_needed <- paste0(prefix, names(coefficients))
   if (!all(names_needed %in% coefficient_names)) {
+    if (!length(coefficient_names)) return(vector)
     stop("Missing contrast coefficients: ", paste(setdiff(names_needed, coefficient_names),
                                                   collapse = ", "), call. = FALSE)
   }
@@ -582,12 +604,13 @@ crossing_slope_flag <- function(departures) {
 compatibility_pass <- function(level_estimate, departures) {
   if (!is.finite(level_estimate)) return(FALSE)
   values <- departures[is.finite(departures)]
-  if (length(values) < 3L || crossing_slope_flag(values)) return(FALSE)
+  if (length(values) < 2L || crossing_slope_flag(values)) return(FALSE)
   sum(sign(values) == sign(level_estimate)) >= 2L
 }
 
 evaluate_models <- function(endpoint_bundle, phase13, context_manifest, endpoint_manifest,
-                            cfg, fingerprint) {
+                            cfg, fingerprint, extra_covariates = character(),
+                            production = FALSE) {
   data <- endpoint_bundle$data
   groups <- unlist(phase13$groups)
   strata <- lapply(phase13$strata, function(x) list(
@@ -601,12 +624,18 @@ evaluate_models <- function(endpoint_bundle, phase13, context_manifest, endpoint
   grids <- list()
   for (context_index in seq_len(nrow(context_manifest))) {
     context_id <- context_manifest$context_id[[context_index]]
+    context_role <- context_manifest$context_role[[context_index]]
+    family_suffix <- if (context_role == "primary_confirmatory") "primary" else "secondary"
+    general_family <- cfg$multiple_testing$families[[paste0("general_", family_suffix)]]
+    modifier_family <- cfg$multiple_testing$families[[paste0("modifier_", family_suffix)]]
     d <- data[data$context_id == context_id, , drop = FALSE]
-    level_X <- build_level_design(d, groups)
+    level_X <- build_level_design(d, groups, extra_covariates)
     models <- list(
       standardized_difference = fit_hc3(d$standardized_difference, level_X),
       nci_reference_residual = fit_hc3(d$nci_reference_residual, level_X),
-      coupling_slope_change = fit_hc3(d$M, build_slope_design(d, groups))
+      coupling_slope_change = fit_hc3(
+        d$M, build_slope_design(d, groups, extra_covariates)
+      )
     )
     for (endpoint_id in names(models)) {
       model <- models[[endpoint_id]]
@@ -645,10 +674,10 @@ evaluate_models <- function(endpoint_bundle, phase13, context_manifest, endpoint
       test <- linear_test(model, general_vector(groups, names(model$beta %||% numeric()), slope))
       endpoint_cfg <- endpoint_manifest[endpoint_manifest$endpoint_id == endpoint_id, ]
       general_rows[[length(general_rows) + 1L]] <- data.frame(
-        context_id = context_id, context_role = "primary_confirmatory",
+        context_id = context_id, context_role = context_role,
         scope_id = "general", endpoint_id = endpoint_id,
         contrast_id = "general_equal_stratum_AD_minus_NCI",
-        family_id = cfg$multiple_testing$families$general_primary,
+        family_id = general_family,
         estimate = test$estimate, standard_error = test$se, ci_low = test$ci_low,
         ci_high = test$ci_high, p_value = test$p, sesoi = endpoint_cfg$sesoi,
         direction = if (is.finite(test$estimate)) sign(test$estimate) else NA,
@@ -691,10 +720,10 @@ evaluate_models <- function(endpoint_bundle, phase13, context_manifest, endpoint
           model, modifier_vector(contrast, names(model$beta %||% numeric()), slope)
         )
         modifier_rows[[length(modifier_rows) + 1L]] <- data.frame(
-          context_id = context_id, context_role = "primary_confirmatory",
+          context_id = context_id, context_role = context_role,
           scope_id = "modifier", endpoint_id = endpoint_id,
           contrast_id = contrast$contrast_id,
-          family_id = cfg$multiple_testing$families$modifier_primary,
+          family_id = modifier_family,
           estimate = modifier_test$estimate, standard_error = modifier_test$se,
           ci_low = modifier_test$ci_low, ci_high = modifier_test$ci_high,
           p_value = modifier_test$p, sesoi = endpoint_cfg$sesoi,
@@ -771,8 +800,10 @@ evaluate_models <- function(endpoint_bundle, phase13, context_manifest, endpoint
       endpoint_status, table$q_value, table$estimate, table$ci_low, table$ci_high,
       table$sesoi, table$eligibility_status
     )
-    table$stability_status <- "pending_pilot_stability"
-    table$endpoint_status <- "not_applicable_pilot"
+    table$stability_status <- if (production) "pending_production_stability" else
+      "pending_pilot_stability"
+    table$endpoint_status <- if (production) "pending_production_stability" else
+      "not_applicable_pilot"
     if (table_name == "general") general <- table else modifier <- table
   }
   list(general = general, modifier = modifier, strata = bind_rows(stratum_rows),
@@ -781,10 +812,12 @@ evaluate_models <- function(endpoint_bundle, phase13, context_manifest, endpoint
 }
 
 analyze_scores <- function(scores, cfg, phase13, context_manifest, endpoint_manifest,
-                           fingerprint, assignment_id = 0L) {
+                           fingerprint, assignment_id = 0L,
+                           extra_covariates = character(), production = FALSE) {
   endpoint_bundle <- build_endpoints(scores, cfg, assignment_id)
   results <- evaluate_models(endpoint_bundle, phase13, context_manifest,
-                             endpoint_manifest, cfg, fingerprint)
+                             endpoint_manifest, cfg, fingerprint,
+                             extra_covariates, production)
   list(endpoint_bundle = endpoint_bundle, results = results)
 }
 
@@ -934,7 +967,52 @@ validate_phase15_output <- function(path, expected_contexts, expected_general,
   if (nrow(status) != 1L || status$validation_status[[1L]] != expected_status ||
       (expected_status == "nonfinal_smoke_test" &&
        status$scientific_decision[[1L]] != "not_applicable_pilot")) {
-    stop("Phase 15 terminal pilot status is invalid", call. = FALSE)
+    stop("Phase 15 terminal status is invalid", call. = FALSE)
+  }
+  if (expected_status != "nonfinal_smoke_test") {
+    required_status <- c(
+      "production_analysis", "contexts", "primary_contexts", "secondary_contexts",
+      "general_result_rows", "modifier_result_rows", "stratum_rows",
+      "general_gate_rows", "modifier_gate_rows", "artifact_manifest_sha256"
+    )
+    if (!all(required_status %in% names(status)) ||
+        !isTRUE(as.logical(status$production_analysis[[1L]])) ||
+        !identical(as.integer(unlist(status[1L, c(
+          "contexts", "general_result_rows", "modifier_result_rows", "stratum_rows",
+          "general_gate_rows", "modifier_gate_rows"
+        )])), as.integer(expected_dimensions)) ||
+        status$primary_contexts[[1L]] != 3L || status$secondary_contexts[[1L]] != 4L) {
+      stop("Phase 15 production status dimensions are invalid", call. = FALSE)
+    }
+    context_table <- read_table("mitonuclear_context_manifest.tsv")
+    if (any(as.logical(context_table$pilot_fixture_context)) ||
+        sum(context_table$context_role == "primary_confirmatory") != 3L ||
+        sum(context_table$context_role == "secondary_extension") != 4L) {
+      stop("Pilot provenance or incorrect context roles appear in production", call. = FALSE)
+    }
+    general <- read_table("mitonuclear_general_results.tsv")
+    modifier <- read_table("mitonuclear_modifier_results.tsv")
+    terminal_endpoint <- c(
+      "supported", "provisional_low_power", "statistically_detectable_but_small",
+      "not_supported_precise_null", "inconclusive", "not_testable"
+    )
+    if (!all(c(general$endpoint_status, modifier$endpoint_status) %in% terminal_endpoint)) {
+      stop("Phase 15 production contains nonterminal endpoint statuses", call. = FALSE)
+    }
+    general_gates <- read_table("mitonuclear_general_gate_decisions.tsv")
+    modifier_gates <- read_table("mitonuclear_modifier_gate_decisions.tsv")
+    terminal_gate <- c(
+      "supported", "provisional_low_power", "partial_evidence",
+      "not_supported_precise_null", "inconclusive", "not_testable"
+    )
+    if (!all(c(general_gates$gate_status, modifier_gates$gate_status) %in%
+             terminal_gate)) {
+      stop("Phase 15 production contains nonterminal gate statuses", call. = FALSE)
+    }
+    source_checks <- read_table("mitonuclear_source_checks.tsv")
+    if (any(as.logical(source_checks$blocking) & !as.logical(source_checks$passed))) {
+      stop("Phase 15 production contains failed source checks", call. = FALSE)
+    }
   }
   checks <- read_table("mitonuclear_checks.tsv")
   if (any(checks$blocking & !checks$passed)) {
@@ -949,6 +1027,28 @@ validate_phase15_output <- function(path, expected_contexts, expected_general,
     file <- file.path(path, artifacts$artifact_file[[i]])
     if (!identical(sha256_file(file), artifacts$sha256[[i]])) {
       stop("Phase 15 artifact hash mismatch: ", artifacts$artifact_file[[i]], call. = FALSE)
+    }
+    if (!identical(as.numeric(file.info(file)$size), as.numeric(artifacts$bytes[[i]])) ||
+        !identical(as.numeric(count_records(file)), as.numeric(artifacts$records[[i]]))) {
+      stop("Phase 15 artifact size/record mismatch: ",
+           artifacts$artifact_file[[i]], call. = FALSE)
+    }
+  }
+  if (!identical(sha256_file(file.path(path, "mitonuclear_artifacts.tsv")),
+                 status$artifact_manifest_sha256[[1L]])) {
+    stop("Phase 15 terminal artifact-manifest hash mismatch", call. = FALSE)
+  }
+  if (expected_status != "nonfinal_smoke_test") {
+    inventory <- read_table("mitonuclear_input_inventory.tsv")
+    if (any(!as.logical(inventory$exists))) {
+      stop("Phase 15 production input inventory contains missing inputs", call. = FALSE)
+    }
+    for (i in seq_len(nrow(inventory))) {
+      if (!file.exists(inventory$path[[i]]) ||
+          !identical(sha256_file(inventory$path[[i]]), inventory$sha256[[i]])) {
+        stop("Phase 15 production input hash mismatch: ", inventory$input_id[[i]],
+             call. = FALSE)
+      }
     }
   }
   folds <- read_table("mitonuclear_crossfit_folds.tsv")
@@ -974,13 +1074,21 @@ main <- function() {
   phase13 <- yaml::read_yaml(phase13_path)
   member_path <- absolute_path(cfg$paths$module_members, root)
   all_members <- data.table::fread(member_path, data.table = FALSE)
-  if (!isTRUE(config$scope$pilot)) {
-    stop("Phase 15 production is not authorized by this local-pilot implementation; ",
-         "validate the seven-context Phase 13 production bundle and approve production first.",
-         call. = FALSE)
-  }
   RNGkind("L'Ecuyer-CMRG")
   set.seed(as.integer(cfg$randomization$base_seed))
+  if (!isTRUE(config$scope$pilot)) {
+    production_script <- file.path(
+      root, "scripts/15_run_mitonuclear_coupling_production.R"
+    )
+    if (!file.exists(production_script)) {
+      stop("Phase 15 production implementation is missing: ", production_script,
+           call. = FALSE)
+    }
+    source(production_script, local = FALSE)
+    return(run_phase15_production(
+      root, config, execution_cfg, cfg, phase13, phase_path, phase13_path, member_path
+    ))
+  }
   stage_root <- absolute_path(config$outputs$root, root)
   final_dir <- file.path(stage_root, cfg$paths$output_relative)
   if (dir.exists(final_dir)) {
