@@ -1,0 +1,260 @@
+schema_version: phase13_respiratory_modifier_v1
+analysis:
+  analysis_id: phase13_respiratory_modifier_c1_v1
+  title: Donor-level test of sex/APOE modification of AD-associated mitochondrial respiratory programs
+  definitions_approved: true
+  definitions_frozen: true
+  approval_basis: explicit_user_execution_request_2026-08-08
+  task_mode: respiratory_modifier
+  stable_task_id: global:respiratory_modifier
+  output_schema: mitochondrial_respiratory_modifier_v1
+  prior_count: 2
+  sesoi_nci_sd: 0.25
+  model_formula: "~ 0 + diagnosis_sex_APOE_group + age_death_scaled + pmi_scaled + study"
+  qc_model_formula: "~ 0 + diagnosis_sex_APOE_group + age_death_scaled + pmi_scaled + study + aggregate_percent_mt + robust_qc_fraction"
+  hc_covariance: HC3
+  camera_allow_negative_correlation: false
+
+paths:
+  module_members: config/phase13_respiratory_modules.tsv
+  cohort_relative: 02_cohort/global_cohort_276.tsv
+  cohort_status_relative: 02_cohort/cohort_status.tsv
+  annotation_status_relative: 03_annotations/annotation_status.tsv
+  pseudobulk_relative: 07_pseudobulk
+  scratch_relative: 13_respiratory_modifier
+  output_relative: 13_respiratory_modifier
+
+contexts:
+  - context_order: 1
+    context_id: astrocytes
+    label: Astrocytes
+    source_rds_ids: [astrocytes]
+    source_stems: [Astrocytes]
+  - context_order: 2
+    context_id: excitatory_neurons
+    label: Excitatory neurons
+    source_rds_ids: [excitatory_set1, excitatory_set2, excitatory_set3]
+    source_stems: [Excitatory_neurons_set1, Excitatory_neurons_set2, Excitatory_neurons_set3]
+  - context_order: 3
+    context_id: inhibitory_neurons
+    label: Inhibitory neurons
+    source_rds_ids: [inhibitory]
+    source_stems: [Inhibitory_neurons]
+  - context_order: 4
+    context_id: immune_cells
+    label: Immune cells
+    source_rds_ids: [immune]
+    source_stems: [Immune_cells]
+  - context_order: 5
+    context_id: opcs
+    label: Oligodendrocyte precursor cells
+    source_rds_ids: [opcs]
+    source_stems: [OPCs]
+  - context_order: 6
+    context_id: oligodendrocytes
+    label: Oligodendrocytes
+    source_rds_ids: [oligodendrocytes]
+    source_stems: [Oligodendrocytes]
+  - context_order: 7
+    context_id: vasculature
+    label: Vasculature cells
+    source_rds_ids: [vasculature]
+    source_stems: [Vasculature_cells]
+
+groups:
+  - NCI__Female__e2
+  - AD__Female__e2
+  - NCI__Female__e33
+  - AD__Female__e33
+  - NCI__Female__e4
+  - AD__Female__e4
+  - NCI__Male__e2
+  - AD__Male__e2
+  - NCI__Male__e33
+  - AD__Male__e33
+  - NCI__Male__e4
+  - AD__Male__e4
+
+strata:
+  - stratum_order: 1
+    stratum_id: Female__e2
+    nci_group: NCI__Female__e2
+    ad_group: AD__Female__e2
+  - stratum_order: 2
+    stratum_id: Female__e33
+    nci_group: NCI__Female__e33
+    ad_group: AD__Female__e33
+  - stratum_order: 3
+    stratum_id: Female__e4
+    nci_group: NCI__Female__e4
+    ad_group: AD__Female__e4
+  - stratum_order: 4
+    stratum_id: Male__e2
+    nci_group: NCI__Male__e2
+    ad_group: AD__Male__e2
+  - stratum_order: 5
+    stratum_id: Male__e33
+    nci_group: NCI__Male__e33
+    ad_group: AD__Male__e33
+  - stratum_order: 6
+    stratum_id: Male__e4
+    nci_group: NCI__Male__e4
+    ad_group: AD__Male__e4
+
+contrasts:
+  - contrast_order: 1
+    contrast_id: sex_F_minus_M__e2
+    modifier: sex
+    required_groups: [AD__Female__e2, NCI__Female__e2, AD__Male__e2, NCI__Male__e2]
+    coefficients:
+      AD__Female__e2: 1
+      NCI__Female__e2: -1
+      AD__Male__e2: -1
+      NCI__Male__e2: 1
+  - contrast_order: 2
+    contrast_id: sex_F_minus_M__e33
+    modifier: sex
+    required_groups: [AD__Female__e33, NCI__Female__e33, AD__Male__e33, NCI__Male__e33]
+    coefficients:
+      AD__Female__e33: 1
+      NCI__Female__e33: -1
+      AD__Male__e33: -1
+      NCI__Male__e33: 1
+  - contrast_order: 3
+    contrast_id: sex_F_minus_M__e4
+    modifier: sex
+    required_groups: [AD__Female__e4, NCI__Female__e4, AD__Male__e4, NCI__Male__e4]
+    coefficients:
+      AD__Female__e4: 1
+      NCI__Female__e4: -1
+      AD__Male__e4: -1
+      NCI__Male__e4: 1
+  - contrast_order: 4
+    contrast_id: apoe_e2_minus_e33__Female
+    modifier: apoe
+    required_groups: [AD__Female__e2, NCI__Female__e2, AD__Female__e33, NCI__Female__e33]
+    coefficients:
+      AD__Female__e2: 1
+      NCI__Female__e2: -1
+      AD__Female__e33: -1
+      NCI__Female__e33: 1
+  - contrast_order: 5
+    contrast_id: apoe_e2_minus_e33__Male
+    modifier: apoe
+    required_groups: [AD__Male__e2, NCI__Male__e2, AD__Male__e33, NCI__Male__e33]
+    coefficients:
+      AD__Male__e2: 1
+      NCI__Male__e2: -1
+      AD__Male__e33: -1
+      NCI__Male__e33: 1
+  - contrast_order: 6
+    contrast_id: apoe_e4_minus_e33__Female
+    modifier: apoe
+    required_groups: [AD__Female__e4, NCI__Female__e4, AD__Female__e33, NCI__Female__e33]
+    coefficients:
+      AD__Female__e4: 1
+      NCI__Female__e4: -1
+      AD__Female__e33: -1
+      NCI__Female__e33: 1
+  - contrast_order: 7
+    contrast_id: apoe_e4_minus_e33__Male
+    modifier: apoe
+    required_groups: [AD__Male__e4, NCI__Male__e4, AD__Male__e33, NCI__Male__e33]
+    coefficients:
+      AD__Male__e4: 1
+      NCI__Male__e4: -1
+      AD__Male__e33: -1
+      NCI__Male__e33: 1
+
+modules:
+  - module_order: 1
+    module_id: mtdna_oxphos_13
+    label: mtDNA OXPHOS
+    role: direct_respiratory
+    reference_genes: 13
+    minimum_fraction: 0.70
+    minimum_genes: 10
+  - module_order: 2
+    module_id: nuclear_oxphos_structural_86
+    label: Nuclear OXPHOS structural
+    role: direct_respiratory
+    reference_genes: 86
+    minimum_fraction: 0.70
+    minimum_genes: 5
+  - module_order: 3
+    module_id: mitochondrial_translation_155
+    label: Mitochondrial translation
+    role: respiration_supporting
+    reference_genes: 155
+    minimum_fraction: 0.70
+    minimum_genes: 5
+  - module_order: 4
+    module_id: mib_micos_inner_membrane_19
+    label: MIB/MICOS inner membrane
+    role: respiration_supporting
+    reference_genes: 19
+    minimum_fraction: 0.70
+    minimum_genes: 5
+
+eligibility:
+  primary_min_nuclei: 20
+  sensitivity_min_nuclei: 50
+  minimum_estimable_donors_per_group: 5
+  minimum_confirmatory_donors_per_group: 10
+  severe_qc_flag_fraction: 0.50
+
+multiple_testing:
+  score_family: M13-score
+  camera_family: M13-camera
+  method: BH
+  q_threshold: 0.05
+
+stability:
+  production_bootstrap_repetitions: 1000
+  production_balance_repetitions: 1000
+  pilot_bootstrap_repetitions: 50
+  pilot_balance_repetitions: 50
+  minimum_success_fraction: 0.95
+  minimum_direction_fraction: 0.80
+  minimum_relative_magnitude: 0.50
+  pc1_minimum_correlation: 0.70
+  zero_loo_sign_reversals_required: true
+
+randomization:
+  rng_kind: "L'Ecuyer-CMRG"
+  base_seed: 1313001
+
+outputs:
+  declared_files:
+    - respiratory_analysis_manifest.tsv
+    - respiratory_cell_context_manifest.tsv
+    - respiratory_contrast_manifest.tsv
+    - respiratory_module_manifest.tsv
+    - respiratory_module_members.tsv
+    - respiratory_input_inventory.tsv
+    - respiratory_source_identity_checks.tsv
+    - respiratory_test_manifest.tsv
+    - respiratory_donor_samples.tsv.gz
+    - respiratory_pseudobulk_counts.rds
+    - respiratory_count_conservation.tsv
+    - respiratory_qc_summary.tsv
+    - respiratory_expression_bundle.rds
+    - respiratory_gene_stratum_effects.tsv.gz
+    - respiratory_gene_interaction_results.tsv.gz
+    - respiratory_gene_model_diagnostics.tsv
+    - respiratory_module_coverage.tsv
+    - respiratory_nci_reference_parameters.tsv.gz
+    - respiratory_donor_module_scores.tsv.gz
+    - respiratory_pc1_loadings.tsv.gz
+    - respiratory_module_stratum_effects.tsv
+    - respiratory_module_results.tsv
+    - respiratory_camera_results.tsv
+    - respiratory_module_reliability.tsv
+    - respiratory_stability_replicates.tsv.gz
+    - respiratory_stability_summary.tsv
+    - respiratory_gate_decisions.tsv
+    - respiratory_claim_summary.tsv
+    - respiratory_stage_status.tsv
+    - respiratory_checks.tsv
+    - respiratory_artifacts.tsv
+    - respiratory_status.tsv

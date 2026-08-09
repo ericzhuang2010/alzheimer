@@ -1910,6 +1910,17 @@ Checkpoint location:
 <execution.temp_dir>/13_respiratory_modifier/<analysis_fingerprint>/
 ```
 
+Phase 13 uses `execution.phase13_stability_workers` fork workers for the
+independent donor-bootstrap, leave-one-donor-out, and group-size-balanced
+repetitions. The effective count is capped by `max_total_cores`, the cores
+visible on the host, and the LSF/Slurm/SGE allocation when one is reported.
+Minerva production requests 48 workers; the local pilot keeps one. Every job
+sets its frozen identifier-derived seed, and results are restored to canonical
+task order before they are combined, so changing the worker count does not
+change the scientific result. BLAS/OpenMP thread counts remain one to avoid
+nested oversubscription. Completed stability contexts are checkpointed
+separately and reused by a hash-compatible resumed run.
+
 The resume-compatibility fingerprint covers required input artifacts,
 scientific scripts, YAML/module/manifest files, pipeline configuration, and
 `renv.lock`. Test hashes and Git revision are recorded as provenance but are

@@ -5,6 +5,7 @@ project:
   phase10_similarity_config: config/phase10_similarity.yml
   phase11_pathway_config: config/phase11_pathway.yml
   phase12_kda_config: config/phase12_kda.yml
+  phase13_respiratory_modifier_config: config/phase13_respiratory_modifier.yml
   manifest: config/minerva_rds_manifest.tsv
 
 inputs:
@@ -45,3 +46,4 @@ scope:
     - similarity
     - pathway
     - kda
+    - respiratory_modifier
