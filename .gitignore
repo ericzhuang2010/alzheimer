@@ -86,3 +86,4 @@ results/minerva_production/09_annotate_genes/deg_all_annotated.tsv.gz
 !results/minerva_production/11_pathway
 !results/minerva_production/12_kda
 !results/minerva_production/13_respiratory_modifier
+results/minerva_production/13_respiratory_modifier/respiratory_pseudobulk_counts.rds
