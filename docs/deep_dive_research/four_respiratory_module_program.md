@@ -22,6 +22,48 @@ number that actually enters a statistical analysis may be smaller. The analysis
 must report the original, measured, tested, and excluded genes for every cell
 context.
 
+## How the four modules were chosen
+
+The four modules were not selected as four one-to-one matches for the three
+candidate systems. They were selected through two connected routes:
+
+1. **Core biological question:** which gene sets are needed to test whether AD
+   changes mitochondrial respiratory expression, including the relationship
+   between mitochondrial-DNA and nuclear-DNA signals?
+2. **Earlier pathway and network clues:** which nearby mitochondrial processes
+   could help connect the core respiratory result to the proposed candidate
+   systems?
+
+MitoCarta supplies curated genes after a biological process has been chosen.
+It does not decide by itself that these are the four most important processes.
+The process selection came from the central research question, earlier
+Phase 11/12 observations, and the candidate hypotheses. This makes the current
+set biologically motivated but partly hypothesis-driven.
+
+The relationship is:
+
+| Primary module | Main reason for choosing it | Relationship to C4–C6 |
+|---|---|---|
+| mtDNA-encoded OXPHOS | Directly measures the 13 respiratory components encoded by mitochondrial DNA; required for the core respiratory and mitonuclear questions | Shared mitochondrial outcome, not specific to one candidate |
+| Nuclear-encoded OXPHOS | Measures the nuclear structural components of respiratory complexes I–V; required as the other half of the core respiratory and mitonuclear questions | Shared outcome for all candidates; its Complex V subset is especially relevant to `LAMTOR5–ATP5IF1` |
+| Mitochondrial translation | Measures the machinery that makes mtDNA-encoded proteins | Directly related to the `APOE–TUFM` hypothesis because `TUFM` is a mitochondrial translation factor |
+| MIB/MICOS and inner-membrane organization | Measures cristae and inner-membrane organization, the physical setting in which respiratory complexes operate | General respiration-supporting context; it is not a direct readout for one of C4–C6 |
+
+Therefore, the four modules are best described as:
+
+```text
+Core respiratory measurements
+├── mtDNA-encoded OXPHOS
+└── nuclear-encoded OXPHOS
+
+Broader respiration-supporting programs
+├── mitochondrial translation
+└── MIB/MICOS and inner-membrane organization
+```
+
+Only the first two directly measure OXPHOS machinery. The other two measure
+processes that can support respiratory-chain production or organization.
+
 ## 1. mtDNA-encoded OXPHOS module: 13 genes
 
 These genes are located in mitochondrial DNA rather than nuclear DNA.
@@ -243,6 +285,68 @@ MTX1, MTX2, MTX3, OPA1, SAMM50, SLC25A46
 
 This 19-gene definition is a reasonable custom module, but it must be
 explicitly approved and frozen before running C1.
+
+### Relationship to the GABARAPL2–CHCHD2/PARK7 hypothesis
+
+This MIB/MICOS module must not be treated as the candidate-specific
+quality-control program for `GABARAPL2–CHCHD2`/`PARK7`.
+
+In particular:
+
+- `CHCHD2` is not one of the proposed 19 MIB/MICOS genes;
+- `PARK7` is not one of the proposed 19 genes; and
+- similar-looking `CHCHD` gene names do not establish membership in the same
+  complex or program.
+
+The C6 candidate test needs a separately frozen mitochondrial-quality-control
+program with `CHCHD2` and `PARK7` removed from its score. The MIB/MICOS module
+can provide broader membrane context, but it cannot substitute for that
+candidate-specific readout.
+
+## Primary modules versus candidate-specific readouts
+
+The four modules above are used to study the main respiratory phenomenon.
+Candidate testing asks a narrower question and therefore uses additional
+target-excluded scores.
+
+A **target-excluded score** is calculated after removing the named readout gene
+from its biological program. This prevents one changing gene from creating
+its own supporting module result.
+
+| Candidate claim | Named partner/readout | Candidate-specific program | Relationship to the four primary modules |
+|---|---|---|---|
+| C4: `APOE–TUFM` | `TUFM` | Mitochondrial translation with `TUFM` removed | Directly derived from the 155-gene translation module |
+| C5: `LAMTOR5–ATP5IF1` | `ATP5IF1` | ATP-synthase structural genes with `ATP5IF1` excluded | A focused Complex V subset of nuclear OXPHOS; `ATP5IF1` is already absent from the strict 86 structural genes |
+| C6: `GABARAPL2–CHCHD2`/`PARK7` | `CHCHD2` primary; `PARK7` secondary | A separately frozen mitochondrial-quality-control program with `CHCHD2` and `PARK7` removed | Not one of the four primary modules; MIB/MICOS is not a replacement |
+
+The complete organization is:
+
+```text
+Core biological phenomenon
+├── mtDNA OXPHOS
+├── nuclear OXPHOS
+├── mitochondrial translation
+└── MIB/MICOS and membrane organization
+
+Candidate-specific phenotype checks
+├── translation minus TUFM
+├── ATP synthase minus ATP5IF1
+└── quality control minus CHCHD2 and PARK7
+```
+
+Use the full translation module, including `TUFM`, for the general C1 analysis.
+Use translation minus `TUFM` only for the C4 candidate test. Apply the same
+separation between a general program and its candidate-specific
+target-excluded score.
+
+This design means:
+
+- the core modules can be supported even if all three candidates fail;
+- a candidate cannot rescue an unsupported core respiratory result;
+- a candidate-specific module is supporting evidence for that candidate, not
+  an independent replication; and
+- the four primary modules must not be presented as four independent
+  confirmations of the three candidate hypotheses.
 
 ## Gene-name translations to watch
 
