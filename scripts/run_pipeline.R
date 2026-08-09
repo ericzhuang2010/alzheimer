@@ -68,12 +68,12 @@ registry <- data.frame(
     "environment", "parity", "audit", "cohort", "annotations", "qc",
     "normalize", "descriptive", "pseudobulk", "contrasts", "pseudobulk_de",
     "mast", "annotate_genes", "similarity", "pathway", "kda",
-    "respiratory_modifier"
+    "respiratory_modifier", "modifier_heterogeneity"
   ),
   scope = c(
     "global", "global", "rds", "global", "global", "rds", "rds", "rds",
     "rds", "global", "rds", "rds", "global", "global", "global", "global",
-    "global"
+    "global", "global"
   ),
   script = c(
     "scripts/00_check_environment.R",
@@ -92,11 +92,12 @@ registry <- data.frame(
     "scripts/10_calculate_mitochondrial_similarity.R",
     "scripts/11_prepare_mitochondrial_pathway_data.R",
     "scripts/12_run_kda.R",
-    "scripts/13_run_respiratory_modifier.R"
+    "scripts/13_run_respiratory_modifier.R",
+    "scripts/14_run_modifier_heterogeneity.R"
   ),
   argument_names = c(
     "config,execution-config,report,status",
-    rep("config,execution-config,manifest-row,task-mode", 16L)
+    rep("config,execution-config,manifest-row,task-mode", 17L)
   ),
   output_schema = c(
     "environment_checks_v1", "parity_v1", "rds_audit_v1", "cohort_v1",
@@ -105,7 +106,8 @@ registry <- data.frame(
     "pseudobulk_de_v1", "yu_mast_de_v2",
     "mitochondrial_annotation_status_v1", "mitochondrial_similarity_v1",
     "mitochondrial_pathway_data_v1", "mitochondrial_kda_v1",
-    "mitochondrial_respiratory_modifier_v1"
+    "mitochondrial_respiratory_modifier_v1",
+    "mitochondrial_modifier_heterogeneity_v1"
   ),
   stringsAsFactors = FALSE
 )
@@ -128,6 +130,9 @@ registry$argument_names[registry$task_mode == "kda"] <- paste(
   c("config", "execution-config", "task-mode"), collapse = ","
 )
 registry$argument_names[registry$task_mode == "respiratory_modifier"] <- paste(
+  c("config", "execution-config", "task-mode"), collapse = ","
+)
+registry$argument_names[registry$task_mode == "modifier_heterogeneity"] <- paste(
   c("config", "execution-config", "task-mode"), collapse = ","
 )
 
@@ -230,6 +235,12 @@ for (i in seq_len(nrow(selected_registry))) {
         stop("project.phase13_respiratory_modifier_config is required for respiratory_modifier", call. = FALSE)
       }
       absolute_path(phase13_config, root)
+    } else if (task$task_mode == "modifier_heterogeneity") {
+      phase14_config <- config$project$phase14_modifier_heterogeneity_config
+      if (is.null(phase14_config)) {
+        stop("project.phase14_modifier_heterogeneity_config is required for modifier_heterogeneity", call. = FALSE)
+      }
+      absolute_path(phase14_config, root)
     } else {
       analysis_path
     }
@@ -308,7 +319,7 @@ if (args$phase == "environment") {
 # scientific entry point in every execution stage.
 implemented_global_modes <- c(
   "cohort", "annotations", "contrasts", "annotate_genes", "similarity",
-  "pathway", "kda", "respiratory_modifier"
+  "pathway", "kda", "respiratory_modifier", "modifier_heterogeneity"
 )
 unsupported_global <- task_graph$task_mode[
   is.na(task_graph$manifest_row) &
