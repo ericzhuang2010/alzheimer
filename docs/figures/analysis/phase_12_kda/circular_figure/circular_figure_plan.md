@@ -46,7 +46,7 @@ The figure uses:
 | `kda_key_driver_summary.tsv` | Select recurrent drivers and obtain recurrence, tier, global-driver, adjusted-P, and fold-enrichment summaries |
 
 The script writes figures outside the nine-file Phase 12 output bundle, under
-`results/figures/analysis/phase12_kda/`.
+`results/figures/analysis/phase12_kda/circular_figure/`.
 
 ## Run it
 
@@ -62,7 +62,7 @@ Useful options:
 Rscript scripts/figures/analysis/phease12_kda/visualize_phase12_kda_netweaver.R \
   --input-dir results/minerva_production/12_kda \
   --netweaver-dir untracked/NetWeaver \
-  --output-dir results/figures/analysis/phase12_kda \
+  --output-dir results/figures/analysis/phase12_kda/circular_figure \
   --basename phase12_kda_netweaver \
   --top-per-network 5
 ```
@@ -76,7 +76,7 @@ Rscript scripts/figures/analysis/phease12_kda/visualize_phase12_kda_netweaver.R 
 The default run creates:
 
 ```text
-results/figures/analysis/phase12_kda/
+results/figures/analysis/phase12_kda/circular_figure/
 ├── phase12_kda_circular.svg
 ├── phase12_kda_circular.png
 └── phase12_kda_circular_plotted_data.tsv

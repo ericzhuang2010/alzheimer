@@ -285,7 +285,7 @@ recovers the same endpoint at the topology level: `MT-CO2` has 550 calls,
 rows have an mtDNA driver and 5,349 contain the candidate in its own query.
 `COX4I1` appears 169 times but is a query member in 149 calls.
 
-The [Phase 12 circular overview](../../results/figures/analysis/phase12_kda/phase12_kda_circular.png)
+The [Phase 12 circular overview](../../results/figures/analysis/phase12_kda/circular_figure/phase12_kda_circular.png)
 makes this structural dominance visually explicit. Of its 35 displayed
 network-by-candidate sectors, 28 have mtDNA-encoded candidates and 29 are
 structural respiratory-gene sectors when nuclear `COX4I1` is included. The
@@ -1376,8 +1376,8 @@ Phase 12 inputs, outputs, and methods:
 - [KDA run manifest](../../results/minerva_production/12_kda/kda_run_manifest.tsv)
 - [KDA results](../../results/minerva_production/12_kda/kda_results.tsv.gz)
 - [KDA candidate summary](../../results/minerva_production/12_kda/kda_key_driver_summary.tsv)
-- [Phase 12 circular overview](../../results/figures/analysis/phase12_kda/phase12_kda_circular.png)
-- [Exact data plotted in the circular overview](../../results/figures/analysis/phase12_kda/phase12_kda_circular_plotted_data.tsv)
+- [Phase 12 circular overview](../../results/figures/analysis/phase12_kda/circular_figure/phase12_kda_circular.png)
+- [Exact data plotted in the circular overview](../../results/figures/analysis/phase12_kda/circular_figure/phase12_kda_circular_plotted_data.tsv)
 - [KDA signature members](../../results/minerva_production/12_kda/kda_signature_members.tsv.gz)
 - [KDA background members](../../results/minerva_production/12_kda/kda_background_members.tsv.gz)
 - [Phase 12 configuration](../../config/phase12_kda.yml)

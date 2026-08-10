@@ -23,7 +23,7 @@ args <- parse_value_args(
   commandArgs(trailingOnly = TRUE),
   defaults = list(
     input_dir = "results/figures/analysis/phase12_kda",
-    output_dir = "results/figures/analysis/phase12_kda",
+    output_dir = "results/figures/analysis/phase12_kda/reduced_circular_figure",
     basename = "phase12_kda_reduced_circular",
     top_per_network = "3",
     minimum_ranking_coverage = "0.80"

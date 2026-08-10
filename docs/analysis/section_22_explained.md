@@ -4,7 +4,7 @@
 **Audience:** readers who want to distinguish an annotation artifact from a potentially valid network hypothesis  
 **Purpose:** explain, sentence by sentence, why most displayed `RPL13` recurrence is not currently interpretable and why one corrected analysis could still retain `RPL13` as a candidate
 
-The principal supporting files are the [circular-figure data](../../results/figures/analysis/phase12_kda/phase12_kda_circular_plotted_data.tsv), the [Phase 12 result rows](../../results/minerva_production/12_kda/kda_results.tsv), the [tested-gene annotation table](../../results/minerva_production/03_annotations/tested_gene_universe.tsv), and the [alias map](../../results/minerva_production/03_annotations/gene_alias_mapping.tsv).
+The principal supporting files are the [circular-figure data](../../results/figures/analysis/phase12_kda/circular_figure/phase12_kda_circular_plotted_data.tsv), the [Phase 12 result rows](../../results/minerva_production/12_kda/kda_results.tsv), the [tested-gene annotation table](../../results/minerva_production/03_annotations/tested_gene_universe.tsv), and the [alias map](../../results/minerva_production/03_annotations/gene_alias_mapping.tsv).
 
 ## 1. The central idea
 
