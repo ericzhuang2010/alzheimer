@@ -329,7 +329,8 @@ sequential_color <- function(value, minimum, maximum) {
 
 draw_effect_key <- function(
     limit, xleft = 0.10, xright = 0.55, y = 0.24,
-    label = "Signed modifier estimate (NCI-reference SD)") {
+    label = "Signed modifier estimate (NCI-reference SD)",
+    tick_cex = 0.75, label_cex = 0.78) {
   count <- length(effect_palette)
   for (index in seq_len(count)) {
     left <- xleft + (index - 1L) / count * (xright - xleft)
@@ -340,17 +341,24 @@ draw_effect_key <- function(
   graphics::rect(xleft, y - 0.035, xright, y + 0.035, border = "#777777")
   graphics::text(c(xleft, mean(c(xleft, xright)), xright), y - 0.075,
                  labels = c(paste0("−", limit), "0", paste0("+", limit)),
-                 cex = 0.75)
+                 cex = tick_cex)
   graphics::text(mean(c(xleft, xright)), y + 0.085,
-                 label, cex = 0.78, font = 2)
+                 label, cex = label_cex, font = 2)
 }
 
 draw_effect_heatmap <- function(
     data, row_ids, column_ids, row_labels, column_labels, value_column,
     row_column, column_column, limit, panel_label, panel_title,
     status_column = NULL, clipped_column = NULL, show_row_labels = TRUE,
-    cell_labels = NULL) {
-  graphics::par(mar = c(5.8, if (show_row_labels) 8.2 else 2.2, 2.6, 1.0),
+    cell_labels = NULL, x_label_cex = 0.72, y_label_cex = 0.78,
+    panel_title_cex = 0.95, bottom_margin = 5.8, row_label_margin = 8.2,
+    no_row_label_margin = 2.2, top_margin = 2.6) {
+  graphics::par(mar = c(
+    bottom_margin,
+    if (show_row_labels) row_label_margin else no_row_label_margin,
+    top_margin,
+    1.0
+  ),
                 family = "sans", xpd = NA)
   graphics::plot.new()
   graphics::plot.window(
@@ -413,16 +421,17 @@ draw_effect_heatmap <- function(
   )
   graphics::text(
     seq_along(column_ids), 0.23, labels = column_labels,
-    srt = 42, adj = c(1, 0.5), cex = 0.72
+    srt = 42, adj = c(1, 0.5), cex = x_label_cex
   )
   if (show_row_labels) {
     graphics::axis(
       2, at = rev(seq_along(row_ids)), labels = row_labels,
-      las = 1, tick = FALSE, cex.axis = 0.78
+      las = 1, tick = FALSE, cex.axis = y_label_cex
     )
   }
   graphics::box(col = "#777777")
-  graphics::mtext(panel_title, side = 3, line = 0.65, cex = 0.95, font = 2)
+  graphics::mtext(panel_title, side = 3, line = 0.65,
+                  cex = panel_title_cex, font = 2)
   graphics::mtext(panel_label, side = 3, line = 0.65, adj = -0.08,
                   cex = 1.12, font = 2)
 }
@@ -559,7 +568,7 @@ draw_landscape <- function() {
     matrix(c(1, 2, 3, 4, 5, 5), nrow = 3, byrow = TRUE),
     heights = c(1, 1, 0.47)
   )
-  graphics::par(oma = c(0.5, 0.5, 2.3, 0.5))
+  graphics::par(oma = c(0.5, 0.5, 4.2, 0.5))
   panel_letters <- c("A", "B", "C", "D")
   for (module_index in seq_along(module_ids)) {
     module_id <- module_ids[[module_index]]
@@ -578,7 +587,13 @@ draw_landscape <- function() {
       panel_title = unname(module_labels[module_id]),
       status_column = "scientific_status",
       clipped_column = "display_clipped",
-      show_row_labels = module_index %% 2L == 1L
+      show_row_labels = module_index %% 2L == 1L,
+      panel_title_cex = 0.95 * 2,
+      x_label_cex = 0.72 * 3,
+      y_label_cex = 0.78 * 3,
+      bottom_margin = 10.5,
+      row_label_margin = 19.0,
+      top_margin = 4.2
     )
   }
   graphics::par(mar = c(0.5, 0.7, 1.5, 0.7), family = "sans", xpd = NA)
@@ -603,25 +618,31 @@ draw_landscape <- function() {
     format(round(min(landscape_data$q_value_camera, na.rm = TRUE), 3), nsmall = 3)
   )
   graphics::text(0.58, 0.73, summary_text, adj = c(0, 0.5), cex = 0.83)
-  draw_effect_key(effect_limit, 0.08, 0.48, 0.27)
+  draw_effect_key(
+    effect_limit, 0.08, 0.48, 0.27,
+    tick_cex = 0.75 * 3,
+    label_cex = 0.78 * 3
+  )
   graphics::rect(0.58, 0.22, 0.62, 0.32, col = "#E6E6E6", border = "#A8A8A8")
   graphics::segments(0.585, 0.225, 0.615, 0.315, col = "#777777")
   graphics::segments(0.585, 0.315, 0.615, 0.225, col = "#777777")
-  graphics::text(0.64, 0.27, "not testable (not zero)", adj = c(0, 0.5), cex = 0.76)
+  graphics::text(0.64, 0.27, "not testable (not zero)",
+                 adj = c(0, 0.5), cex = 0.76 * 3)
   graphics::rect(0.80, 0.22, 0.84, 0.32, col = "white", border = "#5A5A5A")
-  graphics::text(0.86, 0.27, "inconclusive", adj = c(0, 0.5), cex = 0.76)
+  graphics::text(0.86, 0.27, "inconclusive",
+                 adj = c(0, 0.5), cex = 0.76 * 3)
   graphics::mtext(
     "Phase 13 respiratory-modifier landscape: complete prespecified test family",
-    side = 3, outer = TRUE, line = 0.6, cex = 1.22, font = 2
+    side = 3, outer = TRUE, line = 1.2, cex = 1.22 * 2, font = 2
   )
   graphics::mtext(
     "Four modules × seven cell contexts × seven sex/APOE contrasts; no row passed the frozen scientific gate",
-    side = 3, outer = TRUE, line = -0.65, cex = 0.82, col = "#4D4D4D"
+    side = 3, outer = TRUE, line = -0.30, cex = 0.82, col = "#4D4D4D"
   )
 }
 
 landscape_images <- render_triplet(
-  landscape_dir, landscape_base, 14.5, 10.2, args$png_dpi, draw_landscape
+  landscape_dir, landscape_base, 14.5, 12.2, args$png_dpi, draw_landscape
 )
 landscape_sources <- c(
   input_path("respiratory_status.tsv"),
