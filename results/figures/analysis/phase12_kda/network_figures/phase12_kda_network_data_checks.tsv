@@ -1,0 +1,8 @@
+schema_version	check_id	passed	observed	expected
+phase12_kda_network_figures_v1	validated_phase12_bundle	TRUE	1	1
+phase12_kda_network_figures_v1	bayesian_networks_are_dags	TRUE	9	9
+phase12_kda_network_figures_v1	complex_v_gene_count	TRUE	26	26
+phase12_kda_network_figures_v1	selected_atp_pair_counts	TRUE	0	0
+phase12_kda_network_figures_v1	selected_neighborhood_sizes	TRUE	0	0
+phase12_kda_network_figures_v1	overlap_genes_in_effective_signatures	TRUE	0	0
+phase12_kda_network_figures_v1	connectivity_points_present	TRUE	50165	>0

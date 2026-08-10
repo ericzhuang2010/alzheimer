@@ -1,0 +1,20 @@
+schema_version	panel	comparison_row	condition	driver	target	path
+phase12_kda_network_figures_v1	A	APOE | Ast GRM3	Female AD-up	APOE	ATP5PB	APOE;ATP5PB
+phase12_kda_network_figures_v1	A	APOE | Ast GRM3	Female AD-up	APOE	CHCHD10	APOE;CHCHD10
+phase12_kda_network_figures_v1	A	APOE | Ast GRM3	Female AD-up	APOE	TUFM	APOE;TUFM
+phase12_kda_network_figures_v1	B	APOE | Ast GRM3	Male AD-down	APOE	ATP5F1A	APOE;LDHB;ATP5F1A
+phase12_kda_network_figures_v1	B	APOE | Ast GRM3	Male AD-down	APOE	ATP5PB	APOE;ATP5PB
+phase12_kda_network_figures_v1	B	APOE | Ast GRM3	Male AD-down	APOE	CHCHD10	APOE;CHCHD10
+phase12_kda_network_figures_v1	B	APOE | Ast GRM3	Male AD-down	APOE	TUFM	APOE;TUFM
+phase12_kda_network_figures_v1	C	LAMTOR5 | Exc L4-5 RORB IL1RAPL2	Female AD-up	LAMTOR5	ATP5IF1	LAMTOR5;ATP5IF1
+phase12_kda_network_figures_v1	C	LAMTOR5 | Exc L4-5 RORB IL1RAPL2	Female AD-up	LAMTOR5	ATP5MC2	LAMTOR5;POP7;ATP5MC2
+phase12_kda_network_figures_v1	C	LAMTOR5 | Exc L4-5 RORB IL1RAPL2	Female AD-up	LAMTOR5	CHCHD10	LAMTOR5;TMEM11;CHCHD10
+phase12_kda_network_figures_v1	D	LAMTOR5 | Exc L4-5 RORB IL1RAPL2	Male AD-down	LAMTOR5	ATP5IF1	LAMTOR5;ATP5IF1
+phase12_kda_network_figures_v1	D	LAMTOR5 | Exc L4-5 RORB IL1RAPL2	Male AD-down	LAMTOR5	ATP5MC2	LAMTOR5;POP7;ATP5MC2
+phase12_kda_network_figures_v1	D	LAMTOR5 | Exc L4-5 RORB IL1RAPL2	Male AD-down	LAMTOR5	CHCHD10	LAMTOR5;TMEM11;CHCHD10
+phase12_kda_network_figures_v1	E	GABARAPL2 | Exc L4-5 RORB IL1RAPL2	Female AD-up	GABARAPL2	ATP5MC3	GABARAPL2;CHCHD2;ATP5MC3
+phase12_kda_network_figures_v1	E	GABARAPL2 | Exc L4-5 RORB IL1RAPL2	Female AD-up	GABARAPL2	CHCHD2	GABARAPL2;CHCHD2
+phase12_kda_network_figures_v1	E	GABARAPL2 | Exc L4-5 RORB IL1RAPL2	Female AD-up	GABARAPL2	PARK7	GABARAPL2;MAGEF1;SNAPC5;PARK7
+phase12_kda_network_figures_v1	F	GABARAPL2 | Exc L4-5 RORB IL1RAPL2	Male AD-down	GABARAPL2	ATP5MC3	GABARAPL2;CHCHD2;ATP5MC3
+phase12_kda_network_figures_v1	F	GABARAPL2 | Exc L4-5 RORB IL1RAPL2	Male AD-down	GABARAPL2	CHCHD2	GABARAPL2;CHCHD2
+phase12_kda_network_figures_v1	F	GABARAPL2 | Exc L4-5 RORB IL1RAPL2	Male AD-down	GABARAPL2	PARK7	GABARAPL2;MAGEF1;SNAPC5;PARK7

@@ -1,0 +1,10 @@
+schema_version	panel	driver	target	path
+phase12_kda_network_figures_v1	A	APOE	ATP5F1A	APOE;LDHB;ATP5F1A
+phase12_kda_network_figures_v1	A	APOE	ATP5PB	APOE;ATP5PB
+phase12_kda_network_figures_v1	A	APOE	CHCHD10	APOE;CHCHD10
+phase12_kda_network_figures_v1	A	APOE	TUFM	APOE;TUFM
+phase12_kda_network_figures_v1	B	LAMTOR5	ATP5IF1	LAMTOR5;ATP5IF1
+phase12_kda_network_figures_v1	B	LAMTOR5	ATP5MC2	LAMTOR5;POP7;ATP5MC2
+phase12_kda_network_figures_v1	C	GABARAPL2	ATP5MC3	GABARAPL2;CHCHD2;ATP5MC3
+phase12_kda_network_figures_v1	C	GABARAPL2	CHCHD2	GABARAPL2;CHCHD2
+phase12_kda_network_figures_v1	C	GABARAPL2	PARK7	GABARAPL2;MAGEF1;SNAPC5;PARK7
