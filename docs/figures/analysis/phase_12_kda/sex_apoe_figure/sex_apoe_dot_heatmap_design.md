@@ -405,7 +405,7 @@ interaction analysis has been performed and documented.
 Write a long-format table beside the figure. Recommended filename:
 
 ```text
-results/figures/analysis/phase12_kda/
+results/figures/analysis/phase12_kda/sex_apoe_figure/
   phase12_kda_figure_b_sex_apoe_plotted_data.tsv
 ```
 
@@ -544,7 +544,7 @@ scripts/figures/analysis/phease12_kda/
 Generated Panel B files:
 
 ```text
-results/figures/analysis/phase12_kda/
+results/figures/analysis/phase12_kda/sex_apoe_figure/
   phase12_kda_sex_apoe.png
   phase12_kda_sex_apoe.pdf
   phase12_kda_sex_apoe.svg

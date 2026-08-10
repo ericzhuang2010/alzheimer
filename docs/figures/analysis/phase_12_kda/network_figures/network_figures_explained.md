@@ -30,6 +30,12 @@ and a checksum log are under:
 - Dark arrows mark prespecified shortest directed paths; pale arrows provide
   the remaining neighborhood context.
 
+The full-network degree mapping is identical wherever marker size represents
+connectivity: all nodes in Figures 1 and 2 and the driver nodes on the left of
+Figure 3. Figure 3 target-node area instead represents supporting-call
+recurrence, and Figure 4 point area represents significant-run recurrence;
+those marks do not claim to encode network degree.
+
 These encodings adapt the logic of Wang et al.'s multiscale network figure:
 node size represents connectivity, node color represents differential
 expression, and key-driver nodes receive a distinct visual treatment.
@@ -173,11 +179,12 @@ driver, and Complex V target combinations.
 **Figure 3. Primary directional KDA calls converge recurrently on ATP synthase
 / Complex V genes.** The bipartite map links selected key drivers to Complex V
 genes found in their KDA overlaps. Driver color indicates the broad-cell-type
-network, driver area indicates within-network degree percentile, target area
-indicates total supporting calls, edge width indicates the number of qualifying
-KDA calls, and line style indicates directed shortest-path distance. The main
-panel shows seven prespecified driver families; the complete vector supplement
-shows all qualifying relationships.
+network. Driver size uses the same Wang-style linear-diameter mapping from
+full-network total degree as Figures 1 and 2, including the common key-driver
+enlargement. Target area indicates total supporting calls, edge width indicates
+the number of qualifying KDA calls, and line style indicates directed
+shortest-path distance. The main panel shows seven prespecified driver
+families; the complete vector supplement shows all qualifying relationships.
 
 ### Slide message
 

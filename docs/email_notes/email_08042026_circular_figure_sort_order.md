@@ -3,7 +3,7 @@
 ## Bottom line
 
 For the key-driver genes in
-`results/figures/analysis/phase12_kda/phase12_kda_circular.png`, the most
+`results/figures/analysis/phase12_kda/circular_figure/phase12_kda_circular.png`, the most
 paper-faithful interpretation of the professor's comment is:
 
 > Rank key drivers in descending order of the standardized **MeanOfLog** score
@@ -107,4 +107,3 @@ should not be used as the final paper figure.
 > DEG signatures. Higher scores indicate stronger and more consistent evidence
 > across KDA runs. Secondary and combined-direction signatures were excluded
 > from the primary ranking to avoid double-counting overlapping signatures.
-

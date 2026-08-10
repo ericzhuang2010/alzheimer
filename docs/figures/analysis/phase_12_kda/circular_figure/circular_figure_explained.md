@@ -114,7 +114,7 @@ eligible analyses, to occupy nearly the entire figure.
 The complete list and its exact ordering are written to:
 
 ```text
-results/figures/analysis/phase12_kda/phase12_kda_circular_plotted_data.tsv
+results/figures/analysis/phase12_kda/circular_figure/phase12_kda_circular_plotted_data.tsv
 ```
 
 ## 6. How the eligible denominators are calculated
@@ -732,7 +732,7 @@ The explicit equivalent is:
 Rscript scripts/figures/analysis/phease12_kda/visualize_phase12_kda_netweaver.R \
   --input-dir results/minerva_production/12_kda \
   --netweaver-dir untracked/NetWeaver \
-  --output-dir results/figures/analysis/phase12_kda \
+  --output-dir results/figures/analysis/phase12_kda/circular_figure \
   --basename phase12_kda_netweaver \
   --top-per-network 5
 ```

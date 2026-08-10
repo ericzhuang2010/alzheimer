@@ -24,10 +24,19 @@ The same gene can appear more than once because it is evaluated in different
 networks—for example, `RPL11 (Ast)`, `RPL11 (Exc)`, `RPL11 (Mic)`, and
 `RPL11 (Oli)`.
 
-Driver colors identify the network. Driver circle area represents the
-driver's degree percentile within the complete corresponding network.
-Therefore, a large driver is a highly connected network node; it is not
-necessarily more significant or more recurrent.
+Driver colors identify the network. Driver size represents total degree in the
+complete corresponding network using the same rule as the Wang-style and
+sex-reversal figures:
+
+```text
+diameter_points = min(24, 7 + total_degree)
+area_points_squared = 1.25 * diameter_points^2
+```
+
+The 1.25 factor is the common key-driver area enlargement. Thus, a given total
+degree produces the same marker area in all three network figures. A large
+driver is a highly connected network node; it is not necessarily more
+significant or more recurrent.
 
 ### Right side: Complex V genes
 
@@ -38,6 +47,11 @@ Only 11 appear in this focused map because these are the Complex V genes
 connected to one of the seven prespecified driver families after filtering. A
 larger target circle means that gene accumulated more supporting driver–target
 calls across the displayed relationships.
+
+Target sizes intentionally do not use the full-network degree rule: they encode
+total supporting-call recurrence, which is a different quantity. Edge width
+also encodes qualifying-call recurrence. These encodings are stated separately
+in the figure annotation to avoid conflating recurrence with connectivity.
 
 For example, `ATP5PF` is especially large because it is repeatedly connected
 to several drivers and networks.

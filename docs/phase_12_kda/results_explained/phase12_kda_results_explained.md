@@ -27,7 +27,7 @@ scripts/figures/analysis/phease12_kda/visualize_phase12_kda_netweaver.R
 The generated files are:
 
 ```text
-results/figures/analysis/phase12_kda/
+results/figures/analysis/phase12_kda/circular_figure/
 ├── phase12_kda_circular.svg
 ├── phase12_kda_circular.png
 └── phase12_kda_circular_plotted_data.tsv
