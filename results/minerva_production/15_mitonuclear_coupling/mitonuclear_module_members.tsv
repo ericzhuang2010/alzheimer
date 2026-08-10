@@ -1,0 +1,100 @@
+schema_version	module_order	module_id	frozen_gene_symbol	current_approved_symbol	stable_ensembl_id	assay_feature_identifier	source	source_version	inclusion_reason	omission_category	respiratory_complex	overlaps_phase13_modules	mapping_status	c3_admitted	c3_role
+phase15_module_members_v1	1	mtdna_oxphos_13	MT-ND1	MT-ND1	ENSG00000198888	MT-ND1	MitoCarta3.0	3	mtDNA-encoded structural OXPHOS subunit	gene:MT-ND1	I	none	unique_assay_match	TRUE	mtDNA
+phase15_module_members_v1	1	mtdna_oxphos_13	MT-ND2	MT-ND2	ENSG00000198763	MT-ND2	MitoCarta3.0	3	mtDNA-encoded structural OXPHOS subunit	gene:MT-ND2	I	none	unique_assay_match	TRUE	mtDNA
+phase15_module_members_v1	1	mtdna_oxphos_13	MT-ND3	MT-ND3	ENSG00000198840	MT-ND3	MitoCarta3.0	3	mtDNA-encoded structural OXPHOS subunit	gene:MT-ND3	I	none	unique_assay_match	TRUE	mtDNA
+phase15_module_members_v1	1	mtdna_oxphos_13	MT-ND4	MT-ND4	ENSG00000198886	MT-ND4	MitoCarta3.0	3	mtDNA-encoded structural OXPHOS subunit	gene:MT-ND4	I	none	unique_assay_match	TRUE	mtDNA
+phase15_module_members_v1	1	mtdna_oxphos_13	MT-ND4L	MT-ND4L	ENSG00000212907	MT-ND4L	MitoCarta3.0	3	mtDNA-encoded structural OXPHOS subunit	gene:MT-ND4L	I	none	unique_assay_match	TRUE	mtDNA
+phase15_module_members_v1	1	mtdna_oxphos_13	MT-ND5	MT-ND5	ENSG00000198786	MT-ND5	MitoCarta3.0	3	mtDNA-encoded structural OXPHOS subunit	gene:MT-ND5	I	none	unique_assay_match	TRUE	mtDNA
+phase15_module_members_v1	1	mtdna_oxphos_13	MT-ND6	MT-ND6	ENSG00000198695	MT-ND6	MitoCarta3.0	3	mtDNA-encoded structural OXPHOS subunit	gene:MT-ND6	I	none	unique_assay_match	TRUE	mtDNA
+phase15_module_members_v1	1	mtdna_oxphos_13	MT-CYB	MT-CYB	ENSG00000198727	MT-CYB	MitoCarta3.0	3	mtDNA-encoded structural OXPHOS subunit	gene:MT-CYB	III	none	unique_assay_match	TRUE	mtDNA
+phase15_module_members_v1	1	mtdna_oxphos_13	MT-CO1	MT-CO1	ENSG00000198804	MT-CO1	MitoCarta3.0	3	mtDNA-encoded structural OXPHOS subunit	gene:MT-CO1	IV	none	unique_assay_match	TRUE	mtDNA
+phase15_module_members_v1	1	mtdna_oxphos_13	MT-CO2	MT-CO2	ENSG00000198712	MT-CO2	MitoCarta3.0	3	mtDNA-encoded structural OXPHOS subunit	gene:MT-CO2	IV	none	unique_assay_match	TRUE	mtDNA
+phase15_module_members_v1	1	mtdna_oxphos_13	MT-CO3	MT-CO3	ENSG00000198938	MT-CO3	MitoCarta3.0	3	mtDNA-encoded structural OXPHOS subunit	gene:MT-CO3	IV	none	unique_assay_match	TRUE	mtDNA
+phase15_module_members_v1	1	mtdna_oxphos_13	MT-ATP6	MT-ATP6	ENSG00000198899	MT-ATP6	MitoCarta3.0	3	mtDNA-encoded structural OXPHOS subunit	gene:MT-ATP6	V	none	unique_assay_match	TRUE	mtDNA
+phase15_module_members_v1	1	mtdna_oxphos_13	MT-ATP8	MT-ATP8	ENSG00000228253	MT-ATP8	MitoCarta3.0	3	mtDNA-encoded structural OXPHOS subunit	gene:MT-ATP8	V	none	unique_assay_match	TRUE	mtDNA
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	NDUFA1	NDUFA1	ENSG00000125356	NDUFA1	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_I	I	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	NDUFA2	NDUFA2	ENSG00000131495	NDUFA2	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_I	I	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	NDUFA3	NDUFA3	ENSG00000170906	NDUFA3	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_I	I	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	NDUFA5	NDUFA5	ENSG00000128609	NDUFA5	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_I	I	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	NDUFA6	NDUFA6	ENSG00000184983	NDUFA6	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_I	I	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	NDUFA7	NDUFA7	ENSG00000267855	NDUFA7	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_I	I	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	NDUFA8	NDUFA8	ENSG00000119421	NDUFA8	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_I	I	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	NDUFA9	NDUFA9	ENSG00000139180	NDUFA9	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_I	I	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	NDUFA10	NDUFA10	ENSG00000130414	NDUFA10	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_I	I	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	NDUFA11	NDUFA11	ENSG00000174886	NDUFA11	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_I	I	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	NDUFA12	NDUFA12	ENSG00000184752	NDUFA12	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_I	I	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	NDUFA13	NDUFA13	ENSG00000186010	NDUFA13	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_I	I	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	NDUFAB1	NDUFAB1	ENSG00000004779	NDUFAB1	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_I	I	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	NDUFB1	NDUFB1	ENSG00000183648	NDUFB1	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_I	I	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	NDUFB2	NDUFB2	ENSG00000090266	NDUFB2	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_I	I	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	NDUFB3	NDUFB3	ENSG00000119013	NDUFB3	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_I	I	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	NDUFB4	NDUFB4	ENSG00000065518	NDUFB4	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_I	I	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	NDUFB5	NDUFB5	ENSG00000136521	NDUFB5	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_I	I	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	NDUFB6	NDUFB6	ENSG00000165264	NDUFB6	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_I	I	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	NDUFB7	NDUFB7	ENSG00000099795	NDUFB7	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_I	I	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	NDUFB8	NDUFB8	ENSG00000166136	NDUFB8	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_I	I	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	NDUFB9	NDUFB9	ENSG00000147684	NDUFB9	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_I	I	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	NDUFB10	NDUFB10	ENSG00000140990	NDUFB10	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_I	I	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	NDUFB11	NDUFB11	ENSG00000147123	NDUFB11	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_I	I	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	NDUFC1	NDUFC1	ENSG00000109390	NDUFC1	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_I	I	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	NDUFC2	NDUFC2	ENSG00000151366	NDUFC2	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_I	I	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	NDUFS1	NDUFS1	ENSG00000023228	NDUFS1	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_I	I	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	NDUFS2	NDUFS2	ENSG00000158864	NDUFS2	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_I	I	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	NDUFS3	NDUFS3	ENSG00000213619	NDUFS3	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_I	I	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	NDUFS4	NDUFS4	ENSG00000164258	NDUFS4	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_I	I	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	NDUFS5	NDUFS5	ENSG00000168653	NDUFS5	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_I	I	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	NDUFS6	NDUFS6	ENSG00000145494	NDUFS6	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_I	I	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	NDUFS7	NDUFS7	ENSG00000115286	NDUFS7	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_I	I	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	NDUFS8	NDUFS8	ENSG00000110717	NDUFS8	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_I	I	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	NDUFV1	NDUFV1	ENSG00000167792	NDUFV1	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_I	I	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	NDUFV2	NDUFV2	ENSG00000178127	NDUFV2	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_I	I	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	NDUFV3	NDUFV3	ENSG00000160194	NDUFV3	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_I	I	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	SDHA	SDHA	ENSG00000073578	SDHA	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_II	II	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	SDHB	SDHB	ENSG00000117118	SDHB	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_II	II	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	SDHC	SDHC	ENSG00000143252	SDHC	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_II	II	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	SDHD	SDHD	ENSG00000204370	SDHD	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_II	II	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	CYC1	CYC1	ENSG00000179091	CYC1	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_III	III	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	UQCR10	UQCR10	ENSG00000184076	UQCR10	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_III	III	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	UQCR11	UQCR11	ENSG00000127540	UQCR11	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_III	III	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	UQCRB	UQCRB	ENSG00000156467	UQCRB	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_III	III	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	UQCRC1	UQCRC1	ENSG00000010256	UQCRC1	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_III	III	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	UQCRC2	UQCRC2	ENSG00000140740	UQCRC2	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_III	III	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	UQCRFS1	UQCRFS1	ENSG00000169021	UQCRFS1	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_III	III	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	UQCRH	UQCRH	ENSG00000173660	UQCRH	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_III	III	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	UQCRQ	UQCRQ	ENSG00000164405	UQCRQ	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_III	III	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	COX4I1	COX4I1	ENSG00000131143	COX4I1	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_IV	IV	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	COX4I2	COX4I2	ENSG00000131055	COX4I2	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_IV	IV	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	COX5A	COX5A	ENSG00000178741	COX5A	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_IV	IV	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	COX5B	COX5B	ENSG00000135940	COX5B	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_IV	IV	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	COX6A1	COX6A1	ENSG00000111775	COX6A1	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_IV	IV	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	COX6A2	COX6A2	ENSG00000156885	COX6A2	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_IV	IV	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	COX6B1	COX6B1	ENSG00000126267	COX6B1	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_IV	IV	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	COX6B2	COX6B2	ENSG00000160471	COX6B2	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_IV	IV	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	COX6C	COX6C	ENSG00000164919	COX6C	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_IV	IV	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	COX7A1	COX7A1	ENSG00000161281	COX7A1	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_IV	IV	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	COX7A2	COX7A2	ENSG00000112695	COX7A2	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_IV	IV	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	COX7A2L	COX7A2L	ENSG00000115944	COX7A2L	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_IV	IV	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	COX7B	COX7B	ENSG00000131174	COX7B	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_IV	IV	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	COX7B2	COX7B2	ENSG00000170516	COX7B2	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_IV	IV	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	COX7C	COX7C	ENSG00000127184	COX7C	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_IV	IV	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	COX8A	COX8A	ENSG00000176340	COX8A	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_IV	IV	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	COX8C	COX8C	ENSG00000187581	COX8C	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_IV	IV	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	NDUFA4	COXFA4	ENSG00000189043	NDUFA4	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_IV	IV	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	ATP5F1A	ATP5F1A	ENSG00000152234	ATP5F1A	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_V	V	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	ATP5F1B	ATP5F1B	ENSG00000110955	ATP5F1B	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_V	V	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	ATP5F1C	ATP5F1C	ENSG00000165629	ATP5F1C	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_V	V	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	ATP5F1D	ATP5F1D	ENSG00000099624	ATP5F1D	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_V	V	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	ATP5F1E	ATP5F1E	ENSG00000124172	ATP5F1E	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_V	V	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	ATP5MC1	ATP5MC1	ENSG00000159199	ATP5MC1	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_V	V	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	ATP5MC2	ATP5MC2	ENSG00000135390	ATP5MC2	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_V	V	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	ATP5MC3	ATP5MC3	ENSG00000154518	ATP5MC3	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_V	V	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	ATP5MD	ATP5MK	ENSG00000173915	ATP5MD	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_V	V	mib_micos_inner_membrane_19|nuclear_oxphos_structural_86	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	ATP5ME	ATP5ME	ENSG00000169020	ATP5ME	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_V	V	mib_micos_inner_membrane_19|nuclear_oxphos_structural_86	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	ATP5MF	ATP5MF	ENSG00000241468	ATP5MF	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_V	V	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	ATP5MG	ATP5MG	ENSG00000167283	ATP5MG	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_V	V	mib_micos_inner_membrane_19|nuclear_oxphos_structural_86	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	ATP5MPL	ATP5MJ	ENSG00000156411	ATP5MPL	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_V	V	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	ATP5PB	ATP5PB	ENSG00000116459	ATP5PB	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_V	V	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	ATP5PD	ATP5PD	ENSG00000167863	ATP5PD	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_V	V	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	ATP5PF	ATP5PF	ENSG00000154723	ATP5PF	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_V	V	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	ATP5PO	ATP5PO	ENSG00000241837	ATP5PO	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_V	V	none	unique_assay_match	TRUE	nuclear
+phase15_module_members_v1	2	nuclear_oxphos_structural_86	DMAC2L	DMAC2L	ENSG00000125375	ATP5S	MitoCarta3.0	3	strict nuclear structural OXPHOS subunit	complex_V	V	none	unique_assay_match	TRUE	nuclear

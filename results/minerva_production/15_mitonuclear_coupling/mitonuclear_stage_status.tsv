@@ -1,0 +1,8 @@
+schema_version	stage_order	stage_id	dependency	terminal_status	records	started_utc	completed_utc
+phase15_stage_status_v1	1	definitions	none	complete	1	2026-08-09 22:46:51	2026-08-10 06:25:24
+phase15_stage_status_v1	2	phase13_inputs	definitions	complete	18	2026-08-09 22:46:51	2026-08-10 06:25:24
+phase15_stage_status_v1	3	score_pairs	phase13_inputs	complete	1825	2026-08-09 22:46:51	2026-08-10 06:25:24
+phase15_stage_status_v1	4	crossfit_models	score_pairs	complete	21	2026-08-09 22:46:51	2026-08-10 06:25:24
+phase15_stage_status_v1	5	stability_sensitivities	crossfit_models	complete	386512	2026-08-09 22:46:51	2026-08-10 06:25:24
+phase15_stage_status_v1	6	gates	stability_sensitivities	complete	56	2026-08-09 22:46:51	2026-08-10 06:25:24
+phase15_stage_status_v1	7	publication	checks	ready	36	2026-08-09 22:46:51	2026-08-10 06:25:24

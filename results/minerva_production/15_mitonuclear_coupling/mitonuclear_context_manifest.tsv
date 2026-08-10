@@ -1,0 +1,8 @@
+schema_version	context_order	inherited_context_order	context_id	context_label	context_role	source_rds_ids	pilot_fixture_context
+phase15_context_manifest_v1	1	1	astrocytes	Astrocytes	primary_confirmatory	astrocytes	FALSE
+phase15_context_manifest_v1	2	2	excitatory_neurons	Excitatory neurons	primary_confirmatory	excitatory_set1|excitatory_set2|excitatory_set3	FALSE
+phase15_context_manifest_v1	3	3	inhibitory_neurons	Inhibitory neurons	primary_confirmatory	inhibitory	FALSE
+phase15_context_manifest_v1	4	4	immune_cells	Immune cells	secondary_extension	immune	FALSE
+phase15_context_manifest_v1	5	5	opcs	Oligodendrocyte precursor cells	secondary_extension	opcs	FALSE
+phase15_context_manifest_v1	6	6	oligodendrocytes	Oligodendrocytes	secondary_extension	oligodendrocytes	FALSE
+phase15_context_manifest_v1	7	7	vasculature	Vasculature cells	secondary_extension	vasculature	FALSE

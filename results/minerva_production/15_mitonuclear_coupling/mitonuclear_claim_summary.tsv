@@ -1,0 +1,7 @@
+schema_version	claim_scope	scientific_decision	bridge_authorized	conclusion
+phase15_claim_summary_v1	primary_overall	inconclusive	FALSE	inconclusive
+phase15_claim_summary_v1	general_C3	not_supported_or_inconclusive	FALSE	
+phase15_claim_summary_v1	modifier_C3	not_supported_or_inconclusive	FALSE	
+phase15_claim_summary_v1	secondary_extension	no_secondary_support	FALSE	Secondary contexts are reported separately and do not alter the primary decision.
+phase15_claim_summary_v1	residual_bridge	not_authorized	FALSE	Residual bridge authorization follows exact supported gates only.
+phase15_claim_summary_v1	phase13_C1_context	inconclusive	FALSE	Phase 13 C1 is contextual provenance and does not gate Phase 15 C3.

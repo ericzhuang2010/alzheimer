@@ -1,0 +1,3 @@
+schema_version	module_order	module_id	module_label	reference_genes	minimum_fraction	minimum_genes	c3_role
+phase15_module_manifest_v1	1	mtdna_oxphos_13	mtDNA OXPHOS	13	0.7	10	mtDNA
+phase15_module_manifest_v1	2	nuclear_oxphos_structural_86	Nuclear OXPHOS structural	86	0.7	5	nuclear

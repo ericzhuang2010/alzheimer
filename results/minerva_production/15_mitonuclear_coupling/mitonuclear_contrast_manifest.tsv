@@ -1,0 +1,9 @@
+schema_version	contrast_order	contrast_id	contrast_type	modifier	required_groups	coefficients
+phase15_contrast_manifest_v1	0	general_equal_stratum_AD_minus_NCI	general	general	NCI__Female__e2|AD__Female__e2|NCI__Female__e33|AD__Female__e33|NCI__Female__e4|AD__Female__e4|NCI__Male__e2|AD__Male__e2|NCI__Male__e33|AD__Male__e33|NCI__Male__e4|AD__Male__e4	equal one-sixth average of six AD-minus-NCI stratum effects
+phase15_contrast_manifest_v1	1	sex_F_minus_M__e2	modifier	sex	AD__Female__e2|NCI__Female__e2|AD__Male__e2|NCI__Male__e2	AD__Female__e2=1;NCI__Female__e2=-1;AD__Male__e2=-1;NCI__Male__e2=1
+phase15_contrast_manifest_v1	2	sex_F_minus_M__e33	modifier	sex	AD__Female__e33|NCI__Female__e33|AD__Male__e33|NCI__Male__e33	AD__Female__e33=1;NCI__Female__e33=-1;AD__Male__e33=-1;NCI__Male__e33=1
+phase15_contrast_manifest_v1	3	sex_F_minus_M__e4	modifier	sex	AD__Female__e4|NCI__Female__e4|AD__Male__e4|NCI__Male__e4	AD__Female__e4=1;NCI__Female__e4=-1;AD__Male__e4=-1;NCI__Male__e4=1
+phase15_contrast_manifest_v1	4	apoe_e2_minus_e33__Female	modifier	apoe	AD__Female__e2|NCI__Female__e2|AD__Female__e33|NCI__Female__e33	AD__Female__e2=1;NCI__Female__e2=-1;AD__Female__e33=-1;NCI__Female__e33=1
+phase15_contrast_manifest_v1	5	apoe_e2_minus_e33__Male	modifier	apoe	AD__Male__e2|NCI__Male__e2|AD__Male__e33|NCI__Male__e33	AD__Male__e2=1;NCI__Male__e2=-1;AD__Male__e33=-1;NCI__Male__e33=1
+phase15_contrast_manifest_v1	6	apoe_e4_minus_e33__Female	modifier	apoe	AD__Female__e4|NCI__Female__e4|AD__Female__e33|NCI__Female__e33	AD__Female__e4=1;NCI__Female__e4=-1;AD__Female__e33=-1;NCI__Female__e33=1
+phase15_contrast_manifest_v1	7	apoe_e4_minus_e33__Male	modifier	apoe	AD__Male__e4|NCI__Male__e4|AD__Male__e33|NCI__Male__e33	AD__Male__e4=1;NCI__Male__e4=-1;AD__Male__e33=-1;NCI__Male__e33=1

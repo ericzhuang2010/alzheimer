@@ -1,0 +1,4 @@
+schema_version	endpoint_order	endpoint_id	endpoint_label	definition	sesoi	unit	positive_direction
+phase15_endpoint_manifest_v1	1	standardized_difference	Standardized compartment difference	M_minus_N	0.25	mtDNA_NCI_SD_minus_nuclear_NCI_SD	more positive AD-related mitonuclear endpoint change
+phase15_endpoint_manifest_v1	2	nci_reference_residual	Cross-fitted NCI-reference residual	observed_M_minus_NCI_predicted_M	0.25	cross_fitted_NCI_residual_SD	more positive AD-related mitonuclear endpoint change
+phase15_endpoint_manifest_v1	3	coupling_slope_change	Coupling-slope change	AD_minus_NCI_change_in_M_on_N_slope	0.25	mtDNA_NCI_SD_per_nuclear_NCI_SD	more positive AD-related mitonuclear endpoint change
