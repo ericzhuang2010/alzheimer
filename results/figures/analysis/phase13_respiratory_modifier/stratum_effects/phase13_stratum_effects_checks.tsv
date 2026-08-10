@@ -1,0 +1,10 @@
+schema_version	check_id	blocking	passed	observed	expected	detail
+phase13_figure_checks_v1	production_bundle_validated	TRUE	TRUE	validated_complete	validated_complete	status hash 1502f0c003a9df63fec57e784da9d3eb64d6d925847bc6c0af2d58ec340e3d03
+phase13_figure_checks_v1	outputs_nonempty	TRUE	TRUE	6	6	
+phase13_figure_checks_v1	vector_and_raster_outputs_present	TRUE	TRUE	svg|pdf|png	svg|pdf|png	
+phase13_figure_checks_v1	no_confusing_abbreviation_in_artifact_paths	TRUE	TRUE	none	none	
+phase13_figure_checks_v1	colorblind_safe_palettes_configured	TRUE	TRUE	PuOr plus Okabe-Ito categorical colors	colorblind-safe palette	
+phase13_figure_checks_v1	grayscale_redundant_encoding_configured	TRUE	TRUE	symbols, outlines, labels, and positions supplement color	color is not the sole status encoding	
+phase13_figure_checks_v1	minimum_text_size_configured	TRUE	TRUE	7 pt	>=7 pt at final size	
+phase13_figure_checks_v1	stratum_rows	TRUE	TRUE	168	168	
+phase13_figure_checks_v1	stratum_unique_keys	TRUE	TRUE	168	168	
