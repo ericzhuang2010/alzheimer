@@ -14,28 +14,42 @@ usage <- function() {
     "Usage: Rscript scripts/figures/analysis/phease12_kda/",
     "visualize_phase12_kda_reduced_circular.R ",
     "[--input-dir DIR] [--output-dir DIR] [--basename NAME] ",
+    "[--ranking-method mean_of_log|acat] ",
     "[--top-per-network N] [--minimum-ranking-coverage FRACTION]\n",
     sep = ""
   )
 }
 
+cli_args <- commandArgs(trailingOnly = TRUE)
 args <- parse_value_args(
-  commandArgs(trailingOnly = TRUE),
+  cli_args,
   defaults = list(
     input_dir = "results/figures/analysis/phase12_kda",
     output_dir = "results/figures/analysis/phase12_kda/reduced_circular_figure",
     basename = "phase12_kda_reduced_circular",
+    ranking_method = "mean_of_log",
     top_per_network = "3",
     minimum_ranking_coverage = "0.80"
   ),
   allowed = c(
     "--input-dir", "--output-dir", "--basename", "--top-per-network",
-    "--minimum-ranking-coverage"
+    "--minimum-ranking-coverage", "--ranking-method"
   )
 )
 if (isTRUE(attr(args, "help"))) {
   usage()
   quit(status = 0L)
+}
+
+ranking_method <- match.arg(args$ranking_method, c("mean_of_log", "acat"))
+if (ranking_method == "acat") {
+  if (!"--output-dir" %in% cli_args) {
+    args$output_dir <-
+      "results/figures/analysis/phase12_kda/reduced_circular_figure_ACAT"
+  }
+  if (!"--basename" %in% cli_args) {
+    args$basename <- "phase12_kda_reduced_circular_ACAT"
+  }
 }
 
 project_root <- normalizePath(getwd(), mustWork = TRUE)
@@ -59,21 +73,187 @@ assert_true(
 )
 if (!capabilities("cairo")) stop("This R installation lacks Cairo graphics support", call. = FALSE)
 
-summary_path <- file.path(input_dir, "phase12_kda_mean_of_log_summary.tsv")
 checks_path <- file.path(input_dir, "phase12_kda_figure_data_checks.tsv")
-summary <- read_tsv(summary_path)
 checks <- read_tsv(checks_path)
-require_columns(
-  summary,
-  c(
-    "broad_network", "key_driver", "mean_of_log_score", "ranking_runs",
-    "eligible_directional_runs", "ranking_coverage_fraction",
-    "primary_directional_significant_runs",
-    "primary_directional_recurrence_fraction", "mtDNA_encoded"
-  ),
-  basename(summary_path)
-)
 assert_true(nrow(checks) > 0L && all(checks$passed), "Prepared figure-data checks did not all pass")
+
+# NetWeaver-compatible ACAT behavior, including its treatment of NA, 0, and 1.
+# Reference: https://github.com/mw201608/NetWeaver/blob/master/R/ACAT.R
+acat_combine_netweaver <- function(p_values, na_action = c("na.omit", "na.to1"),
+                                   tolerance = 1e-300) {
+  na_action <- match.arg(na_action)
+  x <- as.numeric(p_values)
+  assert_true(!any(x < 0 | x > 1, na.rm = TRUE), "ACAT input p-values must be in [0, 1]")
+  if (anyNA(x)) {
+    if (na_action == "na.omit") {
+      x <- x[!is.na(x)]
+    } else {
+      x[is.na(x)] <- 1
+    }
+  }
+  if (!length(x)) return(NA_real_)
+  if (all(x == 1)) return(1)
+  if (any(x == 0)) {
+    positive <- x[x > 0]
+    replacement <- if (length(positive)) min(positive) else tolerance
+    if (replacement > tolerance) replacement <- tolerance
+    x[x == 0] <- replacement
+  }
+  if (any(x == 1)) {
+    x[x == 1] <- max(x[x < 1]) / 2 + 0.5
+  }
+  small <- x < 1e-15
+  statistics <- numeric(length(x))
+  statistics[small] <- 1 / (x[small] * pi)
+  statistics[!small] <- tan((0.5 - x[!small]) * pi)
+  stats::pcauchy(mean(statistics), lower.tail = FALSE)
+}
+
+p_matrix_acat_netweaver <- function(p_matrix, na_action = c("na.omit", "na.to1")) {
+  na_action <- match.arg(na_action)
+  apply(as.matrix(p_matrix), 1L, acat_combine_netweaver, na_action = na_action)
+}
+
+validate_acat_example <- function() {
+  example <- matrix(
+    c(
+      0.5746569, 0.7090122, 0.7965851, 0.1149619,
+      0.6513363, 0.6671072, 0.5985140, 0.4991580,
+      0.1632148, 0.9312446, 0.9105127, 0.2293418,
+      0.8836971, 0.8424568, 0.2578088, 0.3955429,
+      0.6770827, 0.7551785, 0.3221481, 0.5570227
+    ),
+    nrow = 5L,
+    byrow = TRUE
+  )
+  expected <- c(
+    0.4768092003, 0.6079561876, 0.7884404860, 0.7135191247, 0.5935618969
+  )
+  observed <- p_matrix_acat_netweaver(example, na_action = "na.to1")
+  error <- max(abs(observed - expected))
+  assert_true(error <= 5e-10, "Local ACAT implementation failed the professor example")
+  error
+}
+
+prepare_acat_summary <- function(candidate_path) {
+  message("Reading complete primary-directional KDA candidate tests for ACAT ranking")
+  candidate_tests <- read_tsv(candidate_path)
+  require_columns(
+    candidate_tests,
+    c(
+      "kda_run_id", "analysis_tier", "broad_network", "signature_direction",
+      "key_driver", "raw_p_value", "adjusted_p_value", "ranking_candidate"
+    ),
+    basename(candidate_path)
+  )
+  candidate_tests <- candidate_tests[
+    candidate_tests$analysis_tier == "primary" &
+      candidate_tests$signature_direction %in% c("AD_up_mito", "AD_down_mito") &
+      candidate_tests$ranking_candidate %in% TRUE,
+    ,
+    drop = FALSE
+  ]
+  assert_true(nrow(candidate_tests) > 0L, "No primary-directional candidate tests for ACAT")
+  assert_true(
+    all(is.na(candidate_tests$raw_p_value) |
+      candidate_tests$raw_p_value >= 0 & candidate_tests$raw_p_value <= 1),
+    "Candidate raw p-values are outside [0, 1]"
+  )
+  assert_true(
+    !anyDuplicated(paste(candidate_tests$kda_run_id, candidate_tests$key_driver, sep = "\r")),
+    "Candidate table contains duplicated run-driver tests"
+  )
+
+  parts <- lapply(phase12_network_order, function(network) {
+    x <- candidate_tests[candidate_tests$broad_network == network, , drop = FALSE]
+    assert_true(nrow(x) > 0L, paste("No ACAT candidate tests for", network))
+    run_ids <- unique(x$kda_run_id)
+    genes <- sort(unique(x$key_driver))
+    p_matrix <- matrix(
+      NA_real_, nrow = length(genes), ncol = length(run_ids),
+      dimnames = list(genes, run_ids)
+    )
+    indices <- cbind(match(x$key_driver, genes), match(x$kda_run_id, run_ids))
+    p_matrix[indices] <- x$raw_p_value
+    combined_p <- p_matrix_acat_netweaver(p_matrix, na_action = "na.to1")
+    tested_runs <- rowSums(!is.na(p_matrix))
+    significant_runs <- rowsum(
+      as.integer(x$adjusted_p_value <= 0.05),
+      group = x$key_driver,
+      reorder = FALSE
+    )
+    significant_runs <- significant_runs[genes, 1L]
+    evidence <- -log10(pmax(combined_p, .Machine$double.xmin))
+    data.frame(
+      schema_version = "phase12_kda_acat_summary_v1",
+      broad_network = network,
+      key_driver = genes,
+      acat_combined_p = as.numeric(combined_p),
+      acat_negative_log10_p = evidence,
+      ranking_runs = as.integer(tested_runs),
+      eligible_directional_runs = length(run_ids),
+      ranking_coverage_fraction = tested_runs / length(run_ids),
+      primary_directional_significant_runs = as.integer(significant_runs),
+      primary_directional_recurrence_fraction = significant_runs / tested_runs,
+      acat_input_p_value = "raw_p_value",
+      acat_na_action = "na.to1",
+      mtDNA_encoded = grepl("^MT-", genes),
+      stringsAsFactors = FALSE
+    )
+  })
+  result <- do.call(rbind, parts)
+  result$network_display_order <- match(result$broad_network, phase12_network_order)
+  result <- result[
+    order(
+      result$network_display_order,
+      result$acat_combined_p,
+      -result$ranking_runs,
+      -result$primary_directional_recurrence_fraction,
+      result$key_driver
+    ),
+    ,
+    drop = FALSE
+  ]
+  rownames(result) <- NULL
+  assert_true(
+    all(is.finite(result$acat_combined_p)) &
+      all(result$acat_combined_p >= 0 & result$acat_combined_p <= 1),
+    "ACAT produced an invalid combined p-value"
+  )
+  result
+}
+
+candidate_path <- NA_character_
+acat_example_max_abs_error <- NA_real_
+if (ranking_method == "mean_of_log") {
+  summary_path <- file.path(input_dir, "phase12_kda_mean_of_log_summary.tsv")
+  summary <- read_tsv(summary_path)
+  require_columns(
+    summary,
+    c(
+      "broad_network", "key_driver", "mean_of_log_score", "ranking_runs",
+      "eligible_directional_runs", "ranking_coverage_fraction",
+      "primary_directional_significant_runs",
+      "primary_directional_recurrence_fraction", "mtDNA_encoded"
+    ),
+    basename(summary_path)
+  )
+  score_legend_label <- "standardized MeanOfLog"
+  ranking_subtitle <- "ranked by mean -log10(KDA P)"
+  selection_method_label <- "MeanOfLog"
+} else {
+  acat_example_max_abs_error <- validate_acat_example()
+  candidate_path <- file.path(
+    input_dir,
+    "phase12_kda_primary_directional_candidate_tests.tsv.gz"
+  )
+  summary <- prepare_acat_summary(candidate_path)
+  summary_path <- file.path(output_dir, paste0(args$basename, "_acat_summary.tsv"))
+  atomic_write_table(summary, summary_path)
+  score_legend_label <- "standardized -log10(ACAT P)"
+  ranking_subtitle <- "ranked by combined ACAT P"
+  selection_method_label <- "ACAT"
+}
 
 selected_parts <- lapply(phase12_network_order, function(network) {
   x <- summary[
@@ -86,18 +266,28 @@ selected_parts <- lapply(phase12_network_order, function(network) {
     nrow(x) >= top_per_network,
     paste("Fewer than", top_per_network, "coverage-qualified candidates in", network)
   )
-  maximum <- max(x$mean_of_log_score, na.rm = TRUE)
-  x$mean_of_log_score_standardized <- if (maximum > 0) x$mean_of_log_score / maximum else 0
-  x <- x[
-    order(
-      -x$mean_of_log_score_standardized,
+  if (ranking_method == "mean_of_log") {
+    maximum <- max(x$mean_of_log_score, na.rm = TRUE)
+    x$display_score_standardized <- if (maximum > 0) x$mean_of_log_score / maximum else 0
+    ordering <- order(
+      -x$display_score_standardized,
       -x$ranking_runs,
       -x$primary_directional_recurrence_fraction,
       x$key_driver
-    ),
-    ,
-    drop = FALSE
-  ]
+    )
+  } else {
+    maximum <- max(x$acat_negative_log10_p, na.rm = TRUE)
+    x$acat_evidence_score_standardized <-
+      if (maximum > 0) x$acat_negative_log10_p / maximum else 0
+    x$display_score_standardized <- x$acat_evidence_score_standardized
+    ordering <- order(
+      x$acat_combined_p,
+      -x$ranking_runs,
+      -x$primary_directional_recurrence_fraction,
+      x$key_driver
+    )
+  }
+  x <- x[ordering, , drop = FALSE]
   x <- utils::head(x, top_per_network)
   x$driver_display_order_within_network <- seq_len(nrow(x))
   x
@@ -109,9 +299,11 @@ selected$network_color <- unname(phase12_network_colors[selected$broad_network])
 selected$display_network <- unname(phase12_network_labels[selected$broad_network])
 selected$selection_rule <- paste0(
   "Top ", top_per_network,
-  " MeanOfLog candidates per network with ranking coverage >= ",
+  " ", selection_method_label,
+  " candidates per network with ranking coverage >= ",
   format(minimum_ranking_coverage, trim = TRUE)
 )
+selected$ranking_method <- ranking_method
 selected_count <- table(selected$key_driver)
 selected$selected_network_count <- as.integer(selected_count[selected$key_driver])
 selected <- selected[
@@ -213,7 +405,7 @@ draw_panel_a <- function() {
   recurring <- names(selected_count)[selected_count > 1L]
   for (gene in recurring) {
     indices <- which(selected$key_driver == gene)
-    anchor <- indices[[which.max(selected$mean_of_log_score_standardized[indices])]]
+    anchor <- indices[[which.max(selected$display_score_standardized[indices])]]
     for (other in setdiff(indices, anchor)) {
       bezier_link(
         selected$sector_mid_degrees[[anchor]],
@@ -228,7 +420,7 @@ draw_panel_a <- function() {
       selected$sector_start_degrees[[index]],
       selected$sector_end_degrees[[index]],
       score_inner,
-      score_inner + score_height * selected$mean_of_log_score_standardized[[index]],
+      score_inner + score_height * selected$display_score_standardized[[index]],
       fill = "#344E73",
       border = "white",
       line_width = 0.55
@@ -285,7 +477,7 @@ draw_panel_a <- function() {
   graphics::rect(-0.31, 0.135, -0.23, 0.175, col = phase12_network_colors[[1L]], border = NA)
   graphics::text(-0.19, 0.155, "broad network", adj = c(0, 0.5), cex = 0.52, col = "#333333")
   graphics::rect(-0.31, 0.045, -0.23, 0.085, col = "#344E73", border = NA)
-  graphics::text(-0.19, 0.065, "standardized MeanOfLog", adj = c(0, 0.5), cex = 0.52, col = "#333333")
+  graphics::text(-0.19, 0.065, score_legend_label, adj = c(0, 0.5), cex = 0.52, col = "#333333")
   graphics::segments(-0.31, -0.025, -0.23, -0.025, col = rgba("#666666", 0.55), lwd = 1)
   graphics::text(-0.19, -0.025, "same driver across networks", adj = c(0, 0.5), cex = 0.52, col = "#333333")
   graphics::points(-0.27, -0.115, pch = 16, col = "#777777", cex = 0.55)
@@ -302,7 +494,7 @@ draw_panel_a <- function() {
   graphics::mtext(
     paste0(
       "Top ", top_per_network,
-      " coverage-qualified drivers per network, ranked by mean -log10(KDA P)"
+      " coverage-qualified drivers per network, ", ranking_subtitle
     ),
     side = 3, line = 0.9, cex = 0.76, col = "#555555"
   )
@@ -334,8 +526,18 @@ atomic_write_table(
     generated_at_utc = format(Sys.time(), "%Y-%m-%dT%H:%M:%SZ", tz = "UTC"),
     figure_script = "scripts/figures/analysis/phease12_kda/visualize_phase12_kda_reduced_circular.R",
     input_summary = summary_path,
+    input_candidate_tests = candidate_path,
     input_checks = checks_path,
     figure_basename = args$basename,
+    ranking_method = ranking_method,
+    acat_input_p_value = if (ranking_method == "acat") "raw_p_value" else NA_character_,
+    acat_na_action = if (ranking_method == "acat") "na.to1" else NA_character_,
+    acat_example_max_abs_error = acat_example_max_abs_error,
+    acat_reference = if (ranking_method == "acat") {
+      "https://github.com/mw201608/NetWeaver/blob/master/R/ACAT.R"
+    } else {
+      NA_character_
+    },
     selection_rule = unique(selected$selection_rule),
     plotted_rows = nrow(selected),
     unique_drivers = length(unique(selected$key_driver)),

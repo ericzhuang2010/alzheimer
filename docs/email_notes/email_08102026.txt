@@ -1,0 +1,49 @@
+Eric,
+
+ 
+
+For ranking key drivers, you used the occurrence of predicting a gene from multiple DEG signatures as the metric, which is good. Alternatively, we usually combine key driver analysis P values from multiple DEG signatures into a single P value for ranking. One of the approaches for combining P values is Aggregated Cauchy Association Test (ACAT).
+
+ 
+
+I have included this ACAT method in my NetWeaver package. To use it, call the PMatrixACAT function. E.g., say you have a matrix of KDA p values,
+
+> Pmatrix
+
+      Female.e2x.AD_vs_Control Female.e33.AD_vs_Control Female.e4x.AD_vs_Control Female.AD_vs_Control
+
+Gene1                0.5746569                0.7090122                0.7965851            0.1149619
+
+Gene2                0.6513363                0.6671072                0.5985140            0.4991580
+
+Gene3                0.1632148                0.9312446                0.9105127            0.2293418
+
+Gene4                0.8836971                0.8424568                0.2578088            0.3955429
+
+Gene5                0.6770827                0.7551785                0.3221481            0.5570227
+
+ 
+
+Then run PMatrixACAT to combine P values
+
+> p_acat = NetWeaver:::PMatrixACAT(Pmatrix, na.action = "na.to1")
+
+na.action: na.to1
+
+> p_acat
+
+    Gene1     Gene2     Gene3     Gene4     Gene5
+
+0.4768092 0.6079562 0.7884405 0.7135192 0.5935619
+
+ 
+
+Now, the genes can be ranked by final P values (p_acat). As we discussed before, you can get different key driver rankings for different biological questions of interest by selecting the input P values (based on selected DEG signatures),.
+
+ 
+
+Let me know if you have any questions.
+
+ 
+
+Minghui
