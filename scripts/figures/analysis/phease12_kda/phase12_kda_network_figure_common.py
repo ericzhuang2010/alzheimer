@@ -80,6 +80,7 @@ COMPLEX_V_COLOR = "#7B3294"
 NODE_DIAMETER_BASE = 7.0
 NODE_DIAMETER_PER_DEGREE = 1.0
 NODE_DIAMETER_CAP = 24.0
+KEY_DRIVER_AREA_MULTIPLIER = 1.25
 OVERLAP_RING_DIAMETER_PADDING = 3.0
 COMPLEX_V_RING_DIAMETER_PADDING = 5.0
 
@@ -508,6 +509,11 @@ def node_area(total_degree: int) -> float:
         NODE_DIAMETER_BASE + NODE_DIAMETER_PER_DEGREE * max(total_degree, 0),
     )
     return diameter**2
+
+
+def key_driver_node_area(total_degree: int) -> float:
+    """Return the consistently enlarged Wang-style area for a key driver."""
+    return KEY_DRIVER_AREA_MULTIPLIER * node_area(total_degree)
 
 
 def node_ring_area(total_degree: int, diameter_padding: float) -> float:
@@ -1041,7 +1047,12 @@ def draw_network_panel(
     for genes, shape in ((regular, "o"), (drivers, "D")):
         if not genes:
             continue
-        sizes = [node_area(parse_int(row_lookup[gene]["total_degree"])) * (1.25 if shape == "D" else 1.0) for gene in genes]
+        sizes = [
+            key_driver_node_area(parse_int(row_lookup[gene]["total_degree"]))
+            if shape == "D"
+            else node_area(parse_int(row_lookup[gene]["total_degree"]))
+            for gene in genes
+        ]
         colors = ["#FAFAFA" if gene in inactive_nodes else expression_color(parse_float(row_lookup[gene]["logFC"])) for gene in genes]
         borders = ["#CCCCCC" if gene in inactive_nodes else "#303030" for gene in genes]
         nx.draw_networkx_nodes(
@@ -1446,6 +1457,9 @@ def draw_convergence_map(
         y1 = target_positions[target]
         calls = parse_int(row["qualifying_calls"])
         distance = parse_int(row["shortest_path_distance"])
+        driver_total_degree = parse_int(row["driver_total_degree"])
+        driver_area = key_driver_node_area(driver_total_degree)
+        target_area = 80 + 20 * math.sqrt(target_support[target])
         line_style = {1: "-", 2: "--", 3: ":"}.get(distance, ":")
         arrow = FancyArrowPatch(
             (0.18, y0),
@@ -1471,17 +1485,24 @@ def draw_convergence_map(
                 "target_y": y1,
                 "qualifying_calls": calls,
                 "shortest_path_distance": distance,
+                "driver_total_degree": driver_total_degree,
+                "driver_node_size_area": driver_area,
+                "target_supporting_calls": target_support[target],
+                "target_node_size_area": target_area,
             }
         )
     for network, driver in driver_nodes:
         matching = [row for row in rows if row["broad_network"] == network and row["driver"] == driver]
-        percentile = max(parse_float(row["driver_degree_percentile"]) for row in matching)
+        total_degrees = {parse_int(row["driver_total_degree"]) for row in matching}
+        if len(total_degrees) != 1:
+            raise RuntimeError(f"Inconsistent full-network degree for convergence driver: {network}/{driver}")
+        total_degree = total_degrees.pop()
         y_value = driver_positions[(network, driver)]
         ax.scatter(
             [0.18],
             [y_value],
             transform=ax.transAxes,
-            s=70 + 235 * percentile,
+            s=key_driver_node_area(total_degree),
             marker="o",
             facecolor=NETWORK_COLORS.get(network, "#777777"),
             edgecolor="#222222",
@@ -1499,11 +1520,12 @@ def draw_convergence_map(
         )
     for target in targets:
         y_value = target_positions[target]
+        target_area = 80 + 20 * math.sqrt(target_support[target])
         ax.scatter(
             [0.82],
             [y_value],
             transform=ax.transAxes,
-            s=80 + 20 * math.sqrt(target_support[target]),
+            s=target_area,
             marker="o",
             facecolor="#FFFFFF",
             edgecolor=COMPLEX_V_COLOR,
@@ -1528,14 +1550,14 @@ def draw_convergence_map(
     ax.text(
         0.5,
         -0.03,
-        "Edge width = number of qualifying primary directional KDA calls; driver node area = within-network degree percentile; target node area = total supporting calls",
+        "Edge width = qualifying primary directional KDA calls; driver size = Wang scale from full-network total degree; target area = total supporting calls",
         transform=ax.transAxes,
         ha="center",
         va="top",
         fontsize=7.2,
         color="#444444",
     )
-    ax.set_title(title, fontsize=14, fontweight="bold", pad=25)
+    ax.set_title(title, fontsize=14, fontweight="bold", pad=42)
     ax.axis("off")
     return fig, layout_rows
 

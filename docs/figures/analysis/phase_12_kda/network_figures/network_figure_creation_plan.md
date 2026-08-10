@@ -528,9 +528,18 @@ Prepare two versions:
 
 Use a two-column bipartite layout. Group drivers by broad network on the left
 and order Complex V genes by total incoming support on the right. Node size
-should use full-network degree percentile for drivers and total incoming
-summary support for target nodes; the legend must distinguish these two size
-definitions.
+should use the same Wang-style full-network total-degree rule as Figures 1 and
+2 for drivers:
+
+```text
+diameter_points = min(24, 7 + total_degree)
+area_points_squared = 1.25 * diameter_points^2
+```
+
+The 1.25 area factor is the common key-driver enlargement. Target nodes should
+continue to use total incoming summary support because their size encodes
+recurrence rather than network connectivity. The legend must distinguish these
+two size definitions.
 
 ### Acceptance criteria
 
@@ -538,6 +547,8 @@ definitions.
 - All displayed pair counts reproduce the preparation table.
 - Each displayed pair has a directed path of length at most three in the
   corresponding fixed network.
+- Every driver marker uses the same full-network total-degree-to-area mapping
+  as the key-driver markers in Figures 1 and 2.
 - Edge width is labeled as recurrence of KDA neighborhood support, not edge
   confidence or independent network replication.
 - Main and supplementary versions are generated from the same prepared table.
