@@ -18,9 +18,10 @@ and a checksum log are under:
 
 - Arrows follow the Bayesian-network direction.
 - A diamond identifies the KDA key driver.
-- Node area is proportional to `log1p(full-network total degree)`. Degree is
-  calculated in the complete broad-cell-type network, not in the displayed
-  neighborhood.
+- Node diameter increases linearly with full-network total degree, using
+  `min(24, 7 + total_degree)` points. Degree is calculated in the complete
+  broad-cell-type network, not in the displayed neighborhood. Key-driver
+  diamonds receive an additional enlargement.
 - Node fill is the matched Phase 08 AD-versus-NCI log fold-change: blue is
   lower in AD, orange is higher in AD, and white is unavailable.
 - A black outer ring identifies a gene in that run's KDA overlap.

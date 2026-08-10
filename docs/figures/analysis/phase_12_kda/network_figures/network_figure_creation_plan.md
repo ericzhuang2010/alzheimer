@@ -195,15 +195,20 @@ Calculate node size from total degree in the complete broad network, not from
 degree in the plotted subgraph. Otherwise, node sizes would change when a
 panel is pruned.
 
-Use node area proportional to a capped transformation such as:
+Following Wang et al. Figure 6, scale node diameter linearly with link degree.
+Because Matplotlib's `node_size` parameter represents marker area rather than
+diameter, use the following conversion:
 
 ```text
-area = a + b * log1p(total_degree)
+diameter_points = min(24, 7 + total_degree)
+area_points_squared = diameter_points^2
 ```
 
-Cap at a documented high percentile if necessary and include three reference
-sizes in the legend. For the highlighted candidates, the current network
-values provide useful validation examples:
+The 7-point baseline keeps low-degree nodes visible, while the 24-point cap
+prevents extreme hubs from dominating a panel. This produces a much stronger
+visual distinction than the earlier `log1p(total_degree)` area transform. For
+the highlighted candidates, the current network values provide useful
+validation examples:
 
 | Network | Gene | In-degree | Out-degree | Total degree | Within-network degree percentile |
 |---|---|---:|---:|---:|---:|

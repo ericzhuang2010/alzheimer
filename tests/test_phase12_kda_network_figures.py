@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import hashlib
+import math
 import struct
 import sys
 import unittest
@@ -18,6 +19,7 @@ from phase12_kda_network_figure_common import (  # noqa: E402
     DEFAULT_OUTPUT_DIR,
     SEX_REVERSAL_SPECS,
     WANG_PANEL_SPECS,
+    node_area,
     read_tsv,
 )
 
@@ -98,6 +100,11 @@ class Phase12KdaNetworkFigureTests(unittest.TestCase):
             [(spec["panel"], spec["driver"]) for spec in WANG_PANEL_SPECS],
             [("A", "APOE"), ("B", "LAMTOR5"), ("C", "GABARAPL2")],
         )
+
+    def test_node_diameter_scales_linearly_with_degree(self) -> None:
+        diameters = [math.sqrt(node_area(degree)) for degree in range(1, 17)]
+        self.assertEqual(diameters, [float(value) for value in range(8, 24)])
+        self.assertGreater(node_area(16) / node_area(1), 8.0)
 
     def test_generation_log_hashes_match_files(self) -> None:
         rows = read_tsv(self.output_dir / "phase12_kda_network_figures_generation_log.tsv")

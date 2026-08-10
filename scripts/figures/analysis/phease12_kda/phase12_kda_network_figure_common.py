@@ -77,6 +77,11 @@ EXPRESSION_CMAP = mcolors.LinearSegmentedColormap.from_list(
 )
 EXPRESSION_NORM = mcolors.TwoSlopeNorm(vmin=-1.5, vcenter=0.0, vmax=1.5)
 COMPLEX_V_COLOR = "#7B3294"
+NODE_DIAMETER_BASE = 7.0
+NODE_DIAMETER_PER_DEGREE = 1.0
+NODE_DIAMETER_CAP = 24.0
+OVERLAP_RING_DIAMETER_PADDING = 3.0
+COMPLEX_V_RING_DIAMETER_PADDING = 5.0
 
 FOCUSED_ATP_DRIVERS = {
     "APOE",
@@ -492,7 +497,22 @@ def load_de_for_contexts(
 
 
 def node_area(total_degree: int) -> float:
-    return 115.0 + 82.0 * math.log1p(max(total_degree, 0))
+    """Return marker area with diameter linearly scaled to full-network degree.
+
+    Wang et al. Figure 6 describes node size as proportional to link degree.
+    NetworkX/Matplotlib accepts marker area in points squared, so square the
+    linearly scaled diameter after applying a legibility floor and upper cap.
+    """
+    diameter = min(
+        NODE_DIAMETER_CAP,
+        NODE_DIAMETER_BASE + NODE_DIAMETER_PER_DEGREE * max(total_degree, 0),
+    )
+    return diameter**2
+
+
+def node_ring_area(total_degree: int, diameter_padding: float) -> float:
+    diameter = math.sqrt(node_area(total_degree))
+    return (diameter + diameter_padding) ** 2
 
 
 def centered_offsets(count: int) -> list[float]:
@@ -1041,7 +1061,10 @@ def draw_network_panel(
             graph,
             position,
             nodelist=overlap_nodes,
-            node_size=[node_area(parse_int(row_lookup[g]["total_degree"])) + 75 for g in overlap_nodes],
+            node_size=[
+                node_ring_area(parse_int(row_lookup[g]["total_degree"]), OVERLAP_RING_DIAMETER_PADDING)
+                for g in overlap_nodes
+            ],
             node_color="none",
             edgecolors="#111111",
             linewidths=1.65,
@@ -1053,7 +1076,10 @@ def draw_network_panel(
             graph,
             position,
             nodelist=complex_nodes,
-            node_size=[node_area(parse_int(row_lookup[g]["total_degree"])) + 145 for g in complex_nodes],
+            node_size=[
+                node_ring_area(parse_int(row_lookup[g]["total_degree"]), COMPLEX_V_RING_DIAMETER_PADDING)
+                for g in complex_nodes
+            ],
             node_color="none",
             edgecolors=COMPLEX_V_COLOR,
             linewidths=2.0,
@@ -1104,9 +1130,9 @@ def add_network_legend(ax: plt.Axes) -> None:
     ]
     ax.legend(handles=handles, loc="upper left", bbox_to_anchor=(0.0, 0.82), frameon=False, handlelength=2.7, labelspacing=1.0)
     ax.text(
-        0.0,
-        0.45,
-        "Node fill: AD vs NCI logFC\nblue = lower in AD; orange = higher in AD\nwhite = unavailable\n\nNode area: full-network total degree\n\nBlack outer ring: gene is in the KDA overlap\nPurple outer ring: MitoCarta Complex V gene",
+        0.48,
+        0.82,
+        "Node fill: AD vs NCI logFC\nblue = lower in AD; orange = higher in AD\nwhite = unavailable\n\nNode diameter: full-network total degree (linear)\n\nBlack outer ring: gene is in the KDA overlap\nPurple outer ring: MitoCarta Complex V gene",
         transform=ax.transAxes,
         ha="left",
         va="top",
