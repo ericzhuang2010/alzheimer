@@ -1,0 +1,3 @@
+# Complete slope-departure atlas
+
+One page is provided for each broad cell context. Every page contains the general question followed by all seven frozen modifier contrasts. Curves are saved AD-minus-NCI prediction departures over the validated common nuclear-score range; diamonds mark saved checkpoints. Exact gate status and the descriptive `slope_rewiring_observed` flag are printed in every panel. Gray crossed panels lack a valid curve, and gray dashed/watermarked curves belong to gates that are not testable. A rewiring flag is outside Gate 2 and is not C3 support; every compatibility classification is `none` and no gate is supported.

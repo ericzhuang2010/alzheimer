@@ -1,0 +1,3 @@
+# Score and NCI-reference reliability
+
+**A,** Agreement of mean-z and alternative PC1 scores against PC1 variance explained for every context-by-module pair; all 14 pairs pass the frozen reliability criterion. **B,** Held-out NCI observed versus cross-fitted predicted mtDNA score for reference assignment 0, colored by context; the dashed diagonal is identity, not a fitted line. **C,** Individual donor-context NCI-reference residuals and box summaries by diagnosis. **D,** Fraction of saved mtDNA-gene and nuclear-complex omission sensitivities retaining the primary direction; labels report the smallest retained relative magnitude. These panels establish measurement and reference-model diagnostics but do not convert the inconclusive C3 result into support.

@@ -330,19 +330,22 @@ sequential_color <- function(value, minimum, maximum) {
 draw_effect_key <- function(
     limit, xleft = 0.10, xright = 0.55, y = 0.24,
     label = "Signed modifier estimate (NCI-reference SD)",
-    tick_cex = 0.75, label_cex = 0.78) {
+    tick_cex = 0.75, label_cex = 0.78,
+    bar_half_height = 0.035, tick_offset = 0.075,
+    label_offset = 0.085) {
   count <- length(effect_palette)
   for (index in seq_len(count)) {
     left <- xleft + (index - 1L) / count * (xright - xleft)
     right <- xleft + index / count * (xright - xleft)
-    graphics::rect(left, y - 0.035, right, y + 0.035,
+    graphics::rect(left, y - bar_half_height, right, y + bar_half_height,
                    col = effect_palette[[index]], border = NA)
   }
-  graphics::rect(xleft, y - 0.035, xright, y + 0.035, border = "#777777")
-  graphics::text(c(xleft, mean(c(xleft, xright)), xright), y - 0.075,
+  graphics::rect(xleft, y - bar_half_height, xright, y + bar_half_height,
+                 border = "#777777")
+  graphics::text(c(xleft, mean(c(xleft, xright)), xright), y - tick_offset,
                  labels = c(paste0("−", limit), "0", paste0("+", limit)),
                  cex = tick_cex)
-  graphics::text(mean(c(xleft, xright)), y + 0.085,
+  graphics::text(mean(c(xleft, xright)), y + label_offset,
                  label, cex = label_cex, font = 2)
 }
 
@@ -351,7 +354,8 @@ draw_effect_heatmap <- function(
     row_column, column_column, limit, panel_label, panel_title,
     status_column = NULL, clipped_column = NULL, show_row_labels = TRUE,
     cell_labels = NULL, x_label_cex = 0.72, y_label_cex = 0.78,
-    panel_title_cex = 0.95, bottom_margin = 5.8, row_label_margin = 8.2,
+    panel_title_cex = 0.95, panel_label_cex = 1.12,
+    bottom_margin = 5.8, row_label_margin = 8.2,
     no_row_label_margin = 2.2, top_margin = 2.6) {
   graphics::par(mar = c(
     bottom_margin,
@@ -433,7 +437,7 @@ draw_effect_heatmap <- function(
   graphics::mtext(panel_title, side = 3, line = 0.65,
                   cex = panel_title_cex, font = 2)
   graphics::mtext(panel_label, side = 3, line = 0.65, adj = -0.08,
-                  cex = 1.12, font = 2)
+                  cex = panel_label_cex, font = 2)
 }
 
 args <- parse_args(commandArgs(trailingOnly = TRUE))
@@ -562,13 +566,30 @@ landscape_data <- landscape_data[order(
 ), ]
 landscape_path <- file.path(landscape_dir, paste0(landscape_base, "_plotted_data.tsv"))
 atomic_write_table(landscape_data, landscape_path)
+landscape_min_cex <- 0.78 * 3
+landscape_panel_e_cex <- landscape_min_cex * 1.25
+landscape_text_cex <- c(
+  x_axis = landscape_min_cex,
+  y_axis = landscape_min_cex,
+  panel_title = landscape_min_cex,
+  panel_letter = landscape_min_cex,
+  subtitle = landscape_min_cex,
+  panel_e_letter = landscape_panel_e_cex,
+  definition = landscape_panel_e_cex,
+  outcome_summary = landscape_panel_e_cex,
+  color_key_title = landscape_panel_e_cex,
+  color_key_ticks = landscape_panel_e_cex,
+  status_legend = landscape_panel_e_cex,
+  main_title = 1.22 * 2
+)
 
 draw_landscape <- function() {
   graphics::layout(
-    matrix(c(1, 2, 3, 4, 5, 5), nrow = 3, byrow = TRUE),
-    heights = c(1, 1, 0.47)
+    matrix(c(1, 2, 5, 3, 4, 5), nrow = 2, byrow = TRUE),
+    widths = c(1.12, 1.00, 0.78),
+    heights = c(1, 1)
   )
-  graphics::par(oma = c(0.5, 0.5, 4.2, 0.5))
+  graphics::par(oma = c(0.5, 0.5, 6.2, 0.5))
   panel_letters <- c("A", "B", "C", "D")
   for (module_index in seq_along(module_ids)) {
     module_id <- module_ids[[module_index]]
@@ -588,61 +609,87 @@ draw_landscape <- function() {
       status_column = "scientific_status",
       clipped_column = "display_clipped",
       show_row_labels = module_index %% 2L == 1L,
-      panel_title_cex = 0.95 * 2,
-      x_label_cex = 0.72 * 3,
-      y_label_cex = 0.78 * 3,
+      panel_title_cex = landscape_min_cex,
+      panel_label_cex = landscape_min_cex,
+      x_label_cex = landscape_min_cex,
+      y_label_cex = landscape_min_cex,
       bottom_margin = 10.5,
-      row_label_margin = 19.0,
+      row_label_margin = 17.5,
       top_margin = 4.2
     )
   }
-  graphics::par(mar = c(0.5, 0.7, 1.5, 0.7), family = "sans", xpd = NA)
+  graphics::par(mar = c(0.8, 0.6, 1.0, 0.6), family = "sans", xpd = NA)
   graphics::plot.new()
   graphics::plot.window(xlim = c(0, 1), ylim = c(0, 1))
-  graphics::text(0.01, 0.90, "E", adj = c(0, 1), cex = 1.12, font = 2)
+  graphics::text(0.02, 0.98, "E", adj = c(0, 1),
+                 cex = landscape_panel_e_cex, font = 2)
   graphics::text(
-    0.05, 0.73,
-    "Modifier = (AD − NCI) in group 1  −  (AD − NCI) in group 2",
-    adj = c(0, 0.5), cex = 0.88, font = 2
+    0.08, 0.89, "Modifier definition",
+    adj = c(0, 0.5), cex = landscape_panel_e_cex, font = 2
   )
+  graphics::text(0.08, 0.82, "(AD − NCI) in group 1",
+                 adj = c(0, 0.5), cex = landscape_panel_e_cex)
+  graphics::text(0.08, 0.76, "− (AD − NCI) in group 2",
+                 adj = c(0, 0.5), cex = landscape_panel_e_cex)
   counts <- table(factor(
     landscape_data$scientific_status,
     levels = c("supported", "inconclusive", "not_testable")
   ))
-  summary_text <- paste0(
-    "Frozen outcome: ", counts[["supported"]], " supported   |   ",
-    counts[["inconclusive"]], " inconclusive   |   ",
-    counts[["not_testable"]], " not testable\n",
-    "Minimum score q = ", format(round(min(landscape_data$q_value_score, na.rm = TRUE), 3), nsmall = 3),
-    "   |   Minimum CAMERA q = ",
-    format(round(min(landscape_data$q_value_camera, na.rm = TRUE), 3), nsmall = 3)
+  graphics::text(0.08, 0.66, "Frozen outcome", adj = c(0, 0.5),
+                 cex = landscape_panel_e_cex, font = 2)
+  graphics::text(0.08, 0.59, paste0(counts[["supported"]], " supported"),
+                 adj = c(0, 0.5), cex = landscape_panel_e_cex)
+  graphics::text(0.08, 0.53, paste0(counts[["inconclusive"]], " inconclusive"),
+                 adj = c(0, 0.5), cex = landscape_panel_e_cex)
+  graphics::text(0.08, 0.47, paste0(counts[["not_testable"]], " not testable"),
+                 adj = c(0, 0.5), cex = landscape_panel_e_cex)
+  graphics::text(
+    0.08, 0.39,
+    paste0("Minimum score q = ",
+           format(round(min(landscape_data$q_value_score, na.rm = TRUE), 3), nsmall = 3)),
+    adj = c(0, 0.5), cex = landscape_panel_e_cex
   )
-  graphics::text(0.58, 0.73, summary_text, adj = c(0, 0.5), cex = 0.83)
+  graphics::text(
+    0.08, 0.33,
+    paste0("Minimum CAMERA q = ",
+           format(round(min(landscape_data$q_value_camera, na.rm = TRUE), 3), nsmall = 3)),
+    adj = c(0, 0.5), cex = landscape_panel_e_cex
+  )
+  graphics::rect(0.08, 0.245, 0.15, 0.275,
+                 col = "#E6E6E6", border = "#A8A8A8")
+  graphics::segments(0.085, 0.248, 0.145, 0.272, col = "#777777")
+  graphics::segments(0.085, 0.272, 0.145, 0.248, col = "#777777")
+  graphics::text(0.19, 0.26, "not testable (not zero)",
+                 adj = c(0, 0.5), cex = landscape_panel_e_cex)
+  graphics::rect(0.08, 0.195, 0.15, 0.225,
+                 col = "white", border = "#5A5A5A")
+  graphics::text(0.19, 0.21, "inconclusive",
+                 adj = c(0, 0.5), cex = landscape_panel_e_cex)
   draw_effect_key(
-    effect_limit, 0.08, 0.48, 0.27,
-    tick_cex = 0.75 * 3,
-    label_cex = 0.78 * 3
-  )
-  graphics::rect(0.58, 0.22, 0.62, 0.32, col = "#E6E6E6", border = "#A8A8A8")
-  graphics::segments(0.585, 0.225, 0.615, 0.315, col = "#777777")
-  graphics::segments(0.585, 0.315, 0.615, 0.225, col = "#777777")
-  graphics::text(0.64, 0.27, "not testable (not zero)",
-                 adj = c(0, 0.5), cex = 0.76 * 3)
-  graphics::rect(0.80, 0.22, 0.84, 0.32, col = "white", border = "#5A5A5A")
-  graphics::text(0.86, 0.27, "inconclusive",
-                 adj = c(0, 0.5), cex = 0.76 * 3)
-  graphics::mtext(
-    "Phase 13 respiratory-modifier landscape: complete prespecified test family",
-    side = 3, outer = TRUE, line = 1.2, cex = 1.22 * 2, font = 2
+    effect_limit, 0.08, 0.92, 0.075,
+    label = "Signed modifier estimate\n(NCI-reference SD)",
+    tick_cex = landscape_panel_e_cex,
+    label_cex = landscape_panel_e_cex,
+    bar_half_height = 0.012,
+    tick_offset = 0.040,
+    label_offset = 0.080
   )
   graphics::mtext(
-    "Four modules × seven cell contexts × seven sex/APOE contrasts; no row passed the frozen scientific gate",
-    side = 3, outer = TRUE, line = -0.30, cex = 0.82, col = "#4D4D4D"
+    "Respiratory-modifier landscape: complete prespecified test family",
+    side = 3, outer = TRUE, line = 3.1, cex = 1.22 * 2, font = 2
+  )
+  graphics::mtext(
+    "Four modules × seven cell contexts × seven sex/APOE contrasts",
+    side = 3, outer = TRUE, line = 0.45,
+    cex = landscape_min_cex, col = "#4D4D4D"
   )
 }
 
+landscape_width <- 18 + 2 / 3
+landscape_height <- 10.5
 landscape_images <- render_triplet(
-  landscape_dir, landscape_base, 14.5, 12.2, args$png_dpi, draw_landscape
+  landscape_dir, landscape_base,
+  landscape_width, landscape_height, args$png_dpi, draw_landscape
 )
 landscape_sources <- c(
   input_path("respiratory_status.tsv"),
@@ -684,7 +731,28 @@ family_status[["modifier_landscape"]] <- finalize_family(
     make_check("landscape_supported_rows", sum(landscape_data$scientific_status == "supported") == 0L,
                sum(landscape_data$scientific_status == "supported"), 0L),
     make_check("landscape_not_testable_rows", sum(landscape_data$scientific_status == "not_testable") == 16L,
-               sum(landscape_data$scientific_status == "not_testable"), 16L)
+               sum(landscape_data$scientific_status == "not_testable"), 16L),
+    make_check(
+      "landscape_minimum_text_scale",
+      min(landscape_text_cex) >= landscape_min_cex,
+      min(landscape_text_cex),
+      paste0(">=", landscape_min_cex),
+      "All landscape text is at least the shared x/y-axis label scale"
+    ),
+    make_check(
+      "landscape_panel_e_text_scale",
+      landscape_panel_e_cex > landscape_min_cex,
+      landscape_panel_e_cex,
+      paste0(">", landscape_min_cex),
+      "Panel E text is 25% larger than the shared minimum text scale"
+    ),
+    make_check(
+      "landscape_slide_aspect_ratio",
+      abs(landscape_width / landscape_height - 16 / 9) < 0.01,
+      round(landscape_width / landscape_height, 4),
+      round(16 / 9, 4),
+      "Panel E occupies the dedicated right column on a 16:9 slide canvas"
+    )
   ),
   project_root = project_root,
   production_hash = production_hash

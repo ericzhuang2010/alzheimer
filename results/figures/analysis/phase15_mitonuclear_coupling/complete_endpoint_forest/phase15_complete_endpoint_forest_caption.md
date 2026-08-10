@@ -1,0 +1,3 @@
+# Complete endpoint forest
+
+All 168 formal Phase 15 endpoint tests are shown in frozen file order: 21 general rows followed by 147 modifier rows. Estimates and HC3 95% confidence intervals are divided by the endpoint-specific 0.25 SESOI to share a dimensionless axis; the gray region is ±1 SESOI. Confidence limits beyond ±16 are clipped with arrows, but exact raw estimates and limits remain in the plotted-data table. Filled markers passed stability, open markers failed stability, and crossed gray rows are not testable. Exact family-wide q values and terminal endpoint statuses appear for every row. No row is supported.

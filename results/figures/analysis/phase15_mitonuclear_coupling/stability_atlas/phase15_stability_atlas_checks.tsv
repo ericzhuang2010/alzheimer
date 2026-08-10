@@ -1,0 +1,12 @@
+schema_version	figure_family	check_id	blocking	passed	observed	expected	detail
+phase15_figure_package_v1	stability_atlas	plotted_data_nonempty	TRUE	TRUE	168	>0	
+phase15_figure_package_v1	stability_atlas	vector_and_raster_outputs_present	TRUE	TRUE	.pdf|.png|.svg	.pdf|.png|.svg	
+phase15_figure_package_v1	stability_atlas	outputs_nonempty	TRUE	TRUE	3	3	
+phase15_figure_package_v1	stability_atlas	colorblind_safe_palette_configured	TRUE	TRUE	PuOr_r, viridis-derived sequential maps, Okabe-Ito categories	colorblind-safe palettes	
+phase15_figure_package_v1	stability_atlas	grayscale_redundant_encoding_configured	TRUE	TRUE	status symbols, borders, hatching, and labels supplement color	color is not the sole status encoding	
+phase15_figure_package_v1	stability_atlas	minimum_text_size_configured	TRUE	TRUE	7 pt	>=7 pt	
+phase15_figure_package_v1	stability_atlas	no_significance_stars	TRUE	TRUE	none	none	Exact q values and statuses are used.
+phase15_figure_package_v1	stability_atlas	endpoint_row_count	TRUE	TRUE	168	168	
+phase15_figure_package_v1	stability_atlas	component_count	TRUE	TRUE	12	12	
+phase15_figure_package_v1	stability_atlas	not_applicable_row_count	TRUE	TRUE	10	10	
+phase15_figure_package_v1	stability_atlas	production_status_hash_recorded	TRUE	TRUE	1b032bde2e11ee20fb7e64e3afc416284ba4771451bb4a84c93d560c3619fc01	1b032bde2e11ee20fb7e64e3afc416284ba4771451bb4a84c93d560c3619fc01	

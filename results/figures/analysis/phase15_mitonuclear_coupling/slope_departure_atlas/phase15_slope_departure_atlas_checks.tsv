@@ -1,0 +1,13 @@
+schema_version	figure_family	check_id	blocking	passed	observed	expected	detail
+phase15_figure_package_v1	slope_departure_atlas	plotted_data_nonempty	TRUE	TRUE	2270	>0	
+phase15_figure_package_v1	slope_departure_atlas	vector_and_raster_outputs_present	TRUE	TRUE	.pdf|.pdf|.pdf|.pdf|.pdf|.pdf|.pdf|.png|.png|.png|.png|.png|.png|.png|.svg|.svg|.svg|.svg|.svg|.svg|.svg	.pdf|.png|.svg	
+phase15_figure_package_v1	slope_departure_atlas	outputs_nonempty	TRUE	TRUE	21	21	
+phase15_figure_package_v1	slope_departure_atlas	colorblind_safe_palette_configured	TRUE	TRUE	PuOr_r, viridis-derived sequential maps, Okabe-Ito categories	colorblind-safe palettes	
+phase15_figure_package_v1	slope_departure_atlas	grayscale_redundant_encoding_configured	TRUE	TRUE	status symbols, borders, hatching, and labels supplement color	color is not the sole status encoding	
+phase15_figure_package_v1	slope_departure_atlas	minimum_text_size_configured	TRUE	TRUE	7 pt	>=7 pt	
+phase15_figure_package_v1	slope_departure_atlas	no_significance_stars	TRUE	TRUE	none	none	Exact q values and statuses are used.
+phase15_figure_package_v1	slope_departure_atlas	gate_question_count	TRUE	TRUE	56	56	Seven general plus 49 modifier gates.
+phase15_figure_package_v1	slope_departure_atlas	context_page_count	TRUE	TRUE	7	7	
+phase15_figure_package_v1	slope_departure_atlas	prediction_grid_rows	TRUE	TRUE	2214	2214	
+phase15_figure_package_v1	slope_departure_atlas	supported_gate_count	TRUE	TRUE	0	0	
+phase15_figure_package_v1	slope_departure_atlas	production_status_hash_recorded	TRUE	TRUE	1b032bde2e11ee20fb7e64e3afc416284ba4771451bb4a84c93d560c3619fc01	1b032bde2e11ee20fb7e64e3afc416284ba4771451bb4a84c93d560c3619fc01	

@@ -1,0 +1,2 @@
+schema_version	figure_family	production_status_sha256	plotted_rows	image_artifacts	checks	failed_checks	visual_review_status	validation_status
+phase15_figure_package_v1	stability_atlas	1b032bde2e11ee20fb7e64e3afc416284ba4771451bb4a84c93d560c3619fc01	168	3	11	0	complete	validated_complete

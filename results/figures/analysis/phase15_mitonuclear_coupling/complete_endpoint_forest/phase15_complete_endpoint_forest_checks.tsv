@@ -1,0 +1,12 @@
+schema_version	figure_family	check_id	blocking	passed	observed	expected	detail
+phase15_figure_package_v1	complete_endpoint_forest	plotted_data_nonempty	TRUE	TRUE	168	>0	
+phase15_figure_package_v1	complete_endpoint_forest	vector_and_raster_outputs_present	TRUE	TRUE	.pdf|.png|.svg	.pdf|.png|.svg	
+phase15_figure_package_v1	complete_endpoint_forest	outputs_nonempty	TRUE	TRUE	3	3	
+phase15_figure_package_v1	complete_endpoint_forest	colorblind_safe_palette_configured	TRUE	TRUE	PuOr_r, viridis-derived sequential maps, Okabe-Ito categories	colorblind-safe palettes	
+phase15_figure_package_v1	complete_endpoint_forest	grayscale_redundant_encoding_configured	TRUE	TRUE	status symbols, borders, hatching, and labels supplement color	color is not the sole status encoding	
+phase15_figure_package_v1	complete_endpoint_forest	minimum_text_size_configured	TRUE	TRUE	7 pt	>=7 pt	
+phase15_figure_package_v1	complete_endpoint_forest	no_significance_stars	TRUE	TRUE	none	none	Exact q values and statuses are used.
+phase15_figure_package_v1	complete_endpoint_forest	formal_endpoint_count	TRUE	TRUE	168	168	
+phase15_figure_package_v1	complete_endpoint_forest	general_rows_first	TRUE	TRUE	21	21	
+phase15_figure_package_v1	complete_endpoint_forest	supported_rows	TRUE	TRUE	0	0	
+phase15_figure_package_v1	complete_endpoint_forest	production_status_hash_recorded	TRUE	TRUE	1b032bde2e11ee20fb7e64e3afc416284ba4771451bb4a84c93d560c3619fc01	1b032bde2e11ee20fb7e64e3afc416284ba4771451bb4a84c93d560c3619fc01	

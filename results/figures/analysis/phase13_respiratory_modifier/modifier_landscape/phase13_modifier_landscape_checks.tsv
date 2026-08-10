@@ -10,3 +10,6 @@ phase13_figure_checks_v1	landscape_rows	TRUE	TRUE	196	196
 phase13_figure_checks_v1	landscape_unique_tests	TRUE	TRUE	196	196	
 phase13_figure_checks_v1	landscape_supported_rows	TRUE	TRUE	0	0	
 phase13_figure_checks_v1	landscape_not_testable_rows	TRUE	TRUE	16	16	
+phase13_figure_checks_v1	landscape_minimum_text_scale	TRUE	TRUE	2.34	>=2.34	All landscape text is at least the shared x/y-axis label scale
+phase13_figure_checks_v1	landscape_panel_e_text_scale	TRUE	TRUE	2.925	>2.34	Panel E text is 25% larger than the shared minimum text scale
+phase13_figure_checks_v1	landscape_slide_aspect_ratio	TRUE	TRUE	1.7778	1.7778	Panel E occupies the dedicated right column on a 16:9 slide canvas

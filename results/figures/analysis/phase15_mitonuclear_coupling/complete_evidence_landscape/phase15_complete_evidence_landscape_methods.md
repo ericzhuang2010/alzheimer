@@ -1,0 +1,3 @@
+# Methods
+
+The renderer read the validated Phase 15 general and modifier result tables and gate-decision tables without refitting models. General estimates use the saved HC3 confidence intervals and four prespecified BH families. Modifier heatmaps retain the frozen context and contrast order. Signed estimates use endpoint-specific zero-centered PuOr scales (difference ±1.25, residual ±1.50, slope ±2.00); clipped cells carry a directional triangle. Status, stability, and testability use redundant marker fill, outlines, and crosses. The statistical unit is one donor within one broad cell context.

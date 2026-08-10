@@ -1,2 +1,2 @@
 schema_version	figure_family	generated_at_utc	production_status_sha256	plotted_rows	output_artifacts	checks	failed_checks	visual_review	validation_status
-phase13_figure_status_v1	stability_atlas	2026-08-10T13:59:19Z	1502f0c003a9df63fec57e784da9d3eb64d6d925847bc6c0af2d58ec340e3d03	1596	6	10	0	programmatic_checks_complete; manual rendering review required	validated_complete
+phase13_figure_status_v1	stability_atlas	2026-08-10T14:21:09Z	1502f0c003a9df63fec57e784da9d3eb64d6d925847bc6c0af2d58ec340e3d03	1596	6	10	0	programmatic_checks_complete; manual rendering review required	validated_complete
