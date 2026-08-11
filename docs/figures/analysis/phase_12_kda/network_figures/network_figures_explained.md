@@ -207,14 +207,14 @@ Files:
 ### Main result
 
 Across the 50,165 candidate-by-network records with ranking evidence,
-within-network degree percentile is positively associated with standardized
-MeanOfLog KDA evidence. The per-network Spearman correlations are:
+within-network degree percentile is positively associated with
+−log10(ACAT P) KDA evidence. The per-network Spearman correlations are:
 
 | Broad network | Candidates | Spearman rho |
 |---|---:|---:|
-| Astrocytes | 7,547 | 0.525 |
-| Excitatory neurons | 9,926 | 0.559 |
-| Inhibitory neurons | 9,054 | 0.525 |
+| Astrocytes | 7,547 | 0.523 |
+| Excitatory neurons | 9,926 | 0.550 |
+| Inhibitory neurons | 9,054 | 0.523 |
 | Microglia | 5,547 | 0.360 |
 | OPCs | 7,567 | 0.401 |
 | Oligodendrocytes | 5,851 | 0.286 |
@@ -230,8 +230,7 @@ distributions can be displayed together.
 **Figure 4. Network connectivity provides contextual support for aggregate KDA
 evidence.** Each point represents a candidate gene in one broad-cell-type
 network. The x axis is full-network total-degree percentile within that network,
-the y axis is standardized MeanOfLog KDA evidence, point area is the number of
-significant primary directional KDA calls, and color denotes network. Panel B
+the y axis is −log10(ACAT P), point area is the number of significant primary directional KDA calls, and color denotes network. Panel B
 reports the corresponding within-network Spearman correlation. Connectivity is
 treated as supporting context rather than an independent significance test or
 evidence of causality.

@@ -37,43 +37,48 @@ Degree is converted to a percentile separately within each broad network:
 For example, the `APOE` astrocyte value of 0.986 means its total degree of 13
 is at approximately the 98.6th percentile of the astrocyte network.
 
-### Y-axis: standardized MeanOfLog KDA evidence
+### Y-axis: −log10(ACAT P)
 
-For candidate (g) in broad network (n), the underlying MeanOfLog score is
+For each candidate gene in each broad network, ACAT first combines its raw KDA
+P values across all eligible primary `AD_up_mito` and `AD_down_mito` runs.
+Secondary pooled analyses and the derived `AD_both_mito` signature are excluded.
+If a candidate lacks a test in an otherwise eligible run, that missing value
+is treated as P = 1 (`na.to1`), matching the NetWeaver ACAT implementation used
+for the other ACAT figures.
 
-\[
-S_{n,g} = \frac{1}{K_{n,g}}
-\sum_{r=1}^{K_{n,g}} -\log_{10}(p_{n,g,r}),
-\]
-
-where (p_{n,g,r}) is the raw KDA P value in eligible primary directional run
-(r), and (K_{n,g}) is the number of runs in which that candidate could be
-ranked. The included signatures are `AD_up_mito` and `AD_down_mito`; secondary
-pooled analyses and the derived `AD_both_mito` signature are excluded.
-
-The score is then divided by the largest MeanOfLog value in the same broad
-network:
+For an eligible-run P-value vector \(p_1,\ldots,p_K\), the equal-weight ACAT
+statistic is
 
 \[
-S^{\mathrm{std}}_{n,g} =
-\frac{S_{n,g}}{\max_g S_{n,g}}.
+T = \frac{1}{K}\sum_{r=1}^{K}
+\tan\!\left[\left(\frac{1}{2}-p_r\right)\pi\right],
+\qquad
+P_{\mathrm{ACAT}} = \frac{1}{2} -
+\frac{\arctan(T)}{\pi}.
 \]
 
-Consequently:
+The implementation uses the NetWeaver-compatible numerical handling for very
+small values and exact boundary values of 0 and 1. Nonsignificant tests remain
+in the calculation; the aggregation is not restricted to significant KDA
+results.
 
-- 1 is the largest MeanOfLog score in that network;
-- 0.5 means half of that network's maximum score;
-- the value is not a probability, combined P value, adjusted P value, or
-  estimated biological effect size.
+The plotted value is then
 
-MeanOfLog is a ranking statistic based on the complete pre-significance
-candidate-test matrix. Nonsignificant tests remain in the calculation, while
-an implicit zero-overlap test contributes raw P = 1 and therefore
-`−log10(1) = 0`.
+\[
+E_{n,g} = -\log_{10}\!\left(P_{\mathrm{ACAT},n,g}\right).
+\]
 
-Because standardization only divides all scores in a network by a positive
-constant, it does not change their ranks or the within-network Spearman
-correlation.
+ACAT is the aggregation step. The −log10 operation happens only afterward to
+make small combined P values easy to display:
+
+- ACAT P = 0.05 gives a y-value of 1.301;
+- ACAT P = 10⁻⁵ gives a y-value of 5;
+- ACAT P = 1 gives a y-value of 0.
+
+A larger y-value therefore means stronger combined ACAT evidence. The
+transformation is strictly monotonic, so it does not change candidate ordering
+or the Spearman correlations. Unlike the previous display, the ACAT values are
+not normalized separately by each network's maximum.
 
 ### Point color
 
@@ -115,7 +120,7 @@ When a gene was present in more than one broad network, one context was chosen
 for labeling by the following ordered rule:
 
 1. most significant primary directional runs;
-2. largest absolute standardized MeanOfLog score;
+2. largest −log10(ACAT P) value;
 3. highest degree percentile.
 
 The labels are therefore annotations of nominated genes, not an automated list
@@ -123,37 +128,37 @@ of the most extreme scatterplot points.
 
 ## Values for the seven central candidate systems
 
-| Candidate and labeled network | Total degree | Degree percentile | Standardized MeanOfLog | Significant/ranking runs |
-|---|---:|---:|---:|---:|
-| `APOE` — astrocytes | 13 | 0.986 | 0.346 | 4/34 |
-| `LAMTOR5` — excitatory neurons | 10 | 0.981 | 0.138 | 13/129 |
-| `GABARAPL2` — excitatory neurons | 11 | 0.986 | 0.180 | 18/133 |
-| `RPL11` — excitatory neurons | 9 | 0.976 | 0.313 | 24/133 |
-| `RPS15` — inhibitory neurons | 18 | 0.995 | 0.207 | 14/92 |
-| `FTL` — OPCs | 31 | 0.996 | 0.630 | 2/9 |
-| `ANKRD11` — OPCs | 28 | 0.996 | 0.512 | 2/9 |
+| Candidate and labeled network | Total degree | Degree percentile | ACAT P | −log10(ACAT P) | Significant/ranking runs |
+|---|---:|---:|---:|---:|---:|
+| `APOE` — astrocytes | 13 | 0.986 | 3.36 × 10⁻⁵ | 4.474 | 4/34 |
+| `LAMTOR5` — excitatory neurons | 10 | 0.981 | 5.84 × 10⁻⁶ | 5.234 | 13/129 |
+| `GABARAPL2` — excitatory neurons | 11 | 0.986 | 2.20 × 10⁻⁵ | 4.657 | 18/133 |
+| `RPL11` — excitatory neurons | 9 | 0.976 | 8.92 × 10⁻¹³ | 12.050 | 24/133 |
+| `RPS15` — inhibitory neurons | 18 | 0.995 | 4.22 × 10⁻⁶ | 5.374 | 14/92 |
+| `FTL` — OPCs | 31 | 0.996 | 1.46 × 10⁻⁷ | 6.837 | 2/9 |
+| `ANKRD11` — OPCs | 28 | 0.996 | 7.89 × 10⁻⁷ | 6.103 | 2/9 |
 
-These candidates are all high-degree nodes, but their aggregate KDA scores
-and recurrence counts differ substantially. In particular, the OPC values are
-standardized against the OPC maximum and are based on only nine ranking runs,
-whereas the excitatory-neuron candidates can have as many as 133 ranking runs.
+These candidates are all high-degree nodes, but their combined KDA evidence
+and recurrence counts differ substantially. The y-values are on one absolute
+−log10(P) scale; however, the OPC candidates aggregate only nine eligible
+runs, whereas the excitatory-neuron candidates aggregate as many as 133.
 
 ## Panel B: within-network Spearman associations
 
 Panel B calculates a separate Spearman rank correlation between degree
-percentile and standardized MeanOfLog score within each broad network.
+percentile and −log10(ACAT P) within each broad network.
 Spearman correlation measures monotonic rank association and does not require
 a linear relationship or normally distributed variables.
 
 | Broad network | Candidate records | Spearman rho | Nominal P value |
 |---|---:|---:|---:|
-| Astrocytes | 7,547 | 0.525 | <1 × 10⁻³⁰⁰ |
-| Excitatory neurons | 9,926 | 0.559 | <1 × 10⁻³⁰⁰ |
-| Inhibitory neurons | 9,054 | 0.525 | <1 × 10⁻³⁰⁰ |
-| Microglia | 5,547 | 0.360 | 8.55 × 10⁻¹⁷⁰ |
-| OPCs | 7,567 | 0.401 | 1.77 × 10⁻²⁹⁰ |
-| Oligodendrocytes | 5,851 | 0.286 | 7.38 × 10⁻¹¹¹ |
-| Vasculature | 4,673 | 0.170 | 1.54 × 10⁻³¹ |
+| Astrocytes | 7,547 | 0.523 | <1 × 10⁻³⁰⁰ |
+| Excitatory neurons | 9,926 | 0.550 | <1 × 10⁻³⁰⁰ |
+| Inhibitory neurons | 9,054 | 0.523 | <1 × 10⁻³⁰⁰ |
+| Microglia | 5,547 | 0.360 | 1.29 × 10⁻¹⁶⁹ |
+| OPCs | 7,567 | 0.401 | 3.21 × 10⁻²⁹⁰ |
+| Oligodendrocytes | 5,851 | 0.286 | 9.96 × 10⁻¹¹¹ |
+| Vasculature | 4,673 | 0.170 | 1.55 × 10⁻³¹ |
 
 The values stored as P = 0 for the first three networks are numerical
 underflow, not literal zero probability; the figure reports them as
@@ -173,7 +178,7 @@ The figure supports two related conclusions:
    evidence.
 2. Connectivity does not determine the KDA score perfectly: all correlations
    are well below 1, and genes with similar degree percentiles show substantial
-   vertical variation in MeanOfLog evidence.
+   vertical variation in ACAT evidence.
 
 The first conclusion is a warning against treating a large network node as
 independent support for biological importance. The second shows that degree is
@@ -197,11 +202,14 @@ diagnostics.
   passing the adjusted KDA threshold. These are related but different
   quantities.
 - Ranking coverage varies. Of 50,165 plotted records, 10,468 have coverage
-  below 80% of eligible directional runs. Missing tests are not converted to
-  P = 1, so a low-coverage candidate's score is an average over fewer observed
-  runs. Coverage is retained in the TSV but is not encoded in the plot.
-- Scores are normalized separately by network maxima. A y-value of 0.6 in one
-  network is not the same absolute raw MeanOfLog evidence as 0.6 in another.
+  below 80% of eligible directional runs. ACAT treats each missing test as
+  P = 1 (`na.to1`), so missingness contributes conservative null evidence.
+  Coverage and the missing-value rule are retained in the TSV but are not
+  separately encoded in the plot.
+- The y-axis uses one absolute −log10(P) scale rather than network-specific
+  normalization. Even so, ACAT values can reflect different eligible-run
+  counts and shared dependence structures across networks, so cross-network
+  numerical comparisons should remain descriptive.
 - The candidate universe includes mtDNA-encoded genes as well as nuclear
   genes. The plot is a complete ranking diagnostic, not a restricted display
   of the seven highlighted nuclear candidates.

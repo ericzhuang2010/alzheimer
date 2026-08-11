@@ -84,12 +84,11 @@ preparation.
 
 | File | Use |
 |---|---|
-| `results/figures/analysis/phase12_kda/phase12_kda_primary_directional_candidate_tests.tsv.gz` | Complete primary directional candidate-test matrix, including nonsignificant tests |
-| `results/figures/analysis/phase12_kda/phase12_kda_mean_of_log_summary.tsv` | Network-standardized MeanOfLog score, ranking coverage, and primary directional recurrence |
+| `results/figures/analysis/phase12_kda/phase12_kda_primary_directional_candidate_tests.tsv.gz` | Complete primary directional raw-P matrix for Figure 4 ACAT aggregation, including nonsignificant tests |
 | `results/figures/analysis/phase12_kda/phase12_kda_conservative_candidate_summary.tsv` | Existing conservative candidate counts and highlighted-candidate flags |
 
 The complete candidate-test matrix is required for Figure 4. Do not calculate
-MeanOfLog using only `kda_results.tsv`, because that file contains only
+ACAT using only `kda_results.tsv`, because that file contains only
 significant rows.
 
 ### Phase 08 differential expression
@@ -571,9 +570,10 @@ the second clause.
 
 ### Candidate universe
 
-Start from `phase12_kda_mean_of_log_summary.tsv`. Retain network-driver rows
-with at least one eligible primary directional test and valid ranking
-coverage. Join each row to the complete-network degree table by
+Start from the complete primary-directional candidate-test matrix. For each
+network-driver pair with at least one observed ranking test, combine raw P
+values across all eligible runs by ACAT, treating missing tests as P = 1.
+Join each row to the complete-network degree table by
 `broad_network` and `key_driver`.
 
 Do not limit this figure to significant candidates. The complete tested
@@ -585,9 +585,9 @@ Plot:
 
 ```text
 x = within-network percentile of total degree
-y = mean_of_log_score_standardized
+y = acat_negative_log10_p
 color = broad network
-point area = primary_directional_recurrence_fraction
+point area = primary_directional_significant_runs
 ```
 
 Label the prespecified candidates:
@@ -612,7 +612,7 @@ names.
 ### Supporting panel or inset
 
 Show per-network Spearman correlation between degree percentile and
-MeanOfLog score, with the number of tested candidate nodes. Report confidence
+−log10(ACAT P), with the number of tested candidate nodes. Report confidence
 intervals from a documented bootstrap if feasible; otherwise report rho,
 sample size, and nominal P value with an explicit exploratory label.
 

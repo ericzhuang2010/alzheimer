@@ -1,12 +1,12 @@
-schema_version	broad_network	key_driver	mean_of_log_score	mean_of_log_score_standardized	ranking_runs	eligible_directional_runs	ranking_coverage_fraction	primary_directional_significant_runs	primary_directional_recurrence_fraction	mtDNA_encoded	in_degree	out_degree	total_degree	degree_percentile
-phase12_kda_network_figures_v1	Astrocytes	APOE	0.853855903028334	0.345968004568062	34	34	1.0	4	0.117647058823529	FALSE	2	11	13	0.9862401931200966
-phase12_kda_network_figures_v1	Excitatory_neurons	LAMTOR5	0.723480021272235	0.137851139113296	129	133	0.969924812030075	13	0.10077519379845	FALSE	1	9	10	0.9808447466717747
-phase12_kda_network_figures_v1	Excitatory_neurons	GABARAPL2	0.945446090448269	0.180144325629504	133	133	1.0	18	0.135338345864662	FALSE	3	8	11	0.9864955464036012
-phase12_kda_network_figures_v1	Excitatory_neurons	RPL11	1.6424669895013	0.31295397080985	133	133	1.0	24	0.180451127819549	FALSE	0	9	9	0.9756728282731539
-phase12_kda_network_figures_v1	Inhibitory_neurons	RPS15	0.850993308115492	0.207390727816384	92	92	1.0	14	0.152173913043478	FALSE	1	17	18	0.9946758534293768
-phase12_kda_network_figures_v1	OPCs	FTL	2.20049333890025	0.629877475434401	9	9	1.0	2	0.222222222222222	FALSE	1	30	31	0.9962419687234816
-phase12_kda_network_figures_v1	OPCs	ANKRD11	1.7903748649626	0.51248362359845	9	9	1.0	2	0.222222222222222	FALSE	1	27	28	0.9955146078312522
-phase12_kda_network_figures_v1	Excitatory_neurons	SELENOW	1.09992022467494	0.209577668279714	133	133	1.0	16	0.120300751879699	FALSE	1	7	8	0.965807872809118
-phase12_kda_network_figures_v1	Excitatory_neurons	WDR82	1.09593681013584	0.2088186725706	133	133	1.0	24	0.180451127819549	FALSE	0	12	12	0.9904223733358873
-phase12_kda_network_figures_v1	Microglia	SLC11A1	0.626861449948834	0.103751676173922	12	12	1.0	1	0.0833333333333333	FALSE	1	3	4	0.9274682010902483
-phase12_kda_network_figures_v1	Inhibitory_neurons	HSPA1A	0.312907611303616	0.076256930141143	85	92	0.923913043478261	4	0.0470588235294118	FALSE	2	2	4	0.899154400250548
+schema_version	broad_network	key_driver	acat_combined_p	acat_negative_log10_p	ranking_runs	eligible_directional_runs	ranking_coverage_fraction	primary_directional_significant_runs	primary_directional_recurrence_fraction	acat_input_p_value	acat_na_action	mtDNA_encoded	in_degree	out_degree	total_degree	degree_percentile	node_size_area
+phase12_kda_network_figures_v1	Astrocytes	APOE	3.355517141015609e-05	4.4742405383319745	34	34	1.0	4	0.11764705882352941	raw_p_value	na.to1	FALSE	2	11	13	0.9862401931200966	400.0
+phase12_kda_network_figures_v1	Excitatory_neurons	LAMTOR5	5.839120002894008e-06	5.233652599237643	129	133	0.9699248120300752	13	0.10077519379844961	raw_p_value	na.to1	FALSE	1	9	10	0.9808447466717747	289.0
+phase12_kda_network_figures_v1	Excitatory_neurons	GABARAPL2	2.201491167038396e-05	4.65728305270465	133	133	1.0	18	0.13533834586466165	raw_p_value	na.to1	FALSE	3	8	11	0.9864955464036012	324.0
+phase12_kda_network_figures_v1	Excitatory_neurons	RPL11	8.916926298677945e-13	12.049784822929714	133	133	1.0	24	0.18045112781954886	raw_p_value	na.to1	FALSE	0	9	9	0.9756728282731539	256.0
+phase12_kda_network_figures_v1	Inhibitory_neurons	RPS15	4.221967774535805e-06	5.374485085901571	92	92	1.0	14	0.15217391304347827	raw_p_value	na.to1	FALSE	1	17	18	0.9946758534293768	576.0
+phase12_kda_network_figures_v1	OPCs	FTL	1.4563960557321435e-07	6.8367205059095335	9	9	1.0	2	0.2222222222222222	raw_p_value	na.to1	FALSE	1	30	31	0.9962419687234816	576.0
+phase12_kda_network_figures_v1	OPCs	ANKRD11	7.89000130329815e-07	6.102922925052285	9	9	1.0	2	0.2222222222222222	raw_p_value	na.to1	FALSE	1	27	28	0.9955146078312522	576.0
+phase12_kda_network_figures_v1	Excitatory_neurons	SELENOW	6.503358433296824e-09	8.186862309145553	133	133	1.0	16	0.12030075187969924	raw_p_value	na.to1	FALSE	1	7	8	0.965807872809118	225.0
+phase12_kda_network_figures_v1	Excitatory_neurons	WDR82	1.3195133601142282e-05	4.879586208176396	133	133	1.0	24	0.18045112781954886	raw_p_value	na.to1	FALSE	0	12	12	0.9904223733358873	361.0
+phase12_kda_network_figures_v1	Microglia	SLC11A1	0.00044534193763911807	3.3513064056375668	12	12	1.0	1	0.08333333333333333	raw_p_value	na.to1	FALSE	1	3	4	0.9274682010902483	121.0
+phase12_kda_network_figures_v1	Inhibitory_neurons	HSPA1A	0.016343770808237016	1.78664773652587	85	92	0.9239130434782609	4	0.047058823529411764	raw_p_value	na.to1	FALSE	2	2	4	0.899154400250548	121.0

@@ -30,7 +30,7 @@ import networkx as nx  # noqa: E402
 import numpy as np  # noqa: E402
 from matplotlib.lines import Line2D  # noqa: E402
 from matplotlib.patches import FancyArrowPatch  # noqa: E402
-from scipy.stats import spearmanr  # noqa: E402
+from scipy.stats import cauchy, spearmanr  # noqa: E402
 
 
 SCHEMA_VERSION = "phase12_kda_network_figures_v1"
@@ -106,6 +106,22 @@ CONNECTIVITY_LABEL_GENES = [
     "SLC11A1",
     "HSPA1A",
 ]
+
+ACAT_EXAMPLE = [
+    [0.5746569, 0.7090122, 0.7965851, 0.1149619],
+    [0.6513363, 0.6671072, 0.5985140, 0.4991580],
+    [0.1632148, 0.9312446, 0.9105127, 0.2293418],
+    [0.8836971, 0.8424568, 0.2578088, 0.3955429],
+    [0.6770827, 0.7551785, 0.3221481, 0.5570227],
+]
+ACAT_EXAMPLE_EXPECTED = [
+    0.4768092003,
+    0.6079561876,
+    0.7884404860,
+    0.7135191247,
+    0.5935618969,
+]
+
 
 WANG_PANEL_SPECS = [
     {
@@ -266,6 +282,50 @@ def parse_int(value: object, default: int = 0) -> int:
         return int(float(value))
     except (TypeError, ValueError):
         return default
+
+
+def _acat_statistic(p_value: float) -> float:
+    if p_value < 1e-15:
+        return 1.0 / (p_value * math.pi)
+    return math.tan((0.5 - p_value) * math.pi)
+
+
+def acat_combine_netweaver(
+    p_values: Sequence[float | None],
+    *,
+    na_action: str = "na.to1",
+    tolerance: float = 1e-300,
+) -> float:
+    """Combine p-values with the edge-case behavior used by NetWeaver ACAT."""
+    if na_action not in {"na.omit", "na.to1"}:
+        raise ValueError(f"Unsupported ACAT missing-value action: {na_action}")
+    values = np.asarray(
+        [math.nan if value is None else float(value) for value in p_values],
+        dtype=float,
+    )
+    if np.any(np.isinf(values)) or np.any((values < 0) | (values > 1)):
+        raise ValueError("ACAT input p-values must be finite values in [0, 1] or missing")
+    if na_action == "na.omit":
+        values = values[~np.isnan(values)]
+    else:
+        values[np.isnan(values)] = 1.0
+    if values.size == 0:
+        return math.nan
+    if np.all(values == 1):
+        return 1.0
+    if np.any(values == 0):
+        positive = values[values > 0]
+        replacement = min(float(np.min(positive)), tolerance) if positive.size else tolerance
+        values[values == 0] = replacement
+    if np.any(values == 1):
+        values[values == 1] = float(np.max(values[values < 1])) / 2.0 + 0.5
+    statistics = np.asarray([_acat_statistic(float(value)) for value in values])
+    return float(cauchy.sf(float(np.mean(statistics))))
+
+
+def validate_acat_example() -> float:
+    observed = [acat_combine_netweaver(row) for row in ACAT_EXAMPLE]
+    return max(abs(value - expected) for value, expected in zip(observed, ACAT_EXAMPLE_EXPECTED))
 
 
 def sha256_file(path: Path) -> str:
@@ -709,31 +769,141 @@ def build_convergence_pairs(
     return rows
 
 
+def build_acat_candidate_summary() -> list[dict[str, object]]:
+    """Aggregate complete primary-directional raw p-values using ACAT."""
+    example_error = validate_acat_example()
+    if example_error > 5e-10:
+        raise RuntimeError(
+            f"NetWeaver-compatible ACAT failed the professor example: error={example_error:.3g}"
+        )
+
+    candidate_path = FIGURE_DATA_DIR / "phase12_kda_primary_directional_candidate_tests.tsv.gz"
+    run_ids: dict[str, set[str]] = defaultdict(set)
+    accumulators: dict[tuple[str, str], dict[str, object]] = {}
+
+    for row in iter_tsv(candidate_path):
+        if (
+            row["analysis_tier"] != "primary"
+            or row["signature_direction"] not in {"AD_up_mito", "AD_down_mito"}
+            or not parse_bool(row["ranking_candidate"])
+        ):
+            continue
+        network = row["broad_network"]
+        if network not in NETWORK_ORDER:
+            continue
+        run_ids[network].add(row["kda_run_id"])
+        key = (network, row["key_driver"])
+        record = accumulators.setdefault(
+            key,
+            {
+                "ranking_runs": 0,
+                "significant_runs": 0,
+                "zero_p_values": 0,
+                "one_p_values": 0,
+                "nonzero_below_one": 0,
+                "sum_statistics": 0.0,
+                "minimum_positive": math.inf,
+                "maximum_below_one": -math.inf,
+            },
+        )
+
+        raw_p = parse_float(row["raw_p_value"])
+        if math.isfinite(raw_p):
+            if raw_p < 0 or raw_p > 1:
+                raise RuntimeError(f"Candidate raw p-value is outside [0, 1]: {key}/{raw_p}")
+            record["ranking_runs"] = parse_int(record["ranking_runs"]) + 1
+            if raw_p == 0:
+                record["zero_p_values"] = parse_int(record["zero_p_values"]) + 1
+            elif raw_p == 1:
+                record["one_p_values"] = parse_int(record["one_p_values"]) + 1
+                record["minimum_positive"] = min(parse_float(record["minimum_positive"]), raw_p)
+            else:
+                record["nonzero_below_one"] = parse_int(record["nonzero_below_one"]) + 1
+                record["sum_statistics"] = parse_float(record["sum_statistics"]) + _acat_statistic(raw_p)
+                record["minimum_positive"] = min(parse_float(record["minimum_positive"]), raw_p)
+                record["maximum_below_one"] = max(parse_float(record["maximum_below_one"]), raw_p)
+
+        adjusted_p = parse_float(row["adjusted_p_value"])
+        if math.isfinite(adjusted_p) and adjusted_p <= 0.05:
+            record["significant_runs"] = parse_int(record["significant_runs"]) + 1
+
+    missing_networks = [network for network in NETWORK_ORDER if not run_ids[network]]
+    if missing_networks:
+        raise RuntimeError(f"No primary-directional ACAT runs for: {', '.join(missing_networks)}")
+
+    rows: list[dict[str, object]] = []
+    for (network, key_driver), record in accumulators.items():
+        tested_runs = parse_int(record["ranking_runs"])
+        if tested_runs < 1:
+            continue
+        eligible_runs = len(run_ids[network])
+        if tested_runs > eligible_runs:
+            raise RuntimeError(f"Candidate has more tests than eligible runs: {network}/{key_driver}")
+
+        zero_count = parse_int(record["zero_p_values"])
+        below_one_count = parse_int(record["nonzero_below_one"])
+        missing_or_one_count = eligible_runs - tested_runs + parse_int(record["one_p_values"])
+        if zero_count == 0 and below_one_count == 0:
+            combined_p = 1.0
+        else:
+            statistic_sum = parse_float(record["sum_statistics"])
+            maximum_below_one = parse_float(record["maximum_below_one"])
+            if zero_count:
+                minimum_positive = parse_float(record["minimum_positive"])
+                zero_replacement = min(minimum_positive, 1e-300) if math.isfinite(minimum_positive) else 1e-300
+                statistic_sum += zero_count * _acat_statistic(zero_replacement)
+                maximum_below_one = max(maximum_below_one, zero_replacement)
+            if missing_or_one_count:
+                one_replacement = maximum_below_one / 2.0 + 0.5
+                statistic_sum += missing_or_one_count * _acat_statistic(one_replacement)
+            combined_p = float(cauchy.sf(statistic_sum / eligible_runs))
+
+        if not math.isfinite(combined_p) or combined_p < 0 or combined_p > 1:
+            raise RuntimeError(f"ACAT produced an invalid p-value: {network}/{key_driver}")
+        significant_runs = parse_int(record["significant_runs"])
+        rows.append(
+            {
+                "broad_network": network,
+                "key_driver": key_driver,
+                "acat_combined_p": combined_p,
+                "acat_negative_log10_p": -math.log10(max(combined_p, np.finfo(float).tiny)),
+                "ranking_runs": tested_runs,
+                "eligible_directional_runs": eligible_runs,
+                "ranking_coverage_fraction": tested_runs / eligible_runs,
+                "primary_directional_significant_runs": significant_runs,
+                "primary_directional_recurrence_fraction": significant_runs / tested_runs,
+                "acat_input_p_value": "raw_p_value",
+                "acat_na_action": "na.to1",
+                "mtDNA_encoded": key_driver.startswith("MT-"),
+            }
+        )
+
+    network_index = {network: index for index, network in enumerate(NETWORK_ORDER)}
+    rows.sort(
+        key=lambda row: (
+            network_index[str(row["broad_network"])],
+            parse_float(row["acat_combined_p"]),
+            -parse_int(row["ranking_runs"]),
+            -parse_float(row["primary_directional_recurrence_fraction"]),
+            str(row["key_driver"]),
+        )
+    )
+    return rows
+
+
 def build_connectivity_points(
     degrees: Mapping[tuple[str, str], Mapping[str, object]],
 ) -> list[dict[str, object]]:
     rows: list[dict[str, object]] = []
-    summary_path = FIGURE_DATA_DIR / "phase12_kda_mean_of_log_summary.tsv"
-    for row in iter_tsv(summary_path):
-        if parse_int(row.get("ranking_runs")) < 1:
-            continue
-        key = (row["broad_network"], row["key_driver"])
+    for row in build_acat_candidate_summary():
+        key = (str(row["broad_network"]), str(row["key_driver"]))
         if key not in degrees:
-            raise RuntimeError(f"MeanOfLog candidate is absent from network: {key}")
+            raise RuntimeError(f"ACAT candidate is absent from network: {key}")
         degree = degrees[key]
         rows.append(
             {
                 "schema_version": SCHEMA_VERSION,
-                "broad_network": row["broad_network"],
-                "key_driver": row["key_driver"],
-                "mean_of_log_score": parse_float(row["mean_of_log_score"]),
-                "mean_of_log_score_standardized": parse_float(row["mean_of_log_score_standardized"]),
-                "ranking_runs": parse_int(row["ranking_runs"]),
-                "eligible_directional_runs": parse_int(row["eligible_directional_runs"]),
-                "ranking_coverage_fraction": parse_float(row["ranking_coverage_fraction"]),
-                "primary_directional_significant_runs": parse_int(row["primary_directional_significant_runs"]),
-                "primary_directional_recurrence_fraction": parse_float(row["primary_directional_recurrence_fraction"]),
-                "mtDNA_encoded": parse_bool(row["mtDNA_encoded"]),
+                **row,
                 "in_degree": degree["in_degree"],
                 "out_degree": degree["out_degree"],
                 "total_degree": degree["total_degree"],
@@ -1607,8 +1777,8 @@ def _typed_connectivity_rows(output_dir: Path) -> list[dict[str, object]]:
         rows.append(
             {
                 **row,
-                "mean_of_log_score": parse_float(row["mean_of_log_score"]),
-                "mean_of_log_score_standardized": parse_float(row["mean_of_log_score_standardized"]),
+                "acat_combined_p": parse_float(row["acat_combined_p"]),
+                "acat_negative_log10_p": parse_float(row["acat_negative_log10_p"]),
                 "ranking_runs": parse_int(row["ranking_runs"]),
                 "primary_directional_significant_runs": parse_int(row["primary_directional_significant_runs"]),
                 "primary_directional_recurrence_fraction": parse_float(row["primary_directional_recurrence_fraction"]),
@@ -1626,7 +1796,7 @@ def _connectivity_correlations(rows: Sequence[Mapping[str, object]]) -> list[dic
         if len(subset) < 3:
             continue
         x_values = [parse_float(row["degree_percentile"]) for row in subset]
-        y_values = [parse_float(row["mean_of_log_score_standardized"]) for row in subset]
+        y_values = [parse_float(row["acat_negative_log10_p"]) for row in subset]
         statistic = spearmanr(x_values, y_values)
         output.append(
             {
@@ -1661,7 +1831,7 @@ def generate_connectivity_evidence(output_dir: Path = DEFAULT_OUTPUT_DIR, check_
             continue
         ax_scatter.scatter(
             [row["degree_percentile"] for row in subset],
-            [row["mean_of_log_score_standardized"] for row in subset],
+            [row["acat_negative_log10_p"] for row in subset],
             s=[18 + 38 * math.sqrt(parse_int(row["primary_directional_significant_runs"])) for row in subset],
             c=NETWORK_COLORS[network],
             alpha=0.58,
@@ -1680,7 +1850,7 @@ def generate_connectivity_evidence(output_dir: Path = DEFAULT_OUTPUT_DIR, check_
                 candidates,
                 key=lambda row: (
                     parse_int(row["primary_directional_significant_runs"]),
-                    abs(parse_float(row["mean_of_log_score_standardized"])),
+                    parse_float(row["acat_negative_log10_p"]),
                     parse_float(row["degree_percentile"]),
                 ),
             )
@@ -1700,7 +1870,7 @@ def generate_connectivity_evidence(output_dir: Path = DEFAULT_OUTPUT_DIR, check_
     }
     for index, row in enumerate(selected_labels):
         x_value = parse_float(row["degree_percentile"])
-        y_value = parse_float(row["mean_of_log_score_standardized"])
+        y_value = parse_float(row["acat_negative_log10_p"])
         ax_scatter.scatter(
             [x_value],
             [y_value],
@@ -1725,7 +1895,7 @@ def generate_connectivity_evidence(output_dir: Path = DEFAULT_OUTPUT_DIR, check_
     ax_scatter.axhline(0, color="#BBBBBB", linewidth=0.8, linestyle="--")
     ax_scatter.set_xlim(-0.02, 1.03)
     ax_scatter.set_xlabel("Within-network total-degree percentile")
-    ax_scatter.set_ylabel("Standardized MeanOfLog KDA evidence")
+    ax_scatter.set_ylabel("\u2212log10(ACAT P)")
     ax_scatter.set_title("A  Candidate-level connectivity and KDA evidence", loc="left", fontweight="bold")
     ax_scatter.grid(color="#EEEEEE", linewidth=0.6)
     ax_scatter.legend(loc="lower left", frameon=False, ncol=2, fontsize=6.5)
@@ -1780,7 +1950,7 @@ def generate_connectivity_evidence(output_dir: Path = DEFAULT_OUTPUT_DIR, check_
         subset = [row for row in rows if row["broad_network"] == network]
         ax.scatter(
             [row["total_degree"] for row in subset],
-            [row["mean_of_log_score_standardized"] for row in subset],
+            [row["acat_negative_log10_p"] for row in subset],
             s=[12 + 25 * math.sqrt(parse_int(row["primary_directional_significant_runs"])) for row in subset],
             c=NETWORK_COLORS[network],
             alpha=0.6,
@@ -1792,10 +1962,10 @@ def generate_connectivity_evidence(output_dir: Path = DEFAULT_OUTPUT_DIR, check_
         ax.set_title(f"{NETWORK_LABELS[network]} | rho={parse_float(correlation['spearman_rho']):.2f}", loc="left", fontweight="bold")
         ax.axhline(0, color="#BBBBBB", linewidth=0.7, linestyle="--")
         ax.set_xlabel("Full-network total degree")
-        ax.set_ylabel("Standardized MeanOfLog")
+        ax.set_ylabel("\u2212log10(ACAT P)")
         ax.grid(color="#EEEEEE", linewidth=0.5)
     diagnostic_axes.flat[-1].axis("off")
-    diagnostic_fig.suptitle("Diagnostic: raw network degree versus standardized KDA evidence", fontsize=14, fontweight="bold")
+    diagnostic_fig.suptitle("Diagnostic: raw network degree versus ACAT KDA evidence", fontsize=14, fontweight="bold")
     diagnostic_paths = save_figure(
         diagnostic_fig,
         output_dir / "phase12_kda_connectivity_evidence_by_network",

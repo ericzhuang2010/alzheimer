@@ -1,8 +1,8 @@
 schema_version	broad_network	n_candidates	spearman_rho	p_value
-phase12_kda_network_figures_v1	Astrocytes	7547	0.5246403157226316	0.0
-phase12_kda_network_figures_v1	Excitatory_neurons	9926	0.5588776855032946	0.0
-phase12_kda_network_figures_v1	Inhibitory_neurons	9054	0.5252610844415367	0.0
-phase12_kda_network_figures_v1	Microglia	5547	0.36041259056860986	8.550523236062173e-170
-phase12_kda_network_figures_v1	OPCs	7567	0.40108326735525557	1.7678680318986355e-290
-phase12_kda_network_figures_v1	Oligodendrocytes	5851	0.28638928770957317	7.378600437769622e-111
-phase12_kda_network_figures_v1	Vasculature_cells	4673	0.16972508587212778	1.5377889965184934e-31
+phase12_kda_network_figures_v1	Astrocytes	7547	0.5226763662249851	0.0
+phase12_kda_network_figures_v1	Excitatory_neurons	9926	0.5502284986560836	0.0
+phase12_kda_network_figures_v1	Inhibitory_neurons	9054	0.5229332495192993	0.0
+phase12_kda_network_figures_v1	Microglia	5547	0.3602348204798649	1.28669676989624e-169
+phase12_kda_network_figures_v1	OPCs	7567	0.40091820434410214	3.211898394253619e-290
+phase12_kda_network_figures_v1	Oligodendrocytes	5851	0.28622509519148764	9.960876040980634e-111
+phase12_kda_network_figures_v1	Vasculature_cells	4673	0.16971886128420777	1.5456783170413904e-31

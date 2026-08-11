@@ -21,11 +21,24 @@ from phase12_kda_network_figure_common import (  # noqa: E402
     WANG_PANEL_SPECS,
     node_area,
     read_tsv,
+    validate_acat_example,
 )
 
 
 class Phase12KdaNetworkFigureTests(unittest.TestCase):
     output_dir = DEFAULT_OUTPUT_DIR
+
+    def test_acat_implementation_matches_professor_example(self) -> None:
+        self.assertLessEqual(validate_acat_example(), 5e-10)
+
+    def test_connectivity_points_use_acat(self) -> None:
+        row = read_tsv(self.output_dir / "phase12_kda_connectivity_evidence_points.tsv")[0]
+        self.assertIn("acat_combined_p", row)
+        self.assertIn("acat_negative_log10_p", row)
+        self.assertEqual(row["acat_input_p_value"], "raw_p_value")
+        self.assertEqual(row["acat_na_action"], "na.to1")
+        self.assertNotIn("mean_of_log_score", row)
+        self.assertNotIn("mean_of_log_score_standardized", row)
 
     def test_common_data_checks_pass(self) -> None:
         rows = read_tsv(self.output_dir / "phase12_kda_network_data_checks.tsv")
