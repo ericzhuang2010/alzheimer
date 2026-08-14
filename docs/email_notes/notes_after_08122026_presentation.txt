@@ -1,0 +1,24 @@
+
+================After the meeting with prof on 0811026==========
+
+legend in the middle blocks the connection
+validation->testing
+another figure to show full network, in case there is upstream nodes, show gene regulate APOE, upstream/downstream 2-3 layers, highlight Mito genes, we need to get
+the overall picture.
+use cytoscope, when you export, use SVG
+ATP Regulation map, group gene together like RPL11, key driver grouped by cell type. some genes are common across cell type, maybe just group by gene name.
+Network connectivity figure: 
+Modifier landscape: maybe do a T test
+for the key driver that was newly ranked, maybe find new report.
+We need to look at genetic, need more evidence, maybe get some 
+we need provide strong case for the top key driver. genetic support, AD patient, tend to be mutated, genetic variation, maybe other data, protein geomics.
+Tomorrow, we may have a meeting at 1PM, sex project meeting, you do not need to show everything, you can combine previous slides, Mito
+previous slides, put things together, 15-20 slides. Just you what you have done and what you plan to do next. ask for comments and suggestions for your work.
+Next week, better ranking, more evidence supporting that. May consider moving on to experiments
+
+
+================Email from the prof on 08122026 after presentations==============
+I think the presentation was well received by the audience. There were many constructive comments, such as checking APOE gene expression changes, clarification about the genes tested, interaction models, and comparison with mouse APOE knock-in single cell data, etc. Please try to addresses them as much as you can. For cross-species comparison, I will send you relevant data rather.
+
+
+
