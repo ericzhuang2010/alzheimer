@@ -42,6 +42,9 @@ if (isTRUE(attr(args, "help"))) {
 }
 
 ranking_method <- match.arg(args$ranking_method, c("mean_of_log", "acat"))
+side_legend <- ranking_method == "acat"
+figure_width_inches <- if (side_legend) 9.6 else 7.1
+figure_height_inches <- 7.1
 if (ranking_method == "acat") {
   if (!"--output-dir" %in% cli_args) {
     args$output_dir <-
@@ -378,7 +381,11 @@ draw_panel_a <- function() {
     xaxs = "i", yaxs = "i", family = "sans", xpd = NA
   )
   graphics::plot.new()
-  graphics::plot.window(xlim = c(-1.48, 1.48), ylim = c(-1.48, 1.48), asp = 1)
+  graphics::plot.window(
+    xlim = if (side_legend) c(-1.48, 2.52) else c(-1.48, 1.48),
+    ylim = c(-1.48, 1.48),
+    asp = 1
+  )
 
   score_inner <- 0.62
   score_height <- 0.32
@@ -473,16 +480,49 @@ draw_panel_a <- function() {
     0, 0, circles = 0.405, inches = FALSE, add = TRUE,
     fg = "#B9C0C8", bg = "white"
   )
-  graphics::text(0, 0.245, "Legend", cex = 0.72, font = 2, col = "#222222")
-  graphics::rect(-0.31, 0.135, -0.23, 0.175, col = phase12_network_colors[[1L]], border = NA)
-  graphics::text(-0.19, 0.155, "broad network", adj = c(0, 0.5), cex = 0.52, col = "#333333")
-  graphics::rect(-0.31, 0.045, -0.23, 0.085, col = "#344E73", border = NA)
-  graphics::text(-0.19, 0.065, score_legend_label, adj = c(0, 0.5), cex = 0.52, col = "#333333")
-  graphics::segments(-0.31, -0.025, -0.23, -0.025, col = rgba("#666666", 0.55), lwd = 1)
-  graphics::text(-0.19, -0.025, "same driver across networks", adj = c(0, 0.5), cex = 0.52, col = "#333333")
-  graphics::points(-0.27, -0.115, pch = 16, col = "#777777", cex = 0.55)
-  graphics::text(-0.19, -0.115, "mtDNA-encoded sentinel candidate", adj = c(0, 0.5), cex = 0.48, col = "#333333")
-  graphics::text(0, -0.245, "Score range 0-1", cex = 0.52, col = "#666666")
+  legend_center_x <- if (side_legend) 1.91 else 0
+  legend_left_x <- if (side_legend) 1.54 else -0.31
+  legend_text_x <- if (side_legend) 1.68 else -0.19
+  graphics::text(
+    legend_center_x, 0.245, "Legend",
+    cex = 0.72, font = 2, col = "#222222"
+  )
+  graphics::rect(
+    legend_left_x, 0.135, legend_left_x + 0.08, 0.175,
+    col = phase12_network_colors[[1L]], border = NA
+  )
+  graphics::text(
+    legend_text_x, 0.155, "broad network",
+    adj = c(0, 0.5), cex = 0.52, col = "#333333"
+  )
+  graphics::rect(
+    legend_left_x, 0.045, legend_left_x + 0.08, 0.085,
+    col = "#344E73", border = NA
+  )
+  graphics::text(
+    legend_text_x, 0.065, score_legend_label,
+    adj = c(0, 0.5), cex = 0.52, col = "#333333"
+  )
+  graphics::segments(
+    legend_left_x, -0.025, legend_left_x + 0.08, -0.025,
+    col = rgba("#666666", 0.55), lwd = 1
+  )
+  graphics::text(
+    legend_text_x, -0.025, "same driver across networks",
+    adj = c(0, 0.5), cex = 0.52, col = "#333333"
+  )
+  graphics::points(
+    legend_left_x + 0.04, -0.115,
+    pch = 16, col = "#777777", cex = 0.55
+  )
+  graphics::text(
+    legend_text_x, -0.115, "mtDNA-encoded sentinel candidate",
+    adj = c(0, 0.5), cex = 0.48, col = "#333333"
+  )
+  graphics::text(
+    legend_center_x, -0.245, "Score range 0-1",
+    cex = 0.52, col = "#666666"
+  )
 
   graphics::title(
     main = "Recurrent mitochondrial KDA evidence across brain cell networks",
@@ -515,11 +555,23 @@ log_path <- file.path(output_dir, paste0(args$basename, "_generation_log.tsv"))
 
 atomic_write_table(selected, table_path)
 message("Writing ", svg_path)
-render_atomic(svg_path, function(path) open_svg_device(path, 7.1, 7.1), draw_panel_a)
+render_atomic(
+  svg_path,
+  function(path) open_svg_device(path, figure_width_inches, figure_height_inches),
+  draw_panel_a
+)
 message("Writing ", pdf_path)
-render_atomic(pdf_path, function(path) open_pdf_device(path, 7.1, 7.1), draw_panel_a)
+render_atomic(
+  pdf_path,
+  function(path) open_pdf_device(path, figure_width_inches, figure_height_inches),
+  draw_panel_a
+)
 message("Writing ", png_path)
-render_atomic(png_path, function(path) open_png_device(path, 7.1, 7.1, 450), draw_panel_a)
+render_atomic(
+  png_path,
+  function(path) open_png_device(path, figure_width_inches, figure_height_inches, 450),
+  draw_panel_a
+)
 atomic_write_table(
   data.frame(
     schema_version = "phase12_kda_figure_generation_log_v1",
@@ -541,8 +593,8 @@ atomic_write_table(
     selection_rule = unique(selected$selection_rule),
     plotted_rows = nrow(selected),
     unique_drivers = length(unique(selected$key_driver)),
-    width_inches = 7.1,
-    height_inches = 7.1,
+    width_inches = figure_width_inches,
+    height_inches = figure_height_inches,
     png_dpi = 450,
     data_checks_passed = all(checks$passed),
     stringsAsFactors = FALSE
