@@ -5,8 +5,9 @@
 This document defines the scientific, implementation, execution, output, and
 completion plan for Phase 18.
 
-Plan status: **draft for review; implementation, local pilot execution, and
-production execution are not yet approved**.
+Plan status: **the frozen primary design and a nonfinal local real-data
+execution were authorized by the user's explicit request on 2026-08-14;
+production execution is not approved**.
 
 Phase 18 is intentionally numbered after the currently documented Phase 15
 work. Phase numbers 16 and 17 are treated as reserved and must not be reused,
@@ -1235,8 +1236,10 @@ No positive driver candidate is required for technical completion.
 | File | Purpose |
 |---|---|
 | <code>config/phase18_key_driver_selection.yml</code> | Frozen inputs, cases, filters, families, ACAT, ranking, sensitivities, outputs, and seeds |
-| <code>scripts/18_run_key_driver_selection.R</code> | Validation, test reconstruction, self-exclusion, aggregation, ranking, sensitivities, and publication |
-| <code>tests/test_phase18_key_driver_selection.R</code> | Synthetic, unit, integration, reconstruction, gate, and output-only tests |
+| <code>scripts/18_run_key_driver_selection.R</code> | Package-independent R command-line entry point |
+| <code>scripts/18_run_key_driver_selection.py</code> | Validation, test reconstruction, self-exclusion, aggregation, ranking, sensitivities, and atomic publication using the locally available scientific Python stack |
+| <code>tests/test_phase18_key_driver_selection.R</code> | R entry point for Phase 18 tests and output validation |
+| <code>tests/test_phase18_key_driver_selection.py</code> | Deterministic unit, gate, top-five, filter-funnel, gzip, artifact, and output-only tests |
 | <code>docs/phase_18_key_driver_selection/phase_18_key_driver_selection_plan.md</code> | This Phase 18 contract |
 
 The existing companion proposal remains in the same documentation directory.
@@ -1284,6 +1287,8 @@ The global task rejects <code>--rds-id</code>.
 The local pilot validates computation and contracts only. It must not use
 production results to make scientific claims.
 
+### Deterministic unit and synthetic checks
+
 Use a deterministic synthetic fixture containing:
 
 - at least two broad networks;
@@ -1326,6 +1331,34 @@ Pilot status must be:
 validation_status = nonfinal_smoke_test
 scientific_decision = not_applicable_pilot
 ~~~
+
+### Authorized nonfinal local real-data integration
+
+The user's explicit 2026-08-14 request authorizes one local integration run
+against the immutable validated Phase 12 production inputs. This run is more
+informative than the synthetic checks because it verifies reconstruction,
+aggregation, filtering, ranking, and output contracts at their real sizes.
+It remains nonfinal and does not authorize Minerva production publication.
+
+The local command is:
+
+~~~bash
+Rscript --vanilla scripts/18_run_key_driver_selection.R \
+  --phase18-config config/phase18_key_driver_selection.yml \
+  --phase12-dir results/minerva_production/12_kda \
+  --output-dir results/local_pilot/18_key_driver_selection
+~~~
+
+The required terminal status is:
+
+~~~text
+execution_class = real_phase12_data_nonfinal
+validation_status = nonfinal_local_analysis
+~~~
+
+Local results may be inspected to evaluate the design, but they must not be
+copied to the Minerva production root or described as a final Phase 18
+production result.
 
 ## Minerva production
 
