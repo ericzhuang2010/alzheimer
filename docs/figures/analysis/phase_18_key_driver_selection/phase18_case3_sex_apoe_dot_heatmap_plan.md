@@ -179,7 +179,7 @@ The implementation must call the canonical `acat_combine(...,
 missing_action="omit")` from:
 
 ```text
-scripts/18_run_key_driver_selection.py
+scripts/18_export_significant_returns.py
 ```
 
 Do not copy or independently reimplement its zero, one, and extreme-P handling.

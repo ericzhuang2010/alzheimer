@@ -1,691 +1,290 @@
-# Proposal: A Consistent, Data-Driven Way to Select Phase 12 Key Drivers
+# Unified Selection of Phase 12 Key Drivers
 
-**Status:** Revised proposal; not yet implemented
+**Phase:** 18 key-driver selection
+
+**Status:** Revised analysis specification; strict case-separated testing still requires a rerun
+
 **Prepared:** 2026-08-14
 
-## Executive recommendation
+**Rewritten:** 2026-08-15
 
-Phase 12 should begin with **all genes that were tested** and process them in three steps:
+## Purpose
 
-1. Divide every gene × run result into one of three mutually exclusive cases.
-2. Apply prespecified filters to decide which genes qualify as driver candidates.
-3. Sort the remaining candidates using the same transparent evidence measures.
+This document defines how Phase 12 key-driver analysis (KDA) results should be converted into Phase 18 candidate lists.
 
-The three cases are:
+The central rule is simple: **analyze the three biological cases separately**. For each case, begin with its own gene × run results, apply the same five filters, combine evidence, correct for multiple testing, and rank genes. Do not pool evidence or false-discovery-rate calculations across cases.
 
-1. The driver is one of the 1,136 MitoCarta core genes **and is in that run's mitochondrial query**.
-2. The driver is one of the 1,136 MitoCarta core genes **and is not in that run's mitochondrial query**.
-3. The driver is **not** one of the 1,136 MitoCarta core genes.
+## 1. Core concepts
 
-These cases should be analyzed and displayed separately. They answer different biological questions and should not compete in one undifferentiated “top five genes” list.
-
-## Definitions used in this proposal
-
-### What “MT-related” means
-
-For this proposal, **MT-related gene** means a gene in the fixed 1,136-gene Human MitoCarta3.0 core inventory.
-
-The inventory contains:
-
-- 13 genes encoded by mitochondrial DNA; and
-- approximately 1,123 mitochondrial genes encoded by nuclear DNA.
-
-The 13 mitochondrial-DNA-encoded protein genes are:
-
-MT-ATP6, MT-ATP8, MT-CO1, MT-CO2, MT-CO3, MT-CYB, MT-ND1, MT-ND2, MT-ND3, MT-ND4, MT-ND4L, MT-ND5, and MT-ND6.
-
-Some project annotations use a broader category called <code>mito_extended</code>. Those genes are outside the 1,136-gene core inventory, so they belong to Case 3 under the definition above. Their extended mitochondrial annotation should still be retained as an additional label.
-
-### What the query is
-
-A **query** is the smaller set of MitoCarta core genes that changed in AD versus NCI in one particular analysis.
-
-Each run represents one:
-
-- fine cell type;
-- sex/APOE analysis group;
-- direction of AD change; and
-- matching broad cell network.
-
-Phase 12 contains six primary sex/APOE groups:
-
-| Primary group ID | Sex | APOE group |
-|---|---|---|
-| <code>F_e2</code> | Female | APOE e2 |
-| <code>F_e33</code> | Female | APOE e3/e3 |
-| <code>F_e4</code> | Female | APOE e4 |
-| <code>M_e2</code> | Male | APOE e2 |
-| <code>M_e33</code> | Male | APOE e3/e3 |
-| <code>M_e4</code> | Male | APOE e4 |
-
-It also contains five secondary pooled groups:
-
-| Secondary group ID | Samples combined |
+| Term | Definition |
 |---|---|
-| <code>female_pool</code> | All three female APOE groups |
-| <code>male_pool</code> | All three male APOE groups |
-| <code>e2_pool</code> | Female and male APOE e2 groups |
-| <code>e33_pool</code> | Female and male APOE e3/e3 groups |
-| <code>e4_pool</code> | Female and male APOE e4 groups |
+| **Core mitochondrial gene** | A gene in the fixed 1,136-gene Human MitoCarta3.0 core inventory. |
+| **Extended mitochondrial annotation** | A broader project annotation, such as `mito_extended`. It is retained as descriptive information but does not change case assignment. A non-core gene remains in Case 3. |
+| **Query** | The core MitoCarta genes altered in AD versus NCI for one fine cell type, sex/APOE group, and direction. The query changes from run to run. |
+| **Run** | One fine cell type × one sex/APOE group × one direction, evaluated in the matching broad cell-type network. |
+| **Network neighborhood** | The genes connected to or downstream of a candidate gene in the Bayesian network, using the neighborhood selected by KDA. |
+| **Gene × run result** | One KDA enrichment test asking whether a candidate gene's neighborhood contains more query genes than expected. |
+| **Eligible result** | A gene × run result that belongs to the case being analyzed and whose run passed Filter 1. |
+| **Usable result** | An eligible result for which KDA produced a valid, interpretable P value. |
+| **Supporting run** | A usable result that meets all conservative run-level criteria in Filter 3. |
+| **Candidate unit** | One gene × broad network × case aggregate. This is the unit that receives a final status and rank. |
+| **Driver candidate** | A candidate unit that passes coverage, combined-significance, and supporting-run requirements. It is statistical network evidence, not proof of causality. |
 
-The complete Phase 12 production grid has 1,782 runs:
+KDA uses four counts for each gene × run test:
 
-~~~text
-54 fine cell types
-× 11 analysis groups (6 primary + 5 secondary)
-× 3 directions (AD-up, AD-down, and AD-both)
-= 1,782 runs
-~~~
+- `N`: number of genes in the tested background;
+- `K`: number of query genes in that background;
+- `n`: number of genes in the candidate's network neighborhood; and
+- `k`: number of query genes in that neighborhood.
 
-The proposed primary driver selection uses only the six primary groups and the separate AD-up and AD-down directions. The five secondary pooled groups and AD-both runs remain available for sensitivity or descriptive analyses, but they are not mixed into the primary ranking.
+The test reports a hypergeometric P value and fold enrichment:
 
-The query therefore changes between runs. The 1,136-gene MitoCarta inventory is fixed, but membership in a particular run's query is not fixed.
+```text
+fold enrichment = (k / n) / (K / N)
+```
 
-### What a candidate driver is
+A fold enrichment above 1 means that query genes are more concentrated in the neighborhood than expected.
 
-KDA, or **key driver analysis**, asks whether a candidate gene's network neighborhood contains more query genes than expected by chance.
+## 2. Runs used for primary selection
 
-A **network neighborhood** is the set of genes connected to or downstream of the candidate in the inferred gene network.
+Primary selection uses only:
 
-“Candidate driver” means that the gene has passed the statistical and reproducibility filters defined below. It does not prove that the gene causes Alzheimer's disease or mitochondrial dysfunction.
+- the six independent sex/APOE groups: `F_e2`, `F_e33`, `F_e4`, `M_e2`, `M_e33`, and `M_e4`;
+- the separate `AD_up_mito` and `AD_down_mito` directions;
+- validated runs with an original query size of at least 10 genes; and
+- the broad network that matches the fine cell type.
 
-## Step 1: Divide every result into three cases
+It excludes pooled sex/APOE groups and the combined AD-both direction. Those analyses reuse information and should be reserved for sensitivity or descriptive summaries.
 
-Every gene × run result should receive exactly one case label.
+The maximum primary grid is:
 
-| Case | Exact rule | Question answered | Interpretation |
-|---|---|---|---|
-| **Case 1: MT-related and in query** | <code>in_core_mito = yes</code> and <code>driver_in_query = yes</code> | Does an AD-altered mitochondrial gene connect to other AD-altered mitochondrial genes? | The candidate is part of the input signature, so its own contribution must be removed before judging downstream evidence. |
-| **Case 2: MT-related and not in query** | <code>in_core_mito = yes</code> and <code>driver_in_query = no</code> | Does a mitochondrial gene that was not selected into this run's AD query connect to the altered mitochondrial program? | Query-independent evidence for a mitochondrial component or regulator. |
-| **Case 3: not MT-related** | <code>in_core_mito = no</code> | Does a gene outside the 1,136-gene MitoCarta core set connect to the altered mitochondrial program? | Best case for discovering candidate regulators outside the queried mitochondrial program. |
+```text
+54 fine cell types × 6 sex/APOE groups × 2 directions = 648 possible runs
+```
 
-Because every Phase 12 query is drawn from the 1,136 MitoCarta genes, a Case 3 gene cannot be in the query. Therefore, Case 3 does not need a second query-membership subdivision.
+In the current validated data snapshot, 161 runs remain after the run-level requirements:
 
-### Why Case 1 needs special handling
+| Broad network | Included runs |
+|---|---:|
+| Astrocyte | 21 |
+| Excitatory neuron | 97 |
+| Inhibitory neuron | 28 |
+| Microglia | 6 |
+| Oligodendrocyte precursor cell | 6 |
+| Oligodendrocyte | 2 |
+| Vasculature | 1 |
 
-The Phase 12 fKDA method includes the candidate driver itself in the tested neighborhood. If the candidate is also in the query, it automatically contributes one overlap to its own enrichment result. This is called **self-overlap**.
+These counts describe the current input. They should be recomputed whenever the validated run set changes.
 
-For example:
+## 3. Assign every gene × run opportunity to one case
 
-~~~text
-The query contains 10 genes.
-The candidate is one of those 10 genes.
-The candidate reaches 1 other query gene.
+Each opportunity receives exactly one case label before case-specific filtering or correction.
 
-Reported overlap = 1 candidate itself + 1 other query gene = 2.
-Independent downstream overlap = 1 other query gene.
-~~~
-
-The reported overlap of two can look stronger than the independent downstream evidence of one. In the validated Phase 12 results, 5,349 of 10,172 result rows, or 52.6%, have a driver that is also in the query. This is therefore a major feature of the data, not a rare edge case.
-
-Case 1 results should not be discarded automatically. A query-member gene may genuinely connect to several other altered mitochondrial genes. Instead, recompute its enrichment after removing the driver's guaranteed self-contribution.
-
-For a Case 1 row, subtract the driver once from:
-
-- the total background size;
-- the query size;
-- the neighborhood size; and
-- the query–neighborhood overlap.
-
-Then recompute the enrichment P value using the remaining genes. This **self-excluded P value** asks whether the driver reaches other query genes, rather than rewarding the driver for matching itself.
-
-For Cases 2 and 3, no subtraction is needed because the driver is not in the query.
-
-## Step 2: Filter genes to obtain driver candidates
-
-Filtering and sorting serve different purposes:
-
-- **Filtering** defines the minimum evidence required to call a gene a candidate.
-- **Sorting** orders candidates that have already passed those minimum requirements.
-
-The filters should be defined before inspecting the resulting ranks.
-
-### Filter 1: Use a common set of Phase 12 runs
-
-For primary driver selection, use **only the six primary sex/APOE groups and only the separate AD-up and AD-down mitochondrial queries**.
-
-This gives a maximum starting set of 648 runs before the query-size and other quality filters are applied:
-
-~~~text
-54 fine cell types
-× 6 primary sex/APOE groups
-× 2 directions (AD-up and AD-down)
-= 648 possible primary-selection runs
-~~~
-
-Specifically, include only:
-
-- primary Phase 12 analyses only;
-- the six primary sex/APOE groups: <code>F_e2</code>, <code>F_e33</code>, <code>F_e4</code>, <code>M_e2</code>, <code>M_e33</code>, and <code>M_e4</code>;
-- AD-up and AD-down mitochondrial queries;
-- validated runs with an effective query size of at least 10 genes; and
-- the matching broad cell network.
-
-Explicitly exclude from primary candidate selection:
-
-- the five secondary pooled groups: <code>female_pool</code>, <code>male_pool</code>, <code>e2_pool</code>, <code>e33_pool</code>, and <code>e4_pool</code>; and
-- the combined AD-both query direction.
-
-The secondary groups reuse samples from the six primary groups, and AD-both reuses information from the separate directional queries. Including them together in the primary ACAT calculation would count related evidence more than once. Analyze them separately as sensitivity or descriptive results.
-
-### Filter 2: Require a valid, interpretable test
-
-Filter 2 is a **data-validity filter**, not a significance filter. It asks whether a gene × run result is trustworthy enough to use in the later candidate-selection calculations.
-
-#### 2A. Confirm that the driver was testable in the run
-
-The driver must be present in the run's tested gene background. This means that the gene was sufficiently represented in the corresponding fine cell type and sex/APOE comparison to be included in the analysis.
-
-If a driver was not measured or could not be tested, store its result as missing, or <code>NA</code>. Do not replace an unperformed test with P = 1, because P = 1 means that a valid test was performed and found no enrichment.
-
-#### 2B. Confirm that the network test was constructed correctly
-
-The candidate must exist in the matching broad cell network, and its downstream neighborhood must have been constructed successfully.
-
-A valid neighborhood with no query-gene overlap is still a valid null result. Retain it with P = 1. It is different from a missing test:
-
-| Situation | Stored value | Meaning |
+| Case | Assignment rule | Biological question |
 |---|---|---|
-| Test completed but found no enrichment | P = 1 | Valid evidence against enrichment in that run |
-| Test could not be performed | <code>NA</code> | No evidence was generated |
+| **Case 1: core mitochondrial and in query** | Gene is in the 1,136-gene core and is present in that run's query. | Does an AD-altered mitochondrial gene connect to other altered mitochondrial genes? |
+| **Case 2: core mitochondrial and not in query** | Gene is in the core but absent from that run's query. | Does a mitochondrial gene outside this run's AD signature connect to the altered mitochondrial program? |
+| **Case 3: not core mitochondrial** | Gene is outside the 1,136-gene core. | Does a non-core gene connect to, and potentially regulate, the altered mitochondrial program? |
 
-#### 2C. Confirm that the run passed quality checks
+Case membership can change by run for a core mitochondrial gene: it is in Case 1 when it belongs to the query and Case 2 otherwise. A non-core gene is always in Case 3.
 
-The query, background, network, and enrichment calculation must be internally valid. At minimum:
+After assignment, the analysis branches:
 
-- query genes must map correctly to the tested background;
-- network genes must use valid and consistent identifiers;
-- the query, neighborhood, overlap, and background counts must be logically consistent;
-- the run must satisfy the Phase 12 validation checks; and
-- the raw enrichment P value must be a valid number between 0 and 1.
+```text
+validated runs
+    |
+    +-- Case 1 gene × run table --> filters --> ACAT --> Case 1 BH --> Case 1 ranks
+    +-- Case 2 gene × run table --> filters --> ACAT --> Case 2 BH --> Case 2 ranks
+    +-- Case 3 gene × run table --> filters --> ACAT --> Case 3 BH --> Case 3 ranks
+```
 
-A failed or malformed result should be stored as untestable and must not enter ACAT.
+No P values, q values, candidate lists, or ranks should be combined across these branches.
 
-#### 2D. Remove the guaranteed self-overlap from Case 1
+## 4. The five filters
 
-In Case 1, the driver belongs to the query and the Phase 12 fKDA method includes the driver in its own neighborhood. The original enrichment result therefore contains one guaranteed overlap.
+The filters act at different levels. This distinction is important.
 
-Remove the driver once from all four enrichment counts:
+| Filter | Acts on | Purpose |
+|---|---|---|
+| **1. Run eligibility** | Run | Select the common, valid primary runs. |
+| **2. Test validity** | Gene × run result | Decide whether an individual test is usable. |
+| **3. Conservative support** | Gene × run result | Label convincing evidence from one run. It does not delete valid non-supporting results. |
+| **4. Coverage** | Gene × network × case | Require enough usable results across eligible runs. |
+| **5. Combined evidence** | Gene × network × case | Combine all usable P values and identify final candidates. |
 
-~~~text
-self-excluded background size   = original background size − 1
-self-excluded query size        = original query size − 1
-self-excluded neighborhood size = original neighborhood size − 1
-self-excluded overlap count     = original overlap count − 1
-~~~
+### Filter 1: Select eligible runs
 
-Then recalculate both the enrichment P value and fold enrichment from the self-excluded counts.
+A run is included only if it satisfies all requirements in Section 2. This filter removes runs, not genes.
 
-For example:
+Runs removed here are not counted in any later coverage denominator.
 
-~~~text
-Original overlap:
-1 driver itself + 2 other query genes = 3
+### Filter 2: Require a valid gene × run test
 
-Self-excluded overlap:
-2 other query genes
-~~~
+An eligible result is usable when:
 
-For Cases 2 and 3, use the original counts and ordinary P value because the driver is not in the query.
+- the gene is in the run's tested background and matching broad network;
+- the query, background, neighborhood, and overlap counts are logically valid; and
+- a valid P value from 0 to 1 can be calculated.
 
-If removing the Case 1 driver leaves no remaining neighborhood genes or no overlap with the remaining query, retain the result as a valid null test with P = 1 rather than marking it missing.
+Keep the difference between a null result and a missing test:
 
-#### 2E. Recalculate run-level q values
+| Stored value | Meaning | Used by ACAT? | Counts as usable? |
+|---|---|---:|---:|
+| `P = 1` | The test was completed and found no enrichment. | Yes | Yes |
+| `NA` | The test could not be performed or interpreted. | No | No |
 
-After all Case 1 P values have been replaced with their self-excluded P values, apply Benjamini-Hochberg multiple-testing correction again across all tested drivers within each run.
+#### Case 1 self-overlap correction
 
-The q values must be recalculated because each q value depends on:
+In Case 1, the candidate belongs to both the query and its own KDA neighborhood. That creates one guaranteed overlap. Remove that self-match before evaluating the gene:
 
-- all P values in the run;
-- the number of genes tested; and
-- the relative ordering of the P values.
+```text
+N_corrected = N - 1
+K_corrected = K - 1
+n_corrected = n - 1
+k_corrected = k - 1
+```
 
-The existing run-level q values are no longer valid after the Case 1 P values change.
+Then recompute the P value and fold enrichment. This asks whether the candidate reaches **other** query genes. If no enrichment remains, keep the valid result as `P = 1`; do not convert it to `NA`.
 
-The resulting **q value** is the multiple-testing-adjusted P value. It controls the expected fraction of false discoveries among the reported genes.
+Cases 2 and 3 use the original counts because the candidate is not in the query.
 
-#### Output of Filter 2
+After this correction, recalculate run-level Benjamini-Hochberg (BH) q values **separately within each run × case**. This keeps the three hypothesis families separate.
 
-Filter 2 does not require statistical significance. Valid non-significant P values must remain in the data because ACAT needs favorable, weak, and null evidence.
+### Filter 3: Label conservative supporting runs
 
-After Filter 2, every gene × run result has one of these outcomes:
+A usable gene × run result is a supporting run only when all four conditions hold:
 
-| Filter 2 outcome | Value carried forward |
-|---|---|
-| Valid Case 1 test | Self-excluded P value and self-excluded fold enrichment |
-| Valid Case 2 or Case 3 test | Original P value and fold enrichment |
-| Valid test with no enrichment | P = 1 |
-| Invalid or untestable result | <code>NA</code> |
+1. the original run query contains at least 10 genes, as already required by Filter 1;
+2. the candidate's neighborhood contains at least two other query genes;
+3. fold enrichment is greater than 1; and
+4. the case-specific run-level q value is at most 0.05.
 
-Statistical support is evaluated later under Filters 3 and 5.
+For Case 1, use the self-corrected overlap, fold enrichment, P value, and q value. For Cases 2 and 3, use the original values.
 
-### Filter 3: Define conservative run-level support
+A usable result that fails these criteria remains in the case table and still enters ACAT. Filter 3 adds a support label; it does not keep only significant results.
 
-Filter 3 asks whether **one individual run provides convincing support for a driver**. It does not produce the final driver list; evidence is combined across runs later under Filter 5.
+### Filter 4: Require at least 80% coverage
 
-A run counts as conservative support only when all four conditions below are satisfied.
+Filter 4 asks one question:
 
-#### 3A. The effective query contains at least 10 genes
+> Was this gene successfully tested in at least 80% of the runs where it should have been tested?
 
-The query is the set of mitochondrial genes altered in AD for that fine cell type × sex/APOE group × direction.
+For one gene × broad network × case:
 
-Very small queries produce unstable enrichment results. For example, if a query contains only three genes, reaching one gene represents one-third of the entire query and can produce an apparently impressive result from very little information.
+```text
+coverage = number of usable results / number of eligible results
+```
 
-Requiring at least 10 query genes removes the smallest and most fragile tests. Filter 1 already applies this threshold to the primary run set; repeating it here ensures that no smaller-query sensitivity run can accidentally count as conservative support.
+The denominator is case-specific:
 
-#### 3B. The driver reaches at least two other query genes
+- **Case 1:** included runs in that broad network where the core gene is in the query;
+- **Case 2:** included runs in that broad network where the core gene is not in the query; and
+- **Case 3:** all included runs in that broad network, because a non-core gene always belongs to Case 3.
 
-The driver's network neighborhood must contain at least two query genes other than the driver itself.
+Examples:
 
-Apply the rule as follows:
+- 8 usable results out of 10 eligible results gives 80% coverage and passes.
+- 7 usable results out of 10 gives 70% and fails.
+- A valid `P = 1` result is usable and counts in the numerator.
+- An `NA` result is eligible but not usable, so it lowers coverage.
+- A run removed by Filter 1 is not eligible and is absent from both numerator and denominator.
 
-- Case 1: subtract the driver's self-overlap. The original reported overlap must be at least three to leave two other query genes.
-- Case 2: use the reported overlap directly because the driver is not in the query.
-- Case 3: also use the reported overlap directly because the driver cannot be in the core mitochondrial query.
-
-Case 1 passing example:
-
-~~~text
-Reported overlap       = 3
-                       = driver itself + 2 other query genes
-Self-excluded overlap = 2
-Result passes the overlap requirement.
-~~~
-
-Case 1 failing example:
-
-~~~text
-Reported overlap       = 2
-                       = driver itself + 1 other query gene
-Self-excluded overlap = 1
-Result fails the overlap requirement.
-~~~
-
-Requiring two other query genes prevents a candidate from receiving conservative support from only one network connection and avoids giving Case 1 an easier threshold.
-
-#### 3C. Fold enrichment is greater than 1
-
-Fold enrichment compares the proportion of query genes inside the driver's neighborhood with the proportion of query genes in the complete tested background:
-
-~~~text
-                  query genes in neighborhood / neighborhood size
-fold enrichment = ────────────────────────────────────────────────
-                       total query genes / background size
-~~~
-
-Interpret fold enrichment as follows:
-
-- Fold enrichment = 1 means no enrichment.
-- Fold enrichment > 1 means query genes are more concentrated around the driver than expected.
-- Fold enrichment < 1 means query genes are less concentrated around the driver than expected.
-
-For Case 1, calculate fold enrichment using the self-excluded counts from Filter 2. This condition ensures that a statistically significant result represents enrichment in the intended direction.
-
-#### 3D. The run-level q value is no greater than 0.05
-
-Each run tests many candidate drivers, so some genes will have small raw P values by chance. The Benjamini-Hochberg q value corrects for these multiple tests.
-
-Requiring q ≤ 0.05 means that the run-level result remains significant after accounting for the number of candidate drivers tested. For Case 1, use the recalculated q value based on the self-excluded P values.
-
-#### Output of Filter 3
-
-For every valid gene × run result:
-
-~~~text
-All four conditions pass → conservative supporting run
-Any condition fails      → not a conservative supporting run
-~~~
-
-The supporting runs are used to calculate:
-
-- number of conservative supporting runs;
-- recurrence across tested runs;
-- fine-cell-type breadth; and
-- whether the gene has at least one conservative supporting run, as required by Filter 5.
-
-A valid run that fails Filter 3 is **not deleted**. Its P value still enters the later ACAT calculation. Keeping favorable, weak, and null evidence prevents the combined analysis from using only significant results.
-
-### Filter 4: Require adequate coverage across runs
-
-Filter 4 asks whether a gene was evaluated often enough for its combined ACAT result to be trustworthy. It is a **data-completeness filter**, not a significance filter.
-
-#### 4A. What one gene-level test means
-
-A **test** is one KDA enrichment calculation for one candidate gene in one Phase 12 run:
-
-~~~text
-one candidate gene × one Phase 12 run = one gene-level KDA test
-~~~
-
-For example:
-
-~~~text
-Run:       astrocyte subtype × Female APOE e4 × AD-up query
-Candidate: RPL11
-Question:  Are AD-up mitochondrial query genes unusually concentrated
-           in RPL11's downstream network neighborhood?
-~~~
-
-For each candidate, KDA uses:
-
-- background size: number of genes in the run's tested background;
-- query size: number of AD-associated mitochondrial query genes;
-- neighborhood size: number of genes in the candidate's directed network neighborhood; and
-- overlap count: number of query genes in that neighborhood.
-
-KDA evaluates directed neighborhoods up to three network layers and retains the best layer for the candidate. It reports fold enrichment, a raw hypergeometric P value, and a run-level Benjamini-Hochberg-adjusted q value.
-
-#### 4B. What counts as a usable test result
-
-A gene has a usable test result when:
-
-1. the run passed Filter 1 and the Phase 12 run-level quality checks;
-2. the gene is present in that run's tested background;
-3. the gene and network identifiers are valid;
-4. the neighborhood, query, overlap, and background counts are internally possible; and
-5. a P value between 0 and 1 can be assigned.
-
-A usable result can be significant, non-significant, or completely null.
-
-Example of a usable enriched test:
-
-~~~text
-Background genes:              7,000
-Query genes:                      20
-Neighborhood genes:               50
-Query genes in neighborhood:        4
-~~~
-
-KDA can calculate an enrichment P value from these counts, so this is a usable test.
-
-If a gene is present in the tested background but has no usable query overlap, the complete Phase 12 candidate table records an implicit zero-overlap result:
-
-~~~text
-candidate_test_status = implicit_zero_overlap
-P value = 1
-~~~
-
-This is also a usable test. It is valid evidence that the gene did not show enrichment in that run.
-
-#### 4C. When no usable gene-level test exists
-
-**Gene absent from the tested background:** The gene was not testable in that fine cell type and contrast or was absent from the run-specific induced network. No gene-level P value can be calculated, so store <code>NA</code>.
-
-**Entire run ineligible:** The run may have an insufficient query, an unvalidated source contrast, an empty induced network, or another failed run-level quality check. Such a run is excluded before coverage is calculated and is not part of the denominator.
-
-**Malformed or failed calculation:** Examples include an overlap larger than the query or neighborhood, a neighborhood larger than the background, duplicated gene/run records, an invalid P value, or a computation failure. Store the result as <code>NA</code>. The validated Phase 12 production report had zero failed runs, but the revised workflow should still check for these conditions.
-
-#### 4D. Calculate coverage
-
-For each gene, broad network, and case, calculate:
-
-~~~text
-           eligible runs with a usable gene-level result
-coverage = ─────────────────────────────────────────────
-              eligible runs for that network and case
-~~~
-
-For example:
-
-~~~text
-Eligible runs: 100
-Usable tests:   85
-Coverage:       85 / 100 = 0.85
-~~~
-
-This gene passes the proposed 80% coverage threshold. A gene with one very small P value but usable results in only 40 of 100 eligible runs has 40% coverage and fails.
-
-The denominator is gene- and case-specific:
-
-- Case 1 includes runs in which that MitoCarta gene is in the query.
-- Case 2 includes runs in which that MitoCarta gene is not in the query.
-- Case 3 includes all otherwise eligible runs because a non-MitoCarta gene cannot enter the core mitochondrial query.
-
-A MitoCarta gene can therefore have one Case 1 aggregate and a separate Case 2 aggregate. Do not pool evidence from the two cases.
-
-Always report the numerator and denominator as well as the fraction. For example, 4/5 and 80/100 both equal 80%, but the second estimate is based on substantially more information.
-
-#### 4E. Distinguish P = 1 from missing data
-
-| Situation | Count in coverage denominator? | Count in coverage numerator? | Value supplied to primary ACAT |
-|---|---:|---:|---|
-| Run excluded by Filter 1 | No | No | Not included |
-| Eligible run; gene has an explicit KDA result | Yes | Yes | Calculated P value |
-| Eligible run; gene has an implicit zero-overlap result | Yes | Yes | P = 1 |
-| Eligible run; gene is absent from the tested background | Yes | No | <code>NA</code> |
-| Eligible run; gene-level calculation fails | Yes | No | <code>NA</code> |
-
-The essential distinction is:
-
-~~~text
-P = 1 → the gene was evaluated and showed no enrichment
-NA    → the gene could not be evaluated
-~~~
-
-For example:
-
-~~~text
-100 eligible runs
-80 usable P values, including 20 values equal to 1
-20 untestable values recorded as NA
-
-Coverage = 80 / 100 = 0.80
-~~~
-
-The gene passes coverage, and all 80 usable P values—including the P = 1 results—enter the primary ACAT calculation.
-
-#### 4F. Apply the threshold and sensitivity analyses
-
-Require coverage of at least 0.80 for the primary analysis. Passing means that the gene has sufficiently complete testing across its relevant runs; it does not mean that the gene is significant or recurrent.
-
-After a gene passes the 80% gate:
-
-1. combine all usable P values with ACAT, including P = 1 results; and
-2. omit genuine <code>NA</code> values from the primary ACAT calculation.
-
-This avoids treating technical inability to evaluate a gene as biological evidence against it. As a conservative sensitivity analysis, replace the remaining <code>NA</code> values with P = 1 and repeat ACAT. A gene that remains strong under both approaches is less dependent on missing-data handling.
-
-The 80% threshold is a prespecified compromise, not a biological constant. Repeat the analysis at coverage thresholds of 0.50, 0.80, and 1.00 to show whether conclusions depend strongly on this choice; retain 0.80 as the primary threshold.
+If a gene has no eligible results for a case, that gene × network × case combination is not assessed.
 
 ### Filter 5: Require significant combined evidence
 
-For every broad network × gene × case:
+For each gene × broad network × case, combine **all usable P values** with the aggregated Cauchy association test (ACAT).
 
-1. Combine all valid tested run-level P values with ACAT.
-2. Include non-significant P values as well as significant ones.
-3. Do not combine only the favorable runs.
-4. Apply Benjamini-Hochberg correction to the resulting gene-level ACAT P values across all tested gene × case combinations within that broad network.
+ACAT must include:
 
-ACAT, the **aggregated Cauchy association test**, produces one combined P value from a gene's evidence across runs.
+- significant P values;
+- non-significant P values; and
+- valid null values of `P = 1`.
 
-A gene becomes a Phase 12 driver candidate only if all of the following are true:
+Omit only `NA` values from the primary ACAT calculation. Exact boundary values should be handled with a numerically stable implementation without changing their interpretation.
 
-- coverage is at least 0.80;
-- the gene has at least one conservative supporting run; and
-- the gene-level ACAT q value is no greater than 0.05.
+Next, apply BH correction to the ACAT P values **separately within each broad network × case**. For example, Astrocyte Case 1, Astrocyte Case 2, and Astrocyte Case 3 are three different correction families.
 
-The same hard filters apply to all three cases. The only special operation is removing self-overlap before testing Case 1.
+A gene × broad network × case result is a final driver candidate when it has:
 
-### Candidate status after filtering
+- coverage of at least 80%;
+- aggregate ACAT q ≤ 0.05; and
+- at least one conservative supporting run from Filter 3.
+
+Suggested result labels are:
 
 | Status | Rule |
 |---|---|
-| **Driver candidate** | Coverage ≥ 0.80, at least one conservative run, and ACAT q ≤ 0.05 |
-| **Exploratory signal** | Coverage ≥ 0.80 and raw ACAT P ≤ 0.05, but ACAT q > 0.05 |
-| **Insufficient coverage** | Coverage < 0.80 |
-| **Not supported** | Adequate coverage but no conservative run or raw ACAT P > 0.05 |
+| **Driver candidate** | Passes coverage, aggregate q, and supporting-run requirements. |
+| **Exploratory signal** | Passes coverage and has raw ACAT P ≤ 0.05, but does not pass all final-candidate requirements. |
+| **Not supported** | Has adequate coverage but does not meet either rule above. |
+| **Insufficient coverage** | Coverage is below 80%. |
+| **Not assessed** | No eligible results exist. |
 
-Exploratory signals should remain in the supplementary table but should not be displayed as selected drivers in the main figure.
+## 5. Ranking candidates
 
-## Step 3: Sort the remaining driver candidates
+Rank final candidates separately within each broad network × case by:
 
-Sorting must occur **within each of the three cases**. The workflow should produce three independent ranked lists for every broad network:
+1. ascending aggregate ACAT q value;
+2. ascending aggregate ACAT P value; and
+3. gene symbol, alphabetically, as the deterministic tie-breaker.
 
-1. a Case 1 ranking containing only MT-related drivers that are in the query;
-2. a Case 2 ranking containing only MT-related drivers that are not in the query; and
-3. a Case 3 ranking containing only drivers outside the 1,136-gene MitoCarta core set.
+Supporting-run count, recurrence, fine-cell-type breadth, and sex/APOE pattern should be reported as evidence annotations. They should not silently replace the prespecified statistical ranking.
 
-There must be no single combined rank across Cases 1, 2, and 3.
+“Top five” is a display limit, not a biological threshold. A circular figure may show the first five ranked candidates per broad cell type, but the complete table must retain every candidate.
 
-Do not compare a Case 1 query-member mitochondrial gene directly with a Case 3 non-MitoCarta gene for one shared rank. The two genes answer different questions.
+## 6. Required outputs
 
-### Measures used for sorting
+Produce separate outputs for Cases 1, 2, and 3.
 
-For every candidate, calculate:
+### Complete candidate table
 
-- **ACAT q value:** overall statistical evidence after multiple-testing correction;
-- **fine-cell-type breadth:** number of distinct fine cell types with conservative support;
-- **recurrence:** conservative supporting runs divided by tested runs;
-- **leave-one-fine-cell-type-out stability:** whether the combined result remains when each fine cell type is removed in turn;
-- **median fold enrichment:** typical magnitude of enrichment across supporting runs, using the self-excluded fold enrichment for Case 1; and
-- **coverage:** completeness of testing across eligible runs.
+At minimum, report:
 
-The leave-one-fine-cell-type-out check identifies genes whose combined evidence is driven almost entirely by one subtype.
+- gene symbol and stable gene identifier;
+- broad network and case;
+- core and extended mitochondrial annotations;
+- eligible, usable, and supporting-run counts;
+- coverage;
+- aggregate ACAT P and case-specific q values;
+- fine-cell-type, sex/APOE, and direction breadth;
+- final status and within-case rank; and
+- the contributing run identifiers.
 
-### Evidence tiers
+### Main figures
 
-Assign an evidence tier before sorting:
+- one circular summary per case, showing at most five genes per broad cell type;
+- one sex/APOE evidence figure for selected genes; and
+- focused network figures showing how selected genes connect to query genes.
 
-| Tier | Rule | Meaning |
-|---|---|---|
-| **Tier 1: recurrent and stable** | Candidate filter passed; conservative support in at least two fine cell types; nominal ACAT P ≤ 0.05 in at least 80% of leave-one-fine-cell-type-out repeats | Strongest repeated evidence |
-| **Tier 2: significant but localized** | Candidate filter passed, but support occurs in only one fine cell type or fails the stability requirement | Statistically supported but context-specific |
+The figures summarize the complete tables; they do not define candidate status.
 
-If a network contains too few eligible fine cell types to evaluate breadth or leave-one-out stability, mark stability as **not assessable** rather than treating it as failure.
+### Audit output
 
-### Exact sorting order
+Retain a gene × run audit table containing case assignment, eligibility, usability, original values, Case 1 corrected values, support status, and exclusion reason. This makes every aggregate result traceable to its contributing tests.
 
-Within each broad network, apply the following sorting order independently to Case 1, Case 2, and Case 3 candidates:
+## 7. Robustness checks
 
-1. Tier 1 before Tier 2.
-2. Smaller gene-level ACAT q value.
-3. Greater fine-cell-type breadth.
-4. Higher recurrence.
-5. Larger median fold enrichment.
-6. Higher coverage.
-7. Gene symbol alphabetically as the final deterministic tie-breaker.
+The primary result uses `NA` omission, 80% coverage, and ACAT. Test whether conclusions change under:
 
-This is a **lexicographic ranking**: apply the first rule, use the second rule only to order genes within the same tier, then continue down the list. It is not a weighted score. Readers can therefore see exactly why one gene ranks above another.
+- treating missing eligible results as `P = 1`;
+- coverage thresholds of 50%, 80%, and 100%;
+- leave-one-fine-cell-type-out aggregation;
+- degree-matched network nulls; and
+- an alternative P-value combination method.
 
-### The “top five” rule
+These checks assess stability. They should not replace the frozen primary rule after results are inspected.
 
-“Top five” should be a display limit only, not a candidate-selection criterion.
+## 8. Interpretation
 
-- If more than five genes pass, display the first five and publish all candidates in the supplementary table.
-- If fewer than five genes pass, display only the genes that passed.
-- If no gene passes, state that no gene met the prespecified criteria.
+The analysis can support statements such as:
 
-Never fill an empty position with a gene that failed the candidate filters.
+- a gene's Bayesian-network neighborhood is enriched for an AD-associated mitochondrial query;
+- the signal recurs across defined runs; or
+- the signal is specific to a broad cell type, sex/APOE group, or direction.
 
-## Recommended outputs
+It cannot by itself prove that the gene causes AD, directly regulates every connected gene, or is a therapeutic target. Bayesian-network direction and KDA enrichment are prioritization evidence that require biological validation.
 
-### Main summary figure
+## 9. Implementation note
 
-Show separate sections or panels for:
-
-- **Case 1:** MT-related, query-member candidates evaluated with self-excluded enrichment;
-- **Case 2:** MT-related, query-independent candidates; and
-- **Case 3:** candidates outside the 1,136-gene MitoCarta core set.
-
-Case 3 should be the primary panel for claims about regulators outside the queried mitochondrial program. Case 2 provides mitochondrial regulator or component candidates. Case 1 describes mitochondrial genes that are themselves altered in AD but also reach other altered mitochondrial genes after self-overlap is removed.
-
-Use a separate annotation to show whether a gene is mtDNA encoded, nuclear encoded, or labeled <code>mito_extended</code>. Genome origin is useful biological information but does not replace the three-case classification.
-
-### Sex/APOE heatmap
-
-Use the same candidates selected by the three-case workflow. The heatmap should show which sex/APOE runs contribute to each candidate's overall result.
-
-Do not select a new heatmap gene list from the manually curated set of 14 genes.
-
-### Complete supplementary table
-
-The master table should contain at least:
-
-| Column | Purpose |
-|---|---|
-| Broad network, fine cell type, group, direction, and gene | Identifies the result |
-| <code>in_core_mito</code> | Identifies membership in the 1,136-gene MitoCarta core set |
-| <code>driver_in_query</code> | Distinguishes Case 1 from Case 2 |
-| Three-case label | Makes the analysis branch explicit |
-| Genome origin and extended mitochondrial annotation | Preserves additional biological information |
-| Original and self-excluded overlap counts | Makes the Case 1 correction visible |
-| Original and self-excluded P values | Shows the impact of removing self-overlap |
-| Recomputed run-level q value | Reports multiple-testing-adjusted run evidence |
-| Eligible runs, tested runs, and coverage | Shows data completeness |
-| Conservative-support count and recurrence | Shows repeated run-level support |
-| Fine-cell-type breadth | Shows whether evidence spans subtypes |
-| ACAT P value and gene-level q value | Reports aggregate evidence |
-| Leave-one-fine-cell-type-out stability | Identifies subtype-driven results |
-| Median fold enrichment | Reports evidence magnitude, not only significance |
-| Candidate status, evidence tier, and final rank | Makes selection reproducible |
-
-## Robustness checks
-
-### Network-hub sensitivity
-
-Highly connected genes have more opportunities to reach query genes. The enrichment calculation accounts for neighborhood size, but additional degree-matched permutations should test whether highly ranked genes remain unusual compared with genes having similar network connectivity.
-
-A **degree-matched permutation** compares a candidate with randomized genes or queries having similar numbers of network connections.
-
-### Missing-data sensitivity
-
-Compare:
-
-- primary ACAT with true missing values omitted after the 80% coverage gate; and
-- conservative ACAT with missing values replaced by P = 1.
-
-Candidates that pass under both approaches are less sensitive to missing tests.
-
-### Coverage sensitivity
-
-Repeat the ranking at coverage thresholds of 0.50, 0.80, and 1.00. The 0.80 analysis remains primary; the alternatives show whether rankings depend strongly on the chosen threshold.
-
-### Alternative aggregation
-
-Compare ACAT with the existing mean-of-log-P method. This is a sensitivity check, not an opportunity to choose whichever method gives the preferred genes.
-
-## Plain-language statistical glossary
-
-| Term | Meaning |
-|---|---|
-| **P value** | How surprising the result would be if there were no enrichment. Smaller values indicate stronger evidence but do not prove causality. |
-| **q value/FDR-adjusted P value** | A P value corrected because many genes were tested. It limits the expected proportion of false discoveries among selected genes. |
-| **ACAT** | A method that combines several run-level P values into one overall P value for a gene. |
-| **Fold enrichment** | How concentrated query genes are in a driver's neighborhood compared with the full background. It describes magnitude, whereas the P value describes statistical evidence. |
-| **Coverage** | The fraction of eligible runs in which a gene was actually tested. |
-| **Recurrence** | The fraction of tested runs that provide conservative significant support. |
-| **Fine-cell-type breadth** | The number of different fine cell types providing conservative support. |
-| **Self-overlap** | The guaranteed overlap created when the candidate driver is itself in the query and is included in its tested neighborhood. |
-| **Multiple-testing correction** | An adjustment that reduces false-positive findings when many genes are examined. |
-| **Sensitivity analysis** | Repeating the analysis under a reasonable alternative rule to determine whether conclusions are stable. |
-
-## Minimum implementation requirements
-
-The revised workflow is complete when:
-
-1. all tested genes enter the initial analysis;
-2. every result receives exactly one of the three case labels;
-3. Case 1 enrichment is recomputed after removing self-overlap;
-4. run-level multiple-testing correction is recomputed after changing the P values;
-5. the same conservative support, coverage, and aggregate significance filters are applied to all cases;
-6. candidates are sorted separately by broad network and case;
-7. the ranking follows the documented tier and tie-breaking order;
-8. “top five” is used only as a display cap;
-9. the circular and sex/APOE figures use the same selected candidates; and
-10. a complete table documents every inclusion, exclusion, and rank.
-
-## Claims the analysis can and cannot support
-
-This analysis can identify genes with statistically supported and reproducible network connections to AD-associated mitochondrial expression.
-
-It cannot establish that a selected gene causes Alzheimer's disease, directly regulates mitochondria, or is a therapeutic target. Those conclusions require independent datasets and functional experiments.
-
-## Recommended decision
-
-Adopt the three-case workflow as the Phase 12 standard:
-
-1. classify every tested result;
-2. remove Case 1 self-overlap and apply common candidate filters; and
-3. sort the surviving candidates separately within each broad network and case.
-
-Keep biological literature as an interpretation and experimental-prioritization layer after the data-driven selection is complete.
+Strict separation means that both run-level BH correction and aggregate BH correction use case-specific hypothesis families. Because this requirement changes the q values, existing Phase 18 candidate tables and figures should not be treated as compliant with this specification until the analysis is rerun and validated under the revised rule.

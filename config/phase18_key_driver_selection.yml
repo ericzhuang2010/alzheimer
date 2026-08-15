@@ -86,24 +86,4 @@ networks:
 outputs:
   validation_status: validated_complete
   declared_files:
-    - key_driver_analysis_manifest.tsv
-    - key_driver_case_manifest.tsv
-    - key_driver_run_manifest.tsv
-    - key_driver_input_inventory.tsv
-    - key_driver_source_checks.tsv
-    - key_driver_candidate_tests.tsv.gz
-    - key_driver_conservative_support.tsv.gz
-    - key_driver_gene_case_summary.tsv.gz
-    - key_driver_candidates.tsv
-    - key_driver_top5.tsv
-    - key_driver_stability_replicates.tsv.gz
-    - key_driver_stability_summary.tsv
-    - key_driver_sensitivity_results.tsv.gz
-    - key_driver_network_degree_sensitivity.tsv
-    - key_driver_figure_data.tsv
-    - key_driver_exclusion_summary.tsv
-    - key_driver_filter_funnel.tsv
-    - key_driver_stage_status.tsv
-    - key_driver_checks.tsv
-    - key_driver_artifacts.tsv
-    - key_driver_status.tsv
+    - key_driver_significant_returns.tsv

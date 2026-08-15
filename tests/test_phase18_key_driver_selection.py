@@ -4,17 +4,15 @@
 from __future__ import annotations
 
 import argparse
-import csv
 import importlib.util
 import math
-from collections import Counter
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location(
     "phase18_key_driver_selection",
-    ROOT / "scripts" / "18_run_key_driver_selection.py",
+    ROOT / "scripts" / "18_export_significant_returns.py",
 )
 if SPEC is None or SPEC.loader is None:
     raise RuntimeError("Could not load Phase 18 implementation")
@@ -73,99 +71,49 @@ def unit_tests() -> None:
 def validate_output(output: Path) -> None:
     config = PHASE18.yaml.safe_load((ROOT / "config" / "phase18_key_driver_selection.yml").read_text())
     declared = list(config["outputs"]["declared_files"])
-    actual = sorted(path.name for path in output.iterdir() if path.is_file())
-    assert_true(len(declared) == 21, "Phase 18 must declare exactly 21 outputs")
-    assert_true(sorted(declared) == actual, "Output files do not match the declaration")
-    for name in declared:
-        if name.endswith(".gz"):
-            with (output / name).open("rb") as handle:
-                assert_true(handle.read(2) == b"\x1f\x8b", f"Declared gzip file is not compressed: {name}")
-
-    status = read(output / "key_driver_status.tsv")
-    assert_true(len(status) == 1, "Status must contain one row")
     assert_true(
-        status[0]["validation_status"] == config["outputs"]["validation_status"],
-        "Status does not match the configured validation status",
+        declared == ["key_driver_significant_returns.tsv"],
+        "Phase 18 must declare only the significant-return table",
     )
+    path = output / declared[0] if output.is_dir() else output
+    assert_true(path.is_file(), f"Missing Phase 18 output: {path}")
+
+    rows = read(path)
+    assert_true(len(rows) == 1641, "Significant-return row count changed")
     assert_true(
-        status[0]["execution_stage"] == config["analysis"]["execution_stage"],
-        "Status does not match the configured execution stage",
+        set(rows[0]) == set(PHASE18.SIGNIFICANT_OUTPUT_FIELDS),
+        "Significant-return columns do not match the schema",
     )
     assert_true(
-        status[0]["execution_class"] == config["analysis"]["execution_class"],
-        "Status does not match the configured execution class",
+        len(rows[0]) == len(PHASE18.SIGNIFICANT_OUTPUT_FIELDS) == 103,
+        "Significant-return column count changed",
     )
-    assert_true(int(status[0]["phase12_planned_runs"]) == 1782, "Phase 12 run count changed")
-    assert_true(int(status[0]["phase18_structural_run_slots"]) == 648, "Structural run count changed")
-    assert_true(int(status[0]["phase18_included_runs"]) == 161, "Included run count changed")
 
-    checks = read(output / "key_driver_checks.tsv")
-    assert_true(checks and all(PHASE18.is_true(row["passed"]) for row in checks), "A blocking check failed")
-
-    case_manifest = read(output / "key_driver_case_manifest.tsv")
-    assert_true([row["case_id"] for row in case_manifest] == [PHASE18.CASE1, PHASE18.CASE2, PHASE18.CASE3], "Case order changed")
-
-    runs = read(output / "key_driver_run_manifest.tsv")
-    assert_true(len(runs) == 648, "Run manifest must contain 648 rows")
-    assert_true(sum(PHASE18.is_true(row["phase18_included"]) for row in runs) == 161, "Run manifest included count changed")
-
-    candidates = read(output / "key_driver_candidates.tsv")
-    candidate_keys = set()
-    for row in candidates:
-        assert_true(row["terminal_candidate_status"] == "driver_candidate", "Noncandidate in candidate table")
-        assert_true(float(row["coverage_fraction"]) >= 0.80, "Candidate failed coverage")
-        assert_true(int(row["conservative_support_count"]) >= 1, "Candidate failed support")
-        assert_true(float(row["aggregate_acat_q"]) <= 0.05, "Candidate failed aggregate q")
-        key = (row["broad_network"], row["case_id"], int(row["within_case_rank"]))
-        assert_true(key not in candidate_keys, "Candidate ranks are duplicated")
-        candidate_keys.add(key)
-
-    top5 = read(output / "key_driver_top5.tsv")
-    combinations = {(row["broad_network"], row["case_id"]) for row in top5}
-    assert_true(len(combinations) == 27, "Top-five table does not represent all 27 lists")
-    displayed_counts = Counter(
-        (row["broad_network"], row["case_id"])
-        for row in top5
-        if row["list_status"] == "ranked_candidates"
+    row_keys = {(row["kda_run_id"], row["key_driver"]) for row in rows}
+    assert_true(len(row_keys) == len(rows), "Run-by-gene rows are duplicated")
+    assert_true(len({row["kda_run_id"] for row in rows}) == 122, "Nonempty run count changed")
+    assert_true(len({row["key_driver"] for row in rows}) == 295, "Returned-gene count changed")
+    assert_true(
+        {row["case_id"] for row in rows} == {PHASE18.CASE1, PHASE18.CASE2, PHASE18.CASE3},
+        "The three Phase 18 cases are not all represented",
     )
-    assert_true(all(count <= 5 for count in displayed_counts.values()), "A top-five list exceeds five genes")
-    for row in top5:
-        if row["list_status"] == "ranked_candidates":
-            assert_true(row["current_symbol"] not in {"", "NA"}, "Ranked row lacks a gene")
-            assert_true(1 <= int(row["display_rank"]) <= 5, "Display rank is outside 1-5")
-        else:
-            assert_true(row["current_symbol"] in {"", "NA"}, "Empty-status row contains a gene")
-
-    funnel = read(output / "key_driver_filter_funnel.tsv")
-    for row in funnel:
-        assert_true(
-            int(row["input_n"]) == int(row["pass_n"]) + int(row["fail_n"]),
-            f"Funnel row is not additive: {row}",
-        )
-    final = [
-        row
-        for row in funnel
-        if row["report_type"] == "sequential_candidate_funnel"
-        and row["summary_scope"] == "overall"
-        and row["filter_number"] == "5"
-    ]
-    assert_true(len(final) == 1, "Missing global final funnel row")
-    assert_true(int(final[0]["pass_n"]) == len(candidates), "Funnel does not end at candidate count")
-
-    artifacts = read(output / "key_driver_artifacts.tsv")
-    assert_true(len(artifacts) == 21, "Artifact manifest must declare all 21 files")
-    assert_true({row["path"] for row in artifacts} == set(declared), "Artifact paths differ from declaration")
-    for row in artifacts:
-        if row["hash_status"] == "recorded":
-            path = output / row["path"]
-            assert_true(int(row["bytes"]) == path.stat().st_size, f"Artifact byte count changed: {path.name}")
-            assert_true(row["sha256"] == PHASE18.sha256_file(path), f"Artifact hash changed: {path.name}")
-        else:
-            assert_true(
-                row["path"] in {"key_driver_artifacts.tsv", "key_driver_status.tsv"},
-                f"Unexpected unhashed artifact: {row['path']}",
-            )
-    print(f"Phase 18 output validation passed: {output}")
+    assert_true(
+        all(PHASE18.is_true(row["returned_by_call_key_drivers"]) for row in rows),
+        "The output contains a gene not returned by call_key_drivers",
+    )
+    assert_true(
+        all(float(row["published_adjusted_p_value"]) <= 0.05 for row in rows),
+        "The output contains a nonsignificant returned gene",
+    )
+    assert_true(
+        all(int(row["effective_query_genes"]) >= 10 for row in rows),
+        "The output contains a run with fewer than 10 effective query genes",
+    )
+    assert_true(
+        all(row["run_terminal_status"] == "completed_significant" for row in rows),
+        "The output contains a non-significant run status",
+    )
+    print(f"Phase 18 significant-return validation passed: {path}")
 
 
 def main() -> int:

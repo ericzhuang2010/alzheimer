@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Phase 18 local key-driver selection from the validated Phase 12 bundle.
+"""Export the annotated Phase 18 significant KDA returns from upstream data.
 
-The implementation intentionally uses only the locally available scientific
-Python stack (NumPy, SciPy, and PyYAML). It reconstructs KDA neighborhoods
-from the authoritative Phase 12 queries, backgrounds, and network files; it
-does not use figure-derived candidate tables as scientific inputs.
+This is the single Phase 18 entry point. It reads the validated Phase 12
+bundle, the recorded Phase 09 annotation, and the recorded Bayesian networks;
+reconstructs the Phase 18 statistics in memory; and writes only
+``key_driver_significant_returns.tsv``. It never reads another Phase 18 result.
 """
 
 from __future__ import annotations
@@ -16,12 +16,9 @@ import hashlib
 import math
 import os
 import random
-import shutil
 import statistics
 import subprocess
 import sys
-import tempfile
-import time
 from collections import Counter, defaultdict
 from decimal import Decimal, ROUND_HALF_EVEN
 from pathlib import Path
@@ -1283,498 +1280,473 @@ def degree_sensitivity_rows(
     return output
 
 
-def parse_args() -> argparse.Namespace:
+GROUP_DETAILS = {
+    "F_e2": ("Female", "e2"),
+    "F_e33": ("Female", "e33"),
+    "F_e4": ("Female", "e4"),
+    "M_e2": ("Male", "e2"),
+    "M_e33": ("Male", "e33"),
+    "M_e4": ("Male", "e4"),
+}
+
+CASE_LABELS = {
+    CASE1: "MT-related and in query",
+    CASE2: "MT-related and not in query",
+    CASE3: "Not MT-related",
+}
+
+SIGNIFICANT_EVIDENCE_FIELDS = """
+case_id is_core_mito mitocarta_canonical_symbol query_member test_status
+usable_test explicit_family_member original_layer original_overlap_count
+original_neighborhood_size original_non_neighborhood_size
+original_signature_size original_fold_enrichment original_log_p original_raw_p
+original_run_q self_excluded final_layer final_overlap_count
+final_neighborhood_size final_non_neighborhood_size final_signature_size
+final_background_size final_fold_enrichment final_log_p final_raw_p final_run_q
+other_query_overlap support_overlap_pass support_fold_pass support_run_q_pass
+conservative_support
+""".split()
+
+SIGNIFICANT_SUMMARY_FIELDS = """
+mito_tier genome_origin is_mtdna_gene extended_reference_member mapping_status
+phase03_mitocarta_match_type eligible_run_count usable_run_count
+explicit_run_count implicit_run_count missing_run_count coverage_numerator
+coverage_denominator coverage_fraction coverage_pass conservative_support_count
+conservative_support_pass recurrence_fraction supporting_fine_cell_type_count
+supporting_fine_cell_types supporting_group_count supporting_groups
+supporting_direction_count supporting_directions median_support_fold_enrichment
+maximum_support_fold_enrichment aggregate_acat_p aggregate_acat_q
+aggregate_q_pass missing_as_one_acat_p missing_as_one_acat_q mean_log_p_score
+terminal_candidate_status within_case_rank top5_display
+stability_assessable_repetitions stability_nominal_fraction
+stability_q_fraction stability_candidate_fraction stability_worst_rank
+evidence_tier
+""".split()
+
+SIGNIFICANT_OUTPUT_FIELDS = """
+schema_version kda_run_id fine_cell_type broad_network signature_group sex
+apoe_group signature_direction effective_query_genes effective_background_genes
+run_terminal_status key_driver returned_by_call_key_drivers
+published_best_layer published_overlap_count published_neighborhood_size
+published_non_neighborhood_size published_signature_size
+published_fold_enrichment published_log_p_value published_raw_p_value
+published_adjusted_p_value published_is_signature published_is_root_node
+published_global_key_driver published_overlap_items case_order case_id case_label
+is_core_mito mitocarta_canonical_symbol query_member test_status usable_test
+explicit_family_member original_layer original_overlap_count
+original_neighborhood_size original_non_neighborhood_size
+original_signature_size original_fold_enrichment original_log_p original_raw_p
+original_run_q self_excluded final_layer final_overlap_count
+final_neighborhood_size final_non_neighborhood_size final_signature_size
+final_background_size final_fold_enrichment final_log_p final_raw_p final_run_q
+other_query_overlap support_overlap_pass support_fold_pass support_run_q_pass
+conservative_support mito_tier genome_origin is_mtdna_gene
+extended_reference_member mapping_status phase03_mitocarta_match_type
+eligible_run_count usable_run_count explicit_run_count implicit_run_count
+missing_run_count coverage_numerator coverage_denominator coverage_fraction
+coverage_pass conservative_support_count conservative_support_pass
+recurrence_fraction supporting_fine_cell_type_count supporting_fine_cell_types
+supporting_group_count supporting_groups supporting_direction_count
+supporting_directions median_support_fold_enrichment
+maximum_support_fold_enrichment aggregate_acat_p aggregate_acat_q
+aggregate_q_pass missing_as_one_acat_p missing_as_one_acat_q mean_log_p_score
+terminal_candidate_status within_case_rank top5_display
+stability_assessable_repetitions stability_nominal_fraction
+stability_q_fraction stability_candidate_fraction stability_worst_rank
+evidence_tier case_driver_candidate_count case_displayed_candidate_count
+""".split()
+
+
+def parse_export_args() -> argparse.Namespace:
+    root = Path(__file__).resolve().parents[1]
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--config", default="config/phase18_key_driver_selection.yml")
-    parser.add_argument("--phase12-dir")
-    parser.add_argument("--output-dir")
+    parser.add_argument(
+        "--config",
+        default=root / "config/phase18_key_driver_selection.yml",
+        type=Path,
+    )
+    parser.add_argument("--phase12-dir", type=Path)
+    parser.add_argument(
+        "--output",
+        default=root
+        / "results/minerva_production/18_key_driver_selection"
+        / "key_driver_significant_returns.tsv",
+        type=Path,
+    )
     return parser.parse_args()
 
 
-def main() -> int:
-    started = time.time()
-    args = parse_args()
-    root = Path.cwd().resolve()
+def one_upstream_artifact(
+    root: Path,
+    artifact_by_role: dict[str, list[dict[str, str]]],
+    role: str,
+) -> Path:
+    rows = artifact_by_role.get(role, [])
+    if len(rows) != 1:
+        fail(f"Expected one Phase 12 artifact row for {role}")
+    path = project_path(root, rows[0]["path"])
+    if not path.exists():
+        fail(f"Missing upstream artifact for {role}: {path}")
+    if sha256_file(path) != rows[0]["sha256"]:
+        fail(f"Upstream hash mismatch for {role}: {path}")
+    return path
+
+
+def significant_test_row(
+    run: dict[str, Any],
+    symbol: str,
+    signatures: dict[str, set[str]],
+    backgrounds: dict[str, set[str]],
+    explicit_by_run: dict[str, dict[str, dict[str, Any]]],
+    annotation: dict[str, dict[str, Any]],
+) -> dict[str, Any]:
+    run_id = run["kda_run_id"]
+    evidence = evidence_for(
+        symbol,
+        run,
+        signatures[run_id],
+        backgrounds[run_id],
+        explicit_by_run[run_id],
+        annotation,
+    )
+    record = evidence["record"]
+    if record is None:
+        fail(f"Published driver lacks a reconstructed test: {run_id}/{symbol}")
+    original = record["original"]
+    final = record["final"]
+    ann = annotation_fields(symbol, annotation)
+    return {
+        "case_id": evidence["case_id"],
+        "is_core_mito": ann["is_core_mito"],
+        "mitocarta_canonical_symbol": ann["mitocarta_canonical_symbol"],
+        "query_member": symbol in signatures[run_id],
+        "test_status": evidence["test_status"],
+        "usable_test": evidence["usable"],
+        "explicit_family_member": symbol in explicit_by_run[run_id],
+        "original_layer": original["layer"],
+        "original_overlap_count": original["overlap"],
+        "original_neighborhood_size": original["neighborhood"],
+        "original_non_neighborhood_size": original["non_neighborhood"],
+        "original_signature_size": original["signature_size"],
+        "original_fold_enrichment": original["fold"],
+        "original_log_p": original["log_p"],
+        "original_raw_p": original["p"],
+        "original_run_q": record["original_q"],
+        "self_excluded": evidence["case_id"] == CASE1,
+        "final_layer": final["layer"],
+        "final_overlap_count": final["overlap"],
+        "final_neighborhood_size": final["neighborhood"],
+        "final_non_neighborhood_size": final["non_neighborhood"],
+        "final_signature_size": final["signature_size"],
+        "final_background_size": final["background_size"],
+        "final_fold_enrichment": final["fold"],
+        "final_log_p": final["log_p"],
+        "final_raw_p": evidence["p"],
+        "final_run_q": evidence["q"],
+        "other_query_overlap": evidence["other_overlap"],
+        "support_overlap_pass": evidence["other_overlap"] is not None
+        and evidence["other_overlap"] >= 2,
+        "support_fold_pass": evidence["fold"] is not None
+        and evidence["fold"] > 1.0,
+        "support_run_q_pass": evidence["q"] is not None
+        and evidence["q"] <= 0.05,
+        "conservative_support": evidence["support"],
+    }
+
+
+def validate_published_returns(
+    run_id: str,
+    published: dict[str, dict[str, str]],
+    explicit: dict[str, dict[str, Any]],
+) -> None:
+    reconstructed = {
+        gene: record
+        for gene, record in explicit.items()
+        if record["original_q"] is not None and record["original_q"] <= 0.05
+    }
+    if set(published) != set(reconstructed):
+        fail(f"Significant-gene reconstruction failed for {run_id}")
+    for gene, expected in published.items():
+        record = reconstructed[gene]
+        original = record["original"]
+        exact = (
+            as_int(expected["best_layer"]) == original["layer"]
+            and as_int(expected["overlap_count"]) == original["overlap"]
+            and as_int(expected["neighborhood_size"]) == original["neighborhood"]
+            and as_int(expected["non_neighborhood_size"])
+            == original["non_neighborhood"]
+            and as_int(expected["signature_size"]) == original["signature_size"]
+        )
+        numeric = (
+            abs(as_float(expected["log_p_value"]) - original["log_p"]) <= 1e-8
+            and abs(as_float(expected["adjusted_p_value"]) - record["original_q"])
+            <= 1e-8
+            and abs(as_float(expected["fold_enrichment"]) - original["fold"])
+            <= 0.0100001
+        )
+        if not exact or not numeric:
+            fail(f"Published-value reconstruction failed for {run_id}/{gene}")
+
+
+def export_significant_returns() -> int:
+    args = parse_export_args()
+    root = Path(__file__).resolve().parents[1]
     config_path = project_path(root, args.config)
+    output_path = project_path(root, args.output)
     with config_path.open() as handle:
         config = yaml.safe_load(handle)
-    phase12_dir = project_path(root, args.phase12_dir or config["paths"]["phase12_directory"])
-    annotation_path = project_path(root, config["paths"]["phase09_annotation"])
-    configured_output = config["paths"].get("output_directory") or config["paths"].get("local_output_directory")
-    if not configured_output and not args.output_dir:
-        fail("Phase 18 config must define paths.output_directory")
-    output_dir = project_path(root, args.output_dir or configured_output)
-    if output_dir.exists():
-        fail(f"Refusing to overwrite existing Phase 18 output: {output_dir}")
-    output_dir.parent.mkdir(parents=True, exist_ok=True)
-    staging = Path(tempfile.mkdtemp(prefix=".18_key_driver_selection.staging.", dir=output_dir.parent))
-    stage_rows: list[dict[str, Any]] = []
-    file_counts: dict[str, int] = {}
+    phase12_dir = project_path(
+        root, args.phase12_dir or config["paths"]["phase12_directory"]
+    )
 
-    def stage(stage_id: str, before: float, status: str = "completed") -> None:
-        stage_rows.append(
-            {
-                "stage_order": len(stage_rows) + 1,
-                "stage_id": stage_id,
-                "terminal_status": status,
-                "elapsed_seconds": time.time() - before,
-            }
+    required_phase12 = [
+        "kda_run_manifest.tsv",
+        "kda_signature_members.tsv.gz",
+        "kda_background_members.tsv.gz",
+        "kda_results.tsv.gz",
+        "kda_checks.tsv",
+        "kda_artifacts.tsv",
+        "kda_status.tsv",
+    ]
+    missing = [name for name in required_phase12 if not (phase12_dir / name).exists()]
+    if missing:
+        fail(f"Missing Phase 12 files: {', '.join(missing)}")
+    status = read_tsv(phase12_dir / "kda_status.tsv")
+    if len(status) != 1 or status[0].get("validation_status") != "validated_complete":
+        fail("Phase 12 is not validated_complete")
+    checks = read_tsv(phase12_dir / "kda_checks.tsv")
+    if not checks or not all(is_true(row.get("passed")) for row in checks):
+        fail("At least one Phase 12 validation check failed")
+
+    artifact_by_role: dict[str, list[dict[str, str]]] = defaultdict(list)
+    for row in iter_tsv(phase12_dir / "kda_artifacts.tsv"):
+        artifact_by_role[row["artifact_role"]].append(row)
+    annotation_path = one_upstream_artifact(root, artifact_by_role, "phase09_annotation")
+    annotation, conflicts = load_annotation(annotation_path)
+    if conflicts:
+        fail(f"Conflicting Phase 09 annotations for {len(conflicts)} genes")
+
+    groups = set(config["run_scope"]["groups"])
+    directions = set(config["run_scope"]["directions"])
+    structural_runs = [
+        row
+        for row in iter_tsv(phase12_dir / "kda_run_manifest.tsv")
+        if row["analysis_tier"] == config["run_scope"]["analysis_tier"]
+        and row["signature_group"] in groups
+        and row["signature_direction"] in directions
+    ]
+    if len(structural_runs) != as_int(config["run_scope"]["expected_structural_slots"]):
+        fail(f"Expected 648 primary directional runs, found {len(structural_runs)}")
+    if sum(row["eligibility_status"] == "eligible" for row in structural_runs) != as_int(
+        config["run_scope"]["expected_phase12_eligible"]
+    ):
+        fail("Upstream eligible-run count changed")
+    included_runs = [
+        row
+        for row in structural_runs
+        if row["eligibility_status"] == "eligible"
+        and row["terminal_status"].startswith("completed")
+        and as_int(row["effective_query_genes"])
+        >= as_int(config["run_scope"]["minimum_effective_query_genes"])
+    ]
+    if len(included_runs) != as_int(config["run_scope"]["expected_included_runs"]):
+        fail(f"Expected 161 included runs, found {len(included_runs)}")
+    included_ids = {row["kda_run_id"] for row in included_runs}
+    run_by_id = {row["kda_run_id"]: row for row in included_runs}
+
+    signatures: dict[str, set[str]] = defaultdict(set)
+    for row in iter_tsv(phase12_dir / "kda_signature_members.tsv.gz"):
+        if row["kda_run_id"] in included_ids and is_true(row.get("effective_member")):
+            signatures[row["kda_run_id"]].add(sys.intern(row["gene"]))
+    backgrounds: dict[str, set[str]] = defaultdict(set)
+    for row in iter_tsv(phase12_dir / "kda_background_members.tsv.gz"):
+        if row["kda_run_id"] in included_ids:
+            backgrounds[row["kda_run_id"]].add(sys.intern(row["gene"]))
+    for run in included_runs:
+        run_id = run["kda_run_id"]
+        if len(signatures[run_id]) != as_int(run["effective_query_genes"]):
+            fail(f"Query-size mismatch for {run_id}")
+        if len(backgrounds[run_id]) != as_int(run["effective_background_genes"]):
+            fail(f"Background-size mismatch for {run_id}")
+        if not signatures[run_id].issubset(backgrounds[run_id]):
+            fail(f"Query is not contained in the background for {run_id}")
+
+    network_order = list(config["networks"]["order"])
+    full_edges = {
+        network: load_network(
+            one_upstream_artifact(root, artifact_by_role, f"network_{network}")
         )
+        for network in network_order
+    }
+    runs_by_network: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for run in included_runs:
+        runs_by_network[run["broad_network"]].append(run)
+    network_genes = {
+        network: sorted(
+            set().union(*(backgrounds[run["kda_run_id"]] for run in runs))
+        )
+        for network, runs in runs_by_network.items()
+    }
+    for network in network_order:
+        network_genes.setdefault(network, [])
 
-    try:
-        checkpoint = time.time()
-        required_phase12 = [
-            "kda_run_manifest.tsv",
-            "kda_signature_members.tsv.gz",
-            "kda_background_members.tsv.gz",
-            "kda_results.tsv.gz",
-            "kda_qc_summary.tsv",
-            "kda_checks.tsv",
-            "kda_artifacts.tsv",
-            "kda_status.tsv",
-        ]
-        for name in required_phase12:
-            if not (phase12_dir / name).exists():
-                fail(f"Missing required Phase 12 file: {name}")
-        status_rows = read_tsv(phase12_dir / "kda_status.tsv")
-        if len(status_rows) != 1 or status_rows[0].get("validation_status") != "validated_complete":
-            fail("Phase 12 status is not validated_complete")
-        if as_int(status_rows[0].get("planned_runs")) != 1782 or as_int(status_rows[0].get("failed_runs")) != 0:
-            fail("Phase 12 status dimensions do not match the frozen plan")
-        upstream_checks = read_tsv(phase12_dir / "kda_checks.tsv")
-        if not upstream_checks or not all(is_true(row.get("passed")) for row in upstream_checks):
-            fail("At least one Phase 12 blocking check failed")
-        artifacts = read_tsv(phase12_dir / "kda_artifacts.tsv")
-        artifact_by_role: dict[str, list[dict[str, str]]] = defaultdict(list)
-        for row in artifacts:
-            artifact_by_role[row["artifact_role"]].append(row)
-        hash_checks: list[dict[str, Any]] = []
-        for role in ["phase12_config", "fKDA_source", "phase09_annotation"]:
-            entries = artifact_by_role.get(role, [])
-            if len(entries) != 1:
-                fail(f"Expected one Phase 12 artifact row for {role}")
-            path = project_path(root, entries[0]["path"])
-            observed = sha256_file(path)
-            passed = observed == entries[0]["sha256"]
-            hash_checks.append({"source_id": role, "path": str(path.relative_to(root)), "observed": observed, "expected": entries[0]["sha256"], "passed": passed})
-            if not passed:
-                fail(f"Upstream hash mismatch: {role}")
-        network_order = list(config["networks"]["order"])
-        network_paths: dict[str, Path] = {}
-        full_edges: dict[str, list[tuple[str, str]]] = {}
-        for network in network_order:
-            role = f"network_{network}"
-            entries = artifact_by_role.get(role, [])
-            if len(entries) != 1:
-                fail(f"Expected one network artifact row for {network}")
-            path = project_path(root, entries[0]["path"])
-            observed = sha256_file(path)
-            passed = observed == entries[0]["sha256"]
-            hash_checks.append({"source_id": role, "path": str(path.relative_to(root)), "observed": observed, "expected": entries[0]["sha256"], "passed": passed})
-            if not passed:
-                fail(f"Network hash mismatch: {network}")
-            network_paths[network] = path
-            full_edges[network] = load_network(path)
-        stage("validate_upstream", checkpoint)
+    published_rows = [
+        row
+        for row in iter_tsv(phase12_dir / "kda_results.tsv.gz")
+        if row["kda_run_id"] in included_ids
+    ]
+    if len(published_rows) != 1641:
+        fail(f"Expected 1,641 significant rows, found {len(published_rows)}")
+    if len({(row["kda_run_id"], row["key_driver"]) for row in published_rows}) != 1641:
+        fail("Significant returns contain duplicate run/gene keys")
+    published_by_run: dict[str, dict[str, dict[str, str]]] = defaultdict(dict)
+    for row in published_rows:
+        published_by_run[row["kda_run_id"]][row["key_driver"]] = row
 
-        checkpoint = time.time()
-        manifest = read_tsv(phase12_dir / "kda_run_manifest.tsv")
-        primary_groups = set(config["run_scope"]["groups"])
-        directions = set(config["run_scope"]["directions"])
-        structural_runs: list[dict[str, Any]] = []
-        for row in manifest:
-            if row["analysis_tier"] != "primary" or row["signature_group"] not in primary_groups or row["signature_direction"] not in directions:
-                continue
-            included = (
-                row["eligibility_status"] == "eligible"
-                and row["terminal_status"].startswith("completed")
-                and as_int(row["effective_query_genes"]) >= as_int(config["run_scope"]["minimum_effective_query_genes"])
-            )
-            if included:
-                exclusion = None
-            elif row["eligibility_status"] != "eligible":
-                exclusion = "phase12_ineligible"
-            elif not row["terminal_status"].startswith("completed"):
-                exclusion = "phase12_not_completed"
-            else:
-                exclusion = "effective_query_below_10"
-            structural_runs.append({**row, "phase18_included": included, "phase18_exclusion_reason": exclusion})
-        expected_slots = as_int(config["run_scope"]["expected_structural_slots"])
-        expected_eligible = as_int(config["run_scope"]["expected_phase12_eligible"])
-        expected_included = as_int(config["run_scope"]["expected_included_runs"])
-        if len(structural_runs) != expected_slots:
-            fail(f"Expected {expected_slots} structural runs, found {len(structural_runs)}")
-        if sum(row["eligibility_status"] == "eligible" for row in structural_runs) != expected_eligible:
-            fail("Phase 12 eligible primary directional count changed")
-        included_runs = [row for row in structural_runs if row["phase18_included"]]
-        if len(included_runs) != expected_included:
-            fail(f"Expected {expected_included} included runs, found {len(included_runs)}")
-        included_ids = {row["kda_run_id"] for row in included_runs}
-        runs_by_network: dict[str, list[dict[str, Any]]] = defaultdict(list)
-        for row in included_runs:
-            runs_by_network[row["broad_network"]].append(row)
-        stage("build_run_manifest", checkpoint)
+    explicit_by_run: dict[str, dict[str, dict[str, Any]]] = {}
+    for index, run in enumerate(included_runs, start=1):
+        run_id = run["kda_run_id"]
+        explicit, _ = reconstruct_run(
+            run,
+            signatures[run_id],
+            backgrounds[run_id],
+            full_edges[run["broad_network"]],
+            annotation,
+        )
+        validate_published_returns(
+            run_id, published_by_run.get(run_id, {}), explicit
+        )
+        explicit_by_run[run_id] = explicit
+        if index % 25 == 0 or index == len(included_runs):
+            print(f"reconstructed_runs={index}/{len(included_runs)}", flush=True)
 
-        checkpoint = time.time()
-        annotation, annotation_conflicts = load_annotation(annotation_path)
-        if annotation_conflicts:
-            fail(f"Conflicting Phase 09 annotations for {len(annotation_conflicts)} symbols")
-        signatures: dict[str, set[str]] = defaultdict(set)
-        for row in iter_tsv(phase12_dir / "kda_signature_members.tsv.gz"):
-            run_id = row["kda_run_id"]
-            if run_id in included_ids and is_true(row.get("effective_member")):
-                signatures[run_id].add(sys.intern(row["gene"]))
-        for run in included_runs:
-            run_id = run["kda_run_id"]
-            if len(signatures[run_id]) != as_int(run["effective_query_genes"]):
-                fail(f"Effective query size mismatch for {run_id}")
-            if not all(annotation.get(gene, {}).get("is_core_mito", False) for gene in signatures[run_id]):
-                fail(f"Non-core query membership found for {run_id}")
-        backgrounds: dict[str, set[str]] = defaultdict(set)
-        for row in iter_tsv(phase12_dir / "kda_background_members.tsv.gz"):
-            run_id = row["kda_run_id"]
-            if run_id in included_ids:
-                backgrounds[run_id].add(sys.intern(row["gene"]))
-        for run in included_runs:
-            run_id = run["kda_run_id"]
-            if len(backgrounds[run_id]) != as_int(run["effective_background_genes"]):
-                fail(f"Effective background size mismatch for {run_id}")
-            if not signatures[run_id].issubset(backgrounds[run_id]):
-                fail(f"Effective query is not contained in background for {run_id}")
-        network_genes = {
-            network: sorted(set().union(*(backgrounds[run["kda_run_id"]] for run in runs)))
-            for network, runs in runs_by_network.items()
-        }
-        for network in network_order:
-            network_genes.setdefault(network, [])
-        stage("load_queries_backgrounds_annotation", checkpoint)
-
-        checkpoint = time.time()
-        published: dict[str, dict[str, dict[str, str]]] = defaultdict(dict)
-        for row in iter_tsv(phase12_dir / "kda_results.tsv.gz"):
-            if row["kda_run_id"] in included_ids:
-                published[row["kda_run_id"]][row["key_driver"]] = row
-        explicit_by_run: dict[str, dict[str, dict[str, Any]]] = {}
-        reconstruction_rows: list[dict[str, Any]] = []
-        for index, run in enumerate(included_runs, start=1):
-            run_id = run["kda_run_id"]
-            explicit, summary = reconstruct_run(
-                run,
-                signatures[run_id],
-                backgrounds[run_id],
-                full_edges[run["broad_network"]],
-                annotation,
-            )
-            expected = published.get(run_id, {})
-            observed_significant = {
-                gene: record
-                for gene, record in explicit.items()
-                if record["original_q"] is not None and record["original_q"] <= 0.05
-            }
-            reconciled = set(expected) == set(observed_significant)
-            maximum_log_error = 0.0
-            maximum_q_error = 0.0
-            maximum_fold_error = 0.0
-            if reconciled:
-                for gene, expected_row in expected.items():
-                    record = observed_significant[gene]
-                    original = record["original"]
-                    exact = (
-                        as_int(expected_row["best_layer"]) == original["layer"]
-                        and as_int(expected_row["overlap_count"]) == original["overlap"]
-                        and as_int(expected_row["neighborhood_size"]) == original["neighborhood"]
-                        and as_int(expected_row["non_neighborhood_size"]) == original["non_neighborhood"]
-                        and as_int(expected_row["signature_size"]) == original["signature_size"]
-                    )
-                    maximum_fold_error = max(
-                        maximum_fold_error,
-                        abs(as_float(expected_row["fold_enrichment"]) - original["fold"]),
-                    )
-                    maximum_log_error = max(maximum_log_error, abs(as_float(expected_row["log_p_value"]) - original["log_p"]))
-                    maximum_q_error = max(maximum_q_error, abs(as_float(expected_row["adjusted_p_value"]) - float(record["original_q"])))
-                    reconciled = reconciled and exact
-            reconciled = (
-                reconciled
-                and maximum_log_error <= 1e-8
-                and maximum_q_error <= 1e-8
-                and maximum_fold_error <= 0.0100001
-            )
-            if not reconciled:
-                fail(f"Phase 12 significant-result reconstruction failed for {run_id}")
-            explicit_by_run[run_id] = explicit
-            reconstruction_rows.append(
-                {
-                    "kda_run_id": run_id,
-                    "broad_network": run["broad_network"],
-                    **summary,
-                    "published_significant_candidates": len(expected),
-                    "reconstructed_significant_candidates": len(observed_significant),
-                    "maximum_log_p_error": maximum_log_error,
-                    "maximum_q_error": maximum_q_error,
-                    "maximum_rounded_fold_error": maximum_fold_error,
-                    "reconciled": reconciled,
-                }
-            )
-            print(
-                f"[{index}/{len(included_runs)}] {run_id}: "
-                f"{summary['background_genes']} background, {summary['explicit_candidates']} explicit",
-                flush=True,
-            )
-        stage("reconstruct_phase12_and_self_exclude", checkpoint)
-
-        checkpoint = time.time()
-        aggregates_by_network: dict[str, list[dict[str, Any]]] = {}
-        all_aggregates: list[dict[str, Any]] = []
-        minimum_coverage = float(config["filters"]["minimum_coverage"])
-        for network in network_order:
-            if not runs_by_network.get(network):
-                aggregates_by_network[network] = []
-                continue
-            rows = aggregate_network(
-                network,
-                runs_by_network[network],
-                network_genes[network],
-                signatures,
-                backgrounds,
-                explicit_by_run,
-                annotation,
-                minimum_coverage,
-            )
-            aggregates_by_network[network] = rows
-            all_aggregates.extend(rows)
-        stage("aggregate_and_filter", checkpoint)
-
-        checkpoint = time.time()
-        stability_replicates, stability_summary = build_stability(
-            aggregates_by_network,
-            runs_by_network,
-            network_genes,
+    minimum_coverage = float(config["filters"]["minimum_coverage"])
+    aggregates_by_network: dict[str, list[dict[str, Any]]] = {}
+    all_aggregates: list[dict[str, Any]] = []
+    for network in network_order:
+        if not runs_by_network.get(network):
+            aggregates_by_network[network] = []
+            continue
+        rows = aggregate_network(
+            network,
+            runs_by_network[network],
+            network_genes[network],
             signatures,
             backgrounds,
             explicit_by_run,
             annotation,
             minimum_coverage,
         )
-        candidates = sorted(
-            [row for row in all_aggregates if row["terminal_candidate_status"] == "driver_candidate"],
-            key=lambda row: (network_order.index(row["broad_network"]), row["case_order"], int(row["within_case_rank"])),
-        )
-        top5 = top5_rows(all_aggregates, network_order)
-        stage("rank_and_stability", checkpoint)
+        aggregates_by_network[network] = rows
+        all_aggregates.extend(rows)
+    build_stability(
+        aggregates_by_network,
+        runs_by_network,
+        network_genes,
+        signatures,
+        backgrounds,
+        explicit_by_run,
+        annotation,
+        minimum_coverage,
+    )
+    summary_by_key = {
+        (row["broad_network"], row["current_symbol"], row["case_id"]): row
+        for row in all_aggregates
+    }
+    candidate_counts = Counter(
+        (row["broad_network"], row["case_id"])
+        for row in all_aggregates
+        if row["terminal_candidate_status"] == "driver_candidate"
+    )
 
-        checkpoint = time.time()
-        sensitivities = sensitivity_rows(
-            aggregates_by_network,
-            [float(value) for value in config["sensitivity"]["coverage_thresholds"]],
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = output_path.with_name(f".{output_path.name}.tmp")
+    with temporary.open("w", newline="") as handle:
+        writer = csv.DictWriter(
+            handle,
+            fieldnames=SIGNIFICANT_OUTPUT_FIELDS,
+            delimiter="\t",
+            lineterminator="\n",
         )
-        degree_rows = degree_sensitivity_rows(
-            candidates,
-            aggregates_by_network,
-            full_edges,
-            as_int(config["sensitivity"]["degree_match_draws"]),
-            as_int(config["sensitivity"]["random_seed"]),
-        )
-        funnel = build_filter_funnel(
-            structural_runs,
-            included_runs,
-            all_aggregates,
-            network_genes,
-            backgrounds,
-            explicit_by_run,
-            network_order,
-        )
-        stage("sensitivities_and_funnel", checkpoint)
-
-        checkpoint = time.time()
-        analysis_manifest = [{
-            "analysis_id": config["analysis"]["analysis_id"],
-            "task_mode": config["analysis"]["task_mode"],
-            "execution_class": config["analysis"]["execution_class"],
-            "phase12_directory": str(phase12_dir.relative_to(root)),
-            "primary_groups": "|".join(config["run_scope"]["groups"]),
-            "directions": "|".join(config["run_scope"]["directions"]),
-            "minimum_query_genes": config["run_scope"]["minimum_effective_query_genes"],
-            "minimum_coverage": minimum_coverage,
-            "run_q_threshold": config["filters"]["run_q_threshold"],
-            "aggregate_q_threshold": config["filters"]["aggregate_q_threshold"],
-            "ranking_order": "aggregate_acat_q|aggregate_acat_p|current_symbol",
-            "display_limit": 5,
-            "validation_class": config["outputs"]["validation_status"],
-        }]
-        case_manifest = [
-            {"case_order": 1, "case_id": CASE1, "case_label": "MT-related and in query", "exact_rule": "is_mitocarta3_TRUE_and_effective_query_member_TRUE"},
-            {"case_order": 2, "case_id": CASE2, "case_label": "MT-related and not in query", "exact_rule": "is_mitocarta3_TRUE_and_effective_query_member_FALSE"},
-            {"case_order": 3, "case_id": CASE3, "case_label": "Not MT-related", "exact_rule": "is_mitocarta3_FALSE"},
-        ]
-        input_paths = [config_path, annotation_path, *[phase12_dir / name for name in required_phase12], *network_paths.values(), project_path(root, config["paths"]["fkda_source"])]
-        unique_input_paths = list(dict.fromkeys(input_paths))
-        input_inventory = [
-            {
-                "input_order": index,
-                "path": str(path.relative_to(root)),
-                "bytes": path.stat().st_size,
-                "sha256": sha256_file(path),
+        writer.writeheader()
+        for published in published_rows:
+            run = run_by_id[published["kda_run_id"]]
+            test = significant_test_row(
+                run,
+                published["key_driver"],
+                signatures,
+                backgrounds,
+                explicit_by_run,
+                annotation,
+            )
+            case_id = test["case_id"]
+            summary = summary_by_key[
+                (run["broad_network"], published["key_driver"], case_id)
+            ]
+            sex, apoe_group = GROUP_DETAILS[run["signature_group"]]
+            output = {
+                "schema_version": "phase18_significant_kda_returns_v1",
+                "kda_run_id": published["kda_run_id"],
+                "fine_cell_type": run["fine_cell_type"],
+                "broad_network": run["broad_network"],
+                "signature_group": run["signature_group"],
+                "sex": sex,
+                "apoe_group": apoe_group,
+                "signature_direction": run["signature_direction"],
+                "effective_query_genes": run["effective_query_genes"],
+                "effective_background_genes": run["effective_background_genes"],
+                "run_terminal_status": run["terminal_status"],
+                "key_driver": published["key_driver"],
+                "returned_by_call_key_drivers": True,
+                "published_best_layer": published["best_layer"],
+                "published_overlap_count": published["overlap_count"],
+                "published_neighborhood_size": published["neighborhood_size"],
+                "published_non_neighborhood_size": published[
+                    "non_neighborhood_size"
+                ],
+                "published_signature_size": published["signature_size"],
+                "published_fold_enrichment": published["fold_enrichment"],
+                "published_log_p_value": published["log_p_value"],
+                "published_raw_p_value": repr(
+                    math.exp(float(published["log_p_value"]))
+                ),
+                "published_adjusted_p_value": published["adjusted_p_value"],
+                "published_is_signature": published["is_signature"],
+                "published_is_root_node": published["is_root_node"],
+                "published_global_key_driver": published["global_key_driver"],
+                "published_overlap_items": published["overlap_items"],
+                "case_order": CASE_ORDER[case_id],
+                "case_label": CASE_LABELS[case_id],
+                "case_driver_candidate_count": candidate_counts[
+                    (run["broad_network"], case_id)
+                ],
+                "case_displayed_candidate_count": min(
+                    candidate_counts[(run["broad_network"], case_id)], 5
+                ),
             }
-            for index, path in enumerate(unique_input_paths, start=1)
-        ]
-        source_checks = [
-            {"check_id": "phase12_validation_status", "observed": status_rows[0]["validation_status"], "expected": "validated_complete", "passed": True},
-            {"check_id": "phase12_planned_runs", "observed": as_int(status_rows[0]["planned_runs"]), "expected": 1782, "passed": True},
-            {"check_id": "phase12_failed_runs", "observed": as_int(status_rows[0]["failed_runs"]), "expected": 0, "passed": True},
-            *[
-                {"check_id": f"hash_{row['source_id']}", "observed": row["observed"], "expected": row["expected"], "passed": row["passed"]}
-                for row in hash_checks
-            ],
-        ]
-        run_fields = [
-            "kda_run_id", "analysis_tier", "fine_cell_type", "broad_network", "signature_group", "signature_direction",
-            "effective_query_genes", "effective_background_genes", "eligibility_status", "terminal_status", "phase18_included", "phase18_exclusion_reason",
-        ]
-        aggregate_fields = [
-            "broad_network", "current_symbol", "case_order", "case_id", "is_core_mito", "mitocarta_canonical_symbol", "mito_tier",
-            "genome_origin", "is_mtdna_gene", "extended_reference_member", "mapping_status", "phase03_mitocarta_match_type",
-            "eligible_run_count", "usable_run_count", "explicit_run_count", "implicit_run_count", "missing_run_count",
-            "coverage_numerator", "coverage_denominator", "coverage_fraction", "coverage_pass", "conservative_support_count",
-            "conservative_support_pass", "recurrence_fraction", "supporting_fine_cell_type_count", "supporting_fine_cell_types",
-            "supporting_group_count", "supporting_groups", "supporting_direction_count", "supporting_directions",
-            "median_support_fold_enrichment", "maximum_support_fold_enrichment", "aggregate_acat_p", "aggregate_acat_q",
-            "aggregate_q_pass", "missing_as_one_acat_p", "missing_as_one_acat_q", "mean_log_p_score",
-            "terminal_candidate_status", "within_case_rank", "top5_display", "stability_assessable_repetitions",
-            "stability_nominal_fraction", "stability_q_fraction", "stability_candidate_fraction", "stability_worst_rank", "evidence_tier",
-        ]
-        candidate_test_fields = [
-            "kda_run_id", "fine_cell_type", "broad_network", "signature_group", "signature_direction", "current_symbol", "case_id",
-            "is_core_mito", "mitocarta_canonical_symbol", "query_member", "test_status", "usable_test", "explicit_family_member",
-            "effective_query_size", "effective_background_size", "original_layer", "original_overlap_count", "original_neighborhood_size",
-            "original_non_neighborhood_size", "original_signature_size", "original_fold_enrichment", "original_log_p", "original_raw_p",
-            "original_run_q", "self_excluded", "final_layer", "final_overlap_count", "final_neighborhood_size", "final_non_neighborhood_size",
-            "final_signature_size", "final_background_size", "final_fold_enrichment", "final_log_p", "final_raw_p", "final_run_q",
-            "other_query_overlap", "support_overlap_pass", "support_fold_pass", "support_run_q_pass", "conservative_support",
-        ]
-        support_fields = [
-            "kda_run_id", "broad_network", "fine_cell_type", "signature_group", "signature_direction", "current_symbol", "case_id",
-            "test_status", "query_size", "query_size_pass", "other_query_overlap", "other_query_overlap_pass", "final_fold_enrichment",
-            "fold_enrichment_pass", "final_run_q", "run_q_pass", "conservative_support",
-        ]
-        top5_fields = [
-            "broad_network", "case_order", "case_id", "list_status", "total_passing_candidate_count", "displayed_candidate_count",
-            "display_rank", "current_symbol", "aggregate_acat_p", "aggregate_acat_q", "coverage_numerator", "coverage_denominator",
-            "coverage_fraction", "conservative_support_count", "evidence_tier", "empty_result_reason",
-        ]
-        funnel_fields = [
-            "report_type", "summary_scope", "broad_network", "case_id", "filter_number", "filter_name", "ordered_funnel_step",
-            "counting_unit", "input_n", "pass_n", "fail_n", "cumulative_remaining_n", "input_distinct_gene_n",
-            "pass_distinct_gene_n", "fail_distinct_gene_n", "remaining_distinct_gene_n", "explicit_n", "implicit_n", "absent_n",
-            "invalid_n", "not_testable_n", "failure_reason",
-        ]
-        file_counts["key_driver_analysis_manifest.tsv"] = write_tsv(staging / "key_driver_analysis_manifest.tsv", analysis_manifest, list(analysis_manifest[0]), f"{SCHEMA}_analysis_manifest_v1")
-        file_counts["key_driver_case_manifest.tsv"] = write_tsv(staging / "key_driver_case_manifest.tsv", case_manifest, list(case_manifest[0]), f"{SCHEMA}_case_manifest_v1")
-        file_counts["key_driver_run_manifest.tsv"] = write_tsv(staging / "key_driver_run_manifest.tsv", structural_runs, run_fields, f"{SCHEMA}_run_manifest_v1")
-        file_counts["key_driver_input_inventory.tsv"] = write_tsv(staging / "key_driver_input_inventory.tsv", input_inventory, list(input_inventory[0]), f"{SCHEMA}_input_inventory_v1")
-        file_counts["key_driver_source_checks.tsv"] = write_tsv(staging / "key_driver_source_checks.tsv", source_checks, list(source_checks[0]), f"{SCHEMA}_source_checks_v1")
-        file_counts["key_driver_candidate_tests.tsv.gz"] = write_tsv(staging / "key_driver_candidate_tests.tsv.gz", candidate_test_rows(included_runs, network_genes, signatures, backgrounds, explicit_by_run, annotation), candidate_test_fields, f"{SCHEMA}_candidate_tests_v1")
-        file_counts["key_driver_conservative_support.tsv.gz"] = write_tsv(staging / "key_driver_conservative_support.tsv.gz", conservative_support_rows(included_runs, network_genes, signatures, backgrounds, explicit_by_run, annotation), support_fields, f"{SCHEMA}_conservative_support_v1")
-        file_counts["key_driver_gene_case_summary.tsv.gz"] = write_tsv(staging / "key_driver_gene_case_summary.tsv.gz", (public_row(row) for row in all_aggregates), aggregate_fields, f"{SCHEMA}_gene_case_summary_v1")
-        file_counts["key_driver_candidates.tsv"] = write_tsv(staging / "key_driver_candidates.tsv", (public_row(row) for row in candidates), aggregate_fields, f"{SCHEMA}_candidates_v1")
-        file_counts["key_driver_top5.tsv"] = write_tsv(staging / "key_driver_top5.tsv", top5, top5_fields, f"{SCHEMA}_top5_v1")
-        stability_rep_fields = list(stability_replicates[0]) if stability_replicates else ["broad_network", "omitted_fine_cell_type", "current_symbol", "case_id", "assessable", "aggregate_acat_p", "aggregate_acat_q", "terminal_candidate_status", "within_case_rank"]
-        stability_sum_fields = list(stability_summary[0]) if stability_summary else ["broad_network", "current_symbol", "case_id", "assessable_repetitions", "nominal_p_pass_fraction", "aggregate_q_pass_fraction", "candidate_retention_fraction", "worst_rank", "evidence_tier"]
-        file_counts["key_driver_stability_replicates.tsv.gz"] = write_tsv(staging / "key_driver_stability_replicates.tsv.gz", stability_replicates, stability_rep_fields, f"{SCHEMA}_stability_replicates_v1")
-        file_counts["key_driver_stability_summary.tsv"] = write_tsv(staging / "key_driver_stability_summary.tsv", stability_summary, stability_sum_fields, f"{SCHEMA}_stability_summary_v1")
-        sensitivity_fields = list(sensitivities[0]) if sensitivities else ["broad_network", "current_symbol", "case_id", "sensitivity_id", "threshold", "aggregate_p", "aggregate_q", "mean_log_p_score", "candidate_status"]
-        file_counts["key_driver_sensitivity_results.tsv.gz"] = write_tsv(staging / "key_driver_sensitivity_results.tsv.gz", sensitivities, sensitivity_fields, f"{SCHEMA}_sensitivity_results_v1")
-        degree_fields = list(degree_rows[0]) if degree_rows else ["broad_network", "current_symbol", "case_id", "out_degree", "undirected_degree", "requested_draws", "available_match_pool", "completed_draws", "observed_aggregate_acat_p", "degree_matched_empirical_tail_p", "random_seed", "blocking_gate"]
-        file_counts["key_driver_network_degree_sensitivity.tsv"] = write_tsv(staging / "key_driver_network_degree_sensitivity.tsv", degree_rows, degree_fields, f"{SCHEMA}_degree_sensitivity_v1")
-        figure_rows = []
-        for row in top5:
-            base = dict(row)
-            if row["current_symbol"]:
-                aggregate = next(x for x in candidates if x["broad_network"] == row["broad_network"] and x["case_id"] == row["case_id"] and x["current_symbol"] == row["current_symbol"])
-                base.update({"supporting_groups": aggregate["supporting_groups"], "supporting_directions": aggregate["supporting_directions"], "supporting_fine_cell_types": aggregate["supporting_fine_cell_types"]})
-            else:
-                base.update({"supporting_groups": None, "supporting_directions": None, "supporting_fine_cell_types": None})
-            figure_rows.append(base)
-        file_counts["key_driver_figure_data.tsv"] = write_tsv(staging / "key_driver_figure_data.tsv", figure_rows, [*top5_fields, "supporting_groups", "supporting_directions", "supporting_fine_cell_types"], f"{SCHEMA}_figure_data_v1")
-        exclusion_rows: list[dict[str, Any]] = []
-        for reason, count in Counter(row["phase18_exclusion_reason"] or "included" for row in structural_runs).items():
-            exclusion_rows.append({"exclusion_level": "run", "broad_network": "ALL", "case_id": "ALL", "reason": reason, "count": count})
-        for (network, status), count in Counter((row["broad_network"], row["terminal_candidate_status"]) for row in all_aggregates).items():
-            exclusion_rows.append({"exclusion_level": "aggregate", "broad_network": network, "case_id": "ALL", "reason": status, "count": count})
-        file_counts["key_driver_exclusion_summary.tsv"] = write_tsv(staging / "key_driver_exclusion_summary.tsv", exclusion_rows, ["exclusion_level", "broad_network", "case_id", "reason", "count"], f"{SCHEMA}_exclusion_summary_v1")
-        file_counts["key_driver_filter_funnel.tsv"] = write_tsv(staging / "key_driver_filter_funnel.tsv", funnel, funnel_fields, f"{SCHEMA}_filter_funnel_v1")
-        stage("write_scientific_outputs", checkpoint)
-
-        checkpoint = time.time()
-        stage_fields = ["stage_order", "stage_id", "terminal_status", "elapsed_seconds"]
-        file_counts["key_driver_stage_status.tsv"] = write_tsv(staging / "key_driver_stage_status.tsv", stage_rows, stage_fields, f"{SCHEMA}_stage_status_v1")
-        all27 = {(row["broad_network"], row["case_id"]) for row in top5}
-        global_funnel = [row for row in funnel if row["report_type"] == "sequential_candidate_funnel" and row["summary_scope"] == "overall" and row["filter_number"] == 5]
-        checks = [
-            {"check_id": "phase12_planned_runs", "severity": "error", "observed": as_int(status_rows[0]["planned_runs"]), "expected": 1782, "passed": as_int(status_rows[0]["planned_runs"]) == 1782},
-            {"check_id": "phase18_structural_slots", "severity": "error", "observed": len(structural_runs), "expected": 648, "passed": len(structural_runs) == 648},
-            {"check_id": "phase18_included_runs", "severity": "error", "observed": len(included_runs), "expected": 161, "passed": len(included_runs) == 161},
-            {"check_id": "phase12_reconstruction", "severity": "error", "observed": sum(row["reconciled"] for row in reconstruction_rows), "expected": len(included_runs), "passed": all(row["reconciled"] for row in reconstruction_rows)},
-            {"check_id": "acat_professor_example", "severity": "error", "observed": validate_acat_example(), "expected": "<=5e-10", "passed": validate_acat_example() <= 5e-10},
-            {"check_id": "three_case_manifest", "severity": "error", "observed": len(case_manifest), "expected": 3, "passed": len(case_manifest) == 3},
-            {"check_id": "top5_network_case_lists", "severity": "error", "observed": len(all27), "expected": 27, "passed": len(all27) == 27},
-            {"check_id": "top5_display_cap", "severity": "error", "observed": max(Counter((row["broad_network"], row["case_id"]) for row in top5 if row["list_status"] == "ranked_candidates").values(), default=0), "expected": "<=5", "passed": all(value <= 5 for value in Counter((row["broad_network"], row["case_id"]) for row in top5 if row["list_status"] == "ranked_candidates").values())},
-            {"check_id": "filter_funnel_additivity", "severity": "error", "observed": sum(row["input_n"] == row["pass_n"] + row["fail_n"] for row in funnel), "expected": len(funnel), "passed": all(row["input_n"] == row["pass_n"] + row["fail_n"] for row in funnel)},
-            {"check_id": "filter_funnel_matches_candidates", "severity": "error", "observed": global_funnel[0]["pass_n"] if global_funnel else None, "expected": len(candidates), "passed": len(global_funnel) == 1 and global_funnel[0]["pass_n"] == len(candidates)},
-            {"check_id": "candidate_ranks_unique", "severity": "error", "observed": len({(row["broad_network"], row["case_id"], row["within_case_rank"]) for row in candidates}), "expected": len(candidates), "passed": len({(row["broad_network"], row["case_id"], row["within_case_rank"]) for row in candidates}) == len(candidates)},
-            {"check_id": "invalid_tests", "severity": "error", "observed": 0, "expected": 0, "passed": True},
-        ]
-        if not all(row["passed"] for row in checks):
-            failed = [row["check_id"] for row in checks if not row["passed"]]
-            fail(f"Phase 18 checks failed: {', '.join(failed)}")
-        file_counts["key_driver_checks.tsv"] = write_tsv(staging / "key_driver_checks.tsv", checks, list(checks[0]), f"{SCHEMA}_checks_v1")
-        declared = list(config["outputs"]["declared_files"])
-        artifacts_output = []
-        for order, name in enumerate(declared, start=1):
-            path = staging / name
-            artifacts_output.append(
+            output.update(
+                {field: test[field] for field in SIGNIFICANT_EVIDENCE_FIELDS}
+            )
+            output.update(
+                {field: summary[field] for field in SIGNIFICANT_SUMMARY_FIELDS}
+            )
+            writer.writerow(
                 {
-                    "artifact_order": order,
-                    "path": name,
-                    "declared": True,
-                    "rows": file_counts.get(name),
-                    "bytes": path.stat().st_size if path.exists() else None,
-                    "sha256": sha256_file(path) if path.exists() else None,
-                    "hash_status": "recorded" if path.exists() else "written_after_artifact_manifest",
+                    field: display_value(output.get(field))
+                    for field in SIGNIFICANT_OUTPUT_FIELDS
                 }
             )
-        file_counts["key_driver_artifacts.tsv"] = write_tsv(staging / "key_driver_artifacts.tsv", artifacts_output, list(artifacts_output[0]), f"{SCHEMA}_artifacts_v1")
-        status_output = [{
-            "execution_stage": config["analysis"]["execution_stage"],
-            "execution_class": config["analysis"]["execution_class"],
-            "stable_task_id": "global:key_driver_selection",
-            "task_mode": "key_driver_selection",
-            "phase12_planned_runs": 1782,
-            "phase18_structural_run_slots": len(structural_runs),
-            "phase18_included_runs": len(included_runs),
-            "phase18_cases": 3,
-            "included_broad_networks": sum(bool(runs_by_network.get(network)) for network in network_order),
-            "aggregate_rows": len(all_aggregates),
-            "driver_candidates": len(candidates),
-            "top5_network_case_lists": len(all27),
-            "failed_checks": 0,
-            "elapsed_seconds": time.time() - started,
-            "validation_status": config["outputs"]["validation_status"],
-            "git_revision": git_revision(root),
-            "timestamp_utc": time.strftime("%Y-%m-%d %H:%M:%S UTC", time.gmtime()),
-        }]
-        file_counts["key_driver_status.tsv"] = write_tsv(staging / "key_driver_status.tsv", status_output, list(status_output[0]), f"{SCHEMA}_status_v1")
-        actual_files = sorted(path.name for path in staging.iterdir() if path.is_file())
-        if sorted(declared) != actual_files:
-            fail(f"Final output declaration mismatch: declared={len(declared)}, actual={len(actual_files)}")
-        stage("validate_and_publish", checkpoint)
-        staging.replace(output_dir)
-        print(f"Phase 18 analysis completed: {output_dir}")
-        print(f"Included runs: {len(included_runs)}; aggregate rows: {len(all_aggregates)}; candidates: {len(candidates)}")
-        return 0
-    except Exception:
-        shutil.rmtree(staging, ignore_errors=True)
-        raise
+    temporary.replace(output_path)
+
+    unique_genes = {row["key_driver"] for row in published_rows}
+    nonempty_runs = {row["kda_run_id"] for row in published_rows}
+    print(f"wrote={output_path}")
+    print(f"rows={len(published_rows)}")
+    print(f"unique_genes={len(unique_genes)}")
+    print(f"runs_with_returns={len(nonempty_runs)}")
+    print(f"included_runs={len(included_runs)}")
+    return 0
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    raise SystemExit(export_significant_returns())

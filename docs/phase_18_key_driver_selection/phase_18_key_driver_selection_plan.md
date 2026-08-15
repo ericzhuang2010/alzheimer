@@ -5,12 +5,10 @@
 This document defines the scientific, implementation, execution, output, and
 completion plan for Phase 18.
 
-Plan status: **the frozen primary design was executed against the complete
-validated Phase 12 inputs. After all Phase 18 checks passed, the user
-explicitly authorized promotion on 2026-08-14. The official bundle is
-<code>validated_complete</code>. It was computed locally, so its execution
-stage is truthfully labeled <code>local_production_equivalent</code>; it does
-not claim execution on Minerva hardware**.
+Plan status: **the current streamlined Phase 18 workflow reads the validated
+upstream results and writes one main output,
+<code>key_driver_significant_returns.tsv</code>. Additional derived tables and
+figures will be created only when needed**.
 
 Phase 18 is intentionally numbered after the currently documented Phase 15
 work. Phase numbers 16 and 17 are treated as reserved and must not be reused,
@@ -52,10 +50,10 @@ q value in the rank.
 results/minerva_production/18_key_driver_selection/
 ~~~
 
-This is the single official Phase 18 result root. The complete real-data run
-was first validated in a local staging root and then moved here after explicit
-user authorization. Promotion changed only path and provenance metadata; it
-did not recompute or selectively replace scientific results.
+This is the Phase 18 result root. The current script writes the significant
+return table here. Older files already present in this directory are retained
+as historical artifacts, but the current script neither reads nor regenerates
+them.
 
 ## What Phase 18 will and will not do
 
@@ -66,8 +64,8 @@ did not recompute or selectively replace scientific results.
    Phase 09 annotation, and all required artifact hashes;
 3. retain only the six primary sex/APOE groups and the separate AD-up and
    AD-down mitochondrial queries;
-4. preserve all 648 primary directional run slots in a Phase 18 run manifest,
-   including explicit exclusion reasons;
+4. evaluate the 648 primary directional run slots and retain the exclusion
+   logic in the script;
 5. use only validated runs with at least 10 effective query genes for primary
    driver selection;
 6. begin from every gene present in at least one included run background,
@@ -85,13 +83,9 @@ did not recompute or selectively replace scientific results.
     evidence before calling a driver candidate;
 13. rank candidates independently within each broad network and each of the
     three cases;
-14. display at most five passing candidates per network × case while
-    publishing every candidate and noncandidate result;
-15. publish an auditable filter funnel showing how many records enter, pass,
-    and fail every filter at every scientifically meaningful reporting scope;
-    and
-16. publish complete provenance, sensitivity results, checks, and terminal
-    statuses.
+14. mark at most five passing candidates per network × case for display; and
+15. write the 1,641 significant returned gene × run rows with the annotations
+    needed for downstream tables and figures.
 
 ### Phase 18 will not
 
@@ -1087,40 +1081,21 @@ Final production root:
 results/minerva_production/18_key_driver_selection/
 ~~~
 
-The final directory is flat and contains exactly 21 files:
+The current workflow declares one output:
 
 | File | Required content |
 |---|---|
-| <code>key_driver_analysis_manifest.tsv</code> | One frozen Phase 18 definition, approvals, thresholds, methods, versions, and hashes |
-| <code>key_driver_case_manifest.tsv</code> | Exactly three ordered case definitions |
-| <code>key_driver_run_manifest.tsv</code> | Exactly 648 primary directional slots with inclusion and exclusion reasons |
-| <code>key_driver_input_inventory.tsv</code> | Required Phase 12, Phase 09, fKDA, network, config, code, and lockfile identities |
-| <code>key_driver_source_checks.tsv</code> | Upstream schemas, dimensions, keys, statuses, and hash validation |
-| <code>key_driver_candidate_tests.tsv.gz</code> | Complete network-specific gene × included-run opportunity matrix, including usable P = 1 and missing-status rows, with original, reconstructed, self-excluded, and final test fields |
-| <code>key_driver_conservative_support.tsv.gz</code> | All component decisions for conservative supporting runs |
-| <code>key_driver_gene_case_summary.tsv.gz</code> | Every network × gene × case aggregate, including noncandidates |
-| <code>key_driver_candidates.tsv</code> | All rows passing the final candidate gate |
-| <code>key_driver_top5.tsv</code> | At most five passing genes per network × case plus explicit empty-result records |
-| <code>key_driver_stability_replicates.tsv.gz</code> | Leave-one-fine-cell-type-out replicate results |
-| <code>key_driver_stability_summary.tsv</code> | Stability counts, fractions, rank range, and evidence tier |
-| <code>key_driver_sensitivity_results.tsv.gz</code> | Missing-value, coverage, and aggregation sensitivities |
-| <code>key_driver_network_degree_sensitivity.tsv</code> | Degree-matched topology sensitivity for candidates |
-| <code>key_driver_figure_data.tsv</code> | Figure-ready top-five and group-contribution data derived only from authoritative candidate tables |
-| <code>key_driver_exclusion_summary.tsv</code> | Counts and reasons for run, test, aggregate, and candidate exclusions |
-| <code>key_driver_filter_funnel.tsv</code> | Native-unit counts, sequential aggregate attrition, and independent gate pass/fail counts at the required overall, network, and network × case scopes |
-| <code>key_driver_stage_status.tsv</code> | Stage dependencies, fingerprints, shard counts, elapsed times, and terminal states |
-| <code>key_driver_checks.tsv</code> | Blocking and nonblocking checks |
-| <code>key_driver_artifacts.tsv</code> | Every declared path, schema, row count, byte count, and SHA-256 |
-| <code>key_driver_status.tsv</code> | One phase-level technical and scientific status row |
+| <code>key_driver_significant_returns.tsv</code> | The 1,641 significant gene × run rows returned by the 161 included <code>call_key_drivers</code> calls, annotated with run, case, gene-level evidence, aggregate, rank, and stability fields needed by downstream Phase 18 figures |
 
-Every TSV begins with <code>schema_version</code>. Every final file is declared
-in <code>key_driver_artifacts.tsv</code>. No scratch directory, temporary
-shard, undeclared file, or figure image is permitted in the final production
-root.
+The table has 103 columns and begins with <code>schema_version</code>. The sole
+script rebuilds it directly from validated Phase 12 results, Phase 09 gene
+annotation, and the Bayesian-network artifacts recorded by Phase 12. It does
+not depend on any other Phase 18 output.
 
-### Required aggregate fields
+### Embedded aggregate fields
 
-<code>key_driver_gene_case_summary.tsv.gz</code> must include at least:
+Each row in <code>key_driver_significant_returns.tsv</code> includes the
+applicable gene × broad-network × case summary fields, including:
 
 - broad network, current symbol, and case ID;
 - MitoCarta, mitochondrial tier, and genome-origin annotations;
@@ -1131,30 +1106,12 @@ root.
 - median and maximum final fold enrichment;
 - primary ACAT P and gene-level q;
 - missing-as-one ACAT P and q;
-- alternate-coverage and aggregation results;
 - stability fields;
 - candidate component Booleans;
 - terminal candidate status;
 - within-case rank;
 - top-five display flag; and
-- deterministic exclusion reason where applicable.
-
-### Required top-five fields
-
-<code>key_driver_top5.tsv</code> must include at least:
-
-- broad network, ordered case ID, and list status;
-- total passing-candidate and displayed-candidate counts;
-- display rank and current gene symbol;
-- primary ACAT P and gene-level q;
-- coverage numerator, denominator, and fraction;
-- conservative-support count;
-- evidence tier; and
-- deterministic empty-result reason when no gene is displayed.
-
-The table must cover all 27 declared network × case combinations. A
-combination with candidates has one row per displayed gene. A combination
-without a displayed gene has exactly one explicit status row.
+- the top-five display flag.
 
 ### Required filter-funnel fields
 
@@ -1240,10 +1197,9 @@ No positive driver candidate is required for technical completion.
 | File | Purpose |
 |---|---|
 | <code>config/phase18_key_driver_selection.yml</code> | Frozen inputs, cases, filters, families, ACAT, ranking, sensitivities, outputs, and seeds |
-| <code>scripts/18_run_key_driver_selection.R</code> | Package-independent R command-line entry point |
-| <code>scripts/18_run_key_driver_selection.py</code> | Validation, test reconstruction, self-exclusion, aggregation, ranking, sensitivities, and atomic publication using the locally available scientific Python stack |
+| <code>scripts/18_export_significant_returns.py</code> | Single Phase 18 entry point: validates upstream inputs, reconstructs tests, applies self-exclusion and aggregation, and writes the annotated significant-return table |
 | <code>tests/test_phase18_key_driver_selection.R</code> | R entry point for Phase 18 tests and output validation |
-| <code>tests/test_phase18_key_driver_selection.py</code> | Deterministic unit, gate, top-five, filter-funnel, gzip, artifact, and output-only tests |
+| <code>tests/test_phase18_key_driver_selection.py</code> | Deterministic numerical tests and validation of the one-file output contract |
 | <code>docs/phase_18_key_driver_selection/phase_18_key_driver_selection_plan.md</code> | This Phase 18 contract |
 
 The existing companion proposal remains in the same documentation directory.
@@ -1349,10 +1305,10 @@ that computation occurred locally rather than on Minerva hardware.
 The local command is:
 
 ~~~bash
-Rscript --vanilla scripts/18_run_key_driver_selection.R \
-  --phase18-config config/phase18_key_driver_selection.yml \
+python3 scripts/18_export_significant_returns.py \
+  --config config/phase18_key_driver_selection.yml \
   --phase12-dir results/minerva_production/12_kda \
-  --output-dir results/minerva_production/18_key_driver_selection
+  --output results/minerva_production/18_key_driver_selection/key_driver_significant_returns.tsv
 ~~~
 
 The required terminal status is:
