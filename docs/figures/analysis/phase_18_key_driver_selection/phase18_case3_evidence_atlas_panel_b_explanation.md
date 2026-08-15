@@ -1,4 +1,8 @@
-# Phase 18 Case 3 evidence atlas: Panel B column explanation
+# Phase 18 non-MT Driver Evidence Atlas: Panel B Column Explanation
+
+> Terminology update: the former Case 3 is now `non_mt_driver`. The column
+> concepts remain applicable, but numerical values from the earlier atlas must
+> be regenerated under the two-class analysis.
 
 Panel B summarizes evidence breadth and reproducibility for each gene,
 restricted to that gene's passing Case 3 network contexts.

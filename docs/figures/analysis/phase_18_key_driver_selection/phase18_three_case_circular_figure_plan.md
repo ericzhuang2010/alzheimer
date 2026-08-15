@@ -1,4 +1,11 @@
-# Phase 18 figure plan: three case-specific circular key-driver graphs
+# Phase 18 Three-Case Circular Figure Plan — Deprecated
+
+> **Deprecated:** Phase 18 now uses two driver classes: `mt_driver` and
+> `non_mt_driver`. The former Case 1 and Case 2 are merged before ACAT,
+> candidate selection, and ranking. This document and its three-case counts
+> are retained only as a record of the earlier figure design. A new two-class
+> figure must use `key_driver_significant_returns.tsv` schema
+> `phase18_significant_kda_returns_v2`.
 
 ## Status and purpose
 

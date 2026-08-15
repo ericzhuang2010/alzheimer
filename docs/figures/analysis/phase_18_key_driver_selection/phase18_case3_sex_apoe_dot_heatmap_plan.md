@@ -1,4 +1,8 @@
-# Phase 18 Case 3 deep-dive plan 2: sex/APOE and direction dot heatmap
+# Phase 18 non-MT Driver Sex/APOE Dot-Heatmap Plan — Legacy Inputs
+
+> The former Case 3 maps to `non_mt_driver`. The old auxiliary inputs predate
+> the two-class recomputation and must be regenerated from the current
+> `key_driver_significant_returns.tsv` before this figure is rerun.
 
 ## Status and purpose
 

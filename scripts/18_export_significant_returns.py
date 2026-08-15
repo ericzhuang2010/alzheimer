@@ -1,10 +1,14 @@
 #!/usr/bin/env python3
-"""Export the annotated Phase 18 significant KDA returns from upstream data.
+"""Export two-class Phase 18 significant KDA returns from upstream data.
 
 This is the single Phase 18 entry point. It reads the validated Phase 12
 bundle, the recorded Phase 09 annotation, and the recorded Bayesian networks;
 reconstructs the Phase 18 statistics in memory; and writes only
 ``key_driver_significant_returns.tsv``. It never reads another Phase 18 result.
+
+Core mitochondrial genes are aggregated as ``mt_driver`` across all included
+runs in their broad network. Non-core genes are aggregated as
+``non_mt_driver``. MT query-member runs retain conditional self-exclusion.
 """
 
 from __future__ import annotations
@@ -32,10 +36,9 @@ from scipy.stats import cauchy, hypergeom
 TRUE_VALUES = {"TRUE", "T", "1", "YES"}
 NA_TEXT = "NA"
 SCHEMA = "mitochondrial_key_driver_selection_v1"
-CASE1 = "case1_core_mito_in_query"
-CASE2 = "case2_core_mito_not_in_query"
-CASE3 = "case3_not_core_mito"
-CASE_ORDER = {CASE1: 1, CASE2: 2, CASE3: 3}
+CASE_MT = "mt_driver"
+CASE_NON_MT = "non_mt_driver"
+CASE_ORDER = {CASE_MT: 1, CASE_NON_MT: 2}
 
 ACAT_EXAMPLE = [
     [0.5746569, 0.7090122, 0.7965851, 0.1149619],
@@ -317,9 +320,15 @@ def load_annotation(path: Path) -> tuple[dict[str, dict[str, Any]], list[str]]:
 
 def classify_case(symbol: str, query: set[str], annotation: dict[str, dict[str, Any]]) -> str:
     core = bool(annotation.get(symbol, {}).get("is_core_mito", False))
-    if not core:
-        return CASE3
-    return CASE1 if symbol in query else CASE2
+    return CASE_MT if core else CASE_NON_MT
+
+
+def requires_self_exclusion(
+    symbol: str,
+    query: set[str],
+    annotation: dict[str, dict[str, Any]],
+) -> bool:
+    return bool(annotation.get(symbol, {}).get("is_core_mito", False)) and symbol in query
 
 
 def load_network(path: Path) -> list[tuple[str, str]]:
@@ -386,7 +395,8 @@ def reconstruct_run(
             continue
         original = min(layer_rows, key=lambda row: (row["log_p"], row["layer"]))
         case_id = classify_case(candidate, query, annotation)
-        if case_id == CASE1:
+        self_excluded = requires_self_exclusion(candidate, query, annotation)
+        if self_excluded:
             corrected_rows: list[dict[str, Any]] = []
             for row in layer_rows:
                 corrected_q = row["overlap"] - 1
@@ -414,6 +424,7 @@ def reconstruct_run(
             final = dict(original)
         explicit[candidate] = {
             "case_id": case_id,
+            "self_excluded": self_excluded,
             "original": dict(original),
             "final": dict(final),
             "test_status": "explicit_zero_overlap" if original["overlap"] == 0 else "explicit_test",
@@ -533,13 +544,8 @@ def aggregate_network(
     aggregates: list[dict[str, Any]] = []
     for symbol in genes:
         ann = annotation_fields(symbol, annotation)
-        if ann["is_core_mito"]:
-            case_runs = {
-                CASE1: [run for run in network_runs if symbol in signatures[run["kda_run_id"]]],
-                CASE2: [run for run in network_runs if symbol not in signatures[run["kda_run_id"]]],
-            }
-        else:
-            case_runs = {CASE3: list(network_runs)}
+        case_id = CASE_MT if ann["is_core_mito"] else CASE_NON_MT
+        case_runs = {case_id: list(network_runs)}
         for case_id, denominator_runs in case_runs.items():
             if not denominator_runs:
                 continue
@@ -697,7 +703,7 @@ def scope_subsets(aggregates: list[dict[str, Any]]) -> list[tuple[str, str, str,
     for network in networks:
         network_rows = [row for row in aggregates if row["broad_network"] == network]
         result.append(("broad_network", network, "ALL", network_rows))
-        for case_id in (CASE1, CASE2, CASE3):
+        for case_id in (CASE_MT, CASE_NON_MT):
             rows = [row for row in network_rows if row["case_id"] == case_id]
             result.append(("broad_network_case", network, case_id, rows))
     return result
@@ -928,7 +934,7 @@ def candidate_test_rows(
                 "original_log_p": original.get("log_p"),
                 "original_raw_p": original.get("p"),
                 "original_run_q": record.get("original_q") if record else None,
-                "self_excluded": evidence["case_id"] == CASE1 and record is not None,
+                "self_excluded": bool(record and record.get("self_excluded", False)),
                 "final_layer": final.get("layer"),
                 "final_overlap_count": final.get("overlap"),
                 "final_neighborhood_size": final.get("neighborhood"),
@@ -995,7 +1001,7 @@ def top5_rows(
     output: list[dict[str, Any]] = []
     for network in network_order:
         network_rows = [row for row in aggregates if row["broad_network"] == network]
-        for case_id in (CASE1, CASE2, CASE3):
+        for case_id in (CASE_MT, CASE_NON_MT):
             case_rows = [row for row in network_rows if row["case_id"] == case_id]
             candidates = sorted(
                 [row for row in case_rows if row["terminal_candidate_status"] == "driver_candidate"],
@@ -1290,9 +1296,8 @@ GROUP_DETAILS = {
 }
 
 CASE_LABELS = {
-    CASE1: "MT-related and in query",
-    CASE2: "MT-related and not in query",
-    CASE3: "Not MT-related",
+    CASE_MT: "MT driver",
+    CASE_NON_MT: "non-MT driver",
 }
 
 SIGNIFICANT_EVIDENCE_FIELDS = """
@@ -1432,7 +1437,7 @@ def significant_test_row(
         "original_log_p": original["log_p"],
         "original_raw_p": original["p"],
         "original_run_q": record["original_q"],
-        "self_excluded": evidence["case_id"] == CASE1,
+        "self_excluded": bool(record.get("self_excluded", False)),
         "final_layer": final["layer"],
         "final_overlap_count": final["overlap"],
         "final_neighborhood_size": final["neighborhood"],
@@ -1685,7 +1690,7 @@ def export_significant_returns() -> int:
             ]
             sex, apoe_group = GROUP_DETAILS[run["signature_group"]]
             output = {
-                "schema_version": "phase18_significant_kda_returns_v1",
+                "schema_version": "phase18_significant_kda_returns_v2",
                 "kda_run_id": published["kda_run_id"],
                 "fine_cell_type": run["fine_cell_type"],
                 "broad_network": run["broad_network"],

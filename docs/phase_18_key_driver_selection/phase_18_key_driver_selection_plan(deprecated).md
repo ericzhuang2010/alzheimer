@@ -1,5 +1,11 @@
 # Phase 18: Data-Driven Selection of Phase 12 Mitochondrial Key-Driver Candidates
 
+> **Deprecated:** This document records the former three-case design and must
+> not be used as the current specification. The active workflow merges the two
+> mitochondrial cases into `mt_driver` and uses `non_mt_driver` as the second
+> class. See
+> [Unified key-driver selection proposal](unified_key_driver_selection_proposal.md).
+
 ## Status and phase boundary
 
 This document defines the scientific, implementation, execution, output, and
@@ -32,11 +38,8 @@ The companion rationale is:
 
 [Unified key-driver selection proposal](unified_key_driver_selection_proposal.md)
 
-This implementation plan is authoritative if the companion proposal and this
-plan differ. In particular, this plan freezes ranking by gene-level ACAT q
-value within each case; breadth, recurrence, stability, and fold enrichment
-are reported as annotations and evidence tiers rather than used ahead of the
-q value in the rank.
+The companion proposal is authoritative for the current two-class workflow.
+The remainder of this file is retained only as historical documentation.
 
 ### Short name
 

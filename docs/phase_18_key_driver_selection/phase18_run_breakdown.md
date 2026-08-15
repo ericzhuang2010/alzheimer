@@ -31,6 +31,48 @@ The runs are divided as follows:
 | Included | Effective query size was at least 10 | 161 |
 | **Total** |  | **648** |
 
+## Eligible runs per driver class and broad network
+
+There are **161 included runs in total**, but an ACAT calculation never uses
+all 161. Each gene is aggregated within one broad network and one driver
+class.
+
+After merging the previous two mitochondrial cases, both driver classes have
+the same fixed eligible-run count within a broad network:
+
+```text
+MT-driver eligible runs
+    = all included runs in the broad network
+
+non-MT-driver eligible runs
+    = all included runs in that broad network
+```
+
+| Broad network | Total included runs | MT-driver eligible runs | non-MT-driver eligible runs |
+|---|---:|---:|---:|
+| Astrocytes | 21 | 21 | 21 |
+| Excitatory neurons | 97 | 97 | 97 |
+| Inhibitory neurons | 28 | 28 | 28 |
+| Microglia | 6 | 6 | 6 |
+| OPCs | 6 | 6 | 6 |
+| Oligodendrocytes | 2 | 2 | 2 |
+| Vasculature cells | 1 | 1 | 1 |
+| **All broad networks** | **161** | **Network-specific; not summed for one gene** | **Network-specific; not summed for one gene** |
+
+For an excitatory-neuron gene in either class:
+
+```text
+eligible_run_count = 97
+```
+
+For an MT driver, query membership still determines whether self-overlap is
+removed in an individual run. It no longer changes the aggregate class or its
+eligible-run denominator.
+
+Therefore, the `eligible_run_count` column is a
+**gene × broad-network × driver-class denominator**, not the global number
+161.
+
 ## Genes returned for the 161 included calls
 
 Of the 161 included `call_key_drivers()` calls:

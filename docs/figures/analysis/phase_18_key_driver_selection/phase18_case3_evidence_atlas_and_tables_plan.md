@@ -1,4 +1,10 @@
-# Phase 18 Case 3 deep-dive plan 1: evidence atlas and tables
+# Phase 18 non-MT Driver Evidence Atlas Plan — Legacy Inputs
+
+> The former Case 3 maps directly to the current `non_mt_driver` class.
+> However, the frozen counts and auxiliary input tables below predate the
+> two-class recomputation. Regenerate them from
+> `key_driver_significant_returns.tsv` schema
+> `phase18_significant_kda_returns_v2` before producing a current atlas.
 
 ## Status and purpose
 

@@ -1,6 +1,14 @@
 #!/usr/bin/env Rscript
 
+# Legacy former-Case-3 renderer. Current Phase 18 uses non_mt_driver and the
+# phase18_significant_kda_returns_v2 two-class output.
+
 options(stringsAsFactors = FALSE, warn = 1)
+
+stop(
+  "Legacy Case 3 inputs are incompatible with two-class Phase 18 v2 output.",
+  call. = FALSE
+)
 
 common_path <- file.path(
   "scripts", "figures", "analysis", "phease12_kda",
@@ -124,8 +132,8 @@ allowed_states <- c(
 assert_true(nrow(row_data) == 22L, "Row annotations must contain 22 contexts")
 assert_true(nrow(plot_data) == 264L, "Plotted data must contain 264 cells")
 assert_true(
-  all(row_data$case_id == "case3_not_core_mito") &&
-    all(plot_data$case_id == "case3_not_core_mito"),
+  all(row_data$case_id == "non_mt_driver") &&
+    all(plot_data$case_id == "non_mt_driver"),
   "Unexpected case ID"
 )
 assert_true(

@@ -1,4 +1,8 @@
-# Phase 18 Case 3 sex/APOE figure explanation
+# Phase 18 non-MT Driver Sex/APOE Figure — Historical Rendering
+
+> The former Case 3 is now called `non_mt_driver`. This explanation describes
+> the historical rendering; quantitative annotations should be regenerated
+> from the current two-class Phase 18 table.
 
 This figure shows where the Case 3 key-driver evidence occurs across sex,
 APOE group, AD direction, and broad cell-type network. It is a validated

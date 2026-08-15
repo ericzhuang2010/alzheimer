@@ -1,4 +1,9 @@
-# Phase 18 figure plan: gene attrition across the five key-driver filters
+# Phase 18 Filter-Attrition Figure Plan — Deprecated
+
+> **Deprecated:** The counts and panels below use the former three-case
+> analysis. Current Phase 18 selection merges mitochondrial query-member and
+> non-query-member evidence into `mt_driver` and uses `non_mt_driver` as the
+> second class. Do not use these frozen counts for the two-class analysis.
 
 ## Status and purpose
 

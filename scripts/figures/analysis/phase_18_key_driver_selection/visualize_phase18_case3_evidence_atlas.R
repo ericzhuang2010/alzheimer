@@ -1,6 +1,14 @@
 #!/usr/bin/env Rscript
 
+# Legacy former-Case-3 renderer. Current Phase 18 uses non_mt_driver and the
+# phase18_significant_kda_returns_v2 two-class output.
+
 options(stringsAsFactors = FALSE, warn = 1)
+
+stop(
+  "Legacy Case 3 inputs are incompatible with two-class Phase 18 v2 output.",
+  call. = FALSE
+)
 
 common_path <- file.path(
   "scripts", "figures", "analysis", "phease12_kda",
@@ -132,9 +140,9 @@ assert_true(nrow(summary_data) == 15L, "Gene summary must contain 15 rows")
 assert_true(nrow(detail_data) == 22L, "Gene-network details must contain 22 rows")
 assert_true(nrow(plot_data) == 105L, "Panel A plot data must contain 105 rows")
 assert_true(
-  all(summary_data$case_id == "case3_not_core_mito") &&
-    all(detail_data$case_id == "case3_not_core_mito") &&
-    all(plot_data$case_id == "case3_not_core_mito"),
+  all(summary_data$case_id == "non_mt_driver") &&
+    all(detail_data$case_id == "non_mt_driver") &&
+    all(plot_data$case_id == "non_mt_driver"),
   "Unexpected case ID in atlas data"
 )
 assert_true(

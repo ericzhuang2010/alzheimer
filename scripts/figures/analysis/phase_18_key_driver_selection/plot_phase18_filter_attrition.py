@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Render and validate the Phase 18 five-filter attrition figure package.
+"""Legacy three-case attrition renderer; not valid for two-class v2 output.
 
 The renderer consumes only the validated Phase 18 production bundle. It
 reshapes saved filter decisions and exact counts; it never recomputes KDA,
@@ -1391,6 +1391,10 @@ def publish(
 
 
 def main(argv: Sequence[str] | None = None) -> int:
+    raise RuntimeError(
+        "Deprecated three-case figure code: regenerate attrition inputs for "
+        "the mt_driver/non_mt_driver v2 analysis before rendering."
+    )
     args = parse_args(argv)
     root = Path.cwd().resolve()
     if args.validate_output:

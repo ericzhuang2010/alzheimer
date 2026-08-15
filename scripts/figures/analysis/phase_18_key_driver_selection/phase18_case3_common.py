@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Shared validated-bundle helpers for Phase 18 Case 3 deep-dive figures."""
+"""Legacy helpers for the former Case 3 deep-dive figures.
+
+The former Case 3 maps to ``non_mt_driver``, but this module depends on the
+retired multi-file Phase 18 bundle and must not be used for current v2 output.
+"""
 
 from __future__ import annotations
 
@@ -11,7 +15,7 @@ from pathlib import Path
 from typing import Any, Iterable, Iterator, Mapping, Sequence
 
 
-CASE_ID = "case3_not_core_mito"
+CASE_ID = "non_mt_driver"
 NETWORK_ORDER = [
     "Astrocytes",
     "Excitatory_neurons",
@@ -249,7 +253,7 @@ def load_validated_bundle(root: Path, input_dir: Path) -> dict[str, Any]:
 
     require_columns(cases, ["case_order", "case_id"], "key_driver_case_manifest.tsv")
     ordered_cases = [row["case_id"] for row in sorted(cases, key=lambda row: integer(row["case_order"]))]
-    require(ordered_cases == ["case1_core_mito_in_query", "case2_core_mito_not_in_query", CASE_ID], "Case manifest drifted")
+    require(ordered_cases == ["mt_driver", CASE_ID], "Driver-class manifest drifted")
 
     return {
         "root": root,
@@ -261,4 +265,3 @@ def load_validated_bundle(root: Path, input_dir: Path) -> dict[str, Any]:
         "analysis": manifest,
         "cases": cases,
     }
-

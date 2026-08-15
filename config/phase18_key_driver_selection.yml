@@ -1,11 +1,11 @@
-schema_version: phase18_key_driver_selection_config_v1
+schema_version: phase18_key_driver_selection_config_v2
 
 analysis:
-  analysis_id: phase18_key_driver_selection_v1
-  title: Data-driven selection of Phase 12 mitochondrial key drivers
+  analysis_id: phase18_key_driver_selection_v2
+  title: Selection of MT and non-MT Phase 12 key drivers
   task_mode: key_driver_selection
   stable_task_id: global:key_driver_selection
-  output_schema: mitochondrial_key_driver_selection_v1
+  output_schema: mitochondrial_key_driver_selection_two_class_v1
   definitions_frozen: true
   execution_stage: local_production_equivalent
   execution_class: real_phase12_data_local_production_equivalent
@@ -29,14 +29,11 @@ run_scope:
 
 cases:
   - case_order: 1
-    case_id: case1_core_mito_in_query
-    label: MT-related and in query
+    case_id: mt_driver
+    label: MT driver
   - case_order: 2
-    case_id: case2_core_mito_not_in_query
-    label: MT-related and not in query
-  - case_order: 3
-    case_id: case3_not_core_mito
-    label: Not MT-related
+    case_id: non_mt_driver
+    label: non-MT driver
 
 filters:
   run_q_threshold: 0.05
@@ -53,7 +50,7 @@ aggregation:
   sensitivity_missing_action: replace_with_one
   boundary_tolerance: 1.0e-300
   run_multiple_testing: BH_within_explicit_candidates
-  aggregate_multiple_testing: BH_within_broad_network_across_cases
+  aggregate_multiple_testing: BH_within_broad_network_across_driver_classes
 
 ranking:
   within: [broad_network, case_id]

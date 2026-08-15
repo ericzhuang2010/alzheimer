@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Prepare, render, validate, and publish the Phase 18 Case 3 sex/APOE dot heatmap."""
+"""Legacy former-Case-3 heatmap generator; not valid for two-class v2 output."""
 
 from __future__ import annotations
 
@@ -997,6 +997,10 @@ def publish(args: argparse.Namespace, root: Path) -> None:
 
 
 def main(argv: Sequence[str] | None = None) -> int:
+    raise RuntimeError(
+        "Legacy Case 3 inputs are incompatible with the two-class v2 output; "
+        "regenerate a non_mt_driver heatmap from key_driver_significant_returns.tsv."
+    )
     args = parse_args(argv)
     root = Path.cwd().resolve()
     if args.validate_output:

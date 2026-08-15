@@ -1,6 +1,14 @@
 #!/usr/bin/env Rscript
 
+# Deprecated three-case renderer. Current Phase 18 merges the former Case 1
+# and Case 2 into mt_driver and uses non_mt_driver as the second class.
+
 options(stringsAsFactors = FALSE, warn = 1)
+
+stop(
+  "Deprecated three-case renderer: use mt_driver/non_mt_driver Phase 18 v2 data.",
+  call. = FALSE
+)
 
 common_path <- file.path(
   "scripts", "figures", "analysis", "phease12_kda",

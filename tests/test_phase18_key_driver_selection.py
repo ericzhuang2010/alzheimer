@@ -44,16 +44,24 @@ def unit_tests() -> None:
     assert_true(PHASE18.acat_combine([1.0, 1.0]) == 1.0, "All-null ACAT failed")
     assert_true(PHASE18.acat_combine([None, None]) is None, "All-missing ACAT failed")
     assert_true(
-        PHASE18.classify_case("A", {"A"}, {"A": {"is_core_mito": True}}) == PHASE18.CASE1,
-        "Case 1 fixture failed",
+        PHASE18.classify_case("A", {"A"}, {"A": {"is_core_mito": True}}) == PHASE18.CASE_MT,
+        "MT-driver in-query fixture failed",
     )
     assert_true(
-        PHASE18.classify_case("A", set(), {"A": {"is_core_mito": True}}) == PHASE18.CASE2,
-        "Case 2 fixture failed",
+        PHASE18.classify_case("A", set(), {"A": {"is_core_mito": True}}) == PHASE18.CASE_MT,
+        "MT-driver outside-query fixture failed",
     )
     assert_true(
-        PHASE18.classify_case("B", {"A"}, {"B": {"is_core_mito": False}}) == PHASE18.CASE3,
-        "Case 3 fixture failed",
+        PHASE18.classify_case("B", {"A"}, {"B": {"is_core_mito": False}}) == PHASE18.CASE_NON_MT,
+        "Non-MT-driver fixture failed",
+    )
+    assert_true(
+        PHASE18.requires_self_exclusion("A", {"A"}, {"A": {"is_core_mito": True}}),
+        "MT query-member self-exclusion fixture failed",
+    )
+    assert_true(
+        not PHASE18.requires_self_exclusion("A", set(), {"A": {"is_core_mito": True}}),
+        "MT non-query self-exclusion fixture failed",
     )
     log_p, p_value, fold = PHASE18.enrichment_statistics(0, 5, 10, 100)
     assert_true(log_p == 0 and p_value == 1 and fold == 0, "Zero-overlap fixture failed")
@@ -94,8 +102,8 @@ def validate_output(output: Path) -> None:
     assert_true(len({row["kda_run_id"] for row in rows}) == 122, "Nonempty run count changed")
     assert_true(len({row["key_driver"] for row in rows}) == 295, "Returned-gene count changed")
     assert_true(
-        {row["case_id"] for row in rows} == {PHASE18.CASE1, PHASE18.CASE2, PHASE18.CASE3},
-        "The three Phase 18 cases are not all represented",
+        {row["case_id"] for row in rows} == {PHASE18.CASE_MT, PHASE18.CASE_NON_MT},
+        "The two Phase 18 driver classes are not both represented",
     )
     assert_true(
         all(PHASE18.is_true(row["returned_by_call_key_drivers"]) for row in rows),
@@ -112,6 +120,38 @@ def validate_output(output: Path) -> None:
     assert_true(
         all(row["run_terminal_status"] == "completed_significant" for row in rows),
         "The output contains a non-significant run status",
+    )
+    assert_true(
+        all(row["schema_version"] == "phase18_significant_kda_returns_v2" for row in rows),
+        "The output does not use the two-class schema",
+    )
+    assert_true(
+        all(
+            PHASE18.is_true(row["self_excluded"])
+            == (
+                row["case_id"] == PHASE18.CASE_MT
+                and PHASE18.is_true(row["query_member"])
+            )
+            for row in rows
+        ),
+        "Self-exclusion is not restricted to MT drivers that are query members",
+    )
+    included_by_network = {
+        "Astrocytes": 21,
+        "Excitatory_neurons": 97,
+        "Inhibitory_neurons": 28,
+        "Microglia": 6,
+        "OPCs": 6,
+        "Oligodendrocytes": 2,
+        "Vasculature_cells": 1,
+    }
+    assert_true(
+        all(
+            int(row["eligible_run_count"])
+            == included_by_network[row["broad_network"]]
+            for row in rows
+        ),
+        "A merged driver class does not use all included runs in its broad network",
     )
     print(f"Phase 18 significant-return validation passed: {path}")
 
