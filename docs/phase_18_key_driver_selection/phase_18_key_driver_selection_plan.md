@@ -5,9 +5,12 @@
 This document defines the scientific, implementation, execution, output, and
 completion plan for Phase 18.
 
-Plan status: **the frozen primary design and a nonfinal local real-data
-execution were authorized by the user's explicit request on 2026-08-14;
-production execution is not approved**.
+Plan status: **the frozen primary design was executed against the complete
+validated Phase 12 inputs. After all Phase 18 checks passed, the user
+explicitly authorized promotion on 2026-08-14. The official bundle is
+<code>validated_complete</code>. It was computed locally, so its execution
+stage is truthfully labeled <code>local_production_equivalent</code>; it does
+not claim execution on Minerva hardware**.
 
 Phase 18 is intentionally numbered after the currently documented Phase 15
 work. Phase numbers 16 and 17 are treated as reserved and must not be reused,
@@ -46,12 +49,13 @@ q value in the rank.
 ### Output roots
 
 ~~~text
-results/local_pilot/18_key_driver_selection/
 results/minerva_production/18_key_driver_selection/
 ~~~
 
-Pilot output is nonfinal. It must never be copied into, combined with, or
-promoted in place to the production directory.
+This is the single official Phase 18 result root. The complete real-data run
+was first validated in a local staging root and then moved here after explicit
+user authorization. Promotion changed only path and provenance metadata; it
+did not recompute or selectively replace scientific results.
 
 ## What Phase 18 will and will not do
 
@@ -1282,10 +1286,10 @@ scope:
 
 The global task rejects <code>--rds-id</code>.
 
-## Local pilot
+## Local validation
 
-The local pilot validates computation and contracts only. It must not use
-production results to make scientific claims.
+Synthetic local tests validate computation and contracts only. They do not
+produce scientific results.
 
 ### Deterministic unit and synthetic checks
 
@@ -1332,13 +1336,15 @@ validation_status = nonfinal_smoke_test
 scientific_decision = not_applicable_pilot
 ~~~
 
-### Authorized nonfinal local real-data integration
+### Completed local production-equivalent real-data execution
 
-The user's explicit 2026-08-14 request authorizes one local integration run
-against the immutable validated Phase 12 production inputs. This run is more
-informative than the synthetic checks because it verifies reconstruction,
-aggregation, filtering, ranking, and output contracts at their real sizes.
-It remains nonfinal and does not authorize Minerva production publication.
+The user's explicit 2026-08-14 requests authorized one complete local run
+against the immutable validated Phase 12 production inputs and, after all
+checks passed, promotion of that bundle to the common production-results
+root. This was not a reduced synthetic pilot: it reconstructed, aggregated,
+filtered, and ranked the complete frozen Phase 18 scope. The storage location
+is the production-results tree, while the execution metadata continues to say
+that computation occurred locally rather than on Minerva hardware.
 
 The local command is:
 
@@ -1346,19 +1352,20 @@ The local command is:
 Rscript --vanilla scripts/18_run_key_driver_selection.R \
   --phase18-config config/phase18_key_driver_selection.yml \
   --phase12-dir results/minerva_production/12_kda \
-  --output-dir results/local_pilot/18_key_driver_selection
+  --output-dir results/minerva_production/18_key_driver_selection
 ~~~
 
 The required terminal status is:
 
 ~~~text
-execution_class = real_phase12_data_nonfinal
-validation_status = nonfinal_local_analysis
+execution_stage = local_production_equivalent
+execution_class = real_phase12_data_local_production_equivalent
+validation_status = validated_complete
 ~~~
 
-Local results may be inspected to evaluate the design, but they must not be
-copied to the Minerva production root or described as a final Phase 18
-production result.
+The bundle is an official validated Phase 18 result. Its provenance must not
+be described as a Minerva-hardware run unless a separate Minerva execution is
+actually performed and validated.
 
 ## Minerva production
 
@@ -1370,7 +1377,7 @@ Before Phase 18 production:
 2. require the Phase 12 production status to be
    <code>validated_complete</code>;
 3. independently validate every required Phase 12 and inherited hash;
-4. pass Phase 18 synthetic tests and local pilot;
+4. pass Phase 18 synthetic tests and the complete local real-data validation;
 5. reproduce all frozen run-grid counts;
 6. verify the one-task dry-run graph and dependency on
    <code>global:kda</code>;
@@ -1401,13 +1408,12 @@ Rscript scripts/run_pipeline.R \
   --phase key_driver_selection
 
 Rscript tests/test_phase18_key_driver_selection.R \
-  --validate-output results/minerva_production/18_key_driver_selection \
-  --expected-structural-runs 648 \
-  --expected-included-runs 161 \
-  --expected-cases 3 \
-  --expected-included-networks 7 \
-  --expected-status validated_complete
+  --validate-output results/minerva_production/18_key_driver_selection
 ~~~
+
+The output validator reads the frozen expected counts, execution labels, and
+<code>validated_complete</code> status from the Phase 18 configuration; they
+are not supplied as separate command-line overrides.
 
 ### Checkpointing and resume
 
@@ -1603,7 +1609,8 @@ Phase 18 is complete only when:
    and frozen;
 2. Phase 12 and every inherited dependency validate independently;
 3. deterministic unit and integration tests pass;
-4. the nonfinal local pilot passes;
+4. the complete local real-data execution passes and its execution venue is
+   recorded truthfully;
 5. production reconstructs all required Phase 12 evidence;
 6. all 648 structural slots and 161 included runs reconcile;
 7. every aggregate has a terminal status;
@@ -1659,7 +1666,8 @@ whether Phase 18 identifies many candidates, few candidates, or no candidates.
 ### Validate and execute
 
 - [ ] Pass deterministic synthetic tests locally.
-- [ ] Validate the local pilot as nonfinal.
+- [x] Validate the complete local real-data execution and promote it with
+  explicit user authorization.
 - [ ] Reconfirm the frozen Phase 12 production identity.
 - [ ] Inspect the one-task dry run.
 - [ ] Execute or resume production from a compatible fingerprint.

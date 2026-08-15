@@ -7,14 +7,16 @@ analysis:
   stable_task_id: global:key_driver_selection
   output_schema: mitochondrial_key_driver_selection_v1
   definitions_frozen: true
-  execution_class: nonfinal_local_real_data_analysis
+  execution_stage: local_production_equivalent
+  execution_class: real_phase12_data_local_production_equivalent
+  promotion_basis: explicit_user_authorization_after_complete_local_validation_2026-08-14
 
 paths:
   phase12_directory: results/minerva_production/12_kda
   phase09_annotation: results/minerva_production/09_annotate_genes/gene_annotation_master.tsv.gz
   phase12_config: config/phase12_kda.yml
   fkda_source: scripts/NetWeaver/fKDA.R
-  local_output_directory: results/local_pilot/18_key_driver_selection
+  output_directory: results/minerva_production/18_key_driver_selection
 
 run_scope:
   analysis_tier: primary
@@ -82,7 +84,7 @@ networks:
     - Vasculature_cells
 
 outputs:
-  validation_status: nonfinal_local_analysis
+  validation_status: validated_complete
   declared_files:
     - key_driver_analysis_manifest.tsv
     - key_driver_case_manifest.tsv

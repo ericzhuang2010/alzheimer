@@ -83,7 +83,18 @@ def validate_output(output: Path) -> None:
 
     status = read(output / "key_driver_status.tsv")
     assert_true(len(status) == 1, "Status must contain one row")
-    assert_true(status[0]["validation_status"] == "nonfinal_local_analysis", "Unexpected local status")
+    assert_true(
+        status[0]["validation_status"] == config["outputs"]["validation_status"],
+        "Status does not match the configured validation status",
+    )
+    assert_true(
+        status[0]["execution_stage"] == config["analysis"]["execution_stage"],
+        "Status does not match the configured execution stage",
+    )
+    assert_true(
+        status[0]["execution_class"] == config["analysis"]["execution_class"],
+        "Status does not match the configured execution class",
+    )
     assert_true(int(status[0]["phase12_planned_runs"]) == 1782, "Phase 12 run count changed")
     assert_true(int(status[0]["phase18_structural_run_slots"]) == 648, "Structural run count changed")
     assert_true(int(status[0]["phase18_included_runs"]) == 161, "Included run count changed")

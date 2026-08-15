@@ -1300,7 +1300,10 @@ def main() -> int:
         config = yaml.safe_load(handle)
     phase12_dir = project_path(root, args.phase12_dir or config["paths"]["phase12_directory"])
     annotation_path = project_path(root, config["paths"]["phase09_annotation"])
-    output_dir = project_path(root, args.output_dir or config["paths"]["local_output_directory"])
+    configured_output = config["paths"].get("output_directory") or config["paths"].get("local_output_directory")
+    if not configured_output and not args.output_dir:
+        fail("Phase 18 config must define paths.output_directory")
+    output_dir = project_path(root, args.output_dir or configured_output)
     if output_dir.exists():
         fail(f"Refusing to overwrite existing Phase 18 output: {output_dir}")
     output_dir.parent.mkdir(parents=True, exist_ok=True)
@@ -1596,7 +1599,7 @@ def main() -> int:
             "aggregate_q_threshold": config["filters"]["aggregate_q_threshold"],
             "ranking_order": "aggregate_acat_q|aggregate_acat_p|current_symbol",
             "display_limit": 5,
-            "validation_class": "nonfinal_local_analysis",
+            "validation_class": config["outputs"]["validation_status"],
         }]
         case_manifest = [
             {"case_order": 1, "case_id": CASE1, "case_label": "MT-related and in query", "exact_rule": "is_mitocarta3_TRUE_and_effective_query_member_TRUE"},
@@ -1741,8 +1744,8 @@ def main() -> int:
             )
         file_counts["key_driver_artifacts.tsv"] = write_tsv(staging / "key_driver_artifacts.tsv", artifacts_output, list(artifacts_output[0]), f"{SCHEMA}_artifacts_v1")
         status_output = [{
-            "execution_stage": "local_pilot",
-            "execution_class": "real_phase12_data_nonfinal",
+            "execution_stage": config["analysis"]["execution_stage"],
+            "execution_class": config["analysis"]["execution_class"],
             "stable_task_id": "global:key_driver_selection",
             "task_mode": "key_driver_selection",
             "phase12_planned_runs": 1782,
@@ -1765,7 +1768,7 @@ def main() -> int:
             fail(f"Final output declaration mismatch: declared={len(declared)}, actual={len(actual_files)}")
         stage("validate_and_publish", checkpoint)
         staging.replace(output_dir)
-        print(f"Phase 18 local analysis completed: {output_dir}")
+        print(f"Phase 18 analysis completed: {output_dir}")
         print(f"Included runs: {len(included_runs)}; aggregate rows: {len(all_aggregates)}; candidates: {len(candidates)}")
         return 0
     except Exception:
