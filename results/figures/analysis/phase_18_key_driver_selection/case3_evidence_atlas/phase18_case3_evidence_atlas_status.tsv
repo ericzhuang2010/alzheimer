@@ -1,0 +1,2 @@
+schema_version	figure_id	validation_status	circle_genes	circle_display_contexts	passing_contexts	panel_a_grid_rows	declared_outputs	automated_checks	automated_checks_passed	failed_blocking_checks	visual_review_status	elapsed_seconds	timestamp_utc
+phase18_case3_evidence_atlas_v1_status_v1	phase18_case3_evidence_atlas	validated_complete	15	21	22	105	12	32	32	0	complete	13.577445983886719	2026-08-15 03:13:55 UTC

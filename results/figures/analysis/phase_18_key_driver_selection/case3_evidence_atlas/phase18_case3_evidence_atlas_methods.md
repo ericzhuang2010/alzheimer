@@ -1,0 +1,15 @@
+# Methods
+
+The atlas was derived only from the validated Phase 18 production bundle under `results/minerva_production/18_key_driver_selection`. Before preparation, the script required terminal `validated_complete` status, all production checks to pass, the frozen ranking rule and five-row display cap, and matching recorded SHA-256 hashes and byte counts for every declared scientific input.
+
+The provenance universe was the union of symbols in the official Case 3 top-five figure data: 15 unique genes and 21 displayed gene-network contexts. For those genes, the detail universe was expanded to every Case 3 row with `terminal_candidate_status = driver_candidate`, yielding 22 contexts. The sole additional context was RPS15 in the excitatory-neuron network at within-case rank 20. Case membership remained based on absence from the 1,136-gene core MitoCarta inventory; the broader extended-reference annotation was retained separately.
+
+Broad-network breadth counted distinct passing networks. Fine-cell-type, sex/APOE-group, and direction breadth used exact set unions of run-level rows with `conservative_support = TRUE`. A query run was one fine cell type × primary sex/APOE group × AD-up or AD-down mitochondrial signature. Gene-level eligible, usable, and supporting counts were distinct run-ID counts restricted to that gene's passing Case 3 contexts. Coverage was usable/eligible and recurrence was conservative support/usable. All counts were reconciled to the candidate and conservative-support tables.
+
+Aggregate ACAT P and q values were copied from the frozen candidate table and remained network-specific. They were not recombined across networks. The tile color used capped −log10(q) with a single cap of 12. Gene rows were placed by decreasing passing-network count, decreasing unique supporting fine-cell-type count, decreasing supporting-query count, and symbol; this deterministic order is for display only and is not an inferential rank.
+
+Stability summaries were independently reconciled from leave-one-fine-cell-type replicate rows. Degree sensitivity retained the network-specific empirical-tail P value and requested/completed draw counts. The production `blocking_gate` field is reported verbatim in the detail table; degree sensitivity is a non-selection diagnostic, so marker fill is based on draw completion rather than interpreting `blocking_gate = FALSE` as a failed scientific test.
+
+The figure used the established seven-network Okabe–Ito colors, a perceptually uniform cividis evidence scale, redundant border/shape encodings, and a sans-serif typeface with a minimum final-size text target of 7 pt. SVG and PDF are authoritative vector outputs; the PNG was exported at 450 dpi on a 12 × 8 inch canvas. The final rendering was manually reviewed at final physical size in color, grayscale, and deuteranopia, protanopia, and tritanopia simulations.
+
+These results are deterministic summaries of a validated selection bundle; uncertainty intervals and new hypothesis tests are not applicable. Key-driver association in a Bayesian network prioritizes candidates but is not experimental evidence of causal regulation.
