@@ -2,7 +2,7 @@
 
 > The former Case 3 maps to `non_mt_driver`. The old auxiliary inputs predate
 > the two-class recomputation and must be regenerated from the current
-> `key_driver_significant_returns.tsv` before this figure is rerun.
+> `call_key_driver_returns.tsv` before this figure is rerun.
 
 ## Status and purpose
 

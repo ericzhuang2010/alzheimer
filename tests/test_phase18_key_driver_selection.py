@@ -80,50 +80,78 @@ def validate_output(output: Path) -> None:
     config = PHASE18.yaml.safe_load((ROOT / "config" / "phase18_key_driver_selection.yml").read_text())
     declared = list(config["outputs"]["declared_files"])
     assert_true(
-        declared == ["key_driver_significant_returns.tsv"],
-        "Phase 18 must declare only the significant-return table",
+        declared == ["call_key_driver_returns.tsv"],
+        "Phase 18 must declare only the complete call-return table",
     )
     path = output / declared[0] if output.is_dir() else output
     assert_true(path.is_file(), f"Missing Phase 18 output: {path}")
 
     rows = read(path)
-    assert_true(len(rows) == 1641, "Significant-return row count changed")
+    assert_true(len(rows) == 95557, "Complete tested-row count changed")
     assert_true(
-        set(rows[0]) == set(PHASE18.SIGNIFICANT_OUTPUT_FIELDS),
-        "Significant-return columns do not match the schema",
+        set(rows[0]) == set(PHASE18.CALL_RETURN_OUTPUT_FIELDS),
+        "Call-return columns do not match the schema",
     )
     assert_true(
-        len(rows[0]) == len(PHASE18.SIGNIFICANT_OUTPUT_FIELDS) == 103,
-        "Significant-return column count changed",
+        len(rows[0]) == len(PHASE18.CALL_RETURN_OUTPUT_FIELDS) == 104,
+        "Call-return column count changed",
     )
 
     row_keys = {(row["kda_run_id"], row["key_driver"]) for row in rows}
     assert_true(len(row_keys) == len(rows), "Run-by-gene rows are duplicated")
-    assert_true(len({row["kda_run_id"] for row in rows}) == 122, "Nonempty run count changed")
-    assert_true(len({row["key_driver"] for row in rows}) == 295, "Returned-gene count changed")
+    assert_true(len({row["kda_run_id"] for row in rows}) == 161, "Tested-run count changed")
+    assert_true(len({row["key_driver"] for row in rows}) == 6149, "Tested-gene count changed")
     assert_true(
         {row["case_id"] for row in rows} == {PHASE18.CASE_MT, PHASE18.CASE_NON_MT},
         "The two Phase 18 driver classes are not both represented",
     )
     assert_true(
-        all(PHASE18.is_true(row["returned_by_call_key_drivers"]) for row in rows),
-        "The output contains a gene not returned by call_key_drivers",
+        all(PHASE18.is_true(row["tested_by_call_key_drivers"]) for row in rows),
+        "The output contains a gene that was not explicitly tested",
+    )
+    significant = [
+        row for row in rows if PHASE18.is_true(row["significant_by_call_key_drivers"])
+    ]
+    assert_true(
+        len(significant) == 1641,
+        "The original significant-return subset changed",
     )
     assert_true(
-        all(float(row["published_adjusted_p_value"]) <= 0.05 for row in rows),
-        "The output contains a nonsignificant returned gene",
+        all(float(row["original_run_q"]) <= 0.05 for row in significant),
+        "A flagged significant row does not pass the original within-run BH threshold",
+    )
+    assert_true(
+        all(
+            PHASE18.is_true(row["significant_by_call_key_drivers"])
+            == (float(row["original_run_q"]) <= 0.05)
+            for row in rows
+        ),
+        "The significant flag does not reproduce the original within-run BH decision",
+    )
+    assert_true(
+        all(
+            row["published_adjusted_p_value"] != PHASE18.NA_TEXT
+            for row in significant
+        )
+        and all(
+            row["published_adjusted_p_value"] == PHASE18.NA_TEXT
+            for row in rows
+            if not PHASE18.is_true(row["significant_by_call_key_drivers"])
+        ),
+        "Published Phase 12 values are not restricted to the significant subset",
     )
     assert_true(
         all(int(row["effective_query_genes"]) >= 10 for row in rows),
         "The output contains a run with fewer than 10 effective query genes",
     )
     assert_true(
-        all(row["run_terminal_status"] == "completed_significant" for row in rows),
-        "The output contains a non-significant run status",
+        {row["run_terminal_status"] for row in rows}
+        == {"completed_significant", "completed_no_significant"},
+        "The complete output does not cover both completed run outcomes",
     )
     assert_true(
-        all(row["schema_version"] == "phase18_significant_kda_returns_v2" for row in rows),
-        "The output does not use the two-class schema",
+        all(row["schema_version"] == "phase18_call_key_driver_returns_v1" for row in rows),
+        "The output does not use the complete call-return schema",
     )
     assert_true(
         all(
@@ -153,7 +181,7 @@ def validate_output(output: Path) -> None:
         ),
         "A merged driver class does not use all included runs in its broad network",
     )
-    print(f"Phase 18 significant-return validation passed: {path}")
+    print(f"Phase 18 complete call-return validation passed: {path}")
 
 
 def main() -> int:

@@ -1,10 +1,16 @@
 #!/usr/bin/env python3
-"""Export two-class Phase 18 significant KDA returns from upstream data.
+"""Export all tested Phase 18 KDA rows from upstream data.
 
 This is the single Phase 18 entry point. It reads the validated Phase 12
 bundle, the recorded Phase 09 annotation, and the recorded Bayesian networks;
-reconstructs the Phase 18 statistics in memory; and writes only
-``key_driver_significant_returns.tsv``. It never reads another Phase 18 result.
+reconstructs the complete pre-FDR ``call_key_drivers()`` test table in memory;
+and writes only ``call_key_driver_returns.tsv``. It never reads another
+Phase 18 result.
+
+The output contains one row for every explicitly tested gene x included run,
+not only the rows that passed the original within-run BH threshold. The
+original Phase 12 significant return is retained as a Boolean flag and its
+published values are copied when available.
 
 Core mitochondrial genes are aggregated as ``mt_driver`` across all included
 runs in their broad network. Non-core genes are aggregated as
@@ -1300,7 +1306,7 @@ CASE_LABELS = {
     CASE_NON_MT: "non-MT driver",
 }
 
-SIGNIFICANT_EVIDENCE_FIELDS = """
+TEST_EVIDENCE_FIELDS = """
 case_id is_core_mito mitocarta_canonical_symbol query_member test_status
 usable_test explicit_family_member original_layer original_overlap_count
 original_neighborhood_size original_non_neighborhood_size
@@ -1312,7 +1318,7 @@ other_query_overlap support_overlap_pass support_fold_pass support_run_q_pass
 conservative_support
 """.split()
 
-SIGNIFICANT_SUMMARY_FIELDS = """
+AGGREGATE_SUMMARY_FIELDS = """
 mito_tier genome_origin is_mtdna_gene extended_reference_member mapping_status
 phase03_mitocarta_match_type eligible_run_count usable_run_count
 explicit_run_count implicit_run_count missing_run_count coverage_numerator
@@ -1328,10 +1334,11 @@ stability_q_fraction stability_candidate_fraction stability_worst_rank
 evidence_tier
 """.split()
 
-SIGNIFICANT_OUTPUT_FIELDS = """
+CALL_RETURN_OUTPUT_FIELDS = """
 schema_version kda_run_id fine_cell_type broad_network signature_group sex
 apoe_group signature_direction effective_query_genes effective_background_genes
-run_terminal_status key_driver returned_by_call_key_drivers
+run_terminal_status key_driver tested_by_call_key_drivers
+significant_by_call_key_drivers
 published_best_layer published_overlap_count published_neighborhood_size
 published_non_neighborhood_size published_signature_size
 published_fold_enrichment published_log_p_value published_raw_p_value
@@ -1375,7 +1382,7 @@ def parse_export_args() -> argparse.Namespace:
         "--output",
         default=root
         / "results/minerva_production/18_key_driver_selection"
-        / "key_driver_significant_returns.tsv",
+        / "call_key_driver_returns.tsv",
         type=Path,
     )
     return parser.parse_args()
@@ -1397,7 +1404,7 @@ def one_upstream_artifact(
     return path
 
 
-def significant_test_row(
+def tested_gene_row(
     run: dict[str, Any],
     symbol: str,
     signatures: dict[str, set[str]],
@@ -1493,7 +1500,7 @@ def validate_published_returns(
             fail(f"Published-value reconstruction failed for {run_id}/{gene}")
 
 
-def export_significant_returns() -> int:
+def export_call_key_driver_returns() -> int:
     args = parse_export_args()
     root = Path(__file__).resolve().parents[1]
     config_path = project_path(root, args.config)
@@ -1557,7 +1564,6 @@ def export_significant_returns() -> int:
     if len(included_runs) != as_int(config["run_scope"]["expected_included_runs"]):
         fail(f"Expected 161 included runs, found {len(included_runs)}")
     included_ids = {row["kda_run_id"] for row in included_runs}
-    run_by_id = {row["kda_run_id"]: row for row in included_runs}
 
     signatures: dict[str, set[str]] = defaultdict(set)
     for row in iter_tsv(phase12_dir / "kda_signature_members.tsv.gz"):
@@ -1669,89 +1675,125 @@ def export_significant_returns() -> int:
     with temporary.open("w", newline="") as handle:
         writer = csv.DictWriter(
             handle,
-            fieldnames=SIGNIFICANT_OUTPUT_FIELDS,
+            fieldnames=CALL_RETURN_OUTPUT_FIELDS,
             delimiter="\t",
             lineterminator="\n",
         )
         writer.writeheader()
-        for published in published_rows:
-            run = run_by_id[published["kda_run_id"]]
-            test = significant_test_row(
-                run,
-                published["key_driver"],
-                signatures,
-                backgrounds,
-                explicit_by_run,
-                annotation,
-            )
-            case_id = test["case_id"]
-            summary = summary_by_key[
-                (run["broad_network"], published["key_driver"], case_id)
-            ]
+        output_row_count = 0
+        significant_row_count = 0
+        for run in included_runs:
+            run_id = run["kda_run_id"]
             sex, apoe_group = GROUP_DETAILS[run["signature_group"]]
-            output = {
-                "schema_version": "phase18_significant_kda_returns_v2",
-                "kda_run_id": published["kda_run_id"],
-                "fine_cell_type": run["fine_cell_type"],
-                "broad_network": run["broad_network"],
-                "signature_group": run["signature_group"],
-                "sex": sex,
-                "apoe_group": apoe_group,
-                "signature_direction": run["signature_direction"],
-                "effective_query_genes": run["effective_query_genes"],
-                "effective_background_genes": run["effective_background_genes"],
-                "run_terminal_status": run["terminal_status"],
-                "key_driver": published["key_driver"],
-                "returned_by_call_key_drivers": True,
-                "published_best_layer": published["best_layer"],
-                "published_overlap_count": published["overlap_count"],
-                "published_neighborhood_size": published["neighborhood_size"],
-                "published_non_neighborhood_size": published[
-                    "non_neighborhood_size"
-                ],
-                "published_signature_size": published["signature_size"],
-                "published_fold_enrichment": published["fold_enrichment"],
-                "published_log_p_value": published["log_p_value"],
-                "published_raw_p_value": repr(
-                    math.exp(float(published["log_p_value"]))
-                ),
-                "published_adjusted_p_value": published["adjusted_p_value"],
-                "published_is_signature": published["is_signature"],
-                "published_is_root_node": published["is_root_node"],
-                "published_global_key_driver": published["global_key_driver"],
-                "published_overlap_items": published["overlap_items"],
-                "case_order": CASE_ORDER[case_id],
-                "case_label": CASE_LABELS[case_id],
-                "case_driver_candidate_count": candidate_counts[
-                    (run["broad_network"], case_id)
-                ],
-                "case_displayed_candidate_count": min(
-                    candidate_counts[(run["broad_network"], case_id)], 5
-                ),
-            }
-            output.update(
-                {field: test[field] for field in SIGNIFICANT_EVIDENCE_FIELDS}
-            )
-            output.update(
-                {field: summary[field] for field in SIGNIFICANT_SUMMARY_FIELDS}
-            )
-            writer.writerow(
-                {
-                    field: display_value(output.get(field))
-                    for field in SIGNIFICANT_OUTPUT_FIELDS
+            for symbol in sorted(explicit_by_run[run_id]):
+                published = published_by_run.get(run_id, {}).get(symbol)
+                significant = published is not None
+                test = tested_gene_row(
+                    run,
+                    symbol,
+                    signatures,
+                    backgrounds,
+                    explicit_by_run,
+                    annotation,
+                )
+                case_id = test["case_id"]
+                summary = summary_by_key[
+                    (run["broad_network"], symbol, case_id)
+                ]
+                output = {
+                    "schema_version": "phase18_call_key_driver_returns_v1",
+                    "kda_run_id": run_id,
+                    "fine_cell_type": run["fine_cell_type"],
+                    "broad_network": run["broad_network"],
+                    "signature_group": run["signature_group"],
+                    "sex": sex,
+                    "apoe_group": apoe_group,
+                    "signature_direction": run["signature_direction"],
+                    "effective_query_genes": run["effective_query_genes"],
+                    "effective_background_genes": run["effective_background_genes"],
+                    "run_terminal_status": run["terminal_status"],
+                    "key_driver": symbol,
+                    "tested_by_call_key_drivers": True,
+                    "significant_by_call_key_drivers": significant,
+                    "published_best_layer": (
+                        published.get("best_layer") if published else None
+                    ),
+                    "published_overlap_count": (
+                        published.get("overlap_count") if published else None
+                    ),
+                    "published_neighborhood_size": (
+                        published.get("neighborhood_size") if published else None
+                    ),
+                    "published_non_neighborhood_size": (
+                        published.get("non_neighborhood_size") if published else None
+                    ),
+                    "published_signature_size": (
+                        published.get("signature_size") if published else None
+                    ),
+                    "published_fold_enrichment": (
+                        published.get("fold_enrichment") if published else None
+                    ),
+                    "published_log_p_value": (
+                        published.get("log_p_value") if published else None
+                    ),
+                    "published_raw_p_value": (
+                        repr(math.exp(float(published["log_p_value"])))
+                        if published
+                        else None
+                    ),
+                    "published_adjusted_p_value": (
+                        published.get("adjusted_p_value") if published else None
+                    ),
+                    "published_is_signature": (
+                        published.get("is_signature") if published else None
+                    ),
+                    "published_is_root_node": (
+                        published.get("is_root_node") if published else None
+                    ),
+                    "published_global_key_driver": (
+                        published.get("global_key_driver") if published else None
+                    ),
+                    "published_overlap_items": (
+                        published.get("overlap_items") if published else None
+                    ),
+                    "case_order": CASE_ORDER[case_id],
+                    "case_label": CASE_LABELS[case_id],
+                    "case_driver_candidate_count": candidate_counts[
+                        (run["broad_network"], case_id)
+                    ],
+                    "case_displayed_candidate_count": min(
+                        candidate_counts[(run["broad_network"], case_id)], 5
+                    ),
                 }
-            )
+                output.update(
+                    {field: test[field] for field in TEST_EVIDENCE_FIELDS}
+                )
+                output.update(
+                    {field: summary[field] for field in AGGREGATE_SUMMARY_FIELDS}
+                )
+                writer.writerow(
+                    {
+                        field: display_value(output.get(field))
+                        for field in CALL_RETURN_OUTPUT_FIELDS
+                    }
+                )
+                output_row_count += 1
+                significant_row_count += int(significant)
     temporary.replace(output_path)
 
-    unique_genes = {row["key_driver"] for row in published_rows}
-    nonempty_runs = {row["kda_run_id"] for row in published_rows}
+    unique_tested_genes = set().union(
+        *(set(rows) for rows in explicit_by_run.values())
+    )
+    runs_with_tests = {run_id for run_id, rows in explicit_by_run.items() if rows}
     print(f"wrote={output_path}")
-    print(f"rows={len(published_rows)}")
-    print(f"unique_genes={len(unique_genes)}")
-    print(f"runs_with_returns={len(nonempty_runs)}")
+    print(f"rows={output_row_count}")
+    print(f"significant_rows={significant_row_count}")
+    print(f"nonsignificant_rows={output_row_count - significant_row_count}")
+    print(f"unique_tested_genes={len(unique_tested_genes)}")
+    print(f"runs_with_tests={len(runs_with_tests)}")
     print(f"included_runs={len(included_runs)}")
     return 0
 
 
 if __name__ == "__main__":
-    raise SystemExit(export_significant_returns())
+    raise SystemExit(export_call_key_driver_returns())

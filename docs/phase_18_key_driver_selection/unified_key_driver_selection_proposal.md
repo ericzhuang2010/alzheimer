@@ -8,23 +8,16 @@
 
 ## Purpose
 
-Phase 18 starts with the 1,641 significant `gene × run` rows in
-[`key_driver_significant_returns.tsv`](../../results/minerva_production/18_key_driver_selection/key_driver_significant_returns.tsv).
-One row means that `call_key_drivers()` returned one gene as significant in
-one Phase 12 run.
-
-These 1,641 rows are the positive observations, but they are not enough by
-themselves to select robust drivers. A gene that was significant in one run
-may be nonsignificant, a valid null, or unavailable in other runs. Phase 18
-therefore reconstructs the complete cross-run evidence before selecting and
-ranking candidates.
+Phase 18 starts with the complete explicit test table in
+[`call_key_driver_returns.tsv`](../../results/minerva_production/18_key_driver_selection/call_key_driver_returns.tsv).
+One row means that one gene received an enrichment test in one included KDA
+run. Significant and nonsignificant tests are both retained.
 
 The analysis follows one linear sequence:
 
 ```text
-1,641 significant rows
--> select the 161 included runs
--> reconstruct complete gene × run evidence
+161 included KDA calls
+-> reconstruct and record every explicit gene × run test
 -> assign MT versus non-MT class and correct MT query-member runs
 -> label conservative supporting runs
 -> calculate coverage and aggregate P values
@@ -32,7 +25,7 @@ The analysis follows one linear sequence:
 -> rank and assess stability
 ```
 
-## Step 1: Start with the 1,641 significant rows
+## Step 1: Start with all explicit tested rows
 
 The current starting table contains:
 
@@ -41,8 +34,10 @@ The current starting table contains:
 | Included KDA calls | 161 |
 | Calls with at least one significant returned gene | 122 |
 | Included calls with no significant returned gene | 39 |
-| Significant `gene × run` rows | 1,641 |
-| Unique returned genes | 295 |
+| All explicit tested `gene × run` rows | 95,557 |
+| Nonsignificant tested rows | 93,916 |
+| Significant tested rows | 1,641 |
+| Unique tested genes | 6,149 |
 
 The unique row key is:
 
@@ -50,19 +45,18 @@ The unique row key is:
 kda_run_id + key_driver
 ```
 
-A run can return several genes, and a gene can be returned in several runs.
-Thus, 1,641 rows does not mean 1,641 distinct genes.
+A run tests many genes, and a gene can be tested in several runs. Thus,
+95,557 rows does not mean 95,557 distinct genes.
 
-Every starting row satisfies:
+Every row satisfies:
 
 ```text
-published_adjusted_p_value <= 0.05
-returned_by_call_key_drivers = TRUE
+tested_by_call_key_drivers = TRUE
 ```
 
-The `published_*` columns preserve the Phase 12 result. Later Phase 18 columns
-describe driver-class assignment, corrected run evidence, cross-run aggregation,
-candidate status, rank, and stability.
+`significant_by_call_key_drivers = TRUE` identifies the original 1,641 rows
+that passed within-run BH adjustment. The `published_*` columns are populated
+only for those rows. Reconstructed test columns are populated for every row.
 
 ## Step 2: Define the included runs
 
@@ -110,13 +104,12 @@ Excluded runs are not used later and are not counted in coverage denominators.
 
 ## Step 3: Reconstruct complete gene × run evidence
 
-Using only the 1,641 significant rows would ignore negative evidence. Phase 18
-rebuilds each included KDA call from its query, background, and directed
-Bayesian network.
+Phase 18 rebuilds each included KDA call from its query, background, and
+directed Bayesian network before the within-run significance filter is applied.
 
 For every explicit candidate, cumulative directed layers 1–3 are tested. The
 layer with the smallest raw hypergeometric P value is retained. The
-reconstructed significant genes and their layers, overlap counts, fold
+The reconstructed significant subset and its layers, overlap counts, fold
 enrichments, and adjusted P values must reproduce the 1,641 published rows.
 
 Phase 18 then represents every relevant gene × run opportunity as:
@@ -312,8 +305,8 @@ Stability is descriptive. It is not a fourth candidate gate.
 
 ## Reading the final table
 
-The output remains a significant `gene × run` table, so aggregate fields are
-repeated when a gene was returned in several runs. Before counting or plotting
+The output is an explicit tested `gene × run` table. Aggregate fields are
+repeated when a gene was tested in several runs. Before counting or plotting
 candidates, keep one row per:
 
 ```text
@@ -336,8 +329,10 @@ The current deduplicated results are:
 | non-MT driver | 37 |
 | Top-five display records across all represented lists | 47 |
 
-All 103 output columns are explained in
-[`key_driver_significant_returns_columns_explained.md`](key_driver_significant_returns_columns_explained.md).
+The table contains 104 columns. `tested_by_call_key_drivers` is true for every
+row; `significant_by_call_key_drivers` selects the original significant subset.
+They are described in
+[`call_key_driver_returns_columns_explained.md`](call_key_driver_returns_columns_explained.md).
 
 ## Figures after selection
 
@@ -346,8 +341,8 @@ status.
 
 1. For the two circular figures, deduplicate candidate units and use
    `top5_display`.
-2. For sex/APOE or direction evidence, use the individual significant
-   `gene × run` rows.
+2. For sex/APOE or direction evidence, use the individual tested rows and
+   distinguish significant from nonsignificant evidence explicitly.
 3. For connectivity figures, reconstruct each selected driver's directed
    neighborhood from the Bayesian network and selected layer.
 
@@ -371,4 +366,4 @@ using
 
 The script reads validated Phase 12 results, Phase 09 annotation, and the
 Bayesian-network artifacts recorded by Phase 12. It reconstructs complete
-evidence in memory and writes the annotated 1,641-row table.
+explicit test evidence and writes the annotated 95,557-row table.

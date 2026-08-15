@@ -3,8 +3,8 @@
 > The former Case 3 maps directly to the current `non_mt_driver` class.
 > However, the frozen counts and auxiliary input tables below predate the
 > two-class recomputation. Regenerate them from
-> `key_driver_significant_returns.tsv` schema
-> `phase18_significant_kda_returns_v2` before producing a current atlas.
+> `call_key_driver_returns.tsv` schema
+> `phase18_call_key_driver_returns_v1` before producing a current atlas.
 
 ## Status and purpose
 

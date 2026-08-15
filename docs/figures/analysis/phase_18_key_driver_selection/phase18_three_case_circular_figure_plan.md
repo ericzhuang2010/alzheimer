@@ -4,8 +4,8 @@
 > `non_mt_driver`. The former Case 1 and Case 2 are merged before ACAT,
 > candidate selection, and ranking. This document and its three-case counts
 > are retained only as a record of the earlier figure design. A new two-class
-> figure must use `key_driver_significant_returns.tsv` schema
-> `phase18_significant_kda_returns_v2`.
+> figure must use `call_key_driver_returns.tsv` schema
+> `phase18_call_key_driver_returns_v1`.
 
 ## Status and purpose
 

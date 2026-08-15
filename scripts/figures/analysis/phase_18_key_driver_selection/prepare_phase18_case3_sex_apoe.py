@@ -999,7 +999,7 @@ def publish(args: argparse.Namespace, root: Path) -> None:
 def main(argv: Sequence[str] | None = None) -> int:
     raise RuntimeError(
         "Legacy Case 3 inputs are incompatible with the two-class v2 output; "
-        "regenerate a non_mt_driver heatmap from key_driver_significant_returns.tsv."
+        "regenerate a non_mt_driver heatmap from call_key_driver_returns.tsv."
     )
     args = parse_args(argv)
     root = Path.cwd().resolve()

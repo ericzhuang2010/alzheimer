@@ -73,15 +73,21 @@ Therefore, the `eligible_run_count` column is a
 **gene × broad-network × driver-class denominator**, not the global number
 161.
 
-## Genes returned for the 161 included calls
+## Genes tested in the 161 included calls
 
 Of the 161 included `call_key_drivers()` calls:
 
+- all 161 calls explicitly tested at least one candidate gene;
+- 95,557 explicit gene × run tests were performed;
+- 6,149 unique gene symbols were tested;
 - 122 calls returned at least one significant gene;
 - 39 calls returned no significant genes;
 - 1,641 significant gene × run rows were returned in total; and
 - these 1,641 rows represented 295 unique gene symbols.
 
-A gene can be returned in more than one run. Therefore, 1,641 is the number of returned gene × run results, whereas 295 is the number of distinct genes across all 161 calls.
+A gene can be tested in more than one run. Therefore, 95,557 is the number of
+tested gene × run rows, whereas 6,149 is the number of distinct tested genes.
 
-These are only the genes that passed the original within-run significance threshold. They are not all genes tested by KDA.
+The 1,641 significant rows are a subset of the 95,557 tested rows. The complete
+table is
+[`call_key_driver_returns.tsv`](../../results/minerva_production/18_key_driver_selection/call_key_driver_returns.tsv).

@@ -1,5 +1,10 @@
 # Phase 18 `key_driver_significant_returns.tsv`: Column Guide
 
+> **Superseded 2026-08-15.** This guide documents the former 1,641-row
+> significant-only export. The current canonical output is
+> [`call_key_driver_returns.tsv`](../../results/minerva_production/18_key_driver_selection/call_key_driver_returns.tsv),
+> which contains all 95,557 explicit tested gene × run rows.
+
 ## Purpose and row meaning
 
 This document explains every column in:

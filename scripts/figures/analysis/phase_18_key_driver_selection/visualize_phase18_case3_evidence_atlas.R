@@ -1,7 +1,7 @@
 #!/usr/bin/env Rscript
 
 # Legacy former-Case-3 renderer. Current Phase 18 uses non_mt_driver and the
-# phase18_significant_kda_returns_v2 two-class output.
+# phase18_call_key_driver_returns_v1 two-class output.
 
 options(stringsAsFactors = FALSE, warn = 1)
 
