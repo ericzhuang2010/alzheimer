@@ -528,9 +528,72 @@ def build_deck() -> Path:
         add_text(slide,
                  "Next: localize candidate evidence across sex/APOE strata, then examine RPL11 in depth.",
                  1.28, 6.35, 10.76, 0.42, size=13.2, color=NAVY, bold=True, align=PP_ALIGN.CENTER)
-        add_source(slide, "Slides 10–15 extend the atlas with the requested RPL11 pathway and STRING figures")
+        add_source(slide, "Slide 10 introduces the validation panel; slides 11–16 extend the atlas with the RPL11 pathway and STRING figures")
 
-        # 10 — RPL11 rationale
+        # 10 — first-batch candidate panel
+        slide = new_slide(prs)
+        add_header(slide, "First-batch validation panel", "Why these six candidates go first", 10,
+                   subtitle="A purposeful pilot panel—not the six smallest q values—balances calibration, mechanism, cell type, and failure-mode testing.")
+
+        candidate_cards = [
+            (
+                "APOE", "ASTROCYTES", "POSITIVE CONTROL",
+                "Known AD biology calibrates the workflow. The discovery test is whether its frozen astrocyte mitochondrial target module reproduces—not whether APOE is an AD gene.",
+                BLUE, PALE_BLUE,
+            ),
+            (
+                "SELENOW", "EXCITATORY", "REINFORCED",
+                "Stable excitatory KDA plus direct AD-model tau-clearance and redox/respiration evidence makes it the externally reinforced mechanism.",
+                TEAL, PALE_GREEN,
+            ),
+            (
+                "LAMTOR5", "EXCITATORY + INHIBITORY", "CROSS-NETWORK",
+                "Recurrence in two neuronal networks provides a tractable lysosome–Ragulator–mTORC1 route to mitochondrial regulation.",
+                PURPLE, RGBColor(239, 232, 246),
+            ),
+            (
+                "RPL11", "4 NETWORKS", "BIAS TEST",
+                "Broadest recurrent non-MT signal—and the hardest specificity test. It advances only if it beats expression-, degree-, and ribosomal-class matched nulls.",
+                GOLD, PALE_GOLD,
+            ),
+            (
+                "FTL", "OPCS", "EXPLORATORY",
+                "Iron storage/ferroptosis is plausible in OPCs, but support is sparse (2 runs, 1 subtype). Independent localization and replication come first.",
+                VERMILION, RGBColor(250, 232, 224),
+            ),
+            (
+                "ANKRD11", "OPCS", "NOVELTY TEST",
+                "An orthogonal chromatin-regulation hypothesis tests whether a novel OPC mechanism reproduces. Sparse subtype evidence keeps it exploratory.",
+                NAVY_2, RGBColor(234, 239, 245),
+            ),
+        ]
+        card_x = [0.58, 4.75, 8.92]
+        card_y = [1.45, 3.93]
+        card_w, card_h = 3.83, 2.24
+        for index, (gene, context, role, body, accent, bg) in enumerate(candidate_cards):
+            x = card_x[index % 3]
+            y = card_y[index // 3]
+            add_rect(slide, x, y, card_w, card_h, color=WHITE, outline=LIGHT)
+            add_rect(slide, x, y, card_w, 0.07, color=accent, outline=None, radius=False)
+            add_rect(slide, x + 0.22, y + 0.19, 1.24, 0.30, color=bg, outline=accent)
+            add_text(slide, role, x + 0.27, y + 0.25, 1.14, 0.14,
+                     size=8.2, color=accent, bold=True, align=PP_ALIGN.CENTER,
+                     valign=MSO_ANCHOR.MIDDLE)
+            add_text(slide, context, x + 1.54, y + 0.23, 2.00, 0.18,
+                     size=8.4, color=MID, bold=True, align=PP_ALIGN.RIGHT)
+            add_text(slide, gene, x + 0.22, y + 0.61, 2.70, 0.40,
+                     size=20.5, color=NAVY, bold=True, font=FONT_HEAD)
+            add_text(slide, body, x + 0.22, y + 1.09, 3.36, 0.94,
+                     size=10.7, color=GRAY)
+
+        add_takeaway_ribbon(
+            slide,
+            "Unequal priors by design: APOE calibrates; SELENOW, LAMTOR5, and RPL11 carry stronger support; FTL and ANKRD11 must replicate before promotion.",
+            accent=TEAL, y=6.57,
+        )
+        add_source(slide, "Source: Phase 18 call_key_driver_returns.tsv and phase18_key_driver_cross_validation_guide.md, Section 2")
+
+        # 11 — RPL11 rationale
         slide = new_slide(prs, bg=NAVY)
         add_rect(slide, 0, 0, 13.333, 7.5, color=NAVY, outline=None, radius=False)
         add_text(slide, "RPL11 DEEP DIVE", 0.72, 0.54, 4.0, 0.28,
@@ -580,13 +643,13 @@ def build_deck() -> Path:
         add_text(slide,
                  "AD capillary proteomics reported increased RPL11/RPL15 protein, while earlier AD work supports ribosomal dysfunction. The capillary signal does not establish neuronal or astrocytic localization.",
                  2.34, 5.42, 6.07, 0.63, size=11.4, color=WHITE)
-        add_text(slide, "10", 12.37, 0.34, 0.42, 0.22,
+        add_text(slide, "11", 12.37, 0.34, 0.42, 0.22,
                  size=9, color=RGBColor(145, 171, 197), bold=True, align=PP_ALIGN.RIGHT)
         add_source(slide, "Biological discussion: phase18_key_driver_gene_by_gene_initial_analysis.md • Zhang 2003; Slomnicki 2018; Suzuki 2022; Ding 2005")
 
-        # 11 — astrocyte directed pathway figure
+        # 12 — astrocyte directed pathway figure
         slide = new_slide(prs)
-        add_header(slide, "RPL11 • astrocytes", "A focused respiratory branch emerges from three supporting runs", 11,
+        add_header(slide, "RPL11 • astrocytes", "A focused respiratory branch emerges from three supporting runs", 12,
                    accent=TEAL, subtitle="Directed Bayesian-network edges are model-derived regulatory hypotheses; pathway outlines summarize the displayed genes.")
         add_picture_contain(slide, trimmed["rpl11_astro_pathway"], 0.18, 1.25, 8.48, 5.85,
                             alt="RPL11-centered astrocyte consensus network with pathway annotations")
@@ -605,9 +668,9 @@ def build_deck() -> Path:
                  9.18, 6.46, 3.20, 0.25, size=9.8, color=NAVY, bold=True)
         add_source(slide, "Source: phase18_rpl11_astrocyte_consensus_network_pathways.png, caption, methods, and ORA table")
 
-        # 12 — astrocyte STRING figure
+        # 13 — astrocyte STRING figure
         slide = new_slide(prs)
-        add_header(slide, "RPL11 • astrocytes", "STRING supports target-module coherence more clearly than direct regulation", 12,
+        add_header(slide, "RPL11 • astrocytes", "STRING supports target-module coherence more clearly than direct regulation", 13,
                    accent=TEAL, subtitle="Medium-confidence STRING functional associations are undirected and are not astrocyte- or AD-specific.")
         add_rect(slide, 0.43, 1.39, 5.38, 5.45, color=WHITE, outline=LIGHT)
         add_picture_contain(slide, trimmed["rpl11_astro_string"], 0.70, 1.62, 4.84, 4.98,
@@ -628,9 +691,9 @@ def build_deck() -> Path:
                  6.66, 6.31, 5.30, 0.22, size=10.2, color=NAVY, bold=True, align=PP_ALIGN.CENTER)
         add_source(slide, "Source: astrocyte/string_full_medium_conf.png • interpretation follows rpl11_astrocyte_string_analysis_guide.md")
 
-        # 13 — excitatory-neuron directed pathway figure
+        # 14 — excitatory-neuron directed pathway figure
         slide = new_slide(prs)
-        add_header(slide, "RPL11 • excitatory neurons", "A broader translation–mitochondria interface recurs across 20 runs", 13,
+        add_header(slide, "RPL11 • excitatory neurons", "A broader translation–mitochondria interface recurs across 20 runs", 14,
                    accent=GOLD, subtitle="The excitatory context has stronger aggregate evidence and complete leave-one-fine-cell-type candidate retention.")
         add_picture_contain(slide, trimmed["rpl11_exc_pathway"], 0.14, 1.24, 8.63, 5.89,
                             alt="RPL11-centered excitatory-neuron consensus network with pathway annotations")
@@ -649,9 +712,9 @@ def build_deck() -> Path:
                  9.25, 6.47, 3.12, 0.25, size=9.8, color=NAVY, bold=True)
         add_source(slide, "Source: phase18_rpl11_excitatory_consensus_network_pathways.png, node/edge tables, and ORA table")
 
-        # 14 — excitatory-neuron STRING figure
+        # 15 — excitatory-neuron STRING figure
         slide = new_slide(prs)
-        add_header(slide, "RPL11 • excitatory neurons", "STRING resolves ribosomal and respiratory protein neighborhoods", 14,
+        add_header(slide, "RPL11 • excitatory neurons", "STRING resolves ribosomal and respiratory protein neighborhoods", 15,
                    accent=GOLD, subtitle="The displayed functional network is useful for architecture; it does not preserve Bayesian edge direction.")
         add_rect(slide, 0.35, 1.40, 7.63, 5.43, color=WHITE, outline=LIGHT)
         add_picture_contain(slide, trimmed["rpl11_exc_string"], 0.55, 1.62, 7.25, 4.99,
@@ -672,9 +735,9 @@ def build_deck() -> Path:
                  8.72, 6.17, 3.43, 0.28, size=10.3, color=NAVY, bold=True, align=PP_ALIGN.CENTER)
         add_source(slide, "Source: excitatory/full_medium_conf.png • medium-confidence functional STRING view")
 
-        # 15 — cross-cell-type synthesis and validation plan
+        # 16 — cross-cell-type synthesis and validation plan
         slide = new_slide(prs)
-        add_header(slide, "RPL11 synthesis", "The excitatory signal is broader; the astrocyte signal is more focused", 15,
+        add_header(slide, "RPL11 synthesis", "The excitatory signal is broader; the astrocyte signal is more focused", 16,
                    subtitle="Both contexts support a translation/stress-to-mitochondria hypothesis, while leaving target specificity unresolved.")
 
         add_rect(slide, 0.69, 1.55, 5.89, 3.63, color=PALE_GREEN, outline=TEAL)
@@ -734,8 +797,8 @@ def build_deck() -> Path:
 
 def validate_deck(path: Path) -> None:
     prs = Presentation(path)
-    if len(prs.slides) != 15:
-        raise RuntimeError(f"Expected 15 slides, found {len(prs.slides)}")
+    if len(prs.slides) != 16:
+        raise RuntimeError(f"Expected 16 slides, found {len(prs.slides)}")
     if prs.slide_width != SLIDE_W or prs.slide_height != SLIDE_H:
         raise RuntimeError("Deck is not 16:9 widescreen")
     image_shapes = sum(1 for slide in prs.slides for shape in slide.shapes if shape.shape_type == 13)
@@ -750,14 +813,15 @@ def validate_deck(path: Path) -> None:
         6: "SYNTHESIS",
         7: "SEX/APOE EVIDENCE • MT",
         8: "SEX/APOE EVIDENCE • NON-MT",
-        9: "RPL11 DEEP DIVE",
+        9: "FIRST-BATCH VALIDATION PANEL",
+        10: "RPL11 DEEP DIVE",
     }
     for zero_based_index, marker in expected_sequence.items():
         if marker not in ordered_text[zero_based_index]:
             raise RuntimeError(f"Expected {marker!r} on slide {zero_based_index + 1}")
     with zipfile.ZipFile(path) as zf:
         names = zf.namelist()
-        if len([name for name in names if name.startswith("ppt/slides/slide") and name.endswith(".xml")]) != 15:
+        if len([name for name in names if name.startswith("ppt/slides/slide") and name.endswith(".xml")]) != 16:
             raise RuntimeError("PPTX package has an unexpected slide count")
         package_text = "\n".join(
             zf.read(name).decode("utf-8", errors="ignore")

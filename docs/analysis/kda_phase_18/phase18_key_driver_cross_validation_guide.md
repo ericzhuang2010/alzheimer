@@ -29,7 +29,16 @@ STRING-db is one protein-network validation task. It cannot substitute for indep
 
 ## 2. Candidate panel to validate first
 
-Do not begin by validating all 25 genes. Start with six candidates that test different biological and methodological situations. This is a **purposefully balanced pilot panel, not the six genes with the smallest aggregate q values**.
+For the labor-intensive replication, proteomics, protein-network, and
+experimental work packages, start with six candidates that test different
+biological and methodological situations. This is a **purposefully balanced
+pilot panel, not the six genes with the smallest aggregate q values**.
+
+WP5 human genetics is the explicit exception. Phase 19 assesses all 25
+displayed genes in all 47 corresponding broad-network contexts because the
+primary fine-mapping and precomputed colocalization extraction can be run in
+one pass. The six-gene prioritization does not limit the Phase 19 scientific
+scope.
 
 ### How the six were chosen
 
@@ -384,7 +393,10 @@ phase18_human_mouse_ortholog_map.tsv
 
 ## 9. WP5 — Human genetic support
 
-Detailed implementation: [WP5 human genetic support guide](phase18_wp5_human_genetic_support_guide.md).
+WP5 is implemented as a standalone next phase. Detailed plan:
+[Phase 19 human genetic support plan](../../phase_19_genetic_support/human_genetic_support_plan.md).
+The Phase 19 plan is authoritative for scope, source freezing, assessability,
+evidence grading, execution, and outputs.
 
 ### Question
 
@@ -425,7 +437,7 @@ For mtDNA-encoded candidates, examine mtDNA variation, heteroplasmy, copy number
 ### Output
 
 ```text
-phase18_human_genetic_evidence.tsv
+results/minerva_production/19_genetic_support/genetic_support_evidence_summary.tsv
 ```
 
 ## 10. WP6 — Human proteomics and proteogenomics
@@ -704,7 +716,8 @@ If experiments are not available, stop at “multi-omic network-associated candi
 - [ ] Select and audit at least one independent human AD transcriptomic reference candidate.
 - [ ] Run donor-level target-module replication.
 - [ ] Run the APOE-model orthologous module analysis if suitable.
-- [ ] Compile NIAGADS/GWAS evidence for the six pilot candidates.
+- [ ] Complete Phase 19 genetic support for all 25 genes and all 47
+  corresponding broad-network contexts.
 - [ ] Compile Agora/AD Knowledge Portal protein evidence for the six candidates.
 - [ ] Run pQTL–GWAS colocalization where both signals are adequate.
 - [ ] Run context-matched STRING analyses and matched nulls.
