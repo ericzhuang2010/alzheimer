@@ -785,8 +785,8 @@ With Cytoscape 3.10.4 running and its local automation endpoint available:
 
 ```bash
 .venv/bin/python scripts/figures/analysis/phase_18_key_driver_selection/render_phase18_rpl11_cytoscape.py \
-  --input-dir results/figures/analysis/phase_18_key_driver_selection/RPL11 \
-  --output-dir results/figures/analysis/phase_18_key_driver_selection/RPL11 \
+  --input-dir results/figures/analysis/phase_18_key_driver_selection/RPL11/excitatory \
+  --output-dir results/figures/analysis/phase_18_key_driver_selection/RPL11/excitatory \
   --png-zoom 300
 ```
 
@@ -803,9 +803,9 @@ editable rendering artifact, not an unrecorded analysis source.
 
 ### Figures
 
-- `phase18_rpl11_excitatory_consensus_network_pathways.png`
-- `phase18_rpl11_excitatory_consensus_network_pathways.pdf`
-- `phase18_rpl11_excitatory_consensus_network_pathways.svg`
+- `excitatory/phase18_rpl11_excitatory_consensus_network_pathways.png`
+- `excitatory/phase18_rpl11_excitatory_consensus_network_pathways.pdf`
+- `excitatory/phase18_rpl11_excitatory_consensus_network_pathways.svg`
 - `phase18_rpl11_deep_dive.png`
 - `phase18_rpl11_deep_dive.pdf`
 - `phase18_rpl11_deep_dive.svg`
@@ -818,17 +818,17 @@ editable rendering artifact, not an unrecorded analysis source.
 
 ### Network and figure data
 
-- `phase18_rpl11_excitatory_consensus_network_nodes.tsv`
-- `phase18_rpl11_excitatory_consensus_network_edges.tsv`
-- `phase18_rpl11_excitatory_consensus_pathway_ora.tsv`
-- `phase18_rpl11_excitatory_consensus_pathway_membership.tsv`
+- `excitatory/phase18_rpl11_excitatory_consensus_network_nodes.tsv`
+- `excitatory/phase18_rpl11_excitatory_consensus_network_edges.tsv`
+- `excitatory/phase18_rpl11_excitatory_consensus_pathway_ora.tsv`
+- `excitatory/phase18_rpl11_excitatory_consensus_pathway_membership.tsv`
 - `phase18_rpl11_nodes.tsv`
 - `phase18_rpl11_edges.tsv`
 - `phase18_rpl11_layout.tsv`
 - `phase18_rpl11_full_three_layer_nodes.tsv`
 - `phase18_rpl11_full_three_layer_edges.tsv`
-- `phase18_rpl11_excitatory.graphml`
-- `phase18_rpl11_astrocyte.graphml`
+- `excitatory/phase18_rpl11_excitatory.graphml`
+- `astrocyte/phase18_rpl11_astrocyte.graphml`
 - `phase18_rpl11_run_target_matrix.tsv`
 - `phase18_rpl11_run_annotations.tsv`
 - `phase18_rpl11_matched_controls.tsv`
@@ -840,9 +840,9 @@ editable rendering artifact, not an unrecorded analysis source.
 
 ### Documentation and audit files
 
-- `phase18_rpl11_excitatory_consensus_network_pathways_cytoscape.cys`
-- `phase18_rpl11_excitatory_consensus_network_pathways_cytoscape_style.xml`
-- `phase18_rpl11_excitatory_consensus_network_pathways_cytoscape_export.json`
+- `excitatory/phase18_rpl11_excitatory_consensus_network_pathways_cytoscape.cys`
+- `excitatory/phase18_rpl11_excitatory_consensus_network_pathways_cytoscape_style.xml`
+- `excitatory/phase18_rpl11_excitatory_consensus_network_pathways_cytoscape_export.json`
 - `phase18_rpl11_deep_dive_caption.md`
 - `phase18_rpl11_deep_dive_methods.md`
 - `phase18_rpl11_deep_dive_checks.tsv`

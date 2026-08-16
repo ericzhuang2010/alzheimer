@@ -164,10 +164,10 @@ DEG_COLORS = {
     "not_deg": "#D9D9D9",
 }
 OUTPUT_NAMES = [
-    "phase18_rpl11_excitatory_consensus_network_nodes.tsv",
-    "phase18_rpl11_excitatory_consensus_network_edges.tsv",
-    "phase18_rpl11_excitatory_consensus_pathway_ora.tsv",
-    "phase18_rpl11_excitatory_consensus_pathway_membership.tsv",
+    "excitatory/phase18_rpl11_excitatory_consensus_network_nodes.tsv",
+    "excitatory/phase18_rpl11_excitatory_consensus_network_edges.tsv",
+    "excitatory/phase18_rpl11_excitatory_consensus_pathway_ora.tsv",
+    "excitatory/phase18_rpl11_excitatory_consensus_pathway_membership.tsv",
     "phase18_rpl11_deep_dive.png",
     "phase18_rpl11_deep_dive.pdf",
     "phase18_rpl11_deep_dive.svg",
@@ -182,8 +182,8 @@ OUTPUT_NAMES = [
     "phase18_rpl11_layout.tsv",
     "phase18_rpl11_full_three_layer_nodes.tsv",
     "phase18_rpl11_full_three_layer_edges.tsv",
-    "phase18_rpl11_excitatory.graphml",
-    "phase18_rpl11_astrocyte.graphml",
+    "excitatory/phase18_rpl11_excitatory.graphml",
+    "astrocyte/phase18_rpl11_astrocyte.graphml",
     "phase18_rpl11_run_target_matrix.tsv",
     "phase18_rpl11_run_annotations.tsv",
     "phase18_rpl11_matched_controls.tsv",
@@ -2128,17 +2128,21 @@ def generate(output_dir: Path, dpi: int, visual_review_status: str) -> None:
     output_dir.parent.mkdir(parents=True, exist_ok=True)
     staging = Path(tempfile.mkdtemp(prefix=".RPL11-staging-", dir=output_dir.parent))
     try:
-        write_tsv(staging / "phase18_rpl11_excitatory_consensus_network_nodes.tsv", consensus_nodes)
-        write_tsv(staging / "phase18_rpl11_excitatory_consensus_network_edges.tsv", consensus_edges)
-        write_tsv(staging / "phase18_rpl11_excitatory_consensus_pathway_ora.tsv", pathway_ora)
-        write_tsv(staging / "phase18_rpl11_excitatory_consensus_pathway_membership.tsv", pathway_membership_rows)
+        excitatory_staging = staging / "excitatory"
+        excitatory_staging.mkdir(parents=True, exist_ok=True)
+        write_tsv(excitatory_staging / "phase18_rpl11_excitatory_consensus_network_nodes.tsv", consensus_nodes)
+        write_tsv(excitatory_staging / "phase18_rpl11_excitatory_consensus_network_edges.tsv", consensus_edges)
+        write_tsv(excitatory_staging / "phase18_rpl11_excitatory_consensus_pathway_ora.tsv", pathway_ora)
+        write_tsv(excitatory_staging / "phase18_rpl11_excitatory_consensus_pathway_membership.tsv", pathway_membership_rows)
         write_tsv(staging / "phase18_rpl11_nodes.tsv", nodes_rows)
         write_tsv(staging / "phase18_rpl11_edges.tsv", edges_rows)
         write_tsv(staging / "phase18_rpl11_layout.tsv", [{"schema_version": SCHEMA, "network": network, "gene": gene, "x": xy[0], "y": xy[1]} for network, positions in layouts.items() for gene, xy in sorted(positions.items())])
         write_tsv(staging / "phase18_rpl11_full_three_layer_nodes.tsv", full_nodes_rows)
         write_tsv(staging / "phase18_rpl11_full_three_layer_edges.tsv", full_edges_rows)
-        nx.write_graphml(complete_graphs["Excitatory_neurons"], staging / "phase18_rpl11_excitatory.graphml")
-        nx.write_graphml(complete_graphs["Astrocytes"], staging / "phase18_rpl11_astrocyte.graphml")
+        nx.write_graphml(complete_graphs["Excitatory_neurons"], excitatory_staging / "phase18_rpl11_excitatory.graphml")
+        astrocyte_staging = staging / "astrocyte"
+        astrocyte_staging.mkdir(parents=True, exist_ok=True)
+        nx.write_graphml(complete_graphs["Astrocytes"], astrocyte_staging / "phase18_rpl11_astrocyte.graphml")
         write_tsv(staging / "phase18_rpl11_run_target_matrix.tsv", matrix_rows)
         write_tsv(staging / "phase18_rpl11_run_annotations.tsv", run_annotations)
         write_tsv(staging / "phase18_rpl11_matched_controls.tsv", controls)
@@ -2168,7 +2172,9 @@ def generate(output_dir: Path, dpi: int, visual_review_status: str) -> None:
         for name in OUTPUT_NAMES:
             source = staging / name
             require(source.exists(), f"Staging output missing: {name}")
-            source.replace(output_dir / name)
+            destination = output_dir / name
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            source.replace(destination)
     finally:
         shutil.rmtree(staging, ignore_errors=True)
     print(f"generated={output_dir}")

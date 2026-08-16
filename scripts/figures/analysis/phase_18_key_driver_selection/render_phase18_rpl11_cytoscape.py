@@ -20,7 +20,7 @@ import py4cytoscape as p4c
 
 
 ROOT = Path(__file__).resolve().parents[4]
-DEFAULT_INPUT_DIR = (
+DEFAULT_RPL11_DIR = (
     ROOT
     / "results"
     / "figures"
@@ -708,12 +708,15 @@ def render(input_dir: Path, output_dir: Path, png_zoom: int) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--network", choices=("excitatory", "astrocytes"), default="excitatory")
-    parser.add_argument("--input-dir", type=Path, default=DEFAULT_INPUT_DIR)
+    parser.add_argument("--input-dir", type=Path)
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--png-zoom", type=int, default=300)
     args = parser.parse_args()
     configure_network(args.network)
-    render(args.input_dir.resolve(), args.output_dir.resolve(), args.png_zoom)
+    input_dir = args.input_dir
+    if input_dir is None:
+        input_dir = DEFAULT_RPL11_DIR / ("astrocyte" if args.network == "astrocytes" else "excitatory")
+    render(input_dir.resolve(), args.output_dir.resolve(), args.png_zoom)
 
 
 if __name__ == "__main__":
