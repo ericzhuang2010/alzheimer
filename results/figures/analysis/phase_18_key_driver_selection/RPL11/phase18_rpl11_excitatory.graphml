@@ -1,0 +1,941 @@
+<?xml version='1.0' encoding='utf-8'?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+  <key id="d5" for="node" attr.name="is_rpl11" attr.type="string" />
+  <key id="d4" for="node" attr.name="is_core_mitocarta" attr.type="string" />
+  <key id="d3" for="node" attr.name="minimum_downstream_depth" attr.type="string" />
+  <key id="d2" for="node" attr.name="minimum_upstream_depth" attr.type="string" />
+  <key id="d1" for="node" attr.name="network" attr.type="string" />
+  <key id="d0" for="graph" attr.name="network" attr.type="string" />
+  <graph edgedefault="directed">
+    <node id="COMMD6">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="RPL13">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">True</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="KRT10">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">2</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="BAIAP2L1">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">2</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="SLC25A5">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">2</data>
+      <data key="d4">True</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="RPLP1">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="FTCD">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="RPL30">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">1</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="RPL19">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">2</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="SMDT1">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">1</data>
+      <data key="d4">True</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="GTF3C6">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="PDHB">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">True</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="SELENOM">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="TFPT">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="SNRPD1">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="RPL10">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="SNAPC4">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">2</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="MRPL21">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">True</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="NDUFA12">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">True</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="RSL24D1">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">2</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="SLC47A1">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="FKBP1B">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="COX20">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">2</data>
+      <data key="d4">True</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="RPL10A">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">2</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="NENF">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="MOAP1">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="IL17RA">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="ATP5ME">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">True</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="S100A6">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="TXNRD1">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">True</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="SNRPB2">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="CISD2">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">2</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="NDUFS5">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">True</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="ACYP1">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="STAT5B">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="MYL12B">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">2</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="NDUFB9">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">2</data>
+      <data key="d4">True</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="NRN1">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="RPL21">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="MRPL24">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">True</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="DPM3">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="CSTF1">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="RPS19BP1">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="DUSP12">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="EPB41L4A-AS1">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="SNHG21">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="NHP2">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="NAA38">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="ATP5PF">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">2</data>
+      <data key="d4">True</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="UQCRFS1">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">True</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="RPS14">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">2</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="NOL7">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="MECOM">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">2</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="COX7C">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">1</data>
+      <data key="d4">True</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="NDUFA1">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">True</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="PINK1">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">True</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="RPS19">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="RPS7">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="RPL18">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="PSMB6">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">2</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="RPS12">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">2</data>
+      <data key="d4">True</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="SPTLC1">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="BCAS2">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">2</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="RAB33A">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="EEF1B2">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">2</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="ASNSD1">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="RPL23A">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="APOO">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">True</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="RWDD1">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">2</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="SRP14">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">1</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="AC084033.3">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="RPS27A">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">1</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="RPS6">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="RPL12">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">2</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="C1orf43">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="EIF3I">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="RPL32">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">2</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="HMGN2">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="SKP2">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="RPL6">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">1</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="MRPS18C">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">2</data>
+      <data key="d4">True</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="RPS13">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">1</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="RPL37">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">2</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="UQCRQ">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">2</data>
+      <data key="d4">True</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="CDC42BPB">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="RPS23">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">1</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="AIMP1">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="LSM3">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="BAG1">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="CTSL">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">2</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="PCBD1">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">2</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="TMCO1">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">2</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="RPLP2">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">2</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="RPS4X">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">2</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="RPL14">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="COX17">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">2</data>
+      <data key="d4">True</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="RPL7">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">2</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="NDUFB3">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">True</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="TMEM258">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">2</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="RPL5">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">1</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="NDUFS6">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">True</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="RPL35A">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="PFDN5">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">2</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="RPL36AL">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="RPL11">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">0</data>
+      <data key="d4">False</data>
+      <data key="d5">True</data>
+    </node>
+    <node id="RPL38">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="RPS15">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">2</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="RPS9">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">2</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="ZNF230">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="ATP5MD">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="FUNDC2">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">True</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="RPL8">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="LSM6">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="FAU">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="LRPAP1">
+      <data key="d1">Excitatory_neurons</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <edge source="KRT10" target="DUSP12" />
+    <edge source="KRT10" target="NOL7" />
+    <edge source="KRT10" target="SNHG21" />
+    <edge source="KRT10" target="ZNF230" />
+    <edge source="BAIAP2L1" target="RPL21" />
+    <edge source="BAIAP2L1" target="CDC42BPB" />
+    <edge source="SLC25A5" target="PDHB" />
+    <edge source="SLC25A5" target="NRN1" />
+    <edge source="SLC25A5" target="MOAP1" />
+    <edge source="RPL30" target="TMCO1" />
+    <edge source="RPL30" target="COX20" />
+    <edge source="RPL30" target="RWDD1" />
+    <edge source="RPL30" target="CTSL" />
+    <edge source="RPL30" target="RSL24D1" />
+    <edge source="SMDT1" target="KRT10" />
+    <edge source="RSL24D1" target="ASNSD1" />
+    <edge source="RSL24D1" target="CISD2" />
+    <edge source="RSL24D1" target="FUNDC2" />
+    <edge source="RSL24D1" target="CSTF1" />
+    <edge source="COX20" target="IL17RA" />
+    <edge source="RPL10A" target="APOO" />
+    <edge source="RPL10A" target="STAT5B" />
+    <edge source="MOAP1" target="PINK1" />
+    <edge source="CISD2" target="AIMP1" />
+    <edge source="CISD2" target="LSM6" />
+    <edge source="CISD2" target="FTCD" />
+    <edge source="MYL12B" target="EIF3I" />
+    <edge source="MYL12B" target="FKBP1B" />
+    <edge source="NDUFB9" target="NDUFS6" />
+    <edge source="NDUFB9" target="SKP2" />
+    <edge source="NDUFB9" target="SNRPD1" />
+    <edge source="ATP5PF" target="NDUFB3" />
+    <edge source="ATP5PF" target="GTF3C6" />
+    <edge source="ATP5PF" target="NDUFA12" />
+    <edge source="ATP5PF" target="ACYP1" />
+    <edge source="RPS14" target="NAA38" />
+    <edge source="COX7C" target="UQCRQ" />
+    <edge source="COX7C" target="RPLP2" />
+    <edge source="COX7C" target="TMEM258" />
+    <edge source="COX7C" target="RPS15" />
+    <edge source="PSMB6" target="PINK1" />
+    <edge source="PSMB6" target="S100A6" />
+    <edge source="PSMB6" target="LSM3" />
+    <edge source="PSMB6" target="LRPAP1" />
+    <edge source="PSMB6" target="RAB33A" />
+    <edge source="PSMB6" target="BAG1" />
+    <edge source="PSMB6" target="MRPL21" />
+    <edge source="PSMB6" target="UQCRFS1" />
+    <edge source="PSMB6" target="TFPT" />
+    <edge source="PSMB6" target="SELENOM" />
+    <edge source="PSMB6" target="RPS19BP1" />
+    <edge source="BCAS2" target="HMGN2" />
+    <edge source="SRP14" target="BCAS2" />
+    <edge source="SRP14" target="PCBD1" />
+    <edge source="SRP14" target="MYL12B" />
+    <edge source="RPS27A" target="EEF1B2" />
+    <edge source="RPS27A" target="RPL32" />
+    <edge source="RPS27A" target="MECOM" />
+    <edge source="RPS27A" target="RPL10A" />
+    <edge source="RPS27A" target="RPS12" />
+    <edge source="RPS27A" target="BAIAP2L1" />
+    <edge source="RPS27A" target="RPS4X" />
+    <edge source="RPS27A" target="RPL7" />
+    <edge source="RPS27A" target="RPL12" />
+    <edge source="RPS27A" target="PFDN5" />
+    <edge source="RPS27A" target="RPL19" />
+    <edge source="RPS6" target="RPL23A" />
+    <edge source="RPL32" target="RPL35A" />
+    <edge source="RPL32" target="RPS14" />
+    <edge source="RPL32" target="FAU" />
+    <edge source="RPL6" target="COX17" />
+    <edge source="RPL6" target="MRPS18C" />
+    <edge source="RPL6" target="CISD2" />
+    <edge source="RPL6" target="SNAPC4" />
+    <edge source="RPL6" target="ATP5PF" />
+    <edge source="RPS13" target="RPS14" />
+    <edge source="RPS13" target="SLC25A5" />
+    <edge source="RPS13" target="NDUFB9" />
+    <edge source="RPS13" target="PSMB6" />
+    <edge source="RPS13" target="RPS9" />
+    <edge source="UQCRQ" target="DPM3" />
+    <edge source="UQCRQ" target="SPTLC1" />
+    <edge source="UQCRQ" target="ATP5MD" />
+    <edge source="UQCRQ" target="SNRPB2" />
+    <edge source="RPS23" target="RPL37" />
+    <edge source="PCBD1" target="C1orf43" />
+    <edge source="RPLP2" target="NDUFS5" />
+    <edge source="RPLP2" target="MRPL24" />
+    <edge source="RPLP2" target="NENF" />
+    <edge source="RPLP2" target="ATP5ME" />
+    <edge source="RPLP2" target="NDUFA1" />
+    <edge source="RPLP2" target="SLC47A1" />
+    <edge source="RPLP2" target="RPL38" />
+    <edge source="RPS4X" target="RPS7" />
+    <edge source="RPS4X" target="RPL14" />
+    <edge source="RPS4X" target="RPL10" />
+    <edge source="RPS4X" target="COMMD6" />
+    <edge source="RPS4X" target="RPL36AL" />
+    <edge source="RPL7" target="RPS6" />
+    <edge source="RPL7" target="RPL23A" />
+    <edge source="RPL35A" target="LSM3" />
+    <edge source="RPL35A" target="RPS4X" />
+    <edge source="PFDN5" target="AC084033.3" />
+    <edge source="RPL11" target="RPL5" />
+    <edge source="RPL11" target="RPS27A" />
+    <edge source="RPL11" target="RPS23" />
+    <edge source="RPL11" target="COX7C" />
+    <edge source="RPL11" target="RPL30" />
+    <edge source="RPL11" target="RPS13" />
+    <edge source="RPL11" target="RPL6" />
+    <edge source="RPL11" target="SRP14" />
+    <edge source="RPL11" target="SMDT1" />
+    <edge source="RPS15" target="RPS14" />
+    <edge source="RPS15" target="NHP2" />
+    <edge source="RPS15" target="RPL8" />
+    <edge source="RPS15" target="RPLP1" />
+    <edge source="RPS15" target="RPL13" />
+    <edge source="RPS15" target="RPL19" />
+    <edge source="RPS15" target="RPS19" />
+    <edge source="RPS15" target="RPL18" />
+    <edge source="RPS9" target="EPB41L4A-AS1" />
+    <edge source="RPS9" target="TXNRD1" />
+    <edge source="ATP5MD" target="NDUFA12" />
+    <edge source="FAU" target="RPLP1" />
+    <data key="d0">Excitatory_neurons</data>
+  </graph>
+</graphml>

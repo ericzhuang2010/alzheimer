@@ -1,0 +1,19 @@
+schema_version	network	gene	included_reason	directed_depth_from_rpl11	upstream_depth_to_rpl11	is_direct_incoming_neighbor	is_direct_outgoing_neighbor	supporting_neighborhood_occurrence_count	supporting_neighborhood_occurrence_fraction	query_hit_occurrence_count	query_hit_occurrence_fraction	query_hit_display_threshold	is_recurrent_query_hit	is_core_mitocarta	is_cytosolic_ribosomal	phase08_deg_class	phase08_up_count	phase08_down_count	in_degree_full	out_degree_full	in_degree_display	out_degree_display
+phase18_rpl11_astrocyte_consensus_v2	Astrocytes	ATP5F1E	recurrent_query_hit	2.0		False	False	3	1.0	1	0.3333333333333333	1	True	True	False	down_only	0	1	1	7	1	2
+phase18_rpl11_astrocyte_consensus_v2	Astrocytes	ATP5ME	recurrent_query_hit	3.0		False	False	1	0.3333333333333333	1	0.3333333333333333	1	True	True	False	mixed	1	1	1	0	1	0
+phase18_rpl11_astrocyte_consensus_v2	Astrocytes	ATP5PF	recurrent_query_hit	2.0		False	False	3	1.0	2	0.6666666666666666	1	True	True	False	mixed	2	1	1	13	1	0
+phase18_rpl11_astrocyte_consensus_v2	Astrocytes	COX6C	recurrent_query_hit	3.0		False	False	1	0.3333333333333333	1	0.3333333333333333	1	True	True	False	down_only	0	1	1	0	1	0
+phase18_rpl11_astrocyte_consensus_v2	Astrocytes	COX7C	all_direct_outgoing|recurrent_query_hit	1.0		False	True	3	1.0	3	1.0	1	True	True	False	mixed	1	2	1	15	1	6
+phase18_rpl11_astrocyte_consensus_v2	Astrocytes	CWC15	all_direct_outgoing	1.0		False	True	1	0.3333333333333333	0	0.0	1	False	False	False	up_only	1	0	1	0	1	0
+phase18_rpl11_astrocyte_consensus_v2	Astrocytes	CYB5R3	recurrent_query_hit	3.0		False	False	1	0.3333333333333333	1	0.3333333333333333	1	True	True	False	down_only	0	3	1	0	1	0
+phase18_rpl11_astrocyte_consensus_v2	Astrocytes	DYNLL1	shortest_path_connector	2.0		False	False	3	1.0	0	0.0	1	False	False	False	down_only	0	2	1	1	1	1
+phase18_rpl11_astrocyte_consensus_v2	Astrocytes	NDUFB4	recurrent_query_hit	2.0		False	False	3	1.0	2	0.6666666666666666	1	True	True	False	mixed	1	2	1	3	1	0
+phase18_rpl11_astrocyte_consensus_v2	Astrocytes	PRDX1	all_direct_outgoing|shortest_path_connector	1.0		False	True	3	1.0	0	0.0	1	False	False	False	mixed	3	3	1	6	1	1
+phase18_rpl11_astrocyte_consensus_v2	Astrocytes	PSAP	recurrent_query_hit	2.0		False	False	3	1.0	3	1.0	1	True	True	False	mixed	3	2	1	28	1	1
+phase18_rpl11_astrocyte_consensus_v2	Astrocytes	RPL11	driver	0.0		False	False	3	1.0	0	0.0	1	False	False	True	mixed	1	1	1	3	1	3
+phase18_rpl11_astrocyte_consensus_v2	Astrocytes	RPLP1	upstream_context|all_direct_incoming		1.0	True	False	0	0.0	0	0.0	1	False	False	True	mixed	2	2	1	8	1	1
+phase18_rpl11_astrocyte_consensus_v2	Astrocytes	RPS25	upstream_context		2.0	False	False	0	0.0	0	0.0	1	False	False	True	mixed	3	1	0	6	0	1
+phase18_rpl11_astrocyte_consensus_v2	Astrocytes	SLIRP	recurrent_query_hit	3.0		False	False	1	0.3333333333333333	1	0.3333333333333333	1	True	True	False	down_only	0	1	1	0	1	0
+phase18_rpl11_astrocyte_consensus_v2	Astrocytes	TOMM7	recurrent_query_hit	2.0		False	False	2	0.6666666666666666	2	0.6666666666666666	1	True	True	False	mixed	1	1	1	0	1	0
+phase18_rpl11_astrocyte_consensus_v2	Astrocytes	UQCRB	recurrent_query_hit	2.0		False	False	3	1.0	2	0.6666666666666666	1	True	True	False	mixed	1	1	1	7	1	1
+phase18_rpl11_astrocyte_consensus_v2	Astrocytes	UQCRH	recurrent_query_hit	3.0		False	False	1	0.3333333333333333	1	0.3333333333333333	1	True	True	False	down_only	0	1	1	0	1	0

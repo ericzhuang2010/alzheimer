@@ -1,0 +1,34 @@
+{
+  "cytoscape_version": "3.10.4",
+  "py4cytoscape_version": "1.13.0",
+  "network_suid": 9662,
+  "node_count": 35,
+  "edge_count": 34,
+  "direct_incoming_edges": 0,
+  "direct_outgoing_edges": 9,
+  "supporting_run_count": 20,
+  "recurrent_query_hit_threshold": 4,
+  "layout": "collision_checked_radial_tree_without_guide_rings",
+  "radial_level_radii": {
+    "D1": 270.0,
+    "D2": 460.0,
+    "D3": 650.0
+  },
+  "guide_rings_drawn": false,
+  "pathway_encoding": "segmented_colored_outer_outline",
+  "exports": {
+    "svg": {
+      "file": "phase18_rpl11_excitatory_consensus_network_pathways.svg",
+      "bytes": 175078
+    },
+    "pdf": {
+      "file": "phase18_rpl11_excitatory_consensus_network_pathways.pdf",
+      "bytes": 13177
+    },
+    "png": {
+      "file": "phase18_rpl11_excitatory_consensus_network_pathways.png",
+      "bytes": 451938,
+      "zoom_percent": 300
+    }
+  }
+}

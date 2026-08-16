@@ -1,0 +1,20 @@
+schema_version	check_id	status	observed	expected	message
+phase18_rpl11_astrocyte_consensus_v2	supporting_run_count	PASS	3	3	Conservative-support RPL11 runs in astrocytes
+phase18_rpl11_astrocyte_consensus_v2	recurrence_display_threshold	PASS	1/3	1/3	Mitochondrial query-hit display threshold
+phase18_rpl11_astrocyte_consensus_v2	display_node_count	PASS	18	18	Displayed consensus-network nodes
+phase18_rpl11_astrocyte_consensus_v2	display_edge_count	PASS	17	17	Displayed consensus-network edges
+phase18_rpl11_astrocyte_consensus_v2	direct_incoming_edges	PASS	1	1	All direct edges into RPL11 are retained
+phase18_rpl11_astrocyte_consensus_v2	direct_outgoing_edges	PASS	3	3	All direct edges out of RPL11 are retained
+phase18_rpl11_astrocyte_consensus_v2	upstream_context	PASS	RPS25→RPLP1→RPL11	RPS25→RPLP1→RPL11	Recorded two-step upstream chain
+phase18_rpl11_astrocyte_consensus_v2	recurrent_query_hits	PASS	12	12	Mitochondrial hits occurring in at least 1 of 3 supporting runs
+phase18_rpl11_astrocyte_consensus_v2	pathway_background_size	PASS	5769	5769	Mapped astrocyte Bayesian-network background genes
+phase18_rpl11_astrocyte_consensus_v2	pathway_query_size	PASS	18	18	Displayed genes mapped to the pathway collection
+phase18_rpl11_astrocyte_consensus_v2	pathway_test_count	PASS	1594	1594	Pathways tested after the 15–500 member filter
+phase18_rpl11_astrocyte_consensus_v2	displayed_pathway_count	PASS	3	3	Two significant representatives plus cytosolic-ribosome context
+phase18_rpl11_astrocyte_consensus_v2	pathway_membership_rows	PASS	14	14	Displayed gene–pathway membership rows
+phase18_rpl11_astrocyte_consensus_v2	collision_check	PASS	none	none	All displayed nodes meet pairwise clearance requirements
+phase18_rpl11_astrocyte_consensus_v2	label_review	PASS	all labels contained	all labels contained	Gene and recurrence labels remain within their circular nodes
+phase18_rpl11_astrocyte_consensus_v2	title_clearance	PASS	clear	clear	No D3 node overlaps the title or subtitle
+phase18_rpl11_astrocyte_consensus_v2	png_export	PASS	261209	>0 bytes	Cytoscape PNG export exists and is nonempty
+phase18_rpl11_astrocyte_consensus_v2	pdf_export	PASS	7829	>0 bytes	Cytoscape PDF export exists and is nonempty
+phase18_rpl11_astrocyte_consensus_v2	svg_export	PASS	92528	>0 bytes	Cytoscape SVG export exists and is nonempty

@@ -1,0 +1,65 @@
+schema_version	check_id	status	blocking	observed	expected	message
+phase18_rpl11_deep_dive_v1	canonical_row_count	PASS	TRUE	95557	95557	Canonical Phase 18 row count
+phase18_rpl11_deep_dive_v1	canonical_run_count	PASS	TRUE	161	161	Included call_key_drivers runs
+phase18_rpl11_deep_dive_v1	canonical_unique_keys	PASS	TRUE	0	0	Unique run × tested-driver rows
+phase18_rpl11_deep_dive_v1	rpl11_case	PASS	TRUE	['non_mt_driver']	non_mt_driver	RPL11 case classification
+phase18_rpl11_deep_dive_v1	Excitatory_neurons_node_count	PASS	TRUE	10441	10441	Full-network node count
+phase18_rpl11_deep_dive_v1	Excitatory_neurons_edge_count	PASS	TRUE	13759	13759	Full-network edge count
+phase18_rpl11_deep_dive_v1	Excitatory_neurons_dag	PASS	TRUE	TRUE	TRUE	Bayesian network is acyclic
+phase18_rpl11_deep_dive_v1	Excitatory_neurons_edge_hygiene	PASS	TRUE	duplicate=0;self=0;empty=0	0	Input edges require no cleaning
+phase18_rpl11_deep_dive_v1	Astrocytes_node_count	PASS	TRUE	8285	8285	Full-network node count
+phase18_rpl11_deep_dive_v1	Astrocytes_edge_count	PASS	TRUE	8881	8881	Full-network edge count
+phase18_rpl11_deep_dive_v1	Astrocytes_dag	PASS	TRUE	TRUE	TRUE	Bayesian network is acyclic
+phase18_rpl11_deep_dive_v1	Astrocytes_edge_hygiene	PASS	TRUE	duplicate=0;self=0;empty=0	0	Input edges require no cleaning
+phase18_rpl11_deep_dive_v1	annotation_rpl11	PASS	TRUE	TRUE	TRUE	RPL11 has Phase 9 annotation
+phase18_rpl11_deep_dive_v1	expression_rpl11	PASS	TRUE	['Astrocytes', 'Excitatory_neurons']	['Excitatory_neurons', 'Astrocytes']	RPL11 has expression/detection matching features
+phase18_rpl11_deep_dive_v1	support_run_manifest	PASS	TRUE	25	25	All RPL11 support runs occur in the run manifest
+phase18_rpl11_deep_dive_v1	support_query_nonempty	PASS	TRUE	25	25	All support queries have effective members
+phase18_rpl11_deep_dive_v1	support_background_nonempty	PASS	TRUE	25	25	All support runs have background members
+phase18_rpl11_deep_dive_v1	primary_support_count	PASS	TRUE	23	23	Primary-network conservative-support rows
+phase18_rpl11_deep_dive_v1	primary_run_reconstruction	PASS	TRUE	0	0	Run-specific query hits, neighborhoods, fold enrichment, and raw P reproduce canonical rows
+phase18_rpl11_deep_dive_v1	support_layer_distribution	PASS	TRUE	{'Excitatory_neurons': 'L2=1;L3=19', 'Astrocytes': 'L2=2;L3=1'}	Exc L2=1/L3=19; Ast L2=2/L3=1	Supporting-run final-layer distribution
+phase18_rpl11_deep_dive_v1	Excitatory_neurons_rpl11_indegree	PASS	TRUE	0	0	RPL11 full-network in-degree
+phase18_rpl11_deep_dive_v1	Excitatory_neurons_rpl11_outdegree	PASS	TRUE	9	9	RPL11 full-network out-degree
+phase18_rpl11_deep_dive_v1	Excitatory_neurons_rpl11_totaldegree	PASS	TRUE	9	9	RPL11 full-network total degree
+phase18_rpl11_deep_dive_v1	Excitatory_neurons_downstream3	PASS	TRUE	114	114	Downstream genes through layer 3
+phase18_rpl11_deep_dive_v1	Excitatory_neurons_core_mito_downstream3	PASS	TRUE	25	25	Core MitoCarta downstream genes through layer 3
+phase18_rpl11_deep_dive_v1	exc_no_upstream	PASS	TRUE	{1: [], 2: [], 3: []}	none	No recorded excitatory upstream parents
+phase18_rpl11_deep_dive_v1	Astrocytes_rpl11_indegree	PASS	TRUE	1	1	RPL11 full-network in-degree
+phase18_rpl11_deep_dive_v1	Astrocytes_rpl11_outdegree	PASS	TRUE	3	3	RPL11 full-network out-degree
+phase18_rpl11_deep_dive_v1	Astrocytes_rpl11_totaldegree	PASS	TRUE	4	4	RPL11 full-network total degree
+phase18_rpl11_deep_dive_v1	Astrocytes_downstream3	PASS	TRUE	106	106	Downstream genes through layer 3
+phase18_rpl11_deep_dive_v1	Astrocytes_core_mito_downstream3	PASS	TRUE	22	22	Core MitoCarta downstream genes through layer 3
+phase18_rpl11_deep_dive_v1	astro_upstream_chain	PASS	TRUE	{1: ['RPLP1'], 2: ['RPS25'], 3: []}	RPLP1 at U1; RPS25 at U2	Recorded astrocyte upstream chain
+phase18_rpl11_deep_dive_v1	exc_consensus_all_direct_in	PASS	TRUE	[]	[]	Standalone consensus includes every full-network edge into RPL11
+phase18_rpl11_deep_dive_v1	exc_consensus_all_direct_out	PASS	TRUE	['COX7C', 'RPL30', 'RPL5', 'RPL6', 'RPS13', 'RPS23', 'RPS27A', 'SMDT1', 'SRP14']	['COX7C', 'RPL30', 'RPL5', 'RPL6', 'RPS13', 'RPS23', 'RPS27A', 'SMDT1', 'SRP14']	Standalone consensus includes every full-network edge out of RPL11
+phase18_rpl11_deep_dive_v1	exc_consensus_direct_degree	PASS	TRUE	in=0;out=9	in=0;out=9	Fixed excitatory RPL11 direct-degree anchor
+phase18_rpl11_deep_dive_v1	exc_consensus_occurrence_range	PASS	TRUE	min=10;max=20	0..20	Node recurrence counts are bounded by the 20 supporting runs
+phase18_rpl11_deep_dive_v1	msigdb_c2_cp_pathway_count	PASS	TRUE	4115	4115	MSigDB C2:CP v2026.1 Hs pathway count
+phase18_rpl11_deep_dive_v1	pathway_background_size	PASS	TRUE	6952	6952	Full excitatory-network genes represented in MSigDB C2:CP
+phase18_rpl11_deep_dive_v1	pathway_query_mapped	PASS	TRUE	34	34	Displayed genes represented in MSigDB C2:CP
+phase18_rpl11_deep_dive_v1	pathway_eligible_test_count	PASS	TRUE	1739	1739	Pathways tested after 15–500 background-gene size filter
+phase18_rpl11_deep_dive_v1	pathway_representatives_present	PASS	TRUE	['KEGG_RIBOSOME', 'REACTOME_CRISTAE_FORMATION', 'REACTOME_MITOCHONDRIAL_PROTEIN_DEGRADATION', 'WP_ELECTRON_TRANSPORT_CHAIN_OXPHOS_SYSTEM_IN_MITOCHONDRIA']	['KEGG_RIBOSOME', 'REACTOME_CRISTAE_FORMATION', 'REACTOME_MITOCHONDRIAL_PROTEIN_DEGRADATION', 'WP_ELECTRON_TRANSPORT_CHAIN_OXPHOS_SYSTEM_IN_MITOCHONDRIA']	All declared pathway representatives occur in the tested collection
+phase18_rpl11_deep_dive_v1	pathway_representative_overlap_counts	PASS	TRUE	{'KEGG_RIBOSOME': 14, 'WP_ELECTRON_TRANSPORT_CHAIN_OXPHOS_SYSTEM_IN_MITOCHONDRIA': 12, 'REACTOME_MITOCHONDRIAL_PROTEIN_DEGRADATION': 5, 'REACTOME_CRISTAE_FORMATION': 3}	{'KEGG_RIBOSOME': 14, 'WP_ELECTRON_TRANSPORT_CHAIN_OXPHOS_SYSTEM_IN_MITOCHONDRIA': 12, 'REACTOME_MITOCHONDRIAL_PROTEIN_DEGRADATION': 5, 'REACTOME_CRISTAE_FORMATION': 3}	Selected representative pathway overlap counts
+phase18_rpl11_deep_dive_v1	pathway_representatives_fdr	PASS	TRUE	{'KEGG_RIBOSOME': 1.3458600023258956e-16, 'WP_ELECTRON_TRANSPORT_CHAIN_OXPHOS_SYSTEM_IN_MITOCHONDRIA': 3.200181684568396e-13, 'REACTOME_MITOCHONDRIAL_PROTEIN_DEGRADATION': 0.0018001945394537653, 'REACTOME_CRISTAE_FORMATION': 0.007624678682011091}	all < 0.05	Selected representative pathways pass BH FDR < 0.05
+phase18_rpl11_deep_dive_v1	pathway_membership_row_count	PASS	TRUE	34	34	Selected pathway gene-membership rows
+phase18_rpl11_deep_dive_v1	pathway_annotated_display_gene_count	PASS	TRUE	29	29	Displayed genes carrying at least one selected pathway outline
+phase18_rpl11_deep_dive_v1	query_overlap_regions	PASS	TRUE	"{""('Excitatory_neurons', 'AD-up only')"": 1, ""('Excitatory_neurons', 'Shared')"": 20, ""('Excitatory_neurons', 'AD-down only')"": 4, ""('Astrocytes', 'AD-up only')"": 0, ""('Astrocytes', 'Shared')"": 6, ""('Astrocytes', 'AD-down only')"": 6, ""('Microglia', 'AD-up only')"": 0, ""('Microglia', 'Shared')"": 0, ""('Microglia', 'AD-down only')"": 5, ""('Oligodendrocytes', 'AD-up only')"": 0, ""('Oligodendrocytes', 'Shared')"": 0, ""('Oligodendrocytes', 'AD-down only')"": 4}"	"{""('Excitatory_neurons', 'AD-up only')"": 1, ""('Excitatory_neurons', 'Shared')"": 20, ""('Excitatory_neurons', 'AD-down only')"": 4, ""('Astrocytes', 'AD-up only')"": 0, ""('Astrocytes', 'Shared')"": 6, ""('Astrocytes', 'AD-down only')"": 6, ""('Microglia', 'AD-up only')"": 0, ""('Microglia', 'Shared')"": 0, ""('Microglia', 'AD-down only')"": 5, ""('Oligodendrocytes', 'AD-up only')"": 0, ""('Oligodendrocytes', 'Shared')"": 0, ""('Oligodendrocytes', 'AD-down only')"": 4}"	Direction-level Venn and one-set counts
+phase18_rpl11_deep_dive_v1	matched_controls_unique	PASS	TRUE	TRUE	TRUE	No duplicated controls within network/null model
+phase18_rpl11_deep_dive_v1	matched_nulls_complete	PASS	TRUE	6	6	Three null models for each primary network
+phase18_rpl11_deep_dive_v1	ribosomal_null_annotation	PASS	TRUE	TRUE	TRUE	Ribosomal null contains curated cytosolic-ribosomal controls and excludes RPL11
+phase18_rpl11_deep_dive_v1	exc_consensus_pathway_labels_inside_nodes	PASS	TRUE	none	none	Every gene symbol and recurrence label fits within its circle or box
+phase18_rpl11_deep_dive_v1	phase18_rpl11_excitatory_consensus_network_pathways_png	PASS	TRUE	451938	>0 bytes	Cytoscape figure export exists and is nonempty
+phase18_rpl11_deep_dive_v1	phase18_rpl11_excitatory_consensus_network_pathways_pdf	PASS	TRUE	13177	>0 bytes	Cytoscape figure export exists and is nonempty
+phase18_rpl11_deep_dive_v1	phase18_rpl11_excitatory_consensus_network_pathways_svg	PASS	TRUE	175078	>0 bytes	Cytoscape figure export exists and is nonempty
+phase18_rpl11_deep_dive_v1	phase18_rpl11_deep_dive_png	PASS	TRUE	1485008	>0 bytes	Figure export exists and is nonempty
+phase18_rpl11_deep_dive_v1	phase18_rpl11_deep_dive_pdf	PASS	TRUE	103421	>0 bytes	Figure export exists and is nonempty
+phase18_rpl11_deep_dive_v1	phase18_rpl11_deep_dive_svg	PASS	TRUE	182215	>0 bytes	Figure export exists and is nonempty
+phase18_rpl11_deep_dive_v1	phase18_rpl11_query_overlap_png	PASS	TRUE	654400	>0 bytes	Figure export exists and is nonempty
+phase18_rpl11_deep_dive_v1	phase18_rpl11_query_overlap_pdf	PASS	TRUE	51616	>0 bytes	Figure export exists and is nonempty
+phase18_rpl11_deep_dive_v1	phase18_rpl11_query_overlap_svg	PASS	TRUE	37141	>0 bytes	Figure export exists and is nonempty
+phase18_rpl11_deep_dive_v1	phase18_rpl11_ribosomal_comparison_png	PASS	TRUE	634526	>0 bytes	Figure export exists and is nonempty
+phase18_rpl11_deep_dive_v1	phase18_rpl11_ribosomal_comparison_pdf	PASS	TRUE	52313	>0 bytes	Figure export exists and is nonempty
+phase18_rpl11_deep_dive_v1	phase18_rpl11_ribosomal_comparison_svg	PASS	TRUE	104678	>0 bytes	Figure export exists and is nonempty
+phase18_rpl11_deep_dive_v1	png_dpi	PASS	TRUE	450	>=450	PNG export resolution
+phase18_rpl11_deep_dive_v1	visual_review	PASS	FALSE	complete	complete	Final-size color and grayscale visual review

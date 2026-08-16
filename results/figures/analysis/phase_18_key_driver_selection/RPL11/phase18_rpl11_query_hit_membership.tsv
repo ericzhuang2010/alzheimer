@@ -1,0 +1,257 @@
+schema_version	broad_network	kda_run_id	fine_cell_type	signature_group	sex	apoe_group	signature_direction	final_layer	final_run_q	hit_gene
+phase18_rpl11_deep_dive_v1	Astrocytes	primary_Ast_CHI3L1_M_e4_AD_down_mito	Ast CHI3L1	M_e4	Male	e4	AD_down_mito	2	0.0166781014250489	COX7C
+phase18_rpl11_deep_dive_v1	Astrocytes	primary_Ast_CHI3L1_M_e4_AD_down_mito	Ast CHI3L1	M_e4	Male	e4	AD_down_mito	2	0.0166781014250489	PSAP
+phase18_rpl11_deep_dive_v1	Astrocytes	primary_Ast_CHI3L1_M_e4_AD_down_mito	Ast CHI3L1	M_e4	Male	e4	AD_down_mito	2	0.0166781014250489	TOMM7
+phase18_rpl11_deep_dive_v1	Astrocytes	primary_Ast_GRM3_M_e2_AD_down_mito	Ast GRM3	M_e2	Male	e2	AD_down_mito	3	1.89568006390114e-07	NDUFB4
+phase18_rpl11_deep_dive_v1	Astrocytes	primary_Ast_GRM3_M_e2_AD_down_mito	Ast GRM3	M_e2	Male	e2	AD_down_mito	3	1.89568006390114e-07	COX7C
+phase18_rpl11_deep_dive_v1	Astrocytes	primary_Ast_GRM3_M_e2_AD_down_mito	Ast GRM3	M_e2	Male	e2	AD_down_mito	3	1.89568006390114e-07	UQCRB
+phase18_rpl11_deep_dive_v1	Astrocytes	primary_Ast_GRM3_M_e2_AD_down_mito	Ast GRM3	M_e2	Male	e2	AD_down_mito	3	1.89568006390114e-07	PSAP
+phase18_rpl11_deep_dive_v1	Astrocytes	primary_Ast_GRM3_M_e2_AD_down_mito	Ast GRM3	M_e2	Male	e2	AD_down_mito	3	1.89568006390114e-07	ATP5F1E
+phase18_rpl11_deep_dive_v1	Astrocytes	primary_Ast_GRM3_M_e2_AD_down_mito	Ast GRM3	M_e2	Male	e2	AD_down_mito	3	1.89568006390114e-07	ATP5PF
+phase18_rpl11_deep_dive_v1	Astrocytes	primary_Ast_GRM3_M_e2_AD_down_mito	Ast GRM3	M_e2	Male	e2	AD_down_mito	3	1.89568006390114e-07	SLIRP
+phase18_rpl11_deep_dive_v1	Astrocytes	primary_Ast_GRM3_M_e2_AD_down_mito	Ast GRM3	M_e2	Male	e2	AD_down_mito	3	1.89568006390114e-07	CYB5R3
+phase18_rpl11_deep_dive_v1	Astrocytes	primary_Ast_GRM3_M_e2_AD_down_mito	Ast GRM3	M_e2	Male	e2	AD_down_mito	3	1.89568006390114e-07	UQCRH
+phase18_rpl11_deep_dive_v1	Astrocytes	primary_Ast_GRM3_M_e2_AD_down_mito	Ast GRM3	M_e2	Male	e2	AD_down_mito	3	1.89568006390114e-07	ATP5ME
+phase18_rpl11_deep_dive_v1	Astrocytes	primary_Ast_GRM3_M_e2_AD_down_mito	Ast GRM3	M_e2	Male	e2	AD_down_mito	3	1.89568006390114e-07	COX6C
+phase18_rpl11_deep_dive_v1	Astrocytes	primary_Ast_GRM3_F_e2_AD_up_mito	Ast GRM3	F_e2	Female	e2	AD_up_mito	2	7.14522452634455e-06	COX7C
+phase18_rpl11_deep_dive_v1	Astrocytes	primary_Ast_GRM3_F_e2_AD_up_mito	Ast GRM3	F_e2	Female	e2	AD_up_mito	2	7.14522452634455e-06	PSAP
+phase18_rpl11_deep_dive_v1	Astrocytes	primary_Ast_GRM3_F_e2_AD_up_mito	Ast GRM3	F_e2	Female	e2	AD_up_mito	2	7.14522452634455e-06	NDUFB4
+phase18_rpl11_deep_dive_v1	Astrocytes	primary_Ast_GRM3_F_e2_AD_up_mito	Ast GRM3	F_e2	Female	e2	AD_up_mito	2	7.14522452634455e-06	TOMM7
+phase18_rpl11_deep_dive_v1	Astrocytes	primary_Ast_GRM3_F_e2_AD_up_mito	Ast GRM3	F_e2	Female	e2	AD_up_mito	2	7.14522452634455e-06	UQCRB
+phase18_rpl11_deep_dive_v1	Astrocytes	primary_Ast_GRM3_F_e2_AD_up_mito	Ast GRM3	F_e2	Female	e2	AD_up_mito	2	7.14522452634455e-06	ATP5PF
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L2_3_CBLN2_LINC02306_F_e4_AD_down_mito	Exc L2-3 CBLN2 LINC02306	F_e4	Female	e4	AD_down_mito	3	1.69883894803261e-09	COX7C
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L2_3_CBLN2_LINC02306_F_e4_AD_down_mito	Exc L2-3 CBLN2 LINC02306	F_e4	Female	e4	AD_down_mito	3	1.69883894803261e-09	UQCRQ
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L2_3_CBLN2_LINC02306_F_e4_AD_down_mito	Exc L2-3 CBLN2 LINC02306	F_e4	Female	e4	AD_down_mito	3	1.69883894803261e-09	SLC25A5
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L2_3_CBLN2_LINC02306_F_e4_AD_down_mito	Exc L2-3 CBLN2 LINC02306	F_e4	Female	e4	AD_down_mito	3	1.69883894803261e-09	NDUFB9
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L2_3_CBLN2_LINC02306_F_e4_AD_down_mito	Exc L2-3 CBLN2 LINC02306	F_e4	Female	e4	AD_down_mito	3	1.69883894803261e-09	SMDT1
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L2_3_CBLN2_LINC02306_F_e4_AD_down_mito	Exc L2-3 CBLN2 LINC02306	F_e4	Female	e4	AD_down_mito	3	1.69883894803261e-09	ATP5PF
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L2_3_CBLN2_LINC02306_F_e4_AD_down_mito	Exc L2-3 CBLN2 LINC02306	F_e4	Female	e4	AD_down_mito	3	1.69883894803261e-09	RPS12
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L2_3_CBLN2_LINC02306_F_e4_AD_down_mito	Exc L2-3 CBLN2 LINC02306	F_e4	Female	e4	AD_down_mito	3	1.69883894803261e-09	APOO
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L2_3_CBLN2_LINC02306_F_e4_AD_down_mito	Exc L2-3 CBLN2 LINC02306	F_e4	Female	e4	AD_down_mito	3	1.69883894803261e-09	NDUFS6
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L2_3_CBLN2_LINC02306_F_e4_AD_down_mito	Exc L2-3 CBLN2 LINC02306	F_e4	Female	e4	AD_down_mito	3	1.69883894803261e-09	NDUFS5
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L2_3_CBLN2_LINC02306_F_e4_AD_down_mito	Exc L2-3 CBLN2 LINC02306	F_e4	Female	e4	AD_down_mito	3	1.69883894803261e-09	ATP5ME
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L2_3_CBLN2_LINC02306_F_e4_AD_down_mito	Exc L2-3 CBLN2 LINC02306	F_e4	Female	e4	AD_down_mito	3	1.69883894803261e-09	NDUFA1
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L2_3_CBLN2_LINC02306_F_e4_AD_down_mito	Exc L2-3 CBLN2 LINC02306	F_e4	Female	e4	AD_down_mito	3	1.69883894803261e-09	FUNDC2
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L2_3_CBLN2_LINC02306_F_e4_AD_down_mito	Exc L2-3 CBLN2 LINC02306	F_e4	Female	e4	AD_down_mito	3	1.69883894803261e-09	PINK1
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L2_3_CBLN2_LINC02306_F_e4_AD_down_mito	Exc L2-3 CBLN2 LINC02306	F_e4	Female	e4	AD_down_mito	3	1.69883894803261e-09	MRPL21
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L2_3_CBLN2_LINC02306_F_e4_AD_down_mito	Exc L2-3 CBLN2 LINC02306	F_e4	Female	e4	AD_down_mito	3	1.69883894803261e-09	UQCRFS1
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L2_3_CBLN2_LINC02306_F_e4_AD_down_mito	Exc L2-3 CBLN2 LINC02306	F_e4	Female	e4	AD_down_mito	3	1.69883894803261e-09	RPL13
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L2_3_CBLN2_LINC02306_F_e4_AD_down_mito	Exc L2-3 CBLN2 LINC02306	F_e4	Female	e4	AD_down_mito	3	1.69883894803261e-09	TXNRD1
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L2_3_CBLN2_LINC02306_F_e4_AD_down_mito	Exc L2-3 CBLN2 LINC02306	F_e4	Female	e4	AD_down_mito	3	1.69883894803261e-09	NDUFB3
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L2_3_CBLN2_LINC02306_F_e4_AD_down_mito	Exc L2-3 CBLN2 LINC02306	F_e4	Female	e4	AD_down_mito	3	1.69883894803261e-09	NDUFA12
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L2_3_CBLN2_LINC02306_M_e2_AD_down_mito	Exc L2-3 CBLN2 LINC02306	M_e2	Male	e2	AD_down_mito	3	3.15271000664045e-11	COX7C
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L2_3_CBLN2_LINC02306_M_e2_AD_down_mito	Exc L2-3 CBLN2 LINC02306	M_e2	Male	e2	AD_down_mito	3	3.15271000664045e-11	UQCRQ
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L2_3_CBLN2_LINC02306_M_e2_AD_down_mito	Exc L2-3 CBLN2 LINC02306	M_e2	Male	e2	AD_down_mito	3	3.15271000664045e-11	SLC25A5
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L2_3_CBLN2_LINC02306_M_e2_AD_down_mito	Exc L2-3 CBLN2 LINC02306	M_e2	Male	e2	AD_down_mito	3	3.15271000664045e-11	NDUFB9
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L2_3_CBLN2_LINC02306_M_e2_AD_down_mito	Exc L2-3 CBLN2 LINC02306	M_e2	Male	e2	AD_down_mito	3	3.15271000664045e-11	SMDT1
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L2_3_CBLN2_LINC02306_M_e2_AD_down_mito	Exc L2-3 CBLN2 LINC02306	M_e2	Male	e2	AD_down_mito	3	3.15271000664045e-11	ATP5PF
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L2_3_CBLN2_LINC02306_M_e2_AD_down_mito	Exc L2-3 CBLN2 LINC02306	M_e2	Male	e2	AD_down_mito	3	3.15271000664045e-11	RPS12
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L2_3_CBLN2_LINC02306_M_e2_AD_down_mito	Exc L2-3 CBLN2 LINC02306	M_e2	Male	e2	AD_down_mito	3	3.15271000664045e-11	APOO
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L2_3_CBLN2_LINC02306_M_e2_AD_down_mito	Exc L2-3 CBLN2 LINC02306	M_e2	Male	e2	AD_down_mito	3	3.15271000664045e-11	PDHB
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L2_3_CBLN2_LINC02306_M_e2_AD_down_mito	Exc L2-3 CBLN2 LINC02306	M_e2	Male	e2	AD_down_mito	3	3.15271000664045e-11	NDUFS5
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L2_3_CBLN2_LINC02306_M_e2_AD_down_mito	Exc L2-3 CBLN2 LINC02306	M_e2	Male	e2	AD_down_mito	3	3.15271000664045e-11	ATP5ME
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L2_3_CBLN2_LINC02306_M_e2_AD_down_mito	Exc L2-3 CBLN2 LINC02306	M_e2	Male	e2	AD_down_mito	3	3.15271000664045e-11	NDUFA1
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L2_3_CBLN2_LINC02306_M_e2_AD_down_mito	Exc L2-3 CBLN2 LINC02306	M_e2	Male	e2	AD_down_mito	3	3.15271000664045e-11	FUNDC2
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L2_3_CBLN2_LINC02306_M_e2_AD_down_mito	Exc L2-3 CBLN2 LINC02306	M_e2	Male	e2	AD_down_mito	3	3.15271000664045e-11	MRPL21
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L2_3_CBLN2_LINC02306_M_e2_AD_down_mito	Exc L2-3 CBLN2 LINC02306	M_e2	Male	e2	AD_down_mito	3	3.15271000664045e-11	UQCRFS1
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L2_3_CBLN2_LINC02306_M_e2_AD_down_mito	Exc L2-3 CBLN2 LINC02306	M_e2	Male	e2	AD_down_mito	3	3.15271000664045e-11	RPL13
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L2_3_CBLN2_LINC02306_M_e2_AD_down_mito	Exc L2-3 CBLN2 LINC02306	M_e2	Male	e2	AD_down_mito	3	3.15271000664045e-11	TXNRD1
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L2_3_CBLN2_LINC02306_M_e2_AD_down_mito	Exc L2-3 CBLN2 LINC02306	M_e2	Male	e2	AD_down_mito	3	3.15271000664045e-11	NDUFB3
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L2_3_CBLN2_LINC02306_M_e2_AD_down_mito	Exc L2-3 CBLN2 LINC02306	M_e2	Male	e2	AD_down_mito	3	3.15271000664045e-11	NDUFA12
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L3_4_RORB_CUX2_M_e2_AD_down_mito	Exc L3-4 RORB CUX2	M_e2	Male	e2	AD_down_mito	3	1.02953291813603e-11	COX7C
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L3_4_RORB_CUX2_M_e2_AD_down_mito	Exc L3-4 RORB CUX2	M_e2	Male	e2	AD_down_mito	3	1.02953291813603e-11	UQCRQ
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L3_4_RORB_CUX2_M_e2_AD_down_mito	Exc L3-4 RORB CUX2	M_e2	Male	e2	AD_down_mito	3	1.02953291813603e-11	SLC25A5
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L3_4_RORB_CUX2_M_e2_AD_down_mito	Exc L3-4 RORB CUX2	M_e2	Male	e2	AD_down_mito	3	1.02953291813603e-11	NDUFB9
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L3_4_RORB_CUX2_M_e2_AD_down_mito	Exc L3-4 RORB CUX2	M_e2	Male	e2	AD_down_mito	3	1.02953291813603e-11	SMDT1
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L3_4_RORB_CUX2_M_e2_AD_down_mito	Exc L3-4 RORB CUX2	M_e2	Male	e2	AD_down_mito	3	1.02953291813603e-11	ATP5PF
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L3_4_RORB_CUX2_M_e2_AD_down_mito	Exc L3-4 RORB CUX2	M_e2	Male	e2	AD_down_mito	3	1.02953291813603e-11	RPS12
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L3_4_RORB_CUX2_M_e2_AD_down_mito	Exc L3-4 RORB CUX2	M_e2	Male	e2	AD_down_mito	3	1.02953291813603e-11	APOO
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L3_4_RORB_CUX2_M_e2_AD_down_mito	Exc L3-4 RORB CUX2	M_e2	Male	e2	AD_down_mito	3	1.02953291813603e-11	PDHB
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L3_4_RORB_CUX2_M_e2_AD_down_mito	Exc L3-4 RORB CUX2	M_e2	Male	e2	AD_down_mito	3	1.02953291813603e-11	NDUFS5
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L3_4_RORB_CUX2_M_e2_AD_down_mito	Exc L3-4 RORB CUX2	M_e2	Male	e2	AD_down_mito	3	1.02953291813603e-11	MRPL24
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L3_4_RORB_CUX2_M_e2_AD_down_mito	Exc L3-4 RORB CUX2	M_e2	Male	e2	AD_down_mito	3	1.02953291813603e-11	ATP5ME
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L3_4_RORB_CUX2_M_e2_AD_down_mito	Exc L3-4 RORB CUX2	M_e2	Male	e2	AD_down_mito	3	1.02953291813603e-11	NDUFA1
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L3_4_RORB_CUX2_M_e2_AD_down_mito	Exc L3-4 RORB CUX2	M_e2	Male	e2	AD_down_mito	3	1.02953291813603e-11	MRPS18C
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L3_4_RORB_CUX2_M_e2_AD_down_mito	Exc L3-4 RORB CUX2	M_e2	Male	e2	AD_down_mito	3	1.02953291813603e-11	FUNDC2
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L3_4_RORB_CUX2_M_e2_AD_down_mito	Exc L3-4 RORB CUX2	M_e2	Male	e2	AD_down_mito	3	1.02953291813603e-11	MRPL21
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L3_4_RORB_CUX2_M_e2_AD_down_mito	Exc L3-4 RORB CUX2	M_e2	Male	e2	AD_down_mito	3	1.02953291813603e-11	UQCRFS1
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L3_4_RORB_CUX2_M_e2_AD_down_mito	Exc L3-4 RORB CUX2	M_e2	Male	e2	AD_down_mito	3	1.02953291813603e-11	RPL13
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L3_4_RORB_CUX2_M_e2_AD_down_mito	Exc L3-4 RORB CUX2	M_e2	Male	e2	AD_down_mito	3	1.02953291813603e-11	TXNRD1
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L3_4_RORB_CUX2_M_e2_AD_down_mito	Exc L3-4 RORB CUX2	M_e2	Male	e2	AD_down_mito	3	1.02953291813603e-11	NDUFB3
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L3_4_RORB_CUX2_M_e2_AD_down_mito	Exc L3-4 RORB CUX2	M_e2	Male	e2	AD_down_mito	3	1.02953291813603e-11	NDUFA12
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L3_5_RORB_PLCH1_M_e2_AD_down_mito	Exc L3-5 RORB PLCH1	M_e2	Male	e2	AD_down_mito	3	1.06056571628509e-09	COX7C
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L3_5_RORB_PLCH1_M_e2_AD_down_mito	Exc L3-5 RORB PLCH1	M_e2	Male	e2	AD_down_mito	3	1.06056571628509e-09	UQCRQ
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L3_5_RORB_PLCH1_M_e2_AD_down_mito	Exc L3-5 RORB PLCH1	M_e2	Male	e2	AD_down_mito	3	1.06056571628509e-09	SLC25A5
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L3_5_RORB_PLCH1_M_e2_AD_down_mito	Exc L3-5 RORB PLCH1	M_e2	Male	e2	AD_down_mito	3	1.06056571628509e-09	NDUFB9
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L3_5_RORB_PLCH1_M_e2_AD_down_mito	Exc L3-5 RORB PLCH1	M_e2	Male	e2	AD_down_mito	3	1.06056571628509e-09	SMDT1
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L3_5_RORB_PLCH1_M_e2_AD_down_mito	Exc L3-5 RORB PLCH1	M_e2	Male	e2	AD_down_mito	3	1.06056571628509e-09	ATP5PF
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L3_5_RORB_PLCH1_M_e2_AD_down_mito	Exc L3-5 RORB PLCH1	M_e2	Male	e2	AD_down_mito	3	1.06056571628509e-09	RPS12
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L3_5_RORB_PLCH1_M_e2_AD_down_mito	Exc L3-5 RORB PLCH1	M_e2	Male	e2	AD_down_mito	3	1.06056571628509e-09	PDHB
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L3_5_RORB_PLCH1_M_e2_AD_down_mito	Exc L3-5 RORB PLCH1	M_e2	Male	e2	AD_down_mito	3	1.06056571628509e-09	NDUFS5
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L3_5_RORB_PLCH1_M_e2_AD_down_mito	Exc L3-5 RORB PLCH1	M_e2	Male	e2	AD_down_mito	3	1.06056571628509e-09	MRPL24
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L3_5_RORB_PLCH1_M_e2_AD_down_mito	Exc L3-5 RORB PLCH1	M_e2	Male	e2	AD_down_mito	3	1.06056571628509e-09	ATP5ME
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L3_5_RORB_PLCH1_M_e2_AD_down_mito	Exc L3-5 RORB PLCH1	M_e2	Male	e2	AD_down_mito	3	1.06056571628509e-09	NDUFA1
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L3_5_RORB_PLCH1_M_e2_AD_down_mito	Exc L3-5 RORB PLCH1	M_e2	Male	e2	AD_down_mito	3	1.06056571628509e-09	MRPS18C
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L3_5_RORB_PLCH1_M_e2_AD_down_mito	Exc L3-5 RORB PLCH1	M_e2	Male	e2	AD_down_mito	3	1.06056571628509e-09	FUNDC2
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L3_5_RORB_PLCH1_M_e2_AD_down_mito	Exc L3-5 RORB PLCH1	M_e2	Male	e2	AD_down_mito	3	1.06056571628509e-09	UQCRFS1
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L3_5_RORB_PLCH1_M_e2_AD_down_mito	Exc L3-5 RORB PLCH1	M_e2	Male	e2	AD_down_mito	3	1.06056571628509e-09	RPL13
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L3_5_RORB_PLCH1_M_e2_AD_down_mito	Exc L3-5 RORB PLCH1	M_e2	Male	e2	AD_down_mito	3	1.06056571628509e-09	TXNRD1
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L3_5_RORB_PLCH1_M_e2_AD_down_mito	Exc L3-5 RORB PLCH1	M_e2	Male	e2	AD_down_mito	3	1.06056571628509e-09	NDUFB3
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L3_5_RORB_PLCH1_M_e2_AD_down_mito	Exc L3-5 RORB PLCH1	M_e2	Male	e2	AD_down_mito	3	1.06056571628509e-09	NDUFA12
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L4_5_RORB_GABRG1_M_e2_AD_down_mito	Exc L4-5 RORB GABRG1	M_e2	Male	e2	AD_down_mito	3	3.44873654316334e-10	COX7C
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L4_5_RORB_GABRG1_M_e2_AD_down_mito	Exc L4-5 RORB GABRG1	M_e2	Male	e2	AD_down_mito	3	3.44873654316334e-10	UQCRQ
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L4_5_RORB_GABRG1_M_e2_AD_down_mito	Exc L4-5 RORB GABRG1	M_e2	Male	e2	AD_down_mito	3	3.44873654316334e-10	SLC25A5
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L4_5_RORB_GABRG1_M_e2_AD_down_mito	Exc L4-5 RORB GABRG1	M_e2	Male	e2	AD_down_mito	3	3.44873654316334e-10	NDUFB9
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L4_5_RORB_GABRG1_M_e2_AD_down_mito	Exc L4-5 RORB GABRG1	M_e2	Male	e2	AD_down_mito	3	3.44873654316334e-10	SMDT1
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L4_5_RORB_GABRG1_M_e2_AD_down_mito	Exc L4-5 RORB GABRG1	M_e2	Male	e2	AD_down_mito	3	3.44873654316334e-10	ATP5PF
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L4_5_RORB_GABRG1_M_e2_AD_down_mito	Exc L4-5 RORB GABRG1	M_e2	Male	e2	AD_down_mito	3	3.44873654316334e-10	RPS12
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L4_5_RORB_GABRG1_M_e2_AD_down_mito	Exc L4-5 RORB GABRG1	M_e2	Male	e2	AD_down_mito	3	3.44873654316334e-10	APOO
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L4_5_RORB_GABRG1_M_e2_AD_down_mito	Exc L4-5 RORB GABRG1	M_e2	Male	e2	AD_down_mito	3	3.44873654316334e-10	PDHB
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L4_5_RORB_GABRG1_M_e2_AD_down_mito	Exc L4-5 RORB GABRG1	M_e2	Male	e2	AD_down_mito	3	3.44873654316334e-10	NDUFS6
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L4_5_RORB_GABRG1_M_e2_AD_down_mito	Exc L4-5 RORB GABRG1	M_e2	Male	e2	AD_down_mito	3	3.44873654316334e-10	NDUFS5
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L4_5_RORB_GABRG1_M_e2_AD_down_mito	Exc L4-5 RORB GABRG1	M_e2	Male	e2	AD_down_mito	3	3.44873654316334e-10	ATP5ME
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L4_5_RORB_GABRG1_M_e2_AD_down_mito	Exc L4-5 RORB GABRG1	M_e2	Male	e2	AD_down_mito	3	3.44873654316334e-10	NDUFA1
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L4_5_RORB_GABRG1_M_e2_AD_down_mito	Exc L4-5 RORB GABRG1	M_e2	Male	e2	AD_down_mito	3	3.44873654316334e-10	FUNDC2
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L4_5_RORB_GABRG1_M_e2_AD_down_mito	Exc L4-5 RORB GABRG1	M_e2	Male	e2	AD_down_mito	3	3.44873654316334e-10	UQCRFS1
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L4_5_RORB_GABRG1_M_e2_AD_down_mito	Exc L4-5 RORB GABRG1	M_e2	Male	e2	AD_down_mito	3	3.44873654316334e-10	RPL13
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L4_5_RORB_GABRG1_M_e2_AD_down_mito	Exc L4-5 RORB GABRG1	M_e2	Male	e2	AD_down_mito	3	3.44873654316334e-10	TXNRD1
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L4_5_RORB_GABRG1_M_e2_AD_down_mito	Exc L4-5 RORB GABRG1	M_e2	Male	e2	AD_down_mito	3	3.44873654316334e-10	NDUFB3
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L4_5_RORB_GABRG1_M_e2_AD_down_mito	Exc L4-5 RORB GABRG1	M_e2	Male	e2	AD_down_mito	3	3.44873654316334e-10	NDUFA12
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L4_5_RORB_IL1RAPL2_F_e4_AD_down_mito	Exc L4-5 RORB IL1RAPL2	F_e4	Female	e4	AD_down_mito	3	0.000756607548414459	COX7C
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L4_5_RORB_IL1RAPL2_F_e4_AD_down_mito	Exc L4-5 RORB IL1RAPL2	F_e4	Female	e4	AD_down_mito	3	0.000756607548414459	UQCRQ
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L4_5_RORB_IL1RAPL2_F_e4_AD_down_mito	Exc L4-5 RORB IL1RAPL2	F_e4	Female	e4	AD_down_mito	3	0.000756607548414459	NDUFS6
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L4_5_RORB_IL1RAPL2_F_e4_AD_down_mito	Exc L4-5 RORB IL1RAPL2	F_e4	Female	e4	AD_down_mito	3	0.000756607548414459	NDUFS5
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L4_5_RORB_IL1RAPL2_F_e4_AD_down_mito	Exc L4-5 RORB IL1RAPL2	F_e4	Female	e4	AD_down_mito	3	0.000756607548414459	ATP5ME
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L4_5_RORB_IL1RAPL2_F_e4_AD_down_mito	Exc L4-5 RORB IL1RAPL2	F_e4	Female	e4	AD_down_mito	3	0.000756607548414459	NDUFA1
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L4_5_RORB_IL1RAPL2_F_e4_AD_down_mito	Exc L4-5 RORB IL1RAPL2	F_e4	Female	e4	AD_down_mito	3	0.000756607548414459	MRPL21
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L4_5_RORB_IL1RAPL2_F_e4_AD_down_mito	Exc L4-5 RORB IL1RAPL2	F_e4	Female	e4	AD_down_mito	3	0.000756607548414459	UQCRFS1
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L4_5_RORB_IL1RAPL2_F_e4_AD_down_mito	Exc L4-5 RORB IL1RAPL2	F_e4	Female	e4	AD_down_mito	3	0.000756607548414459	NDUFB3
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L4_5_RORB_IL1RAPL2_M_e2_AD_down_mito	Exc L4-5 RORB IL1RAPL2	M_e2	Male	e2	AD_down_mito	3	1.30816005968546e-08	COX7C
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L4_5_RORB_IL1RAPL2_M_e2_AD_down_mito	Exc L4-5 RORB IL1RAPL2	M_e2	Male	e2	AD_down_mito	3	1.30816005968546e-08	UQCRQ
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L4_5_RORB_IL1RAPL2_M_e2_AD_down_mito	Exc L4-5 RORB IL1RAPL2	M_e2	Male	e2	AD_down_mito	3	1.30816005968546e-08	NDUFB9
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L4_5_RORB_IL1RAPL2_M_e2_AD_down_mito	Exc L4-5 RORB IL1RAPL2	M_e2	Male	e2	AD_down_mito	3	1.30816005968546e-08	SMDT1
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L4_5_RORB_IL1RAPL2_M_e2_AD_down_mito	Exc L4-5 RORB IL1RAPL2	M_e2	Male	e2	AD_down_mito	3	1.30816005968546e-08	ATP5PF
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L4_5_RORB_IL1RAPL2_M_e2_AD_down_mito	Exc L4-5 RORB IL1RAPL2	M_e2	Male	e2	AD_down_mito	3	1.30816005968546e-08	APOO
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L4_5_RORB_IL1RAPL2_M_e2_AD_down_mito	Exc L4-5 RORB IL1RAPL2	M_e2	Male	e2	AD_down_mito	3	1.30816005968546e-08	PDHB
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L4_5_RORB_IL1RAPL2_M_e2_AD_down_mito	Exc L4-5 RORB IL1RAPL2	M_e2	Male	e2	AD_down_mito	3	1.30816005968546e-08	NDUFS5
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L4_5_RORB_IL1RAPL2_M_e2_AD_down_mito	Exc L4-5 RORB IL1RAPL2	M_e2	Male	e2	AD_down_mito	3	1.30816005968546e-08	MRPL24
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L4_5_RORB_IL1RAPL2_M_e2_AD_down_mito	Exc L4-5 RORB IL1RAPL2	M_e2	Male	e2	AD_down_mito	3	1.30816005968546e-08	ATP5ME
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L4_5_RORB_IL1RAPL2_M_e2_AD_down_mito	Exc L4-5 RORB IL1RAPL2	M_e2	Male	e2	AD_down_mito	3	1.30816005968546e-08	NDUFA1
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L4_5_RORB_IL1RAPL2_M_e2_AD_down_mito	Exc L4-5 RORB IL1RAPL2	M_e2	Male	e2	AD_down_mito	3	1.30816005968546e-08	COX17
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L4_5_RORB_IL1RAPL2_M_e2_AD_down_mito	Exc L4-5 RORB IL1RAPL2	M_e2	Male	e2	AD_down_mito	3	1.30816005968546e-08	RPL13
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L4_5_RORB_IL1RAPL2_M_e2_AD_down_mito	Exc L4-5 RORB IL1RAPL2	M_e2	Male	e2	AD_down_mito	3	1.30816005968546e-08	TXNRD1
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L5_6_IT_Car3_F_e4_AD_down_mito	Exc L5/6 IT Car3	F_e4	Female	e4	AD_down_mito	3	0.0196218618930461	COX7C
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L5_6_IT_Car3_F_e4_AD_down_mito	Exc L5/6 IT Car3	F_e4	Female	e4	AD_down_mito	3	0.0196218618930461	UQCRQ
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L5_6_IT_Car3_F_e4_AD_down_mito	Exc L5/6 IT Car3	F_e4	Female	e4	AD_down_mito	3	0.0196218618930461	NDUFB9
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L5_6_IT_Car3_F_e4_AD_down_mito	Exc L5/6 IT Car3	F_e4	Female	e4	AD_down_mito	3	0.0196218618930461	SMDT1
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L5_6_IT_Car3_F_e4_AD_down_mito	Exc L5/6 IT Car3	F_e4	Female	e4	AD_down_mito	3	0.0196218618930461	NDUFS6
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L5_6_IT_Car3_F_e4_AD_down_mito	Exc L5/6 IT Car3	F_e4	Female	e4	AD_down_mito	3	0.0196218618930461	ATP5ME
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L5_6_IT_Car3_F_e4_AD_down_mito	Exc L5/6 IT Car3	F_e4	Female	e4	AD_down_mito	3	0.0196218618930461	NDUFA12
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L5_6_NP_M_e2_AD_down_mito	Exc L5/6 NP	M_e2	Male	e2	AD_down_mito	3	0.00533719830732788	COX7C
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L5_6_NP_M_e2_AD_down_mito	Exc L5/6 NP	M_e2	Male	e2	AD_down_mito	3	0.00533719830732788	NDUFS5
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L5_6_NP_M_e2_AD_down_mito	Exc L5/6 NP	M_e2	Male	e2	AD_down_mito	3	0.00533719830732788	NDUFA1
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L5_6_NP_M_e2_AD_down_mito	Exc L5/6 NP	M_e2	Male	e2	AD_down_mito	3	0.00533719830732788	RPL13
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L5_6_NP_M_e2_AD_down_mito	Exc L5/6 NP	M_e2	Male	e2	AD_down_mito	3	0.00533719830732788	TXNRD1
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_NRGN_M_e2_AD_down_mito	Exc NRGN	M_e2	Male	e2	AD_down_mito	3	0.0394203992516958	COX7C
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_NRGN_M_e2_AD_down_mito	Exc NRGN	M_e2	Male	e2	AD_down_mito	3	0.0394203992516958	UQCRQ
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_NRGN_M_e2_AD_down_mito	Exc NRGN	M_e2	Male	e2	AD_down_mito	3	0.0394203992516958	NDUFB9
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_NRGN_M_e2_AD_down_mito	Exc NRGN	M_e2	Male	e2	AD_down_mito	3	0.0394203992516958	RPS12
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_NRGN_M_e2_AD_down_mito	Exc NRGN	M_e2	Male	e2	AD_down_mito	3	0.0394203992516958	ATP5ME
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_NRGN_M_e2_AD_down_mito	Exc NRGN	M_e2	Male	e2	AD_down_mito	3	0.0394203992516958	NDUFA1
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_NRGN_M_e2_AD_down_mito	Exc NRGN	M_e2	Male	e2	AD_down_mito	3	0.0394203992516958	NDUFA12
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_NRGN_M_e33_AD_down_mito	Exc NRGN	M_e33	Male	e33	AD_down_mito	3	0.0113475268587925	COX7C
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_NRGN_M_e33_AD_down_mito	Exc NRGN	M_e33	Male	e33	AD_down_mito	3	0.0113475268587925	SLC25A5
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_NRGN_M_e33_AD_down_mito	Exc NRGN	M_e33	Male	e33	AD_down_mito	3	0.0113475268587925	ATP5PF
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_NRGN_M_e33_AD_down_mito	Exc NRGN	M_e33	Male	e33	AD_down_mito	3	0.0113475268587925	APOO
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_NRGN_M_e33_AD_down_mito	Exc NRGN	M_e33	Male	e33	AD_down_mito	3	0.0113475268587925	NDUFS5
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_NRGN_M_e33_AD_down_mito	Exc NRGN	M_e33	Male	e33	AD_down_mito	3	0.0113475268587925	RPL13
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_NRGN_M_e33_AD_down_mito	Exc NRGN	M_e33	Male	e33	AD_down_mito	3	0.0113475268587925	TXNRD1
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_NRGN_M_e33_AD_down_mito	Exc NRGN	M_e33	Male	e33	AD_down_mito	3	0.0113475268587925	NDUFA12
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_RELN_CHD7_F_e4_AD_down_mito	Exc RELN CHD7	F_e4	Female	e4	AD_down_mito	3	0.00203669395860407	COX7C
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_RELN_CHD7_F_e4_AD_down_mito	Exc RELN CHD7	F_e4	Female	e4	AD_down_mito	3	0.00203669395860407	UQCRQ
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_RELN_CHD7_F_e4_AD_down_mito	Exc RELN CHD7	F_e4	Female	e4	AD_down_mito	3	0.00203669395860407	ATP5PF
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_RELN_CHD7_F_e4_AD_down_mito	Exc RELN CHD7	F_e4	Female	e4	AD_down_mito	3	0.00203669395860407	APOO
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_RELN_CHD7_F_e4_AD_down_mito	Exc RELN CHD7	F_e4	Female	e4	AD_down_mito	3	0.00203669395860407	NDUFS6
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_RELN_CHD7_F_e4_AD_down_mito	Exc RELN CHD7	F_e4	Female	e4	AD_down_mito	3	0.00203669395860407	NDUFS5
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_RELN_CHD7_F_e4_AD_down_mito	Exc RELN CHD7	F_e4	Female	e4	AD_down_mito	3	0.00203669395860407	ATP5ME
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_RELN_CHD7_F_e4_AD_down_mito	Exc RELN CHD7	F_e4	Female	e4	AD_down_mito	3	0.00203669395860407	NDUFA1
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_RELN_CHD7_F_e4_AD_down_mito	Exc RELN CHD7	F_e4	Female	e4	AD_down_mito	3	0.00203669395860407	RPL13
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_RELN_CHD7_M_e2_AD_down_mito	Exc RELN CHD7	M_e2	Male	e2	AD_down_mito	3	1.15378950987995e-06	COX7C
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_RELN_CHD7_M_e2_AD_down_mito	Exc RELN CHD7	M_e2	Male	e2	AD_down_mito	3	1.15378950987995e-06	UQCRQ
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_RELN_CHD7_M_e2_AD_down_mito	Exc RELN CHD7	M_e2	Male	e2	AD_down_mito	3	1.15378950987995e-06	SLC25A5
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_RELN_CHD7_M_e2_AD_down_mito	Exc RELN CHD7	M_e2	Male	e2	AD_down_mito	3	1.15378950987995e-06	ATP5PF
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_RELN_CHD7_M_e2_AD_down_mito	Exc RELN CHD7	M_e2	Male	e2	AD_down_mito	3	1.15378950987995e-06	NDUFS5
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_RELN_CHD7_M_e2_AD_down_mito	Exc RELN CHD7	M_e2	Male	e2	AD_down_mito	3	1.15378950987995e-06	ATP5ME
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_RELN_CHD7_M_e2_AD_down_mito	Exc RELN CHD7	M_e2	Male	e2	AD_down_mito	3	1.15378950987995e-06	RPL13
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_RELN_CHD7_M_e2_AD_down_mito	Exc RELN CHD7	M_e2	Male	e2	AD_down_mito	3	1.15378950987995e-06	TXNRD1
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L3_4_RORB_CUX2_F_e2_AD_up_mito	Exc L3-4 RORB CUX2	F_e2	Female	e2	AD_up_mito	3	0.000122679628643273	COX7C
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L3_4_RORB_CUX2_F_e2_AD_up_mito	Exc L3-4 RORB CUX2	F_e2	Female	e2	AD_up_mito	3	0.000122679628643273	UQCRQ
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L3_4_RORB_CUX2_F_e2_AD_up_mito	Exc L3-4 RORB CUX2	F_e2	Female	e2	AD_up_mito	3	0.000122679628643273	NDUFB9
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L3_4_RORB_CUX2_F_e2_AD_up_mito	Exc L3-4 RORB CUX2	F_e2	Female	e2	AD_up_mito	3	0.000122679628643273	ATP5PF
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L3_4_RORB_CUX2_F_e2_AD_up_mito	Exc L3-4 RORB CUX2	F_e2	Female	e2	AD_up_mito	3	0.000122679628643273	NDUFS5
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L3_4_RORB_CUX2_F_e2_AD_up_mito	Exc L3-4 RORB CUX2	F_e2	Female	e2	AD_up_mito	3	0.000122679628643273	ATP5ME
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L3_4_RORB_CUX2_F_e2_AD_up_mito	Exc L3-4 RORB CUX2	F_e2	Female	e2	AD_up_mito	3	0.000122679628643273	NDUFA1
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L3_4_RORB_CUX2_F_e2_AD_up_mito	Exc L3-4 RORB CUX2	F_e2	Female	e2	AD_up_mito	3	0.000122679628643273	RPL13
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L3_4_RORB_CUX2_F_e2_AD_up_mito	Exc L3-4 RORB CUX2	F_e2	Female	e2	AD_up_mito	3	0.000122679628643273	NDUFB3
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L4_5_RORB_IL1RAPL2_F_e2_AD_up_mito	Exc L4-5 RORB IL1RAPL2	F_e2	Female	e2	AD_up_mito	3	0.00025064730590651	COX7C
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L4_5_RORB_IL1RAPL2_F_e2_AD_up_mito	Exc L4-5 RORB IL1RAPL2	F_e2	Female	e2	AD_up_mito	3	0.00025064730590651	UQCRQ
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L4_5_RORB_IL1RAPL2_F_e2_AD_up_mito	Exc L4-5 RORB IL1RAPL2	F_e2	Female	e2	AD_up_mito	3	0.00025064730590651	NDUFB9
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L4_5_RORB_IL1RAPL2_F_e2_AD_up_mito	Exc L4-5 RORB IL1RAPL2	F_e2	Female	e2	AD_up_mito	3	0.00025064730590651	NDUFS6
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L4_5_RORB_IL1RAPL2_F_e2_AD_up_mito	Exc L4-5 RORB IL1RAPL2	F_e2	Female	e2	AD_up_mito	3	0.00025064730590651	NDUFS5
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L4_5_RORB_IL1RAPL2_F_e2_AD_up_mito	Exc L4-5 RORB IL1RAPL2	F_e2	Female	e2	AD_up_mito	3	0.00025064730590651	MRPL24
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L4_5_RORB_IL1RAPL2_F_e2_AD_up_mito	Exc L4-5 RORB IL1RAPL2	F_e2	Female	e2	AD_up_mito	3	0.00025064730590651	NDUFA1
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L4_5_RORB_IL1RAPL2_F_e2_AD_up_mito	Exc L4-5 RORB IL1RAPL2	F_e2	Female	e2	AD_up_mito	3	0.00025064730590651	RPL13
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L4_5_RORB_IL1RAPL2_F_e2_AD_up_mito	Exc L4-5 RORB IL1RAPL2	F_e2	Female	e2	AD_up_mito	3	0.00025064730590651	NDUFB3
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L5_6_RORB_LINC02196_F_e2_AD_up_mito	Exc L5-6 RORB LINC02196	F_e2	Female	e2	AD_up_mito	3	1.12999750408643e-05	COX7C
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L5_6_RORB_LINC02196_F_e2_AD_up_mito	Exc L5-6 RORB LINC02196	F_e2	Female	e2	AD_up_mito	3	1.12999750408643e-05	UQCRQ
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L5_6_RORB_LINC02196_F_e2_AD_up_mito	Exc L5-6 RORB LINC02196	F_e2	Female	e2	AD_up_mito	3	1.12999750408643e-05	SLC25A5
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L5_6_RORB_LINC02196_F_e2_AD_up_mito	Exc L5-6 RORB LINC02196	F_e2	Female	e2	AD_up_mito	3	1.12999750408643e-05	NDUFB9
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L5_6_RORB_LINC02196_F_e2_AD_up_mito	Exc L5-6 RORB LINC02196	F_e2	Female	e2	AD_up_mito	3	1.12999750408643e-05	ATP5PF
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L5_6_RORB_LINC02196_F_e2_AD_up_mito	Exc L5-6 RORB LINC02196	F_e2	Female	e2	AD_up_mito	3	1.12999750408643e-05	NDUFS5
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L5_6_RORB_LINC02196_F_e2_AD_up_mito	Exc L5-6 RORB LINC02196	F_e2	Female	e2	AD_up_mito	3	1.12999750408643e-05	NDUFA1
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L5_6_RORB_LINC02196_F_e2_AD_up_mito	Exc L5-6 RORB LINC02196	F_e2	Female	e2	AD_up_mito	3	1.12999750408643e-05	RPL13
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L5_6_RORB_LINC02196_F_e2_AD_up_mito	Exc L5-6 RORB LINC02196	F_e2	Female	e2	AD_up_mito	3	1.12999750408643e-05	NDUFB3
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L5_6_IT_Car3_F_e2_AD_up_mito	Exc L5/6 IT Car3	F_e2	Female	e2	AD_up_mito	3	8.50119424547121e-08	COX7C
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L5_6_IT_Car3_F_e2_AD_up_mito	Exc L5/6 IT Car3	F_e2	Female	e2	AD_up_mito	3	8.50119424547121e-08	UQCRQ
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L5_6_IT_Car3_F_e2_AD_up_mito	Exc L5/6 IT Car3	F_e2	Female	e2	AD_up_mito	3	8.50119424547121e-08	SLC25A5
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L5_6_IT_Car3_F_e2_AD_up_mito	Exc L5/6 IT Car3	F_e2	Female	e2	AD_up_mito	3	8.50119424547121e-08	NDUFB9
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L5_6_IT_Car3_F_e2_AD_up_mito	Exc L5/6 IT Car3	F_e2	Female	e2	AD_up_mito	3	8.50119424547121e-08	ATP5PF
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L5_6_IT_Car3_F_e2_AD_up_mito	Exc L5/6 IT Car3	F_e2	Female	e2	AD_up_mito	3	8.50119424547121e-08	NDUFS6
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L5_6_IT_Car3_F_e2_AD_up_mito	Exc L5/6 IT Car3	F_e2	Female	e2	AD_up_mito	3	8.50119424547121e-08	NDUFS5
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L5_6_IT_Car3_F_e2_AD_up_mito	Exc L5/6 IT Car3	F_e2	Female	e2	AD_up_mito	3	8.50119424547121e-08	NDUFA1
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L5_6_IT_Car3_F_e2_AD_up_mito	Exc L5/6 IT Car3	F_e2	Female	e2	AD_up_mito	3	8.50119424547121e-08	FUNDC2
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L5_6_IT_Car3_F_e2_AD_up_mito	Exc L5/6 IT Car3	F_e2	Female	e2	AD_up_mito	3	8.50119424547121e-08	PINK1
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L5_6_IT_Car3_F_e2_AD_up_mito	Exc L5/6 IT Car3	F_e2	Female	e2	AD_up_mito	3	8.50119424547121e-08	MRPL21
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L5_6_IT_Car3_F_e2_AD_up_mito	Exc L5/6 IT Car3	F_e2	Female	e2	AD_up_mito	3	8.50119424547121e-08	UQCRFS1
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L5_6_IT_Car3_F_e2_AD_up_mito	Exc L5/6 IT Car3	F_e2	Female	e2	AD_up_mito	3	8.50119424547121e-08	NDUFB3
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L5_6_NP_F_e33_AD_up_mito	Exc L5/6 NP	F_e33	Female	e33	AD_up_mito	2	0.00409672522162137	COX7C
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L5_6_NP_F_e33_AD_up_mito	Exc L5/6 NP	F_e33	Female	e33	AD_up_mito	2	0.00409672522162137	SMDT1
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L5_6_NP_F_e33_AD_up_mito	Exc L5/6 NP	F_e33	Female	e33	AD_up_mito	2	0.00409672522162137	COX20
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L5_6_NP_F_e33_AD_up_mito	Exc L5/6 NP	F_e33	Female	e33	AD_up_mito	2	0.00409672522162137	SLC25A5
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L5_6_NP_M_e33_AD_up_mito	Exc L5/6 NP	M_e33	Male	e33	AD_up_mito	3	0.0155919661926463	PDHB
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L5_6_NP_M_e33_AD_up_mito	Exc L5/6 NP	M_e33	Male	e33	AD_up_mito	3	0.0155919661926463	FUNDC2
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L5_6_NP_M_e33_AD_up_mito	Exc L5/6 NP	M_e33	Male	e33	AD_up_mito	3	0.0155919661926463	NDUFB3
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L6_THEMIS_NFIA_F_e2_AD_up_mito	Exc L6 THEMIS NFIA	F_e2	Female	e2	AD_up_mito	3	5.62469414861369e-10	COX7C
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L6_THEMIS_NFIA_F_e2_AD_up_mito	Exc L6 THEMIS NFIA	F_e2	Female	e2	AD_up_mito	3	5.62469414861369e-10	UQCRQ
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L6_THEMIS_NFIA_F_e2_AD_up_mito	Exc L6 THEMIS NFIA	F_e2	Female	e2	AD_up_mito	3	5.62469414861369e-10	SLC25A5
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L6_THEMIS_NFIA_F_e2_AD_up_mito	Exc L6 THEMIS NFIA	F_e2	Female	e2	AD_up_mito	3	5.62469414861369e-10	NDUFB9
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L6_THEMIS_NFIA_F_e2_AD_up_mito	Exc L6 THEMIS NFIA	F_e2	Female	e2	AD_up_mito	3	5.62469414861369e-10	SMDT1
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L6_THEMIS_NFIA_F_e2_AD_up_mito	Exc L6 THEMIS NFIA	F_e2	Female	e2	AD_up_mito	3	5.62469414861369e-10	ATP5PF
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L6_THEMIS_NFIA_F_e2_AD_up_mito	Exc L6 THEMIS NFIA	F_e2	Female	e2	AD_up_mito	3	5.62469414861369e-10	NDUFS6
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L6_THEMIS_NFIA_F_e2_AD_up_mito	Exc L6 THEMIS NFIA	F_e2	Female	e2	AD_up_mito	3	5.62469414861369e-10	NDUFS5
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L6_THEMIS_NFIA_F_e2_AD_up_mito	Exc L6 THEMIS NFIA	F_e2	Female	e2	AD_up_mito	3	5.62469414861369e-10	NDUFA1
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L6_THEMIS_NFIA_F_e2_AD_up_mito	Exc L6 THEMIS NFIA	F_e2	Female	e2	AD_up_mito	3	5.62469414861369e-10	COX17
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L6_THEMIS_NFIA_F_e2_AD_up_mito	Exc L6 THEMIS NFIA	F_e2	Female	e2	AD_up_mito	3	5.62469414861369e-10	FUNDC2
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L6_THEMIS_NFIA_F_e2_AD_up_mito	Exc L6 THEMIS NFIA	F_e2	Female	e2	AD_up_mito	3	5.62469414861369e-10	MRPL21
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L6_THEMIS_NFIA_F_e2_AD_up_mito	Exc L6 THEMIS NFIA	F_e2	Female	e2	AD_up_mito	3	5.62469414861369e-10	RPL13
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L6_THEMIS_NFIA_F_e2_AD_up_mito	Exc L6 THEMIS NFIA	F_e2	Female	e2	AD_up_mito	3	5.62469414861369e-10	NDUFB3
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	primary_Exc_L6_THEMIS_NFIA_F_e2_AD_up_mito	Exc L6 THEMIS NFIA	F_e2	Female	e2	AD_up_mito	3	5.62469414861369e-10	NDUFA12
+phase18_rpl11_deep_dive_v1	Microglia	primary_Mic_P2RY12_M_e4_AD_down_mito	Mic P2RY12	M_e4	Male	e4	AD_down_mito	3	0.000219816327764859	FTH1
+phase18_rpl11_deep_dive_v1	Microglia	primary_Mic_P2RY12_M_e4_AD_down_mito	Mic P2RY12	M_e4	Male	e4	AD_down_mito	3	0.000219816327764859	APOO
+phase18_rpl11_deep_dive_v1	Microglia	primary_Mic_P2RY12_M_e4_AD_down_mito	Mic P2RY12	M_e4	Male	e4	AD_down_mito	3	0.000219816327764859	TXNRD1
+phase18_rpl11_deep_dive_v1	Microglia	primary_Mic_P2RY12_M_e4_AD_down_mito	Mic P2RY12	M_e4	Male	e4	AD_down_mito	3	0.000219816327764859	ATP5F1E
+phase18_rpl11_deep_dive_v1	Microglia	primary_Mic_P2RY12_M_e4_AD_down_mito	Mic P2RY12	M_e4	Male	e4	AD_down_mito	3	0.000219816327764859	UQCRB
+phase18_rpl11_deep_dive_v1	Oligodendrocytes	primary_Oli_M_e2_AD_down_mito	Oli	M_e2	Male	e2	AD_down_mito	3	0.000466076141119103	TXNRD1
+phase18_rpl11_deep_dive_v1	Oligodendrocytes	primary_Oli_M_e2_AD_down_mito	Oli	M_e2	Male	e2	AD_down_mito	3	0.000466076141119103	RPL13
+phase18_rpl11_deep_dive_v1	Oligodendrocytes	primary_Oli_M_e2_AD_down_mito	Oli	M_e2	Male	e2	AD_down_mito	3	0.000466076141119103	FTH1
+phase18_rpl11_deep_dive_v1	Oligodendrocytes	primary_Oli_M_e2_AD_down_mito	Oli	M_e2	Male	e2	AD_down_mito	3	0.000466076141119103	ATP5MC2

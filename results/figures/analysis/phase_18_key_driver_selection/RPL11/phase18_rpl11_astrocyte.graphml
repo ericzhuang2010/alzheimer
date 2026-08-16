@@ -1,0 +1,887 @@
+<?xml version='1.0' encoding='utf-8'?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+  <key id="d5" for="node" attr.name="is_rpl11" attr.type="string" />
+  <key id="d4" for="node" attr.name="is_core_mitocarta" attr.type="string" />
+  <key id="d3" for="node" attr.name="minimum_downstream_depth" attr.type="string" />
+  <key id="d2" for="node" attr.name="minimum_upstream_depth" attr.type="string" />
+  <key id="d1" for="node" attr.name="network" attr.type="string" />
+  <key id="d0" for="graph" attr.name="network" attr.type="string" />
+  <graph edgedefault="directed">
+    <node id="SF3B6">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">2</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="UQCRB">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">2</data>
+      <data key="d4">True</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="EPHX1">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="SYNCRIP">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="COMMD6">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">2</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="SMYD4">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="CHPF">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="RHBDD2">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="RAD54L2">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="SELENOP">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="ARL8A">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="RPLP1">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">1</data>
+      <data key="d3">NA</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="TSPAN7">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="TMA7">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="ESD">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="DOPEY2">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="COPS9">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">2</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="SYF2">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="RPN2">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="NDUFC1">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">True</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="C8orf59">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">2</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="NDUFB4">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">2</data>
+      <data key="d4">True</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="TMEM59L">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="PRKRIP1">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="RPS27L">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="CCM2">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">2</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="RPS25">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">2</data>
+      <data key="d3">NA</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="GATAD2B">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="SSB">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">2</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="MRPS7">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">True</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="COX5B">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">True</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="ATP5ME">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">True</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="BCAP31">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="TOMM7">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">2</data>
+      <data key="d4">True</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="DYNLL1">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">2</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="NACA">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="GTF3A">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="CCT6A">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="SLIRP">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">True</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="EMC10">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="AKTIP">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="TXNDC12">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="PRDX1">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">1</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="FAM200B">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="LAMTOR5">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">2</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="RETREG2">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="FLYWCH2">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="CD151">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="NVL">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="RPS24">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="TMBIM6">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="ZNF432">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="PCBP1">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="TMEM9">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="ATP5PF">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">2</data>
+      <data key="d4">True</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="UQCRH">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">True</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="COX7C">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">1</data>
+      <data key="d4">True</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="TMEM120A">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="NDUFB7">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">True</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="C2orf74">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="ATP5PD">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">2</data>
+      <data key="d4">True</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="LGALS3BP">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="FO393400.1">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="TPP1">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="MT3">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="LAMP1">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="COX6C">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">True</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="HSPBP1">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="AP003108.2">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="SRP14">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">2</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="MAGED2">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="MRPL4">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">True</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="CWC15">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">1</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="ISCA1">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">2</data>
+      <data key="d4">True</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="ZZEF1">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="UBQLN2">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="ATP5F1E">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">2</data>
+      <data key="d4">True</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="CYB5R3">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">True</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="VPS4A">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="UBA52">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="RPL32">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="ZNF496">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="RIC8A">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="PSAP">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">2</data>
+      <data key="d4">True</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="C19orf12">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="CTSB">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="PCBD1">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="LAMTOR1">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="GORASP2">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="MARCKSL1">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">2</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="PLEKHJ1">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="RNF121">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="ATP5MG">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">True</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="LMAN2">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="CLU">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="TPRG1L">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="ZNF721">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="RPL35A">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">2</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="NDUFAF4">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">True</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="RPL11">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">0</data>
+      <data key="d4">False</data>
+      <data key="d5">True</data>
+    </node>
+    <node id="PPT1">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">2</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="SRP9">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="REXO2">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">True</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="YIPF2">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="RPL27">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">2</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="EIF3G">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="P4HB">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="SRI">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="RTRAF">
+      <data key="d1">Astrocytes</data>
+      <data key="d2">NA</data>
+      <data key="d3">3</data>
+      <data key="d4">False</data>
+      <data key="d5">False</data>
+    </node>
+    <edge source="UQCRB" target="RPL32" />
+    <edge source="UQCRB" target="RAD54L2" />
+    <edge source="UQCRB" target="AP003108.2" />
+    <edge source="UQCRB" target="RNF121" />
+    <edge source="UQCRB" target="RPS24" />
+    <edge source="UQCRB" target="SLIRP" />
+    <edge source="UQCRB" target="ZZEF1" />
+    <edge source="RPLP1" target="RPL11" />
+    <edge source="RPLP1" target="RPL27" />
+    <edge source="COPS9" target="SYNCRIP" />
+    <edge source="C8orf59" target="REXO2" />
+    <edge source="C8orf59" target="DOPEY2" />
+    <edge source="NDUFB4" target="EPHX1" />
+    <edge source="NDUFB4" target="AKTIP" />
+    <edge source="NDUFB4" target="ZNF432" />
+    <edge source="RPS25" target="RPL32" />
+    <edge source="RPS25" target="RPLP1" />
+    <edge source="SSB" target="CCT6A" />
+    <edge source="SSB" target="C19orf12" />
+    <edge source="DYNLL1" target="UQCRH" />
+    <edge source="PRDX1" target="MARCKSL1" />
+    <edge source="PRDX1" target="PPT1" />
+    <edge source="PRDX1" target="SF3B6" />
+    <edge source="PRDX1" target="ISCA1" />
+    <edge source="PRDX1" target="PSAP" />
+    <edge source="PRDX1" target="SRP14" />
+    <edge source="LAMTOR5" target="SYF2" />
+    <edge source="LAMTOR5" target="ZNF496" />
+    <edge source="LAMTOR5" target="COX5B" />
+    <edge source="LAMTOR5" target="RTRAF" />
+    <edge source="LAMTOR5" target="FLYWCH2" />
+    <edge source="LAMTOR5" target="SMYD4" />
+    <edge source="LAMTOR5" target="MRPS7" />
+    <edge source="TMBIM6" target="LAMP1" />
+    <edge source="ATP5PF" target="GATAD2B" />
+    <edge source="ATP5PF" target="NVL" />
+    <edge source="ATP5PF" target="FAM200B" />
+    <edge source="ATP5PF" target="NDUFAF4" />
+    <edge source="ATP5PF" target="SRI" />
+    <edge source="ATP5PF" target="PRKRIP1" />
+    <edge source="ATP5PF" target="ATP5MG" />
+    <edge source="ATP5PF" target="PCBD1" />
+    <edge source="ATP5PF" target="NACA" />
+    <edge source="ATP5PF" target="GTF3A" />
+    <edge source="ATP5PF" target="ESD" />
+    <edge source="ATP5PF" target="RPS27L" />
+    <edge source="ATP5PF" target="FO393400.1" />
+    <edge source="COX7C" target="LAMTOR5" />
+    <edge source="COX7C" target="SSB" />
+    <edge source="COX7C" target="COPS9" />
+    <edge source="COX7C" target="NDUFB4" />
+    <edge source="COX7C" target="RPL35A" />
+    <edge source="COX7C" target="TOMM7" />
+    <edge source="COX7C" target="CCM2" />
+    <edge source="COX7C" target="C8orf59" />
+    <edge source="COX7C" target="UQCRB" />
+    <edge source="COX7C" target="DYNLL1" />
+    <edge source="COX7C" target="COMMD6" />
+    <edge source="COX7C" target="RPL27" />
+    <edge source="COX7C" target="ATP5PD" />
+    <edge source="COX7C" target="ATP5F1E" />
+    <edge source="COX7C" target="ATP5PF" />
+    <edge source="SRP14" target="SRP9" />
+    <edge source="SRP14" target="SELENOP" />
+    <edge source="SRP14" target="MAGED2" />
+    <edge source="SRP14" target="PLEKHJ1" />
+    <edge source="SRP14" target="MRPL4" />
+    <edge source="ATP5F1E" target="TMA7" />
+    <edge source="ATP5F1E" target="ZNF721" />
+    <edge source="ATP5F1E" target="ATP5ME" />
+    <edge source="ATP5F1E" target="NDUFC1" />
+    <edge source="ATP5F1E" target="COX6C" />
+    <edge source="ATP5F1E" target="MT3" />
+    <edge source="ATP5F1E" target="EIF3G" />
+    <edge source="RPL32" target="RPL35A" />
+    <edge source="PSAP" target="TPRG1L" />
+    <edge source="PSAP" target="TXNDC12" />
+    <edge source="PSAP" target="TMEM9" />
+    <edge source="PSAP" target="ARL8A" />
+    <edge source="PSAP" target="PCBP1" />
+    <edge source="PSAP" target="RETREG2" />
+    <edge source="PSAP" target="CHPF" />
+    <edge source="PSAP" target="LMAN2" />
+    <edge source="PSAP" target="RHBDD2" />
+    <edge source="PSAP" target="TMEM120A" />
+    <edge source="PSAP" target="TSPAN7" />
+    <edge source="PSAP" target="UBQLN2" />
+    <edge source="PSAP" target="BCAP31" />
+    <edge source="PSAP" target="CTSB" />
+    <edge source="PSAP" target="CLU" />
+    <edge source="PSAP" target="RIC8A" />
+    <edge source="PSAP" target="CD151" />
+    <edge source="PSAP" target="TPP1" />
+    <edge source="PSAP" target="TMBIM6" />
+    <edge source="PSAP" target="LAMP1" />
+    <edge source="PSAP" target="LGALS3BP" />
+    <edge source="PSAP" target="P4HB" />
+    <edge source="PSAP" target="RPN2" />
+    <edge source="PSAP" target="YIPF2" />
+    <edge source="PSAP" target="TMEM59L" />
+    <edge source="PSAP" target="EMC10" />
+    <edge source="PSAP" target="HSPBP1" />
+    <edge source="PSAP" target="CYB5R3" />
+    <edge source="MARCKSL1" target="GORASP2" />
+    <edge source="MARCKSL1" target="LAMTOR1" />
+    <edge source="RPL11" target="PRDX1" />
+    <edge source="RPL11" target="COX7C" />
+    <edge source="RPL11" target="CWC15" />
+    <edge source="RPL27" target="C2orf74" />
+    <edge source="RPL27" target="VPS4A" />
+    <edge source="RPL27" target="NDUFB7" />
+    <edge source="RPL27" target="UBA52" />
+    <data key="d0">Astrocytes</data>
+  </graph>
+</graphml>

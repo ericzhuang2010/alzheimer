@@ -1,0 +1,13 @@
+schema_version	broad_network	region	gene_count	genes	ad_up_supporting_query_count	ad_down_supporting_query_count	ad_up_union_gene_count	ad_down_union_gene_count
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	AD-up only	1	COX20	7	13	21	24
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	Shared	20	ATP5ME;ATP5PF;COX17;COX7C;FUNDC2;MRPL21;MRPL24;NDUFA1;NDUFA12;NDUFB3;NDUFB9;NDUFS5;NDUFS6;PDHB;PINK1;RPL13;SLC25A5;SMDT1;UQCRFS1;UQCRQ	7	13	21	24
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	AD-down only	4	APOO;MRPS18C;RPS12;TXNRD1	7	13	21	24
+phase18_rpl11_deep_dive_v1	Astrocytes	AD-up only	0		1	2	6	12
+phase18_rpl11_deep_dive_v1	Astrocytes	Shared	6	ATP5PF;COX7C;NDUFB4;PSAP;TOMM7;UQCRB	1	2	6	12
+phase18_rpl11_deep_dive_v1	Astrocytes	AD-down only	6	ATP5F1E;ATP5ME;COX6C;CYB5R3;SLIRP;UQCRH	1	2	6	12
+phase18_rpl11_deep_dive_v1	Microglia	AD-up only	0		0	1	0	5
+phase18_rpl11_deep_dive_v1	Microglia	Shared	0		0	1	0	5
+phase18_rpl11_deep_dive_v1	Microglia	AD-down only	5	APOO;ATP5F1E;FTH1;TXNRD1;UQCRB	0	1	0	5
+phase18_rpl11_deep_dive_v1	Oligodendrocytes	AD-up only	0		0	1	0	4
+phase18_rpl11_deep_dive_v1	Oligodendrocytes	Shared	0		0	1	0	4
+phase18_rpl11_deep_dive_v1	Oligodendrocytes	AD-down only	4	ATP5MC2;FTH1;RPL13;TXNRD1	0	1	0	4

@@ -1,0 +1,7 @@
+schema_version	network	target_gene	null_model	available_pool_n	matched_control_n	caliper_control_n	target_aggregate_acat_p	target_conservative_support_count	target_supporting_fine_cell_type_count	empirical_tail_p	caliper_empirical_tail_p	interpretation	matching_balance_status
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	RPL11	topology	3371	250	7	6.50332218774679e-13	20	11	0.00398406374501992	0.125	empirical	residual_difference
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	RPL11	topology_expression	3262	250	1	6.50332218774679e-13	20	11	0.00398406374501992	0.5	empirical	residual_difference
+phase18_rpl11_deep_dive_v1	Excitatory_neurons	RPL11	ribosomal	53	53	0	6.50332218774679e-13	20	11	0.0185185185185185	NA	empirical	residual_difference
+phase18_rpl11_deep_dive_v1	Astrocytes	RPL11	topology	1565	250	0	1.77765596358295e-08	3	2	0.00398406374501992	NA	empirical	residual_difference
+phase18_rpl11_deep_dive_v1	Astrocytes	RPL11	topology_expression	1507	250	0	1.77765596358295e-08	3	2	0.00398406374501992	NA	empirical	residual_difference
+phase18_rpl11_deep_dive_v1	Astrocytes	RPL11	ribosomal	21	21	0	1.77765596358295e-08	3	2	0.0454545454545455	NA	empirical	residual_difference

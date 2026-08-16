@@ -1,0 +1,18 @@
+schema_version	network	source	target	is_directly_incident_to_rpl11	is_upstream_context_edge	source_directed_depth	target_directed_depth	source_upstream_depth	target_upstream_depth	source_supporting_neighborhood_occurrence_count	target_supporting_neighborhood_occurrence_count
+phase18_rpl11_astrocyte_consensus_v2	Astrocytes	ATP5F1E	ATP5ME	False	False	2.0	3.0			3	1
+phase18_rpl11_astrocyte_consensus_v2	Astrocytes	ATP5F1E	COX6C	False	False	2.0	3.0			3	1
+phase18_rpl11_astrocyte_consensus_v2	Astrocytes	COX7C	ATP5F1E	False	False	1.0	2.0			3	3
+phase18_rpl11_astrocyte_consensus_v2	Astrocytes	COX7C	ATP5PF	False	False	1.0	2.0			3	3
+phase18_rpl11_astrocyte_consensus_v2	Astrocytes	COX7C	DYNLL1	False	False	1.0	2.0			3	3
+phase18_rpl11_astrocyte_consensus_v2	Astrocytes	COX7C	NDUFB4	False	False	1.0	2.0			3	3
+phase18_rpl11_astrocyte_consensus_v2	Astrocytes	COX7C	TOMM7	False	False	1.0	2.0			3	2
+phase18_rpl11_astrocyte_consensus_v2	Astrocytes	COX7C	UQCRB	False	False	1.0	2.0			3	3
+phase18_rpl11_astrocyte_consensus_v2	Astrocytes	DYNLL1	UQCRH	False	False	2.0	3.0			3	1
+phase18_rpl11_astrocyte_consensus_v2	Astrocytes	PRDX1	PSAP	False	False	1.0	2.0			3	3
+phase18_rpl11_astrocyte_consensus_v2	Astrocytes	PSAP	CYB5R3	False	False	2.0	3.0			3	1
+phase18_rpl11_astrocyte_consensus_v2	Astrocytes	RPL11	COX7C	True	False	0.0	1.0			3	3
+phase18_rpl11_astrocyte_consensus_v2	Astrocytes	RPL11	CWC15	True	False	0.0	1.0			3	1
+phase18_rpl11_astrocyte_consensus_v2	Astrocytes	RPL11	PRDX1	True	False	0.0	1.0			3	3
+phase18_rpl11_astrocyte_consensus_v2	Astrocytes	RPLP1	RPL11	True	True		0.0	1.0		0	3
+phase18_rpl11_astrocyte_consensus_v2	Astrocytes	RPS25	RPLP1	False	True			2.0	1.0	0	0
+phase18_rpl11_astrocyte_consensus_v2	Astrocytes	UQCRB	SLIRP	False	False	2.0	3.0			3	1
