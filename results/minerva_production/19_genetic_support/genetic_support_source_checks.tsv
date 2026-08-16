@@ -1,0 +1,9 @@
+schema_version	check_id	severity	status	expected	observed	detail
+human_genetic_support_tier1_v1	phase18_sha256	blocking	pass	b917f70e6edcdf030f63e88ba8fbc5b22b80714599c12c80ea449e8c38bd51d8	b917f70e6edcdf030f63e88ba8fbc5b22b80714599c12c80ea449e8c38bd51d8	Frozen upstream identity
+human_genetic_support_tier1_v1	candidate_context_count	blocking	pass	47	47	Unique gene/network/case units
+human_genetic_support_tier1_v1	unique_gene_count	blocking	pass	25	25	Full Phase 18 scope
+human_genetic_support_tier1_v1	gencode_coordinates	blocking	pass	25	25	All candidates mapped on GRCh38
+human_genetic_support_tier1_v1	hgnc_symbols	blocking	pass	25	25	All current symbols approved
+human_genetic_support_tier1_v1	source_file_hashes	blocking	pass	6	6	All public snapshot hashes matched
+human_genetic_support_tier1_v1	classical_h0_h4	nonblocking_tier1	limited	available	absent	Do not interpret inclusion scores as PP.H4
+human_genetic_support_tier1_v1	mtdna_route	nonblocking_tier1	limited	mtDNA-specific summary	absent	Tier 1 nuclear resource cannot assess mtDNA genes

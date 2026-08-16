@@ -1,0 +1,2 @@
+schema_version	run_id	execution_stage	technical_status	scientific_status	full_phase19_complete	candidate_contexts	unique_genes	strong	moderate	weak	none_found	not_assessable	output_files	completed_utc	next_required_tier
+human_genetic_support_tier1_v1	phase19_tier1_local_20260816	local_production_equivalent	validated_complete_tier1	tier1_screen_complete_with_prespecified_source_limitations	False	47	25	1	0	3	23	20	23	2026-08-16T22:45:22.991693+00:00	Tier 2 only if classical H0-H4, full rare-variant, or mtDNA inference is required

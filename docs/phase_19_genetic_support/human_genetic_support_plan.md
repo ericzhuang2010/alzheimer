@@ -5,8 +5,11 @@
 This document is the scientific, implementation, data-acquisition, execution,
 output, and completion plan for Phase 19.
 
-Plan status: **planned; not implemented; external data not yet frozen; local
-pilot and production not yet run**.
+Tier 1 status (2026-08-16): **implemented and validated locally** for all 25
+genes and 47 candidate-context units. See the
+[Tier 1 execution report](tier1_execution_report.md) and the validated bundle
+in `results/minerva_production/19_genetic_support/`. Tier 2 items below remain
+optional and are not represented as completed Tier 1 work.
 
 Phase 19 promotes WP5 from the
 [Phase 18 cross-validation guide](../analysis/kda_phase_18/phase18_key_driver_cross_validation_guide.md)
@@ -281,8 +284,9 @@ phase.
 |---|---|
 | `config/phase19_genetic_support.yml` | Freeze the input identities, complete 25-gene scope, source registry, phenotype/context hierarchy, thresholds, priors, routes, output schemas, paths, and analysis version. |
 | `config/phase19_local_production_execution.yml` | Define the 24-GB local production-equivalent resource profile, one-at-a-time custom colocalization, scratch paths, and hardware safety gates. |
-| `scripts/19_run_genetic_support.R` | Validate inputs, construct manifests/loci, extract evidence, harmonize optional regional data, run colocalization, grade evidence, make figures, and publish the validated bundle. |
-| `tests/test_phase19_genetic_support.R` | Unit, synthetic, integration, harmonization, grading, assessability, and output-only validation tests. |
+| `requirements/phase19_genetic_support.txt` | Pin the Python packages used by the Tier 1 public-summary workflow. |
+| `scripts/19_run_genetic_support.py` | Validate inputs, construct manifests/loci, extract Tier 1 evidence, grade assessability, make figures, and publish the validated bundle. |
+| `tests/test_phase19_genetic_support.py` | Unit and end-to-end tests for scope, grading, assessability, H0-H4 safeguards, output counts, and artifact hashes. |
 
 No separate hand-edited candidate TSV will be added to source control. The
 script constructs it from the hash-frozen Phase 18 file, and the tests verify
@@ -295,13 +299,13 @@ the expected keys and counts.
 | `scripts/run_pipeline.R` | Git-tracked | Register and dispatch the global `genetic_support` task, resolve the Phase 19 config path, and accept `local_production_equivalent` as a validated execution stage. |
 | `config/minerva_shared.yml` | Git-tracked | Add the Phase 19 config path, external-data root, and `genetic_support` to allowed production task modes. |
 | `config/local_pilot.yml` | Workstation-only; ignored by Git | Add the Phase 19 config path and permit the nonfinal local pilot task. |
-| `renv.lock` | Git-tracked | Pin `coloc` and `susieR` plus any newly required transitive dependencies before candidate effects are examined. |
+| `renv.lock` | Git-tracked | No Tier 1 change. Pin `coloc` and `susieR` only if Tier 2 custom colocalization is authorized and implemented. |
 | `.gitignore` | Git-tracked | Add an explicit ignore rule for `data/reference/phase19_genetic_support/` and permit the validated Phase 19 production result directory while continuing to ignore local pilot output. |
 
-The lockfile change is part of implementation, even if the first production
-pass uses only precomputed colocalization. This ensures that the prespecified
-custom sensitivity route is tested and reproducible before results are
-reviewed.
+Tier 1 uses the version-pinned Python summary workflow. It does not install or
+run `coloc`/`susieR`, because the public snapshot does not contain the regional
+summary inputs required for a valid custom analysis. Those dependencies and
+the prior-sensitivity route remain a separate Tier 2 implementation decision.
 
 ### Files deleted
 
@@ -353,8 +357,8 @@ and logs remain in scratch and are not copied into the final bundle.
 task_mode: genetic_support
 scope: global
 stable_task_id: global:genetic_support
-output_schema: human_genetic_support_v1
-scientific_script: scripts/19_run_genetic_support.R
+output_schema: human_genetic_support_tier1_v1
+scientific_script: scripts/19_run_genetic_support.py
 upstream_file_contract: Phase 18 key-driver selection v2
 default_execution_stage: local_production_equivalent
 fallback_execution_stage: minerva_production
@@ -612,7 +616,7 @@ candidate-specific evidence is reviewed.
    `p12 = 5e-6`;
 7. freeze sensitivity values `p12 = 1e-6, 5e-6, 1e-5`;
 8. freeze paths, schemas, output names, numeric tolerances, and plot rules;
-9. add and pin `coloc` and `susieR`; and
+9. pin the Tier 1 Python dependencies; defer `coloc` and `susieR` to Tier 2; and
 10. set `definitions_frozen = TRUE` only after all fields validate and none is
    `TBD`.
 
@@ -1234,7 +1238,7 @@ Production must not begin until:
 
 - [ ] this plan is approved;
 - [ ] all source-controlled implementation files exist;
-- [ ] `renv.lock` includes the approved colocalization software;
+- [ ] if Tier 2 is authorized, `renv.lock` includes the approved colocalization software;
 - [ ] the Phase 18 source hashes and 47/25 counts validate;
 - [ ] the full-manifest local pilot passes every blocking test;
 - [ ] exact Tier 1 source child IDs, versions, sizes, and checksums are frozen;

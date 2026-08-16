@@ -1,0 +1,74 @@
+schema_version: phase19_genetic_support_config_v1
+
+analysis:
+  analysis_id: phase19_human_genetic_support_tier1_v1
+  tier: 1
+  genome_build: GRCh38
+  scope_rule: top5_display_TRUE_unique_key_driver_broad_network_case_id
+  expected_candidate_contexts: 47
+  expected_unique_genes: 25
+  locus_window_bp: 1000000
+  public_snapshot_date: "2026-08-16"
+  frozen_before_effect_review: true
+
+inputs:
+  phase18_returns: results/minerva_production/18_key_driver_selection/call_key_driver_returns.tsv
+  phase18_returns_sha256: b917f70e6edcdf030f63e88ba8fbc5b22b80714599c12c80ea449e8c38bd51d8
+  phase18_config: config/phase18_key_driver_selection.yml
+  phase18_config_sha256: d1979ef4b66d1e841633a2f235419147fa130da140d20b40c2d84b99cd90ae4f
+  gencode_gtf: data/reference/gencode/gencode.v44.basic.annotation.gtf.gz
+  gencode_gtf_sha256: 3e52f82c63f8fd860bf632ccde10441c05751f4c342ad08c0a98e9e2700171a5
+  hgnc_complete_set: data/reference/hgnc/hgnc_complete_set_2026-06-05.txt
+  hgnc_complete_set_sha256: f3051e4aa6fac82166e1c26638d0077a95b0f66ab62a03e18bb35eb613e40a90
+  external_root: data/reference/phase19_genetic_support
+  source_downloads: data/reference/phase19_genetic_support/source_downloads
+  unified_workbook: data/reference/phase19_genetic_support/source_downloads/unified_AD_loci_xQTL_summary.xlsx
+  variant_table: data/reference/phase19_genetic_support/source_downloads/AD_loci_unified_cs95orColocs_Pval1e5_variant_level.csv.gz
+  gvc_xqtl_gene_table: data/reference/phase19_genetic_support/source_downloads/AD_genes_FunGen_AD_GVC_xQTL_20250325.tsv
+  twas_gvc_xqtl_gene_table: data/reference/phase19_genetic_support/source_downloads/AD_genes_FunGen_AD_twas_GVC_xQTL_20250325.tsv
+  context_metadata: data/reference/phase19_genetic_support/source_downloads/context_meta.tsv
+  source_structure: data/reference/phase19_genetic_support/source_downloads/statfungen_synapse_staging_folder_structure.yml
+
+source_release:
+  name: FunGen-xQTL AD resource public GitHub snapshot
+  repository: https://github.com/statfungen/xqtl-resources
+  commit: f6f63fc319a417213cf1e86ec0eb14fcb53d2427
+  commit_date: "2026-07-29"
+  documentation: https://statfungen.github.io/xqtl-resources/xqtl_resource_description/
+  richer_synapse_parent: syn69696846
+  access_note: Public GitHub tables are sufficient for Tier 1 screening; classical H0-H4 posteriors and regional custom-colocalization inputs were not present in this snapshot.
+
+source_sha256:
+  unified_AD_loci_xQTL_summary.xlsx: e3cb20c0c55502644db47337ea8f7bb0367267b819bc01c6327833071b5ed3c5
+  AD_loci_unified_cs95orColocs_Pval1e5_variant_level.csv.gz: c4c052cbc5e500b6f9b4d0e5f31a38fa15463dc95df9b6e27421c01d4467f6e1
+  AD_genes_FunGen_AD_GVC_xQTL_20250325.tsv: 6a3be610740af996e0427cfe7bc99fbfef7f0f7530f1f90b8c83e2530695fd5f
+  AD_genes_FunGen_AD_twas_GVC_xQTL_20250325.tsv: f522d042e928a8181f97e1a48862f7d0548edca28b65f64a47bd6e88db61f1e4
+  context_meta.tsv: e0c5e5eea791c848a4989c2d8d98cd391b6b0451978b7de2d4e4d1b3c00faf3e
+  statfungen_synapse_staging_folder_structure.yml: 146f429fa32e53d678210e7456681f968e9845201e1d90fbbd8d489f62d137b8
+
+context_mapping:
+  Astrocytes: Ast
+  Excitatory_neurons: Exc
+  Inhibitory_neurons: Inh
+  Microglia: Mic
+  OPCs: OPC
+  Oligodendrocytes: Oli
+  Vasculature_cells: Brain
+
+grading:
+  strong:
+    rule: genome_wide_AD_signal_and_direct_candidate_mapping_with_high_inclusion_or_coding_variant
+  moderate:
+    rule: direct_candidate_mapping_with_replication_or_strong_precomputed_functional_support
+  weak:
+    rule: direct_candidate_mapping_but_sub_genome_wide_or_single_filtered_functional_route
+  none_found:
+    rule: registered_source_was_adequate_for_route_and_no_candidate_mapping_was_reported
+  not_assessable:
+    rule: required data_or_statistics_absent_from_public_tier1_snapshot
+
+outputs:
+  root: results/minerva_production/19_genetic_support
+  schema: human_genetic_support_tier1_v1
+  exact_file_count: 23
+

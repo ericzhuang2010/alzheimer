@@ -1,0 +1,9 @@
+schema_version	stage_order	stage	status	dependencies	detail
+human_genetic_support_tier1_v1	1	freeze_scope	complete		47 contexts/25 genes reconstructed from Phase 18
+human_genetic_support_tier1_v1	2	validate_sources	complete	freeze_scope	All checksums matched
+human_genetic_support_tier1_v1	3	map_loci	complete	validate_sources	25 GRCh38 gene loci
+human_genetic_support_tier1_v1	4	screen_common_variants	complete	map_loci	Regional and direct target entries extracted
+human_genetic_support_tier1_v1	5	screen_colocalization	complete_with_tier1_limit	screen_common_variants	Precomputed inclusion/confidence only; H0-H4 unavailable
+human_genetic_support_tier1_v1	6	screen_rare_and_mtdna	complete_with_tier1_limit	validate_sources	Presence/assessability screen; inferential tables absent
+human_genetic_support_tier1_v1	7	grade_and_plot	complete	screen_colocalization,screen_rare_and_mtdna	All 47 units assigned a terminal Tier 1 grade
+human_genetic_support_tier1_v1	8	validate_bundle	complete	grade_and_plot	Exactly 23 declared files

@@ -8,6 +8,7 @@ project:
   phase13_respiratory_modifier_config: config/phase13_respiratory_modifier.yml
   phase14_modifier_heterogeneity_config: config/phase14_modifier_heterogeneity.yml
   phase15_mitonuclear_coupling_config: config/phase15_mitonuclear_coupling.yml
+  phase19_genetic_support_config: config/phase19_genetic_support.yml
   manifest: config/minerva_rds_manifest.tsv
 
 inputs:
@@ -53,3 +54,4 @@ scope:
     - respiratory_modifier
     - modifier_heterogeneity
     - mitonuclear_coupling
+    - genetic_support

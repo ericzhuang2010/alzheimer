@@ -1,0 +1,189 @@
+schema_version	candidate_id	gene	broad_network	case_id	route	status	reason
+human_genetic_support_tier1_v1	GS001	ANKRD11	OPCs	non_mt_driver	common_variant	none_found	no direct entry in filtered summary
+human_genetic_support_tier1_v1	GS001	ANKRD11	OPCs	non_mt_driver	colocalization	not_assessable	classical H0-H4 absent
+human_genetic_support_tier1_v1	GS001	ANKRD11	OPCs	non_mt_driver	rare_variant	not_assessable	full gene burden table absent
+human_genetic_support_tier1_v1	GS001	ANKRD11	OPCs	non_mt_driver	mtdna	not_applicable	nuclear gene
+human_genetic_support_tier1_v1	GS002	APOE	Astrocytes	non_mt_driver	common_variant	positive	direct candidate entry
+human_genetic_support_tier1_v1	GS002	APOE	Astrocytes	non_mt_driver	colocalization	positive_limited	precomputed filtered result; no H0-H4
+human_genetic_support_tier1_v1	GS002	APOE	Astrocytes	non_mt_driver	rare_variant	ambiguous_reported	GVC membership without test statistics
+human_genetic_support_tier1_v1	GS002	APOE	Astrocytes	non_mt_driver	mtdna	not_applicable	nuclear gene
+human_genetic_support_tier1_v1	GS003	ATP6V1F	Inhibitory_neurons	non_mt_driver	common_variant	none_found	no direct entry in filtered summary
+human_genetic_support_tier1_v1	GS003	ATP6V1F	Inhibitory_neurons	non_mt_driver	colocalization	not_assessable	classical H0-H4 absent
+human_genetic_support_tier1_v1	GS003	ATP6V1F	Inhibitory_neurons	non_mt_driver	rare_variant	not_assessable	full gene burden table absent
+human_genetic_support_tier1_v1	GS003	ATP6V1F	Inhibitory_neurons	non_mt_driver	mtdna	not_applicable	nuclear gene
+human_genetic_support_tier1_v1	GS004	COX4I1	Astrocytes	mt_driver	common_variant	none_found	no direct entry in filtered summary
+human_genetic_support_tier1_v1	GS004	COX4I1	Astrocytes	mt_driver	colocalization	not_assessable	classical H0-H4 absent
+human_genetic_support_tier1_v1	GS004	COX4I1	Astrocytes	mt_driver	rare_variant	not_assessable	full gene burden table absent
+human_genetic_support_tier1_v1	GS004	COX4I1	Astrocytes	mt_driver	mtdna	not_applicable	nuclear gene
+human_genetic_support_tier1_v1	GS005	COX4I1	Excitatory_neurons	mt_driver	common_variant	none_found	no direct entry in filtered summary
+human_genetic_support_tier1_v1	GS005	COX4I1	Excitatory_neurons	mt_driver	colocalization	not_assessable	classical H0-H4 absent
+human_genetic_support_tier1_v1	GS005	COX4I1	Excitatory_neurons	mt_driver	rare_variant	not_assessable	full gene burden table absent
+human_genetic_support_tier1_v1	GS005	COX4I1	Excitatory_neurons	mt_driver	mtdna	not_applicable	nuclear gene
+human_genetic_support_tier1_v1	GS006	COX6B1	Excitatory_neurons	mt_driver	common_variant	none_found	no direct entry in filtered summary
+human_genetic_support_tier1_v1	GS006	COX6B1	Excitatory_neurons	mt_driver	colocalization	not_assessable	classical H0-H4 absent
+human_genetic_support_tier1_v1	GS006	COX6B1	Excitatory_neurons	mt_driver	rare_variant	not_assessable	full gene burden table absent
+human_genetic_support_tier1_v1	GS006	COX6B1	Excitatory_neurons	mt_driver	mtdna	not_applicable	nuclear gene
+human_genetic_support_tier1_v1	GS007	COX7C	Astrocytes	mt_driver	common_variant	positive	direct candidate entry
+human_genetic_support_tier1_v1	GS007	COX7C	Astrocytes	mt_driver	colocalization	positive_limited	precomputed filtered result; no H0-H4
+human_genetic_support_tier1_v1	GS007	COX7C	Astrocytes	mt_driver	rare_variant	not_assessable	full gene burden table absent
+human_genetic_support_tier1_v1	GS007	COX7C	Astrocytes	mt_driver	mtdna	not_applicable	nuclear gene
+human_genetic_support_tier1_v1	GS008	COX7C	Inhibitory_neurons	mt_driver	common_variant	positive	direct candidate entry
+human_genetic_support_tier1_v1	GS008	COX7C	Inhibitory_neurons	mt_driver	colocalization	positive_limited	precomputed filtered result; no H0-H4
+human_genetic_support_tier1_v1	GS008	COX7C	Inhibitory_neurons	mt_driver	rare_variant	not_assessable	full gene burden table absent
+human_genetic_support_tier1_v1	GS008	COX7C	Inhibitory_neurons	mt_driver	mtdna	not_applicable	nuclear gene
+human_genetic_support_tier1_v1	GS009	DYNLT1	Excitatory_neurons	non_mt_driver	common_variant	none_found	no direct entry in filtered summary
+human_genetic_support_tier1_v1	GS009	DYNLT1	Excitatory_neurons	non_mt_driver	colocalization	not_assessable	classical H0-H4 absent
+human_genetic_support_tier1_v1	GS009	DYNLT1	Excitatory_neurons	non_mt_driver	rare_variant	not_assessable	full gene burden table absent
+human_genetic_support_tier1_v1	GS009	DYNLT1	Excitatory_neurons	non_mt_driver	mtdna	not_applicable	nuclear gene
+human_genetic_support_tier1_v1	GS010	FTL	OPCs	non_mt_driver	common_variant	none_found	no direct entry in filtered summary
+human_genetic_support_tier1_v1	GS010	FTL	OPCs	non_mt_driver	colocalization	not_assessable	classical H0-H4 absent
+human_genetic_support_tier1_v1	GS010	FTL	OPCs	non_mt_driver	rare_variant	not_assessable	full gene burden table absent
+human_genetic_support_tier1_v1	GS010	FTL	OPCs	non_mt_driver	mtdna	not_applicable	nuclear gene
+human_genetic_support_tier1_v1	GS011	LAMTOR5	Excitatory_neurons	non_mt_driver	common_variant	none_found	no direct entry in filtered summary
+human_genetic_support_tier1_v1	GS011	LAMTOR5	Excitatory_neurons	non_mt_driver	colocalization	not_assessable	classical H0-H4 absent
+human_genetic_support_tier1_v1	GS011	LAMTOR5	Excitatory_neurons	non_mt_driver	rare_variant	not_assessable	full gene burden table absent
+human_genetic_support_tier1_v1	GS011	LAMTOR5	Excitatory_neurons	non_mt_driver	mtdna	not_applicable	nuclear gene
+human_genetic_support_tier1_v1	GS012	LAMTOR5	Inhibitory_neurons	non_mt_driver	common_variant	none_found	no direct entry in filtered summary
+human_genetic_support_tier1_v1	GS012	LAMTOR5	Inhibitory_neurons	non_mt_driver	colocalization	not_assessable	classical H0-H4 absent
+human_genetic_support_tier1_v1	GS012	LAMTOR5	Inhibitory_neurons	non_mt_driver	rare_variant	not_assessable	full gene burden table absent
+human_genetic_support_tier1_v1	GS012	LAMTOR5	Inhibitory_neurons	non_mt_driver	mtdna	not_applicable	nuclear gene
+human_genetic_support_tier1_v1	GS013	LAPTM4A	Astrocytes	non_mt_driver	common_variant	none_found	no direct entry in filtered summary
+human_genetic_support_tier1_v1	GS013	LAPTM4A	Astrocytes	non_mt_driver	colocalization	not_assessable	classical H0-H4 absent
+human_genetic_support_tier1_v1	GS013	LAPTM4A	Astrocytes	non_mt_driver	rare_variant	not_assessable	full gene burden table absent
+human_genetic_support_tier1_v1	GS013	LAPTM4A	Astrocytes	non_mt_driver	mtdna	not_applicable	nuclear gene
+human_genetic_support_tier1_v1	GS014	MT-ATP6	Astrocytes	mt_driver	common_variant	not_assessable	nuclear source excludes mtDNA
+human_genetic_support_tier1_v1	GS014	MT-ATP6	Astrocytes	mt_driver	colocalization	not_assessable	classical H0-H4 absent
+human_genetic_support_tier1_v1	GS014	MT-ATP6	Astrocytes	mt_driver	rare_variant	not_applicable	nuclear route
+human_genetic_support_tier1_v1	GS014	MT-ATP6	Astrocytes	mt_driver	mtdna	not_assessable	mtDNA-specific association source absent
+human_genetic_support_tier1_v1	GS015	MT-ATP6	Vasculature_cells	mt_driver	common_variant	not_assessable	nuclear source excludes mtDNA
+human_genetic_support_tier1_v1	GS015	MT-ATP6	Vasculature_cells	mt_driver	colocalization	not_assessable	classical H0-H4 absent
+human_genetic_support_tier1_v1	GS015	MT-ATP6	Vasculature_cells	mt_driver	rare_variant	not_applicable	nuclear route
+human_genetic_support_tier1_v1	GS015	MT-ATP6	Vasculature_cells	mt_driver	mtdna	not_assessable	mtDNA-specific association source absent
+human_genetic_support_tier1_v1	GS016	MT-CO2	Astrocytes	mt_driver	common_variant	not_assessable	nuclear source excludes mtDNA
+human_genetic_support_tier1_v1	GS016	MT-CO2	Astrocytes	mt_driver	colocalization	not_assessable	classical H0-H4 absent
+human_genetic_support_tier1_v1	GS016	MT-CO2	Astrocytes	mt_driver	rare_variant	not_applicable	nuclear route
+human_genetic_support_tier1_v1	GS016	MT-CO2	Astrocytes	mt_driver	mtdna	not_assessable	mtDNA-specific association source absent
+human_genetic_support_tier1_v1	GS017	MT-CO2	Excitatory_neurons	mt_driver	common_variant	not_assessable	nuclear source excludes mtDNA
+human_genetic_support_tier1_v1	GS017	MT-CO2	Excitatory_neurons	mt_driver	colocalization	not_assessable	classical H0-H4 absent
+human_genetic_support_tier1_v1	GS017	MT-CO2	Excitatory_neurons	mt_driver	rare_variant	not_applicable	nuclear route
+human_genetic_support_tier1_v1	GS017	MT-CO2	Excitatory_neurons	mt_driver	mtdna	not_assessable	mtDNA-specific association source absent
+human_genetic_support_tier1_v1	GS018	MT-CO2	Inhibitory_neurons	mt_driver	common_variant	not_assessable	nuclear source excludes mtDNA
+human_genetic_support_tier1_v1	GS018	MT-CO2	Inhibitory_neurons	mt_driver	colocalization	not_assessable	classical H0-H4 absent
+human_genetic_support_tier1_v1	GS018	MT-CO2	Inhibitory_neurons	mt_driver	rare_variant	not_applicable	nuclear route
+human_genetic_support_tier1_v1	GS018	MT-CO2	Inhibitory_neurons	mt_driver	mtdna	not_assessable	mtDNA-specific association source absent
+human_genetic_support_tier1_v1	GS019	MT-CO2	Microglia	mt_driver	common_variant	not_assessable	nuclear source excludes mtDNA
+human_genetic_support_tier1_v1	GS019	MT-CO2	Microglia	mt_driver	colocalization	not_assessable	classical H0-H4 absent
+human_genetic_support_tier1_v1	GS019	MT-CO2	Microglia	mt_driver	rare_variant	not_applicable	nuclear route
+human_genetic_support_tier1_v1	GS019	MT-CO2	Microglia	mt_driver	mtdna	not_assessable	mtDNA-specific association source absent
+human_genetic_support_tier1_v1	GS020	MT-CO2	OPCs	mt_driver	common_variant	not_assessable	nuclear source excludes mtDNA
+human_genetic_support_tier1_v1	GS020	MT-CO2	OPCs	mt_driver	colocalization	not_assessable	classical H0-H4 absent
+human_genetic_support_tier1_v1	GS020	MT-CO2	OPCs	mt_driver	rare_variant	not_applicable	nuclear route
+human_genetic_support_tier1_v1	GS020	MT-CO2	OPCs	mt_driver	mtdna	not_assessable	mtDNA-specific association source absent
+human_genetic_support_tier1_v1	GS021	MT-CO2	Oligodendrocytes	mt_driver	common_variant	not_assessable	nuclear source excludes mtDNA
+human_genetic_support_tier1_v1	GS021	MT-CO2	Oligodendrocytes	mt_driver	colocalization	not_assessable	classical H0-H4 absent
+human_genetic_support_tier1_v1	GS021	MT-CO2	Oligodendrocytes	mt_driver	rare_variant	not_applicable	nuclear route
+human_genetic_support_tier1_v1	GS021	MT-CO2	Oligodendrocytes	mt_driver	mtdna	not_assessable	mtDNA-specific association source absent
+human_genetic_support_tier1_v1	GS022	MT-CO2	Vasculature_cells	mt_driver	common_variant	not_assessable	nuclear source excludes mtDNA
+human_genetic_support_tier1_v1	GS022	MT-CO2	Vasculature_cells	mt_driver	colocalization	not_assessable	classical H0-H4 absent
+human_genetic_support_tier1_v1	GS022	MT-CO2	Vasculature_cells	mt_driver	rare_variant	not_applicable	nuclear route
+human_genetic_support_tier1_v1	GS022	MT-CO2	Vasculature_cells	mt_driver	mtdna	not_assessable	mtDNA-specific association source absent
+human_genetic_support_tier1_v1	GS023	MT-CO3	Astrocytes	mt_driver	common_variant	not_assessable	nuclear source excludes mtDNA
+human_genetic_support_tier1_v1	GS023	MT-CO3	Astrocytes	mt_driver	colocalization	not_assessable	classical H0-H4 absent
+human_genetic_support_tier1_v1	GS023	MT-CO3	Astrocytes	mt_driver	rare_variant	not_applicable	nuclear route
+human_genetic_support_tier1_v1	GS023	MT-CO3	Astrocytes	mt_driver	mtdna	not_assessable	mtDNA-specific association source absent
+human_genetic_support_tier1_v1	GS024	MT-CO3	Inhibitory_neurons	mt_driver	common_variant	not_assessable	nuclear source excludes mtDNA
+human_genetic_support_tier1_v1	GS024	MT-CO3	Inhibitory_neurons	mt_driver	colocalization	not_assessable	classical H0-H4 absent
+human_genetic_support_tier1_v1	GS024	MT-CO3	Inhibitory_neurons	mt_driver	rare_variant	not_applicable	nuclear route
+human_genetic_support_tier1_v1	GS024	MT-CO3	Inhibitory_neurons	mt_driver	mtdna	not_assessable	mtDNA-specific association source absent
+human_genetic_support_tier1_v1	GS025	MT-CO3	OPCs	mt_driver	common_variant	not_assessable	nuclear source excludes mtDNA
+human_genetic_support_tier1_v1	GS025	MT-CO3	OPCs	mt_driver	colocalization	not_assessable	classical H0-H4 absent
+human_genetic_support_tier1_v1	GS025	MT-CO3	OPCs	mt_driver	rare_variant	not_applicable	nuclear route
+human_genetic_support_tier1_v1	GS025	MT-CO3	OPCs	mt_driver	mtdna	not_assessable	mtDNA-specific association source absent
+human_genetic_support_tier1_v1	GS026	MT-CO3	Vasculature_cells	mt_driver	common_variant	not_assessable	nuclear source excludes mtDNA
+human_genetic_support_tier1_v1	GS026	MT-CO3	Vasculature_cells	mt_driver	colocalization	not_assessable	classical H0-H4 absent
+human_genetic_support_tier1_v1	GS026	MT-CO3	Vasculature_cells	mt_driver	rare_variant	not_applicable	nuclear route
+human_genetic_support_tier1_v1	GS026	MT-CO3	Vasculature_cells	mt_driver	mtdna	not_assessable	mtDNA-specific association source absent
+human_genetic_support_tier1_v1	GS027	MT-CYB	Excitatory_neurons	mt_driver	common_variant	not_assessable	nuclear source excludes mtDNA
+human_genetic_support_tier1_v1	GS027	MT-CYB	Excitatory_neurons	mt_driver	colocalization	not_assessable	classical H0-H4 absent
+human_genetic_support_tier1_v1	GS027	MT-CYB	Excitatory_neurons	mt_driver	rare_variant	not_applicable	nuclear route
+human_genetic_support_tier1_v1	GS027	MT-CYB	Excitatory_neurons	mt_driver	mtdna	not_assessable	mtDNA-specific association source absent
+human_genetic_support_tier1_v1	GS028	MT-CYB	Inhibitory_neurons	mt_driver	common_variant	not_assessable	nuclear source excludes mtDNA
+human_genetic_support_tier1_v1	GS028	MT-CYB	Inhibitory_neurons	mt_driver	colocalization	not_assessable	classical H0-H4 absent
+human_genetic_support_tier1_v1	GS028	MT-CYB	Inhibitory_neurons	mt_driver	rare_variant	not_applicable	nuclear route
+human_genetic_support_tier1_v1	GS028	MT-CYB	Inhibitory_neurons	mt_driver	mtdna	not_assessable	mtDNA-specific association source absent
+human_genetic_support_tier1_v1	GS029	MT-ND4	Microglia	mt_driver	common_variant	not_assessable	nuclear source excludes mtDNA
+human_genetic_support_tier1_v1	GS029	MT-ND4	Microglia	mt_driver	colocalization	not_assessable	classical H0-H4 absent
+human_genetic_support_tier1_v1	GS029	MT-ND4	Microglia	mt_driver	rare_variant	not_applicable	nuclear route
+human_genetic_support_tier1_v1	GS029	MT-ND4	Microglia	mt_driver	mtdna	not_assessable	mtDNA-specific association source absent
+human_genetic_support_tier1_v1	GS030	MT-ND4	OPCs	mt_driver	common_variant	not_assessable	nuclear source excludes mtDNA
+human_genetic_support_tier1_v1	GS030	MT-ND4	OPCs	mt_driver	colocalization	not_assessable	classical H0-H4 absent
+human_genetic_support_tier1_v1	GS030	MT-ND4	OPCs	mt_driver	rare_variant	not_applicable	nuclear route
+human_genetic_support_tier1_v1	GS030	MT-ND4	OPCs	mt_driver	mtdna	not_assessable	mtDNA-specific association source absent
+human_genetic_support_tier1_v1	GS031	MT-ND4	Oligodendrocytes	mt_driver	common_variant	not_assessable	nuclear source excludes mtDNA
+human_genetic_support_tier1_v1	GS031	MT-ND4	Oligodendrocytes	mt_driver	colocalization	not_assessable	classical H0-H4 absent
+human_genetic_support_tier1_v1	GS031	MT-ND4	Oligodendrocytes	mt_driver	rare_variant	not_applicable	nuclear route
+human_genetic_support_tier1_v1	GS031	MT-ND4	Oligodendrocytes	mt_driver	mtdna	not_assessable	mtDNA-specific association source absent
+human_genetic_support_tier1_v1	GS032	MT-ND4	Vasculature_cells	mt_driver	common_variant	not_assessable	nuclear source excludes mtDNA
+human_genetic_support_tier1_v1	GS032	MT-ND4	Vasculature_cells	mt_driver	colocalization	not_assessable	classical H0-H4 absent
+human_genetic_support_tier1_v1	GS032	MT-ND4	Vasculature_cells	mt_driver	rare_variant	not_applicable	nuclear route
+human_genetic_support_tier1_v1	GS032	MT-ND4	Vasculature_cells	mt_driver	mtdna	not_assessable	mtDNA-specific association source absent
+human_genetic_support_tier1_v1	GS033	MT-ND5	Inhibitory_neurons	mt_driver	common_variant	not_assessable	nuclear source excludes mtDNA
+human_genetic_support_tier1_v1	GS033	MT-ND5	Inhibitory_neurons	mt_driver	colocalization	not_assessable	classical H0-H4 absent
+human_genetic_support_tier1_v1	GS033	MT-ND5	Inhibitory_neurons	mt_driver	rare_variant	not_applicable	nuclear route
+human_genetic_support_tier1_v1	GS033	MT-ND5	Inhibitory_neurons	mt_driver	mtdna	not_assessable	mtDNA-specific association source absent
+human_genetic_support_tier1_v1	GS034	NCOA1	OPCs	non_mt_driver	common_variant	none_found	no direct entry in filtered summary
+human_genetic_support_tier1_v1	GS034	NCOA1	OPCs	non_mt_driver	colocalization	not_assessable	classical H0-H4 absent
+human_genetic_support_tier1_v1	GS034	NCOA1	OPCs	non_mt_driver	rare_variant	not_assessable	full gene burden table absent
+human_genetic_support_tier1_v1	GS034	NCOA1	OPCs	non_mt_driver	mtdna	not_applicable	nuclear gene
+human_genetic_support_tier1_v1	GS035	RPL11	Astrocytes	non_mt_driver	common_variant	none_found	no direct entry in filtered summary
+human_genetic_support_tier1_v1	GS035	RPL11	Astrocytes	non_mt_driver	colocalization	not_assessable	classical H0-H4 absent
+human_genetic_support_tier1_v1	GS035	RPL11	Astrocytes	non_mt_driver	rare_variant	not_assessable	full gene burden table absent
+human_genetic_support_tier1_v1	GS035	RPL11	Astrocytes	non_mt_driver	mtdna	not_applicable	nuclear gene
+human_genetic_support_tier1_v1	GS036	RPL11	Excitatory_neurons	non_mt_driver	common_variant	none_found	no direct entry in filtered summary
+human_genetic_support_tier1_v1	GS036	RPL11	Excitatory_neurons	non_mt_driver	colocalization	not_assessable	classical H0-H4 absent
+human_genetic_support_tier1_v1	GS036	RPL11	Excitatory_neurons	non_mt_driver	rare_variant	not_assessable	full gene burden table absent
+human_genetic_support_tier1_v1	GS036	RPL11	Excitatory_neurons	non_mt_driver	mtdna	not_applicable	nuclear gene
+human_genetic_support_tier1_v1	GS037	RPL11	Microglia	non_mt_driver	common_variant	none_found	no direct entry in filtered summary
+human_genetic_support_tier1_v1	GS037	RPL11	Microglia	non_mt_driver	colocalization	not_assessable	classical H0-H4 absent
+human_genetic_support_tier1_v1	GS037	RPL11	Microglia	non_mt_driver	rare_variant	not_assessable	full gene burden table absent
+human_genetic_support_tier1_v1	GS037	RPL11	Microglia	non_mt_driver	mtdna	not_applicable	nuclear gene
+human_genetic_support_tier1_v1	GS038	RPL11	Oligodendrocytes	non_mt_driver	common_variant	none_found	no direct entry in filtered summary
+human_genetic_support_tier1_v1	GS038	RPL11	Oligodendrocytes	non_mt_driver	colocalization	not_assessable	classical H0-H4 absent
+human_genetic_support_tier1_v1	GS038	RPL11	Oligodendrocytes	non_mt_driver	rare_variant	not_assessable	full gene burden table absent
+human_genetic_support_tier1_v1	GS038	RPL11	Oligodendrocytes	non_mt_driver	mtdna	not_applicable	nuclear gene
+human_genetic_support_tier1_v1	GS039	RPL15	Astrocytes	non_mt_driver	common_variant	none_found	no direct entry in filtered summary
+human_genetic_support_tier1_v1	GS039	RPL15	Astrocytes	non_mt_driver	colocalization	not_assessable	classical H0-H4 absent
+human_genetic_support_tier1_v1	GS039	RPL15	Astrocytes	non_mt_driver	rare_variant	not_assessable	full gene burden table absent
+human_genetic_support_tier1_v1	GS039	RPL15	Astrocytes	non_mt_driver	mtdna	not_applicable	nuclear gene
+human_genetic_support_tier1_v1	GS040	RPL38	Inhibitory_neurons	non_mt_driver	common_variant	none_found	no direct entry in filtered summary
+human_genetic_support_tier1_v1	GS040	RPL38	Inhibitory_neurons	non_mt_driver	colocalization	not_assessable	classical H0-H4 absent
+human_genetic_support_tier1_v1	GS040	RPL38	Inhibitory_neurons	non_mt_driver	rare_variant	not_assessable	full gene burden table absent
+human_genetic_support_tier1_v1	GS040	RPL38	Inhibitory_neurons	non_mt_driver	mtdna	not_applicable	nuclear gene
+human_genetic_support_tier1_v1	GS041	RPLP1	Astrocytes	non_mt_driver	common_variant	none_found	no direct entry in filtered summary
+human_genetic_support_tier1_v1	GS041	RPLP1	Astrocytes	non_mt_driver	colocalization	not_assessable	classical H0-H4 absent
+human_genetic_support_tier1_v1	GS041	RPLP1	Astrocytes	non_mt_driver	rare_variant	not_assessable	full gene burden table absent
+human_genetic_support_tier1_v1	GS041	RPLP1	Astrocytes	non_mt_driver	mtdna	not_applicable	nuclear gene
+human_genetic_support_tier1_v1	GS042	RPLP1	Inhibitory_neurons	non_mt_driver	common_variant	none_found	no direct entry in filtered summary
+human_genetic_support_tier1_v1	GS042	RPLP1	Inhibitory_neurons	non_mt_driver	colocalization	not_assessable	classical H0-H4 absent
+human_genetic_support_tier1_v1	GS042	RPLP1	Inhibitory_neurons	non_mt_driver	rare_variant	not_assessable	full gene burden table absent
+human_genetic_support_tier1_v1	GS042	RPLP1	Inhibitory_neurons	non_mt_driver	mtdna	not_applicable	nuclear gene
+human_genetic_support_tier1_v1	GS043	RPS13	Excitatory_neurons	non_mt_driver	common_variant	none_found	no direct entry in filtered summary
+human_genetic_support_tier1_v1	GS043	RPS13	Excitatory_neurons	non_mt_driver	colocalization	not_assessable	classical H0-H4 absent
+human_genetic_support_tier1_v1	GS043	RPS13	Excitatory_neurons	non_mt_driver	rare_variant	not_assessable	full gene burden table absent
+human_genetic_support_tier1_v1	GS043	RPS13	Excitatory_neurons	non_mt_driver	mtdna	not_applicable	nuclear gene
+human_genetic_support_tier1_v1	GS044	RPS15	Inhibitory_neurons	non_mt_driver	common_variant	none_found	no direct entry in filtered summary
+human_genetic_support_tier1_v1	GS044	RPS15	Inhibitory_neurons	non_mt_driver	colocalization	not_assessable	classical H0-H4 absent
+human_genetic_support_tier1_v1	GS044	RPS15	Inhibitory_neurons	non_mt_driver	rare_variant	not_assessable	full gene burden table absent
+human_genetic_support_tier1_v1	GS044	RPS15	Inhibitory_neurons	non_mt_driver	mtdna	not_applicable	nuclear gene
+human_genetic_support_tier1_v1	GS045	RPS15	OPCs	non_mt_driver	common_variant	none_found	no direct entry in filtered summary
+human_genetic_support_tier1_v1	GS045	RPS15	OPCs	non_mt_driver	colocalization	not_assessable	classical H0-H4 absent
+human_genetic_support_tier1_v1	GS045	RPS15	OPCs	non_mt_driver	rare_variant	not_assessable	full gene burden table absent
+human_genetic_support_tier1_v1	GS045	RPS15	OPCs	non_mt_driver	mtdna	not_applicable	nuclear gene
+human_genetic_support_tier1_v1	GS046	SELENOW	Excitatory_neurons	non_mt_driver	common_variant	positive	direct candidate entry
+human_genetic_support_tier1_v1	GS046	SELENOW	Excitatory_neurons	non_mt_driver	colocalization	not_assessable	classical H0-H4 absent
+human_genetic_support_tier1_v1	GS046	SELENOW	Excitatory_neurons	non_mt_driver	rare_variant	not_assessable	full gene burden table absent
+human_genetic_support_tier1_v1	GS046	SELENOW	Excitatory_neurons	non_mt_driver	mtdna	not_applicable	nuclear gene
+human_genetic_support_tier1_v1	GS047	UQCR10	Excitatory_neurons	mt_driver	common_variant	none_found	no direct entry in filtered summary
+human_genetic_support_tier1_v1	GS047	UQCR10	Excitatory_neurons	mt_driver	colocalization	not_assessable	classical H0-H4 absent
+human_genetic_support_tier1_v1	GS047	UQCR10	Excitatory_neurons	mt_driver	rare_variant	not_assessable	full gene burden table absent
+human_genetic_support_tier1_v1	GS047	UQCR10	Excitatory_neurons	mt_driver	mtdna	not_applicable	nuclear gene

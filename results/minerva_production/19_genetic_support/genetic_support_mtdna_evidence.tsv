@@ -1,0 +1,7 @@
+schema_version	gene	status	variant	heteroplasmy_threshold	haplogroup	copy_number	tissue	depth	genome_build	numt_control	reason
+human_genetic_support_tier1_v1	MT-ATP6	not_assessable	NA	NA	NA	NA	NA	NA	NA	NA	No mtDNA-specific association source was present in Tier 1.
+human_genetic_support_tier1_v1	MT-CO2	not_assessable	NA	NA	NA	NA	NA	NA	NA	NA	No mtDNA-specific association source was present in Tier 1.
+human_genetic_support_tier1_v1	MT-CO3	not_assessable	NA	NA	NA	NA	NA	NA	NA	NA	No mtDNA-specific association source was present in Tier 1.
+human_genetic_support_tier1_v1	MT-CYB	not_assessable	NA	NA	NA	NA	NA	NA	NA	NA	No mtDNA-specific association source was present in Tier 1.
+human_genetic_support_tier1_v1	MT-ND4	not_assessable	NA	NA	NA	NA	NA	NA	NA	NA	No mtDNA-specific association source was present in Tier 1.
+human_genetic_support_tier1_v1	MT-ND5	not_assessable	NA	NA	NA	NA	NA	NA	NA	NA	No mtDNA-specific association source was present in Tier 1.

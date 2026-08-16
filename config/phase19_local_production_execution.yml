@@ -1,0 +1,14 @@
+execution:
+  execution_stage: local_production_equivalent
+  execution_phase: genetic_support
+  backend: direct
+  run_id: phase19_tier1_local_20260816
+  total_memory_gib: 24
+  reserve_memory_gib: 6
+  max_total_cores: 4
+  max_custom_coloc_workers: 1
+  max_peak_memory_gib: 16
+  minimum_free_disk_gib: 50
+  scratch_root: tmp/phase19_genetic_support
+  fail_fast: true
+

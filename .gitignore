@@ -49,6 +49,8 @@ __pycache__/
 # Ignore local data except the reference assets maintained in Git.
 data/*
 !data/reference
+# Phase 19 external genetics snapshots are checksum-frozen but not committed.
+data/reference/phase19_genetic_support/
 !data/processed/
 data/processed/*
 !data/processed/dataset_707_basic_02-08-2022.clean.txt
@@ -89,3 +91,4 @@ results/minerva_production/09_annotate_genes/deg_all_annotated.tsv.gz
 results/minerva_production/13_respiratory_modifier/respiratory_pseudobulk_counts.rds
 !results/minerva_production/15_mitonuclear_coupling
 !results/minerva_production/18_key_driver_selection
+!results/minerva_production/19_genetic_support

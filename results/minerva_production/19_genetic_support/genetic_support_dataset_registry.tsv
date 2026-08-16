@@ -1,0 +1,6 @@
+schema_version	dataset_id	phenotype	context	genome_build	access	eligibility	source_id	version
+human_genetic_support_tier1_v1	FunGen_AD_unified	AD GWAS/fine-map	case-control/meta-analysis	GRCh38	public GitHub	eligible	syn69696846	f6f63fc319a417213cf1e86ec0eb14fcb53d2427
+human_genetic_support_tier1_v1	FunGen_xQTL	brain xQTL	bulk and cell type	GRCh38	public filtered summary	eligible_with_limitations	syn69865816	f6f63fc319a417213cf1e86ec0eb14fcb53d2427
+human_genetic_support_tier1_v1	FunGen_TWAS	AD TWAS	multiple brain contexts	GRCh38	public gene list	screen_only	GitHub companion table	f6f63fc319a417213cf1e86ec0eb14fcb53d2427
+human_genetic_support_tier1_v1	ADSP_GVC	gene/variant coding evidence	ADSP	GRCh38	public gene membership only	screen_only	GitHub companion table	2025-03-25
+human_genetic_support_tier1_v1	Synapse_richer_exports	H0-H4/regional inputs	multiple	GRCh38	account and DUA	not_accessed_tier1	syn69865824	current resource

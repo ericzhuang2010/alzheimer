@@ -68,12 +68,13 @@ registry <- data.frame(
     "environment", "parity", "audit", "cohort", "annotations", "qc",
     "normalize", "descriptive", "pseudobulk", "contrasts", "pseudobulk_de",
     "mast", "annotate_genes", "similarity", "pathway", "kda",
-    "respiratory_modifier", "modifier_heterogeneity", "mitonuclear_coupling"
+    "respiratory_modifier", "modifier_heterogeneity", "mitonuclear_coupling",
+    "genetic_support"
   ),
   scope = c(
     "global", "global", "rds", "global", "global", "rds", "rds", "rds",
     "rds", "global", "rds", "rds", "global", "global", "global", "global",
-    "global", "global", "global"
+    "global", "global", "global", "global"
   ),
   script = c(
     "scripts/00_check_environment.R",
@@ -94,11 +95,12 @@ registry <- data.frame(
     "scripts/12_run_kda.R",
     "scripts/13_run_respiratory_modifier.R",
     "scripts/14_run_modifier_heterogeneity.R",
-    "scripts/15_run_mitonuclear_coupling.R"
+    "scripts/15_run_mitonuclear_coupling.R",
+    "scripts/19_run_genetic_support.py"
   ),
   argument_names = c(
     "config,execution-config,report,status",
-    rep("config,execution-config,manifest-row,task-mode", 18L)
+    rep("config,execution-config,manifest-row,task-mode", 19L)
   ),
   output_schema = c(
     "environment_checks_v1", "parity_v1", "rds_audit_v1", "cohort_v1",
@@ -109,7 +111,8 @@ registry <- data.frame(
     "mitochondrial_pathway_data_v1", "mitochondrial_kda_v1",
     "mitochondrial_respiratory_modifier_v1",
     "mitochondrial_modifier_heterogeneity_v1",
-    "mitochondrial_mitonuclear_coupling_v1"
+    "mitochondrial_mitonuclear_coupling_v1",
+    "human_genetic_support_tier1_v1"
   ),
   stringsAsFactors = FALSE
 )
@@ -141,6 +144,9 @@ registry$argument_names[registry$task_mode == "modifier_heterogeneity"] <- paste
 registry$argument_names[registry$task_mode == "mitonuclear_coupling"] <- paste(
   c("config", "execution-config", "task-mode"), collapse = ","
 )
+registry$argument_names[registry$task_mode == "genetic_support"] <- paste(
+  c("config", "execution-config", "task-mode"), collapse = ","
+)
 args <- parse_cli(commandArgs(trailingOnly = TRUE))
 if (!requireNamespace("yaml", quietly = TRUE)) stop("Package 'yaml' is required", call. = FALSE)
 
@@ -169,7 +175,10 @@ execution <- execution_config$execution
 execution_stage <- as.character(execution$execution_stage %||% if (
   isTRUE(config$scope$pilot)
 ) "local_pilot" else "minerva_production")
-allowed_execution_stages <- c("local_pilot", "minerva_production", "lsf_fallback")
+allowed_execution_stages <- c(
+  "local_pilot", "local_production_equivalent", "minerva_production",
+  "lsf_fallback"
+)
 if (length(execution_stage) != 1L || !execution_stage %in% allowed_execution_stages) {
   stop(
     "execution.execution_stage must be one of: ",
@@ -252,6 +261,12 @@ for (i in seq_len(nrow(selected_registry))) {
         stop("project.phase15_mitonuclear_coupling_config is required for mitonuclear_coupling", call. = FALSE)
       }
       absolute_path(phase15_config, root)
+    } else if (task$task_mode == "genetic_support") {
+      phase19_config <- config$project$phase19_genetic_support_config
+      if (is.null(phase19_config)) {
+        stop("project.phase19_genetic_support_config is required for genetic_support", call. = FALSE)
+      }
+      absolute_path(phase19_config, root)
     } else {
       analysis_path
     }
@@ -331,7 +346,7 @@ if (args$phase == "environment") {
 implemented_global_modes <- c(
   "cohort", "annotations", "contrasts", "annotate_genes", "similarity",
   "pathway", "kda", "respiratory_modifier", "modifier_heterogeneity",
-  "mitonuclear_coupling"
+  "mitonuclear_coupling", "genetic_support"
 )
 unsupported_global <- task_graph$task_mode[
   is.na(task_graph$manifest_row) &
@@ -355,6 +370,7 @@ for (i in seq_len(nrow(task_graph))) {
       "--execution-config", execution_path,
       "--task-mode", row$task_mode
     )
+    if (isTRUE(args$force)) runner_args <- c(runner_args, "--force")
   } else {
     runner_args <- c(
       absolute_path("scripts/run_one_rds.R", root),
@@ -366,7 +382,14 @@ for (i in seq_len(nrow(task_graph))) {
     )
     if (isTRUE(args$force)) runner_args <- c(runner_args, "--force")
   }
-  exit_code <- system2("Rscript", runner_args)
+  if (grepl("[.]py$", row$scientific_script)) {
+    local_python <- absolute_path(".venv/bin/python", root)
+    python_runner <- if (file.exists(local_python)) local_python else Sys.which("python3")
+    if (!nzchar(python_runner)) stop("Python 3 is required for ", row$task_mode, call. = FALSE)
+    exit_code <- system2(python_runner, runner_args)
+  } else {
+    exit_code <- system2("Rscript", runner_args)
+  }
   if (exit_code != 0L) {
     failed_tasks <- c(failed_tasks, row$stable_task_id)
     if (isTRUE(execution$fail_fast)) quit(status = exit_code)
