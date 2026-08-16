@@ -37,3 +37,12 @@ Essentially, I need to dig deeper to find more interesting results for the alzhe
 and my most recent presentation  /Users/rzhuang/Documents/VscodeProjects/alzheimer/docs/presentations
 I guess the main goal is to figure out interesting results such as some genes or pathways and get some conclusion and come up with figures cross-validation etc. You have some writeup also (/Users/rzhuang/Documents/VscodeProjects/alzheimer/docs/analysis/phase11_phase12_joint_mitochondrial_discussion.md)
 Please help me find what to do next by looking at the materials I have provided. Write a plan (md file) for things to try as the next steps.
+
+
+Now I want to start to analyze the key driver genes one by one. Please take a look at the phase 18 results and figures in /Users/rzhuang/Documents/VscodeProjects/alzheimer/results/figures/analysis/phase_18_key_driver_selection
+Next, write an initial analysis report and put under /Users/rzhuang/Documents/VscodeProjects/alzheimer/docs/analysis/kda_phase_18. You can mimic  /Users/rzhuang/Documents/VscodeProjects/alzheimer/docs/analysis/kda_and_pathway/phase11_phase12_joint_mitochondrial_discussion.md and even borrow some of stuff from that md file. Generally, the discussion needs to
+1. analyze each top key driver separately
+2. related to prior work if there was study or prior paper, so please search for such papers and list them at the end of the discussion. It can also be a new finding, then it would to interesting to analyze further
+3. analyze and related to the phase 18 resutls/figures and/or previous phase's results. But be mindful that phase 12's selection process is deprecated. so do not use phase 12 figures. But you can use DEG results if those are useful
+4. please also propose other validation approaches for each gene with new findings. Some ideas are in /Users/rzhuang/Documents/VscodeProjects/alzheimer/docs/email_notes/notes_after_08122026_presentation.txt
+

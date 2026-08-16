@@ -16,6 +16,21 @@ Tomorrow, we may have a meeting at 1PM, sex project meeting, you do not need to 
 previous slides, put things together, 15-20 slides. Just you what you have done and what you plan to do next. ask for comments and suggestions for your work.
 Next week, better ranking, more evidence supporting that. May consider moving on to experiments
 
+Since one gene can occur in multiple fine cell types as driver, draw some venn graph.
+
+
+Someone else is doing sequencing data, coming out in 2 weeks (as they
+discussed at the start of today’s meeting). We may want to contact the
+lab about it, although I doubt it would be important.
+For DEG Analysis: Look at APOE in excitatory neurons and astrocytes.
+APOE is predominantly expressed in astrocytes and is responsible for a
+lot of the expression changes in AD. Notably, excitatory neurons seem
+to share these changes
+Interaction analysis: Look at the overlap between genes upregulated in
+each sex-APOE group.
+Look at non-human AD datasets to see which of these results also
+appear. This should probably be done later though.
+
 
 ================Email from the prof on 08122026 after presentations==============
 I think the presentation was well received by the audience. There were many constructive comments, such as checking APOE gene expression changes, clarification about the genes tested, interaction models, and comparison with mouse APOE knock-in single cell data, etc. Please try to addresses them as much as you can. For cross-species comparison, I will send you relevant data rather.
