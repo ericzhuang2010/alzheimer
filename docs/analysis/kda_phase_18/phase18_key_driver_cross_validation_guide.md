@@ -29,16 +29,34 @@ STRING-db is one protein-network validation task. It cannot substitute for indep
 
 ## 2. Candidate panel to validate first
 
-Do not begin by validating all 25 genes. Start with six candidates that test different biological and methodological situations:
+Do not begin by validating all 25 genes. Start with six candidates that test different biological and methodological situations. This is a **purposefully balanced pilot panel, not the six genes with the smallest aggregate q values**.
 
-| Candidate | Primary context | Purpose in the paper |
+### How the six were chosen
+
+Every gene in the pilot first passed the formal Phase 18 selection gates in at least one broad network: usable-run coverage >= 0.80, at least one conservatively supporting run, aggregate ACAT q <= 0.05, and rank <= 5 within its broad-network × driver-class list. Conservative support means that the driver's neighborhood contained at least two other mitochondrial-query genes, had fold enrichment > 1, and had within-run q <= 0.05. The exact run- and aggregate-level evidence is stored in [`call_key_driver_returns.tsv`](../../../results/minerva_production/18_key_driver_selection/call_key_driver_returns.tsv).
+
+The six-gene subset was then chosen to maximize information from the first validation round across five dimensions:
+
+1. **Evidence role:** include an established positive control, internally strong candidates, and deliberately exploratory candidates.
+2. **Biological breadth:** represent APOE/lipid biology, redox and tau proteostasis, lysosome–mTOR signaling, ribosomal stress, iron/ferroptosis, and chromatin regulation.
+3. **Cell-type breadth:** cover astrocytes, excitatory neurons, inhibitory neurons, and OPCs.
+4. **Methodological stress tests:** determine whether a recurrent ribosomal hub survives matched-null testing and whether sparse OPC signals reproduce independently.
+5. **Experimental interpretability:** initially favor non-MT genes with potentially testable upstream mechanisms. Many selected MT genes are structural respiratory-chain components that may be valuable module sentinels but are harder to interpret as upstream regulators because their perturbation can cause nonspecific respiratory failure.
+
+Consequently, the six candidates do not enter validation with equal prior confidence. APOE is a calibration control; SELENOW, LAMTOR5, and the excitatory-neuron RPL11 result have comparatively strong internal or external support; FTL and ANKRD11 are high-novelty, low-recurrence OPC hypotheses that must replicate before receiving similar weight.
+
+| Candidate | Primary context and Phase 18 basis | Why it is in the pilot |
 |---|---|---|
-| **APOE** | Astrocytes | Established AD positive control; test the new mitochondrial target neighborhood |
-| **SELENOW** | Excitatory neurons | Strong KDA candidate with relevant external mechanism evidence |
-| **LAMTOR5** | Excitatory and inhibitory neurons | Novel lysosome–mTOR–mitochondria candidate |
-| **RPL11** | Excitatory neurons and astrocytes | Recurrent candidate; determine whether signal exceeds ribosomal/hub bias |
-| **FTL** | OPCs | Exploratory iron/ferroptosis candidate; requires cell-type confirmation |
-| **ANKRD11** | OPCs | Exploratory chromatin candidate; requires independent subtype replication |
+| **APOE** | Astrocytes; aggregate q = 0.0127, four conservative-support runs across three fine cell types, with candidate retention in two of three assessable omissions | It is the established AD positive control. Successful recovery of its frozen astrocyte mitochondrial target module shows whether the validation pipeline can detect a known AD mechanism; the new claim is the target neighborhood, not discovery of APOE itself. |
+| **SELENOW** | Excitatory neurons; aggregate q = 5.75 × 10^-6, 14 conservative-support runs across nine fine cell types in the selected context, and complete omission retention | It combines a strong, stable KDA signal with direct external AD-model evidence involving tau clearance and with redox/respiration biology. It is the externally reinforced novel-mechanism candidate. |
+| **LAMTOR5** | Excitatory and inhibitory neurons; 17 conservative-support runs across 13 fine cell types in total, aggregate q = 0.00259 and 0.00414, respectively, and complete omission retention in both networks | It reproduces across two neuronal network types and provides a coherent, experimentally tractable lysosome–Ragulator–mTORC1 route to mitochondrial regulation, while remaining novel at the gene-specific AD level. |
+| **RPL11** | Displayed in four networks; strongest in excitatory neurons (aggregate q = 1.84 × 10^-9, 20 conservative-support runs across 11 fine cell types, complete omission retention) and also supported in astrocytes | It is the broadest recurrent non-MT candidate and a deliberate specificity challenge. Validation must show that its result exceeds expression-, degree-, and ribosomal-class-matched nulls before it is interpreted as more than a ribosomal or high-connectivity module anchor. |
+| **FTL** | OPCs; aggregate q = 2.19 × 10^-4 but only two conservative-support runs from one fine cell type; omission stability is not assessable | It tests a biologically plausible iron-storage/ferroptosis–mitochondria hypothesis in an understudied lineage. Its inclusion is exploratory: independent OPC localization and replication are prerequisites, because the current recurrence is sparse. |
+| **ANKRD11** | OPCs; aggregate q = 7.12 × 10^-4 but only two conservative-support runs from one fine cell type; omission stability is not assessable | It is a mechanistically orthogonal, high-novelty chromatin-regulation hypothesis. It tests whether a new OPC-specific regulatory signal can reproduce, rather than whether a familiar mitochondrial or stress gene can be rediscovered. |
+
+### Why other displayed genes were not in the first six
+
+Several omitted genes have strong Phase 18 statistics; omission does not mean that they failed. RPS15, RPS13, RPLP1, RPL15, and RPL38 would overrepresent the same ribosomal/translation theme, so RPL11 was chosen as the first representative and as the most demanding hub-bias test. ATP6V1F and LAPTM4A overlap the lysosomal theme, for which LAMTOR5 has broader neuronal support. The MT/OXPHOS candidates remain important for the full evidence matrix, but the initial pilot emphasizes non-MT genes whose perturbation is less likely to produce an uninformative, generic respiratory defect. FTL and ANKRD11 were retained despite weaker recurrence because validating or rejecting two distinct OPC mechanisms will reveal whether the striking OPC aggregate signals are independently reproducible or are consequences of the small OPC evidence base.
 
 After the pipeline works for these candidates, extend the computational evidence matrix to the remaining displayed genes. Reserve expensive experiments for two or three candidates.
 
@@ -365,6 +383,8 @@ phase18_human_mouse_ortholog_map.tsv
 ```
 
 ## 9. WP5 — Human genetic support
+
+Detailed implementation: [WP5 human genetic support guide](phase18_wp5_human_genetic_support_guide.md).
 
 ### Question
 
