@@ -1,0 +1,27 @@
+schema_version	figure_id	check_id	blocking	passed	observed	expected	detail
+phase18_key_driver_selection_process_figure_v1	phase18_key_driver_selection_process	input_schema	TRUE	TRUE	phase18_call_key_driver_returns_v1	phase18_call_key_driver_returns_v1	
+phase18_key_driver_selection_process_figure_v1	phase18_key_driver_selection_process	input_rows	TRUE	TRUE	95557	95557	
+phase18_key_driver_selection_process_figure_v1	phase18_key_driver_selection_process	input_columns	TRUE	TRUE	104	104	
+phase18_key_driver_selection_process_figure_v1	phase18_key_driver_selection_process	included_calls	TRUE	TRUE	161	161	
+phase18_key_driver_selection_process_figure_v1	phase18_key_driver_selection_process	unique_tested_genes	TRUE	TRUE	6149	6149	
+phase18_key_driver_selection_process_figure_v1	phase18_key_driver_selection_process	represented_candidate_units	TRUE	TRUE	10433	10433	
+phase18_key_driver_selection_process_figure_v1	phase18_key_driver_selection_process	conditional_gate_counts	TRUE	TRUE	10433|9846|243|78	10433|9846|243|78	
+phase18_key_driver_selection_process_figure_v1	phase18_key_driver_selection_process	candidate_class_counts	TRUE	TRUE	{'mt_driver': 41, 'non_mt_driver': 37}	{'mt_driver': 41, 'non_mt_driver': 37}	
+phase18_key_driver_selection_process_figure_v1	phase18_key_driver_selection_process	candidate_unique_genes	TRUE	TRUE	50	50	
+phase18_key_driver_selection_process_figure_v1	phase18_key_driver_selection_process	display_class_counts	TRUE	TRUE	{'mt_driver': 26, 'non_mt_driver': 21}	{'mt_driver': 26, 'non_mt_driver': 21}	
+phase18_key_driver_selection_process_figure_v1	phase18_key_driver_selection_process	displayed_positions	TRUE	TRUE	47	47	
+phase18_key_driver_selection_process_figure_v1	phase18_key_driver_selection_process	displayed_unique_genes	TRUE	TRUE	25	25	
+phase18_key_driver_selection_process_figure_v1	phase18_key_driver_selection_process	network_class_matrix	TRUE	TRUE	Astrocytes:mt_driver:6>5|Astrocytes:non_mt_driver:5>5|Excitatory_neurons:mt_driver:13>5|Excitatory_neurons:non_mt_driver:21>5|Inhibitory_neurons:mt_driver:11>5|Inhibitory_neurons:non_mt_driver:5>5|Microglia:mt_driver:2>2|Microglia:non_mt_driver:1>1|OPCs:mt_driver:3>3|OPCs:non_mt_driver:4>4|Oligodendrocytes:mt_driver:2>2|Oligodendrocytes:non_mt_driver:1>1|Vasculature_cells:mt_driver:4>4|Vasculature_cells:non_mt_driver:0>0	Astrocytes:mt_driver:6>5|Astrocytes:non_mt_driver:5>5|Excitatory_neurons:mt_driver:13>5|Excitatory_neurons:non_mt_driver:21>5|Inhibitory_neurons:mt_driver:11>5|Inhibitory_neurons:non_mt_driver:5>5|Microglia:mt_driver:2>2|Microglia:non_mt_driver:1>1|OPCs:mt_driver:3>3|OPCs:non_mt_driver:4>4|Oligodendrocytes:mt_driver:2>2|Oligodendrocytes:non_mt_driver:1>1|Vasculature_cells:mt_driver:4>4|Vasculature_cells:non_mt_driver:0>0	
+phase18_key_driver_selection_process_figure_v1	phase18_key_driver_selection_process	top_five_limit	TRUE	TRUE	5	<=5	
+phase18_key_driver_selection_process_figure_v1	phase18_key_driver_selection_process	colorblind_safe_palette	TRUE	TRUE	Okabe-Ito blue|orange + labels	colorblind-safe + redundant labels	
+phase18_key_driver_selection_process_figure_v1	phase18_key_driver_selection_process	minimum_text_size	TRUE	TRUE	>=6.2 pt; primary labels >=7 pt	>=6 pt	
+phase18_key_driver_selection_process_figure_v1	phase18_key_driver_selection_process	no_uncertainty_bars	TRUE	TRUE	not applicable to deterministic counts	not applicable	
+phase18_key_driver_selection_process_figure_v1	phase18_key_driver_selection_process	visual_review_complete	FALSE	TRUE	complete	complete	Manual review of clipping, readability, color, and grayscale redundancy.
+phase18_key_driver_selection_process_figure_v1	phase18_key_driver_selection_process	vector_and_raster_outputs	TRUE	TRUE	.pdf|.png|.svg	.pdf|.png|.svg	
+phase18_key_driver_selection_process_figure_v1	phase18_key_driver_selection_process	image_outputs_nonempty	TRUE	TRUE	3	3	
+phase18_key_driver_selection_process_figure_v1	phase18_key_driver_selection_process	svg_is_vector	TRUE	TRUE	<svg present	<svg present	
+phase18_key_driver_selection_process_figure_v1	phase18_key_driver_selection_process	svg_text_preserved	TRUE	TRUE	<text present	<text present	
+phase18_key_driver_selection_process_figure_v1	phase18_key_driver_selection_process	pdf_signature	TRUE	TRUE	%PDF-	%PDF-	
+phase18_key_driver_selection_process_figure_v1	phase18_key_driver_selection_process	png_width	TRUE	TRUE	3240	3240	
+phase18_key_driver_selection_process_figure_v1	phase18_key_driver_selection_process	png_height	TRUE	TRUE	2295	2295	
+phase18_key_driver_selection_process_figure_v1	phase18_key_driver_selection_process	png_resolution	TRUE	TRUE	450.01|450.01	450|450	

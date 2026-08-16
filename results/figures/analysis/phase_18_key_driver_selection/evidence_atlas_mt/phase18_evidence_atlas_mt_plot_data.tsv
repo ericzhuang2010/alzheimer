@@ -1,0 +1,71 @@
+schema_version	figure_id	case_id	atlas_display_order	current_symbol	network_order	broad_network	network_label	network_color	tile_status	passing_context	circle_displayed	within_case_rank	aggregate_acat_q	negative_log10_aggregate_acat_q	capped_negative_log10_aggregate_acat_q	extended_reference_member
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	1	MT-CO2	1	Astrocytes	Astrocytes	#009E73	circle_displayed	TRUE	TRUE	1	3.0862435151253747e-12	11.510569809607025	11.510569809607025	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	1	MT-CO2	2	Excitatory_neurons	Excitatory neurons	#E69F00	circle_displayed	TRUE	TRUE	1	8.33845518307657e-21	20.07891440111393	12.0	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	1	MT-CO2	3	Inhibitory_neurons	Inhibitory neurons	#0072B2	circle_displayed	TRUE	TRUE	1	7.464702679293243e-18	17.126987485636718	12.0	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	1	MT-CO2	4	Microglia	Microglia	#CC79A7	circle_displayed	TRUE	TRUE	1	9.279624811863303e-15	14.032469582556072	12.0	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	1	MT-CO2	5	OPCs	OPCs	#56B4E9	circle_displayed	TRUE	TRUE	2	0.0007117827820485487	3.147652521743449	3.147652521743449	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	1	MT-CO2	6	Oligodendrocytes	Oligodendrocytes	#F0E442	circle_displayed	TRUE	TRUE	1	9.317996816160671e-14	13.030677442280595	12.0	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	1	MT-CO2	7	Vasculature_cells	Vasculature	#D55E00	circle_displayed	TRUE	TRUE	2	9.179038119345654e-07	6.037202826570798	6.037202826570798	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	2	MT-ND4	1	Astrocytes	Astrocytes	#009E73	no_passing_context	FALSE	FALSE	NA	NA	NA	NA	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	2	MT-ND4	2	Excitatory_neurons	Excitatory neurons	#E69F00	passing_not_circle_displayed	TRUE	FALSE	10	0.005247602335134957	2.28003908335041	2.28003908335041	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	2	MT-ND4	3	Inhibitory_neurons	Inhibitory neurons	#0072B2	no_passing_context	FALSE	FALSE	NA	NA	NA	NA	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	2	MT-ND4	4	Microglia	Microglia	#CC79A7	circle_displayed	TRUE	TRUE	2	0.010583090913485178	1.975387473073541	1.975387473073541	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	2	MT-ND4	5	OPCs	OPCs	#56B4E9	circle_displayed	TRUE	TRUE	3	0.011400053491068577	1.9430931108721754	1.9430931108721754	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	2	MT-ND4	6	Oligodendrocytes	Oligodendrocytes	#F0E442	circle_displayed	TRUE	TRUE	2	0.0011368492558896898	2.9442971181403386	2.9442971181403386	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	2	MT-ND4	7	Vasculature_cells	Vasculature	#D55E00	circle_displayed	TRUE	TRUE	4	0.0014910967119154228	2.8264941874731795	2.8264941874731795	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	3	MT-CO3	1	Astrocytes	Astrocytes	#009E73	circle_displayed	TRUE	TRUE	2	1.5917308305728527e-08	7.798130371699121	7.798130371699121	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	3	MT-CO3	2	Excitatory_neurons	Excitatory neurons	#E69F00	no_passing_context	FALSE	FALSE	NA	NA	NA	NA	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	3	MT-CO3	3	Inhibitory_neurons	Inhibitory neurons	#0072B2	circle_displayed	TRUE	TRUE	2	6.887580432997238e-08	7.161933316430119	7.161933316430119	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	3	MT-CO3	4	Microglia	Microglia	#CC79A7	no_passing_context	FALSE	FALSE	NA	NA	NA	NA	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	3	MT-CO3	5	OPCs	OPCs	#56B4E9	circle_displayed	TRUE	TRUE	1	6.472066554338819e-09	8.188957025383194	8.188957025383194	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	3	MT-CO3	6	Oligodendrocytes	Oligodendrocytes	#F0E442	no_passing_context	FALSE	FALSE	NA	NA	NA	NA	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	3	MT-CO3	7	Vasculature_cells	Vasculature	#D55E00	circle_displayed	TRUE	TRUE	1	2.373870889685576e-14	13.624542905188465	12.0	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	4	MT-ATP6	1	Astrocytes	Astrocytes	#009E73	circle_displayed	TRUE	TRUE	3	7.749292243037909e-05	4.110737960587792	4.110737960587792	TRUE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	4	MT-ATP6	2	Excitatory_neurons	Excitatory neurons	#E69F00	passing_not_circle_displayed	TRUE	FALSE	11	0.005704166534717775	2.2438078036237243	2.2438078036237243	TRUE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	4	MT-ATP6	3	Inhibitory_neurons	Inhibitory neurons	#0072B2	no_passing_context	FALSE	FALSE	NA	NA	NA	NA	TRUE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	4	MT-ATP6	4	Microglia	Microglia	#CC79A7	no_passing_context	FALSE	FALSE	NA	NA	NA	NA	TRUE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	4	MT-ATP6	5	OPCs	OPCs	#56B4E9	no_passing_context	FALSE	FALSE	NA	NA	NA	NA	TRUE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	4	MT-ATP6	6	Oligodendrocytes	Oligodendrocytes	#F0E442	no_passing_context	FALSE	FALSE	NA	NA	NA	NA	TRUE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	4	MT-ATP6	7	Vasculature_cells	Vasculature	#D55E00	circle_displayed	TRUE	TRUE	3	0.0003999034458706969	3.398044853640468	3.398044853640468	TRUE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	5	COX4I1	1	Astrocytes	Astrocytes	#009E73	circle_displayed	TRUE	TRUE	5	0.0031287662858203425	2.5046268767929094	2.5046268767929094	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	5	COX4I1	2	Excitatory_neurons	Excitatory neurons	#E69F00	circle_displayed	TRUE	TRUE	3	1.5236713995136778e-08	7.8171086844173265	7.8171086844173265	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	5	COX4I1	3	Inhibitory_neurons	Inhibitory neurons	#0072B2	passing_not_circle_displayed	TRUE	FALSE	11	0.020777019716936823	1.6824167480836503	1.6824167480836503	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	5	COX4I1	4	Microglia	Microglia	#CC79A7	no_passing_context	FALSE	FALSE	NA	NA	NA	NA	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	5	COX4I1	5	OPCs	OPCs	#56B4E9	no_passing_context	FALSE	FALSE	NA	NA	NA	NA	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	5	COX4I1	6	Oligodendrocytes	Oligodendrocytes	#F0E442	no_passing_context	FALSE	FALSE	NA	NA	NA	NA	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	5	COX4I1	7	Vasculature_cells	Vasculature	#D55E00	no_passing_context	FALSE	FALSE	NA	NA	NA	NA	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	6	COX7C	1	Astrocytes	Astrocytes	#009E73	circle_displayed	TRUE	TRUE	4	0.0005139297313015923	3.2890962572579587	3.2890962572579587	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	6	COX7C	2	Excitatory_neurons	Excitatory neurons	#E69F00	passing_not_circle_displayed	TRUE	FALSE	6	2.027914086491458e-05	4.692950448033492	4.692950448033492	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	6	COX7C	3	Inhibitory_neurons	Inhibitory neurons	#0072B2	circle_displayed	TRUE	TRUE	5	6.239199452599093e-06	5.20487113076992	5.20487113076992	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	6	COX7C	4	Microglia	Microglia	#CC79A7	no_passing_context	FALSE	FALSE	NA	NA	NA	NA	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	6	COX7C	5	OPCs	OPCs	#56B4E9	no_passing_context	FALSE	FALSE	NA	NA	NA	NA	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	6	COX7C	6	Oligodendrocytes	Oligodendrocytes	#F0E442	no_passing_context	FALSE	FALSE	NA	NA	NA	NA	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	6	COX7C	7	Vasculature_cells	Vasculature	#D55E00	no_passing_context	FALSE	FALSE	NA	NA	NA	NA	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	7	MT-CYB	1	Astrocytes	Astrocytes	#009E73	no_passing_context	FALSE	FALSE	NA	NA	NA	NA	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	7	MT-CYB	2	Excitatory_neurons	Excitatory neurons	#E69F00	circle_displayed	TRUE	TRUE	5	1.539438400949714e-05	4.812637684261824	4.812637684261824	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	7	MT-CYB	3	Inhibitory_neurons	Inhibitory neurons	#0072B2	circle_displayed	TRUE	TRUE	3	6.887580432997238e-08	7.161933316430119	7.161933316430119	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	7	MT-CYB	4	Microglia	Microglia	#CC79A7	no_passing_context	FALSE	FALSE	NA	NA	NA	NA	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	7	MT-CYB	5	OPCs	OPCs	#56B4E9	no_passing_context	FALSE	FALSE	NA	NA	NA	NA	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	7	MT-CYB	6	Oligodendrocytes	Oligodendrocytes	#F0E442	no_passing_context	FALSE	FALSE	NA	NA	NA	NA	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	7	MT-CYB	7	Vasculature_cells	Vasculature	#D55E00	no_passing_context	FALSE	FALSE	NA	NA	NA	NA	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	8	COX6B1	1	Astrocytes	Astrocytes	#009E73	no_passing_context	FALSE	FALSE	NA	NA	NA	NA	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	8	COX6B1	2	Excitatory_neurons	Excitatory neurons	#E69F00	circle_displayed	TRUE	TRUE	4	5.958609234062103e-07	6.224855094698579	6.224855094698579	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	8	COX6B1	3	Inhibitory_neurons	Inhibitory neurons	#0072B2	no_passing_context	FALSE	FALSE	NA	NA	NA	NA	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	8	COX6B1	4	Microglia	Microglia	#CC79A7	no_passing_context	FALSE	FALSE	NA	NA	NA	NA	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	8	COX6B1	5	OPCs	OPCs	#56B4E9	no_passing_context	FALSE	FALSE	NA	NA	NA	NA	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	8	COX6B1	6	Oligodendrocytes	Oligodendrocytes	#F0E442	no_passing_context	FALSE	FALSE	NA	NA	NA	NA	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	8	COX6B1	7	Vasculature_cells	Vasculature	#D55E00	no_passing_context	FALSE	FALSE	NA	NA	NA	NA	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	9	UQCR10	1	Astrocytes	Astrocytes	#009E73	no_passing_context	FALSE	FALSE	NA	NA	NA	NA	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	9	UQCR10	2	Excitatory_neurons	Excitatory neurons	#E69F00	circle_displayed	TRUE	TRUE	2	2.761874901843084e-10	9.558795996528438	9.558795996528438	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	9	UQCR10	3	Inhibitory_neurons	Inhibitory neurons	#0072B2	no_passing_context	FALSE	FALSE	NA	NA	NA	NA	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	9	UQCR10	4	Microglia	Microglia	#CC79A7	no_passing_context	FALSE	FALSE	NA	NA	NA	NA	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	9	UQCR10	5	OPCs	OPCs	#56B4E9	no_passing_context	FALSE	FALSE	NA	NA	NA	NA	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	9	UQCR10	6	Oligodendrocytes	Oligodendrocytes	#F0E442	no_passing_context	FALSE	FALSE	NA	NA	NA	NA	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	9	UQCR10	7	Vasculature_cells	Vasculature	#D55E00	no_passing_context	FALSE	FALSE	NA	NA	NA	NA	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	10	MT-ND5	1	Astrocytes	Astrocytes	#009E73	no_passing_context	FALSE	FALSE	NA	NA	NA	NA	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	10	MT-ND5	2	Excitatory_neurons	Excitatory neurons	#E69F00	no_passing_context	FALSE	FALSE	NA	NA	NA	NA	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	10	MT-ND5	3	Inhibitory_neurons	Inhibitory neurons	#0072B2	circle_displayed	TRUE	TRUE	4	2.6917602273647295e-06	5.569963628166533	5.569963628166533	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	10	MT-ND5	4	Microglia	Microglia	#CC79A7	no_passing_context	FALSE	FALSE	NA	NA	NA	NA	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	10	MT-ND5	5	OPCs	OPCs	#56B4E9	no_passing_context	FALSE	FALSE	NA	NA	NA	NA	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	10	MT-ND5	6	Oligodendrocytes	Oligodendrocytes	#F0E442	no_passing_context	FALSE	FALSE	NA	NA	NA	NA	FALSE
+phase18_mt_evidence_atlas_v2_plot_data_v1	phase18_evidence_atlas_mt	mt_driver	10	MT-ND5	7	Vasculature_cells	Vasculature	#D55E00	no_passing_context	FALSE	FALSE	NA	NA	NA	NA	FALSE

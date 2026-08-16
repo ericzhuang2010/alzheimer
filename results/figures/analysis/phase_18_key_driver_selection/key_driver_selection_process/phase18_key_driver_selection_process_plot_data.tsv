@@ -1,0 +1,24 @@
+schema_version	figure_id	panel_id	record_type	stage_order	broad_network	case_id	counting_unit	count	source_column	unique_gene_count	gate_name	input_n	retained_n	removed_n	conditional_retention_fraction	candidate_unit_count	candidate_unique_gene_count	displayed_position_count
+phase18_key_driver_selection_process_figure_v1	phase18_key_driver_selection_process	A	starting_evidence	1	NA	NA	included_kda_call	161	kda_run_id	NA	NA	NA	NA	NA	NA	NA	NA	NA
+phase18_key_driver_selection_process_figure_v1	phase18_key_driver_selection_process	A	starting_evidence	2	NA	NA	explicit_gene_run_row	95557	kda_run_id + key_driver	6149	NA	NA	NA	NA	NA	NA	NA	NA
+phase18_key_driver_selection_process_figure_v1	phase18_key_driver_selection_process	A	candidate_universe	3	NA	NA	gene_broad_network_driver_class	10433	broad_network + key_driver + case_id	NA	NA	NA	NA	NA	NA	NA	NA	NA
+phase18_key_driver_selection_process_figure_v1	phase18_key_driver_selection_process	B	conditional_gate_funnel	0	NA	NA	gene_broad_network_driver_class	NA	NA	NA	represented	NA	10433	NA	NA	NA	NA	NA
+phase18_key_driver_selection_process_figure_v1	phase18_key_driver_selection_process	B	conditional_gate_funnel	1	NA	NA	gene_broad_network_driver_class	NA	NA	NA	coverage	10433	9846	587	0.9437362216045241	NA	NA	NA
+phase18_key_driver_selection_process_figure_v1	phase18_key_driver_selection_process	B	conditional_gate_funnel	2	NA	NA	gene_broad_network_driver_class	NA	NA	NA	support	9846	243	9603	0.024680073126142597	NA	NA	NA
+phase18_key_driver_selection_process_figure_v1	phase18_key_driver_selection_process	B	conditional_gate_funnel	3	NA	NA	gene_broad_network_driver_class	NA	NA	NA	aggregate_acat_q	243	78	165	0.32098765432098764	NA	NA	NA
+phase18_key_driver_selection_process_figure_v1	phase18_key_driver_selection_process	C	class_summary	NA	NA	mt_driver	NA	NA	NA	NA	NA	NA	NA	NA	NA	41	20	26
+phase18_key_driver_selection_process_figure_v1	phase18_key_driver_selection_process	C	network_class_display	NA	Astrocytes	mt_driver	NA	NA	NA	NA	NA	NA	NA	NA	NA	6	NA	5
+phase18_key_driver_selection_process_figure_v1	phase18_key_driver_selection_process	C	network_class_display	NA	Excitatory_neurons	mt_driver	NA	NA	NA	NA	NA	NA	NA	NA	NA	13	NA	5
+phase18_key_driver_selection_process_figure_v1	phase18_key_driver_selection_process	C	network_class_display	NA	Inhibitory_neurons	mt_driver	NA	NA	NA	NA	NA	NA	NA	NA	NA	11	NA	5
+phase18_key_driver_selection_process_figure_v1	phase18_key_driver_selection_process	C	network_class_display	NA	Microglia	mt_driver	NA	NA	NA	NA	NA	NA	NA	NA	NA	2	NA	2
+phase18_key_driver_selection_process_figure_v1	phase18_key_driver_selection_process	C	network_class_display	NA	OPCs	mt_driver	NA	NA	NA	NA	NA	NA	NA	NA	NA	3	NA	3
+phase18_key_driver_selection_process_figure_v1	phase18_key_driver_selection_process	C	network_class_display	NA	Oligodendrocytes	mt_driver	NA	NA	NA	NA	NA	NA	NA	NA	NA	2	NA	2
+phase18_key_driver_selection_process_figure_v1	phase18_key_driver_selection_process	C	network_class_display	NA	Vasculature_cells	mt_driver	NA	NA	NA	NA	NA	NA	NA	NA	NA	4	NA	4
+phase18_key_driver_selection_process_figure_v1	phase18_key_driver_selection_process	C	class_summary	NA	NA	non_mt_driver	NA	NA	NA	NA	NA	NA	NA	NA	NA	37	30	21
+phase18_key_driver_selection_process_figure_v1	phase18_key_driver_selection_process	C	network_class_display	NA	Astrocytes	non_mt_driver	NA	NA	NA	NA	NA	NA	NA	NA	NA	5	NA	5
+phase18_key_driver_selection_process_figure_v1	phase18_key_driver_selection_process	C	network_class_display	NA	Excitatory_neurons	non_mt_driver	NA	NA	NA	NA	NA	NA	NA	NA	NA	21	NA	5
+phase18_key_driver_selection_process_figure_v1	phase18_key_driver_selection_process	C	network_class_display	NA	Inhibitory_neurons	non_mt_driver	NA	NA	NA	NA	NA	NA	NA	NA	NA	5	NA	5
+phase18_key_driver_selection_process_figure_v1	phase18_key_driver_selection_process	C	network_class_display	NA	Microglia	non_mt_driver	NA	NA	NA	NA	NA	NA	NA	NA	NA	1	NA	1
+phase18_key_driver_selection_process_figure_v1	phase18_key_driver_selection_process	C	network_class_display	NA	OPCs	non_mt_driver	NA	NA	NA	NA	NA	NA	NA	NA	NA	4	NA	4
+phase18_key_driver_selection_process_figure_v1	phase18_key_driver_selection_process	C	network_class_display	NA	Oligodendrocytes	non_mt_driver	NA	NA	NA	NA	NA	NA	NA	NA	NA	1	NA	1
+phase18_key_driver_selection_process_figure_v1	phase18_key_driver_selection_process	C	network_class_display	NA	Vasculature_cells	non_mt_driver	NA	NA	NA	NA	NA	NA	NA	NA	NA	0	NA	0

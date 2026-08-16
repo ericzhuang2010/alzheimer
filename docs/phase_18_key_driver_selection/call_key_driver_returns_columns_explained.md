@@ -31,6 +31,123 @@ The `published_*` columns are populated only when
 rows. Nonsignificant rows use `NA` in the `published_*` columns but have complete
 values in the reconstructed `original_*` and `final_*` columns.
 
+The significant-only provenance copy is
+[`call_key_driver_significant_returns.tsv`](../../results/minerva_production/18_key_driver_selection/call_key_driver_significant_returns.tsv).
+
+## Calculation level for every column
+
+“Level” describes the biological/statistical unit at which a value is defined,
+even though every value is physically stored on a gene × run row. Values
+defined per gene × broad network are therefore repeated on all explicit run
+rows for that candidate unit.
+
+| No. | Column | Level |
+|---:|---|---|
+| 1 | `schema_version` | Whole table |
+| 2 | `kda_run_id` | Per run |
+| 3 | `fine_cell_type` | Per run |
+| 4 | `broad_network` | Per run and candidate unit |
+| 5 | `signature_group` | Per run |
+| 6 | `sex` | Per run |
+| 7 | `apoe_group` | Per run |
+| 8 | `signature_direction` | Per run |
+| 9 | `effective_query_genes` | Per run |
+| 10 | `effective_background_genes` | Per run |
+| 11 | `run_terminal_status` | Per run |
+| 12 | `key_driver` | Per gene |
+| 13 | `tested_by_call_key_drivers` | Per gene × run |
+| 14 | `significant_by_call_key_drivers` | Per gene × run; significance assessed within the run |
+| 15 | `published_best_layer` | Per gene × run |
+| 16 | `published_overlap_count` | Per gene × run |
+| 17 | `published_neighborhood_size` | Per gene × run |
+| 18 | `published_non_neighborhood_size` | Per gene × run |
+| 19 | `published_signature_size` | Per gene × run |
+| 20 | `published_fold_enrichment` | Per gene × run |
+| 21 | `published_log_p_value` | Per gene × run |
+| 22 | `published_raw_p_value` | Per gene × run |
+| 23 | `published_adjusted_p_value` | Per gene × run; BH corrected within the run |
+| 24 | `published_is_signature` | Per gene × run |
+| 25 | `published_is_root_node` | Per gene × run/network topology |
+| 26 | `published_global_key_driver` | Per gene × run; redundancy assessed within the run |
+| 27 | `published_overlap_items` | Per gene × run |
+| 28 | `case_order` | Per gene |
+| 29 | `case_id` | Per gene |
+| 30 | `case_label` | Per gene |
+| 31 | `is_core_mito` | Per gene |
+| 32 | `mitocarta_canonical_symbol` | Per gene |
+| 33 | `query_member` | Per gene × run |
+| 34 | `test_status` | Per gene × run |
+| 35 | `usable_test` | Per gene × run |
+| 36 | `explicit_family_member` | Per gene × run |
+| 37 | `original_layer` | Per gene × run |
+| 38 | `original_overlap_count` | Per gene × run |
+| 39 | `original_neighborhood_size` | Per gene × run |
+| 40 | `original_non_neighborhood_size` | Per gene × run |
+| 41 | `original_signature_size` | Per gene × run |
+| 42 | `original_fold_enrichment` | Per gene × run |
+| 43 | `original_log_p` | Per gene × run |
+| 44 | `original_raw_p` | Per gene × run |
+| 45 | `original_run_q` | Per gene × run; BH corrected within the run |
+| 46 | `self_excluded` | Per gene × run |
+| 47 | `final_layer` | Per gene × run |
+| 48 | `final_overlap_count` | Per gene × run |
+| 49 | `final_neighborhood_size` | Per gene × run |
+| 50 | `final_non_neighborhood_size` | Per gene × run |
+| 51 | `final_signature_size` | Per gene × run |
+| 52 | `final_background_size` | Per gene × run |
+| 53 | `final_fold_enrichment` | Per gene × run |
+| 54 | `final_log_p` | Per gene × run |
+| 55 | `final_raw_p` | Per gene × run |
+| 56 | `final_run_q` | Per gene × run; BH corrected within the run |
+| 57 | `other_query_overlap` | Per gene × run |
+| 58 | `support_overlap_pass` | Per gene × run |
+| 59 | `support_fold_pass` | Per gene × run |
+| 60 | `support_run_q_pass` | Per gene × run |
+| 61 | `conservative_support` | Per gene × run |
+| 62 | `mito_tier` | Per gene |
+| 63 | `genome_origin` | Per gene |
+| 64 | `is_mtdna_gene` | Per gene |
+| 65 | `extended_reference_member` | Per gene |
+| 66 | `mapping_status` | Per gene |
+| 67 | `phase03_mitocarta_match_type` | Per gene |
+| 68 | `eligible_run_count` | Per broad network; fixed for every gene in that network |
+| 69 | `usable_run_count` | Per gene × broad network |
+| 70 | `explicit_run_count` | Per gene × broad network |
+| 71 | `implicit_run_count` | Per gene × broad network |
+| 72 | `missing_run_count` | Per gene × broad network |
+| 73 | `coverage_numerator` | Per gene × broad network |
+| 74 | `coverage_denominator` | Per broad network; repeated per gene |
+| 75 | `coverage_fraction` | Per gene × broad network |
+| 76 | `coverage_pass` | Per gene × broad network |
+| 77 | `conservative_support_count` | Per gene × broad network |
+| 78 | `conservative_support_pass` | Per gene × broad network |
+| 79 | `recurrence_fraction` | Per gene × broad network |
+| 80 | `supporting_fine_cell_type_count` | Per gene × broad network |
+| 81 | `supporting_fine_cell_types` | Per gene × broad network |
+| 82 | `supporting_group_count` | Per gene × broad network |
+| 83 | `supporting_groups` | Per gene × broad network |
+| 84 | `supporting_direction_count` | Per gene × broad network |
+| 85 | `supporting_directions` | Per gene × broad network |
+| 86 | `median_support_fold_enrichment` | Per gene × broad network |
+| 87 | `maximum_support_fold_enrichment` | Per gene × broad network |
+| 88 | `aggregate_acat_p` | Per gene × broad network |
+| 89 | `aggregate_acat_q` | Per gene × broad network; BH corrected within the broad network across both driver classes |
+| 90 | `aggregate_q_pass` | Per gene × broad network |
+| 91 | `missing_as_one_acat_p` | Per gene × broad network |
+| 92 | `missing_as_one_acat_q` | Per gene × broad network; BH corrected within the broad network |
+| 93 | `mean_log_p_score` | Per gene × broad network |
+| 94 | `terminal_candidate_status` | Per gene × broad network |
+| 95 | `within_case_rank` | Per gene × broad network; ranked within broad network × driver class |
+| 96 | `top5_display` | Per gene × broad network |
+| 97 | `stability_assessable_repetitions` | Per gene × broad network |
+| 98 | `stability_nominal_fraction` | Per gene × broad network |
+| 99 | `stability_q_fraction` | Per gene × broad network |
+| 100 | `stability_candidate_fraction` | Per gene × broad network |
+| 101 | `stability_worst_rank` | Per gene × broad network; ranks evaluated within broad network × driver class |
+| 102 | `evidence_tier` | Per gene × broad network |
+| 103 | `case_driver_candidate_count` | Per broad network × driver class |
+| 104 | `case_displayed_candidate_count` | Per broad network × driver class |
+
 ## Column groups
 
 ### 1. Schema, run, and gene identity

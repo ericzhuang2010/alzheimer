@@ -1,2 +1,0 @@
-schema_version	figure_id	validation_status	circle_genes	circle_display_contexts	passing_contexts	heatmap_cells	aggregation_audit_rows	declared_outputs	automated_checks	automated_checks_passed	failed_blocking_checks	visual_review_status	elapsed_seconds	timestamp_utc
-phase18_case3_sex_apoe_v1_status_v1	phase18_case3_sex_apoe	validated_complete	15	21	22	264	859	12	44	44	0	complete	14.304173946380615	2026-08-15 03:29:42 UTC

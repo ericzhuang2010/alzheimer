@@ -1,0 +1,2 @@
+schema_version	figure_id	validation_status	circle_genes	circle_display_contexts	passing_contexts	panel_a_grid_rows	selected_tested_runs	selected_significant_runs	selected_support_runs	figure_width_inches	figure_height_inches	png_dpi	declared_outputs	automated_checks	automated_checks_passed	failed_blocking_checks	visual_review_status	timestamp_utc
+phase18_mt_evidence_atlas_v2_status_v1	phase18_evidence_atlas_mt	validated_complete	10	26	30	70	836	396	278	12.0	6.2	450	12	27	27	0	complete	2026-08-16 00:47:17 UTC

@@ -1,0 +1,22 @@
+schema_version	figure_id	check_id	blocking	passed	observed	expected	detail
+phase18_sex_apoe_non_mt_v1_checks_v1	phase18_sex_apoe_non_mt	input_schema	TRUE	TRUE	phase18_call_key_driver_returns_v1	phase18_call_key_driver_returns_v1	
+phase18_sex_apoe_non_mt_v1_checks_v1	phase18_sex_apoe_non_mt	input_rows	TRUE	TRUE	95557	95557	
+phase18_sex_apoe_non_mt_v1_checks_v1	phase18_sex_apoe_non_mt	input_columns	TRUE	TRUE	104	104	
+phase18_sex_apoe_non_mt_v1_checks_v1	phase18_sex_apoe_non_mt	included_calls	TRUE	TRUE	161	161	
+phase18_sex_apoe_non_mt_v1_checks_v1	phase18_sex_apoe_non_mt	selected_genes	TRUE	TRUE	15	15	
+phase18_sex_apoe_non_mt_v1_checks_v1	phase18_sex_apoe_non_mt	displayed_contexts	TRUE	TRUE	21	21	
+phase18_sex_apoe_non_mt_v1_checks_v1	phase18_sex_apoe_non_mt	passing_contexts	TRUE	TRUE	22	22	
+phase18_sex_apoe_non_mt_v1_checks_v1	phase18_sex_apoe_non_mt	heatmap_cells	TRUE	TRUE	264	264	
+phase18_sex_apoe_non_mt_v1_checks_v1	phase18_sex_apoe_non_mt	aggregation_audit_rows	TRUE	TRUE	859	859	
+phase18_sex_apoe_non_mt_v1_checks_v1	phase18_sex_apoe_non_mt	aggregate_acat_reconstruction	TRUE	TRUE	5.421010862427522e-20	<=1e-10	
+phase18_sex_apoe_non_mt_v1_checks_v1	phase18_sex_apoe_non_mt	circle_flags	TRUE	TRUE	21	21	
+phase18_sex_apoe_non_mt_v1_checks_v1	phase18_sex_apoe_non_mt	case_id	TRUE	TRUE	all non_mt_driver	all non_mt_driver	
+phase18_sex_apoe_non_mt_v1_checks_v1	phase18_sex_apoe_non_mt	cell_states	TRUE	TRUE	no_eligible_query|supporting_tested|tested_zero_support	supported states	
+phase18_sex_apoe_non_mt_v1_checks_v1	phase18_sex_apoe_non_mt	visual_review_complete	FALSE	TRUE	complete	complete	Final-size color and grayscale review.
+phase18_sex_apoe_non_mt_v1_checks_v1	phase18_sex_apoe_non_mt	three_image_formats	TRUE	TRUE	3	3	
+phase18_sex_apoe_non_mt_v1_checks_v1	phase18_sex_apoe_non_mt	svg_vector_content	TRUE	TRUE	vector SVG	vector SVG	
+phase18_sex_apoe_non_mt_v1_checks_v1	phase18_sex_apoe_non_mt	pdf_header	TRUE	TRUE	%PDF-	%PDF-	
+phase18_sex_apoe_non_mt_v1_checks_v1	phase18_sex_apoe_non_mt	png_dimensions	TRUE	TRUE	6750x4950	6750x4950	
+phase18_sex_apoe_non_mt_v1_checks_v1	phase18_sex_apoe_non_mt	png_dpi	TRUE	TRUE	449.99|449.99	450|450	
+phase18_sex_apoe_non_mt_v1_checks_v1	phase18_sex_apoe_non_mt	colorblind_safe	TRUE	TRUE	cividis + Okabe-Ito + redundant marks	colorblind-safe	
+phase18_sex_apoe_non_mt_v1_checks_v1	phase18_sex_apoe_non_mt	minimum_text	TRUE	TRUE	>=7 pt	>=7 pt	

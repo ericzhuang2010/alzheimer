@@ -91,3 +91,5 @@ tested gene × run rows, whereas 6,149 is the number of distinct tested genes.
 The 1,641 significant rows are a subset of the 95,557 tested rows. The complete
 table is
 [`call_key_driver_returns.tsv`](../../results/minerva_production/18_key_driver_selection/call_key_driver_returns.tsv).
+The significant-only provenance table is
+[`call_key_driver_significant_returns.tsv`](../../results/minerva_production/18_key_driver_selection/call_key_driver_significant_returns.tsv).

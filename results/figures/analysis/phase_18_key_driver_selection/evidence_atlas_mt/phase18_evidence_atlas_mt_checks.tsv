@@ -1,0 +1,28 @@
+schema_version	figure_id	check_id	blocking	passed	observed	expected	detail
+phase18_mt_evidence_atlas_v2_checks_v1	phase18_evidence_atlas_mt	input_schema	TRUE	TRUE	phase18_call_key_driver_returns_v1	phase18_call_key_driver_returns_v1	
+phase18_mt_evidence_atlas_v2_checks_v1	phase18_evidence_atlas_mt	input_rows	TRUE	TRUE	95557	95557	
+phase18_mt_evidence_atlas_v2_checks_v1	phase18_evidence_atlas_mt	input_columns	TRUE	TRUE	104	104	
+phase18_mt_evidence_atlas_v2_checks_v1	phase18_evidence_atlas_mt	included_runs	TRUE	TRUE	161	161	
+phase18_mt_evidence_atlas_v2_checks_v1	phase18_evidence_atlas_mt	all_tested_genes	TRUE	TRUE	6149	6149	
+phase18_mt_evidence_atlas_v2_checks_v1	phase18_evidence_atlas_mt	selected_genes	TRUE	TRUE	10	10	
+phase18_mt_evidence_atlas_v2_checks_v1	phase18_evidence_atlas_mt	displayed_contexts	TRUE	TRUE	26	26	
+phase18_mt_evidence_atlas_v2_checks_v1	phase18_evidence_atlas_mt	passing_contexts	TRUE	TRUE	30	30	
+phase18_mt_evidence_atlas_v2_checks_v1	phase18_evidence_atlas_mt	panel_a_grid	TRUE	TRUE	70	70	
+phase18_mt_evidence_atlas_v2_checks_v1	phase18_evidence_atlas_mt	panel_a_keys	TRUE	TRUE	70	70	
+phase18_mt_evidence_atlas_v2_checks_v1	phase18_evidence_atlas_mt	selected_tested_runs	TRUE	TRUE	836	836	
+phase18_mt_evidence_atlas_v2_checks_v1	phase18_evidence_atlas_mt	selected_significant_runs	TRUE	TRUE	396	396	
+phase18_mt_evidence_atlas_v2_checks_v1	phase18_evidence_atlas_mt	selected_support_runs	TRUE	TRUE	278	278	
+phase18_mt_evidence_atlas_v2_checks_v1	phase18_evidence_atlas_mt	support_subset	TRUE	TRUE	all	support <= significant <= tested	
+phase18_mt_evidence_atlas_v2_checks_v1	phase18_evidence_atlas_mt	candidate_q_values	TRUE	TRUE	all	0 < q <= 0.05	
+phase18_mt_evidence_atlas_v2_checks_v1	phase18_evidence_atlas_mt	top_five_ranks	TRUE	TRUE	all	displayed rank <=5	
+phase18_mt_evidence_atlas_v2_checks_v1	phase18_evidence_atlas_mt	nonpassing_tiles_empty	TRUE	TRUE	all	all	
+phase18_mt_evidence_atlas_v2_checks_v1	phase18_evidence_atlas_mt	colorblind_safe	TRUE	TRUE	cividis + Okabe-Ito + labels	colorblind-safe redundant encoding	
+phase18_mt_evidence_atlas_v2_checks_v1	phase18_evidence_atlas_mt	minimum_text	TRUE	TRUE	>=6.1 pt; primary labels >=7 pt	>=6 pt	
+phase18_mt_evidence_atlas_v2_checks_v1	phase18_evidence_atlas_mt	visual_review_complete	FALSE	TRUE	complete	complete	Manual final-size color and grayscale review.
+phase18_mt_evidence_atlas_v2_checks_v1	phase18_evidence_atlas_mt	three_image_formats	TRUE	TRUE	.pdf|.png|.svg	.pdf|.png|.svg	
+phase18_mt_evidence_atlas_v2_checks_v1	phase18_evidence_atlas_mt	images_nonempty	TRUE	TRUE	3	3	
+phase18_mt_evidence_atlas_v2_checks_v1	phase18_evidence_atlas_mt	svg_vector_content	TRUE	TRUE	vector SVG	vector SVG	
+phase18_mt_evidence_atlas_v2_checks_v1	phase18_evidence_atlas_mt	svg_text_preserved	TRUE	TRUE	<text present	<text present	
+phase18_mt_evidence_atlas_v2_checks_v1	phase18_evidence_atlas_mt	pdf_header	TRUE	TRUE	%PDF-	%PDF-	
+phase18_mt_evidence_atlas_v2_checks_v1	phase18_evidence_atlas_mt	png_dimensions	TRUE	TRUE	5400x2790	5400x2790	
+phase18_mt_evidence_atlas_v2_checks_v1	phase18_evidence_atlas_mt	png_dpi	TRUE	TRUE	450.01|450.01	450|450	
