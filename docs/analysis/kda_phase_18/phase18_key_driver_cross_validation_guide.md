@@ -30,21 +30,21 @@ STRING-db is one protein-network validation task. It cannot substitute for indep
 ## 2. Candidate panel to validate first
 
 For the labor-intensive replication, proteomics, protein-network, and
-experimental work packages, start with six candidates that test different
+experimental work packages, start with seven candidates that test different
 biological and methodological situations. This is a **purposefully balanced
-pilot panel, not the six genes with the smallest aggregate q values**.
+pilot panel, not the seven genes with the smallest aggregate q values**.
 
 WP5 human genetics is the explicit exception. Phase 19 assesses all 25
 displayed genes in all 47 corresponding broad-network contexts because the
 primary fine-mapping and precomputed colocalization extraction can be run in
-one pass. The six-gene prioritization does not limit the Phase 19 scientific
+one pass. The seven-gene prioritization does not limit the Phase 19 scientific
 scope.
 
-### How the six were chosen
+### How the seven were chosen
 
 Every gene in the pilot first passed the formal Phase 18 selection gates in at least one broad network: usable-run coverage >= 0.80, at least one conservatively supporting run, aggregate ACAT q <= 0.05, and rank <= 5 within its broad-network × driver-class list. Conservative support means that the driver's neighborhood contained at least two other mitochondrial-query genes, had fold enrichment > 1, and had within-run q <= 0.05. The exact run- and aggregate-level evidence is stored in [`call_key_driver_returns.tsv`](../../../results/minerva_production/18_key_driver_selection/call_key_driver_returns.tsv).
 
-The six-gene subset was then chosen to maximize information from the first validation round across five dimensions:
+The original six-gene subset was chosen to maximize information from the first validation round across five dimensions:
 
 1. **Evidence role:** include an established positive control, internally strong candidates, and deliberately exploratory candidates.
 2. **Biological breadth:** represent APOE/lipid biology, redox and tau proteostasis, lysosome–mTOR signaling, ribosomal stress, iron/ferroptosis, and chromatin regulation.
@@ -52,20 +52,48 @@ The six-gene subset was then chosen to maximize information from the first valid
 4. **Methodological stress tests:** determine whether a recurrent ribosomal hub survives matched-null testing and whether sparse OPC signals reproduce independently.
 5. **Experimental interpretability:** initially favor non-MT genes with potentially testable upstream mechanisms. Many selected MT genes are structural respiratory-chain components that may be valuable module sentinels but are harder to interpret as upstream regulators because their perturbation can cause nonspecific respiratory failure.
 
-Consequently, the six candidates do not enter validation with equal prior confidence. APOE is a calibration control; SELENOW, LAMTOR5, and the excitatory-neuron RPL11 result have comparatively strong internal or external support; FTL and ANKRD11 are high-novelty, low-recurrence OPC hypotheses that must replicate before receiving similar weight.
+The all-gene WP5 screen then added **COX7C as the seventh candidate**. COX7C
+is the only non-APOE candidate in the screened public xQTL summary with a
+direct target-gene record, and it is displayed in both astrocyte and
+inhibitory-neuron networks. The record is a weak, bulk-tissue sQTL signal, so
+it raises COX7C's value as a cross-evidence validation test without establishing
+cell-type specificity or causality. The same record projected onto two network
+contexts is not two independent replications.
 
-| Candidate | Primary context and Phase 18 basis | Why it is in the pilot |
+Consequently, the seven candidates do not enter validation with equal prior
+confidence. APOE is a calibration control; COX7C is a genetics-informed but
+still limited complex-IV candidate; SELENOW, LAMTOR5, and the
+excitatory-neuron RPL11 result have comparatively strong internal or external
+support; FTL and ANKRD11 are high-novelty, low-recurrence OPC hypotheses that
+must replicate before receiving similar weight.
+
+| Candidate | Broad network(s) to validate and Phase 18 basis | Why it is in the pilot |
 |---|---|---|
 | **APOE** | Astrocytes; aggregate q = 0.0127, four conservative-support runs across three fine cell types, with candidate retention in two of three assessable omissions | It is the established AD positive control. Successful recovery of its frozen astrocyte mitochondrial target module shows whether the validation pipeline can detect a known AD mechanism; the new claim is the target neighborhood, not discovery of APOE itself. |
+| **COX7C** | Astrocytes and inhibitory neurons; aggregate q = 5.14 × 10^-4 and 6.24 × 10^-6, respectively. The displayed contexts contain two and six conservative-support runs; candidate-retention fractions are 0.67 and 1.00. | It adds a nuclear complex-IV/mitonuclear test and is the only non-APOE candidate with a direct target-gene xQTL record in the Tier 1 public screen. The genetic result is weak and bulk-tissue, so both displayed networks require separate replication and protein/complex-IV validation. |
 | **SELENOW** | Excitatory neurons; aggregate q = 5.75 × 10^-6, 14 conservative-support runs across nine fine cell types in the selected context, and complete omission retention | It combines a strong, stable KDA signal with direct external AD-model evidence involving tau clearance and with redox/respiration biology. It is the externally reinforced novel-mechanism candidate. |
 | **LAMTOR5** | Excitatory and inhibitory neurons; 17 conservative-support runs across 13 fine cell types in total, aggregate q = 0.00259 and 0.00414, respectively, and complete omission retention in both networks | It reproduces across two neuronal network types and provides a coherent, experimentally tractable lysosome–Ragulator–mTORC1 route to mitochondrial regulation, while remaining novel at the gene-specific AD level. |
-| **RPL11** | Displayed in four networks; strongest in excitatory neurons (aggregate q = 1.84 × 10^-9, 20 conservative-support runs across 11 fine cell types, complete omission retention) and also supported in astrocytes | It is the broadest recurrent non-MT candidate and a deliberate specificity challenge. Validation must show that its result exceeds expression-, degree-, and ribosomal-class-matched nulls before it is interpreted as more than a ribosomal or high-connectivity module anchor. |
+| **RPL11** | Astrocytes, excitatory neurons, microglia, and oligodendrocytes; strongest in excitatory neurons (aggregate q = 1.84 × 10^-9, 20 conservative-support runs across 11 fine cell types, complete omission retention) | It is the broadest recurrent non-MT candidate and a deliberate specificity challenge. Validation must show that its result exceeds expression-, degree-, and ribosomal-class-matched nulls before it is interpreted as more than a ribosomal or high-connectivity module anchor. |
 | **FTL** | OPCs; aggregate q = 2.19 × 10^-4 but only two conservative-support runs from one fine cell type; omission stability is not assessable | It tests a biologically plausible iron-storage/ferroptosis–mitochondria hypothesis in an understudied lineage. Its inclusion is exploratory: independent OPC localization and replication are prerequisites, because the current recurrence is sparse. |
 | **ANKRD11** | OPCs; aggregate q = 7.12 × 10^-4 but only two conservative-support runs from one fine cell type; omission stability is not assessable | It is a mechanistically orthogonal, high-novelty chromatin-regulation hypothesis. It tests whether a new OPC-specific regulatory signal can reproduce, rather than whether a familiar mitochondrial or stress gene can be rediscovered. |
 
-### Why other displayed genes were not in the first six
+### Why other displayed genes were not in the first seven
 
-Several omitted genes have strong Phase 18 statistics; omission does not mean that they failed. RPS15, RPS13, RPLP1, RPL15, and RPL38 would overrepresent the same ribosomal/translation theme, so RPL11 was chosen as the first representative and as the most demanding hub-bias test. ATP6V1F and LAPTM4A overlap the lysosomal theme, for which LAMTOR5 has broader neuronal support. The MT/OXPHOS candidates remain important for the full evidence matrix, but the initial pilot emphasizes non-MT genes whose perturbation is less likely to produce an uninformative, generic respiratory defect. FTL and ANKRD11 were retained despite weaker recurrence because validating or rejecting two distinct OPC mechanisms will reveal whether the striking OPC aggregate signals are independently reproducible or are consequences of the small OPC evidence base.
+Several omitted genes have strong Phase 18 statistics; omission does not mean
+that they failed. RPS15, RPS13, RPLP1, RPL15, and RPL38 would overrepresent the
+same ribosomal/translation theme, so RPL11 was chosen as the first
+representative and as the most demanding hub-bias test. ATP6V1F and LAPTM4A
+overlap the lysosomal theme, for which LAMTOR5 has broader neuronal support.
+Most MT/OXPHOS candidates remain important for the full evidence matrix but are
+not in the first panel because perturbing a structural respiratory-chain
+component can produce an uninformative, generic respiratory defect. COX7C is
+the deliberate exception: it is nuclear encoded, spans two displayed broad
+networks, and now supplies a weak direct human-genetic mapping that can be
+tested against protein stoichiometry and complex-IV assembly. FTL and ANKRD11
+were retained despite weaker recurrence because validating or rejecting two
+distinct OPC mechanisms will reveal whether the striking OPC aggregate signals
+are independently reproducible or are consequences of the small OPC evidence
+base.
 
 After the pipeline works for these candidates, extend the computational evidence matrix to the remaining displayed genes. Reserve expensive experiments for two or three candidates.
 
@@ -718,7 +746,7 @@ If experiments are not available, stop at “multi-omic network-associated candi
 - [ ] Run the APOE-model orthologous module analysis if suitable.
 - [ ] Complete Phase 19 genetic support for all 25 genes and all 47
   corresponding broad-network contexts.
-- [ ] Compile Agora/AD Knowledge Portal protein evidence for the six candidates.
+- [ ] Compile Agora/AD Knowledge Portal protein evidence for the seven candidates.
 - [ ] Run pQTL–GWAS colocalization where both signals are adequate.
 - [ ] Run context-matched STRING analyses and matched nulls.
 

@@ -1,0 +1,19 @@
+schema_version	network	source	target	is_directly_incident_to_apoe	is_upstream_context_edge	source_directed_depth	target_directed_depth	source_upstream_depth	target_upstream_depth	source_supporting_neighborhood_occurrence_count	target_supporting_neighborhood_occurrence_count
+phase18_apoe_astrocyte_consensus_v1	Astrocytes	APOE	ATP5PB	True	False	0.0	1.0			4	4
+phase18_apoe_astrocyte_consensus_v1	Astrocytes	APOE	C1orf56	True	False	0.0	1.0			4	0
+phase18_apoe_astrocyte_consensus_v1	Astrocytes	APOE	CHCHD10	True	False	0.0	1.0			4	4
+phase18_apoe_astrocyte_consensus_v1	Astrocytes	APOE	CST3	True	False	0.0	1.0			4	4
+phase18_apoe_astrocyte_consensus_v1	Astrocytes	APOE	DNASE2	True	False	0.0	1.0			4	0
+phase18_apoe_astrocyte_consensus_v1	Astrocytes	APOE	HLA-A	True	False	0.0	1.0			4	4
+phase18_apoe_astrocyte_consensus_v1	Astrocytes	APOE	LDHB	True	False	0.0	1.0			4	4
+phase18_apoe_astrocyte_consensus_v1	Astrocytes	APOE	PLTP	True	False	0.0	1.0			4	4
+phase18_apoe_astrocyte_consensus_v1	Astrocytes	APOE	TEX264	True	False	0.0	1.0			4	2
+phase18_apoe_astrocyte_consensus_v1	Astrocytes	APOE	TRAPPC4	True	False	0.0	1.0			4	0
+phase18_apoe_astrocyte_consensus_v1	Astrocytes	APOE	TUFM	True	False	0.0	1.0			4	4
+phase18_apoe_astrocyte_consensus_v1	Astrocytes	CKB	APOE	True	True		0.0	1.0		0	4
+phase18_apoe_astrocyte_consensus_v1	Astrocytes	CST3	AGT	False	False	1.0	2.0			4	3
+phase18_apoe_astrocyte_consensus_v1	Astrocytes	GPX4	CKB	False	True			2.0	1.0	0	0
+phase18_apoe_astrocyte_consensus_v1	Astrocytes	ITM2B	LAPTM4A	False	True			2.0	1.0	0	0
+phase18_apoe_astrocyte_consensus_v1	Astrocytes	LAPTM4A	APOE	True	True		0.0	1.0		0	4
+phase18_apoe_astrocyte_consensus_v1	Astrocytes	LDHB	ATP5F1A	False	False	1.0	2.0			4	3
+phase18_apoe_astrocyte_consensus_v1	Astrocytes	TUFM	NME3	False	False	1.0	2.0			4	3

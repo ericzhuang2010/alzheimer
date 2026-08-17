@@ -26,7 +26,7 @@ Phase 18 artifact.
 The scientific scope is all 25 Phase 18 genes in every corresponding displayed
 broad-network context: 47 candidate-context units in total. A local pilot may
 exercise synthetic or reduced-size external inputs, but it must still build
-and validate the full 47-row candidate manifest. There is no six-gene
+and validate the full 47-row candidate manifest. There is no seven-gene
 scientific stage and no optional later expansion.
 
 ### Output roots
@@ -229,7 +229,7 @@ and then referenced by every context for that gene. Molecular-QTL evidence is
 evaluated per `key_driver + broad_network` because context match matters. One
 GWAS locus repeated across contexts is not independent replication.
 
-Expanding from the former six-gene starter set to all 25 genes adds little
+Expanding from the seven-gene experimental starter panel to all 25 genes adds little
 computational cost when the precomputed fine-mapping and colocalization tables
 are filtered in one pass. The material extra work is human review of 25 gene
 searches and any candidate-specific custom reruns. Those reruns remain

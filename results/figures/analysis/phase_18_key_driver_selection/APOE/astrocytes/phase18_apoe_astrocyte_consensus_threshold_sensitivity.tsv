@@ -1,0 +1,5 @@
+schema_version	threshold_count	threshold_fraction	retained_query_hit_count	retained_query_hits	display_node_count	display_edge_count	is_selected_for_figure
+phase18_apoe_astrocyte_consensus_v1	1	0.25	7	AGT;ATP5F1A;ATP5PB;CHCHD10;LDHB;NME3;TUFM	19	18	True
+phase18_apoe_astrocyte_consensus_v1	2	0.5	4	AGT;ATP5PB;LDHB;TUFM	17	16	False
+phase18_apoe_astrocyte_consensus_v1	3	0.75	3	AGT;LDHB;TUFM	17	16	False
+phase18_apoe_astrocyte_consensus_v1	4	1.0	1	TUFM	16	15	False

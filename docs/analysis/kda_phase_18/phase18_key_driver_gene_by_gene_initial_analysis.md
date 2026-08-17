@@ -263,7 +263,15 @@ MT-CO2's ubiquity makes it an excellent marker of coordinated respiratory remode
 
 **Biological interpretation.** COX7C is a small nuclear-encoded complex-IV subunit. Its 42 earlier direct-DEG contexts are mostly AD-down, again contrasting with many mtDNA-encoded genes. A small candidate-gene study reported only limited/nominal evidence near COX7C and COX6B1, not decisive genetic support [40]. There is little direct gene-specific AD perturbation evidence. Phase 18 therefore mainly supports COX7C as part of a reproducible complex-IV/mitonuclear program.
 
-**Validation priority.** Prioritize protein stoichiometry, complex-IV assembly, and network-target validation over simple expression replication. Compare COX7C with COX4I1 to see whether the two nuclear subunits have distinct directed neighborhoods. Astrocyte results should be replicated because their stability is weaker.
+**Validation priority.** Include COX7C in the first validation panel for both
+displayed broad networks: astrocytes and inhibitory neurons. Prioritize protein
+stoichiometry, complex-IV assembly, and network-target validation over simple
+expression replication. Compare COX7C with COX4I1 to see whether the two
+nuclear subunits have distinct directed neighborhoods. Astrocyte results should
+be replicated because their stability is weaker. The later public genetic
+screen adds one direct but weak bulk-sQTL mapping for COX7C; that single source
+result supports prioritization but is not two independent replications across
+the two network contexts.
 
 ### 4.7 MT-CYB — complex-III sentinel in excitatory and inhibitory neurons
 

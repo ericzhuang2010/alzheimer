@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
-"""Build a presentation-ready Phase 18 key-driver selection deck.
+"""Build a presentation-ready key-driver selection deck.
 
-The deck uses only the requested Phase 18 figures.  The deprecated
-``filter_attrition`` directory is deliberately not referenced.
+The deck uses the requested selection and human-genetic-support figures.
+The deprecated ``filter_attrition`` directory is deliberately not referenced.
 """
 
 from __future__ import annotations
 
+import argparse
 import csv
 import tempfile
 import zipfile
@@ -23,7 +24,8 @@ from pptx.util import Inches, Pt
 
 REPO = Path(__file__).resolve().parents[2]
 FIG_ROOT = REPO / "results/figures/analysis/phase_18_key_driver_selection"
-OUT = REPO / "docs/presentations/key_driver_selection_analysis.pptx"
+GENETIC_SUPPORT_FIG_ROOT = REPO / "results/figures/analysis/phase_19_genetic_support"
+DEFAULT_OUT = REPO / "docs/presentations/key_driver_selection_analysis 08192026.pptx"
 
 FIG = {
     "selection": FIG_ROOT / "key_driver_selection_process/phase18_key_driver_selection_process.png",
@@ -34,9 +36,12 @@ FIG = {
     "sex_mt": FIG_ROOT / "sex_apoe_mt/phase18_sex_apoe_mt.png",
     "sex_non_mt": FIG_ROOT / "sex_apoe_non_mt/phase18_sex_apoe_non_mt.png",
     "rpl11_astro_pathway": FIG_ROOT / "RPL11/astrocyte/phase18_rpl11_astrocyte_consensus_network_pathways.png",
-    "rpl11_astro_string": FIG_ROOT / "RPL11/astrocyte/string_full_medium_conf.png",
+    "rpl11_astro_string": FIG_ROOT / "RPL11/astrocyte/stringdb_full_medium_conf.png",
     "rpl11_exc_pathway": FIG_ROOT / "RPL11/excitatory/phase18_rpl11_excitatory_consensus_network_pathways.png",
-    "rpl11_exc_string": FIG_ROOT / "RPL11/excitatory/full_medium_conf.png",
+    "rpl11_exc_string": FIG_ROOT / "RPL11/excitatory/stringdb_full_medium_conf.png",
+    "apoe_astro_pathway": FIG_ROOT / "APOE/astrocytes/phase18_apoe_astrocyte_consensus_network_pathways.png",
+    "apoe_astro_string": FIG_ROOT / "APOE/astrocytes/stringdb_full_medium_conf.png",
+    "genetic_support": GENETIC_SUPPORT_FIG_ROOT / "genetic_support_slide_summary.png",
 }
 
 DATA = {
@@ -278,6 +283,46 @@ def new_slide(prs: Presentation, *, bg: RGBColor = OFF_WHITE):
     return slide
 
 
+def add_section_divider(prs: Presentation, section_no: int, title: str,
+                        subtitle: str, topics: list[str], page_no: int,
+                        *, accent: RGBColor) -> None:
+    """Add a concise dark section divider using the deck's visual language."""
+    slide = new_slide(prs, bg=NAVY)
+    add_rect(slide, 0, 0, 13.333, 7.5, color=NAVY, outline=None, radius=False)
+    add_text(slide, f"SECTION {section_no:02d}", 0.76, 0.63, 3.30, 0.28,
+             size=11, color=accent, bold=True)
+    add_rect(slide, 0.76, 1.28, 0.11, 2.26, color=accent, outline=None, radius=False)
+    add_text(slide, title, 1.16, 1.36, 8.35, 1.50,
+             size=32, color=WHITE, bold=True, font=FONT_HEAD,
+             valign=MSO_ANCHOR.MIDDLE)
+    add_text(slide, subtitle, 1.18, 3.18, 7.80, 0.92,
+             size=15.3, color=RGBColor(204, 219, 234))
+
+    add_text(slide, f"{section_no:02d}", 9.55, 0.88, 2.52, 1.92,
+             size=104, color=NAVY_2, bold=True, font=FONT_HEAD,
+             align=PP_ALIGN.CENTER, valign=MSO_ANCHOR.MIDDLE)
+    add_circle(slide, 11.63, 1.06, 0.56, accent)
+    add_circle(slide, 10.98, 2.93, 0.28, SKY)
+    add_connector(slide, 10.85, 2.20, 11.91, 1.34, RGBColor(105, 137, 169))
+    add_connector(slide, 10.84, 2.23, 11.12, 3.05, RGBColor(105, 137, 169))
+
+    add_text(slide, "IN THIS SECTION", 0.78, 4.67, 2.10, 0.25,
+             size=9.8, color=SKY, bold=True)
+    topic_x = [0.78, 4.20, 7.62]
+    topic_w = 3.10
+    for index, topic in enumerate(topics):
+        x = topic_x[index]
+        add_rect(slide, x, 5.12, topic_w, 0.76,
+                 color=NAVY_2, outline=accent)
+        add_text(slide, topic, x + 0.18, 5.30, topic_w - 0.36, 0.32,
+                 size=11.4, color=WHITE, bold=True,
+                 align=PP_ALIGN.CENTER, valign=MSO_ANCHOR.MIDDLE)
+
+    add_text(slide, f"{page_no:02d}", 12.38, 0.34, 0.42, 0.22,
+             size=9, color=RGBColor(145, 171, 197), bold=True,
+             align=PP_ALIGN.RIGHT)
+
+
 def summarize() -> dict:
     circular = read_tsv(DATA["circular"])
     displayed = [r for r in circular if r["slot_status"] == "ranked_candidate"]
@@ -318,7 +363,7 @@ def summarize() -> dict:
     }
 
 
-def build_deck() -> Path:
+def build_deck(output_path: Path = DEFAULT_OUT) -> Path:
     for path in [*FIG.values(), *DATA.values()]:
         if not path.exists():
             raise FileNotFoundError(path)
@@ -373,9 +418,68 @@ def build_deck() -> Path:
         add_text(slide, "Prepared from validated Phase 18 outputs • 16 August 2026",
                  0.75, 6.90, 7.10, 0.23, size=9, color=RGBColor(145, 171, 197))
 
-        # 2 — selection process
+        # 2 — agenda
         slide = new_slide(prs)
-        add_header(slide, "Selection process", "A strict intersection of coverage, support, and aggregate evidence", 2,
+        add_header(
+            slide,
+            "Presentation roadmap",
+            "Agenda",
+            2,
+            accent=BLUE,
+            subtitle="Three sections move from candidate selection to independent genetic support and then to network and proteomics validation.",
+        )
+        agenda_rows = [
+            (
+                "01", "Key-driver selection & evidence landscape", "Slides 03–11",
+                "Selection logic, MT/non-MT recurrence, evidence breadth, synthesis, and descriptive sex/APOE patterns.",
+                TEAL, PALE_GREEN,
+            ),
+            (
+                "02", "Human genetic support", "Slides 12–15",
+                "Public summary data, direct-mapping rules, context-aware grading, and the candidate-level result profile.",
+                BLUE, PALE_BLUE,
+            ),
+            (
+                "03", "Key-driver networks & proteomics validation", "Slides 16–25",
+                "Place RPL11 and APOE on cell-type network graphs, examine protein-level coherence, and define proteomics validation.",
+                GOLD, PALE_GOLD,
+            ),
+        ]
+        for index, (number, title, slide_range, body, accent, bg) in enumerate(agenda_rows):
+            y = 1.55 + index * 1.63
+            add_rect(slide, 0.74, y, 11.86, 1.36, color=WHITE, outline=LIGHT)
+            add_rect(slide, 0.74, y, 0.10, 1.36, color=accent, outline=None, radius=False)
+            add_circle(slide, 1.10, y + 0.34, 0.68, accent)
+            add_text(slide, number, 1.10, y + 0.53, 0.68, 0.23,
+                     size=11.5, color=WHITE, bold=True, align=PP_ALIGN.CENTER,
+                     valign=MSO_ANCHOR.MIDDLE)
+            add_text(slide, title, 2.04, y + 0.22, 6.75, 0.36,
+                     size=18.3, color=NAVY, bold=True, font=FONT_HEAD)
+            add_text(slide, slide_range, 9.75, y + 0.23, 2.31, 0.27,
+                     size=10.2, color=accent, bold=True, align=PP_ALIGN.RIGHT)
+            add_text(slide, body, 2.05, y + 0.72, 9.90, 0.40,
+                     size=11.5, color=GRAY)
+        add_takeaway_ribbon(
+            slide,
+            "Narrative arc: prioritize candidates → seek independent human evidence → place key drivers on networks and validate at the protein level.",
+            accent=BLUE,
+            y=6.62,
+        )
+
+        # 3 — section divider: selection and evidence
+        add_section_divider(
+            prs,
+            1,
+            "Key-driver selection &\nevidence landscape",
+            "How 25 candidates emerged across 47 displayed network contexts—and where support recurs.",
+            ["Selection logic", "MT / non-MT evidence", "Sex / APOE patterns"],
+            3,
+            accent=TEAL,
+        )
+
+        # 4 — selection process
+        slide = new_slide(prs)
+        add_header(slide, "Selection process", "A strict intersection of coverage, support, and aggregate evidence", 4,
                    subtitle="The pipeline changes counting units as run-level tests are aggregated into network × driver-class candidates.")
         add_picture_contain(slide, trimmed["selection"], 0.35, 1.28, 8.55, 5.84,
                             alt="Phase 18 key-driver selection process from 95,557 run-level tests to 47 displayed positions")
@@ -393,7 +497,7 @@ def build_deck() -> Path:
                  size=10.5, color=VERMILION, bold=True)
         add_source(slide, "Source: phase18_key_driver_selection_process.png and accompanying validated caption/methods")
 
-        # 3 — MT circular
+        # 5 — MT circular
         slide = new_slide(prs, bg=WHITE)
         add_picture_contain(slide, trimmed["circular_mt"], 0.05, 0.02, 13.23, 6.92,
                             alt="Circular view of selected mitochondrial key drivers across seven broad cell networks")
@@ -405,7 +509,7 @@ def build_deck() -> Path:
         )
         add_source(slide, "Source: phase18_mt_driver_circular.png • center curves show recurrence, not network edges")
 
-        # 4 — non-MT circular
+        # 6 — non-MT circular
         slide = new_slide(prs, bg=WHITE)
         add_picture_contain(slide, trimmed["circular_non_mt"], 0.05, 0.02, 13.23, 6.92,
                             alt="Circular view of selected non-mitochondrial key drivers across seven broad cell networks")
@@ -417,7 +521,7 @@ def build_deck() -> Path:
         )
         add_source(slide, "Source: phase18_non_mt_driver_circular.png • non-MT means outside core MitoCarta, not absence of mitochondrial function")
 
-        # 5 — MT evidence atlas
+        # 7 — MT evidence atlas
         slide = new_slide(prs, bg=WHITE)
         add_picture_contain(slide, trimmed["atlas_mt"], 0.05, 0.06, 13.23, 6.94,
                             alt="Evidence atlas for 10 selected mitochondrial key-driver genes")
@@ -429,9 +533,9 @@ def build_deck() -> Path:
         )
         add_source(slide, "Source: phase18_evidence_atlas_mt.png • stability is diagnostic and did not determine selection")
 
-        # 6 — non-MT evidence atlas
+        # 8 — non-MT evidence atlas
         slide = new_slide(prs)
-        add_header(slide, "Evidence atlas • non-MT", "Ribosomal candidates carry the broadest non-MT evidence", 6,
+        add_header(slide, "Evidence atlas • non-MT", "Ribosomal candidates carry the broadest non-MT evidence", 8,
                    accent=GOLD, subtitle="Network evidence, recurrence, breadth, and leave-one-fine-cell-type stability are complementary summaries.")
         add_picture_contain(slide, trimmed["atlas_non_mt"], 0.25, 1.28, 9.17, 5.86,
                             alt="Evidence atlas for 15 selected non-mitochondrial key-driver genes")
@@ -448,9 +552,9 @@ def build_deck() -> Path:
                  10.08, 5.84, 2.24, 0.38, size=10.3, color=NAVY, bold=True, align=PP_ALIGN.CENTER)
         add_source(slide, "Source: phase18_evidence_atlas_non_mt.png and gene summary TSV")
 
-        # 7 — MT sex/APOE
+        # 10 — MT sex/APOE
         slide = new_slide(prs)
-        add_header(slide, "Sex/APOE evidence • MT", "MT support is widespread but uneven across descriptive strata", 7,
+        add_header(slide, "Sex/APOE evidence • MT", "MT support is widespread but uneven across descriptive strata", 10,
                    accent=BLUE, subtitle="Each row is a gene × broad-network context; columns partition AD-up and AD-down queries by sex and APOE group.")
         add_picture_contain(slide, trimmed["sex_mt"], 0.18, 1.28, 7.05, 5.98,
                             alt="Sex- and APOE-stratified support for selected mitochondrial key drivers")
@@ -476,9 +580,9 @@ def build_deck() -> Path:
                  7.78, 6.48, 4.54, 0.25, size=11.0, color=VERMILION, bold=True)
         add_source(slide, "Source: phase18_sex_apoe_mt.png • supporting-run totals are descriptive across displayed contexts")
 
-        # 8 — non-MT sex/APOE
+        # 11 — non-MT sex/APOE
         slide = new_slide(prs)
-        add_header(slide, "Sex/APOE evidence • non-MT", "Non-MT support concentrates in a smaller set of strata", 8,
+        add_header(slide, "Sex/APOE evidence • non-MT", "Non-MT support concentrates in a smaller set of strata", 11,
                    accent=GOLD, subtitle="The same visual grammar reveals broad recurrence for some drivers and sharply localized evidence for others.")
         add_picture_contain(slide, trimmed["sex_non_mt"], 0.18, 1.30, 8.62, 5.86,
                             alt="Sex- and APOE-stratified support for selected non-mitochondrial key drivers")
@@ -500,8 +604,9 @@ def build_deck() -> Path:
                  9.31, 6.39, 3.08, 0.34, size=10.4, color=VERMILION, bold=True)
         add_source(slide, "Source: phase18_sex_apoe_non_mt.png • descriptive totals match the validated figure guide")
 
-        # Candidate synthesis; moved to position 7 before saving.
+        # Candidate synthesis; moved to position 9 before saving.
         slide = new_slide(prs)
+        synthesis_slide_id = prs.slides._sldIdLst[-1]
         add_header(slide, "Synthesis", "What Phase 18 establishes—and what it leaves open", 9,
                    subtitle="The broad atlas establishes which candidates emerged; the next slides localize support before the RPL11 case study.")
         cards = [
@@ -528,72 +633,273 @@ def build_deck() -> Path:
         add_text(slide,
                  "Next: localize candidate evidence across sex/APOE strata, then examine RPL11 in depth.",
                  1.28, 6.35, 10.76, 0.42, size=13.2, color=NAVY, bold=True, align=PP_ALIGN.CENTER)
-        add_source(slide, "Slide 10 introduces the validation panel; slides 11–16 extend the atlas with the RPL11 pathway and STRING figures")
+        add_source(slide, "Slides 13–15 add independent human-genetic support; slide 17 introduces the validation panel; slides 18–25 show RPL11 and APOE network/protein examples")
 
-        # 10 — first-batch candidate panel
+        # 12 — section divider: human genetic support
+        add_section_divider(
+            prs,
+            2,
+            "Human genetic support",
+            "An independent check of whether public Alzheimer’s disease genetic signals map directly to the selected candidate genes.",
+            ["Public summary data", "Direct-mapping rules", "Candidate-level results"],
+            12,
+            accent=BLUE,
+        )
+
+        # 13 — human genetic support: data
         slide = new_slide(prs)
-        add_header(slide, "First-batch validation panel", "Why these six candidates go first", 10,
-                   subtitle="A purposeful pilot panel—not the six smallest q values—balances calibration, mechanism, cell type, and failure-mode testing.")
+        add_header(
+            slide,
+            "Human genetic support • data",
+            "A compact public summary bundle tests all 25 candidates",
+            13,
+            accent=BLUE,
+            subtitle="This is an independent evidence line across every displayed gene × broad-network context—not a rerun of the network model.",
+        )
 
-        candidate_cards = [
+        add_rect(slide, 0.55, 1.45, 7.42, 4.94, color=WHITE, outline=LIGHT)
+        add_panel_title(slide, "What entered the analysis", 0.86, 1.72, 6.82, accent=BLUE)
+
+        source_rows = [
             (
-                "APOE", "ASTROCYTES", "POSITIVE CONTROL",
-                "Known AD biology calibrates the workflow. The discovery test is whether its frozen astrocyte mitochondrial target module reproduces—not whether APOE is an AD gene.",
-                BLUE, PALE_BLUE,
-            ),
-            (
-                "SELENOW", "EXCITATORY", "REINFORCED",
-                "Stable excitatory KDA plus direct AD-model tau-clearance and redox/respiration evidence makes it the externally reinforced mechanism.",
+                "01", "Selected key drivers",
+                "25 unique genes evaluated in all 47 displayed broad cell-type/network contexts.",
                 TEAL, PALE_GREEN,
             ),
             (
-                "LAMTOR5", "EXCITATORY + INHIBITORY", "CROSS-NETWORK",
-                "Recurrence in two neuronal networks provides a tractable lysosome–Ragulator–mTORC1 route to mitochondrial regulation.",
-                PURPLE, RGBColor(239, 232, 246),
+                "02", "Public human-genetics summaries",
+                "Official FunGen-xQTL Alzheimer’s disease snapshot: GWAS/fine-mapping, xQTL, TWAS and gene-level result tables.",
+                BLUE, PALE_BLUE,
             ),
             (
-                "RPL11", "4 NETWORKS", "BIAS TEST",
-                "Broadest recurrent non-MT signal—and the hardest specificity test. It advances only if it beats expression-, degree-, and ribosomal-class matched nulls.",
+                "03", "Gene identity references",
+                "GENCODE v44 (GRCh38) coordinates plus the HGNC 2026-06-05 symbol table keep locus and gene mappings explicit.",
                 GOLD, PALE_GOLD,
             ),
-            (
-                "FTL", "OPCS", "EXPLORATORY",
-                "Iron storage/ferroptosis is plausible in OPCs, but support is sparse (2 runs, 1 subtype). Independent localization and replication come first.",
-                VERMILION, RGBColor(250, 232, 224),
-            ),
-            (
-                "ANKRD11", "OPCS", "NOVELTY TEST",
-                "An orthogonal chromatin-regulation hypothesis tests whether a novel OPC mechanism reproduces. Sparse subtype evidence keeps it exploratory.",
-                NAVY_2, RGBColor(234, 239, 245),
-            ),
         ]
-        card_x = [0.58, 4.75, 8.92]
-        card_y = [1.45, 3.93]
-        card_w, card_h = 3.83, 2.24
-        for index, (gene, context, role, body, accent, bg) in enumerate(candidate_cards):
-            x = card_x[index % 3]
-            y = card_y[index // 3]
-            add_rect(slide, x, y, card_w, card_h, color=WHITE, outline=LIGHT)
-            add_rect(slide, x, y, card_w, 0.07, color=accent, outline=None, radius=False)
-            add_rect(slide, x + 0.22, y + 0.19, 1.24, 0.30, color=bg, outline=accent)
-            add_text(slide, role, x + 0.27, y + 0.25, 1.14, 0.14,
-                     size=8.2, color=accent, bold=True, align=PP_ALIGN.CENTER,
+        for index, (number, title, body, accent, bg) in enumerate(source_rows):
+            y = 2.22 + index * 1.15
+            add_rect(slide, 0.86, y, 6.78, 0.94, color=bg, outline=accent)
+            add_circle(slide, 1.08, y + 0.22, 0.49, accent)
+            add_text(slide, number, 1.08, y + 0.31, 0.49, 0.20,
+                     size=9.4, color=WHITE, bold=True, align=PP_ALIGN.CENTER,
                      valign=MSO_ANCHOR.MIDDLE)
-            add_text(slide, context, x + 1.54, y + 0.23, 2.00, 0.18,
-                     size=8.4, color=MID, bold=True, align=PP_ALIGN.RIGHT)
-            add_text(slide, gene, x + 0.22, y + 0.61, 2.70, 0.40,
-                     size=20.5, color=NAVY, bold=True, font=FONT_HEAD)
-            add_text(slide, body, x + 0.22, y + 1.09, 3.36, 0.94,
-                     size=10.7, color=GRAY)
+            add_text(slide, title, 1.78, y + 0.15, 2.20, 0.26,
+                     size=13.8, color=NAVY, bold=True, font=FONT_HEAD)
+            add_text(slide, body, 4.00, y + 0.14, 3.35, 0.57,
+                     size=10.8, color=GRAY, valign=MSO_ANCHOR.MIDDLE)
+
+        add_rect(slide, 0.86, 5.82, 6.78, 0.35, color=OFF_WHITE, outline=None, radius=False)
+        add_text(slide, "Summary-level only: no individual genotypes, phenotypes, or protected participant data.",
+                 1.02, 5.91, 6.45, 0.18, size=9.7, color=VERMILION,
+                 bold=True, align=PP_ALIGN.CENTER)
+
+        add_rect(slide, 8.20, 1.45, 4.58, 4.94, color=WHITE, outline=LIGHT)
+        add_panel_title(slide, "Scale and portability", 8.50, 1.72, 3.97, accent=TEAL)
+        add_metric(slide, "25", "unique candidate genes", 8.50, 2.22, 1.74, accent=BLUE)
+        add_metric(slide, "47", "gene × network contexts", 10.44, 2.22, 1.74, accent=TEAL)
+        add_metric(slide, "6", "public source files", 8.50, 3.49, 1.74, accent=GOLD)
+        add_metric(slide, "~8.8 MiB", "total downloaded bundle", 10.44, 3.49, 1.74, accent=PURPLE)
+        add_rect(slide, 8.50, 4.83, 3.68, 1.16, color=NAVY, outline=None)
+        add_text(slide, "LOCAL WORKSTATION READY", 8.76, 5.04, 3.17, 0.24,
+                 size=10.2, color=SKY, bold=True, align=PP_ALIGN.CENTER)
+        add_text(slide, "Small, tabular inputs; no cluster-scale compute required.",
+                 8.76, 5.38, 3.17, 0.39, size=11.5, color=WHITE,
+                 bold=True, align=PP_ALIGN.CENTER)
 
         add_takeaway_ribbon(
             slide,
-            "Unequal priors by design: APOE calibrates; SELENOW, LAMTOR5, and RPL11 carry stronger support; FTL and ANKRD11 must replicate before promotion.",
-            accent=TEAL, y=6.57,
+            "Human genetics asks whether an independently measured AD-associated signal maps to the same candidate gene in a relevant context.",
+            accent=BLUE,
+            y=6.62,
         )
-        add_source(slide, "Source: Phase 18 call_key_driver_returns.tsv and phase18_key_driver_cross_validation_guide.md, Section 2")
+        add_source(slide, "Sources: FunGen-xQTL public snapshot (2026-07-29) • GENCODE v44, GRCh38 • HGNC 2026-06-05")
 
-        # 11 — RPL11 rationale
+        # 14 — human genetic support: method
+        slide = new_slide(prs)
+        add_header(
+            slide,
+            "Human genetic support • method",
+            "Direct gene mapping—not proximity—determines the grade",
+            14,
+            accent=TEAL,
+            subtitle="The workflow screens broadly, then prevents a nearby association from being mistaken for support of a specific candidate gene.",
+        )
+
+        flow = [
+            ("25 genes", "47 candidate contexts", BLUE, PALE_BLUE),
+            ("19 nuclear genes", "screen ±1 Mb per locus", TEAL, PALE_GREEN),
+            ("356 records", "candidate-locus variant records", GOLD, PALE_GOLD),
+            ("Direct mapping", "target gene + evidence context", PURPLE, RGBColor(239, 232, 246)),
+        ]
+        flow_x = [0.55, 3.60, 6.65, 9.70]
+        for index, (title, body, accent, bg) in enumerate(flow):
+            x = flow_x[index]
+            add_rect(slide, x, 1.53, 2.52, 1.13, color=bg, outline=accent)
+            add_text(slide, title, x + 0.16, 1.72, 2.20, 0.31,
+                     size=16.5, color=NAVY, bold=True, font=FONT_HEAD,
+                     align=PP_ALIGN.CENTER)
+            add_text(slide, body, x + 0.16, 2.15, 2.20, 0.24,
+                     size=9.6, color=GRAY, bold=True, align=PP_ALIGN.CENTER)
+            if index < len(flow) - 1:
+                add_connector(slide, x + 2.55, 2.10, flow_x[index + 1] - 0.08, 2.10, SKY)
+
+        add_rect(slide, 0.55, 2.98, 4.00, 2.73, color=WHITE, outline=LIGHT)
+        add_panel_title(slide, "Set aside", 0.84, 3.26, 3.40, accent=MID)
+        add_text(slide, "352", 0.85, 3.79, 1.18, 0.55,
+                 size=30, color=MID, bold=True, font=FONT_HEAD)
+        add_text(slide, "regional proximity-only records", 1.86, 3.84, 2.32, 0.39,
+                 size=13.3, color=NAVY, bold=True)
+        add_text(slide,
+                 "They help locate candidate regions but do not name the candidate as the molecular target, so they are not counted as gene support.",
+                 0.86, 4.56, 3.32, 0.73, size=11.4, color=GRAY)
+
+        add_rect(slide, 4.67, 2.98, 4.00, 2.73, color=PALE_GREEN, outline=TEAL)
+        add_panel_title(slide, "Grade direct evidence", 4.96, 3.26, 3.40, accent=TEAL)
+        add_text(slide, "4 + 1", 4.97, 3.79, 1.34, 0.55,
+                 size=30, color=TEAL, bold=True, font=FONT_HEAD)
+        add_text(slide, "direct xQTL records + TWAS-list row", 6.25, 3.84, 2.02, 0.50,
+                 size=12.3, color=NAVY, bold=True)
+        add_text(slide,
+                 "Grade strong / moderate / weak from the source’s direct gene mapping, evidence type, and match to the broad cell context.",
+                 4.98, 4.56, 3.31, 0.73, size=11.4, color=GRAY)
+
+        add_rect(slide, 8.79, 2.98, 4.00, 2.73, color=PALE_GOLD, outline=GOLD)
+        add_panel_title(slide, "Mitochondrial route", 9.08, 3.26, 3.40, accent=GOLD)
+        add_text(slide, "6", 9.09, 3.79, 0.66, 0.55,
+                 size=30, color=GOLD, bold=True, font=FONT_HEAD)
+        add_text(slide, "mtDNA genes • 20 contexts", 9.83, 3.84, 2.56, 0.39,
+                 size=13.0, color=NAVY, bold=True)
+        add_text(slide,
+                 "The available source lacks mtDNA-specific heteroplasmy, haplogroup, copy-number and NUMT controls; these contexts are not assessable.",
+                 9.10, 4.56, 3.32, 0.73, size=11.4, color=GRAY)
+
+        add_rect(slide, 0.78, 5.95, 12.00, 0.42, color=OFF_WHITE, outline=LIGHT, radius=False)
+        add_text(slide,
+                 "Colocalization boundary: the public source provides prefiltered summaries, not H0–H4 posterior probabilities; missing statistics were not reconstructed or relabeled.",
+                 1.00, 6.05, 11.57, 0.22, size=10.3, color=VERMILION,
+                 bold=True, align=PP_ALIGN.CENTER)
+        add_takeaway_ribbon(
+            slide,
+            "Decision rule: direct gene mapping can support a candidate; proximity alone cannot. Missing source coverage remains unresolved—not negative.",
+            accent=TEAL,
+            y=6.67,
+        )
+        add_source(slide, "Method: registered candidate list • ±1 Mb nuclear-locus screen • direct-target review • context-aware evidence grading")
+
+        # 15 — human genetic support: results
+        slide = new_slide(prs)
+        add_header(
+            slide,
+            "Human genetic support • results",
+            "APOE stands out; COX7C and SELENOW remain limited",
+            15,
+            accent=BLUE,
+            subtitle="Most candidates remain unresolved because direct mapping or appropriate source coverage was unavailable; the grades are not causal probabilities.",
+        )
+        add_picture_contain(
+            slide,
+            trimmed["genetic_support"],
+            0.50,
+            1.37,
+            12.33,
+            5.70,
+            alt="Human genetic support summary across 47 candidate gene-by-network contexts, highlighting APOE, COX7C, SELENOW, unresolved nuclear candidates, and mitochondrial contexts not assessable in the source",
+        )
+        add_source(slide, "Source: validated human-genetic-support summary • FunGen-xQTL public snapshot • GENCODE v44 • HGNC 2026-06-05")
+
+        # 16 — section divider: network graphs and proteomics validation
+        add_section_divider(
+            prs,
+            3,
+            "Key-driver network graphs &\nproteomics validation",
+            "Place prioritized key drivers in their cell-type network context, then test whether predicted modules are supported at the protein level.",
+            ["Network graph overlays", "Protein-level evidence", "Proteomics validation"],
+            16,
+            accent=GOLD,
+        )
+
+        # 17 — first-batch candidate panel
+        slide = new_slide(prs)
+        add_header(slide, "First-batch validation panel", "Why these seven candidates go first", 17,
+                   subtitle="Every listed gene × broad-network pairing is a separate validation unit; support in one network does not validate another.")
+
+        candidate_rows = [
+            (
+                "APOE", "Astrocytes", "CALIBRATOR",
+                "Known-AD control; reproduce its frozen astrocyte mitochondrial target module.",
+                BLUE, PALE_BLUE,
+            ),
+            (
+                "COX7C", "Astrocytes • Inhibitory neurons", "GENETICS-INFORMED",
+                "Weak direct bulk-sQTL mapping; test network targets, complex-IV assembly, and protein stoichiometry.",
+                SKY, PALE_BLUE,
+            ),
+            (
+                "SELENOW", "Excitatory neurons", "REINFORCED",
+                "Stable KDA plus tau/redox evidence; the source TWAS flag remains limited.",
+                TEAL, PALE_GREEN,
+            ),
+            (
+                "LAMTOR5", "Excitatory neurons • Inhibitory neurons", "CROSS-NETWORK",
+                "Two neuronal networks test lysosome–mTOR/mitochondria recurrence.",
+                PURPLE, RGBColor(239, 232, 246),
+            ),
+            (
+                "RPL11", "Astrocytes • Excitatory neurons\nMicroglia • Oligodendrocytes", "BIAS TEST",
+                "Four selected networks; require expression-, degree-, and ribosomal-matched nulls.",
+                GOLD, PALE_GOLD,
+            ),
+            (
+                "FTL", "OPCs", "EXPLORATORY",
+                "Sparse OPC signal; localize the iron/ferroptosis mechanism before promotion.",
+                VERMILION, RGBColor(250, 232, 224),
+            ),
+            (
+                "ANKRD11", "OPCs", "NOVELTY TEST",
+                "Sparse OPC novelty test for chromatin-linked regulation.",
+                NAVY_2, RGBColor(234, 239, 245),
+            ),
+        ]
+
+        add_rect(slide, 0.55, 1.40, 12.23, 0.43, color=NAVY, outline=None, radius=False)
+        add_text(slide, "GENE", 0.74, 1.51, 1.03, 0.18,
+                 size=8.8, color=SKY, bold=True)
+        add_text(slide, "BROAD NETWORK(S) TO VALIDATE", 1.92, 1.51, 3.10, 0.18,
+                 size=8.8, color=SKY, bold=True)
+        add_text(slide, "ROLE", 5.19, 1.51, 1.80, 0.18,
+                 size=8.8, color=SKY, bold=True, align=PP_ALIGN.CENTER)
+        add_text(slide, "WHY / PRIMARY TEST", 7.12, 1.51, 5.12, 0.18,
+                 size=8.8, color=SKY, bold=True)
+
+        for index, (gene, networks, role, body, accent, role_bg) in enumerate(candidate_rows):
+            y = 1.88 + index * 0.63
+            row_bg = WHITE if index % 2 == 0 else OFF_WHITE
+            add_rect(slide, 0.55, y, 12.23, 0.56, color=row_bg, outline=LIGHT, radius=False)
+            add_rect(slide, 0.55, y, 0.08, 0.56, color=accent, outline=None, radius=False)
+            add_text(slide, gene, 0.74, y + 0.12, 1.05, 0.28,
+                     size=14.0, color=NAVY, bold=True, font=FONT_HEAD,
+                     valign=MSO_ANCHOR.MIDDLE)
+            network_size = 8.8 if gene in {"LAMTOR5", "RPL11"} else 9.5
+            add_text(slide, networks, 1.92, y + 0.08, 3.10, 0.40,
+                     size=network_size, color=NAVY, bold=True,
+                     valign=MSO_ANCHOR.MIDDLE)
+            add_rect(slide, 5.16, y + 0.13, 1.84, 0.30, color=role_bg, outline=accent)
+            role_size = 7.1 if role == "GENETICS-INFORMED" else 7.7
+            add_text(slide, role, 5.21, y + 0.21, 1.74, 0.13,
+                     size=role_size, color=accent, bold=True,
+                     align=PP_ALIGN.CENTER, valign=MSO_ANCHOR.MIDDLE)
+            add_text(slide, body, 7.12, y + 0.08, 5.38, 0.40,
+                     size=9.5, color=GRAY, valign=MSO_ANCHOR.MIDDLE)
+
+        add_takeaway_ribbon(
+            slide,
+            "Validate every listed gene × network unit separately; COX7C enters both astrocyte and inhibitory-neuron workstreams, but one bulk-sQTL result is not two replications.",
+            accent=TEAL, y=6.55,
+        )
+        add_source(slide, "Sources: Phase 18 call_key_driver_returns.tsv • cross-validation guide, Section 2 • Tier 1 human-genetic-support report")
+
+        # 18 — RPL11 rationale
         slide = new_slide(prs, bg=NAVY)
         add_rect(slide, 0, 0, 13.333, 7.5, color=NAVY, outline=None, radius=False)
         add_text(slide, "RPL11 DEEP DIVE", 0.72, 0.54, 4.0, 0.28,
@@ -643,13 +949,13 @@ def build_deck() -> Path:
         add_text(slide,
                  "AD capillary proteomics reported increased RPL11/RPL15 protein, while earlier AD work supports ribosomal dysfunction. The capillary signal does not establish neuronal or astrocytic localization.",
                  2.34, 5.42, 6.07, 0.63, size=11.4, color=WHITE)
-        add_text(slide, "11", 12.37, 0.34, 0.42, 0.22,
+        add_text(slide, "18", 12.37, 0.34, 0.42, 0.22,
                  size=9, color=RGBColor(145, 171, 197), bold=True, align=PP_ALIGN.RIGHT)
         add_source(slide, "Biological discussion: phase18_key_driver_gene_by_gene_initial_analysis.md • Zhang 2003; Slomnicki 2018; Suzuki 2022; Ding 2005")
 
-        # 12 — astrocyte directed pathway figure
+        # 19 — astrocyte directed pathway figure
         slide = new_slide(prs)
-        add_header(slide, "RPL11 • astrocytes", "A focused respiratory branch emerges from three supporting runs", 12,
+        add_header(slide, "RPL11 • astrocytes", "A focused respiratory branch emerges from three supporting runs", 19,
                    accent=TEAL, subtitle="Directed Bayesian-network edges are model-derived regulatory hypotheses; pathway outlines summarize the displayed genes.")
         add_picture_contain(slide, trimmed["rpl11_astro_pathway"], 0.18, 1.25, 8.48, 5.85,
                             alt="RPL11-centered astrocyte consensus network with pathway annotations")
@@ -668,9 +974,9 @@ def build_deck() -> Path:
                  9.18, 6.46, 3.20, 0.25, size=9.8, color=NAVY, bold=True)
         add_source(slide, "Source: phase18_rpl11_astrocyte_consensus_network_pathways.png, caption, methods, and ORA table")
 
-        # 13 — astrocyte STRING figure
+        # 20 — astrocyte STRING figure
         slide = new_slide(prs)
-        add_header(slide, "RPL11 • astrocytes", "STRING supports target-module coherence more clearly than direct regulation", 13,
+        add_header(slide, "RPL11 • astrocytes", "STRING supports target-module coherence more clearly than direct regulation", 20,
                    accent=TEAL, subtitle="Medium-confidence STRING functional associations are undirected and are not astrocyte- or AD-specific.")
         add_rect(slide, 0.43, 1.39, 5.38, 5.45, color=WHITE, outline=LIGHT)
         add_picture_contain(slide, trimmed["rpl11_astro_string"], 0.70, 1.62, 4.84, 4.98,
@@ -689,11 +995,11 @@ def build_deck() -> Path:
         add_rect(slide, 6.43, 6.23, 5.76, 0.42, color=PALE_GOLD, outline=GOLD)
         add_text(slide, "Allowed conclusion: protein-level coherence of the target module; direct RPL11 support remains provisional.",
                  6.66, 6.31, 5.30, 0.22, size=10.2, color=NAVY, bold=True, align=PP_ALIGN.CENTER)
-        add_source(slide, "Source: astrocyte/string_full_medium_conf.png • interpretation follows rpl11_astrocyte_string_analysis_guide.md")
+        add_source(slide, "Source: astrocyte/stringdb_full_medium_conf.png • interpretation follows rpl11_astrocyte_string_analysis_guide.md")
 
-        # 14 — excitatory-neuron directed pathway figure
+        # 21 — excitatory-neuron directed pathway figure
         slide = new_slide(prs)
-        add_header(slide, "RPL11 • excitatory neurons", "A broader translation–mitochondria interface recurs across 20 runs", 14,
+        add_header(slide, "RPL11 • excitatory neurons", "A broader translation–mitochondria interface recurs across 20 runs", 21,
                    accent=GOLD, subtitle="The excitatory context has stronger aggregate evidence and complete leave-one-fine-cell-type candidate retention.")
         add_picture_contain(slide, trimmed["rpl11_exc_pathway"], 0.14, 1.24, 8.63, 5.89,
                             alt="RPL11-centered excitatory-neuron consensus network with pathway annotations")
@@ -712,9 +1018,9 @@ def build_deck() -> Path:
                  9.25, 6.47, 3.12, 0.25, size=9.8, color=NAVY, bold=True)
         add_source(slide, "Source: phase18_rpl11_excitatory_consensus_network_pathways.png, node/edge tables, and ORA table")
 
-        # 15 — excitatory-neuron STRING figure
+        # 22 — excitatory-neuron STRING figure
         slide = new_slide(prs)
-        add_header(slide, "RPL11 • excitatory neurons", "STRING resolves ribosomal and respiratory protein neighborhoods", 15,
+        add_header(slide, "RPL11 • excitatory neurons", "STRING resolves ribosomal and respiratory protein neighborhoods", 22,
                    accent=GOLD, subtitle="The displayed functional network is useful for architecture; it does not preserve Bayesian edge direction.")
         add_rect(slide, 0.35, 1.40, 7.63, 5.43, color=WHITE, outline=LIGHT)
         add_picture_contain(slide, trimmed["rpl11_exc_string"], 0.55, 1.62, 7.25, 4.99,
@@ -733,11 +1039,11 @@ def build_deck() -> Path:
         add_rect(slide, 8.51, 6.05, 3.84, 0.56, color=PALE_GOLD, outline=GOLD)
         add_text(slide, "Test RPL11-to-target edges separately from target-to-target connectivity.",
                  8.72, 6.17, 3.43, 0.28, size=10.3, color=NAVY, bold=True, align=PP_ALIGN.CENTER)
-        add_source(slide, "Source: excitatory/full_medium_conf.png • medium-confidence functional STRING view")
+        add_source(slide, "Source: excitatory/stringdb_full_medium_conf.png • medium-confidence functional STRING view")
 
-        # 16 — cross-cell-type synthesis and validation plan
+        # 23 — cross-cell-type synthesis and validation plan
         slide = new_slide(prs)
-        add_header(slide, "RPL11 synthesis", "The excitatory signal is broader; the astrocyte signal is more focused", 16,
+        add_header(slide, "RPL11 synthesis", "The excitatory signal is broader; the astrocyte signal is more focused", 23,
                    subtitle="Both contexts support a translation/stress-to-mitochondria hypothesis, while leaving target specificity unresolved.")
 
         add_rect(slide, 0.69, 1.55, 5.89, 3.63, color=PALE_GREEN, outline=TEAL)
@@ -769,13 +1075,121 @@ def build_deck() -> Path:
                  2.82, 5.68, 9.15, 0.78, size=11.6, color=WHITE)
         add_source(slide, "Interpretation and validation priorities synthesized from phase18_key_driver_gene_by_gene_initial_analysis.md")
 
-        # Narrative order: selection/circular/atlas → synthesis → sex/APOE → RPL11.
-        # The synthesis slide was authored ninth so move its slide-id entry to
-        # position seven, then update the small upper-right slide numerals.
+        # 24 — APOE astrocyte directed pathway figure
+        slide = new_slide(prs)
+        add_header(
+            slide,
+            "APOE • astrocytes",
+            "APOE anchors a recurrent astrocyte mitochondrial neighborhood",
+            24,
+            accent=BLUE,
+            subtitle="APOE is an established AD gene; the Phase 18 contribution is its placement within a specific astrocyte mitochondrial network.",
+        )
+        add_picture_contain(
+            slide,
+            trimmed["apoe_astro_pathway"],
+            0.12,
+            1.23,
+            8.93,
+            5.91,
+            alt="APOE-centered astrocyte consensus network with directed Bayesian-network edges and contextual pathway outlines",
+        )
+        add_rect(slide, 9.20, 1.42, 3.60, 5.48, color=WHITE, outline=LIGHT)
+        add_panel_title(slide, "Evidence scale", 9.47, 1.70, 3.05, accent=BLUE)
+        add_metric(slide, "4/14", "supporting / tested astrocyte runs", 9.47, 2.18, 1.38, accent=BLUE)
+        add_metric(slide, "1.27×10⁻²", "aggregate ACAT q", 10.99, 2.18, 1.53, accent=TEAL)
+        add_panel_title(slide, "Network readout", 9.47, 3.48, 3.05, accent=TEAL)
+        add_bullets(slide, [
+            "19 nodes, 18 directed edges, and seven mitochondrial query hits across four supporting runs.",
+            "APOE-linked paths reach ATP5F1A, ATP5PB, CHCHD10, LDHB, NME3, TUFM, and AGT.",
+            "Amyloid, cholesterol/efflux, and cristae outlines are contextual; none has BH FDR < 0.05.",
+            "Support spans three fine cell types and both mitochondrial directions; leave-one-fine-cell-type retention is 2/3.",
+        ], 9.47, 3.96, 2.91, size=10.7, line_h=0.58, accent=TEAL)
+        add_text(
+            slide,
+            "Interpretation: credible network placement, but less stable than the strongest neuronal candidates and not proof of direct APOE regulation.",
+            9.49,
+            6.43,
+            2.87,
+            0.31,
+            size=9.5,
+            color=NAVY,
+            bold=True,
+        )
+        add_source(slide, "Source: phase18_apoe_astrocyte_consensus_network_pathways.png, caption, methods, and gene-by-gene analysis")
+
+        # 25 — APOE astrocyte STRING figure and validation interpretation
+        slide = new_slide(prs)
+        add_header(
+            slide,
+            "APOE • astrocytes",
+            "STRING reveals two distinct APOE-neighborhood modules",
+            25,
+            accent=BLUE,
+            subtitle="Medium-confidence STRING associations are undirected and context-agnostic; they complement, but do not validate, Bayesian edge direction.",
+        )
+        add_rect(slide, 0.43, 1.39, 6.04, 5.45, color=WHITE, outline=LIGHT)
+        add_picture_contain(
+            slide,
+            trimmed["apoe_astro_string"],
+            0.70,
+            1.69,
+            5.50,
+            4.66,
+            alt="STRING medium-confidence functional association network for APOE and the astrocyte consensus-neighborhood proteins",
+        )
+        add_rect(slide, 6.72, 1.39, 6.08, 5.45, color=WHITE, outline=LIGHT)
+        add_panel_title(slide, "What the image supports", 7.03, 1.72, 5.47, accent=BLUE)
+        add_bullets(slide, [
+            "A mitochondrial protein cluster contains TUFM, ATP5F1A, ATP5PB, CHCHD10, and NME3.",
+            "APOE instead connects with a lipid/amyloid/stress neighborhood containing PLTP, CST3, AGT, ITM2B, and GPX4.",
+            "Their separation argues against reading this figure as a simple direct APOE→mitochondrial protein chain.",
+        ], 7.03, 2.20, 5.42, size=11.8, line_h=0.60, accent=BLUE)
+        add_panel_title(slide, "Mechanism and decisive test", 7.03, 4.15, 5.47, accent=TEAL)
+        add_text(
+            slide,
+            "Prior cell studies connect APOE4 to lysosomal cholesterol accumulation, impaired mitophagy, altered mitochondrial dynamics, and disrupted fatty-acid metabolism. Test whether that biology reproduces the exact Phase 18 target neighborhood in APOE2/3/4-isogenic astrocytes.",
+            7.04,
+            4.62,
+            5.35,
+            0.92,
+            size=11.4,
+            color=GRAY,
+        )
+        add_rect(slide, 7.04, 5.72, 5.31, 0.73, color=PALE_GREEN, outline=TEAL)
+        add_text(
+            slide,
+            "Measure respiration, substrate use, cholesterol distribution, mitophagy, lipid-droplet transfer, and the frozen target module; fit donor-level disease × sex × APOE interactions separately.",
+            7.24,
+            5.85,
+            4.90,
+            0.44,
+            size=9.9,
+            color=NAVY,
+            bold=True,
+            align=PP_ALIGN.CENTER,
+        )
+        add_text(
+            slide,
+            "Observed female ε2, male ε2, and male ε4 support is descriptive—not evidence of an interaction.",
+            7.08,
+            6.55,
+            5.24,
+            0.22,
+            size=9.4,
+            color=VERMILION,
+            bold=True,
+            align=PP_ALIGN.CENTER,
+        )
+        add_source(slide, "Sources: stringdb_full_medium_conf.png • phase18_key_driver_gene_by_gene_initial_analysis.md • Lee 2023; Schmukler 2020; Qi 2021; Williams 2020")
+
+        # Narrative order: agenda/section → selection/circular/atlas → synthesis
+        # → sex/APOE → human genetics → validation/RPL11. The synthesis slide is
+        # authored after the sex/APOE slides, so move its saved slide-id entry to
+        # position nine, then update the small upper-right slide numerals.
         slide_ids = prs.slides._sldIdLst
-        synthesis_id = slide_ids[8]
-        slide_ids.remove(synthesis_id)
-        slide_ids.insert(6, synthesis_id)
+        slide_ids.remove(synthesis_slide_id)
+        slide_ids.insert(8, synthesis_slide_id)
         for position, ordered_slide in enumerate(prs.slides, start=1):
             for shape in ordered_slide.shapes:
                 if not getattr(shape, "has_text_frame", False):
@@ -788,40 +1202,51 @@ def build_deck() -> Path:
                     if runs:
                         runs[0].text = f"{position:02d}"
 
-        OUT.parent.mkdir(parents=True, exist_ok=True)
-        prs.save(OUT)
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        prs.save(output_path)
 
-    validate_deck(OUT)
-    return OUT
+    validate_deck(output_path)
+    return output_path
 
 
 def validate_deck(path: Path) -> None:
     prs = Presentation(path)
-    if len(prs.slides) != 16:
-        raise RuntimeError(f"Expected 16 slides, found {len(prs.slides)}")
+    if len(prs.slides) != 25:
+        raise RuntimeError(f"Expected 25 slides, found {len(prs.slides)}")
     if prs.slide_width != SLIDE_W or prs.slide_height != SLIDE_H:
         raise RuntimeError("Deck is not 16:9 widescreen")
     image_shapes = sum(1 for slide in prs.slides for shape in slide.shapes if shape.shape_type == 13)
-    if image_shapes != 11:
-        raise RuntimeError(f"Expected eleven requested figure images, found {image_shapes}")
+    if image_shapes != 14:
+        raise RuntimeError(f"Expected fourteen requested figure images, found {image_shapes}")
     ordered_text = [
         "\n".join(shape.text for shape in slide.shapes
                   if getattr(shape, "has_text_frame", False))
         for slide in prs.slides
     ]
     expected_sequence = {
-        6: "SYNTHESIS",
-        7: "SEX/APOE EVIDENCE • MT",
-        8: "SEX/APOE EVIDENCE • NON-MT",
-        9: "FIRST-BATCH VALIDATION PANEL",
-        10: "RPL11 DEEP DIVE",
+        1: "PRESENTATION ROADMAP",
+        2: "SECTION 01",
+        3: "SELECTION PROCESS",
+        8: "SYNTHESIS",
+        9: "SEX/APOE EVIDENCE • MT",
+        10: "SEX/APOE EVIDENCE • NON-MT",
+        11: "SECTION 02",
+        12: "HUMAN GENETIC SUPPORT • DATA",
+        13: "HUMAN GENETIC SUPPORT • METHOD",
+        14: "HUMAN GENETIC SUPPORT • RESULTS",
+        15: "SECTION 03",
+        16: "FIRST-BATCH VALIDATION PANEL",
+        17: "RPL11 DEEP DIVE",
+        22: "RPL11 SYNTHESIS",
+        23: "APOE • ASTROCYTES",
+        24: "APOE • ASTROCYTES",
     }
     for zero_based_index, marker in expected_sequence.items():
         if marker not in ordered_text[zero_based_index]:
             raise RuntimeError(f"Expected {marker!r} on slide {zero_based_index + 1}")
     with zipfile.ZipFile(path) as zf:
         names = zf.namelist()
-        if len([name for name in names if name.startswith("ppt/slides/slide") and name.endswith(".xml")]) != 16:
+        if len([name for name in names if name.startswith("ppt/slides/slide") and name.endswith(".xml")]) != 25:
             raise RuntimeError("PPTX package has an unexpected slide count")
         package_text = "\n".join(
             zf.read(name).decode("utf-8", errors="ignore")
@@ -829,8 +1254,19 @@ def validate_deck(path: Path) -> None:
         )
         if "filter_attrition" in package_text:
             raise RuntimeError("Deprecated filter_attrition reference found in PPTX package")
+        visible_genetics_text = "\n".join(ordered_text[12:15]).lower()
+        if "phase 19" in visible_genetics_text or "phase19" in visible_genetics_text:
+            raise RuntimeError("Internal phase identifier found on a human-genetic-support slide")
 
 
 if __name__ == "__main__":
-    output = build_deck()
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--output",
+        type=Path,
+        default=DEFAULT_OUT,
+        help=f"Output PPTX path (default: {DEFAULT_OUT})",
+    )
+    args = parser.parse_args()
+    output = build_deck(args.output)
     print(output)

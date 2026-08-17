@@ -74,6 +74,16 @@ Key qualifications:
   membership rather than a burden-test effect, P value, mask, or replication
   result. It was therefore not treated as a positive rare-variant test.
 
+### Implication for the first validation panel
+
+Add COX7C to the labor-intensive first validation panel in both displayed
+broad networks: astrocytes and inhibitory neurons. This makes a seven-gene
+panel. The rationale is cross-evidence value—the recurrent nuclear complex-IV
+candidate is also the only non-APOE gene with a direct xQTL target record in
+this Tier 1 source—not a stronger genetic grade. The one bulk-sQTL result is
+weak and context-mismatched, and its appearance in two candidate-context rows
+must not be counted as two independent replications.
+
 ## Validation
 
 All 11 registered checks passed or produced the expected nonblocking Tier 1
