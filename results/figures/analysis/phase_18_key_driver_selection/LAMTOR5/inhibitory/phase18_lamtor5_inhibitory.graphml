@@ -1,0 +1,1054 @@
+<?xml version='1.0' encoding='utf-8'?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd"><key id="d40" for="edge" attr.name="target_upstream_depth" attr.type="double"/>
+<key id="d39" for="edge" attr.name="target_directed_depth" attr.type="string"/>
+<key id="d38" for="edge" attr.name="source_upstream_depth" attr.type="double"/>
+<key id="d37" for="edge" attr.name="source_directed_depth" attr.type="string"/>
+<key id="d36" for="edge" attr.name="target_supporting_neighborhood_occurrence_count" attr.type="long"/>
+<key id="d35" for="edge" attr.name="source_supporting_neighborhood_occurrence_count" attr.type="long"/>
+<key id="d34" for="edge" attr.name="target_upstream_depth" attr.type="string"/>
+<key id="d33" for="edge" attr.name="source_upstream_depth" attr.type="string"/>
+<key id="d32" for="edge" attr.name="target_directed_depth" attr.type="double"/>
+<key id="d31" for="edge" attr.name="source_directed_depth" attr.type="double"/>
+<key id="d30" for="edge" attr.name="is_upstream_context_edge" attr.type="boolean"/>
+<key id="d29" for="edge" attr.name="is_directly_incident_to_lamtor5" attr.type="boolean"/>
+<key id="d28" for="edge" attr.name="network" attr.type="string"/>
+<key id="d27" for="node" attr.name="upstream_depth_to_lamtor5" attr.type="double"/>
+<key id="d26" for="node" attr.name="directed_depth_from_lamtor5" attr.type="string"/>
+<key id="d25" for="node" attr.name="pathway_codes" attr.type="string"/>
+<key id="d24" for="node" attr.name="out_degree_display" attr.type="long"/>
+<key id="d23" for="node" attr.name="in_degree_display" attr.type="long"/>
+<key id="d22" for="node" attr.name="out_degree_full" attr.type="long"/>
+<key id="d21" for="node" attr.name="in_degree_full" attr.type="long"/>
+<key id="d20" for="node" attr.name="phase08_down_count" attr.type="long"/>
+<key id="d19" for="node" attr.name="phase08_up_count" attr.type="long"/>
+<key id="d18" for="node" attr.name="phase08_deg_class" attr.type="string"/>
+<key id="d17" for="node" attr.name="hgnc_name" attr.type="string"/>
+<key id="d16" for="node" attr.name="is_core_mitocarta" attr.type="boolean"/>
+<key id="d15" for="node" attr.name="is_query_hit_meeting_display_threshold" attr.type="boolean"/>
+<key id="d14" for="node" attr.name="query_hit_display_threshold_fraction" attr.type="double"/>
+<key id="d13" for="node" attr.name="query_hit_display_threshold_count" attr.type="long"/>
+<key id="d12" for="node" attr.name="query_hit_occurrence_fraction" attr.type="double"/>
+<key id="d11" for="node" attr.name="query_hit_occurrence_count" attr.type="long"/>
+<key id="d10" for="node" attr.name="supporting_neighborhood_occurrence_fraction" attr.type="double"/>
+<key id="d9" for="node" attr.name="supporting_neighborhood_occurrence_count" attr.type="long"/>
+<key id="d8" for="node" attr.name="is_direct_outgoing_neighbor" attr.type="boolean"/>
+<key id="d7" for="node" attr.name="is_direct_incoming_neighbor" attr.type="boolean"/>
+<key id="d6" for="node" attr.name="upstream_depth_to_lamtor5" attr.type="string"/>
+<key id="d5" for="node" attr.name="directed_depth_from_lamtor5" attr.type="double"/>
+<key id="d4" for="node" attr.name="included_reason" attr.type="string"/>
+<key id="d3" for="node" attr.name="network" attr.type="string"/>
+<key id="d2" for="graph" attr.name="query_hit_display_threshold" attr.type="string"/>
+<key id="d1" for="graph" attr.name="driver" attr.type="string"/>
+<key id="d0" for="graph" attr.name="network" attr.type="string"/>
+<graph edgedefault="directed"><data key="d0">Inhibitory_neurons</data>
+<data key="d1">LAMTOR5</data>
+<data key="d2">1/5</data>
+<node id="ATP5IF1">
+  <data key="d3">Inhibitory_neurons</data>
+  <data key="d4">query_hit_meeting_display_threshold</data>
+  <data key="d5">2.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">False</data>
+  <data key="d9">5</data>
+  <data key="d10">1.0</data>
+  <data key="d11">2</data>
+  <data key="d12">0.4</data>
+  <data key="d13">1</data>
+  <data key="d14">0.2</data>
+  <data key="d15">True</data>
+  <data key="d16">True</data>
+  <data key="d17">ATP synthase inhibitory factor subunit 1</data>
+  <data key="d18">mixed</data>
+  <data key="d19">1</data>
+  <data key="d20">5</data>
+  <data key="d21">1</data>
+  <data key="d22">0</data>
+  <data key="d23">1</data>
+  <data key="d24">0</data>
+  <data key="d25">O</data>
+</node>
+<node id="ATP5MG">
+  <data key="d3">Inhibitory_neurons</data>
+  <data key="d4">query_hit_meeting_display_threshold</data>
+  <data key="d5">3.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">False</data>
+  <data key="d9">5</data>
+  <data key="d10">1.0</data>
+  <data key="d11">2</data>
+  <data key="d12">0.4</data>
+  <data key="d13">1</data>
+  <data key="d14">0.2</data>
+  <data key="d15">True</data>
+  <data key="d16">True</data>
+  <data key="d17">ATP synthase membrane subunit g</data>
+  <data key="d18">down_only</data>
+  <data key="d19">0</data>
+  <data key="d20">4</data>
+  <data key="d21">1</data>
+  <data key="d22">0</data>
+  <data key="d23">1</data>
+  <data key="d24">0</data>
+  <data key="d25">D;O</data>
+</node>
+<node id="ATP5PF">
+  <data key="d3">Inhibitory_neurons</data>
+  <data key="d4">all_direct_outgoing|query_hit_meeting_display_threshold</data>
+  <data key="d5">1.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">True</data>
+  <data key="d9">5</data>
+  <data key="d10">1.0</data>
+  <data key="d11">3</data>
+  <data key="d12">0.6</data>
+  <data key="d13">1</data>
+  <data key="d14">0.2</data>
+  <data key="d15">True</data>
+  <data key="d16">True</data>
+  <data key="d17">ATP synthase peripheral stalk subunit F6</data>
+  <data key="d18">down_only</data>
+  <data key="d19">0</data>
+  <data key="d20">7</data>
+  <data key="d21">2</data>
+  <data key="d22">8</data>
+  <data key="d23">1</data>
+  <data key="d24">6</data>
+  <data key="d25">D;O</data>
+</node>
+<node id="CISD1">
+  <data key="d3">Inhibitory_neurons</data>
+  <data key="d4">query_hit_meeting_display_threshold</data>
+  <data key="d5">3.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">False</data>
+  <data key="d9">5</data>
+  <data key="d10">1.0</data>
+  <data key="d11">2</data>
+  <data key="d12">0.4</data>
+  <data key="d13">1</data>
+  <data key="d14">0.2</data>
+  <data key="d15">True</data>
+  <data key="d16">True</data>
+  <data key="d17">CDGSH iron sulfur domain 1</data>
+  <data key="d18">down_only</data>
+  <data key="d19">0</data>
+  <data key="d20">3</data>
+  <data key="d21">1</data>
+  <data key="d22">0</data>
+  <data key="d23">1</data>
+  <data key="d24">0</data>
+  <data key="d25"></data>
+</node>
+<node id="COX5A">
+  <data key="d3">Inhibitory_neurons</data>
+  <data key="d4">query_hit_meeting_display_threshold</data>
+  <data key="d5">3.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">False</data>
+  <data key="d9">5</data>
+  <data key="d10">1.0</data>
+  <data key="d11">2</data>
+  <data key="d12">0.4</data>
+  <data key="d13">1</data>
+  <data key="d14">0.2</data>
+  <data key="d15">True</data>
+  <data key="d16">True</data>
+  <data key="d17">cytochrome c oxidase subunit 5A</data>
+  <data key="d18">mixed</data>
+  <data key="d19">1</data>
+  <data key="d20">3</data>
+  <data key="d21">1</data>
+  <data key="d22">0</data>
+  <data key="d23">1</data>
+  <data key="d24">0</data>
+  <data key="d25">D;O</data>
+</node>
+<node id="COX7C">
+  <data key="d3">Inhibitory_neurons</data>
+  <data key="d4">upstream_context|all_direct_incoming</data>
+  <data key="d26"></data>
+  <data key="d27">1.0</data>
+  <data key="d7">True</data>
+  <data key="d8">False</data>
+  <data key="d9">0</data>
+  <data key="d10">0.0</data>
+  <data key="d11">0</data>
+  <data key="d12">0.0</data>
+  <data key="d13">1</data>
+  <data key="d14">0.2</data>
+  <data key="d15">False</data>
+  <data key="d16">True</data>
+  <data key="d17">cytochrome c oxidase subunit 7C</data>
+  <data key="d18">mixed</data>
+  <data key="d19">1</data>
+  <data key="d20">10</data>
+  <data key="d21">1</data>
+  <data key="d22">15</data>
+  <data key="d23">1</data>
+  <data key="d24">2</data>
+  <data key="d25">O</data>
+</node>
+<node id="DAD1">
+  <data key="d3">Inhibitory_neurons</data>
+  <data key="d4">all_direct_outgoing</data>
+  <data key="d5">1.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">True</data>
+  <data key="d9">2</data>
+  <data key="d10">0.4</data>
+  <data key="d11">0</data>
+  <data key="d12">0.0</data>
+  <data key="d13">1</data>
+  <data key="d14">0.2</data>
+  <data key="d15">False</data>
+  <data key="d16">False</data>
+  <data key="d17">defender against cell death 1</data>
+  <data key="d18">mixed</data>
+  <data key="d19">1</data>
+  <data key="d20">1</data>
+  <data key="d21">1</data>
+  <data key="d22">0</data>
+  <data key="d23">1</data>
+  <data key="d24">0</data>
+  <data key="d25"></data>
+</node>
+<node id="ERH">
+  <data key="d3">Inhibitory_neurons</data>
+  <data key="d4">all_direct_outgoing</data>
+  <data key="d5">1.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">True</data>
+  <data key="d9">5</data>
+  <data key="d10">1.0</data>
+  <data key="d11">0</data>
+  <data key="d12">0.0</data>
+  <data key="d13">1</data>
+  <data key="d14">0.2</data>
+  <data key="d15">False</data>
+  <data key="d16">False</data>
+  <data key="d17">ERH mRNA splicing and mitosis factor</data>
+  <data key="d18">down_only</data>
+  <data key="d19">0</data>
+  <data key="d20">1</data>
+  <data key="d21">1</data>
+  <data key="d22">0</data>
+  <data key="d23">1</data>
+  <data key="d24">0</data>
+  <data key="d25"></data>
+</node>
+<node id="LAMTOR5">
+  <data key="d3">Inhibitory_neurons</data>
+  <data key="d4">driver</data>
+  <data key="d5">0.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">False</data>
+  <data key="d9">5</data>
+  <data key="d10">1.0</data>
+  <data key="d11">0</data>
+  <data key="d12">0.0</data>
+  <data key="d13">1</data>
+  <data key="d14">0.2</data>
+  <data key="d15">False</data>
+  <data key="d16">False</data>
+  <data key="d17">late endosomal/lysosomal adaptor, MAPK and MTOR activator 5</data>
+  <data key="d18">mixed</data>
+  <data key="d19">1</data>
+  <data key="d20">3</data>
+  <data key="d21">1</data>
+  <data key="d22">9</data>
+  <data key="d23">1</data>
+  <data key="d24">9</data>
+  <data key="d25">M</data>
+</node>
+<node id="LSM1">
+  <data key="d3">Inhibitory_neurons</data>
+  <data key="d4">all_direct_outgoing</data>
+  <data key="d5">1.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">True</data>
+  <data key="d9">4</data>
+  <data key="d10">0.8</data>
+  <data key="d11">0</data>
+  <data key="d12">0.0</data>
+  <data key="d13">1</data>
+  <data key="d14">0.2</data>
+  <data key="d15">False</data>
+  <data key="d16">False</data>
+  <data key="d17">LSM1 homolog, mRNA degradation associated</data>
+  <data key="d18">not_deg</data>
+  <data key="d19">0</data>
+  <data key="d20">0</data>
+  <data key="d21">2</data>
+  <data key="d22">0</data>
+  <data key="d23">1</data>
+  <data key="d24">0</data>
+  <data key="d25"></data>
+</node>
+<node id="MAML1">
+  <data key="d3">Inhibitory_neurons</data>
+  <data key="d4">all_direct_outgoing</data>
+  <data key="d5">1.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">True</data>
+  <data key="d9">5</data>
+  <data key="d10">1.0</data>
+  <data key="d11">0</data>
+  <data key="d12">0.0</data>
+  <data key="d13">1</data>
+  <data key="d14">0.2</data>
+  <data key="d15">False</data>
+  <data key="d16">False</data>
+  <data key="d17">mastermind like transcriptional coactivator 1</data>
+  <data key="d18">up_only</data>
+  <data key="d19">2</data>
+  <data key="d20">0</data>
+  <data key="d21">1</data>
+  <data key="d22">0</data>
+  <data key="d23">1</data>
+  <data key="d24">0</data>
+  <data key="d25"></data>
+</node>
+<node id="MRPL50">
+  <data key="d3">Inhibitory_neurons</data>
+  <data key="d4">query_hit_meeting_display_threshold</data>
+  <data key="d5">3.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">False</data>
+  <data key="d9">3</data>
+  <data key="d10">0.6</data>
+  <data key="d11">1</data>
+  <data key="d12">0.2</data>
+  <data key="d13">1</data>
+  <data key="d14">0.2</data>
+  <data key="d15">True</data>
+  <data key="d16">True</data>
+  <data key="d17">mitochondrial ribosomal protein L50</data>
+  <data key="d18">mixed</data>
+  <data key="d19">1</data>
+  <data key="d20">2</data>
+  <data key="d21">1</data>
+  <data key="d22">1</data>
+  <data key="d23">1</data>
+  <data key="d24">0</data>
+  <data key="d25">T</data>
+</node>
+<node id="MRPS14">
+  <data key="d3">Inhibitory_neurons</data>
+  <data key="d4">query_hit_meeting_display_threshold</data>
+  <data key="d5">2.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">False</data>
+  <data key="d9">3</data>
+  <data key="d10">0.6</data>
+  <data key="d11">2</data>
+  <data key="d12">0.4</data>
+  <data key="d13">1</data>
+  <data key="d14">0.2</data>
+  <data key="d15">True</data>
+  <data key="d16">True</data>
+  <data key="d17">mitochondrial ribosomal protein S14</data>
+  <data key="d18">down_only</data>
+  <data key="d19">0</data>
+  <data key="d20">3</data>
+  <data key="d21">1</data>
+  <data key="d22">1</data>
+  <data key="d23">1</data>
+  <data key="d24">0</data>
+  <data key="d25">T</data>
+</node>
+<node id="NDUFA12">
+  <data key="d3">Inhibitory_neurons</data>
+  <data key="d4">shortest_path_connector</data>
+  <data key="d5">2.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">False</data>
+  <data key="d9">5</data>
+  <data key="d10">1.0</data>
+  <data key="d11">0</data>
+  <data key="d12">0.0</data>
+  <data key="d13">1</data>
+  <data key="d14">0.2</data>
+  <data key="d15">False</data>
+  <data key="d16">True</data>
+  <data key="d17">NADH:ubiquinone oxidoreductase subunit A12</data>
+  <data key="d18">not_deg</data>
+  <data key="d19">0</data>
+  <data key="d20">0</data>
+  <data key="d21">1</data>
+  <data key="d22">6</data>
+  <data key="d23">1</data>
+  <data key="d24">4</data>
+  <data key="d25">I;O</data>
+</node>
+<node id="NDUFB1">
+  <data key="d3">Inhibitory_neurons</data>
+  <data key="d4">query_hit_meeting_display_threshold</data>
+  <data key="d5">3.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">False</data>
+  <data key="d9">5</data>
+  <data key="d10">1.0</data>
+  <data key="d11">1</data>
+  <data key="d12">0.2</data>
+  <data key="d13">1</data>
+  <data key="d14">0.2</data>
+  <data key="d15">True</data>
+  <data key="d16">True</data>
+  <data key="d17">NADH:ubiquinone oxidoreductase subunit B1</data>
+  <data key="d18">down_only</data>
+  <data key="d19">0</data>
+  <data key="d20">5</data>
+  <data key="d21">1</data>
+  <data key="d22">0</data>
+  <data key="d23">1</data>
+  <data key="d24">0</data>
+  <data key="d25">I;O</data>
+</node>
+<node id="NDUFB2">
+  <data key="d3">Inhibitory_neurons</data>
+  <data key="d4">query_hit_meeting_display_threshold</data>
+  <data key="d5">2.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">False</data>
+  <data key="d9">5</data>
+  <data key="d10">1.0</data>
+  <data key="d11">2</data>
+  <data key="d12">0.4</data>
+  <data key="d13">1</data>
+  <data key="d14">0.2</data>
+  <data key="d15">True</data>
+  <data key="d16">True</data>
+  <data key="d17">NADH:ubiquinone oxidoreductase subunit B2</data>
+  <data key="d18">down_only</data>
+  <data key="d19">0</data>
+  <data key="d20">4</data>
+  <data key="d21">1</data>
+  <data key="d22">4</data>
+  <data key="d23">1</data>
+  <data key="d24">0</data>
+  <data key="d25">I;O</data>
+</node>
+<node id="NDUFB4">
+  <data key="d3">Inhibitory_neurons</data>
+  <data key="d4">query_hit_meeting_display_threshold</data>
+  <data key="d5">3.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">False</data>
+  <data key="d9">5</data>
+  <data key="d10">1.0</data>
+  <data key="d11">1</data>
+  <data key="d12">0.2</data>
+  <data key="d13">1</data>
+  <data key="d14">0.2</data>
+  <data key="d15">True</data>
+  <data key="d16">True</data>
+  <data key="d17">NADH:ubiquinone oxidoreductase subunit B4</data>
+  <data key="d18">mixed</data>
+  <data key="d19">1</data>
+  <data key="d20">4</data>
+  <data key="d21">1</data>
+  <data key="d22">1</data>
+  <data key="d23">1</data>
+  <data key="d24">0</data>
+  <data key="d25">I;O</data>
+</node>
+<node id="NDUFB9">
+  <data key="d3">Inhibitory_neurons</data>
+  <data key="d4">query_hit_meeting_display_threshold</data>
+  <data key="d5">3.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">False</data>
+  <data key="d9">5</data>
+  <data key="d10">1.0</data>
+  <data key="d11">2</data>
+  <data key="d12">0.4</data>
+  <data key="d13">1</data>
+  <data key="d14">0.2</data>
+  <data key="d15">True</data>
+  <data key="d16">True</data>
+  <data key="d17">NADH:ubiquinone oxidoreductase subunit B9</data>
+  <data key="d18">down_only</data>
+  <data key="d19">0</data>
+  <data key="d20">3</data>
+  <data key="d21">1</data>
+  <data key="d22">3</data>
+  <data key="d23">1</data>
+  <data key="d24">0</data>
+  <data key="d25">I;O</data>
+</node>
+<node id="NDUFS3">
+  <data key="d3">Inhibitory_neurons</data>
+  <data key="d4">query_hit_meeting_display_threshold</data>
+  <data key="d5">2.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">False</data>
+  <data key="d9">5</data>
+  <data key="d10">1.0</data>
+  <data key="d11">1</data>
+  <data key="d12">0.2</data>
+  <data key="d13">1</data>
+  <data key="d14">0.2</data>
+  <data key="d15">True</data>
+  <data key="d16">True</data>
+  <data key="d17">NADH:ubiquinone oxidoreductase core subunit S3</data>
+  <data key="d18">down_only</data>
+  <data key="d19">0</data>
+  <data key="d20">4</data>
+  <data key="d21">2</data>
+  <data key="d22">2</data>
+  <data key="d23">1</data>
+  <data key="d24">0</data>
+  <data key="d25">D;I;O</data>
+</node>
+<node id="PAICS">
+  <data key="d3">Inhibitory_neurons</data>
+  <data key="d4">query_hit_meeting_display_threshold</data>
+  <data key="d5">3.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">False</data>
+  <data key="d9">5</data>
+  <data key="d10">1.0</data>
+  <data key="d11">1</data>
+  <data key="d12">0.2</data>
+  <data key="d13">1</data>
+  <data key="d14">0.2</data>
+  <data key="d15">True</data>
+  <data key="d16">True</data>
+  <data key="d17">phosphoribosylaminoimidazole carboxylase and phosphoribosylaminoimidazolesuccinocarboxamide synthase</data>
+  <data key="d18">down_only</data>
+  <data key="d19">0</data>
+  <data key="d20">1</data>
+  <data key="d21">1</data>
+  <data key="d22">0</data>
+  <data key="d23">1</data>
+  <data key="d24">0</data>
+  <data key="d25"></data>
+</node>
+<node id="PFDN4">
+  <data key="d3">Inhibitory_neurons</data>
+  <data key="d4">all_direct_outgoing</data>
+  <data key="d5">1.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">True</data>
+  <data key="d9">4</data>
+  <data key="d10">0.8</data>
+  <data key="d11">0</data>
+  <data key="d12">0.0</data>
+  <data key="d13">1</data>
+  <data key="d14">0.2</data>
+  <data key="d15">False</data>
+  <data key="d16">False</data>
+  <data key="d17">prefoldin subunit 4</data>
+  <data key="d18">down_only</data>
+  <data key="d19">0</data>
+  <data key="d20">2</data>
+  <data key="d21">1</data>
+  <data key="d22">0</data>
+  <data key="d23">1</data>
+  <data key="d24">0</data>
+  <data key="d25"></data>
+</node>
+<node id="POLR2K">
+  <data key="d3">Inhibitory_neurons</data>
+  <data key="d4">all_direct_outgoing</data>
+  <data key="d5">1.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">True</data>
+  <data key="d9">3</data>
+  <data key="d10">0.6</data>
+  <data key="d11">0</data>
+  <data key="d12">0.0</data>
+  <data key="d13">1</data>
+  <data key="d14">0.2</data>
+  <data key="d15">False</data>
+  <data key="d16">False</data>
+  <data key="d17">RNA polymerase II, I and III subunit K</data>
+  <data key="d18">mixed</data>
+  <data key="d19">1</data>
+  <data key="d20">4</data>
+  <data key="d21">1</data>
+  <data key="d22">3</data>
+  <data key="d23">1</data>
+  <data key="d24">2</data>
+  <data key="d25"></data>
+</node>
+<node id="PYURF">
+  <data key="d3">Inhibitory_neurons</data>
+  <data key="d4">all_direct_outgoing</data>
+  <data key="d5">1.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">True</data>
+  <data key="d9">4</data>
+  <data key="d10">0.8</data>
+  <data key="d11">0</data>
+  <data key="d12">0.0</data>
+  <data key="d13">1</data>
+  <data key="d14">0.2</data>
+  <data key="d15">False</data>
+  <data key="d16">True</data>
+  <data key="d17">PIGY upstream open reading frame</data>
+  <data key="d18">not_deg</data>
+  <data key="d19">0</data>
+  <data key="d20">0</data>
+  <data key="d21">1</data>
+  <data key="d22">1</data>
+  <data key="d23">1</data>
+  <data key="d24">0</data>
+  <data key="d25">I</data>
+</node>
+<node id="RAB11A">
+  <data key="d3">Inhibitory_neurons</data>
+  <data key="d4">shortest_path_connector</data>
+  <data key="d5">2.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">False</data>
+  <data key="d9">5</data>
+  <data key="d10">1.0</data>
+  <data key="d11">0</data>
+  <data key="d12">0.0</data>
+  <data key="d13">1</data>
+  <data key="d14">0.2</data>
+  <data key="d15">False</data>
+  <data key="d16">False</data>
+  <data key="d17">RAB11A, member RAS oncogene family</data>
+  <data key="d18">down_only</data>
+  <data key="d19">0</data>
+  <data key="d20">6</data>
+  <data key="d21">3</data>
+  <data key="d22">6</data>
+  <data key="d23">2</data>
+  <data key="d24">1</data>
+  <data key="d25"></data>
+</node>
+<node id="RPS15">
+  <data key="d3">Inhibitory_neurons</data>
+  <data key="d4">upstream_context</data>
+  <data key="d26"></data>
+  <data key="d27">2.0</data>
+  <data key="d7">False</data>
+  <data key="d8">False</data>
+  <data key="d9">0</data>
+  <data key="d10">0.0</data>
+  <data key="d11">0</data>
+  <data key="d12">0.0</data>
+  <data key="d13">1</data>
+  <data key="d14">0.2</data>
+  <data key="d15">False</data>
+  <data key="d16">False</data>
+  <data key="d17">ribosomal protein S15</data>
+  <data key="d18">mixed</data>
+  <data key="d19">1</data>
+  <data key="d20">9</data>
+  <data key="d21">1</data>
+  <data key="d22">17</data>
+  <data key="d23">0</data>
+  <data key="d24">1</data>
+  <data key="d25">T</data>
+</node>
+<node id="SOD1">
+  <data key="d3">Inhibitory_neurons</data>
+  <data key="d4">query_hit_meeting_display_threshold</data>
+  <data key="d5">2.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">False</data>
+  <data key="d9">5</data>
+  <data key="d10">1.0</data>
+  <data key="d11">3</data>
+  <data key="d12">0.6</data>
+  <data key="d13">1</data>
+  <data key="d14">0.2</data>
+  <data key="d15">True</data>
+  <data key="d16">True</data>
+  <data key="d17">superoxide dismutase 1</data>
+  <data key="d18">mixed</data>
+  <data key="d19">1</data>
+  <data key="d20">5</data>
+  <data key="d21">2</data>
+  <data key="d22">6</data>
+  <data key="d23">1</data>
+  <data key="d24">2</data>
+  <data key="d25"></data>
+</node>
+<node id="SPCS2">
+  <data key="d3">Inhibitory_neurons</data>
+  <data key="d4">all_direct_outgoing</data>
+  <data key="d5">1.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">True</data>
+  <data key="d9">5</data>
+  <data key="d10">1.0</data>
+  <data key="d11">0</data>
+  <data key="d12">0.0</data>
+  <data key="d13">1</data>
+  <data key="d14">0.2</data>
+  <data key="d15">False</data>
+  <data key="d16">False</data>
+  <data key="d17">signal peptidase complex subunit 2</data>
+  <data key="d18">down_only</data>
+  <data key="d19">0</data>
+  <data key="d20">2</data>
+  <data key="d21">1</data>
+  <data key="d22">0</data>
+  <data key="d23">1</data>
+  <data key="d24">0</data>
+  <data key="d25">T</data>
+</node>
+<node id="SRP14">
+  <data key="d3">Inhibitory_neurons</data>
+  <data key="d4">shortest_path_connector</data>
+  <data key="d5">2.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">False</data>
+  <data key="d9">3</data>
+  <data key="d10">0.6</data>
+  <data key="d11">0</data>
+  <data key="d12">0.0</data>
+  <data key="d13">1</data>
+  <data key="d14">0.2</data>
+  <data key="d15">False</data>
+  <data key="d16">False</data>
+  <data key="d17">signal recognition particle 14</data>
+  <data key="d18">mixed</data>
+  <data key="d19">3</data>
+  <data key="d20">4</data>
+  <data key="d21">2</data>
+  <data key="d22">15</data>
+  <data key="d23">1</data>
+  <data key="d24">1</data>
+  <data key="d25">T</data>
+</node>
+<edge source="ATP5PF" target="ATP5IF1">
+  <data key="d28">Inhibitory_neurons</data>
+  <data key="d29">False</data>
+  <data key="d30">False</data>
+  <data key="d31">1.0</data>
+  <data key="d32">2.0</data>
+  <data key="d33"></data>
+  <data key="d34"></data>
+  <data key="d35">5</data>
+  <data key="d36">5</data>
+</edge>
+<edge source="ATP5PF" target="NDUFA12">
+  <data key="d28">Inhibitory_neurons</data>
+  <data key="d29">False</data>
+  <data key="d30">False</data>
+  <data key="d31">1.0</data>
+  <data key="d32">2.0</data>
+  <data key="d33"></data>
+  <data key="d34"></data>
+  <data key="d35">5</data>
+  <data key="d36">5</data>
+</edge>
+<edge source="ATP5PF" target="NDUFB2">
+  <data key="d28">Inhibitory_neurons</data>
+  <data key="d29">False</data>
+  <data key="d30">False</data>
+  <data key="d31">1.0</data>
+  <data key="d32">2.0</data>
+  <data key="d33"></data>
+  <data key="d34"></data>
+  <data key="d35">5</data>
+  <data key="d36">5</data>
+</edge>
+<edge source="ATP5PF" target="NDUFS3">
+  <data key="d28">Inhibitory_neurons</data>
+  <data key="d29">False</data>
+  <data key="d30">False</data>
+  <data key="d31">1.0</data>
+  <data key="d32">2.0</data>
+  <data key="d33"></data>
+  <data key="d34"></data>
+  <data key="d35">5</data>
+  <data key="d36">5</data>
+</edge>
+<edge source="ATP5PF" target="RAB11A">
+  <data key="d28">Inhibitory_neurons</data>
+  <data key="d29">False</data>
+  <data key="d30">False</data>
+  <data key="d31">1.0</data>
+  <data key="d32">2.0</data>
+  <data key="d33"></data>
+  <data key="d34"></data>
+  <data key="d35">5</data>
+  <data key="d36">5</data>
+</edge>
+<edge source="ATP5PF" target="SOD1">
+  <data key="d28">Inhibitory_neurons</data>
+  <data key="d29">False</data>
+  <data key="d30">False</data>
+  <data key="d31">1.0</data>
+  <data key="d32">2.0</data>
+  <data key="d33"></data>
+  <data key="d34"></data>
+  <data key="d35">5</data>
+  <data key="d36">5</data>
+</edge>
+<edge source="COX7C" target="LAMTOR5">
+  <data key="d28">Inhibitory_neurons</data>
+  <data key="d29">True</data>
+  <data key="d30">True</data>
+  <data key="d37"></data>
+  <data key="d32">0.0</data>
+  <data key="d38">1.0</data>
+  <data key="d34"></data>
+  <data key="d35">0</data>
+  <data key="d36">5</data>
+</edge>
+<edge source="COX7C" target="RAB11A">
+  <data key="d28">Inhibitory_neurons</data>
+  <data key="d29">False</data>
+  <data key="d30">False</data>
+  <data key="d37"></data>
+  <data key="d32">2.0</data>
+  <data key="d38">1.0</data>
+  <data key="d34"></data>
+  <data key="d35">0</data>
+  <data key="d36">5</data>
+</edge>
+<edge source="LAMTOR5" target="ATP5PF">
+  <data key="d28">Inhibitory_neurons</data>
+  <data key="d29">True</data>
+  <data key="d30">False</data>
+  <data key="d31">0.0</data>
+  <data key="d32">1.0</data>
+  <data key="d33"></data>
+  <data key="d34"></data>
+  <data key="d35">5</data>
+  <data key="d36">5</data>
+</edge>
+<edge source="LAMTOR5" target="DAD1">
+  <data key="d28">Inhibitory_neurons</data>
+  <data key="d29">True</data>
+  <data key="d30">False</data>
+  <data key="d31">0.0</data>
+  <data key="d32">1.0</data>
+  <data key="d33"></data>
+  <data key="d34"></data>
+  <data key="d35">5</data>
+  <data key="d36">2</data>
+</edge>
+<edge source="LAMTOR5" target="ERH">
+  <data key="d28">Inhibitory_neurons</data>
+  <data key="d29">True</data>
+  <data key="d30">False</data>
+  <data key="d31">0.0</data>
+  <data key="d32">1.0</data>
+  <data key="d33"></data>
+  <data key="d34"></data>
+  <data key="d35">5</data>
+  <data key="d36">5</data>
+</edge>
+<edge source="LAMTOR5" target="LSM1">
+  <data key="d28">Inhibitory_neurons</data>
+  <data key="d29">True</data>
+  <data key="d30">False</data>
+  <data key="d31">0.0</data>
+  <data key="d32">1.0</data>
+  <data key="d33"></data>
+  <data key="d34"></data>
+  <data key="d35">5</data>
+  <data key="d36">4</data>
+</edge>
+<edge source="LAMTOR5" target="MAML1">
+  <data key="d28">Inhibitory_neurons</data>
+  <data key="d29">True</data>
+  <data key="d30">False</data>
+  <data key="d31">0.0</data>
+  <data key="d32">1.0</data>
+  <data key="d33"></data>
+  <data key="d34"></data>
+  <data key="d35">5</data>
+  <data key="d36">5</data>
+</edge>
+<edge source="LAMTOR5" target="PFDN4">
+  <data key="d28">Inhibitory_neurons</data>
+  <data key="d29">True</data>
+  <data key="d30">False</data>
+  <data key="d31">0.0</data>
+  <data key="d32">1.0</data>
+  <data key="d33"></data>
+  <data key="d34"></data>
+  <data key="d35">5</data>
+  <data key="d36">4</data>
+</edge>
+<edge source="LAMTOR5" target="POLR2K">
+  <data key="d28">Inhibitory_neurons</data>
+  <data key="d29">True</data>
+  <data key="d30">False</data>
+  <data key="d31">0.0</data>
+  <data key="d32">1.0</data>
+  <data key="d33"></data>
+  <data key="d34"></data>
+  <data key="d35">5</data>
+  <data key="d36">3</data>
+</edge>
+<edge source="LAMTOR5" target="PYURF">
+  <data key="d28">Inhibitory_neurons</data>
+  <data key="d29">True</data>
+  <data key="d30">False</data>
+  <data key="d31">0.0</data>
+  <data key="d32">1.0</data>
+  <data key="d33"></data>
+  <data key="d34"></data>
+  <data key="d35">5</data>
+  <data key="d36">4</data>
+</edge>
+<edge source="LAMTOR5" target="SPCS2">
+  <data key="d28">Inhibitory_neurons</data>
+  <data key="d29">True</data>
+  <data key="d30">False</data>
+  <data key="d31">0.0</data>
+  <data key="d32">1.0</data>
+  <data key="d33"></data>
+  <data key="d34"></data>
+  <data key="d35">5</data>
+  <data key="d36">5</data>
+</edge>
+<edge source="NDUFA12" target="ATP5MG">
+  <data key="d28">Inhibitory_neurons</data>
+  <data key="d29">False</data>
+  <data key="d30">False</data>
+  <data key="d31">2.0</data>
+  <data key="d32">3.0</data>
+  <data key="d33"></data>
+  <data key="d34"></data>
+  <data key="d35">5</data>
+  <data key="d36">5</data>
+</edge>
+<edge source="NDUFA12" target="COX5A">
+  <data key="d28">Inhibitory_neurons</data>
+  <data key="d29">False</data>
+  <data key="d30">False</data>
+  <data key="d31">2.0</data>
+  <data key="d32">3.0</data>
+  <data key="d33"></data>
+  <data key="d34"></data>
+  <data key="d35">5</data>
+  <data key="d36">5</data>
+</edge>
+<edge source="NDUFA12" target="NDUFB1">
+  <data key="d28">Inhibitory_neurons</data>
+  <data key="d29">False</data>
+  <data key="d30">False</data>
+  <data key="d31">2.0</data>
+  <data key="d32">3.0</data>
+  <data key="d33"></data>
+  <data key="d34"></data>
+  <data key="d35">5</data>
+  <data key="d36">5</data>
+</edge>
+<edge source="NDUFA12" target="NDUFB9">
+  <data key="d28">Inhibitory_neurons</data>
+  <data key="d29">False</data>
+  <data key="d30">False</data>
+  <data key="d31">2.0</data>
+  <data key="d32">3.0</data>
+  <data key="d33"></data>
+  <data key="d34"></data>
+  <data key="d35">5</data>
+  <data key="d36">5</data>
+</edge>
+<edge source="POLR2K" target="MRPS14">
+  <data key="d28">Inhibitory_neurons</data>
+  <data key="d29">False</data>
+  <data key="d30">False</data>
+  <data key="d31">1.0</data>
+  <data key="d32">2.0</data>
+  <data key="d33"></data>
+  <data key="d34"></data>
+  <data key="d35">3</data>
+  <data key="d36">3</data>
+</edge>
+<edge source="POLR2K" target="SRP14">
+  <data key="d28">Inhibitory_neurons</data>
+  <data key="d29">False</data>
+  <data key="d30">False</data>
+  <data key="d31">1.0</data>
+  <data key="d32">2.0</data>
+  <data key="d33"></data>
+  <data key="d34"></data>
+  <data key="d35">3</data>
+  <data key="d36">3</data>
+</edge>
+<edge source="RAB11A" target="PAICS">
+  <data key="d28">Inhibitory_neurons</data>
+  <data key="d29">False</data>
+  <data key="d30">False</data>
+  <data key="d31">2.0</data>
+  <data key="d32">3.0</data>
+  <data key="d33"></data>
+  <data key="d34"></data>
+  <data key="d35">5</data>
+  <data key="d36">5</data>
+</edge>
+<edge source="RPS15" target="COX7C">
+  <data key="d28">Inhibitory_neurons</data>
+  <data key="d29">False</data>
+  <data key="d30">True</data>
+  <data key="d37"></data>
+  <data key="d39"></data>
+  <data key="d38">2.0</data>
+  <data key="d40">1.0</data>
+  <data key="d35">0</data>
+  <data key="d36">0</data>
+</edge>
+<edge source="SOD1" target="CISD1">
+  <data key="d28">Inhibitory_neurons</data>
+  <data key="d29">False</data>
+  <data key="d30">False</data>
+  <data key="d31">2.0</data>
+  <data key="d32">3.0</data>
+  <data key="d33"></data>
+  <data key="d34"></data>
+  <data key="d35">5</data>
+  <data key="d36">5</data>
+</edge>
+<edge source="SOD1" target="NDUFB4">
+  <data key="d28">Inhibitory_neurons</data>
+  <data key="d29">False</data>
+  <data key="d30">False</data>
+  <data key="d31">2.0</data>
+  <data key="d32">3.0</data>
+  <data key="d33"></data>
+  <data key="d34"></data>
+  <data key="d35">5</data>
+  <data key="d36">5</data>
+</edge>
+<edge source="SRP14" target="MRPL50">
+  <data key="d28">Inhibitory_neurons</data>
+  <data key="d29">False</data>
+  <data key="d30">False</data>
+  <data key="d31">2.0</data>
+  <data key="d32">3.0</data>
+  <data key="d33"></data>
+  <data key="d34"></data>
+  <data key="d35">3</data>
+  <data key="d36">3</data>
+</edge>
+</graph></graphml>

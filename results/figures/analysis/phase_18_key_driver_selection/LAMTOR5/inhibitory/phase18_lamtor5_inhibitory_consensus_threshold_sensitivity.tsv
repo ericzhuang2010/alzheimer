@@ -1,0 +1,6 @@
+schema_version	threshold_count	threshold_fraction	retained_query_hit_count	retained_query_hits	display_node_count	display_edge_count	is_selected_for_figure
+phase18_lamtor5_inhibitory_consensus_v1	1	0.2	14	ATP5IF1;ATP5MG;ATP5PF;CISD1;COX5A;MRPL50;MRPS14;NDUFB1;NDUFB2;NDUFB4;NDUFB9;NDUFS3;PAICS;SOD1	28	28	True
+phase18_lamtor5_inhibitory_consensus_v1	2	0.4	9	ATP5IF1;ATP5MG;ATP5PF;CISD1;COX5A;MRPS14;NDUFB2;NDUFB9;SOD1	21	20	False
+phase18_lamtor5_inhibitory_consensus_v1	3	0.6	2	ATP5PF;SOD1	13	12	False
+phase18_lamtor5_inhibitory_consensus_v1	4	0.8	0		12	11	False
+phase18_lamtor5_inhibitory_consensus_v1	5	1.0	0		12	11	False

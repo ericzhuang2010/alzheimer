@@ -1,0 +1,42 @@
+{
+  "cytoscape_version": "3.10.4",
+  "py4cytoscape_version": "1.13.0",
+  "network": "Inhibitory_neurons",
+  "driver": "LAMTOR5",
+  "network_suid": 4407,
+  "node_count": 28,
+  "edge_count": 28,
+  "direct_incoming_edges": 1,
+  "direct_outgoing_edges": 9,
+  "supporting_run_count": 5,
+  "query_hit_threshold": 1,
+  "query_hit_count": 14,
+  "threshold_rationale": "1/5 retains all 14 observed hits in a readable 28-node graph; 2/5 loses 5 hits and 7 nodes",
+  "layout": "collision_checked_radial_DAG_without_guide_rings",
+  "radial_level_radii": {
+    "D1": 650.0,
+    "D2": 950.0,
+    "D3": 1250.0,
+    "U1": 360.0,
+    "U2": 620.0
+  },
+  "minimum_conservative_node_clearance": 42.50336547243029,
+  "closest_node_pair": "DAD1/RPS15",
+  "guide_rings_drawn": false,
+  "pathway_encoding": "segmented_colored_outer_outline",
+  "exports": {
+    "svg": {
+      "file": "phase18_lamtor5_inhibitory_consensus_network_pathways.svg",
+      "bytes": 144340
+    },
+    "pdf": {
+      "file": "phase18_lamtor5_inhibitory_consensus_network_pathways.pdf",
+      "bytes": 10951
+    },
+    "png": {
+      "file": "phase18_lamtor5_inhibitory_consensus_network_pathways.png",
+      "bytes": 243109,
+      "zoom_percent": 300
+    }
+  }
+}
