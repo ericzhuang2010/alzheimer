@@ -1,0 +1,17 @@
+check	passed	observed
+supporting_run_count	True	6
+selected_threshold	True	1/6
+threshold_2_hit_count	True	8
+node_count	True	33
+edge_count	True	34
+query_hit_count	True	15
+all_direct_incoming	True	1
+all_direct_outgoing	True	15
+pathway_representative_count	True	3
+pathway_membership_rows	True	15
+png_dimensions	True	2385x1464
+png_nonempty	True	250024
+pdf_nonempty	True	10743
+svg_nonempty	True	145796
+cytoscape_session_nonempty	True	37611
+cytoscape_style_nonempty	True	11909

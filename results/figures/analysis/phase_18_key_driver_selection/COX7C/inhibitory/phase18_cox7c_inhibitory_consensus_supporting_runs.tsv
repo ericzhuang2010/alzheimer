@@ -1,0 +1,7 @@
+schema_version	kda_run_id	final_layer	effective_query_size	effective_background_size	reconstructed_neighborhood_size_including_driver	driver_self_excluded	reconstructed_query_hit_count	reconstructed_query_hits
+phase18_cox7c_inhibitory_consensus_v1	primary_Inh_L3_5_SST_MAFB_M_e2_AD_down_mito	3	90	7756	67	True	11	ATP5F1E;ATP5IF1;ATP5PF;COX6B1;MRPL50;MRPS14;NDUFA1;NDUFB2;SOD1;TXN;UQCR10
+phase18_cox7c_inhibitory_consensus_v1	primary_Inh_LAMP5_NRG1_Rosehip_F_e4_AD_down_mito	3	55	7917	68	True	7	ATP5F1E;ATP5PF;COX6B1;NDUFA1;NDUFB2;SLC8B1;SOD1
+phase18_cox7c_inhibitory_consensus_v1	primary_Inh_LAMP5_NRG1_Rosehip_M_e2_AD_down_mito	3	65	8084	72	True	5	ATP5F1E;ATP5PF;COX6B1;NDUFA1;NDUFS3
+phase18_cox7c_inhibitory_consensus_v1	primary_Inh_LAMP5_NRG1_Rosehip_M_e4_AD_down_mito	2	44	7835	39	False	4	ATP5PF;COX6B1;NDUFA1;UQCR10
+phase18_cox7c_inhibitory_consensus_v1	primary_Inh_PVALB_HTR4_F_e2_AD_up_mito	3	37	8606	82	True	6	ATP5F1E;COX6B1;NDUFA1;SOD1;TXN;UQCR10
+phase18_cox7c_inhibitory_consensus_v1	primary_Inh_PVALB_HTR4_M_e2_AD_down_mito	2	60	8668	48	True	5	ATP5F1E;COX6B1;DMAC2;NDUFA1;PAICS

@@ -1,0 +1,15 @@
+schema_version	kda_run_id	final_layer	effective_query_size	effective_background_size	reconstructed_neighborhood_size_including_driver	driver_self_excluded	reconstructed_query_hit_count	reconstructed_query_hits
+phase18_selenow_excitatory_consensus_v1	primary_Exc_L2_3_CBLN2_LINC02306_F_e4_AD_down_mito	3	224	9040	54	False	10	CHCHD10;CLPP;COA3;CYC1;GUK1;MRPL4;MRPS34;NDUFB11;PRELID1;SLC25A4
+phase18_selenow_excitatory_consensus_v1	primary_Exc_L2_3_CBLN2_LINC02306_M_e2_AD_down_mito	3	161	9111	57	False	12	CCDC127;CHCHD10;COA3;CYC1;DMAC2;GUK1;MRPL34;MRPL4;MRPS34;NDUFB11;PRELID1;SLC25A4
+phase18_selenow_excitatory_consensus_v1	primary_Exc_L3_4_RORB_CUX2_F_e2_AD_up_mito	2	85	9688	28	False	4	CHCHD10;COA3;NDUFB11;PRELID1
+phase18_selenow_excitatory_consensus_v1	primary_Exc_L3_4_RORB_CUX2_M_e2_AD_down_mito	3	206	9722	66	False	14	CCDC127;CHCHD10;CLPP;COA3;CYC1;DMAC2;GUK1;MRPL34;MRPL4;MRPS34;NDUFB11;PRELID1;SLC25A4;TMEM126A
+phase18_selenow_excitatory_consensus_v1	primary_Exc_L3_5_RORB_PLCH1_M_e2_AD_down_mito	3	194	9445	64	False	11	CHCHD10;CLPP;COA3;CYC1;DMAC2;GUK1;MRPL4;MRPS34;NDUFB11;PRELID1;SLC25A4
+phase18_selenow_excitatory_consensus_v1	primary_Exc_L4_5_RORB_GABRG1_M_e2_AD_down_mito	3	184	9109	61	False	12	CCDC127;CHCHD10;COA3;CYC1;DMAC2;GUK1;MRPL34;MRPL4;MRPS34;NDUFB11;PRELID1;SLC25A4
+phase18_selenow_excitatory_consensus_v1	primary_Exc_L4_5_RORB_IL1RAPL2_F_e2_AD_up_mito	3	99	9695	66	False	6	CHCHD10;MRPL34;NDUFB11;PRELID1;SLC25A4;TMEM126A
+phase18_selenow_excitatory_consensus_v1	primary_Exc_L4_5_RORB_IL1RAPL2_F_e4_AD_down_mito	2	99	9715	28	False	4	CHCHD10;COA3;NDUFB11;PRELID1
+phase18_selenow_excitatory_consensus_v1	primary_Exc_L4_5_RORB_IL1RAPL2_M_e2_AD_down_mito	3	112	9653	66	False	8	CCDC127;CHCHD10;COA3;CYC1;GUK1;MRPS34;NDUFB11;PRELID1
+phase18_selenow_excitatory_consensus_v1	primary_Exc_L5_6_IT_Car3_F_e2_AD_up_mito	3	101	9731	66	False	8	CHCHD10;CYC1;MRPL34;MRPL4;MRPS34;NDUFB11;PRELID1;SLC25A4
+phase18_selenow_excitatory_consensus_v1	primary_Exc_L5_6_IT_Car3_M_e2_AD_up_mito	2	69	9678	28	False	4	CHCHD10;COA3;PRELID1;SLC25A4
+phase18_selenow_excitatory_consensus_v1	primary_Exc_L5_6_RORB_LINC02196_F_e2_AD_up_mito	3	59	9669	64	False	6	CHCHD10;CYC1;GUK1;NDUFB11;PRELID1;SLC25A4
+phase18_selenow_excitatory_consensus_v1	primary_Exc_L6_THEMIS_NFIA_F_e2_AD_up_mito	3	101	9785	65	False	10	CHCHD10;CLPP;COA3;CYC1;MRPL34;MRPS34;NDUFB11;PRELID1;SLC25A4;TMEM126A
+phase18_selenow_excitatory_consensus_v1	primary_Exc_NRGN_M_e33_AD_down_mito	3	136	3823	29	False	7	CHCHD10;COA3;CYC1;GUK1;NDUFB11;PRELID1;SLC25A4

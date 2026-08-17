@@ -1,0 +1,5 @@
+# COX7C inhibitory-neuron consensus network with pathway outlines
+
+COX7C-centered inhibitory-neuron Bayesian-network neighborhood reconstructed from six conservative-support runs. The 1/6 display threshold retains all 15 observed mitochondrial query hits in a 33-node, 34-edge graph. Raising the threshold to 2/6 would retain eight hits and 23 nodes, so 1/6 was selected to preserve informative single-run biology; it is a coverage rule, not a significance cutoff. The display retains the direct incoming edge, all 15 direct outgoing edges, U1-U2 upstream context, D3 paths to retained hits, and every model edge among displayed nodes.
+
+Node size and `x/6` show supporting-neighborhood occurrence; U1/U2 show upstream graph distance. Thick black borders mark query hits meeting 1/6. Fill shows stored Phase 8 direct-DEG direction. Pathway outlines show ETC / oxidative phosphorylation (9 genes; BH FDR = 6.11e-08; FDR-significant), Mitochondrial complex I biogenesis (4 genes; BH FDR = 0.0149; FDR-significant), ROS detoxification (2 genes; BH FDR = 0.192; contextual). The ROS outline is contextual and must not be interpreted as statistically significant enrichment.

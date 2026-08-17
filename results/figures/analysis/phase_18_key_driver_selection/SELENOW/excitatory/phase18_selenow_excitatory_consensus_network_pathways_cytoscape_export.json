@@ -1,0 +1,42 @@
+{
+  "cytoscape_version": "3.10.4",
+  "py4cytoscape_version": "1.13.0",
+  "network": "Excitatory_neurons",
+  "driver": "SELENOW",
+  "network_suid": 3219,
+  "node_count": 25,
+  "edge_count": 25,
+  "direct_incoming_edges": 1,
+  "direct_outgoing_edges": 7,
+  "supporting_run_count": 14,
+  "query_hit_threshold": 4,
+  "query_hit_count": 13,
+  "threshold_rationale": "4/14 retains 13 of 14 observed hits in a readable 25-node graph; 5/14 retains 10 hits and 21 nodes",
+  "layout": "collision_checked_radial_DAG_without_guide_rings",
+  "radial_level_radii": {
+    "D1": 560.0,
+    "D2": 880.0,
+    "D3": 1200.0,
+    "U1": 360.0,
+    "U2": 620.0
+  },
+  "minimum_conservative_node_clearance": 66.0,
+  "closest_node_pair": "ATP5MPL/LAMTOR5",
+  "guide_rings_drawn": false,
+  "pathway_encoding": "segmented_colored_outer_outline",
+  "exports": {
+    "svg": {
+      "file": "phase18_selenow_excitatory_consensus_network_pathways.svg",
+      "bytes": 115972
+    },
+    "pdf": {
+      "file": "phase18_selenow_excitatory_consensus_network_pathways.pdf",
+      "bytes": 9059
+    },
+    "png": {
+      "file": "phase18_selenow_excitatory_consensus_network_pathways.png",
+      "bytes": 211852,
+      "zoom_percent": 300
+    }
+  }
+}

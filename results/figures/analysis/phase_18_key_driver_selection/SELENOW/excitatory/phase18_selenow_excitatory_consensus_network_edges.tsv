@@ -1,0 +1,26 @@
+schema_version	network	source	target	is_directly_incident_to_selenow	is_upstream_context_edge	source_directed_depth	target_directed_depth	source_upstream_depth	target_upstream_depth	source_supporting_neighborhood_occurrence_count	target_supporting_neighborhood_occurrence_count
+phase18_selenow_excitatory_consensus_v1	Excitatory_neurons	AP1S1	GUK1	False	False	2.0	3.0			14	11
+phase18_selenow_excitatory_consensus_v1	Excitatory_neurons	ATP5MPL	SELENOW	True	True		0.0	1.0		0	14
+phase18_selenow_excitatory_consensus_v1	Excitatory_neurons	CHCHD10	MRPL4	False	False	2.0	3.0			14	10
+phase18_selenow_excitatory_consensus_v1	Excitatory_neurons	COA3	SELENOM	False	False	1.0	2.0			14	14
+phase18_selenow_excitatory_consensus_v1	Excitatory_neurons	LAGE3	AP1S1	False	False	1.0	2.0			14	14
+phase18_selenow_excitatory_consensus_v1	Excitatory_neurons	LAGE3	CHCHD10	False	False	1.0	2.0			14	14
+phase18_selenow_excitatory_consensus_v1	Excitatory_neurons	LAGE3	MIEN1	False	False	1.0	2.0			14	13
+phase18_selenow_excitatory_consensus_v1	Excitatory_neurons	LAGE3	NDUFB11	False	False	1.0	2.0			14	14
+phase18_selenow_excitatory_consensus_v1	Excitatory_neurons	LAGE3	PSMD8	False	False	1.0	2.0			14	14
+phase18_selenow_excitatory_consensus_v1	Excitatory_neurons	LAMTOR5	ATP5MPL	False	True			2.0	1.0	0	0
+phase18_selenow_excitatory_consensus_v1	Excitatory_neurons	MIEN1	DMAC2	False	False	2.0	3.0			13	10
+phase18_selenow_excitatory_consensus_v1	Excitatory_neurons	MIEN1	MRPL34	False	False	2.0	3.0			13	10
+phase18_selenow_excitatory_consensus_v1	Excitatory_neurons	PRELID1	SLC25A4	False	False	1.0	2.0			14	14
+phase18_selenow_excitatory_consensus_v1	Excitatory_neurons	PSMD8	CLPP	False	False	2.0	3.0			14	10
+phase18_selenow_excitatory_consensus_v1	Excitatory_neurons	SELENOM	CLPP	False	False	2.0	3.0			14	10
+phase18_selenow_excitatory_consensus_v1	Excitatory_neurons	SELENOM	CYC1	False	False	2.0	3.0			14	11
+phase18_selenow_excitatory_consensus_v1	Excitatory_neurons	SELENOM	MRPS34	False	False	2.0	3.0			14	10
+phase18_selenow_excitatory_consensus_v1	Excitatory_neurons	SELENOW	BRK1	True	False	0.0	1.0			14	14
+phase18_selenow_excitatory_consensus_v1	Excitatory_neurons	SELENOW	COA3	True	False	0.0	1.0			14	14
+phase18_selenow_excitatory_consensus_v1	Excitatory_neurons	SELENOW	DNAJB9	True	False	0.0	1.0			14	13
+phase18_selenow_excitatory_consensus_v1	Excitatory_neurons	SELENOW	LAGE3	True	False	0.0	1.0			14	14
+phase18_selenow_excitatory_consensus_v1	Excitatory_neurons	SELENOW	PRELID1	True	False	0.0	1.0			14	14
+phase18_selenow_excitatory_consensus_v1	Excitatory_neurons	SELENOW	PSEN1	True	False	0.0	1.0			14	14
+phase18_selenow_excitatory_consensus_v1	Excitatory_neurons	SELENOW	STRAP	True	False	0.0	1.0			14	14
+phase18_selenow_excitatory_consensus_v1	Excitatory_neurons	SLC25A4	CCDC127	False	False	2.0	3.0			14	10

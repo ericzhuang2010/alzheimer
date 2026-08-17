@@ -1,0 +1,13 @@
+schema_version	threshold_count	threshold_fraction	retained_query_hit_count	retained_query_hits	display_node_count	display_edge_count	is_selected_for_figure
+phase18_lamtor5_excitatory_consensus_v1	1	0.08333333333333333	8	ATP5IF1;ATP5MC2;CHCHD10;MRPL4;NDUFA6;NDUFB6;TMEM11;TMEM126A	17	16	False
+phase18_lamtor5_excitatory_consensus_v1	2	0.16666666666666666	8	ATP5IF1;ATP5MC2;CHCHD10;MRPL4;NDUFA6;NDUFB6;TMEM11;TMEM126A	17	16	False
+phase18_lamtor5_excitatory_consensus_v1	3	0.25	8	ATP5IF1;ATP5MC2;CHCHD10;MRPL4;NDUFA6;NDUFB6;TMEM11;TMEM126A	17	16	True
+phase18_lamtor5_excitatory_consensus_v1	4	0.3333333333333333	7	ATP5IF1;ATP5MC2;CHCHD10;MRPL4;NDUFA6;NDUFB6;TMEM11	16	15	False
+phase18_lamtor5_excitatory_consensus_v1	5	0.4166666666666667	7	ATP5IF1;ATP5MC2;CHCHD10;MRPL4;NDUFA6;NDUFB6;TMEM11	16	15	False
+phase18_lamtor5_excitatory_consensus_v1	6	0.5	4	ATP5IF1;ATP5MC2;CHCHD10;NDUFA6	13	12	False
+phase18_lamtor5_excitatory_consensus_v1	7	0.5833333333333334	4	ATP5IF1;ATP5MC2;CHCHD10;NDUFA6	13	12	False
+phase18_lamtor5_excitatory_consensus_v1	8	0.6666666666666666	3	ATP5IF1;ATP5MC2;CHCHD10	13	12	False
+phase18_lamtor5_excitatory_consensus_v1	9	0.75	3	ATP5IF1;ATP5MC2;CHCHD10	13	12	False
+phase18_lamtor5_excitatory_consensus_v1	10	0.8333333333333334	3	ATP5IF1;ATP5MC2;CHCHD10	13	12	False
+phase18_lamtor5_excitatory_consensus_v1	11	0.9166666666666666	3	ATP5IF1;ATP5MC2;CHCHD10	13	12	False
+phase18_lamtor5_excitatory_consensus_v1	12	1.0	1	CHCHD10	12	11	False

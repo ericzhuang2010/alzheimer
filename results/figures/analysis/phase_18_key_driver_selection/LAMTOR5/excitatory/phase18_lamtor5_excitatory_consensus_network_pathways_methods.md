@@ -1,0 +1,9 @@
+# Methods: LAMTOR5 excitatory-neuron consensus network
+
+Twelve conservative-support LAMTOR5 rows were read from `call_key_driver_returns.tsv`. For each run, the excitatory-neuron Bayesian network was restricted to its recorded effective background and reconstructed through the stored final D2 or D3 layer. Effective query genes came from `kda_signature_members.tsv`. All reconstructed query-overlap counts matched the stored final overlap counts.
+
+Query-hit recurrence was counted separately from neighborhood occurrence. Threshold profiling showed that 3/12 retains all eight observed hits and yields 17 nodes/16 edges, whereas 4/12 retains seven hits and yields 16 nodes/15 edges. The 3/12 cutoff therefore preserves TMEM126A while keeping the display compact and comparable to the 18-node RPL11 astrocyte reference. The threshold is a coverage choice, not a statistical test.
+
+Pathway ORA used 15 displayed genes represented in MSigDB C2:CP v2026.1. The explicit universe was 6,952 excitatory-neuron Bayesian-network genes represented in that collection. One-sided hypergeometric tests were run for 1,739 pathways with 15-500 mapped background genes and corrected by Benjamini-Hochberg. Four nonredundant representatives are displayed: ETC / oxidative phosphorylation (5 genes; BH FDR = 0.000823; FDR-significant), Mitochondrial complex I biogenesis (3 genes; BH FDR = 0.0449; FDR-significant), Cristae formation (2 genes; BH FDR = 0.169; contextual), mTORC1-mediated signaling (1 genes; BH FDR = 1; contextual). Cristae formation and mTORC1-mediated signaling are contextual annotations and are not statistically significant after correction.
+
+The graph was rendered in Cytoscape 3.10.4 with a deterministic, collision-checked radial layout and no guide rings. Colors use a colorblind-safe palette. PNG was exported at 300% zoom; PDF and SVG are vector exports, and the editable `.cys` session and visual-style XML are saved beside the figure.

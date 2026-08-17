@@ -1,0 +1,42 @@
+{
+  "cytoscape_version": "3.10.4",
+  "py4cytoscape_version": "1.13.0",
+  "network": "Inhibitory_neurons",
+  "driver": "COX7C",
+  "network_suid": 2587,
+  "node_count": 33,
+  "edge_count": 34,
+  "direct_incoming_edges": 1,
+  "direct_outgoing_edges": 15,
+  "supporting_run_count": 6,
+  "query_hit_threshold": 1,
+  "query_hit_count": 15,
+  "threshold_rationale": "1/6 retains all 15 observed hits in a readable 33-node graph; 2/6 loses 7 hits and removes 10 nodes",
+  "layout": "collision_checked_radial_DAG_without_guide_rings",
+  "radial_level_radii": {
+    "D1": 640.0,
+    "D2": 900.0,
+    "D3": 1180.0,
+    "U1": 360.0,
+    "U2": 620.0
+  },
+  "minimum_conservative_node_clearance": 11.269667413670732,
+  "closest_node_pair": "AC004540.1/AC092329.3",
+  "guide_rings_drawn": false,
+  "pathway_encoding": "segmented_colored_outer_outline",
+  "exports": {
+    "svg": {
+      "file": "phase18_cox7c_inhibitory_consensus_network_pathways.svg",
+      "bytes": 145796
+    },
+    "pdf": {
+      "file": "phase18_cox7c_inhibitory_consensus_network_pathways.pdf",
+      "bytes": 10743
+    },
+    "png": {
+      "file": "phase18_cox7c_inhibitory_consensus_network_pathways.png",
+      "bytes": 250024,
+      "zoom_percent": 300
+    }
+  }
+}

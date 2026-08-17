@@ -1,0 +1,7 @@
+schema_version	threshold_count	threshold_fraction	retained_query_hit_count	retained_query_hits	display_node_count	display_edge_count	is_selected_for_figure
+phase18_cox7c_inhibitory_consensus_v1	1	0.16666666666666666	15	ATP5F1E;ATP5IF1;ATP5PF;COX6B1;DMAC2;MRPL50;MRPS14;NDUFA1;NDUFB2;NDUFS3;PAICS;SLC8B1;SOD1;TXN;UQCR10	33	34	True
+phase18_cox7c_inhibitory_consensus_v1	2	0.3333333333333333	8	ATP5F1E;ATP5PF;COX6B1;NDUFA1;NDUFB2;SOD1;TXN;UQCR10	23	23	False
+phase18_cox7c_inhibitory_consensus_v1	3	0.5	6	ATP5F1E;ATP5PF;COX6B1;NDUFA1;SOD1;UQCR10	21	21	False
+phase18_cox7c_inhibitory_consensus_v1	4	0.6666666666666666	4	ATP5F1E;ATP5PF;COX6B1;NDUFA1	20	20	False
+phase18_cox7c_inhibitory_consensus_v1	5	0.8333333333333334	3	ATP5F1E;COX6B1;NDUFA1	19	18	False
+phase18_cox7c_inhibitory_consensus_v1	6	1.0	2	COX6B1;NDUFA1	19	18	False

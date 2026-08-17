@@ -1,0 +1,17 @@
+schema_version	network	source	target	is_directly_incident_to_lamtor5	is_upstream_context_edge	source_directed_depth	target_directed_depth	source_upstream_depth	target_upstream_depth	source_supporting_neighborhood_occurrence_count	target_supporting_neighborhood_occurrence_count
+phase18_lamtor5_excitatory_consensus_v1	Excitatory_neurons	CHCHD10	MRPL4	False	False	2.0	3			12	6
+phase18_lamtor5_excitatory_consensus_v1	Excitatory_neurons	ELOC	POMP	False	False	1.0	2			12	12
+phase18_lamtor5_excitatory_consensus_v1	Excitatory_neurons	LAMTOR5	ATP5IF1	True	False	0.0	1			12	12
+phase18_lamtor5_excitatory_consensus_v1	Excitatory_neurons	LAMTOR5	ATP5MPL	True	False	0.0	1			12	0
+phase18_lamtor5_excitatory_consensus_v1	Excitatory_neurons	LAMTOR5	ELOC	True	False	0.0	1			12	12
+phase18_lamtor5_excitatory_consensus_v1	Excitatory_neurons	LAMTOR5	MAGEH1	True	False	0.0	1			12	12
+phase18_lamtor5_excitatory_consensus_v1	Excitatory_neurons	LAMTOR5	MRPS36	True	False	0.0	1			12	0
+phase18_lamtor5_excitatory_consensus_v1	Excitatory_neurons	LAMTOR5	NDUFA6	True	False	0.0	1			12	11
+phase18_lamtor5_excitatory_consensus_v1	Excitatory_neurons	LAMTOR5	POP7	True	False	0.0	1			12	12
+phase18_lamtor5_excitatory_consensus_v1	Excitatory_neurons	LAMTOR5	TMEM11	True	False	0.0	1			12	12
+phase18_lamtor5_excitatory_consensus_v1	Excitatory_neurons	LAMTOR5	UQCRHL	True	False	0.0	1			12	11
+phase18_lamtor5_excitatory_consensus_v1	Excitatory_neurons	MAGEH1	TMEM126A	False	False	1.0	2			12	11
+phase18_lamtor5_excitatory_consensus_v1	Excitatory_neurons	POMP	NDUFB6	False	False	2.0	3			12	6
+phase18_lamtor5_excitatory_consensus_v1	Excitatory_neurons	POP7	ATP5MC2	False	False	1.0	2			12	12
+phase18_lamtor5_excitatory_consensus_v1	Excitatory_neurons	TMEM11	CHCHD10	False	False	1.0	2			12	12
+phase18_lamtor5_excitatory_consensus_v1	Excitatory_neurons	UQCR10	LAMTOR5	True	True		0	1.0		0	12

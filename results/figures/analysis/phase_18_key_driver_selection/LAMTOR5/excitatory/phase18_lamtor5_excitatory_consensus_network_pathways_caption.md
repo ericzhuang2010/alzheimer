@@ -1,0 +1,5 @@
+# LAMTOR5 excitatory-neuron consensus network with pathway outlines
+
+LAMTOR5-centered excitatory-neuron Bayesian-network neighborhood reconstructed from 12 conservative-support runs. The 3/12 display threshold retains all eight observed mitochondrial query hits in a 17-node, 16-edge graph. Raising the threshold to 4/12 would remove TMEM126A and yield 16 nodes. The display retains the one-node upstream context, all one incoming and nine outgoing LAMTOR5 edges, D3 paths to retained hits, and every model edge among displayed nodes.
+
+Node size and `x/12` show supporting-neighborhood occurrence; U1 shows upstream graph distance. Thick black borders mark query hits meeting 3/12. Fill shows stored Phase 8 direct-DEG direction. Pathway outlines show ETC / oxidative phosphorylation (5 genes; BH FDR = 0.000823; FDR-significant), Mitochondrial complex I biogenesis (3 genes; BH FDR = 0.0449; FDR-significant), Cristae formation (2 genes; BH FDR = 0.169; contextual), mTORC1-mediated signaling (1 genes; BH FDR = 1; contextual). Pathway membership and enrichment do not establish pathway activation or a causal effect of LAMTOR5.

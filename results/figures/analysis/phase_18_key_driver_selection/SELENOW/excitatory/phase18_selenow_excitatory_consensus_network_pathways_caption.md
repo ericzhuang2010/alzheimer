@@ -1,0 +1,5 @@
+# SELENOW excitatory-neuron consensus network with pathway outlines
+
+SELENOW-centered excitatory-neuron Bayesian-network neighborhood reconstructed from 14 conservative-support runs. The 4/14 display threshold retains 13 of 14 observed mitochondrial query hits in a 25-node, 25-edge graph. Raising the threshold to 5/14 would retain 10 hits and 21 nodes. The display retains the two-node upstream context, all one incoming and seven outgoing SELENOW edges, D3 paths to retained hits, and every model edge among displayed nodes.
+
+Node size and `x/14` show supporting-neighborhood occurrence; U1/U2 show upstream graph distance. Thick black borders mark query hits meeting 4/14. Fill shows stored Phase 8 direct-DEG direction. Pathway outlines show Respiration / electron transport (5 genes; BH FDR = 0.26), Mitochondrial translation elongation (3 genes; BH FDR = 0.612), Selenium metabolism / selenoproteins (2 genes; BH FDR = 0.875). These are contextual groupings: no tested pathway passed BH FDR < 0.05, so the outlines must not be interpreted as statistically significant enrichment.

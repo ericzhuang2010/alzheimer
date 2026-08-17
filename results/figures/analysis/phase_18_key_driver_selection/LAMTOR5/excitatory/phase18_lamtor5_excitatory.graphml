@@ -1,0 +1,645 @@
+<?xml version='1.0' encoding='utf-8'?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd"><key id="d38" for="edge" attr.name="source_upstream_depth" attr.type="double"/>
+<key id="d37" for="edge" attr.name="source_directed_depth" attr.type="string"/>
+<key id="d36" for="edge" attr.name="target_supporting_neighborhood_occurrence_count" attr.type="long"/>
+<key id="d35" for="edge" attr.name="source_supporting_neighborhood_occurrence_count" attr.type="long"/>
+<key id="d34" for="edge" attr.name="target_upstream_depth" attr.type="string"/>
+<key id="d33" for="edge" attr.name="source_upstream_depth" attr.type="string"/>
+<key id="d32" for="edge" attr.name="target_directed_depth" attr.type="long"/>
+<key id="d31" for="edge" attr.name="source_directed_depth" attr.type="double"/>
+<key id="d30" for="edge" attr.name="is_upstream_context_edge" attr.type="boolean"/>
+<key id="d29" for="edge" attr.name="is_directly_incident_to_lamtor5" attr.type="boolean"/>
+<key id="d28" for="edge" attr.name="network" attr.type="string"/>
+<key id="d27" for="node" attr.name="upstream_depth_to_lamtor5" attr.type="double"/>
+<key id="d26" for="node" attr.name="directed_depth_from_lamtor5" attr.type="string"/>
+<key id="d25" for="node" attr.name="pathway_codes" attr.type="string"/>
+<key id="d24" for="node" attr.name="out_degree_display" attr.type="long"/>
+<key id="d23" for="node" attr.name="in_degree_display" attr.type="long"/>
+<key id="d22" for="node" attr.name="out_degree_full" attr.type="long"/>
+<key id="d21" for="node" attr.name="in_degree_full" attr.type="long"/>
+<key id="d20" for="node" attr.name="phase08_down_count" attr.type="long"/>
+<key id="d19" for="node" attr.name="phase08_up_count" attr.type="long"/>
+<key id="d18" for="node" attr.name="phase08_deg_class" attr.type="string"/>
+<key id="d17" for="node" attr.name="hgnc_name" attr.type="string"/>
+<key id="d16" for="node" attr.name="is_core_mitocarta" attr.type="boolean"/>
+<key id="d15" for="node" attr.name="is_query_hit_meeting_display_threshold" attr.type="boolean"/>
+<key id="d14" for="node" attr.name="query_hit_display_threshold_fraction" attr.type="double"/>
+<key id="d13" for="node" attr.name="query_hit_display_threshold_count" attr.type="long"/>
+<key id="d12" for="node" attr.name="query_hit_occurrence_fraction" attr.type="double"/>
+<key id="d11" for="node" attr.name="query_hit_occurrence_count" attr.type="long"/>
+<key id="d10" for="node" attr.name="supporting_neighborhood_occurrence_fraction" attr.type="double"/>
+<key id="d9" for="node" attr.name="supporting_neighborhood_occurrence_count" attr.type="long"/>
+<key id="d8" for="node" attr.name="is_direct_outgoing_neighbor" attr.type="boolean"/>
+<key id="d7" for="node" attr.name="is_direct_incoming_neighbor" attr.type="boolean"/>
+<key id="d6" for="node" attr.name="upstream_depth_to_lamtor5" attr.type="string"/>
+<key id="d5" for="node" attr.name="directed_depth_from_lamtor5" attr.type="double"/>
+<key id="d4" for="node" attr.name="included_reason" attr.type="string"/>
+<key id="d3" for="node" attr.name="network" attr.type="string"/>
+<key id="d2" for="graph" attr.name="query_hit_display_threshold" attr.type="string"/>
+<key id="d1" for="graph" attr.name="driver" attr.type="string"/>
+<key id="d0" for="graph" attr.name="network" attr.type="string"/>
+<graph edgedefault="directed"><data key="d0">Excitatory_neurons</data>
+<data key="d1">LAMTOR5</data>
+<data key="d2">3/12</data>
+<node id="ATP5IF1">
+  <data key="d3">Excitatory_neurons</data>
+  <data key="d4">all_direct_outgoing|query_hit_meeting_display_threshold</data>
+  <data key="d5">1.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">True</data>
+  <data key="d9">12</data>
+  <data key="d10">1.0</data>
+  <data key="d11">11</data>
+  <data key="d12">0.9166666666666666</data>
+  <data key="d13">3</data>
+  <data key="d14">0.25</data>
+  <data key="d15">True</data>
+  <data key="d16">True</data>
+  <data key="d17">ATP synthase inhibitory factor subunit 1</data>
+  <data key="d18">mixed</data>
+  <data key="d19">7</data>
+  <data key="d20">16</data>
+  <data key="d21">1</data>
+  <data key="d22">3</data>
+  <data key="d23">1</data>
+  <data key="d24">0</data>
+  <data key="d25">O</data>
+</node>
+<node id="ATP5MC2">
+  <data key="d3">Excitatory_neurons</data>
+  <data key="d4">query_hit_meeting_display_threshold</data>
+  <data key="d5">2.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">False</data>
+  <data key="d9">12</data>
+  <data key="d10">1.0</data>
+  <data key="d11">11</data>
+  <data key="d12">0.9166666666666666</data>
+  <data key="d13">3</data>
+  <data key="d14">0.25</data>
+  <data key="d15">True</data>
+  <data key="d16">True</data>
+  <data key="d17">ATP synthase membrane subunit c locus 2</data>
+  <data key="d18">mixed</data>
+  <data key="d19">7</data>
+  <data key="d20">11</data>
+  <data key="d21">1</data>
+  <data key="d22">1</data>
+  <data key="d23">1</data>
+  <data key="d24">0</data>
+  <data key="d25">C;O</data>
+</node>
+<node id="ATP5MPL">
+  <data key="d3">Excitatory_neurons</data>
+  <data key="d4">all_direct_outgoing</data>
+  <data key="d5">1.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">True</data>
+  <data key="d9">0</data>
+  <data key="d10">0.0</data>
+  <data key="d11">0</data>
+  <data key="d12">0.0</data>
+  <data key="d13">3</data>
+  <data key="d14">0.25</data>
+  <data key="d15">False</data>
+  <data key="d16">False</data>
+  <data key="d17"></data>
+  <data key="d18">mixed</data>
+  <data key="d19">6</data>
+  <data key="d20">14</data>
+  <data key="d21">1</data>
+  <data key="d22">5</data>
+  <data key="d23">1</data>
+  <data key="d24">0</data>
+  <data key="d25"></data>
+</node>
+<node id="CHCHD10">
+  <data key="d3">Excitatory_neurons</data>
+  <data key="d4">query_hit_meeting_display_threshold</data>
+  <data key="d5">2.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">False</data>
+  <data key="d9">12</data>
+  <data key="d10">1.0</data>
+  <data key="d11">12</data>
+  <data key="d12">1.0</data>
+  <data key="d13">3</data>
+  <data key="d14">0.25</data>
+  <data key="d15">True</data>
+  <data key="d16">True</data>
+  <data key="d17">coiled-coil-helix-coiled-coil-helix domain containing 10</data>
+  <data key="d18">mixed</data>
+  <data key="d19">10</data>
+  <data key="d20">15</data>
+  <data key="d21">3</data>
+  <data key="d22">1</data>
+  <data key="d23">1</data>
+  <data key="d24">1</data>
+  <data key="d25"></data>
+</node>
+<node id="ELOC">
+  <data key="d3">Excitatory_neurons</data>
+  <data key="d4">all_direct_outgoing</data>
+  <data key="d5">1.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">True</data>
+  <data key="d9">12</data>
+  <data key="d10">1.0</data>
+  <data key="d11">0</data>
+  <data key="d12">0.0</data>
+  <data key="d13">3</data>
+  <data key="d14">0.25</data>
+  <data key="d15">False</data>
+  <data key="d16">False</data>
+  <data key="d17">elongin C</data>
+  <data key="d18">mixed</data>
+  <data key="d19">2</data>
+  <data key="d20">10</data>
+  <data key="d21">1</data>
+  <data key="d22">2</data>
+  <data key="d23">1</data>
+  <data key="d24">1</data>
+  <data key="d25"></data>
+</node>
+<node id="LAMTOR5">
+  <data key="d3">Excitatory_neurons</data>
+  <data key="d4">driver</data>
+  <data key="d5">0.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">False</data>
+  <data key="d9">12</data>
+  <data key="d10">1.0</data>
+  <data key="d11">0</data>
+  <data key="d12">0.0</data>
+  <data key="d13">3</data>
+  <data key="d14">0.25</data>
+  <data key="d15">False</data>
+  <data key="d16">False</data>
+  <data key="d17">late endosomal/lysosomal adaptor, MAPK and MTOR activator 5</data>
+  <data key="d18">mixed</data>
+  <data key="d19">10</data>
+  <data key="d20">10</data>
+  <data key="d21">1</data>
+  <data key="d22">9</data>
+  <data key="d23">1</data>
+  <data key="d24">9</data>
+  <data key="d25">M</data>
+</node>
+<node id="MAGEH1">
+  <data key="d3">Excitatory_neurons</data>
+  <data key="d4">all_direct_outgoing</data>
+  <data key="d5">1.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">True</data>
+  <data key="d9">12</data>
+  <data key="d10">1.0</data>
+  <data key="d11">0</data>
+  <data key="d12">0.0</data>
+  <data key="d13">3</data>
+  <data key="d14">0.25</data>
+  <data key="d15">False</data>
+  <data key="d16">False</data>
+  <data key="d17">MAGE family member H1</data>
+  <data key="d18">mixed</data>
+  <data key="d19">4</data>
+  <data key="d20">9</data>
+  <data key="d21">2</data>
+  <data key="d22">2</data>
+  <data key="d23">1</data>
+  <data key="d24">1</data>
+  <data key="d25"></data>
+</node>
+<node id="MRPL4">
+  <data key="d3">Excitatory_neurons</data>
+  <data key="d4">query_hit_meeting_display_threshold</data>
+  <data key="d5">3.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">False</data>
+  <data key="d9">6</data>
+  <data key="d10">0.5</data>
+  <data key="d11">5</data>
+  <data key="d12">0.4166666666666667</data>
+  <data key="d13">3</data>
+  <data key="d14">0.25</data>
+  <data key="d15">True</data>
+  <data key="d16">True</data>
+  <data key="d17">mitochondrial ribosomal protein L4</data>
+  <data key="d18">mixed</data>
+  <data key="d19">3</data>
+  <data key="d20">5</data>
+  <data key="d21">2</data>
+  <data key="d22">3</data>
+  <data key="d23">1</data>
+  <data key="d24">0</data>
+  <data key="d25"></data>
+</node>
+<node id="MRPS36">
+  <data key="d3">Excitatory_neurons</data>
+  <data key="d4">all_direct_outgoing</data>
+  <data key="d5">1.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">True</data>
+  <data key="d9">0</data>
+  <data key="d10">0.0</data>
+  <data key="d11">0</data>
+  <data key="d12">0.0</data>
+  <data key="d13">3</data>
+  <data key="d14">0.25</data>
+  <data key="d15">False</data>
+  <data key="d16">False</data>
+  <data key="d17"></data>
+  <data key="d18">mixed</data>
+  <data key="d19">3</data>
+  <data key="d20">4</data>
+  <data key="d21">1</data>
+  <data key="d22">0</data>
+  <data key="d23">1</data>
+  <data key="d24">0</data>
+  <data key="d25"></data>
+</node>
+<node id="NDUFA6">
+  <data key="d3">Excitatory_neurons</data>
+  <data key="d4">all_direct_outgoing|query_hit_meeting_display_threshold</data>
+  <data key="d5">1.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">True</data>
+  <data key="d9">11</data>
+  <data key="d10">0.9166666666666666</data>
+  <data key="d11">7</data>
+  <data key="d12">0.5833333333333334</data>
+  <data key="d13">3</data>
+  <data key="d14">0.25</data>
+  <data key="d15">True</data>
+  <data key="d16">True</data>
+  <data key="d17">NADH:ubiquinone oxidoreductase subunit A6</data>
+  <data key="d18">mixed</data>
+  <data key="d19">3</data>
+  <data key="d20">5</data>
+  <data key="d21">1</data>
+  <data key="d22">0</data>
+  <data key="d23">1</data>
+  <data key="d24">0</data>
+  <data key="d25">I;O</data>
+</node>
+<node id="NDUFB6">
+  <data key="d3">Excitatory_neurons</data>
+  <data key="d4">query_hit_meeting_display_threshold</data>
+  <data key="d5">3.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">False</data>
+  <data key="d9">6</data>
+  <data key="d10">0.5</data>
+  <data key="d11">5</data>
+  <data key="d12">0.4166666666666667</data>
+  <data key="d13">3</data>
+  <data key="d14">0.25</data>
+  <data key="d15">True</data>
+  <data key="d16">True</data>
+  <data key="d17">NADH:ubiquinone oxidoreductase subunit B6</data>
+  <data key="d18">down_only</data>
+  <data key="d19">0</data>
+  <data key="d20">6</data>
+  <data key="d21">2</data>
+  <data key="d22">0</data>
+  <data key="d23">1</data>
+  <data key="d24">0</data>
+  <data key="d25">I;O</data>
+</node>
+<node id="POMP">
+  <data key="d3">Excitatory_neurons</data>
+  <data key="d4">shortest_path_connector</data>
+  <data key="d5">2.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">False</data>
+  <data key="d9">12</data>
+  <data key="d10">1.0</data>
+  <data key="d11">0</data>
+  <data key="d12">0.0</data>
+  <data key="d13">3</data>
+  <data key="d14">0.25</data>
+  <data key="d15">False</data>
+  <data key="d16">False</data>
+  <data key="d17">proteasome maturation protein</data>
+  <data key="d18">mixed</data>
+  <data key="d19">7</data>
+  <data key="d20">9</data>
+  <data key="d21">2</data>
+  <data key="d22">4</data>
+  <data key="d23">1</data>
+  <data key="d24">1</data>
+  <data key="d25"></data>
+</node>
+<node id="POP7">
+  <data key="d3">Excitatory_neurons</data>
+  <data key="d4">all_direct_outgoing</data>
+  <data key="d5">1.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">True</data>
+  <data key="d9">12</data>
+  <data key="d10">1.0</data>
+  <data key="d11">0</data>
+  <data key="d12">0.0</data>
+  <data key="d13">3</data>
+  <data key="d14">0.25</data>
+  <data key="d15">False</data>
+  <data key="d16">False</data>
+  <data key="d17">POP7 ribonuclease P/MRP subunit</data>
+  <data key="d18">mixed</data>
+  <data key="d19">7</data>
+  <data key="d20">8</data>
+  <data key="d21">2</data>
+  <data key="d22">2</data>
+  <data key="d23">1</data>
+  <data key="d24">1</data>
+  <data key="d25"></data>
+</node>
+<node id="TMEM11">
+  <data key="d3">Excitatory_neurons</data>
+  <data key="d4">all_direct_outgoing|query_hit_meeting_display_threshold</data>
+  <data key="d5">1.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">True</data>
+  <data key="d9">12</data>
+  <data key="d10">1.0</data>
+  <data key="d11">5</data>
+  <data key="d12">0.4166666666666667</data>
+  <data key="d13">3</data>
+  <data key="d14">0.25</data>
+  <data key="d15">True</data>
+  <data key="d16">True</data>
+  <data key="d17">transmembrane protein 11</data>
+  <data key="d18">mixed</data>
+  <data key="d19">2</data>
+  <data key="d20">6</data>
+  <data key="d21">2</data>
+  <data key="d22">3</data>
+  <data key="d23">1</data>
+  <data key="d24">1</data>
+  <data key="d25">C</data>
+</node>
+<node id="TMEM126A">
+  <data key="d3">Excitatory_neurons</data>
+  <data key="d4">query_hit_meeting_display_threshold</data>
+  <data key="d5">2.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">False</data>
+  <data key="d9">11</data>
+  <data key="d10">0.9166666666666666</data>
+  <data key="d11">3</data>
+  <data key="d12">0.25</data>
+  <data key="d13">3</data>
+  <data key="d14">0.25</data>
+  <data key="d15">True</data>
+  <data key="d16">True</data>
+  <data key="d17">transmembrane protein 126A</data>
+  <data key="d18">mixed</data>
+  <data key="d19">4</data>
+  <data key="d20">3</data>
+  <data key="d21">2</data>
+  <data key="d22">1</data>
+  <data key="d23">1</data>
+  <data key="d24">0</data>
+  <data key="d25">I</data>
+</node>
+<node id="UQCR10">
+  <data key="d3">Excitatory_neurons</data>
+  <data key="d4">upstream_context|all_direct_incoming</data>
+  <data key="d26"></data>
+  <data key="d27">1.0</data>
+  <data key="d7">True</data>
+  <data key="d8">False</data>
+  <data key="d9">0</data>
+  <data key="d10">0.0</data>
+  <data key="d11">0</data>
+  <data key="d12">0.0</data>
+  <data key="d13">3</data>
+  <data key="d14">0.25</data>
+  <data key="d15">False</data>
+  <data key="d16">True</data>
+  <data key="d17">ubiquinol-cytochrome c reductase, complex III subunit X</data>
+  <data key="d18">mixed</data>
+  <data key="d19">6</data>
+  <data key="d20">12</data>
+  <data key="d21">0</data>
+  <data key="d22">7</data>
+  <data key="d23">0</data>
+  <data key="d24">1</data>
+  <data key="d25">O</data>
+</node>
+<node id="UQCRHL">
+  <data key="d3">Excitatory_neurons</data>
+  <data key="d4">all_direct_outgoing</data>
+  <data key="d5">1.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">True</data>
+  <data key="d9">11</data>
+  <data key="d10">0.9166666666666666</data>
+  <data key="d11">0</data>
+  <data key="d12">0.0</data>
+  <data key="d13">3</data>
+  <data key="d14">0.25</data>
+  <data key="d15">False</data>
+  <data key="d16">False</data>
+  <data key="d17">ubiquinol-cytochrome c reductase hinge protein like</data>
+  <data key="d18">mixed</data>
+  <data key="d19">6</data>
+  <data key="d20">7</data>
+  <data key="d21">1</data>
+  <data key="d22">0</data>
+  <data key="d23">1</data>
+  <data key="d24">0</data>
+  <data key="d25"></data>
+</node>
+<edge source="CHCHD10" target="MRPL4">
+  <data key="d28">Excitatory_neurons</data>
+  <data key="d29">False</data>
+  <data key="d30">False</data>
+  <data key="d31">2.0</data>
+  <data key="d32">3</data>
+  <data key="d33"></data>
+  <data key="d34"></data>
+  <data key="d35">12</data>
+  <data key="d36">6</data>
+</edge>
+<edge source="ELOC" target="POMP">
+  <data key="d28">Excitatory_neurons</data>
+  <data key="d29">False</data>
+  <data key="d30">False</data>
+  <data key="d31">1.0</data>
+  <data key="d32">2</data>
+  <data key="d33"></data>
+  <data key="d34"></data>
+  <data key="d35">12</data>
+  <data key="d36">12</data>
+</edge>
+<edge source="LAMTOR5" target="ATP5IF1">
+  <data key="d28">Excitatory_neurons</data>
+  <data key="d29">True</data>
+  <data key="d30">False</data>
+  <data key="d31">0.0</data>
+  <data key="d32">1</data>
+  <data key="d33"></data>
+  <data key="d34"></data>
+  <data key="d35">12</data>
+  <data key="d36">12</data>
+</edge>
+<edge source="LAMTOR5" target="ATP5MPL">
+  <data key="d28">Excitatory_neurons</data>
+  <data key="d29">True</data>
+  <data key="d30">False</data>
+  <data key="d31">0.0</data>
+  <data key="d32">1</data>
+  <data key="d33"></data>
+  <data key="d34"></data>
+  <data key="d35">12</data>
+  <data key="d36">0</data>
+</edge>
+<edge source="LAMTOR5" target="ELOC">
+  <data key="d28">Excitatory_neurons</data>
+  <data key="d29">True</data>
+  <data key="d30">False</data>
+  <data key="d31">0.0</data>
+  <data key="d32">1</data>
+  <data key="d33"></data>
+  <data key="d34"></data>
+  <data key="d35">12</data>
+  <data key="d36">12</data>
+</edge>
+<edge source="LAMTOR5" target="MAGEH1">
+  <data key="d28">Excitatory_neurons</data>
+  <data key="d29">True</data>
+  <data key="d30">False</data>
+  <data key="d31">0.0</data>
+  <data key="d32">1</data>
+  <data key="d33"></data>
+  <data key="d34"></data>
+  <data key="d35">12</data>
+  <data key="d36">12</data>
+</edge>
+<edge source="LAMTOR5" target="MRPS36">
+  <data key="d28">Excitatory_neurons</data>
+  <data key="d29">True</data>
+  <data key="d30">False</data>
+  <data key="d31">0.0</data>
+  <data key="d32">1</data>
+  <data key="d33"></data>
+  <data key="d34"></data>
+  <data key="d35">12</data>
+  <data key="d36">0</data>
+</edge>
+<edge source="LAMTOR5" target="NDUFA6">
+  <data key="d28">Excitatory_neurons</data>
+  <data key="d29">True</data>
+  <data key="d30">False</data>
+  <data key="d31">0.0</data>
+  <data key="d32">1</data>
+  <data key="d33"></data>
+  <data key="d34"></data>
+  <data key="d35">12</data>
+  <data key="d36">11</data>
+</edge>
+<edge source="LAMTOR5" target="POP7">
+  <data key="d28">Excitatory_neurons</data>
+  <data key="d29">True</data>
+  <data key="d30">False</data>
+  <data key="d31">0.0</data>
+  <data key="d32">1</data>
+  <data key="d33"></data>
+  <data key="d34"></data>
+  <data key="d35">12</data>
+  <data key="d36">12</data>
+</edge>
+<edge source="LAMTOR5" target="TMEM11">
+  <data key="d28">Excitatory_neurons</data>
+  <data key="d29">True</data>
+  <data key="d30">False</data>
+  <data key="d31">0.0</data>
+  <data key="d32">1</data>
+  <data key="d33"></data>
+  <data key="d34"></data>
+  <data key="d35">12</data>
+  <data key="d36">12</data>
+</edge>
+<edge source="LAMTOR5" target="UQCRHL">
+  <data key="d28">Excitatory_neurons</data>
+  <data key="d29">True</data>
+  <data key="d30">False</data>
+  <data key="d31">0.0</data>
+  <data key="d32">1</data>
+  <data key="d33"></data>
+  <data key="d34"></data>
+  <data key="d35">12</data>
+  <data key="d36">11</data>
+</edge>
+<edge source="MAGEH1" target="TMEM126A">
+  <data key="d28">Excitatory_neurons</data>
+  <data key="d29">False</data>
+  <data key="d30">False</data>
+  <data key="d31">1.0</data>
+  <data key="d32">2</data>
+  <data key="d33"></data>
+  <data key="d34"></data>
+  <data key="d35">12</data>
+  <data key="d36">11</data>
+</edge>
+<edge source="POMP" target="NDUFB6">
+  <data key="d28">Excitatory_neurons</data>
+  <data key="d29">False</data>
+  <data key="d30">False</data>
+  <data key="d31">2.0</data>
+  <data key="d32">3</data>
+  <data key="d33"></data>
+  <data key="d34"></data>
+  <data key="d35">12</data>
+  <data key="d36">6</data>
+</edge>
+<edge source="POP7" target="ATP5MC2">
+  <data key="d28">Excitatory_neurons</data>
+  <data key="d29">False</data>
+  <data key="d30">False</data>
+  <data key="d31">1.0</data>
+  <data key="d32">2</data>
+  <data key="d33"></data>
+  <data key="d34"></data>
+  <data key="d35">12</data>
+  <data key="d36">12</data>
+</edge>
+<edge source="TMEM11" target="CHCHD10">
+  <data key="d28">Excitatory_neurons</data>
+  <data key="d29">False</data>
+  <data key="d30">False</data>
+  <data key="d31">1.0</data>
+  <data key="d32">2</data>
+  <data key="d33"></data>
+  <data key="d34"></data>
+  <data key="d35">12</data>
+  <data key="d36">12</data>
+</edge>
+<edge source="UQCR10" target="LAMTOR5">
+  <data key="d28">Excitatory_neurons</data>
+  <data key="d29">True</data>
+  <data key="d30">True</data>
+  <data key="d37"></data>
+  <data key="d32">0</data>
+  <data key="d38">1.0</data>
+  <data key="d34"></data>
+  <data key="d35">0</data>
+  <data key="d36">12</data>
+</edge>
+</graph></graphml>
