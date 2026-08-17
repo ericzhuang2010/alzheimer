@@ -1,0 +1,3 @@
+schema_version	threshold_count	threshold_fraction	retained_query_hit_count	retained_query_hits	display_node_count	display_edge_count	is_selected_for_figure
+phase18_cox7c_astrocyte_consensus_v1	1	0.5	10	ATP5F1E;ATP5ME;ATP5PF;COX5B;COX6C;NDUFB4;SLIRP;TOMM7;UQCRB;UQCRH	23	23	True
+phase18_cox7c_astrocyte_consensus_v1	2	1.0	4	ATP5ME;ATP5PF;NDUFB4;UQCRB	19	19	False

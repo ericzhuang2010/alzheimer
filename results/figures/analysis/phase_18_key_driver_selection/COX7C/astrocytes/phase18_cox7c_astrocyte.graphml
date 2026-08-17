@@ -1,0 +1,922 @@
+<?xml version='1.0' encoding='utf-8'?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd"><key id="d42" for="edge" attr.name="target_upstream_depth" attr.type="double"/>
+<key id="d41" for="edge" attr.name="target_directed_depth" attr.type="string"/>
+<key id="d40" for="edge" attr.name="source_upstream_depth" attr.type="double"/>
+<key id="d39" for="edge" attr.name="source_directed_depth" attr.type="string"/>
+<key id="d38" for="edge" attr.name="target_supporting_neighborhood_occurrence_count" attr.type="long"/>
+<key id="d37" for="edge" attr.name="source_supporting_neighborhood_occurrence_count" attr.type="long"/>
+<key id="d36" for="edge" attr.name="target_upstream_depth" attr.type="string"/>
+<key id="d35" for="edge" attr.name="source_upstream_depth" attr.type="string"/>
+<key id="d34" for="edge" attr.name="target_directed_depth" attr.type="double"/>
+<key id="d33" for="edge" attr.name="source_directed_depth" attr.type="double"/>
+<key id="d32" for="edge" attr.name="is_cross_context_edge" attr.type="boolean"/>
+<key id="d31" for="edge" attr.name="is_upstream_context_edge" attr.type="boolean"/>
+<key id="d30" for="edge" attr.name="is_directly_incident_to_cox7c" attr.type="boolean"/>
+<key id="d29" for="edge" attr.name="network" attr.type="string"/>
+<key id="d28" for="node" attr.name="upstream_depth_to_cox7c" attr.type="double"/>
+<key id="d27" for="node" attr.name="directed_depth_from_cox7c" attr.type="string"/>
+<key id="d26" for="node" attr.name="pathway_codes" attr.type="string"/>
+<key id="d25" for="node" attr.name="out_degree_display" attr.type="long"/>
+<key id="d24" for="node" attr.name="in_degree_display" attr.type="long"/>
+<key id="d23" for="node" attr.name="out_degree_full" attr.type="long"/>
+<key id="d22" for="node" attr.name="in_degree_full" attr.type="long"/>
+<key id="d21" for="node" attr.name="phase08_down_count" attr.type="long"/>
+<key id="d20" for="node" attr.name="phase08_up_count" attr.type="long"/>
+<key id="d19" for="node" attr.name="phase08_deg_class" attr.type="string"/>
+<key id="d18" for="node" attr.name="hgnc_name" attr.type="string"/>
+<key id="d17" for="node" attr.name="is_core_mitocarta" attr.type="boolean"/>
+<key id="d16" for="node" attr.name="driver_was_self_excluded_from_query_overlap" attr.type="boolean"/>
+<key id="d15" for="node" attr.name="is_query_hit_meeting_display_threshold" attr.type="boolean"/>
+<key id="d14" for="node" attr.name="query_hit_display_threshold_fraction" attr.type="double"/>
+<key id="d13" for="node" attr.name="query_hit_display_threshold_count" attr.type="long"/>
+<key id="d12" for="node" attr.name="query_hit_occurrence_fraction" attr.type="double"/>
+<key id="d11" for="node" attr.name="query_hit_occurrence_count" attr.type="long"/>
+<key id="d10" for="node" attr.name="supporting_neighborhood_occurrence_fraction" attr.type="double"/>
+<key id="d9" for="node" attr.name="supporting_neighborhood_occurrence_count" attr.type="long"/>
+<key id="d8" for="node" attr.name="is_direct_outgoing_neighbor" attr.type="boolean"/>
+<key id="d7" for="node" attr.name="is_direct_incoming_neighbor" attr.type="boolean"/>
+<key id="d6" for="node" attr.name="upstream_depth_to_cox7c" attr.type="string"/>
+<key id="d5" for="node" attr.name="directed_depth_from_cox7c" attr.type="double"/>
+<key id="d4" for="node" attr.name="included_reason" attr.type="string"/>
+<key id="d3" for="node" attr.name="network" attr.type="string"/>
+<key id="d2" for="graph" attr.name="query_hit_display_threshold" attr.type="string"/>
+<key id="d1" for="graph" attr.name="driver" attr.type="string"/>
+<key id="d0" for="graph" attr.name="network" attr.type="string"/>
+<graph edgedefault="directed"><data key="d0">Astrocytes</data>
+<data key="d1">COX7C</data>
+<data key="d2">1/2</data>
+<node id="ATP5F1E">
+  <data key="d3">Astrocytes</data>
+  <data key="d4">all_direct_outgoing|query_hit_meeting_display_threshold</data>
+  <data key="d5">1.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">True</data>
+  <data key="d9">2</data>
+  <data key="d10">1.0</data>
+  <data key="d11">1</data>
+  <data key="d12">0.5</data>
+  <data key="d13">1</data>
+  <data key="d14">0.5</data>
+  <data key="d15">True</data>
+  <data key="d16">False</data>
+  <data key="d17">True</data>
+  <data key="d18">ATP synthase F1 subunit epsilon</data>
+  <data key="d19">down_only</data>
+  <data key="d20">0</data>
+  <data key="d21">1</data>
+  <data key="d22">1</data>
+  <data key="d23">7</data>
+  <data key="d24">1</data>
+  <data key="d25">2</data>
+  <data key="d26">C;O</data>
+</node>
+<node id="ATP5ME">
+  <data key="d3">Astrocytes</data>
+  <data key="d4">query_hit_meeting_display_threshold</data>
+  <data key="d5">2.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">False</data>
+  <data key="d9">2</data>
+  <data key="d10">1.0</data>
+  <data key="d11">2</data>
+  <data key="d12">1.0</data>
+  <data key="d13">1</data>
+  <data key="d14">0.5</data>
+  <data key="d15">True</data>
+  <data key="d16">False</data>
+  <data key="d17">True</data>
+  <data key="d18">ATP synthase membrane subunit e</data>
+  <data key="d19">mixed</data>
+  <data key="d20">1</data>
+  <data key="d21">1</data>
+  <data key="d22">1</data>
+  <data key="d23">0</data>
+  <data key="d24">1</data>
+  <data key="d25">0</data>
+  <data key="d26">C;O</data>
+</node>
+<node id="ATP5PD">
+  <data key="d3">Astrocytes</data>
+  <data key="d4">all_direct_outgoing</data>
+  <data key="d5">1.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">True</data>
+  <data key="d9">0</data>
+  <data key="d10">0.0</data>
+  <data key="d11">0</data>
+  <data key="d12">0.0</data>
+  <data key="d13">1</data>
+  <data key="d14">0.5</data>
+  <data key="d15">False</data>
+  <data key="d16">False</data>
+  <data key="d17">True</data>
+  <data key="d18">ATP synthase peripheral stalk subunit d</data>
+  <data key="d19">not_deg</data>
+  <data key="d20">0</data>
+  <data key="d21">0</data>
+  <data key="d22">1</data>
+  <data key="d23">0</data>
+  <data key="d24">1</data>
+  <data key="d25">0</data>
+  <data key="d26">C;O</data>
+</node>
+<node id="ATP5PF">
+  <data key="d3">Astrocytes</data>
+  <data key="d4">all_direct_outgoing|query_hit_meeting_display_threshold</data>
+  <data key="d5">1.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">True</data>
+  <data key="d9">2</data>
+  <data key="d10">1.0</data>
+  <data key="d11">2</data>
+  <data key="d12">1.0</data>
+  <data key="d13">1</data>
+  <data key="d14">0.5</data>
+  <data key="d15">True</data>
+  <data key="d16">False</data>
+  <data key="d17">True</data>
+  <data key="d18">ATP synthase peripheral stalk subunit F6</data>
+  <data key="d19">mixed</data>
+  <data key="d20">2</data>
+  <data key="d21">1</data>
+  <data key="d22">1</data>
+  <data key="d23">13</data>
+  <data key="d24">1</data>
+  <data key="d25">0</data>
+  <data key="d26">C;O</data>
+</node>
+<node id="C8orf59">
+  <data key="d3">Astrocytes</data>
+  <data key="d4">all_direct_outgoing</data>
+  <data key="d5">1.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">True</data>
+  <data key="d9">0</data>
+  <data key="d10">0.0</data>
+  <data key="d11">0</data>
+  <data key="d12">0.0</data>
+  <data key="d13">1</data>
+  <data key="d14">0.5</data>
+  <data key="d15">False</data>
+  <data key="d16">False</data>
+  <data key="d17">False</data>
+  <data key="d18"></data>
+  <data key="d19">up_only</data>
+  <data key="d20">1</data>
+  <data key="d21">0</data>
+  <data key="d22">1</data>
+  <data key="d23">2</data>
+  <data key="d24">1</data>
+  <data key="d25">0</data>
+  <data key="d26"></data>
+</node>
+<node id="CCM2">
+  <data key="d3">Astrocytes</data>
+  <data key="d4">all_direct_outgoing</data>
+  <data key="d5">1.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">True</data>
+  <data key="d9">2</data>
+  <data key="d10">1.0</data>
+  <data key="d11">0</data>
+  <data key="d12">0.0</data>
+  <data key="d13">1</data>
+  <data key="d14">0.5</data>
+  <data key="d15">False</data>
+  <data key="d16">False</data>
+  <data key="d17">False</data>
+  <data key="d18">CCM2 scaffold protein</data>
+  <data key="d19">down_only</data>
+  <data key="d20">0</data>
+  <data key="d21">1</data>
+  <data key="d22">1</data>
+  <data key="d23">0</data>
+  <data key="d24">1</data>
+  <data key="d25">0</data>
+  <data key="d26"></data>
+</node>
+<node id="COMMD6">
+  <data key="d3">Astrocytes</data>
+  <data key="d4">all_direct_outgoing</data>
+  <data key="d5">1.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">True</data>
+  <data key="d9">0</data>
+  <data key="d10">0.0</data>
+  <data key="d11">0</data>
+  <data key="d12">0.0</data>
+  <data key="d13">1</data>
+  <data key="d14">0.5</data>
+  <data key="d15">False</data>
+  <data key="d16">False</data>
+  <data key="d17">False</data>
+  <data key="d18">COMM domain containing 6</data>
+  <data key="d19">down_only</data>
+  <data key="d20">0</data>
+  <data key="d21">1</data>
+  <data key="d22">1</data>
+  <data key="d23">0</data>
+  <data key="d24">1</data>
+  <data key="d25">0</data>
+  <data key="d26"></data>
+</node>
+<node id="COPS9">
+  <data key="d3">Astrocytes</data>
+  <data key="d4">all_direct_outgoing</data>
+  <data key="d5">1.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">True</data>
+  <data key="d9">2</data>
+  <data key="d10">1.0</data>
+  <data key="d11">0</data>
+  <data key="d12">0.0</data>
+  <data key="d13">1</data>
+  <data key="d14">0.5</data>
+  <data key="d15">False</data>
+  <data key="d16">False</data>
+  <data key="d17">False</data>
+  <data key="d18">COP9 signalosome subunit 9</data>
+  <data key="d19">down_only</data>
+  <data key="d20">0</data>
+  <data key="d21">2</data>
+  <data key="d22">1</data>
+  <data key="d23">1</data>
+  <data key="d24">1</data>
+  <data key="d25">0</data>
+  <data key="d26"></data>
+</node>
+<node id="COX5B">
+  <data key="d3">Astrocytes</data>
+  <data key="d4">query_hit_meeting_display_threshold</data>
+  <data key="d5">2.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">False</data>
+  <data key="d9">1</data>
+  <data key="d10">0.5</data>
+  <data key="d11">1</data>
+  <data key="d12">0.5</data>
+  <data key="d13">1</data>
+  <data key="d14">0.5</data>
+  <data key="d15">True</data>
+  <data key="d16">False</data>
+  <data key="d17">True</data>
+  <data key="d18">cytochrome c oxidase subunit 5B</data>
+  <data key="d19">mixed</data>
+  <data key="d20">1</data>
+  <data key="d21">1</data>
+  <data key="d22">2</data>
+  <data key="d23">4</data>
+  <data key="d24">1</data>
+  <data key="d25">0</data>
+  <data key="d26">O</data>
+</node>
+<node id="COX6C">
+  <data key="d3">Astrocytes</data>
+  <data key="d4">query_hit_meeting_display_threshold</data>
+  <data key="d5">2.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">False</data>
+  <data key="d9">2</data>
+  <data key="d10">1.0</data>
+  <data key="d11">1</data>
+  <data key="d12">0.5</data>
+  <data key="d13">1</data>
+  <data key="d14">0.5</data>
+  <data key="d15">True</data>
+  <data key="d16">False</data>
+  <data key="d17">True</data>
+  <data key="d18">cytochrome c oxidase subunit 6C</data>
+  <data key="d19">down_only</data>
+  <data key="d20">0</data>
+  <data key="d21">1</data>
+  <data key="d22">1</data>
+  <data key="d23">0</data>
+  <data key="d24">1</data>
+  <data key="d25">0</data>
+  <data key="d26">O</data>
+</node>
+<node id="COX7C">
+  <data key="d3">Astrocytes</data>
+  <data key="d4">driver</data>
+  <data key="d5">0.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">False</data>
+  <data key="d9">2</data>
+  <data key="d10">1.0</data>
+  <data key="d11">0</data>
+  <data key="d12">0.0</data>
+  <data key="d13">1</data>
+  <data key="d14">0.5</data>
+  <data key="d15">False</data>
+  <data key="d16">True</data>
+  <data key="d17">True</data>
+  <data key="d18">cytochrome c oxidase subunit 7C</data>
+  <data key="d19">mixed</data>
+  <data key="d20">1</data>
+  <data key="d21">2</data>
+  <data key="d22">1</data>
+  <data key="d23">15</data>
+  <data key="d24">1</data>
+  <data key="d25">15</data>
+  <data key="d26">O</data>
+</node>
+<node id="DYNLL1">
+  <data key="d3">Astrocytes</data>
+  <data key="d4">all_direct_outgoing</data>
+  <data key="d5">1.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">True</data>
+  <data key="d9">2</data>
+  <data key="d10">1.0</data>
+  <data key="d11">0</data>
+  <data key="d12">0.0</data>
+  <data key="d13">1</data>
+  <data key="d14">0.5</data>
+  <data key="d15">False</data>
+  <data key="d16">False</data>
+  <data key="d17">False</data>
+  <data key="d18">dynein light chain LC8-type 1</data>
+  <data key="d19">down_only</data>
+  <data key="d20">0</data>
+  <data key="d21">2</data>
+  <data key="d22">1</data>
+  <data key="d23">1</data>
+  <data key="d24">1</data>
+  <data key="d25">1</data>
+  <data key="d26"></data>
+</node>
+<node id="LAMTOR5">
+  <data key="d3">Astrocytes</data>
+  <data key="d4">all_direct_outgoing</data>
+  <data key="d5">1.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">True</data>
+  <data key="d9">1</data>
+  <data key="d10">0.5</data>
+  <data key="d11">0</data>
+  <data key="d12">0.0</data>
+  <data key="d13">1</data>
+  <data key="d14">0.5</data>
+  <data key="d15">False</data>
+  <data key="d16">False</data>
+  <data key="d17">False</data>
+  <data key="d18">late endosomal/lysosomal adaptor, MAPK and MTOR activator 5</data>
+  <data key="d19">not_deg</data>
+  <data key="d20">0</data>
+  <data key="d21">0</data>
+  <data key="d22">1</data>
+  <data key="d23">7</data>
+  <data key="d24">1</data>
+  <data key="d25">1</data>
+  <data key="d26"></data>
+</node>
+<node id="NDUFB4">
+  <data key="d3">Astrocytes</data>
+  <data key="d4">all_direct_outgoing|query_hit_meeting_display_threshold</data>
+  <data key="d5">1.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">True</data>
+  <data key="d9">2</data>
+  <data key="d10">1.0</data>
+  <data key="d11">2</data>
+  <data key="d12">1.0</data>
+  <data key="d13">1</data>
+  <data key="d14">0.5</data>
+  <data key="d15">True</data>
+  <data key="d16">False</data>
+  <data key="d17">True</data>
+  <data key="d18">NADH:ubiquinone oxidoreductase subunit B4</data>
+  <data key="d19">mixed</data>
+  <data key="d20">1</data>
+  <data key="d21">2</data>
+  <data key="d22">1</data>
+  <data key="d23">3</data>
+  <data key="d24">1</data>
+  <data key="d25">0</data>
+  <data key="d26">O</data>
+</node>
+<node id="RPL11">
+  <data key="d3">Astrocytes</data>
+  <data key="d4">upstream_context|all_direct_incoming</data>
+  <data key="d27"></data>
+  <data key="d28">1.0</data>
+  <data key="d7">True</data>
+  <data key="d8">False</data>
+  <data key="d9">0</data>
+  <data key="d10">0.0</data>
+  <data key="d11">0</data>
+  <data key="d12">0.0</data>
+  <data key="d13">1</data>
+  <data key="d14">0.5</data>
+  <data key="d15">False</data>
+  <data key="d16">False</data>
+  <data key="d17">False</data>
+  <data key="d18">ribosomal protein L11</data>
+  <data key="d19">mixed</data>
+  <data key="d20">1</data>
+  <data key="d21">1</data>
+  <data key="d22">1</data>
+  <data key="d23">3</data>
+  <data key="d24">1</data>
+  <data key="d25">1</data>
+  <data key="d26">R</data>
+</node>
+<node id="RPL27">
+  <data key="d3">Astrocytes</data>
+  <data key="d4">all_direct_outgoing</data>
+  <data key="d5">1.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">True</data>
+  <data key="d9">0</data>
+  <data key="d10">0.0</data>
+  <data key="d11">0</data>
+  <data key="d12">0.0</data>
+  <data key="d13">1</data>
+  <data key="d14">0.5</data>
+  <data key="d15">False</data>
+  <data key="d16">False</data>
+  <data key="d17">False</data>
+  <data key="d18">ribosomal protein L27</data>
+  <data key="d19">not_deg</data>
+  <data key="d20">0</data>
+  <data key="d21">0</data>
+  <data key="d22">2</data>
+  <data key="d23">4</data>
+  <data key="d24">2</data>
+  <data key="d25">0</data>
+  <data key="d26">R</data>
+</node>
+<node id="RPL35A">
+  <data key="d3">Astrocytes</data>
+  <data key="d4">all_direct_outgoing</data>
+  <data key="d5">1.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">True</data>
+  <data key="d9">1</data>
+  <data key="d10">0.5</data>
+  <data key="d11">0</data>
+  <data key="d12">0.0</data>
+  <data key="d13">1</data>
+  <data key="d14">0.5</data>
+  <data key="d15">False</data>
+  <data key="d16">False</data>
+  <data key="d17">False</data>
+  <data key="d18">ribosomal protein L35a</data>
+  <data key="d19">mixed</data>
+  <data key="d20">1</data>
+  <data key="d21">2</data>
+  <data key="d22">2</data>
+  <data key="d23">0</data>
+  <data key="d24">1</data>
+  <data key="d25">0</data>
+  <data key="d26">R</data>
+</node>
+<node id="RPLP1">
+  <data key="d3">Astrocytes</data>
+  <data key="d4">upstream_context</data>
+  <data key="d27"></data>
+  <data key="d28">2.0</data>
+  <data key="d7">False</data>
+  <data key="d8">False</data>
+  <data key="d9">0</data>
+  <data key="d10">0.0</data>
+  <data key="d11">0</data>
+  <data key="d12">0.0</data>
+  <data key="d13">1</data>
+  <data key="d14">0.5</data>
+  <data key="d15">False</data>
+  <data key="d16">False</data>
+  <data key="d17">False</data>
+  <data key="d18">ribosomal protein lateral stalk subunit P1</data>
+  <data key="d19">mixed</data>
+  <data key="d20">2</data>
+  <data key="d21">2</data>
+  <data key="d22">1</data>
+  <data key="d23">8</data>
+  <data key="d24">0</data>
+  <data key="d25">2</data>
+  <data key="d26">R</data>
+</node>
+<node id="SLIRP">
+  <data key="d3">Astrocytes</data>
+  <data key="d4">query_hit_meeting_display_threshold</data>
+  <data key="d5">2.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">False</data>
+  <data key="d9">2</data>
+  <data key="d10">1.0</data>
+  <data key="d11">1</data>
+  <data key="d12">0.5</data>
+  <data key="d13">1</data>
+  <data key="d14">0.5</data>
+  <data key="d15">True</data>
+  <data key="d16">False</data>
+  <data key="d17">True</data>
+  <data key="d18">SRA stem-loop interacting RNA binding protein</data>
+  <data key="d19">down_only</data>
+  <data key="d20">0</data>
+  <data key="d21">1</data>
+  <data key="d22">1</data>
+  <data key="d23">0</data>
+  <data key="d24">1</data>
+  <data key="d25">0</data>
+  <data key="d26"></data>
+</node>
+<node id="SSB">
+  <data key="d3">Astrocytes</data>
+  <data key="d4">all_direct_outgoing</data>
+  <data key="d5">1.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">True</data>
+  <data key="d9">2</data>
+  <data key="d10">1.0</data>
+  <data key="d11">0</data>
+  <data key="d12">0.0</data>
+  <data key="d13">1</data>
+  <data key="d14">0.5</data>
+  <data key="d15">False</data>
+  <data key="d16">False</data>
+  <data key="d17">False</data>
+  <data key="d18">small RNA binding exonuclease protection factor La</data>
+  <data key="d19">down_only</data>
+  <data key="d20">0</data>
+  <data key="d21">1</data>
+  <data key="d22">1</data>
+  <data key="d23">2</data>
+  <data key="d24">1</data>
+  <data key="d25">0</data>
+  <data key="d26"></data>
+</node>
+<node id="TOMM7">
+  <data key="d3">Astrocytes</data>
+  <data key="d4">all_direct_outgoing|query_hit_meeting_display_threshold</data>
+  <data key="d5">1.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">True</data>
+  <data key="d9">1</data>
+  <data key="d10">0.5</data>
+  <data key="d11">1</data>
+  <data key="d12">0.5</data>
+  <data key="d13">1</data>
+  <data key="d14">0.5</data>
+  <data key="d15">True</data>
+  <data key="d16">False</data>
+  <data key="d17">True</data>
+  <data key="d18">translocase of outer mitochondrial membrane 7</data>
+  <data key="d19">mixed</data>
+  <data key="d20">1</data>
+  <data key="d21">1</data>
+  <data key="d22">1</data>
+  <data key="d23">0</data>
+  <data key="d24">1</data>
+  <data key="d25">0</data>
+  <data key="d26"></data>
+</node>
+<node id="UQCRB">
+  <data key="d3">Astrocytes</data>
+  <data key="d4">all_direct_outgoing|query_hit_meeting_display_threshold</data>
+  <data key="d5">1.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">True</data>
+  <data key="d9">2</data>
+  <data key="d10">1.0</data>
+  <data key="d11">2</data>
+  <data key="d12">1.0</data>
+  <data key="d13">1</data>
+  <data key="d14">0.5</data>
+  <data key="d15">True</data>
+  <data key="d16">False</data>
+  <data key="d17">True</data>
+  <data key="d18">ubiquinol-cytochrome c reductase binding protein</data>
+  <data key="d19">mixed</data>
+  <data key="d20">1</data>
+  <data key="d21">1</data>
+  <data key="d22">1</data>
+  <data key="d23">7</data>
+  <data key="d24">1</data>
+  <data key="d25">1</data>
+  <data key="d26">O</data>
+</node>
+<node id="UQCRH">
+  <data key="d3">Astrocytes</data>
+  <data key="d4">query_hit_meeting_display_threshold</data>
+  <data key="d5">2.0</data>
+  <data key="d6"></data>
+  <data key="d7">False</data>
+  <data key="d8">False</data>
+  <data key="d9">2</data>
+  <data key="d10">1.0</data>
+  <data key="d11">1</data>
+  <data key="d12">0.5</data>
+  <data key="d13">1</data>
+  <data key="d14">0.5</data>
+  <data key="d15">True</data>
+  <data key="d16">False</data>
+  <data key="d17">True</data>
+  <data key="d18">ubiquinol-cytochrome c reductase hinge protein</data>
+  <data key="d19">down_only</data>
+  <data key="d20">0</data>
+  <data key="d21">1</data>
+  <data key="d22">1</data>
+  <data key="d23">0</data>
+  <data key="d24">1</data>
+  <data key="d25">0</data>
+  <data key="d26">O</data>
+</node>
+<edge source="ATP5F1E" target="ATP5ME">
+  <data key="d29">Astrocytes</data>
+  <data key="d30">False</data>
+  <data key="d31">False</data>
+  <data key="d32">False</data>
+  <data key="d33">1.0</data>
+  <data key="d34">2.0</data>
+  <data key="d35"></data>
+  <data key="d36"></data>
+  <data key="d37">2</data>
+  <data key="d38">2</data>
+</edge>
+<edge source="ATP5F1E" target="COX6C">
+  <data key="d29">Astrocytes</data>
+  <data key="d30">False</data>
+  <data key="d31">False</data>
+  <data key="d32">False</data>
+  <data key="d33">1.0</data>
+  <data key="d34">2.0</data>
+  <data key="d35"></data>
+  <data key="d36"></data>
+  <data key="d37">2</data>
+  <data key="d38">2</data>
+</edge>
+<edge source="COX7C" target="ATP5F1E">
+  <data key="d29">Astrocytes</data>
+  <data key="d30">True</data>
+  <data key="d31">False</data>
+  <data key="d32">False</data>
+  <data key="d33">0.0</data>
+  <data key="d34">1.0</data>
+  <data key="d35"></data>
+  <data key="d36"></data>
+  <data key="d37">2</data>
+  <data key="d38">2</data>
+</edge>
+<edge source="COX7C" target="ATP5PD">
+  <data key="d29">Astrocytes</data>
+  <data key="d30">True</data>
+  <data key="d31">False</data>
+  <data key="d32">False</data>
+  <data key="d33">0.0</data>
+  <data key="d34">1.0</data>
+  <data key="d35"></data>
+  <data key="d36"></data>
+  <data key="d37">2</data>
+  <data key="d38">0</data>
+</edge>
+<edge source="COX7C" target="ATP5PF">
+  <data key="d29">Astrocytes</data>
+  <data key="d30">True</data>
+  <data key="d31">False</data>
+  <data key="d32">False</data>
+  <data key="d33">0.0</data>
+  <data key="d34">1.0</data>
+  <data key="d35"></data>
+  <data key="d36"></data>
+  <data key="d37">2</data>
+  <data key="d38">2</data>
+</edge>
+<edge source="COX7C" target="C8orf59">
+  <data key="d29">Astrocytes</data>
+  <data key="d30">True</data>
+  <data key="d31">False</data>
+  <data key="d32">False</data>
+  <data key="d33">0.0</data>
+  <data key="d34">1.0</data>
+  <data key="d35"></data>
+  <data key="d36"></data>
+  <data key="d37">2</data>
+  <data key="d38">0</data>
+</edge>
+<edge source="COX7C" target="CCM2">
+  <data key="d29">Astrocytes</data>
+  <data key="d30">True</data>
+  <data key="d31">False</data>
+  <data key="d32">False</data>
+  <data key="d33">0.0</data>
+  <data key="d34">1.0</data>
+  <data key="d35"></data>
+  <data key="d36"></data>
+  <data key="d37">2</data>
+  <data key="d38">2</data>
+</edge>
+<edge source="COX7C" target="COMMD6">
+  <data key="d29">Astrocytes</data>
+  <data key="d30">True</data>
+  <data key="d31">False</data>
+  <data key="d32">False</data>
+  <data key="d33">0.0</data>
+  <data key="d34">1.0</data>
+  <data key="d35"></data>
+  <data key="d36"></data>
+  <data key="d37">2</data>
+  <data key="d38">0</data>
+</edge>
+<edge source="COX7C" target="COPS9">
+  <data key="d29">Astrocytes</data>
+  <data key="d30">True</data>
+  <data key="d31">False</data>
+  <data key="d32">False</data>
+  <data key="d33">0.0</data>
+  <data key="d34">1.0</data>
+  <data key="d35"></data>
+  <data key="d36"></data>
+  <data key="d37">2</data>
+  <data key="d38">2</data>
+</edge>
+<edge source="COX7C" target="DYNLL1">
+  <data key="d29">Astrocytes</data>
+  <data key="d30">True</data>
+  <data key="d31">False</data>
+  <data key="d32">False</data>
+  <data key="d33">0.0</data>
+  <data key="d34">1.0</data>
+  <data key="d35"></data>
+  <data key="d36"></data>
+  <data key="d37">2</data>
+  <data key="d38">2</data>
+</edge>
+<edge source="COX7C" target="LAMTOR5">
+  <data key="d29">Astrocytes</data>
+  <data key="d30">True</data>
+  <data key="d31">False</data>
+  <data key="d32">False</data>
+  <data key="d33">0.0</data>
+  <data key="d34">1.0</data>
+  <data key="d35"></data>
+  <data key="d36"></data>
+  <data key="d37">2</data>
+  <data key="d38">1</data>
+</edge>
+<edge source="COX7C" target="NDUFB4">
+  <data key="d29">Astrocytes</data>
+  <data key="d30">True</data>
+  <data key="d31">False</data>
+  <data key="d32">False</data>
+  <data key="d33">0.0</data>
+  <data key="d34">1.0</data>
+  <data key="d35"></data>
+  <data key="d36"></data>
+  <data key="d37">2</data>
+  <data key="d38">2</data>
+</edge>
+<edge source="COX7C" target="RPL27">
+  <data key="d29">Astrocytes</data>
+  <data key="d30">True</data>
+  <data key="d31">False</data>
+  <data key="d32">False</data>
+  <data key="d33">0.0</data>
+  <data key="d34">1.0</data>
+  <data key="d35"></data>
+  <data key="d36"></data>
+  <data key="d37">2</data>
+  <data key="d38">0</data>
+</edge>
+<edge source="COX7C" target="RPL35A">
+  <data key="d29">Astrocytes</data>
+  <data key="d30">True</data>
+  <data key="d31">False</data>
+  <data key="d32">False</data>
+  <data key="d33">0.0</data>
+  <data key="d34">1.0</data>
+  <data key="d35"></data>
+  <data key="d36"></data>
+  <data key="d37">2</data>
+  <data key="d38">1</data>
+</edge>
+<edge source="COX7C" target="SSB">
+  <data key="d29">Astrocytes</data>
+  <data key="d30">True</data>
+  <data key="d31">False</data>
+  <data key="d32">False</data>
+  <data key="d33">0.0</data>
+  <data key="d34">1.0</data>
+  <data key="d35"></data>
+  <data key="d36"></data>
+  <data key="d37">2</data>
+  <data key="d38">2</data>
+</edge>
+<edge source="COX7C" target="TOMM7">
+  <data key="d29">Astrocytes</data>
+  <data key="d30">True</data>
+  <data key="d31">False</data>
+  <data key="d32">False</data>
+  <data key="d33">0.0</data>
+  <data key="d34">1.0</data>
+  <data key="d35"></data>
+  <data key="d36"></data>
+  <data key="d37">2</data>
+  <data key="d38">1</data>
+</edge>
+<edge source="COX7C" target="UQCRB">
+  <data key="d29">Astrocytes</data>
+  <data key="d30">True</data>
+  <data key="d31">False</data>
+  <data key="d32">False</data>
+  <data key="d33">0.0</data>
+  <data key="d34">1.0</data>
+  <data key="d35"></data>
+  <data key="d36"></data>
+  <data key="d37">2</data>
+  <data key="d38">2</data>
+</edge>
+<edge source="DYNLL1" target="UQCRH">
+  <data key="d29">Astrocytes</data>
+  <data key="d30">False</data>
+  <data key="d31">False</data>
+  <data key="d32">False</data>
+  <data key="d33">1.0</data>
+  <data key="d34">2.0</data>
+  <data key="d35"></data>
+  <data key="d36"></data>
+  <data key="d37">2</data>
+  <data key="d38">2</data>
+</edge>
+<edge source="LAMTOR5" target="COX5B">
+  <data key="d29">Astrocytes</data>
+  <data key="d30">False</data>
+  <data key="d31">False</data>
+  <data key="d32">False</data>
+  <data key="d33">1.0</data>
+  <data key="d34">2.0</data>
+  <data key="d35"></data>
+  <data key="d36"></data>
+  <data key="d37">1</data>
+  <data key="d38">1</data>
+</edge>
+<edge source="RPL11" target="COX7C">
+  <data key="d29">Astrocytes</data>
+  <data key="d30">True</data>
+  <data key="d31">True</data>
+  <data key="d32">False</data>
+  <data key="d39"></data>
+  <data key="d34">0.0</data>
+  <data key="d40">1.0</data>
+  <data key="d36"></data>
+  <data key="d37">0</data>
+  <data key="d38">2</data>
+</edge>
+<edge source="RPLP1" target="RPL11">
+  <data key="d29">Astrocytes</data>
+  <data key="d30">False</data>
+  <data key="d31">True</data>
+  <data key="d32">False</data>
+  <data key="d39"></data>
+  <data key="d41"></data>
+  <data key="d40">2.0</data>
+  <data key="d42">1.0</data>
+  <data key="d37">0</data>
+  <data key="d38">0</data>
+</edge>
+<edge source="RPLP1" target="RPL27">
+  <data key="d29">Astrocytes</data>
+  <data key="d30">False</data>
+  <data key="d31">False</data>
+  <data key="d32">True</data>
+  <data key="d39"></data>
+  <data key="d34">1.0</data>
+  <data key="d40">2.0</data>
+  <data key="d36"></data>
+  <data key="d37">0</data>
+  <data key="d38">0</data>
+</edge>
+<edge source="UQCRB" target="SLIRP">
+  <data key="d29">Astrocytes</data>
+  <data key="d30">False</data>
+  <data key="d31">False</data>
+  <data key="d32">False</data>
+  <data key="d33">1.0</data>
+  <data key="d34">2.0</data>
+  <data key="d35"></data>
+  <data key="d36"></data>
+  <data key="d37">2</data>
+  <data key="d38">2</data>
+</edge>
+</graph></graphml>

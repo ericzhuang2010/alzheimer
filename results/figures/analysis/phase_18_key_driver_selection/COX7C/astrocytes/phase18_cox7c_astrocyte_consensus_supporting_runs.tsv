@@ -1,0 +1,3 @@
+schema_version	kda_run_id	final_layer	effective_query_size	effective_background_size	reconstructed_neighborhood_size_including_driver	driver_self_excluded	reconstructed_query_hit_count	reconstructed_query_hits
+phase18_cox7c_astrocyte_consensus_v1	primary_Ast_GRM3_F_e2_AD_up_mito	2	59	6593	42	True	6	ATP5ME;ATP5PF;COX5B;NDUFB4;TOMM7;UQCRB
+phase18_cox7c_astrocyte_consensus_v1	primary_Ast_GRM3_M_e2_AD_down_mito	2	94	6117	34	True	8	ATP5F1E;ATP5ME;ATP5PF;COX6C;NDUFB4;SLIRP;UQCRB;UQCRH

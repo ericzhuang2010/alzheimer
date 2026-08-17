@@ -1,0 +1,41 @@
+{
+  "cytoscape_version": "3.10.4",
+  "py4cytoscape_version": "1.13.0",
+  "network": "Astrocytes",
+  "driver": "COX7C",
+  "network_suid": 1287,
+  "node_count": 23,
+  "edge_count": 23,
+  "direct_incoming_edges": 1,
+  "direct_outgoing_edges": 15,
+  "supporting_run_count": 2,
+  "query_hit_threshold": 1,
+  "query_hit_count": 10,
+  "threshold_rationale": "1/2 retains all 10 self-excluded hits in a readable 23-node graph; 2/2 retains only 4 hits and removes 4 nodes",
+  "layout": "collision_checked_radial_DAG_without_guide_rings",
+  "radial_level_radii": {
+    "D1": 580.0,
+    "D2": 850.0,
+    "U1": 330.0,
+    "U2": 540.0
+  },
+  "minimum_conservative_node_clearance": 17.431886093639207,
+  "closest_node_pair": "COPS9/DYNLL1",
+  "guide_rings_drawn": false,
+  "pathway_encoding": "segmented_colored_outer_outline",
+  "exports": {
+    "svg": {
+      "file": "phase18_cox7c_astrocyte_consensus_network_pathways.svg",
+      "bytes": 116333
+    },
+    "pdf": {
+      "file": "phase18_cox7c_astrocyte_consensus_network_pathways.pdf",
+      "bytes": 9198
+    },
+    "png": {
+      "file": "phase18_cox7c_astrocyte_consensus_network_pathways.png",
+      "bytes": 305660,
+      "zoom_percent": 300
+    }
+  }
+}
