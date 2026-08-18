@@ -1,0 +1,11 @@
+The Mount Sinai Brain Bank (MSBB) cohort is a distinct collection of postmortem human brain donors and associated molecular/clinical data.
+In this paper:
+Primary/discovery analysis: ROSMAP single-nucleus RNA-seq from the prefrontal cortex.
+Independent validation: Previously generated MSBB bulk RNA-seq from the parahippocampal gyrus.
+Validation goal: Test whether genes showing sex-dependent AD effects in the ROSMAP single-cell analysis were enriched among sex-specific AD genes in MSBB.
+So it is a separate cohort, but the validation is not a direct single-cell replication: it uses different donors, a different brain region, and bulk rather than single-nucleus RNA-seq. It validates mainly the sex-specific transcriptional signal, not every cell-type- or APOE-specific result. The reported enrichment was also modest and depended on adjusting DEG thresholds for unequal statistical power between women and men.
+
+Guo L, Cao J, Hou J, Li Y, et al. Sex specific molecular networks and key drivers of Alzheimer’s disease. Molecular neurodegeneration
+
+
+GSE237718, Mayo temporal cortex56 retained donors: 29 AD and 27 controls; both sexes; deliberately sampled APOE2/3, APOE3/3, APOE3/4, and APOE4/4; 10x snRNA-seqBest direct replication of sex × APOE × AD effects and frozen mitochondrial modulesTemporal rather than prefrontal cortex; only about 4–5 donors in most broad sex–APOE–diagnosis cells
