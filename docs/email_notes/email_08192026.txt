@@ -1,0 +1,9 @@
+The Mayo data is from the temporal cortex, which is different from prefrontal cortex (PFC) of the ROSMAP data. We have another AD-related PFC snRNA-seq data (the SEA_AD cohort) available at
+
+/sc/arion/projects/adineto/sea_ad/Data/snRNAseq/PFC/. Please use this instead. However, you need to carefully check the meta data to define/classify samples in a similar way as the ROSMAP cohort.
+
+ 
+
+Regarding the mouse data, I realized that the existing data we have contains only human APOE3 and APOE4 KI samples in the AD mice background. It has no control mice. Can you check in the public domain if there are APOE/Sex mice single cell data in AD and control background?
+
+ 
