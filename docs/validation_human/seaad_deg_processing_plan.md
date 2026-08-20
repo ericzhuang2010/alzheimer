@@ -415,7 +415,7 @@ Fine-to-broad concordance is descriptive because the fine and broad estimates us
 
 ### Downstream extension
 
-The current [VH09 candidate-freeze plan](vh09_phase18_candidate_freeze.md) and [VH10 KDA plan](vh10_seaad_kda_rediscovery_and_overlap.md) contain broad-only SEA-AD input assumptions. Before implementation, they must be revised to consume the new fine primary manifest and to preserve the 1,548-slot structural grid. Their Phase 18 candidate freeze and selection mathematics can remain authoritative; their old 49-contrast/98-direction SEA-AD manifests cannot. VH10 must run `phase18_parity_query` and `fdr_only_query_sensitivity` independently and must not filter or rerank one branch's winners to obtain the other.
+The revised [VH09 candidate-freeze plan](vh09_phase18_candidate_freeze.md) freezes ROSMAP candidate units without crossing them to SEA-AD contrasts. The revised [VH10 KDA plan](vh10_seaad_kda_rediscovery_and_overlap.md) consumes the fine primary manifest, preserves the 1,548-slot structural grid, and runs `phase18_parity_query` and `fdr_only_query_sensitivity` independently. Neither branch may be obtained by filtering or reranking the other branch's winners.
 
 > **Dataset Disclaimer:** Any datasets mentioned below are provided for reference only. Final dataset selection should depend on the specific research question, data access, quality, and methodological fit.
 
@@ -1000,8 +1000,8 @@ Figures should use colorblind-safe palettes and distinguish `not_estimable`, `fa
 - The retired broad-cell DEG plan in repository history: reusable engineering and donor-model decisions only; it is not a live input or predecessor.
 - [SEA-AD dataset contents](seaad_dataset_contents.md): raw object and metadata inventory expectations.
 - [SEA-AD–ROSMAP cell-type mapping](seaad_rosmap_cell_type_mapping.md): taxonomy context and the warning against forced one-to-one fine-label matching.
-- [VH09 Phase 18 candidate freeze](vh09_phase18_candidate_freeze.md): current ROSMAP discovery freeze, subject to a new SEA-AD manifest.
-- [VH10 KDA rediscovery plan](vh10_seaad_kda_rediscovery_and_overlap.md): selection-engine requirements, subject to replacement of its broad-only input grid.
+- [VH09 Phase 18 candidate freeze](vh09_phase18_candidate_freeze.md): revised 47-unit ROSMAP discovery freeze with no SEA-AD candidate cross-product.
+- [VH10 KDA rediscovery plan](vh10_seaad_kda_rediscovery_and_overlap.md): revised fine-supertype KDA and independent ROSMAP overlap contract.
 - `docs/related_papers/yu_paper/code/mathys_DEG_analysis_subcluster_sex-cogdx_apoe-cogdx.Rmd` and `config/analysis_parameters.yml`: executable provenance for the inherited absolute 1.3-fold Yu/ROSMAP threshold.
 - `config/phase18_key_driver_selection.yml`, `scripts/18_key_driver_selection.py`, `config/phase12_kda.yml`, `scripts/12_run_kda.R`, and `scripts/NetWeaver/fKDA.R`: downstream executable authorities and technical assets; they are read-only during DEG.
 
