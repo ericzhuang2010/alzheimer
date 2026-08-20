@@ -1,8 +1,0 @@
-check	passed	observed	expected	details
-feature_count	True	36601	36601	
-source_symbols_unique	True	36601	36601	
-feature_indices_contiguous	True	(np.int64(0), np.int64(36600))	0..36600	
-feature_order_checksum_nonempty	True	7dcafda20108ee578e451c410238e1b659478f02ca7a50bde24bd618b9ba972d	SHA-256	
-matrix_identity_preserved	True	True	True	
-mtdna_protein_gene_count	True	13	13	
-mitocarta_reference_nonempty	True	1192	>0	

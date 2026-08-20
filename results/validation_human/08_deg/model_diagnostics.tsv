@@ -1,8 +1,0 @@
-context	samples	input_genes	tested_genes	filtered_genes	primary_design_columns	primary_design_rank	secondary_design_columns	secondary_design_rank	primary_common_dispersion	secondary_common_dispersion	min_primary_residual_df	min_secondary_residual_df	model_reload_reproduced
-Astrocytes	78	36601	18583	18018	8	8	15	15	0.130472028231683	0.125475637050262	24	22	TRUE
-Excitatory_neurons	78	36601	30075	6526	8	8	15	15	0.140399314891094	0.125683118799316	24	22	TRUE
-Inhibitory_neurons	78	36601	26942	9659	8	8	15	15	0.104225548806683	0.0930002169756246	24	22	TRUE
-Microglia	78	36601	14040	22561	8	8	15	15	0.106444170229622	0.103364447748483	70	38	TRUE
-OPCs	78	36601	14806	21795	8	8	15	15	0.0807669679153138	0.0767357046369808	70	34	TRUE
-Oligodendrocytes	78	36601	18041	18560	8	8	15	15	0.10102553457007	0.0974036159280993	24	22	TRUE
-Vasculature_cells	76	36601	8797	27804	8	8	15	15	0.101115477483684	0.0981311698607463	23	21	TRUE
