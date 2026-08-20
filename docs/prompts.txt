@@ -46,3 +46,6 @@ Next, write an initial analysis report and put under /Users/rzhuang/Documents/Vs
 3. analyze and related to the phase 18 resutls/figures and/or previous phase's results. But be mindful that phase 12's selection process is deprecated. so do not use phase 12 figures. But you can use DEG results if those are useful
 4. please also propose other validation approaches for each gene with new findings. Some ideas are in /Users/rzhuang/Documents/VscodeProjects/alzheimer/docs/email_notes/notes_after_08122026_presentation.txt
 
+I have executed the plan on a separate machine and downloaded the results. They are under results/validation_human.
+Please take a look at the results especially the DEG results. We want to do something similar to phase 18 for ROSMAP. This means we use supertype x six group DEG results as query to KDA analysis. Please update the plan for VH09 and VH10: /Users/rzhuang/Documents/VscodeProjects/alzheimer/docs/validation_human/vh09_phase18_candidate_freeze.md
+/Users/rzhuang/Documents/VscodeProjects/alzheimer/docs/validation_human/vh10_seaad_kda_rediscovery_and_overlap.md
