@@ -6,4 +6,9 @@ The Mayo data is from the temporal cortex, which is different from prefrontal co
 
 Regarding the mouse data, I realized that the existing data we have contains only human APOE3 and APOE4 KI samples in the AD mice background. It has no control mice. Can you check in the public domain if there are APOE/Sex mice single cell data in AD and control background?
 
- 
+===================================================================================================
+You may use this data for studying sex difference:
+
+https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE143758
+
+Please keep looking for AD mice snRNA-seq data with different APOE isoforms.
