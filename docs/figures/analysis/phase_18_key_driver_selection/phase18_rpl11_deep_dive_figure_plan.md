@@ -313,7 +313,7 @@ For each network, calculate:
   nodes.
 
 The calculation must match the cumulative layer convention used by
-`scripts/18_export_significant_returns.py`.
+`scripts/18_key_driver_selection.py`.
 
 ### Step 3 — reconstruct the supporting run-specific induced graphs
 

@@ -12,7 +12,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location(
     "phase18_key_driver_selection",
-    ROOT / "scripts" / "18_export_significant_returns.py",
+    ROOT / "scripts" / "18_key_driver_selection.py",
 )
 if SPEC is None or SPEC.loader is None:
     raise RuntimeError("Could not load Phase 18 implementation")

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Export all tested Phase 18 KDA rows from upstream data.
+"""Run Phase 18 key-driver selection from validated upstream data.
 
 This is the single Phase 18 entry point. It reads the validated Phase 12
 bundle, the recorded Phase 09 annotation, and the recorded Bayesian networks;
@@ -1369,7 +1369,7 @@ evidence_tier case_driver_candidate_count case_displayed_candidate_count
 """.split()
 
 
-def parse_export_args() -> argparse.Namespace:
+def parse_args() -> argparse.Namespace:
     root = Path(__file__).resolve().parents[1]
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
@@ -1500,8 +1500,8 @@ def validate_published_returns(
             fail(f"Published-value reconstruction failed for {run_id}/{gene}")
 
 
-def export_call_key_driver_returns() -> int:
-    args = parse_export_args()
+def run_key_driver_selection() -> int:
+    args = parse_args()
     root = Path(__file__).resolve().parents[1]
     config_path = project_path(root, args.config)
     output_path = project_path(root, args.output)
@@ -1796,4 +1796,4 @@ def export_call_key_driver_returns() -> int:
 
 
 if __name__ == "__main__":
-    raise SystemExit(export_call_key_driver_returns())
+    raise SystemExit(run_key_driver_selection())

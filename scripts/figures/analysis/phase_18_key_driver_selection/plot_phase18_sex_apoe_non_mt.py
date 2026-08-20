@@ -272,7 +272,7 @@ def read_tsv(path: Path) -> list[dict[str, str]]:
 
 
 def load_acat(root: Path) -> tuple[Callable[..., float | None], Path]:
-    source = root / "scripts/18_export_significant_returns.py"
+    source = root / "scripts/18_key_driver_selection.py"
     spec = importlib.util.spec_from_file_location("phase18_current_selection", source)
     require(spec is not None and spec.loader is not None, "Could not load ACAT source")
     module = importlib.util.module_from_spec(spec)
@@ -779,7 +779,7 @@ def methods_text(dpi: int, width: float, height: float) -> str:
 
 The figure was regenerated using the current two-class `call_key_driver_returns.tsv` (`{INPUT_SCHEMA}`) for non-MT selection, network-level evidence, ranks, and annotations. The 15 selected genes were the unique symbols with `top5_display = TRUE`. Every passing `driver_candidate` context for those genes was retained, yielding 21 circle-displayed and 22 total gene × broad-network contexts.
 
-Each row was crossed with two mitochondrial-query directions and six primary sex/APOE groups. Included KDA calls were determined from unique run metadata in the canonical table. Because `call_key_driver_returns.tsv` intentionally retains only explicit gene-run tests, the validated archived `key_driver_candidate_tests.tsv.gz` supplied the run-level distinction among explicit tests, implicit zero-overlap P = 1 tests, and genuinely unavailable tests. Stratum P values used the canonical `acat_combine()` implementation imported from `scripts/18_export_significant_returns.py`; unavailable tests were omitted. Recombining all stratum inputs was required to reproduce each current network-level aggregate ACAT P. Conservative support counted rows with `conservative_support = TRUE`. Filled-dot area is linear in support fraction, and fill uses cividis capped at −log10(P) = 8. The independent right-side network-q track is capped at 12. Network strips use the Okabe–Ito palette with redundant direct labels and shapes.
+Each row was crossed with two mitochondrial-query directions and six primary sex/APOE groups. Included KDA calls were determined from unique run metadata in the canonical table. Because `call_key_driver_returns.tsv` intentionally retains only explicit gene-run tests, the validated archived `key_driver_candidate_tests.tsv.gz` supplied the run-level distinction among explicit tests, implicit zero-overlap P = 1 tests, and genuinely unavailable tests. Stratum P values used the canonical `acat_combine()` implementation imported from `scripts/18_key_driver_selection.py`; unavailable tests were omitted. Recombining all stratum inputs was required to reproduce each current network-level aggregate ACAT P. Conservative support counted rows with `conservative_support = TRUE`. Filled-dot area is linear in support fraction, and fill uses cividis capped at −log10(P) = 8. The independent right-side network-q track is capped at 12. Network strips use the Okabe–Ito palette with redundant direct labels and shapes.
 
 No new inferential tests or across-stratum multiple-testing corrections were introduced. SVG and PDF are vector outputs; PNG is {width:g} × {height:g} inches at {dpi} DPI.
 """
@@ -848,7 +848,7 @@ def artifact_rows(
             "script",
             root / "scripts/figures/analysis/phase_18_key_driver_selection" / RENDERER_FILE,
         ),
-        ("script", root / "scripts/18_export_significant_returns.py"),
+        ("script", root / "scripts/18_key_driver_selection.py"),
     ]
     rows: list[dict[str, Any]] = []
     for role, path in paths:
