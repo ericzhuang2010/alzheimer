@@ -1,0 +1,15 @@
+check	passed	observed	expected	details
+fine_contrast_rows	True	774	774	
+fine_direction_rows	True	1548	1548	
+fine_contrast_ids_unique	True	774	774	
+fine_direction_ids_unique	True	1548	1548	
+pooled_status_rows	True	7	7	
+broad_status_rows	True	42	42	
+no_failed_contrasts	True	0	0	
+eligible_terminal_contract	True	True	True	not_estimable only permits no_genes_after_filterByExpr
+recognized_post_design_reason	True		no_genes_after_filterByExpr	
+direction_handoff_status_complete	True	True	True	
+completed_directions_remain_ready	True	True	True	zero qualifying genes remain ready
+query_rules_distinct	True	True	True	
+direction_summary_rows	True	1548	1548	
+all_result_files_validated	True	287	287	

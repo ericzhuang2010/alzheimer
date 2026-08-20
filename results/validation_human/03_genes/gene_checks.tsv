@@ -1,0 +1,10 @@
+check	passed	observed	expected	details
+feature_count	True	36601	36601	
+feature_indices_contiguous	True	0..36600	0..36600	
+source_symbols_unique	True	36601	36601	
+matrix_order_preserved	True	7dcafda20108ee578e451c410238e1b659478f02ca7a50bde24bd618b9ba972d	7dcafda20108ee578e451c410238e1b659478f02ca7a50bde24bd618b9ba972d	
+reference_hashes_frozen	True	True	True	
+phase18_internal_conflicts	True	0	0	
+query_membership_conflicts	True	0	0	
+core_mito_annotation_nonempty	True	1192	>0	
+mtdna_gene_count	True	13	13	Phase 18 mtDNA flag among SEA-AD source features

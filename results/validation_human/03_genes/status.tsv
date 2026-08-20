@@ -1,0 +1,2 @@
+schema_version	phase	validation_status	failed_checks	started_at_utc	completed_at_utc	git_revision	config_sha256	host	features	current_symbols	phase18_exact	mitocarta_fallback	core_mito_features	feature_order_sha256
+seaad_fine_phase_status_v2	VH03	validated_complete		2026-08-20T18:28:24.425944+00:00	2026-08-20T18:28:57.551416+00:00	0c272f5c3b098ddbc068dc9e6fee45a913fcf305	8057f30622198fd2f629c46c3897040e44aaa4893b83f709796187bae2fa55a5	homedesktop	36601	24200	31908	4693	1192	7dcafda20108ee578e451c410238e1b659478f02ca7a50bde24bd618b9ba972d

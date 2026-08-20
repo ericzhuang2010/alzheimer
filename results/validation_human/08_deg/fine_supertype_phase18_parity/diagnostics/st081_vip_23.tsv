@@ -1,0 +1,2 @@
+deg_tier	context_id	broad_network	samples	input_features	tested_features	filtered_features	design_columns	design_rank	residual_df	common_dispersion	min_norm_factor	max_norm_factor	replay_reproduced
+fine_supertype_phase18_parity	st081_vip_23	Inhibitory_neurons	77	36601	12693	23908	15	15	62	0.0515611230968071	0.862721962571056	1.1433847515806	TRUE

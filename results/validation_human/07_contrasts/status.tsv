@@ -1,0 +1,2 @@
+schema_version	phase	validation_status	failed_checks	started_at_utc	completed_at_utc	fine_contrasts	fine_directions	fine_support_passing	fine_eligible	broad_pooled_eligible	broad_stratified_eligible	broad_stratified_not_estimable	config_sha256	vh06_status_sha256
+seaad_fine_phase_status_v2	VH07	validated_complete		2026-08-20 18:48:04 UTC	2026-08-20 18:48:06 UTC	774	1548	260	260	7	20	22	8057f30622198fd2f629c46c3897040e44aaa4893b83f709796187bae2fa55a5	fac5e92951c3af37d75d45834747f621a4dffff753787c77722573c9ce8ac67c

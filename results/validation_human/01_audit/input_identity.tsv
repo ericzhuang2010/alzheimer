@@ -1,0 +1,4 @@
+input	path	bytes	digest_algorithm	digest_scope	digest_value
+h5ad	data/seaad/SEAAD_A9_RNAseq_final-nuclei.2024-02-13.h5ad	37938782321	sha256	full_file	f710fb0c80431db7bf8f49d83b89c0d103abbf833b8278490b613f80888a640f
+h5ad	data/seaad/SEAAD_A9_RNAseq_final-nuclei.2024-02-13.h5ad	37938782321	sha256	historical_sampled_structure	9e63f9281b9150c8dd8b32cfae58b823dae5472be8ae746dfecd1f79514e32a6
+metadata_csv	data/seaad/SEAAD_A9_RNAseq_final-nuclei_metadata.2024-02-13.csv	1444844786	sha256	full_file	9ef1c9e1180d4404ce814283a25e3b2f0da05ab152af305990a1e3f2f682f3fc

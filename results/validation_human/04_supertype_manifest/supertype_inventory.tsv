@@ -1,0 +1,132 @@
+raw_supertype_code	supertype_label	subclass	class	broad_network	raw_nuclei	relevant_lineage	excluded_by_protocol	included
+0	Lamp5_Lhx6_1	Lamp5 Lhx6	Neuronal: GABAergic	Inhibitory_neurons	22891	True	False	True
+1	Lamp5_1	Lamp5	Neuronal: GABAergic	Inhibitory_neurons	6174	True	False	True
+2	Lamp5_2	Lamp5	Neuronal: GABAergic	Inhibitory_neurons	26787	True	False	True
+3	Lamp5_3	Lamp5	Neuronal: GABAergic	Inhibitory_neurons	8544	True	False	True
+4	Lamp5_4	Lamp5	Neuronal: GABAergic	Inhibitory_neurons	1752	True	False	True
+5	Lamp5_5	Lamp5	Neuronal: GABAergic	Inhibitory_neurons	8937	True	False	True
+6	Lamp5_6	Lamp5	Neuronal: GABAergic	Inhibitory_neurons	3774	True	False	True
+7	Pax6_1	Pax6	Neuronal: GABAergic	Inhibitory_neurons	4924	True	False	True
+8	Pax6_2	Pax6	Neuronal: GABAergic	Inhibitory_neurons	1538	True	False	True
+9	Pax6_3	Pax6	Neuronal: GABAergic	Inhibitory_neurons	1066	True	False	True
+10	Pax6_4	Pax6	Neuronal: GABAergic	Inhibitory_neurons	1918	True	False	True
+11	Sncg_3	Sncg	Neuronal: GABAergic	Inhibitory_neurons	2178	True	False	True
+12	Sncg_6	Sncg	Neuronal: GABAergic	Inhibitory_neurons	3407	True	False	True
+13	Sncg_2	Sncg	Neuronal: GABAergic	Inhibitory_neurons	1308	True	False	True
+14	Sncg_1	Sncg	Neuronal: GABAergic	Inhibitory_neurons	3697	True	False	True
+15	Sncg_8	Sncg	Neuronal: GABAergic	Inhibitory_neurons	3654	True	False	True
+16	Sncg_4	Sncg	Neuronal: GABAergic	Inhibitory_neurons	6962	True	False	True
+17	Sncg_5	Sncg	Neuronal: GABAergic	Inhibitory_neurons	3586	True	False	True
+18	Vip_14	Vip	Neuronal: GABAergic	Inhibitory_neurons	1306	True	False	True
+19	Vip_15	Vip	Neuronal: GABAergic	Inhibitory_neurons	8614	True	False	True
+20	Vip_16	Vip	Neuronal: GABAergic	Inhibitory_neurons	1728	True	False	True
+21	Vip_4	Vip	Neuronal: GABAergic	Inhibitory_neurons	13156	True	False	True
+22	Vip_5	Vip	Neuronal: GABAergic	Inhibitory_neurons	2375	True	False	True
+23	Vip_6	Vip	Neuronal: GABAergic	Inhibitory_neurons	2972	True	False	True
+24	Vip_9	Vip	Neuronal: GABAergic	Inhibitory_neurons	5565	True	False	True
+25	Vip_2	Vip	Neuronal: GABAergic	Inhibitory_neurons	7213	True	False	True
+26	Vip_11	Vip	Neuronal: GABAergic	Inhibitory_neurons	9649	True	False	True
+27	Vip_13	Vip	Neuronal: GABAergic	Inhibitory_neurons	6408	True	False	True
+28	Vip_1	Vip	Neuronal: GABAergic	Inhibitory_neurons	9907	True	False	True
+29	Vip_12	Vip	Neuronal: GABAergic	Inhibitory_neurons	4343	True	False	True
+30	Vip_18	Vip	Neuronal: GABAergic	Inhibitory_neurons	3710	True	False	True
+31	Vip_19	Vip	Neuronal: GABAergic	Inhibitory_neurons	11053	True	False	True
+32	Vip_21	Vip	Neuronal: GABAergic	Inhibitory_neurons	2496	True	False	True
+33	Vip_23	Vip	Neuronal: GABAergic	Inhibitory_neurons	9720	True	False	True
+34	Sst Chodl_1	Sst Chodl	Neuronal: GABAergic	Inhibitory_neurons	1211	True	False	True
+35	Sst_1	Sst	Neuronal: GABAergic	Inhibitory_neurons	2510	True	False	True
+36	Sst_4	Sst	Neuronal: GABAergic	Inhibitory_neurons	2994	True	False	True
+37	Sst_5	Sst	Neuronal: GABAergic	Inhibitory_neurons	3158	True	False	True
+38	Sst_7	Sst	Neuronal: GABAergic	Inhibitory_neurons	2174	True	False	True
+39	Sst_3	Sst	Neuronal: GABAergic	Inhibitory_neurons	19298	True	False	True
+40	Sst_19	Sst	Neuronal: GABAergic	Inhibitory_neurons	6841	True	False	True
+41	Sst_9	Sst	Neuronal: GABAergic	Inhibitory_neurons	4062	True	False	True
+42	Sst_10	Sst	Neuronal: GABAergic	Inhibitory_neurons	5079	True	False	True
+43	Sst_13	Sst	Neuronal: GABAergic	Inhibitory_neurons	8178	True	False	True
+44	Sst_12	Sst	Neuronal: GABAergic	Inhibitory_neurons	3063	True	False	True
+45	Sst Chodl_2	Sst Chodl	Neuronal: GABAergic	Inhibitory_neurons	666	True	False	True
+46	Sst_11	Sst	Neuronal: GABAergic	Inhibitory_neurons	2548	True	False	True
+47	Sst_20	Sst	Neuronal: GABAergic	Inhibitory_neurons	3601	True	False	True
+48	Sst_22	Sst	Neuronal: GABAergic	Inhibitory_neurons	1340	True	False	True
+49	Sst_23	Sst	Neuronal: GABAergic	Inhibitory_neurons	4059	True	False	True
+50	Sst_25	Sst	Neuronal: GABAergic	Inhibitory_neurons	2540	True	False	True
+51	Sst_2	Sst	Neuronal: GABAergic	Inhibitory_neurons	4261	True	False	True
+52	Pvalb_6	Pvalb	Neuronal: GABAergic	Inhibitory_neurons	4438	True	False	True
+53	Pvalb_5	Pvalb	Neuronal: GABAergic	Inhibitory_neurons	2731	True	False	True
+54	Pvalb_8	Pvalb	Neuronal: GABAergic	Inhibitory_neurons	2848	True	False	True
+55	Pvalb_7	Pvalb	Neuronal: GABAergic	Inhibitory_neurons	2667	True	False	True
+56	Pvalb_1	Pvalb	Neuronal: GABAergic	Inhibitory_neurons	7676	True	False	True
+57	Pvalb_3	Pvalb	Neuronal: GABAergic	Inhibitory_neurons	8969	True	False	True
+58	Pvalb_2	Pvalb	Neuronal: GABAergic	Inhibitory_neurons	20431	True	False	True
+59	Pvalb_15	Pvalb	Neuronal: GABAergic	Inhibitory_neurons	48946	True	False	True
+60	Pvalb_14	Pvalb	Neuronal: GABAergic	Inhibitory_neurons	3810	True	False	True
+61	Pvalb_12	Pvalb	Neuronal: GABAergic	Inhibitory_neurons	3027	True	False	True
+62	Pvalb_10	Pvalb	Neuronal: GABAergic	Inhibitory_neurons	3212	True	False	True
+63	Pvalb_13	Pvalb	Neuronal: GABAergic	Inhibitory_neurons	1919	True	False	True
+64	Pvalb_9	Pvalb	Neuronal: GABAergic	Inhibitory_neurons	5468	True	False	True
+65	Chandelier_1	Chandelier	Neuronal: GABAergic	Inhibitory_neurons	11445	True	False	True
+66	Chandelier_2	Chandelier	Neuronal: GABAergic	Inhibitory_neurons	3967	True	False	True
+67	L2/3 IT_1	L2/3 IT	Neuronal: Glutamatergic	Excitatory_neurons	114872	True	False	True
+68	L2/3 IT_2	L2/3 IT	Neuronal: Glutamatergic	Excitatory_neurons	1155	True	False	True
+69	L2/3 IT_6	L2/3 IT	Neuronal: Glutamatergic	Excitatory_neurons	59793	True	False	True
+70	L2/3 IT_7	L2/3 IT	Neuronal: Glutamatergic	Excitatory_neurons	3205	True	False	True
+71	L2/3 IT_5	L2/3 IT	Neuronal: Glutamatergic	Excitatory_neurons	46273	True	False	True
+72	L2/3 IT_13	L2/3 IT	Neuronal: Glutamatergic	Excitatory_neurons	40232	True	False	True
+73	L2/3 IT_10	L2/3 IT	Neuronal: Glutamatergic	Excitatory_neurons	32987	True	False	True
+74	L2/3 IT_8	L2/3 IT	Neuronal: Glutamatergic	Excitatory_neurons	12716	True	False	True
+75	L2/3 IT_12	L2/3 IT	Neuronal: Glutamatergic	Excitatory_neurons	14317	True	False	True
+76	L6 IT_1	L6 IT	Neuronal: Glutamatergic	Excitatory_neurons	5667	True	False	True
+77	L6 IT_2	L6 IT	Neuronal: Glutamatergic	Excitatory_neurons	41706	True	False	True
+78	L4 IT_2	L4 IT	Neuronal: Glutamatergic	Excitatory_neurons	33412	True	False	True
+79	L4 IT_3	L4 IT	Neuronal: Glutamatergic	Excitatory_neurons	6009	True	False	True
+80	L4 IT_4	L4 IT	Neuronal: Glutamatergic	Excitatory_neurons	23848	True	False	True
+81	L5 IT_1	L5 IT	Neuronal: Glutamatergic	Excitatory_neurons	12229	True	False	True
+82	L5 IT_3	L5 IT	Neuronal: Glutamatergic	Excitatory_neurons	4616	True	False	True
+83	L2/3 IT_3	L2/3 IT	Neuronal: Glutamatergic	Excitatory_neurons	16410	True	False	True
+84	L4 IT_1	L4 IT	Neuronal: Glutamatergic	Excitatory_neurons	18600	True	False	True
+85	L5 IT_2	L5 IT	Neuronal: Glutamatergic	Excitatory_neurons	43783	True	False	True
+86	L5 IT_5	L5 IT	Neuronal: Glutamatergic	Excitatory_neurons	18863	True	False	True
+87	L5 IT_6	L5 IT	Neuronal: Glutamatergic	Excitatory_neurons	12829	True	False	True
+88	L5 IT_7	L5 IT	Neuronal: Glutamatergic	Excitatory_neurons	11786	True	False	True
+89	L5 ET_2	L5 ET	Neuronal: Glutamatergic	Excitatory_neurons	4097	True	False	True
+90	L6 CT_1	L6 CT	Neuronal: Glutamatergic	Excitatory_neurons	11278	True	False	True
+91	L6 CT_2	L6 CT	Neuronal: Glutamatergic	Excitatory_neurons	16934	True	False	True
+92	L6 CT_3	L6 CT	Neuronal: Glutamatergic	Excitatory_neurons	571	True	False	True
+93	L6 CT_4	L6 CT	Neuronal: Glutamatergic	Excitatory_neurons	560	True	False	True
+94	L6b_1	L6b	Neuronal: Glutamatergic	Excitatory_neurons	698	True	False	True
+95	L6b_2	L6b	Neuronal: Glutamatergic	Excitatory_neurons	3605	True	False	True
+96	L6b_3	L6b	Neuronal: Glutamatergic	Excitatory_neurons	346	True	False	True
+97	L6b_4	L6b	Neuronal: Glutamatergic	Excitatory_neurons	2618	True	False	True
+98	L6b_5	L6b	Neuronal: Glutamatergic	Excitatory_neurons	1045	True	False	True
+99	L6b_6	L6b	Neuronal: Glutamatergic	Excitatory_neurons	10591	True	False	True
+100	L6 IT Car3_1	L6 IT Car3	Neuronal: Glutamatergic	Excitatory_neurons	1203	True	False	True
+101	L6 IT Car3_2	L6 IT Car3	Neuronal: Glutamatergic	Excitatory_neurons	1471	True	False	True
+102	L6 IT Car3_3	L6 IT Car3	Neuronal: Glutamatergic	Excitatory_neurons	11235	True	False	True
+103	L5/6 NP_1	L5/6 NP	Neuronal: Glutamatergic	Excitatory_neurons	8358	True	False	True
+104	L5/6 NP_2	L5/6 NP	Neuronal: Glutamatergic	Excitatory_neurons	6861	True	False	True
+105	L5/6 NP_3	L5/6 NP	Neuronal: Glutamatergic	Excitatory_neurons	79	True	False	True
+106	L5/6 NP_6	L5/6 NP	Neuronal: Glutamatergic	Excitatory_neurons	405	True	False	True
+107	L5/6 NP_4	L5/6 NP	Neuronal: Glutamatergic	Excitatory_neurons	3488	True	False	True
+108	Astro_1	Astrocyte	Non-neuronal and Non-neural	Astrocytes	1878	True	False	True
+109	Astro_2	Astrocyte	Non-neuronal and Non-neural	Astrocytes	65336	True	False	True
+110	Astro_6-SEAAD	Astrocyte	Non-neuronal and Non-neural	Astrocytes	3437	True	False	True
+111	Astro_5	Astrocyte	Non-neuronal and Non-neural	Astrocytes	3346	True	False	True
+112	Astro_3	Astrocyte	Non-neuronal and Non-neural	Astrocytes	12106	True	False	True
+113	Astro_4	Astrocyte	Non-neuronal and Non-neural	Astrocytes	1341	True	False	True
+114	OPC_1	OPC	Non-neuronal and Non-neural	OPCs	192	True	False	True
+115	OPC_2	OPC	Non-neuronal and Non-neural	OPCs	26144	True	False	True
+116	OPC_2_2-SEAAD	OPC	Non-neuronal and Non-neural	OPCs	2705	True	False	True
+117	Oligo_1	Oligodendrocyte	Non-neuronal and Non-neural	Oligodendrocytes	15107	True	False	True
+118	Oligo_2	Oligodendrocyte	Non-neuronal and Non-neural	Oligodendrocytes	71945	True	False	True
+119	Oligo_4	Oligodendrocyte	Non-neuronal and Non-neural	Oligodendrocytes	57395	True	False	True
+120	Oligo_3	Oligodendrocyte	Non-neuronal and Non-neural	Oligodendrocytes	1548	True	False	True
+121	Endo_2	Endothelial	Non-neuronal and Non-neural	Vasculature_cells	2575	True	False	True
+122	VLMC_1	VLMC	Non-neuronal and Non-neural	Vasculature_cells	1716	True	False	True
+123	SMC-SEAAD	VLMC	Non-neuronal and Non-neural	Vasculature_cells	156	True	False	True
+124	Pericyte_1	VLMC	Non-neuronal and Non-neural	Vasculature_cells	2988	True	False	True
+125	Monocyte	Microglia-PVM	Non-neuronal and Non-neural	Microglia	299	True	True	False
+126	Micro-PVM_1	Microglia-PVM	Non-neuronal and Non-neural	Microglia	728	True	False	True
+127	Micro-PVM_2_1-SEAAD	Microglia-PVM	Non-neuronal and Non-neural	Microglia	274	True	False	True
+128	Micro-PVM_2	Microglia-PVM	Non-neuronal and Non-neural	Microglia	39122	True	False	True
+129	Micro-PVM_3-SEAAD	Microglia-PVM	Non-neuronal and Non-neural	Microglia	1392	True	False	True
+130	Lymphocyte	Microglia-PVM	Non-neuronal and Non-neural	Microglia	671	True	True	False

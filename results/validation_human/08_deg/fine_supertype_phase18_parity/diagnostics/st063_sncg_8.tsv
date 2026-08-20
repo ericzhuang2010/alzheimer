@@ -1,0 +1,2 @@
+deg_tier	context_id	broad_network	samples	input_features	tested_features	filtered_features	design_columns	design_rank	residual_df	common_dispersion	min_norm_factor	max_norm_factor	replay_reproduced
+fine_supertype_phase18_parity	st063_sncg_8	Inhibitory_neurons	69	36601	8470	28131	15	15	54	0.0450612624010813	0.891593658030157	1.12208865161438	TRUE

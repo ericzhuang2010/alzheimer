@@ -1,0 +1,133 @@
+field	required	object_present	encoding	dtype
+sample_id	False	True	array	object
+Neurotypical reference	True	True	categorical	int8
+Donor ID	True	True	categorical	int8
+Organism	False	True	categorical	int8
+Brain Region	False	True	categorical	int8
+Sex	True	True	categorical	int8
+Gender	False	True	categorical	int8
+Age at Death	True	True	array	float64
+Race (choice=White)	False	True	categorical	int8
+Race (choice=Black/ African American)	False	True	categorical	int8
+Race (choice=Asian)	False	True	categorical	int8
+Race (choice=American Indian/ Alaska Native)	False	True	categorical	int8
+Race (choice=Native Hawaiian or Pacific Islander)	False	True	categorical	int8
+Race (choice=Unknown or unreported)	False	True	categorical	int8
+Race (choice=Other)	False	True	categorical	int8
+specify other race	False	True	categorical	int8
+Hispanic/Latino	False	True	categorical	int8
+Highest level of education	False	True	categorical	int8
+Years of education	False	True	categorical	int8
+PMI	True	True	categorical	int8
+Fresh Brain Weight	False	True	categorical	int8
+Brain pH	False	True	categorical	int8
+Overall AD neuropathological Change	True	True	categorical	int8
+Thal	False	True	categorical	int8
+Braak	False	True	categorical	int8
+CERAD score	False	True	categorical	int8
+Overall CAA Score	False	True	categorical	int8
+Highest Lewy Body Disease	False	True	categorical	int8
+Total Microinfarcts (not observed grossly)	False	True	categorical	int8
+Total microinfarcts in screening sections	False	True	categorical	int8
+Atherosclerosis	False	True	categorical	int8
+Arteriolosclerosis	False	True	categorical	int8
+LATE	False	True	categorical	int8
+Cognitive Status	True	True	categorical	int8
+Last CASI Score	False	True	categorical	int8
+Interval from last CASI in months	False	True	categorical	int8
+Last MMSE Score	False	True	categorical	int8
+Interval from last MMSE in months	False	True	categorical	int8
+Last MOCA Score	False	True	categorical	int8
+Interval from last MOCA in months	False	True	categorical	int8
+APOE Genotype	True	True	categorical	int8
+Primary Study Name	True	True	categorical	int8
+Secondary Study Name	False	True	categorical	int8
+cell_prep_type	False	True	categorical	int8
+facs_population_plan	False	True	categorical	int8
+rna_amplification	False	True	categorical	int16
+sample_name	False	True	categorical	int16
+sample_quantity_count	False	True	array	int64
+expc_cell_capture	False	True	array	int64
+method	True	True	categorical	int8
+pcr_cycles	False	True	array	int64
+percent_cdna_longer_than_400bp	False	True	array	float64
+rna_amplification_pass_fail	False	True	categorical	int8
+amplified_quantity_ng	False	True	array	float64
+load_name	False	True	categorical	int16
+library_prep	False	True	categorical	int16
+library_input_ng	False	True	array	float64
+r1_index	False	True	categorical	int8
+avg_size_bp	False	True	array	float64
+quantification_fmol	False	True	array	float64
+library_prep_pass_fail	False	True	categorical	int8
+exp_component_vendor_name	False	True	categorical	int16
+batch_vendor_name	False	True	categorical	int8
+experiment_component_failed	False	True	array	bool
+alignment	False	True	categorical	int8
+Genome	False	True	categorical	int8
+ar_id	False	True	array	int64
+bc	False	True	categorical	int32
+GEX_Estimated_number_of_cells	False	True	array	float64
+GEX_number_of_reads	False	True	array	float64
+GEX_sequencing_saturation	False	True	array	float64
+GEX_Mean_raw_reads_per_cell	False	True	array	float64
+GEX_Q30_bases_in_barcode	False	True	array	float64
+GEX_Q30_bases_in_read_2	False	True	array	float64
+GEX_Q30_bases_in_UMI	False	True	array	float64
+GEX_Percent_duplicates	False	True	array	float64
+GEX_Q30_bases_in_sample_index_i1	False	True	array	float64
+GEX_Q30_bases_in_sample_index_i2	False	True	array	float64
+GEX_Reads_with_TSO	False	True	array	float64
+GEX_Sequenced_read_pairs	False	True	array	float64
+GEX_Valid_UMIs	False	True	array	float64
+GEX_Valid_barcodes	False	True	array	float64
+GEX_Reads_mapped_to_genome	False	True	array	float64
+GEX_Reads_mapped_confidently_to_genome	False	True	array	float64
+GEX_Reads_mapped_confidently_to_intergenic_regions	False	True	array	float64
+GEX_Reads_mapped_confidently_to_intronic_regions	False	True	array	float64
+GEX_Reads_mapped_confidently_to_exonic_regions	False	True	array	float64
+GEX_Reads_mapped_confidently_to_transcriptome	False	True	array	float64
+GEX_Reads_mapped_antisense_to_gene	False	True	array	float64
+GEX_Fraction_of_transcriptomic_reads_in_cells	False	True	array	float64
+GEX_Total_genes_detected	False	True	array	float64
+GEX_Median_UMI_counts_per_cell	False	True	array	float64
+GEX_Median_genes_per_cell	False	True	array	float64
+Multiome_Feature_linkages_detected	False	True	array	float64
+Multiome_Linked_genes	False	True	array	float64
+Multiome_Linked_peaks	False	True	array	float64
+ATAC_Confidently_mapped_read_pairs	False	True	array	float64
+ATAC_Fraction_of_genome_in_peaks	False	True	array	float64
+ATAC_Fraction_of_high_quality_fragments_in_cells	False	True	array	float64
+ATAC_Fraction_of_high_quality_fragments_overlapping_TSS	False	True	array	float64
+ATAC_Fraction_of_high_quality_fragments_overlapping_peaks	False	True	array	float64
+ATAC_Fraction_of_transposition_events_in_peaks_in_cells	False	True	array	float64
+ATAC_Mean_raw_read_pairs_per_cell	False	True	array	float64
+ATAC_Median_high_quality_fragments_per_cell	False	True	array	float64
+ATAC_Non-nuclear_read_pairs	False	True	array	float64
+ATAC_Number_of_peaks	False	True	array	float64
+ATAC_Percent_duplicates	False	True	array	float64
+ATAC_Q30_bases_in_barcode	False	True	array	float64
+ATAC_Q30_bases_in_read_1	False	True	array	float64
+ATAC_Q30_bases_in_read_2	False	True	array	float64
+ATAC_Q30_bases_in_sample_index_i1	False	True	array	float64
+ATAC_Sequenced_read_pairs	False	True	array	float64
+ATAC_TSS_enrichment_score	False	True	array	float64
+ATAC_Unmapped_read_pairs	False	True	array	float64
+ATAC_Valid_barcodes	False	True	array	float64
+Number of mapped reads	False	True	array	float64
+Number of unmapped reads	False	True	array	float64
+Number of multimapped reads	False	True	array	float64
+Number of reads	False	True	array	float64
+Number of UMIs	False	True	array	float64
+Genes detected	False	True	array	int64
+Doublet score	False	True	array	float64
+Fraction mitochondrial UMIs	False	True	array	float32
+Used in analysis	True	True	array	bool
+Class confidence	False	True	array	float64
+Class	True	True	categorical	int8
+Subclass confidence	False	True	array	float64
+Subclass	True	True	categorical	int8
+Supertype confidence	False	True	array	float64
+Supertype (non-expanded)	False	True	categorical	int8
+Supertype	True	True	categorical	int16
+Severely Affected Donor	False	True	categorical	int8

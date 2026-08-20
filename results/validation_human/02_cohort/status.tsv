@@ -1,0 +1,2 @@
+schema_version	phase	validation_status	failed_checks	started_at_utc	completed_at_utc	git_revision	config_sha256	host	source_donors	analysis_donors	dementia_donors	no_dementia_donors	age_center	age_scale	pmi_center	pmi_scale
+seaad_fine_phase_status_v2	VH02	validated_complete		2026-08-20T18:26:04.410346+00:00	2026-08-20T18:26:05.586182+00:00	0c272f5c3b098ddbc068dc9e6fee45a913fcf305	8057f30622198fd2f629c46c3897040e44aaa4893b83f709796187bae2fa55a5	homedesktop	83	78	37	41	88.97435897435898	7.839252480554473	6.953162393162401	2.2767935161074178

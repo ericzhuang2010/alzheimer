@@ -1,0 +1,10 @@
+phase	directory	storage_root
+VH00	00_environment	results/validation_human
+VH01	01_audit	results/validation_human
+VH02	02_cohort	results/validation_human
+VH03	03_genes	results/validation_human
+VH04	04_supertype_manifest	results/validation_human
+VH05	05_pseudobulk	results/validation_human
+VH06	06_pseudobulk_qc	results/validation_human
+VH07	07_contrasts	results/validation_human
+VH08	08_deg	results/validation_human

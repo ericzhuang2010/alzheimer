@@ -1,0 +1,138 @@
+schema_version: seaad_fine_deg_config_v2
+project_root: "."
+output_root: results/validation_human
+
+inputs:
+  h5ad: data/seaad/SEAAD_A9_RNAseq_final-nuclei.2024-02-13.h5ad
+  metadata_csv: data/seaad/SEAAD_A9_RNAseq_final-nuclei_metadata.2024-02-13.csv
+
+references:
+  gencode_gtf: data/reference/gencode/gencode.v44.basic.annotation.gtf.gz
+  hgnc_complete_set: data/reference/hgnc/hgnc_complete_set_2026-06-05.txt
+  mitocarta_workbook: data/reference/Human.MitoCarta3.0.xls
+  phase18_gene_annotation: results/minerva_production/09_annotate_genes/gene_annotation_master.tsv.gz
+
+expected_identity:
+  h5ad_bytes: 37938782321
+  metadata_csv_bytes: 1444844786
+  metadata_csv_sha256: 9ef1c9e1180d4404ce814283a25e3b2f0da05ab152af305990a1e3f2f682f3fc
+  h5ad_structure_digest: 9e63f9281b9150c8dd8b32cfae58b823dae5472be8ae746dfecd1f79514e32a6
+  observation_order_sha256: 76a28a761003c4a538cad107cc2f92f0e76ae27cfe56076b7fe72d4de2fdc3ba
+  feature_order_sha256: 7dcafda20108ee578e451c410238e1b659478f02ca7a50bde24bd618b9ba972d
+  observations: 1395601
+  features: 36601
+  umi_nnz: 7989685110
+  csv_columns: 133
+  source_donors: 83
+  analysis_donors: 78
+  dementia_donors: 37
+  no_dementia_donors: 41
+  selected_nuclei: 1189172
+  all_visited_umis: 37297743646
+  selected_umis: 31867743351
+  included_supertypes: 129
+  excluded_supertypes: 2
+  fine_profiles: 10062
+  fine_contrasts: 774
+  fine_directions: 1548
+  fine_support_passing: 260
+  broad_pooled_contrasts: 7
+  broad_stratified_contrasts: 42
+  broad_stratified_eligible: 20
+  broad_stratified_not_estimable: 22
+
+expected_reference_sha256:
+  gencode_gtf: 3e52f82c63f8fd860bf632ccde10441c05751f4c342ad08c0a98e9e2700171a5
+  hgnc_complete_set: f3051e4aa6fac82166e1c26638d0077a95b0f66ab62a03e18bb35eb613e40a90
+  mitocarta_workbook: e6ada0ae8dcd5447a5efb6f77c69a1c10b1ffa66521540a1e81b92c61e5505f2
+  phase18_gene_annotation: b1a7e9b627c983d083df74cbe1173b8cb3e9007e1afc641747e8c30ec17f9203
+
+cohort:
+  donor_field: Donor ID
+  neurotypical_reference_field: Neurotypical reference
+  diagnosis_field: Cognitive Status
+  sex_field: Sex
+  apoe_field: APOE Genotype
+  age_field: Age at Death
+  pmi_field: PMI
+  study_field: Primary Study Name
+  pathology_field: Overall AD neuropathological Change
+  included_diagnoses: [Dementia, No dementia]
+  excluded_apoe: [2/4]
+  apoe_groups:
+    e2: [2/2, 2/3]
+    e33: [3/3]
+    e4: [3/4, 4/4]
+  signature_groups:
+    - {group_id: F_e2, sex: Female, apoe_group: e2}
+    - {group_id: F_e33, sex: Female, apoe_group: e33}
+    - {group_id: F_e4, sex: Female, apoe_group: e4}
+    - {group_id: M_e2, sex: Male, apoe_group: e2}
+    - {group_id: M_e33, sex: Male, apoe_group: e33}
+    - {group_id: M_e4, sex: Male, apoe_group: e4}
+
+assay:
+  method_field: method
+  method_value: 10Xv3.1
+  used_field: Used in analysis
+  umi_layer: layers/UMIs
+
+taxonomy:
+  broad_network_order:
+    - Astrocytes
+    - Excitatory_neurons
+    - Inhibitory_neurons
+    - Microglia
+    - OPCs
+    - Oligodendrocytes
+    - Vasculature_cells
+  expected_supertype_counts:
+    Astrocytes: 6
+    Excitatory_neurons: 41
+    Inhibitory_neurons: 67
+    Microglia: 4
+    OPCs: 3
+    Oligodendrocytes: 4
+    Vasculature_cells: 4
+  excluded_microglia_supertypes: [Monocyte, Lymphocyte]
+
+thresholds:
+  primary_min_nuclei: 20
+  sensitivity_min_nuclei: 50
+  min_donors_per_disease_arm: 5
+  fdr: 0.05
+  absolute_fold_change: 1.3
+
+models:
+  fine_grouped_formula: "~ 0 + diagnosis_sex_apoe_group + age_death_scaled + pmi_scaled + study"
+  broad_pooled_formula: "~ diagnosis + sex + apoe_group + age_death_scaled + pmi_scaled + study"
+  broad_grouped_formula: "~ 0 + diagnosis_sex_apoe_group + age_death_scaled + pmi_scaled + study"
+  filter_group: diagnosis
+  normalization: TMM
+  robust: true
+  fdr_method: BH
+
+query_rules:
+  phase18_parity_query: "FDR < 0.05 AND abs(logFC) > log2(1.3)"
+  fdr_only_query_sensitivity: "FDR < 0.05"
+
+streaming:
+  block_observations: 1000
+  checkpoint_every_blocks: 700
+  csv_chunk_rows: 100000
+  full_h5ad_sha256: true
+
+storage:
+  minimum_free_bytes: 120000000000
+  safety_reserve_bytes: 80000000000
+  large_artifact_classes:
+    - raw_h5ad_csv
+    - observation_level_arrays
+    - observation_level_tables
+    - pseudobulk_count_shards
+    - checkpoint_snapshots
+    - compressed_deg_shards
+    - edgeR_model_objects
+  retained_model_objects: false
+
+random_seed: 20260820

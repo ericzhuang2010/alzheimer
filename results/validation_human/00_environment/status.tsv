@@ -1,0 +1,2 @@
+schema_version	phase	validation_status	failed_checks	started_at_utc	completed_at_utc	git_revision	config_sha256	host	free_bytes	safety_reserve_bytes	code_files	dirty_tree	h5ad_bytes	metadata_csv_bytes
+seaad_fine_phase_status_v2	VH00	validated_complete		2026-08-20T18:47:52.229114+00:00	2026-08-20T18:47:54.362511+00:00	0c272f5c3b098ddbc068dc9e6fee45a913fcf305	8057f30622198fd2f629c46c3897040e44aaa4893b83f709796187bae2fa55a5	homedesktop	436847112192	80000000000	24	True	37938782321	1444844786

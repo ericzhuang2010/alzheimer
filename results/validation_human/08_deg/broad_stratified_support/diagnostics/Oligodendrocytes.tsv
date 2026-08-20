@@ -1,0 +1,3 @@
+deg_tier	context_id	broad_network	samples	input_features	tested_features	filtered_features	design_columns	design_rank	residual_df	common_dispersion	min_norm_factor	max_norm_factor	replay_reproduced
+broad_pooled_anchor	Oligodendrocytes	Oligodendrocytes	78	36601	18041	18560	8	8	70	0.10102553457007	0.84083485071652	1.18562933547103	TRUE
+broad_stratified_support	Oligodendrocytes	Oligodendrocytes	78	36601	18041	18560	15	15	63	0.0974036159281006	0.84083485071652	1.18562933547103	TRUE

@@ -1,0 +1,130 @@
+supertype_index	supertype_id	supertype_label
+0	st001_astro_1	Astro_1
+1	st002_astro_2	Astro_2
+2	st003_astro_6_seaad	Astro_6-SEAAD
+3	st004_astro_5	Astro_5
+4	st005_astro_3	Astro_3
+5	st006_astro_4	Astro_4
+6	st007_l2_3_it_1	L2/3 IT_1
+7	st008_l2_3_it_2	L2/3 IT_2
+8	st009_l2_3_it_6	L2/3 IT_6
+9	st010_l2_3_it_7	L2/3 IT_7
+10	st011_l2_3_it_5	L2/3 IT_5
+11	st012_l2_3_it_13	L2/3 IT_13
+12	st013_l2_3_it_10	L2/3 IT_10
+13	st014_l2_3_it_8	L2/3 IT_8
+14	st015_l2_3_it_12	L2/3 IT_12
+15	st016_l6_it_1	L6 IT_1
+16	st017_l6_it_2	L6 IT_2
+17	st018_l4_it_2	L4 IT_2
+18	st019_l4_it_3	L4 IT_3
+19	st020_l4_it_4	L4 IT_4
+20	st021_l5_it_1	L5 IT_1
+21	st022_l5_it_3	L5 IT_3
+22	st023_l2_3_it_3	L2/3 IT_3
+23	st024_l4_it_1	L4 IT_1
+24	st025_l5_it_2	L5 IT_2
+25	st026_l5_it_5	L5 IT_5
+26	st027_l5_it_6	L5 IT_6
+27	st028_l5_it_7	L5 IT_7
+28	st029_l5_et_2	L5 ET_2
+29	st030_l6_ct_1	L6 CT_1
+30	st031_l6_ct_2	L6 CT_2
+31	st032_l6_ct_3	L6 CT_3
+32	st033_l6_ct_4	L6 CT_4
+33	st034_l6b_1	L6b_1
+34	st035_l6b_2	L6b_2
+35	st036_l6b_3	L6b_3
+36	st037_l6b_4	L6b_4
+37	st038_l6b_5	L6b_5
+38	st039_l6b_6	L6b_6
+39	st040_l6_it_car3_1	L6 IT Car3_1
+40	st041_l6_it_car3_2	L6 IT Car3_2
+41	st042_l6_it_car3_3	L6 IT Car3_3
+42	st043_l5_6_np_1	L5/6 NP_1
+43	st044_l5_6_np_2	L5/6 NP_2
+44	st045_l5_6_np_3	L5/6 NP_3
+45	st046_l5_6_np_6	L5/6 NP_6
+46	st047_l5_6_np_4	L5/6 NP_4
+47	st048_lamp5_lhx6_1	Lamp5_Lhx6_1
+48	st049_lamp5_1	Lamp5_1
+49	st050_lamp5_2	Lamp5_2
+50	st051_lamp5_3	Lamp5_3
+51	st052_lamp5_4	Lamp5_4
+52	st053_lamp5_5	Lamp5_5
+53	st054_lamp5_6	Lamp5_6
+54	st055_pax6_1	Pax6_1
+55	st056_pax6_2	Pax6_2
+56	st057_pax6_3	Pax6_3
+57	st058_pax6_4	Pax6_4
+58	st059_sncg_3	Sncg_3
+59	st060_sncg_6	Sncg_6
+60	st061_sncg_2	Sncg_2
+61	st062_sncg_1	Sncg_1
+62	st063_sncg_8	Sncg_8
+63	st064_sncg_4	Sncg_4
+64	st065_sncg_5	Sncg_5
+65	st066_vip_14	Vip_14
+66	st067_vip_15	Vip_15
+67	st068_vip_16	Vip_16
+68	st069_vip_4	Vip_4
+69	st070_vip_5	Vip_5
+70	st071_vip_6	Vip_6
+71	st072_vip_9	Vip_9
+72	st073_vip_2	Vip_2
+73	st074_vip_11	Vip_11
+74	st075_vip_13	Vip_13
+75	st076_vip_1	Vip_1
+76	st077_vip_12	Vip_12
+77	st078_vip_18	Vip_18
+78	st079_vip_19	Vip_19
+79	st080_vip_21	Vip_21
+80	st081_vip_23	Vip_23
+81	st082_sst_chodl_1	Sst Chodl_1
+82	st083_sst_1	Sst_1
+83	st084_sst_4	Sst_4
+84	st085_sst_5	Sst_5
+85	st086_sst_7	Sst_7
+86	st087_sst_3	Sst_3
+87	st088_sst_19	Sst_19
+88	st089_sst_9	Sst_9
+89	st090_sst_10	Sst_10
+90	st091_sst_13	Sst_13
+91	st092_sst_12	Sst_12
+92	st093_sst_chodl_2	Sst Chodl_2
+93	st094_sst_11	Sst_11
+94	st095_sst_20	Sst_20
+95	st096_sst_22	Sst_22
+96	st097_sst_23	Sst_23
+97	st098_sst_25	Sst_25
+98	st099_sst_2	Sst_2
+99	st100_pvalb_6	Pvalb_6
+100	st101_pvalb_5	Pvalb_5
+101	st102_pvalb_8	Pvalb_8
+102	st103_pvalb_7	Pvalb_7
+103	st104_pvalb_1	Pvalb_1
+104	st105_pvalb_3	Pvalb_3
+105	st106_pvalb_2	Pvalb_2
+106	st107_pvalb_15	Pvalb_15
+107	st108_pvalb_14	Pvalb_14
+108	st109_pvalb_12	Pvalb_12
+109	st110_pvalb_10	Pvalb_10
+110	st111_pvalb_13	Pvalb_13
+111	st112_pvalb_9	Pvalb_9
+112	st113_chandelier_1	Chandelier_1
+113	st114_chandelier_2	Chandelier_2
+114	st115_micro_pvm_1	Micro-PVM_1
+115	st116_micro_pvm_2_1_seaad	Micro-PVM_2_1-SEAAD
+116	st117_micro_pvm_2	Micro-PVM_2
+117	st118_micro_pvm_3_seaad	Micro-PVM_3-SEAAD
+118	st119_opc_1	OPC_1
+119	st120_opc_2	OPC_2
+120	st121_opc_2_2_seaad	OPC_2_2-SEAAD
+121	st122_oligo_1	Oligo_1
+122	st123_oligo_2	Oligo_2
+123	st124_oligo_4	Oligo_4
+124	st125_oligo_3	Oligo_3
+125	st126_endo_2	Endo_2
+126	st127_vlmc_1	VLMC_1
+127	st128_smc_seaad	SMC-SEAAD
+128	st129_pericyte_1	Pericyte_1

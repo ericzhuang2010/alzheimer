@@ -93,4 +93,20 @@ results/minerva_production/13_respiratory_modifier/respiratory_pseudobulk_counts
 !results/minerva_production/18_key_driver_selection
 !results/minerva_production/19_genetic_support
 
-!results/validation_human
+!results/validation_human/
+# SEA-AD validation keeps bulky matrices, compressed per-feature tables,
+# checkpoints, model objects, and observation-level arrays local. Compact
+# contracts, manifests, checks, statuses, and provenance tables remain visible
+# to Git.
+results/validation_human/**
+!results/validation_human/**/
+!results/validation_human/**/*.tsv
+!results/validation_human/**/*.yml
+!results/validation_human/**/*.yaml
+!results/validation_human/**/*.patch
+!results/validation_human/**/*.txt
+
+# Keep pseudobulk matrices and their QC outputs local.
+results/validation_human/05_pseudobulk/
+results/validation_human/05_pseudobulk_qc/
+results/validation_human/06_pseudobulk_qc/

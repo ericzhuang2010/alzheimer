@@ -1,0 +1,5 @@
+stage	reason	donors
+source	all_source_donors	83
+excluded	excluded_apoe_2_4	2
+excluded	neurotypical_reference	3
+included	analysis_cohort	78

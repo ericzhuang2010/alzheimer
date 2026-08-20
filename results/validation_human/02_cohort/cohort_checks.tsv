@@ -1,0 +1,9 @@
+check	passed	observed	expected	details
+source_donors	True	83	83	
+analysis_donors	True	78	78	
+dementia_donors	True	37	37	
+no_dementia_donors	True	41	41	
+clinical_fields_invariant	True	0	0	
+twelve_arm_counts	True	{('Dementia', 'Female', 'e2'): 1, ('Dementia', 'Female', 'e33'): 13, ('Dementia', 'Female', 'e4'): 9, ('Dementia', 'Male', 'e2'): 1, ('Dementia', 'Male', 'e33'): 9, ('Dementia', 'Male', 'e4'): 4, ('No dementia', 'Female', 'e2'): 6, ('No dementia', 'Female', 'e33'): 13, ('No dementia', 'Female', 'e4'): 5, ('No dementia', 'Male', 'e2'): 4, ('No dementia', 'Male', 'e33'): 10, ('No dementia', 'Male', 'e4'): 3}	{('Dementia', 'Female', 'e2'): 1, ('Dementia', 'Female', 'e33'): 13, ('Dementia', 'Female', 'e4'): 9, ('Dementia', 'Male', 'e2'): 1, ('Dementia', 'Male', 'e33'): 9, ('Dementia', 'Male', 'e4'): 4, ('No dementia', 'Female', 'e2'): 6, ('No dementia', 'Female', 'e33'): 13, ('No dementia', 'Female', 'e4'): 5, ('No dementia', 'Male', 'e2'): 4, ('No dementia', 'Male', 'e33'): 10, ('No dementia', 'Male', 'e4'): 3}	
+model_covariates_complete	True	0	0	
+signature_groups_valid	True	F_e2|F_e33|F_e4|M_e2|M_e33|M_e4	F_e2|F_e33|F_e4|M_e2|M_e33|M_e4	

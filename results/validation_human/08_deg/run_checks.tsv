@@ -1,0 +1,12 @@
+check	passed	observed	expected	details
+fine_status_rows	TRUE	774	774	
+pooled_status_rows	TRUE	7	7	
+broad_status_rows	TRUE	42	42	
+no_failed_contrasts	TRUE	0	0	
+eligible_fine_terminal	TRUE	1	1	
+eligible_pooled_terminal	TRUE	1	1	
+eligible_broad_terminal	TRUE	1	1	
+statistics_finite	TRUE	1	1	
+BH_reproduced	TRUE	1	1	
+sample_replay_reproduced	TRUE	1	1	
+result_files_exist	TRUE	287	287	

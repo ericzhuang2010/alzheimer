@@ -1,0 +1,28 @@
+check	passed	observed	expected	details
+python_package_h5py	True	3.16.0	installed	
+python_package_numpy	True	2.5.1	installed	
+python_package_scipy	True	1.18.0	installed	
+python_package_pandas	True	3.0.3	installed	
+python_package_PyYAML	True	6.0.3	installed	
+Rscript_available	True	/usr/bin/Rscript	installed	
+r_package_edgeR	True	4.0.16	installed	
+r_package_limma	True	3.58.1	installed	
+r_package_Matrix	True	1.6.5	installed	
+r_package_data.table	True	1.18.4	installed	
+r_package_yaml	True	2.3.12	installed	
+r_package_digest	True	0.6.39	installed	
+input_h5ad_exists	True	/home/ericzhuang2010/VscodeProjects/alzheimer/data/seaad/SEAAD_A9_RNAseq_final-nuclei.2024-02-13.h5ad	readable file	
+input_metadata_csv_exists	True	/home/ericzhuang2010/VscodeProjects/alzheimer/data/seaad/SEAAD_A9_RNAseq_final-nuclei_metadata.2024-02-13.csv	readable file	
+h5ad_bytes	True	37938782321	37938782321	
+metadata_csv_bytes	True	1444844786	1444844786	
+h5ad_openable	True	True	True	
+reference_gencode_gtf_identity	True	3e52f82c63f8fd860bf632ccde10441c05751f4c342ad08c0a98e9e2700171a5	3e52f82c63f8fd860bf632ccde10441c05751f4c342ad08c0a98e9e2700171a5	/home/ericzhuang2010/VscodeProjects/alzheimer/data/reference/gencode/gencode.v44.basic.annotation.gtf.gz
+reference_hgnc_complete_set_identity	True	f3051e4aa6fac82166e1c26638d0077a95b0f66ab62a03e18bb35eb613e40a90	f3051e4aa6fac82166e1c26638d0077a95b0f66ab62a03e18bb35eb613e40a90	/home/ericzhuang2010/VscodeProjects/alzheimer/data/reference/hgnc/hgnc_complete_set_2026-06-05.txt
+reference_mitocarta_workbook_identity	True	e6ada0ae8dcd5447a5efb6f77c69a1c10b1ffa66521540a1e81b92c61e5505f2	e6ada0ae8dcd5447a5efb6f77c69a1c10b1ffa66521540a1e81b92c61e5505f2	/home/ericzhuang2010/VscodeProjects/alzheimer/data/reference/Human.MitoCarta3.0.xls
+reference_phase18_gene_annotation_identity	True	b1a7e9b627c983d083df74cbe1173b8cb3e9007e1afc641747e8c30ec17f9203	b1a7e9b627c983d083df74cbe1173b8cb3e9007e1afc641747e8c30ec17f9203	/home/ericzhuang2010/VscodeProjects/alzheimer/results/minerva_production/09_annotate_genes/gene_annotation_master.tsv.gz
+structural_supertypes	True	129	129	
+structural_fine_contrasts	True	774	774	
+structural_fine_directions	True	1548	1548	
+isolated_output_root	True	/home/ericzhuang2010/VscodeProjects/alzheimer/results/validation_human	/home/ericzhuang2010/VscodeProjects/alzheimer/results/validation_human	
+minimum_free_storage	True	436847112192	120000000000	
+implementation_file_count	True	24	>=13	

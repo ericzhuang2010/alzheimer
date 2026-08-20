@@ -1,0 +1,2 @@
+deg_tier	context_id	broad_network	samples	input_features	tested_features	filtered_features	design_columns	design_rank	residual_df	common_dispersion	min_norm_factor	max_norm_factor	replay_reproduced
+fine_supertype_phase18_parity	st015_l2_3_it_12	Excitatory_neurons	75	36601	16681	19920	14	14	61	0.0743873257181214	0.813295190969971	1.20128653220093	TRUE

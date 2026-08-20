@@ -1,0 +1,38 @@
+check	passed	observed	expected	details
+h5ad_bytes	True	37938782321	37938782321	
+metadata_csv_bytes	True	1444844786	1444844786	
+metadata_csv_sha256	True	9ef1c9e1180d4404ce814283a25e3b2f0da05ab152af305990a1e3f2f682f3fc	9ef1c9e1180d4404ce814283a25e3b2f0da05ab152af305990a1e3f2f682f3fc	
+observation_count	True	1395601	1395601	
+feature_count	True	36601	36601	
+umi_nnz	True	7989685110	7989685110	
+X_UMI_shape_equal	True	((1395601, 36601), (1395601, 36601))	equal	
+X_encoding_csr	True	csr_matrix	csr_matrix	
+UMI_encoding_csr	True	csr_matrix	csr_matrix	
+X_UMI_indptr_equal	True	True	True	full comparison
+X_UMI_indices_sample_equal	True	True	True	4096 deterministic entries
+UMI_sample_integer_nonnegative	True	True	True	4096 deterministic entries
+UMI_sample_indices_in_range	True	True	True	
+observation_ids_unique	True	1395601	1395601	
+source_features_unique	True	36601	36601	
+embedded_gene_ids_equal_symbols	True	True	True	embedded field is not treated as stable Ensembl identity
+observation_order_digest	True	76a28a761003c4a538cad107cc2f92f0e76ae27cfe56076b7fe72d4de2fdc3ba	76a28a761003c4a538cad107cc2f92f0e76ae27cfe56076b7fe72d4de2fdc3ba	
+feature_order_digest	True	7dcafda20108ee578e451c410238e1b659478f02ca7a50bde24bd618b9ba972d	7dcafda20108ee578e451c410238e1b659478f02ca7a50bde24bd618b9ba972d	
+historical_structure_digest	True	9e63f9281b9150c8dd8b32cfae58b823dae5472be8ae746dfecd1f79514e32a6	9e63f9281b9150c8dd8b32cfae58b823dae5472be8ae746dfecd1f79514e32a6	historical sampled/structural digest
+csv_column_count	True	133	133	
+csv_h5ad_header_equal	True	True	True	
+required_obs_field:Donor ID	True	True	True	
+required_obs_field:Neurotypical reference	True	True	True	
+required_obs_field:Cognitive Status	True	True	True	
+required_obs_field:Sex	True	True	True	
+required_obs_field:APOE Genotype	True	True	True	
+required_obs_field:Age at Death	True	True	True	
+required_obs_field:PMI	True	True	True	
+required_obs_field:Primary Study Name	True	True	True	
+required_obs_field:Overall AD neuropathological Change	True	True	True	
+required_obs_field:method	True	True	True	
+required_obs_field:Used in analysis	True	True	True	
+required_obs_field:Class	True	True	True	
+required_obs_field:Subclass	True	True	True	
+required_obs_field:Supertype	True	True	True	
+csv_row_count	True	1395601	1395601	
+critical_metadata_exact_alignment	True	0	0	

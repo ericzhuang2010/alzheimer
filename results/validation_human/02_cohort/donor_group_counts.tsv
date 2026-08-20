@@ -1,0 +1,13 @@
+diagnosis	sex	apoe_group	signature_group	donors
+Dementia	Female	e2	F_e2	1
+Dementia	Female	e33	F_e33	13
+Dementia	Female	e4	F_e4	9
+Dementia	Male	e2	M_e2	1
+Dementia	Male	e33	M_e33	9
+Dementia	Male	e4	M_e4	4
+No dementia	Female	e2	F_e2	6
+No dementia	Female	e33	F_e33	13
+No dementia	Female	e4	F_e4	5
+No dementia	Male	e2	M_e2	4
+No dementia	Male	e33	M_e33	10
+No dementia	Male	e4	M_e4	3

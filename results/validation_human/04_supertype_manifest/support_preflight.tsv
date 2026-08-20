@@ -1,0 +1,775 @@
+supertype_id	signature_group	supertype_label	broad_network	Dementia	No dementia	support_pass	support_reason
+st001_astro_1	F_e2	Astro_1	Astrocytes	1	3	False	disease_arm_below_5
+st001_astro_1	F_e33	Astro_1	Astrocytes	6	5	True	
+st001_astro_1	F_e4	Astro_1	Astrocytes	4	1	False	disease_arm_below_5
+st001_astro_1	M_e2	Astro_1	Astrocytes	0	4	False	disease_arm_below_5
+st001_astro_1	M_e33	Astro_1	Astrocytes	5	3	False	disease_arm_below_5
+st001_astro_1	M_e4	Astro_1	Astrocytes	1	2	False	disease_arm_below_5
+st002_astro_2	F_e2	Astro_2	Astrocytes	1	6	False	disease_arm_below_5
+st002_astro_2	F_e33	Astro_2	Astrocytes	13	13	True	
+st002_astro_2	F_e4	Astro_2	Astrocytes	9	5	True	
+st002_astro_2	M_e2	Astro_2	Astrocytes	1	4	False	disease_arm_below_5
+st002_astro_2	M_e33	Astro_2	Astrocytes	9	10	True	
+st002_astro_2	M_e4	Astro_2	Astrocytes	4	3	False	disease_arm_below_5
+st003_astro_6_seaad	F_e2	Astro_6-SEAAD	Astrocytes	0	2	False	disease_arm_below_5
+st003_astro_6_seaad	F_e33	Astro_6-SEAAD	Astrocytes	7	7	True	
+st003_astro_6_seaad	F_e4	Astro_6-SEAAD	Astrocytes	6	1	False	disease_arm_below_5
+st003_astro_6_seaad	M_e2	Astro_6-SEAAD	Astrocytes	1	3	False	disease_arm_below_5
+st003_astro_6_seaad	M_e33	Astro_6-SEAAD	Astrocytes	3	9	False	disease_arm_below_5
+st003_astro_6_seaad	M_e4	Astro_6-SEAAD	Astrocytes	2	0	False	disease_arm_below_5
+st004_astro_5	F_e2	Astro_5	Astrocytes	1	5	False	disease_arm_below_5
+st004_astro_5	F_e33	Astro_5	Astrocytes	8	8	True	
+st004_astro_5	F_e4	Astro_5	Astrocytes	7	3	False	disease_arm_below_5
+st004_astro_5	M_e2	Astro_5	Astrocytes	0	2	False	disease_arm_below_5
+st004_astro_5	M_e33	Astro_5	Astrocytes	5	6	True	
+st004_astro_5	M_e4	Astro_5	Astrocytes	3	2	False	disease_arm_below_5
+st005_astro_3	F_e2	Astro_3	Astrocytes	1	6	False	disease_arm_below_5
+st005_astro_3	F_e33	Astro_3	Astrocytes	13	11	True	
+st005_astro_3	F_e4	Astro_3	Astrocytes	7	5	True	
+st005_astro_3	M_e2	Astro_3	Astrocytes	1	4	False	disease_arm_below_5
+st005_astro_3	M_e33	Astro_3	Astrocytes	8	9	True	
+st005_astro_3	M_e4	Astro_3	Astrocytes	4	3	False	disease_arm_below_5
+st006_astro_4	F_e2	Astro_4	Astrocytes	0	0	False	disease_arm_below_5
+st006_astro_4	F_e33	Astro_4	Astrocytes	0	3	False	disease_arm_below_5
+st006_astro_4	F_e4	Astro_4	Astrocytes	3	1	False	disease_arm_below_5
+st006_astro_4	M_e2	Astro_4	Astrocytes	0	1	False	disease_arm_below_5
+st006_astro_4	M_e33	Astro_4	Astrocytes	3	3	False	disease_arm_below_5
+st006_astro_4	M_e4	Astro_4	Astrocytes	2	1	False	disease_arm_below_5
+st007_l2_3_it_1	F_e2	L2/3 IT_1	Excitatory_neurons	1	6	False	disease_arm_below_5
+st007_l2_3_it_1	F_e33	L2/3 IT_1	Excitatory_neurons	13	13	True	
+st007_l2_3_it_1	F_e4	L2/3 IT_1	Excitatory_neurons	9	5	True	
+st007_l2_3_it_1	M_e2	L2/3 IT_1	Excitatory_neurons	0	4	False	disease_arm_below_5
+st007_l2_3_it_1	M_e33	L2/3 IT_1	Excitatory_neurons	9	10	True	
+st007_l2_3_it_1	M_e4	L2/3 IT_1	Excitatory_neurons	4	3	False	disease_arm_below_5
+st008_l2_3_it_2	F_e2	L2/3 IT_2	Excitatory_neurons	1	0	False	disease_arm_below_5
+st008_l2_3_it_2	F_e33	L2/3 IT_2	Excitatory_neurons	3	1	False	disease_arm_below_5
+st008_l2_3_it_2	F_e4	L2/3 IT_2	Excitatory_neurons	2	1	False	disease_arm_below_5
+st008_l2_3_it_2	M_e2	L2/3 IT_2	Excitatory_neurons	0	0	False	disease_arm_below_5
+st008_l2_3_it_2	M_e33	L2/3 IT_2	Excitatory_neurons	0	4	False	disease_arm_below_5
+st008_l2_3_it_2	M_e4	L2/3 IT_2	Excitatory_neurons	2	1	False	disease_arm_below_5
+st009_l2_3_it_6	F_e2	L2/3 IT_6	Excitatory_neurons	1	6	False	disease_arm_below_5
+st009_l2_3_it_6	F_e33	L2/3 IT_6	Excitatory_neurons	13	13	True	
+st009_l2_3_it_6	F_e4	L2/3 IT_6	Excitatory_neurons	8	5	True	
+st009_l2_3_it_6	M_e2	L2/3 IT_6	Excitatory_neurons	0	4	False	disease_arm_below_5
+st009_l2_3_it_6	M_e33	L2/3 IT_6	Excitatory_neurons	8	10	True	
+st009_l2_3_it_6	M_e4	L2/3 IT_6	Excitatory_neurons	4	3	False	disease_arm_below_5
+st010_l2_3_it_7	F_e2	L2/3 IT_7	Excitatory_neurons	1	5	False	disease_arm_below_5
+st010_l2_3_it_7	F_e33	L2/3 IT_7	Excitatory_neurons	10	7	True	
+st010_l2_3_it_7	F_e4	L2/3 IT_7	Excitatory_neurons	5	4	False	disease_arm_below_5
+st010_l2_3_it_7	M_e2	L2/3 IT_7	Excitatory_neurons	0	2	False	disease_arm_below_5
+st010_l2_3_it_7	M_e33	L2/3 IT_7	Excitatory_neurons	5	5	True	
+st010_l2_3_it_7	M_e4	L2/3 IT_7	Excitatory_neurons	2	2	False	disease_arm_below_5
+st011_l2_3_it_5	F_e2	L2/3 IT_5	Excitatory_neurons	1	6	False	disease_arm_below_5
+st011_l2_3_it_5	F_e33	L2/3 IT_5	Excitatory_neurons	13	13	True	
+st011_l2_3_it_5	F_e4	L2/3 IT_5	Excitatory_neurons	9	5	True	
+st011_l2_3_it_5	M_e2	L2/3 IT_5	Excitatory_neurons	0	4	False	disease_arm_below_5
+st011_l2_3_it_5	M_e33	L2/3 IT_5	Excitatory_neurons	9	10	True	
+st011_l2_3_it_5	M_e4	L2/3 IT_5	Excitatory_neurons	4	3	False	disease_arm_below_5
+st012_l2_3_it_13	F_e2	L2/3 IT_13	Excitatory_neurons	1	6	False	disease_arm_below_5
+st012_l2_3_it_13	F_e33	L2/3 IT_13	Excitatory_neurons	13	13	True	
+st012_l2_3_it_13	F_e4	L2/3 IT_13	Excitatory_neurons	9	5	True	
+st012_l2_3_it_13	M_e2	L2/3 IT_13	Excitatory_neurons	0	4	False	disease_arm_below_5
+st012_l2_3_it_13	M_e33	L2/3 IT_13	Excitatory_neurons	9	10	True	
+st012_l2_3_it_13	M_e4	L2/3 IT_13	Excitatory_neurons	4	3	False	disease_arm_below_5
+st013_l2_3_it_10	F_e2	L2/3 IT_10	Excitatory_neurons	1	5	False	disease_arm_below_5
+st013_l2_3_it_10	F_e33	L2/3 IT_10	Excitatory_neurons	7	12	True	
+st013_l2_3_it_10	F_e4	L2/3 IT_10	Excitatory_neurons	6	4	False	disease_arm_below_5
+st013_l2_3_it_10	M_e2	L2/3 IT_10	Excitatory_neurons	0	4	False	disease_arm_below_5
+st013_l2_3_it_10	M_e33	L2/3 IT_10	Excitatory_neurons	7	9	True	
+st013_l2_3_it_10	M_e4	L2/3 IT_10	Excitatory_neurons	4	3	False	disease_arm_below_5
+st014_l2_3_it_8	F_e2	L2/3 IT_8	Excitatory_neurons	1	6	False	disease_arm_below_5
+st014_l2_3_it_8	F_e33	L2/3 IT_8	Excitatory_neurons	12	13	True	
+st014_l2_3_it_8	F_e4	L2/3 IT_8	Excitatory_neurons	7	5	True	
+st014_l2_3_it_8	M_e2	L2/3 IT_8	Excitatory_neurons	0	4	False	disease_arm_below_5
+st014_l2_3_it_8	M_e33	L2/3 IT_8	Excitatory_neurons	6	10	True	
+st014_l2_3_it_8	M_e4	L2/3 IT_8	Excitatory_neurons	4	3	False	disease_arm_below_5
+st015_l2_3_it_12	F_e2	L2/3 IT_12	Excitatory_neurons	1	6	False	disease_arm_below_5
+st015_l2_3_it_12	F_e33	L2/3 IT_12	Excitatory_neurons	13	13	True	
+st015_l2_3_it_12	F_e4	L2/3 IT_12	Excitatory_neurons	8	5	True	
+st015_l2_3_it_12	M_e2	L2/3 IT_12	Excitatory_neurons	0	4	False	disease_arm_below_5
+st015_l2_3_it_12	M_e33	L2/3 IT_12	Excitatory_neurons	9	9	True	
+st015_l2_3_it_12	M_e4	L2/3 IT_12	Excitatory_neurons	4	3	False	disease_arm_below_5
+st016_l6_it_1	F_e2	L6 IT_1	Excitatory_neurons	1	5	False	disease_arm_below_5
+st016_l6_it_1	F_e33	L6 IT_1	Excitatory_neurons	13	12	True	
+st016_l6_it_1	F_e4	L6 IT_1	Excitatory_neurons	7	5	True	
+st016_l6_it_1	M_e2	L6 IT_1	Excitatory_neurons	1	4	False	disease_arm_below_5
+st016_l6_it_1	M_e33	L6 IT_1	Excitatory_neurons	7	10	True	
+st016_l6_it_1	M_e4	L6 IT_1	Excitatory_neurons	4	3	False	disease_arm_below_5
+st017_l6_it_2	F_e2	L6 IT_2	Excitatory_neurons	1	6	False	disease_arm_below_5
+st017_l6_it_2	F_e33	L6 IT_2	Excitatory_neurons	13	13	True	
+st017_l6_it_2	F_e4	L6 IT_2	Excitatory_neurons	9	5	True	
+st017_l6_it_2	M_e2	L6 IT_2	Excitatory_neurons	1	4	False	disease_arm_below_5
+st017_l6_it_2	M_e33	L6 IT_2	Excitatory_neurons	9	10	True	
+st017_l6_it_2	M_e4	L6 IT_2	Excitatory_neurons	4	3	False	disease_arm_below_5
+st018_l4_it_2	F_e2	L4 IT_2	Excitatory_neurons	1	6	False	disease_arm_below_5
+st018_l4_it_2	F_e33	L4 IT_2	Excitatory_neurons	13	13	True	
+st018_l4_it_2	F_e4	L4 IT_2	Excitatory_neurons	9	5	True	
+st018_l4_it_2	M_e2	L4 IT_2	Excitatory_neurons	1	4	False	disease_arm_below_5
+st018_l4_it_2	M_e33	L4 IT_2	Excitatory_neurons	9	10	True	
+st018_l4_it_2	M_e4	L4 IT_2	Excitatory_neurons	4	3	False	disease_arm_below_5
+st019_l4_it_3	F_e2	L4 IT_3	Excitatory_neurons	1	6	False	disease_arm_below_5
+st019_l4_it_3	F_e33	L4 IT_3	Excitatory_neurons	13	13	True	
+st019_l4_it_3	F_e4	L4 IT_3	Excitatory_neurons	8	5	True	
+st019_l4_it_3	M_e2	L4 IT_3	Excitatory_neurons	1	4	False	disease_arm_below_5
+st019_l4_it_3	M_e33	L4 IT_3	Excitatory_neurons	8	10	True	
+st019_l4_it_3	M_e4	L4 IT_3	Excitatory_neurons	4	3	False	disease_arm_below_5
+st020_l4_it_4	F_e2	L4 IT_4	Excitatory_neurons	1	6	False	disease_arm_below_5
+st020_l4_it_4	F_e33	L4 IT_4	Excitatory_neurons	13	13	True	
+st020_l4_it_4	F_e4	L4 IT_4	Excitatory_neurons	9	5	True	
+st020_l4_it_4	M_e2	L4 IT_4	Excitatory_neurons	1	4	False	disease_arm_below_5
+st020_l4_it_4	M_e33	L4 IT_4	Excitatory_neurons	9	10	True	
+st020_l4_it_4	M_e4	L4 IT_4	Excitatory_neurons	4	3	False	disease_arm_below_5
+st021_l5_it_1	F_e2	L5 IT_1	Excitatory_neurons	1	6	False	disease_arm_below_5
+st021_l5_it_1	F_e33	L5 IT_1	Excitatory_neurons	13	13	True	
+st021_l5_it_1	F_e4	L5 IT_1	Excitatory_neurons	9	5	True	
+st021_l5_it_1	M_e2	L5 IT_1	Excitatory_neurons	1	4	False	disease_arm_below_5
+st021_l5_it_1	M_e33	L5 IT_1	Excitatory_neurons	9	10	True	
+st021_l5_it_1	M_e4	L5 IT_1	Excitatory_neurons	4	3	False	disease_arm_below_5
+st022_l5_it_3	F_e2	L5 IT_3	Excitatory_neurons	1	6	False	disease_arm_below_5
+st022_l5_it_3	F_e33	L5 IT_3	Excitatory_neurons	12	13	True	
+st022_l5_it_3	F_e4	L5 IT_3	Excitatory_neurons	7	5	True	
+st022_l5_it_3	M_e2	L5 IT_3	Excitatory_neurons	1	4	False	disease_arm_below_5
+st022_l5_it_3	M_e33	L5 IT_3	Excitatory_neurons	8	10	True	
+st022_l5_it_3	M_e4	L5 IT_3	Excitatory_neurons	4	3	False	disease_arm_below_5
+st023_l2_3_it_3	F_e2	L2/3 IT_3	Excitatory_neurons	1	6	False	disease_arm_below_5
+st023_l2_3_it_3	F_e33	L2/3 IT_3	Excitatory_neurons	12	13	True	
+st023_l2_3_it_3	F_e4	L2/3 IT_3	Excitatory_neurons	8	5	True	
+st023_l2_3_it_3	M_e2	L2/3 IT_3	Excitatory_neurons	0	4	False	disease_arm_below_5
+st023_l2_3_it_3	M_e33	L2/3 IT_3	Excitatory_neurons	8	10	True	
+st023_l2_3_it_3	M_e4	L2/3 IT_3	Excitatory_neurons	4	3	False	disease_arm_below_5
+st024_l4_it_1	F_e2	L4 IT_1	Excitatory_neurons	1	6	False	disease_arm_below_5
+st024_l4_it_1	F_e33	L4 IT_1	Excitatory_neurons	13	13	True	
+st024_l4_it_1	F_e4	L4 IT_1	Excitatory_neurons	9	5	True	
+st024_l4_it_1	M_e2	L4 IT_1	Excitatory_neurons	1	4	False	disease_arm_below_5
+st024_l4_it_1	M_e33	L4 IT_1	Excitatory_neurons	9	10	True	
+st024_l4_it_1	M_e4	L4 IT_1	Excitatory_neurons	4	3	False	disease_arm_below_5
+st025_l5_it_2	F_e2	L5 IT_2	Excitatory_neurons	1	6	False	disease_arm_below_5
+st025_l5_it_2	F_e33	L5 IT_2	Excitatory_neurons	13	13	True	
+st025_l5_it_2	F_e4	L5 IT_2	Excitatory_neurons	9	5	True	
+st025_l5_it_2	M_e2	L5 IT_2	Excitatory_neurons	1	4	False	disease_arm_below_5
+st025_l5_it_2	M_e33	L5 IT_2	Excitatory_neurons	9	10	True	
+st025_l5_it_2	M_e4	L5 IT_2	Excitatory_neurons	4	3	False	disease_arm_below_5
+st026_l5_it_5	F_e2	L5 IT_5	Excitatory_neurons	1	6	False	disease_arm_below_5
+st026_l5_it_5	F_e33	L5 IT_5	Excitatory_neurons	13	13	True	
+st026_l5_it_5	F_e4	L5 IT_5	Excitatory_neurons	9	5	True	
+st026_l5_it_5	M_e2	L5 IT_5	Excitatory_neurons	1	4	False	disease_arm_below_5
+st026_l5_it_5	M_e33	L5 IT_5	Excitatory_neurons	9	10	True	
+st026_l5_it_5	M_e4	L5 IT_5	Excitatory_neurons	4	3	False	disease_arm_below_5
+st027_l5_it_6	F_e2	L5 IT_6	Excitatory_neurons	1	6	False	disease_arm_below_5
+st027_l5_it_6	F_e33	L5 IT_6	Excitatory_neurons	13	13	True	
+st027_l5_it_6	F_e4	L5 IT_6	Excitatory_neurons	9	5	True	
+st027_l5_it_6	M_e2	L5 IT_6	Excitatory_neurons	1	3	False	disease_arm_below_5
+st027_l5_it_6	M_e33	L5 IT_6	Excitatory_neurons	8	10	True	
+st027_l5_it_6	M_e4	L5 IT_6	Excitatory_neurons	3	2	False	disease_arm_below_5
+st028_l5_it_7	F_e2	L5 IT_7	Excitatory_neurons	1	6	False	disease_arm_below_5
+st028_l5_it_7	F_e33	L5 IT_7	Excitatory_neurons	13	13	True	
+st028_l5_it_7	F_e4	L5 IT_7	Excitatory_neurons	8	5	True	
+st028_l5_it_7	M_e2	L5 IT_7	Excitatory_neurons	1	4	False	disease_arm_below_5
+st028_l5_it_7	M_e33	L5 IT_7	Excitatory_neurons	7	10	True	
+st028_l5_it_7	M_e4	L5 IT_7	Excitatory_neurons	4	3	False	disease_arm_below_5
+st029_l5_et_2	F_e2	L5 ET_2	Excitatory_neurons	1	6	False	disease_arm_below_5
+st029_l5_et_2	F_e33	L5 ET_2	Excitatory_neurons	9	12	True	
+st029_l5_et_2	F_e4	L5 ET_2	Excitatory_neurons	6	4	False	disease_arm_below_5
+st029_l5_et_2	M_e2	L5 ET_2	Excitatory_neurons	1	3	False	disease_arm_below_5
+st029_l5_et_2	M_e33	L5 ET_2	Excitatory_neurons	6	9	True	
+st029_l5_et_2	M_e4	L5 ET_2	Excitatory_neurons	4	3	False	disease_arm_below_5
+st030_l6_ct_1	F_e2	L6 CT_1	Excitatory_neurons	1	6	False	disease_arm_below_5
+st030_l6_ct_1	F_e33	L6 CT_1	Excitatory_neurons	13	13	True	
+st030_l6_ct_1	F_e4	L6 CT_1	Excitatory_neurons	8	5	True	
+st030_l6_ct_1	M_e2	L6 CT_1	Excitatory_neurons	1	4	False	disease_arm_below_5
+st030_l6_ct_1	M_e33	L6 CT_1	Excitatory_neurons	8	10	True	
+st030_l6_ct_1	M_e4	L6 CT_1	Excitatory_neurons	4	3	False	disease_arm_below_5
+st031_l6_ct_2	F_e2	L6 CT_2	Excitatory_neurons	1	6	False	disease_arm_below_5
+st031_l6_ct_2	F_e33	L6 CT_2	Excitatory_neurons	13	13	True	
+st031_l6_ct_2	F_e4	L6 CT_2	Excitatory_neurons	8	5	True	
+st031_l6_ct_2	M_e2	L6 CT_2	Excitatory_neurons	1	4	False	disease_arm_below_5
+st031_l6_ct_2	M_e33	L6 CT_2	Excitatory_neurons	8	10	True	
+st031_l6_ct_2	M_e4	L6 CT_2	Excitatory_neurons	4	3	False	disease_arm_below_5
+st032_l6_ct_3	F_e2	L6 CT_3	Excitatory_neurons	0	0	False	disease_arm_below_5
+st032_l6_ct_3	F_e33	L6 CT_3	Excitatory_neurons	0	0	False	disease_arm_below_5
+st032_l6_ct_3	F_e4	L6 CT_3	Excitatory_neurons	0	0	False	disease_arm_below_5
+st032_l6_ct_3	M_e2	L6 CT_3	Excitatory_neurons	0	0	False	disease_arm_below_5
+st032_l6_ct_3	M_e33	L6 CT_3	Excitatory_neurons	0	0	False	disease_arm_below_5
+st032_l6_ct_3	M_e4	L6 CT_3	Excitatory_neurons	0	0	False	disease_arm_below_5
+st033_l6_ct_4	F_e2	L6 CT_4	Excitatory_neurons	0	0	False	disease_arm_below_5
+st033_l6_ct_4	F_e33	L6 CT_4	Excitatory_neurons	1	0	False	disease_arm_below_5
+st033_l6_ct_4	F_e4	L6 CT_4	Excitatory_neurons	0	0	False	disease_arm_below_5
+st033_l6_ct_4	M_e2	L6 CT_4	Excitatory_neurons	0	0	False	disease_arm_below_5
+st033_l6_ct_4	M_e33	L6 CT_4	Excitatory_neurons	0	0	False	disease_arm_below_5
+st033_l6_ct_4	M_e4	L6 CT_4	Excitatory_neurons	0	0	False	disease_arm_below_5
+st034_l6b_1	F_e2	L6b_1	Excitatory_neurons	0	1	False	disease_arm_below_5
+st034_l6b_1	F_e33	L6b_1	Excitatory_neurons	1	1	False	disease_arm_below_5
+st034_l6b_1	F_e4	L6b_1	Excitatory_neurons	0	1	False	disease_arm_below_5
+st034_l6b_1	M_e2	L6b_1	Excitatory_neurons	0	0	False	disease_arm_below_5
+st034_l6b_1	M_e33	L6b_1	Excitatory_neurons	0	0	False	disease_arm_below_5
+st034_l6b_1	M_e4	L6b_1	Excitatory_neurons	1	1	False	disease_arm_below_5
+st035_l6b_2	F_e2	L6b_2	Excitatory_neurons	1	3	False	disease_arm_below_5
+st035_l6b_2	F_e33	L6b_2	Excitatory_neurons	10	10	True	
+st035_l6b_2	F_e4	L6b_2	Excitatory_neurons	7	4	False	disease_arm_below_5
+st035_l6b_2	M_e2	L6b_2	Excitatory_neurons	1	3	False	disease_arm_below_5
+st035_l6b_2	M_e33	L6b_2	Excitatory_neurons	6	8	True	
+st035_l6b_2	M_e4	L6b_2	Excitatory_neurons	2	2	False	disease_arm_below_5
+st036_l6b_3	F_e2	L6b_3	Excitatory_neurons	0	0	False	disease_arm_below_5
+st036_l6b_3	F_e33	L6b_3	Excitatory_neurons	0	0	False	disease_arm_below_5
+st036_l6b_3	F_e4	L6b_3	Excitatory_neurons	0	0	False	disease_arm_below_5
+st036_l6b_3	M_e2	L6b_3	Excitatory_neurons	0	0	False	disease_arm_below_5
+st036_l6b_3	M_e33	L6b_3	Excitatory_neurons	0	0	False	disease_arm_below_5
+st036_l6b_3	M_e4	L6b_3	Excitatory_neurons	0	0	False	disease_arm_below_5
+st037_l6b_4	F_e2	L6b_4	Excitatory_neurons	1	3	False	disease_arm_below_5
+st037_l6b_4	F_e33	L6b_4	Excitatory_neurons	10	10	True	
+st037_l6b_4	F_e4	L6b_4	Excitatory_neurons	3	4	False	disease_arm_below_5
+st037_l6b_4	M_e2	L6b_4	Excitatory_neurons	1	2	False	disease_arm_below_5
+st037_l6b_4	M_e33	L6b_4	Excitatory_neurons	7	5	True	
+st037_l6b_4	M_e4	L6b_4	Excitatory_neurons	1	1	False	disease_arm_below_5
+st038_l6b_5	F_e2	L6b_5	Excitatory_neurons	0	2	False	disease_arm_below_5
+st038_l6b_5	F_e33	L6b_5	Excitatory_neurons	3	5	False	disease_arm_below_5
+st038_l6b_5	F_e4	L6b_5	Excitatory_neurons	1	0	False	disease_arm_below_5
+st038_l6b_5	M_e2	L6b_5	Excitatory_neurons	0	0	False	disease_arm_below_5
+st038_l6b_5	M_e33	L6b_5	Excitatory_neurons	2	0	False	disease_arm_below_5
+st038_l6b_5	M_e4	L6b_5	Excitatory_neurons	0	0	False	disease_arm_below_5
+st039_l6b_6	F_e2	L6b_6	Excitatory_neurons	1	6	False	disease_arm_below_5
+st039_l6b_6	F_e33	L6b_6	Excitatory_neurons	13	12	True	
+st039_l6b_6	F_e4	L6b_6	Excitatory_neurons	8	5	True	
+st039_l6b_6	M_e2	L6b_6	Excitatory_neurons	1	4	False	disease_arm_below_5
+st039_l6b_6	M_e33	L6b_6	Excitatory_neurons	8	10	True	
+st039_l6b_6	M_e4	L6b_6	Excitatory_neurons	3	2	False	disease_arm_below_5
+st040_l6_it_car3_1	F_e2	L6 IT Car3_1	Excitatory_neurons	1	0	False	disease_arm_below_5
+st040_l6_it_car3_1	F_e33	L6 IT Car3_1	Excitatory_neurons	2	2	False	disease_arm_below_5
+st040_l6_it_car3_1	F_e4	L6 IT Car3_1	Excitatory_neurons	3	0	False	disease_arm_below_5
+st040_l6_it_car3_1	M_e2	L6 IT Car3_1	Excitatory_neurons	0	0	False	disease_arm_below_5
+st040_l6_it_car3_1	M_e33	L6 IT Car3_1	Excitatory_neurons	4	2	False	disease_arm_below_5
+st040_l6_it_car3_1	M_e4	L6 IT Car3_1	Excitatory_neurons	1	1	False	disease_arm_below_5
+st041_l6_it_car3_2	F_e2	L6 IT Car3_2	Excitatory_neurons	0	0	False	disease_arm_below_5
+st041_l6_it_car3_2	F_e33	L6 IT Car3_2	Excitatory_neurons	2	5	False	disease_arm_below_5
+st041_l6_it_car3_2	F_e4	L6 IT Car3_2	Excitatory_neurons	3	0	False	disease_arm_below_5
+st041_l6_it_car3_2	M_e2	L6 IT Car3_2	Excitatory_neurons	1	2	False	disease_arm_below_5
+st041_l6_it_car3_2	M_e33	L6 IT Car3_2	Excitatory_neurons	3	3	False	disease_arm_below_5
+st041_l6_it_car3_2	M_e4	L6 IT Car3_2	Excitatory_neurons	2	0	False	disease_arm_below_5
+st042_l6_it_car3_3	F_e2	L6 IT Car3_3	Excitatory_neurons	1	6	False	disease_arm_below_5
+st042_l6_it_car3_3	F_e33	L6 IT Car3_3	Excitatory_neurons	13	13	True	
+st042_l6_it_car3_3	F_e4	L6 IT Car3_3	Excitatory_neurons	9	5	True	
+st042_l6_it_car3_3	M_e2	L6 IT Car3_3	Excitatory_neurons	1	4	False	disease_arm_below_5
+st042_l6_it_car3_3	M_e33	L6 IT Car3_3	Excitatory_neurons	8	10	True	
+st042_l6_it_car3_3	M_e4	L6 IT Car3_3	Excitatory_neurons	4	3	False	disease_arm_below_5
+st043_l5_6_np_1	F_e2	L5/6 NP_1	Excitatory_neurons	1	6	False	disease_arm_below_5
+st043_l5_6_np_1	F_e33	L5/6 NP_1	Excitatory_neurons	11	13	True	
+st043_l5_6_np_1	F_e4	L5/6 NP_1	Excitatory_neurons	8	5	True	
+st043_l5_6_np_1	M_e2	L5/6 NP_1	Excitatory_neurons	1	4	False	disease_arm_below_5
+st043_l5_6_np_1	M_e33	L5/6 NP_1	Excitatory_neurons	8	10	True	
+st043_l5_6_np_1	M_e4	L5/6 NP_1	Excitatory_neurons	4	3	False	disease_arm_below_5
+st044_l5_6_np_2	F_e2	L5/6 NP_2	Excitatory_neurons	1	6	False	disease_arm_below_5
+st044_l5_6_np_2	F_e33	L5/6 NP_2	Excitatory_neurons	11	13	True	
+st044_l5_6_np_2	F_e4	L5/6 NP_2	Excitatory_neurons	8	5	True	
+st044_l5_6_np_2	M_e2	L5/6 NP_2	Excitatory_neurons	1	4	False	disease_arm_below_5
+st044_l5_6_np_2	M_e33	L5/6 NP_2	Excitatory_neurons	8	10	True	
+st044_l5_6_np_2	M_e4	L5/6 NP_2	Excitatory_neurons	4	3	False	disease_arm_below_5
+st045_l5_6_np_3	F_e2	L5/6 NP_3	Excitatory_neurons	0	0	False	disease_arm_below_5
+st045_l5_6_np_3	F_e33	L5/6 NP_3	Excitatory_neurons	0	0	False	disease_arm_below_5
+st045_l5_6_np_3	F_e4	L5/6 NP_3	Excitatory_neurons	0	0	False	disease_arm_below_5
+st045_l5_6_np_3	M_e2	L5/6 NP_3	Excitatory_neurons	0	0	False	disease_arm_below_5
+st045_l5_6_np_3	M_e33	L5/6 NP_3	Excitatory_neurons	0	0	False	disease_arm_below_5
+st045_l5_6_np_3	M_e4	L5/6 NP_3	Excitatory_neurons	0	0	False	disease_arm_below_5
+st046_l5_6_np_6	F_e2	L5/6 NP_6	Excitatory_neurons	0	0	False	disease_arm_below_5
+st046_l5_6_np_6	F_e33	L5/6 NP_6	Excitatory_neurons	1	0	False	disease_arm_below_5
+st046_l5_6_np_6	F_e4	L5/6 NP_6	Excitatory_neurons	0	0	False	disease_arm_below_5
+st046_l5_6_np_6	M_e2	L5/6 NP_6	Excitatory_neurons	0	0	False	disease_arm_below_5
+st046_l5_6_np_6	M_e33	L5/6 NP_6	Excitatory_neurons	1	0	False	disease_arm_below_5
+st046_l5_6_np_6	M_e4	L5/6 NP_6	Excitatory_neurons	0	0	False	disease_arm_below_5
+st047_l5_6_np_4	F_e2	L5/6 NP_4	Excitatory_neurons	1	6	False	disease_arm_below_5
+st047_l5_6_np_4	F_e33	L5/6 NP_4	Excitatory_neurons	11	13	True	
+st047_l5_6_np_4	F_e4	L5/6 NP_4	Excitatory_neurons	7	5	True	
+st047_l5_6_np_4	M_e2	L5/6 NP_4	Excitatory_neurons	1	2	False	disease_arm_below_5
+st047_l5_6_np_4	M_e33	L5/6 NP_4	Excitatory_neurons	8	10	True	
+st047_l5_6_np_4	M_e4	L5/6 NP_4	Excitatory_neurons	2	3	False	disease_arm_below_5
+st048_lamp5_lhx6_1	F_e2	Lamp5_Lhx6_1	Inhibitory_neurons	1	6	False	disease_arm_below_5
+st048_lamp5_lhx6_1	F_e33	Lamp5_Lhx6_1	Inhibitory_neurons	13	13	True	
+st048_lamp5_lhx6_1	F_e4	Lamp5_Lhx6_1	Inhibitory_neurons	9	5	True	
+st048_lamp5_lhx6_1	M_e2	Lamp5_Lhx6_1	Inhibitory_neurons	1	4	False	disease_arm_below_5
+st048_lamp5_lhx6_1	M_e33	Lamp5_Lhx6_1	Inhibitory_neurons	8	10	True	
+st048_lamp5_lhx6_1	M_e4	Lamp5_Lhx6_1	Inhibitory_neurons	4	3	False	disease_arm_below_5
+st049_lamp5_1	F_e2	Lamp5_1	Inhibitory_neurons	1	6	False	disease_arm_below_5
+st049_lamp5_1	F_e33	Lamp5_1	Inhibitory_neurons	13	13	True	
+st049_lamp5_1	F_e4	Lamp5_1	Inhibitory_neurons	9	5	True	
+st049_lamp5_1	M_e2	Lamp5_1	Inhibitory_neurons	1	4	False	disease_arm_below_5
+st049_lamp5_1	M_e33	Lamp5_1	Inhibitory_neurons	9	10	True	
+st049_lamp5_1	M_e4	Lamp5_1	Inhibitory_neurons	4	3	False	disease_arm_below_5
+st050_lamp5_2	F_e2	Lamp5_2	Inhibitory_neurons	1	6	False	disease_arm_below_5
+st050_lamp5_2	F_e33	Lamp5_2	Inhibitory_neurons	13	13	True	
+st050_lamp5_2	F_e4	Lamp5_2	Inhibitory_neurons	9	5	True	
+st050_lamp5_2	M_e2	Lamp5_2	Inhibitory_neurons	1	4	False	disease_arm_below_5
+st050_lamp5_2	M_e33	Lamp5_2	Inhibitory_neurons	9	10	True	
+st050_lamp5_2	M_e4	Lamp5_2	Inhibitory_neurons	4	3	False	disease_arm_below_5
+st051_lamp5_3	F_e2	Lamp5_3	Inhibitory_neurons	1	6	False	disease_arm_below_5
+st051_lamp5_3	F_e33	Lamp5_3	Inhibitory_neurons	13	13	True	
+st051_lamp5_3	F_e4	Lamp5_3	Inhibitory_neurons	8	5	True	
+st051_lamp5_3	M_e2	Lamp5_3	Inhibitory_neurons	1	4	False	disease_arm_below_5
+st051_lamp5_3	M_e33	Lamp5_3	Inhibitory_neurons	8	10	True	
+st051_lamp5_3	M_e4	Lamp5_3	Inhibitory_neurons	4	3	False	disease_arm_below_5
+st052_lamp5_4	F_e2	Lamp5_4	Inhibitory_neurons	1	3	False	disease_arm_below_5
+st052_lamp5_4	F_e33	Lamp5_4	Inhibitory_neurons	4	4	False	disease_arm_below_5
+st052_lamp5_4	F_e4	Lamp5_4	Inhibitory_neurons	5	2	False	disease_arm_below_5
+st052_lamp5_4	M_e2	Lamp5_4	Inhibitory_neurons	0	2	False	disease_arm_below_5
+st052_lamp5_4	M_e33	Lamp5_4	Inhibitory_neurons	1	7	False	disease_arm_below_5
+st052_lamp5_4	M_e4	Lamp5_4	Inhibitory_neurons	4	1	False	disease_arm_below_5
+st053_lamp5_5	F_e2	Lamp5_5	Inhibitory_neurons	1	5	False	disease_arm_below_5
+st053_lamp5_5	F_e33	Lamp5_5	Inhibitory_neurons	12	13	True	
+st053_lamp5_5	F_e4	Lamp5_5	Inhibitory_neurons	7	5	True	
+st053_lamp5_5	M_e2	Lamp5_5	Inhibitory_neurons	1	4	False	disease_arm_below_5
+st053_lamp5_5	M_e33	Lamp5_5	Inhibitory_neurons	8	10	True	
+st053_lamp5_5	M_e4	Lamp5_5	Inhibitory_neurons	4	3	False	disease_arm_below_5
+st054_lamp5_6	F_e2	Lamp5_6	Inhibitory_neurons	1	4	False	disease_arm_below_5
+st054_lamp5_6	F_e33	Lamp5_6	Inhibitory_neurons	11	12	True	
+st054_lamp5_6	F_e4	Lamp5_6	Inhibitory_neurons	6	4	False	disease_arm_below_5
+st054_lamp5_6	M_e2	Lamp5_6	Inhibitory_neurons	1	4	False	disease_arm_below_5
+st054_lamp5_6	M_e33	Lamp5_6	Inhibitory_neurons	7	10	True	
+st054_lamp5_6	M_e4	Lamp5_6	Inhibitory_neurons	4	3	False	disease_arm_below_5
+st055_pax6_1	F_e2	Pax6_1	Inhibitory_neurons	1	5	False	disease_arm_below_5
+st055_pax6_1	F_e33	Pax6_1	Inhibitory_neurons	11	10	True	
+st055_pax6_1	F_e4	Pax6_1	Inhibitory_neurons	8	5	True	
+st055_pax6_1	M_e2	Pax6_1	Inhibitory_neurons	1	4	False	disease_arm_below_5
+st055_pax6_1	M_e33	Pax6_1	Inhibitory_neurons	7	10	True	
+st055_pax6_1	M_e4	Pax6_1	Inhibitory_neurons	4	3	False	disease_arm_below_5
+st056_pax6_2	F_e2	Pax6_2	Inhibitory_neurons	0	3	False	disease_arm_below_5
+st056_pax6_2	F_e33	Pax6_2	Inhibitory_neurons	4	2	False	disease_arm_below_5
+st056_pax6_2	F_e4	Pax6_2	Inhibitory_neurons	5	4	False	disease_arm_below_5
+st056_pax6_2	M_e2	Pax6_2	Inhibitory_neurons	0	0	False	disease_arm_below_5
+st056_pax6_2	M_e33	Pax6_2	Inhibitory_neurons	3	3	False	disease_arm_below_5
+st056_pax6_2	M_e4	Pax6_2	Inhibitory_neurons	1	2	False	disease_arm_below_5
+st057_pax6_3	F_e2	Pax6_3	Inhibitory_neurons	0	1	False	disease_arm_below_5
+st057_pax6_3	F_e33	Pax6_3	Inhibitory_neurons	0	2	False	disease_arm_below_5
+st057_pax6_3	F_e4	Pax6_3	Inhibitory_neurons	2	0	False	disease_arm_below_5
+st057_pax6_3	M_e2	Pax6_3	Inhibitory_neurons	0	0	False	disease_arm_below_5
+st057_pax6_3	M_e33	Pax6_3	Inhibitory_neurons	2	1	False	disease_arm_below_5
+st057_pax6_3	M_e4	Pax6_3	Inhibitory_neurons	1	0	False	disease_arm_below_5
+st058_pax6_4	F_e2	Pax6_4	Inhibitory_neurons	0	1	False	disease_arm_below_5
+st058_pax6_4	F_e33	Pax6_4	Inhibitory_neurons	8	9	True	
+st058_pax6_4	F_e4	Pax6_4	Inhibitory_neurons	2	4	False	disease_arm_below_5
+st058_pax6_4	M_e2	Pax6_4	Inhibitory_neurons	1	1	False	disease_arm_below_5
+st058_pax6_4	M_e33	Pax6_4	Inhibitory_neurons	6	4	False	disease_arm_below_5
+st058_pax6_4	M_e4	Pax6_4	Inhibitory_neurons	4	2	False	disease_arm_below_5
+st059_sncg_3	F_e2	Sncg_3	Inhibitory_neurons	0	4	False	disease_arm_below_5
+st059_sncg_3	F_e33	Sncg_3	Inhibitory_neurons	10	7	True	
+st059_sncg_3	F_e4	Sncg_3	Inhibitory_neurons	4	4	False	disease_arm_below_5
+st059_sncg_3	M_e2	Sncg_3	Inhibitory_neurons	0	2	False	disease_arm_below_5
+st059_sncg_3	M_e33	Sncg_3	Inhibitory_neurons	6	7	True	
+st059_sncg_3	M_e4	Sncg_3	Inhibitory_neurons	4	1	False	disease_arm_below_5
+st060_sncg_6	F_e2	Sncg_6	Inhibitory_neurons	0	6	False	disease_arm_below_5
+st060_sncg_6	F_e33	Sncg_6	Inhibitory_neurons	11	10	True	
+st060_sncg_6	F_e4	Sncg_6	Inhibitory_neurons	7	5	True	
+st060_sncg_6	M_e2	Sncg_6	Inhibitory_neurons	1	4	False	disease_arm_below_5
+st060_sncg_6	M_e33	Sncg_6	Inhibitory_neurons	8	10	True	
+st060_sncg_6	M_e4	Sncg_6	Inhibitory_neurons	4	3	False	disease_arm_below_5
+st061_sncg_2	F_e2	Sncg_2	Inhibitory_neurons	0	0	False	disease_arm_below_5
+st061_sncg_2	F_e33	Sncg_2	Inhibitory_neurons	4	3	False	disease_arm_below_5
+st061_sncg_2	F_e4	Sncg_2	Inhibitory_neurons	4	1	False	disease_arm_below_5
+st061_sncg_2	M_e2	Sncg_2	Inhibitory_neurons	0	1	False	disease_arm_below_5
+st061_sncg_2	M_e33	Sncg_2	Inhibitory_neurons	2	4	False	disease_arm_below_5
+st061_sncg_2	M_e4	Sncg_2	Inhibitory_neurons	2	1	False	disease_arm_below_5
+st062_sncg_1	F_e2	Sncg_1	Inhibitory_neurons	1	3	False	disease_arm_below_5
+st062_sncg_1	F_e33	Sncg_1	Inhibitory_neurons	10	11	True	
+st062_sncg_1	F_e4	Sncg_1	Inhibitory_neurons	6	4	False	disease_arm_below_5
+st062_sncg_1	M_e2	Sncg_1	Inhibitory_neurons	1	4	False	disease_arm_below_5
+st062_sncg_1	M_e33	Sncg_1	Inhibitory_neurons	6	10	True	
+st062_sncg_1	M_e4	Sncg_1	Inhibitory_neurons	4	2	False	disease_arm_below_5
+st063_sncg_8	F_e2	Sncg_8	Inhibitory_neurons	1	5	False	disease_arm_below_5
+st063_sncg_8	F_e33	Sncg_8	Inhibitory_neurons	11	11	True	
+st063_sncg_8	F_e4	Sncg_8	Inhibitory_neurons	7	4	False	disease_arm_below_5
+st063_sncg_8	M_e2	Sncg_8	Inhibitory_neurons	1	4	False	disease_arm_below_5
+st063_sncg_8	M_e33	Sncg_8	Inhibitory_neurons	8	10	True	
+st063_sncg_8	M_e4	Sncg_8	Inhibitory_neurons	4	3	False	disease_arm_below_5
+st064_sncg_4	F_e2	Sncg_4	Inhibitory_neurons	1	4	False	disease_arm_below_5
+st064_sncg_4	F_e33	Sncg_4	Inhibitory_neurons	12	13	True	
+st064_sncg_4	F_e4	Sncg_4	Inhibitory_neurons	8	5	True	
+st064_sncg_4	M_e2	Sncg_4	Inhibitory_neurons	1	4	False	disease_arm_below_5
+st064_sncg_4	M_e33	Sncg_4	Inhibitory_neurons	8	10	True	
+st064_sncg_4	M_e4	Sncg_4	Inhibitory_neurons	4	3	False	disease_arm_below_5
+st065_sncg_5	F_e2	Sncg_5	Inhibitory_neurons	1	3	False	disease_arm_below_5
+st065_sncg_5	F_e33	Sncg_5	Inhibitory_neurons	10	9	True	
+st065_sncg_5	F_e4	Sncg_5	Inhibitory_neurons	5	4	False	disease_arm_below_5
+st065_sncg_5	M_e2	Sncg_5	Inhibitory_neurons	1	4	False	disease_arm_below_5
+st065_sncg_5	M_e33	Sncg_5	Inhibitory_neurons	5	10	True	
+st065_sncg_5	M_e4	Sncg_5	Inhibitory_neurons	4	2	False	disease_arm_below_5
+st066_vip_14	F_e2	Vip_14	Inhibitory_neurons	0	4	False	disease_arm_below_5
+st066_vip_14	F_e33	Vip_14	Inhibitory_neurons	1	3	False	disease_arm_below_5
+st066_vip_14	F_e4	Vip_14	Inhibitory_neurons	2	0	False	disease_arm_below_5
+st066_vip_14	M_e2	Vip_14	Inhibitory_neurons	0	0	False	disease_arm_below_5
+st066_vip_14	M_e33	Vip_14	Inhibitory_neurons	0	2	False	disease_arm_below_5
+st066_vip_14	M_e4	Vip_14	Inhibitory_neurons	1	1	False	disease_arm_below_5
+st067_vip_15	F_e2	Vip_15	Inhibitory_neurons	1	6	False	disease_arm_below_5
+st067_vip_15	F_e33	Vip_15	Inhibitory_neurons	13	13	True	
+st067_vip_15	F_e4	Vip_15	Inhibitory_neurons	9	5	True	
+st067_vip_15	M_e2	Vip_15	Inhibitory_neurons	1	4	False	disease_arm_below_5
+st067_vip_15	M_e33	Vip_15	Inhibitory_neurons	8	10	True	
+st067_vip_15	M_e4	Vip_15	Inhibitory_neurons	4	3	False	disease_arm_below_5
+st068_vip_16	F_e2	Vip_16	Inhibitory_neurons	0	1	False	disease_arm_below_5
+st068_vip_16	F_e33	Vip_16	Inhibitory_neurons	2	4	False	disease_arm_below_5
+st068_vip_16	F_e4	Vip_16	Inhibitory_neurons	4	2	False	disease_arm_below_5
+st068_vip_16	M_e2	Vip_16	Inhibitory_neurons	1	1	False	disease_arm_below_5
+st068_vip_16	M_e33	Vip_16	Inhibitory_neurons	5	4	False	disease_arm_below_5
+st068_vip_16	M_e4	Vip_16	Inhibitory_neurons	4	1	False	disease_arm_below_5
+st069_vip_4	F_e2	Vip_4	Inhibitory_neurons	1	6	False	disease_arm_below_5
+st069_vip_4	F_e33	Vip_4	Inhibitory_neurons	13	13	True	
+st069_vip_4	F_e4	Vip_4	Inhibitory_neurons	9	5	True	
+st069_vip_4	M_e2	Vip_4	Inhibitory_neurons	1	4	False	disease_arm_below_5
+st069_vip_4	M_e33	Vip_4	Inhibitory_neurons	9	10	True	
+st069_vip_4	M_e4	Vip_4	Inhibitory_neurons	4	3	False	disease_arm_below_5
+st070_vip_5	F_e2	Vip_5	Inhibitory_neurons	1	5	False	disease_arm_below_5
+st070_vip_5	F_e33	Vip_5	Inhibitory_neurons	9	6	True	
+st070_vip_5	F_e4	Vip_5	Inhibitory_neurons	8	4	False	disease_arm_below_5
+st070_vip_5	M_e2	Vip_5	Inhibitory_neurons	0	1	False	disease_arm_below_5
+st070_vip_5	M_e33	Vip_5	Inhibitory_neurons	6	7	True	
+st070_vip_5	M_e4	Vip_5	Inhibitory_neurons	4	1	False	disease_arm_below_5
+st071_vip_6	F_e2	Vip_6	Inhibitory_neurons	1	6	False	disease_arm_below_5
+st071_vip_6	F_e33	Vip_6	Inhibitory_neurons	11	11	True	
+st071_vip_6	F_e4	Vip_6	Inhibitory_neurons	7	4	False	disease_arm_below_5
+st071_vip_6	M_e2	Vip_6	Inhibitory_neurons	0	3	False	disease_arm_below_5
+st071_vip_6	M_e33	Vip_6	Inhibitory_neurons	8	7	True	
+st071_vip_6	M_e4	Vip_6	Inhibitory_neurons	3	1	False	disease_arm_below_5
+st072_vip_9	F_e2	Vip_9	Inhibitory_neurons	1	6	False	disease_arm_below_5
+st072_vip_9	F_e33	Vip_9	Inhibitory_neurons	13	12	True	
+st072_vip_9	F_e4	Vip_9	Inhibitory_neurons	9	5	True	
+st072_vip_9	M_e2	Vip_9	Inhibitory_neurons	1	4	False	disease_arm_below_5
+st072_vip_9	M_e33	Vip_9	Inhibitory_neurons	8	10	True	
+st072_vip_9	M_e4	Vip_9	Inhibitory_neurons	4	3	False	disease_arm_below_5
+st073_vip_2	F_e2	Vip_2	Inhibitory_neurons	1	6	False	disease_arm_below_5
+st073_vip_2	F_e33	Vip_2	Inhibitory_neurons	12	13	True	
+st073_vip_2	F_e4	Vip_2	Inhibitory_neurons	9	5	True	
+st073_vip_2	M_e2	Vip_2	Inhibitory_neurons	1	4	False	disease_arm_below_5
+st073_vip_2	M_e33	Vip_2	Inhibitory_neurons	8	10	True	
+st073_vip_2	M_e4	Vip_2	Inhibitory_neurons	4	3	False	disease_arm_below_5
+st074_vip_11	F_e2	Vip_11	Inhibitory_neurons	1	6	False	disease_arm_below_5
+st074_vip_11	F_e33	Vip_11	Inhibitory_neurons	12	13	True	
+st074_vip_11	F_e4	Vip_11	Inhibitory_neurons	8	5	True	
+st074_vip_11	M_e2	Vip_11	Inhibitory_neurons	1	4	False	disease_arm_below_5
+st074_vip_11	M_e33	Vip_11	Inhibitory_neurons	8	10	True	
+st074_vip_11	M_e4	Vip_11	Inhibitory_neurons	4	3	False	disease_arm_below_5
+st075_vip_13	F_e2	Vip_13	Inhibitory_neurons	1	6	False	disease_arm_below_5
+st075_vip_13	F_e33	Vip_13	Inhibitory_neurons	13	13	True	
+st075_vip_13	F_e4	Vip_13	Inhibitory_neurons	9	5	True	
+st075_vip_13	M_e2	Vip_13	Inhibitory_neurons	1	4	False	disease_arm_below_5
+st075_vip_13	M_e33	Vip_13	Inhibitory_neurons	8	10	True	
+st075_vip_13	M_e4	Vip_13	Inhibitory_neurons	4	3	False	disease_arm_below_5
+st076_vip_1	F_e2	Vip_1	Inhibitory_neurons	1	6	False	disease_arm_below_5
+st076_vip_1	F_e33	Vip_1	Inhibitory_neurons	12	13	True	
+st076_vip_1	F_e4	Vip_1	Inhibitory_neurons	9	5	True	
+st076_vip_1	M_e2	Vip_1	Inhibitory_neurons	1	4	False	disease_arm_below_5
+st076_vip_1	M_e33	Vip_1	Inhibitory_neurons	8	10	True	
+st076_vip_1	M_e4	Vip_1	Inhibitory_neurons	4	3	False	disease_arm_below_5
+st077_vip_12	F_e2	Vip_12	Inhibitory_neurons	1	6	False	disease_arm_below_5
+st077_vip_12	F_e33	Vip_12	Inhibitory_neurons	12	13	True	
+st077_vip_12	F_e4	Vip_12	Inhibitory_neurons	9	5	True	
+st077_vip_12	M_e2	Vip_12	Inhibitory_neurons	1	4	False	disease_arm_below_5
+st077_vip_12	M_e33	Vip_12	Inhibitory_neurons	7	10	True	
+st077_vip_12	M_e4	Vip_12	Inhibitory_neurons	4	3	False	disease_arm_below_5
+st078_vip_18	F_e2	Vip_18	Inhibitory_neurons	1	5	False	disease_arm_below_5
+st078_vip_18	F_e33	Vip_18	Inhibitory_neurons	10	12	True	
+st078_vip_18	F_e4	Vip_18	Inhibitory_neurons	8	5	True	
+st078_vip_18	M_e2	Vip_18	Inhibitory_neurons	1	4	False	disease_arm_below_5
+st078_vip_18	M_e33	Vip_18	Inhibitory_neurons	8	9	True	
+st078_vip_18	M_e4	Vip_18	Inhibitory_neurons	4	3	False	disease_arm_below_5
+st079_vip_19	F_e2	Vip_19	Inhibitory_neurons	1	6	False	disease_arm_below_5
+st079_vip_19	F_e33	Vip_19	Inhibitory_neurons	12	13	True	
+st079_vip_19	F_e4	Vip_19	Inhibitory_neurons	8	5	True	
+st079_vip_19	M_e2	Vip_19	Inhibitory_neurons	1	4	False	disease_arm_below_5
+st079_vip_19	M_e33	Vip_19	Inhibitory_neurons	8	10	True	
+st079_vip_19	M_e4	Vip_19	Inhibitory_neurons	4	3	False	disease_arm_below_5
+st080_vip_21	F_e2	Vip_21	Inhibitory_neurons	0	4	False	disease_arm_below_5
+st080_vip_21	F_e33	Vip_21	Inhibitory_neurons	10	9	True	
+st080_vip_21	F_e4	Vip_21	Inhibitory_neurons	4	5	False	disease_arm_below_5
+st080_vip_21	M_e2	Vip_21	Inhibitory_neurons	1	4	False	disease_arm_below_5
+st080_vip_21	M_e33	Vip_21	Inhibitory_neurons	6	10	True	
+st080_vip_21	M_e4	Vip_21	Inhibitory_neurons	4	3	False	disease_arm_below_5
+st081_vip_23	F_e2	Vip_23	Inhibitory_neurons	1	6	False	disease_arm_below_5
+st081_vip_23	F_e33	Vip_23	Inhibitory_neurons	13	13	True	
+st081_vip_23	F_e4	Vip_23	Inhibitory_neurons	9	5	True	
+st081_vip_23	M_e2	Vip_23	Inhibitory_neurons	1	4	False	disease_arm_below_5
+st081_vip_23	M_e33	Vip_23	Inhibitory_neurons	8	10	True	
+st081_vip_23	M_e4	Vip_23	Inhibitory_neurons	4	3	False	disease_arm_below_5
+st082_sst_chodl_1	F_e2	Sst Chodl_1	Inhibitory_neurons	0	2	False	disease_arm_below_5
+st082_sst_chodl_1	F_e33	Sst Chodl_1	Inhibitory_neurons	3	4	False	disease_arm_below_5
+st082_sst_chodl_1	F_e4	Sst Chodl_1	Inhibitory_neurons	0	0	False	disease_arm_below_5
+st082_sst_chodl_1	M_e2	Sst Chodl_1	Inhibitory_neurons	1	1	False	disease_arm_below_5
+st082_sst_chodl_1	M_e33	Sst Chodl_1	Inhibitory_neurons	2	2	False	disease_arm_below_5
+st082_sst_chodl_1	M_e4	Sst Chodl_1	Inhibitory_neurons	1	0	False	disease_arm_below_5
+st083_sst_1	F_e2	Sst_1	Inhibitory_neurons	0	5	False	disease_arm_below_5
+st083_sst_1	F_e33	Sst_1	Inhibitory_neurons	9	12	True	
+st083_sst_1	F_e4	Sst_1	Inhibitory_neurons	6	5	True	
+st083_sst_1	M_e2	Sst_1	Inhibitory_neurons	1	2	False	disease_arm_below_5
+st083_sst_1	M_e33	Sst_1	Inhibitory_neurons	7	3	False	disease_arm_below_5
+st083_sst_1	M_e4	Sst_1	Inhibitory_neurons	3	3	False	disease_arm_below_5
+st084_sst_4	F_e2	Sst_4	Inhibitory_neurons	0	4	False	disease_arm_below_5
+st084_sst_4	F_e33	Sst_4	Inhibitory_neurons	10	12	True	
+st084_sst_4	F_e4	Sst_4	Inhibitory_neurons	8	5	True	
+st084_sst_4	M_e2	Sst_4	Inhibitory_neurons	1	2	False	disease_arm_below_5
+st084_sst_4	M_e33	Sst_4	Inhibitory_neurons	8	9	True	
+st084_sst_4	M_e4	Sst_4	Inhibitory_neurons	4	3	False	disease_arm_below_5
+st085_sst_5	F_e2	Sst_5	Inhibitory_neurons	1	4	False	disease_arm_below_5
+st085_sst_5	F_e33	Sst_5	Inhibitory_neurons	12	13	True	
+st085_sst_5	F_e4	Sst_5	Inhibitory_neurons	8	5	True	
+st085_sst_5	M_e2	Sst_5	Inhibitory_neurons	1	2	False	disease_arm_below_5
+st085_sst_5	M_e33	Sst_5	Inhibitory_neurons	8	10	True	
+st085_sst_5	M_e4	Sst_5	Inhibitory_neurons	4	1	False	disease_arm_below_5
+st086_sst_7	F_e2	Sst_7	Inhibitory_neurons	0	2	False	disease_arm_below_5
+st086_sst_7	F_e33	Sst_7	Inhibitory_neurons	12	11	True	
+st086_sst_7	F_e4	Sst_7	Inhibitory_neurons	5	4	False	disease_arm_below_5
+st086_sst_7	M_e2	Sst_7	Inhibitory_neurons	1	2	False	disease_arm_below_5
+st086_sst_7	M_e33	Sst_7	Inhibitory_neurons	7	5	True	
+st086_sst_7	M_e4	Sst_7	Inhibitory_neurons	2	2	False	disease_arm_below_5
+st087_sst_3	F_e2	Sst_3	Inhibitory_neurons	1	6	False	disease_arm_below_5
+st087_sst_3	F_e33	Sst_3	Inhibitory_neurons	13	13	True	
+st087_sst_3	F_e4	Sst_3	Inhibitory_neurons	9	5	True	
+st087_sst_3	M_e2	Sst_3	Inhibitory_neurons	1	4	False	disease_arm_below_5
+st087_sst_3	M_e33	Sst_3	Inhibitory_neurons	9	10	True	
+st087_sst_3	M_e4	Sst_3	Inhibitory_neurons	4	3	False	disease_arm_below_5
+st088_sst_19	F_e2	Sst_19	Inhibitory_neurons	1	5	False	disease_arm_below_5
+st088_sst_19	F_e33	Sst_19	Inhibitory_neurons	11	13	True	
+st088_sst_19	F_e4	Sst_19	Inhibitory_neurons	9	5	True	
+st088_sst_19	M_e2	Sst_19	Inhibitory_neurons	1	4	False	disease_arm_below_5
+st088_sst_19	M_e33	Sst_19	Inhibitory_neurons	8	10	True	
+st088_sst_19	M_e4	Sst_19	Inhibitory_neurons	4	2	False	disease_arm_below_5
+st089_sst_9	F_e2	Sst_9	Inhibitory_neurons	1	4	False	disease_arm_below_5
+st089_sst_9	F_e33	Sst_9	Inhibitory_neurons	10	13	True	
+st089_sst_9	F_e4	Sst_9	Inhibitory_neurons	6	3	False	disease_arm_below_5
+st089_sst_9	M_e2	Sst_9	Inhibitory_neurons	1	3	False	disease_arm_below_5
+st089_sst_9	M_e33	Sst_9	Inhibitory_neurons	7	10	True	
+st089_sst_9	M_e4	Sst_9	Inhibitory_neurons	4	3	False	disease_arm_below_5
+st090_sst_10	F_e2	Sst_10	Inhibitory_neurons	1	5	False	disease_arm_below_5
+st090_sst_10	F_e33	Sst_10	Inhibitory_neurons	12	13	True	
+st090_sst_10	F_e4	Sst_10	Inhibitory_neurons	8	5	True	
+st090_sst_10	M_e2	Sst_10	Inhibitory_neurons	1	4	False	disease_arm_below_5
+st090_sst_10	M_e33	Sst_10	Inhibitory_neurons	7	10	True	
+st090_sst_10	M_e4	Sst_10	Inhibitory_neurons	4	3	False	disease_arm_below_5
+st091_sst_13	F_e2	Sst_13	Inhibitory_neurons	1	5	False	disease_arm_below_5
+st091_sst_13	F_e33	Sst_13	Inhibitory_neurons	11	13	True	
+st091_sst_13	F_e4	Sst_13	Inhibitory_neurons	9	5	True	
+st091_sst_13	M_e2	Sst_13	Inhibitory_neurons	1	4	False	disease_arm_below_5
+st091_sst_13	M_e33	Sst_13	Inhibitory_neurons	8	10	True	
+st091_sst_13	M_e4	Sst_13	Inhibitory_neurons	4	3	False	disease_arm_below_5
+st092_sst_12	F_e2	Sst_12	Inhibitory_neurons	0	3	False	disease_arm_below_5
+st092_sst_12	F_e33	Sst_12	Inhibitory_neurons	10	11	True	
+st092_sst_12	F_e4	Sst_12	Inhibitory_neurons	7	5	True	
+st092_sst_12	M_e2	Sst_12	Inhibitory_neurons	1	3	False	disease_arm_below_5
+st092_sst_12	M_e33	Sst_12	Inhibitory_neurons	6	9	True	
+st092_sst_12	M_e4	Sst_12	Inhibitory_neurons	4	3	False	disease_arm_below_5
+st093_sst_chodl_2	F_e2	Sst Chodl_2	Inhibitory_neurons	0	0	False	disease_arm_below_5
+st093_sst_chodl_2	F_e33	Sst Chodl_2	Inhibitory_neurons	0	1	False	disease_arm_below_5
+st093_sst_chodl_2	F_e4	Sst Chodl_2	Inhibitory_neurons	0	0	False	disease_arm_below_5
+st093_sst_chodl_2	M_e2	Sst Chodl_2	Inhibitory_neurons	0	0	False	disease_arm_below_5
+st093_sst_chodl_2	M_e33	Sst Chodl_2	Inhibitory_neurons	0	0	False	disease_arm_below_5
+st093_sst_chodl_2	M_e4	Sst Chodl_2	Inhibitory_neurons	0	0	False	disease_arm_below_5
+st094_sst_11	F_e2	Sst_11	Inhibitory_neurons	0	0	False	disease_arm_below_5
+st094_sst_11	F_e33	Sst_11	Inhibitory_neurons	1	7	False	disease_arm_below_5
+st094_sst_11	F_e4	Sst_11	Inhibitory_neurons	3	1	False	disease_arm_below_5
+st094_sst_11	M_e2	Sst_11	Inhibitory_neurons	1	4	False	disease_arm_below_5
+st094_sst_11	M_e33	Sst_11	Inhibitory_neurons	3	7	False	disease_arm_below_5
+st094_sst_11	M_e4	Sst_11	Inhibitory_neurons	4	2	False	disease_arm_below_5
+st095_sst_20	F_e2	Sst_20	Inhibitory_neurons	1	2	False	disease_arm_below_5
+st095_sst_20	F_e33	Sst_20	Inhibitory_neurons	5	8	True	
+st095_sst_20	F_e4	Sst_20	Inhibitory_neurons	4	3	False	disease_arm_below_5
+st095_sst_20	M_e2	Sst_20	Inhibitory_neurons	1	4	False	disease_arm_below_5
+st095_sst_20	M_e33	Sst_20	Inhibitory_neurons	2	10	False	disease_arm_below_5
+st095_sst_20	M_e4	Sst_20	Inhibitory_neurons	4	2	False	disease_arm_below_5
+st096_sst_22	F_e2	Sst_22	Inhibitory_neurons	0	0	False	disease_arm_below_5
+st096_sst_22	F_e33	Sst_22	Inhibitory_neurons	1	4	False	disease_arm_below_5
+st096_sst_22	F_e4	Sst_22	Inhibitory_neurons	2	0	False	disease_arm_below_5
+st096_sst_22	M_e2	Sst_22	Inhibitory_neurons	1	1	False	disease_arm_below_5
+st096_sst_22	M_e33	Sst_22	Inhibitory_neurons	0	6	False	disease_arm_below_5
+st096_sst_22	M_e4	Sst_22	Inhibitory_neurons	4	1	False	disease_arm_below_5
+st097_sst_23	F_e2	Sst_23	Inhibitory_neurons	1	4	False	disease_arm_below_5
+st097_sst_23	F_e33	Sst_23	Inhibitory_neurons	8	11	True	
+st097_sst_23	F_e4	Sst_23	Inhibitory_neurons	5	3	False	disease_arm_below_5
+st097_sst_23	M_e2	Sst_23	Inhibitory_neurons	1	4	False	disease_arm_below_5
+st097_sst_23	M_e33	Sst_23	Inhibitory_neurons	5	10	True	
+st097_sst_23	M_e4	Sst_23	Inhibitory_neurons	4	3	False	disease_arm_below_5
+st098_sst_25	F_e2	Sst_25	Inhibitory_neurons	1	2	False	disease_arm_below_5
+st098_sst_25	F_e33	Sst_25	Inhibitory_neurons	3	8	False	disease_arm_below_5
+st098_sst_25	F_e4	Sst_25	Inhibitory_neurons	4	2	False	disease_arm_below_5
+st098_sst_25	M_e2	Sst_25	Inhibitory_neurons	1	4	False	disease_arm_below_5
+st098_sst_25	M_e33	Sst_25	Inhibitory_neurons	3	6	False	disease_arm_below_5
+st098_sst_25	M_e4	Sst_25	Inhibitory_neurons	3	2	False	disease_arm_below_5
+st099_sst_2	F_e2	Sst_2	Inhibitory_neurons	1	4	False	disease_arm_below_5
+st099_sst_2	F_e33	Sst_2	Inhibitory_neurons	9	13	True	
+st099_sst_2	F_e4	Sst_2	Inhibitory_neurons	7	3	False	disease_arm_below_5
+st099_sst_2	M_e2	Sst_2	Inhibitory_neurons	1	4	False	disease_arm_below_5
+st099_sst_2	M_e33	Sst_2	Inhibitory_neurons	5	10	True	
+st099_sst_2	M_e4	Sst_2	Inhibitory_neurons	4	3	False	disease_arm_below_5
+st100_pvalb_6	F_e2	Pvalb_6	Inhibitory_neurons	1	6	False	disease_arm_below_5
+st100_pvalb_6	F_e33	Pvalb_6	Inhibitory_neurons	11	13	True	
+st100_pvalb_6	F_e4	Pvalb_6	Inhibitory_neurons	7	5	True	
+st100_pvalb_6	M_e2	Pvalb_6	Inhibitory_neurons	1	4	False	disease_arm_below_5
+st100_pvalb_6	M_e33	Pvalb_6	Inhibitory_neurons	8	10	True	
+st100_pvalb_6	M_e4	Pvalb_6	Inhibitory_neurons	4	3	False	disease_arm_below_5
+st101_pvalb_5	F_e2	Pvalb_5	Inhibitory_neurons	1	2	False	disease_arm_below_5
+st101_pvalb_5	F_e33	Pvalb_5	Inhibitory_neurons	8	8	True	
+st101_pvalb_5	F_e4	Pvalb_5	Inhibitory_neurons	5	3	False	disease_arm_below_5
+st101_pvalb_5	M_e2	Pvalb_5	Inhibitory_neurons	1	4	False	disease_arm_below_5
+st101_pvalb_5	M_e33	Pvalb_5	Inhibitory_neurons	7	9	True	
+st101_pvalb_5	M_e4	Pvalb_5	Inhibitory_neurons	4	3	False	disease_arm_below_5
+st102_pvalb_8	F_e2	Pvalb_8	Inhibitory_neurons	0	3	False	disease_arm_below_5
+st102_pvalb_8	F_e33	Pvalb_8	Inhibitory_neurons	6	11	True	
+st102_pvalb_8	F_e4	Pvalb_8	Inhibitory_neurons	4	3	False	disease_arm_below_5
+st102_pvalb_8	M_e2	Pvalb_8	Inhibitory_neurons	1	3	False	disease_arm_below_5
+st102_pvalb_8	M_e33	Pvalb_8	Inhibitory_neurons	3	10	False	disease_arm_below_5
+st102_pvalb_8	M_e4	Pvalb_8	Inhibitory_neurons	4	3	False	disease_arm_below_5
+st103_pvalb_7	F_e2	Pvalb_7	Inhibitory_neurons	1	5	False	disease_arm_below_5
+st103_pvalb_7	F_e33	Pvalb_7	Inhibitory_neurons	9	11	True	
+st103_pvalb_7	F_e4	Pvalb_7	Inhibitory_neurons	5	4	False	disease_arm_below_5
+st103_pvalb_7	M_e2	Pvalb_7	Inhibitory_neurons	1	3	False	disease_arm_below_5
+st103_pvalb_7	M_e33	Pvalb_7	Inhibitory_neurons	7	8	True	
+st103_pvalb_7	M_e4	Pvalb_7	Inhibitory_neurons	1	3	False	disease_arm_below_5
+st104_pvalb_1	F_e2	Pvalb_1	Inhibitory_neurons	1	6	False	disease_arm_below_5
+st104_pvalb_1	F_e33	Pvalb_1	Inhibitory_neurons	11	13	True	
+st104_pvalb_1	F_e4	Pvalb_1	Inhibitory_neurons	7	5	True	
+st104_pvalb_1	M_e2	Pvalb_1	Inhibitory_neurons	1	3	False	disease_arm_below_5
+st104_pvalb_1	M_e33	Pvalb_1	Inhibitory_neurons	8	10	True	
+st104_pvalb_1	M_e4	Pvalb_1	Inhibitory_neurons	4	3	False	disease_arm_below_5
+st105_pvalb_3	F_e2	Pvalb_3	Inhibitory_neurons	1	6	False	disease_arm_below_5
+st105_pvalb_3	F_e33	Pvalb_3	Inhibitory_neurons	11	13	True	
+st105_pvalb_3	F_e4	Pvalb_3	Inhibitory_neurons	7	5	True	
+st105_pvalb_3	M_e2	Pvalb_3	Inhibitory_neurons	1	4	False	disease_arm_below_5
+st105_pvalb_3	M_e33	Pvalb_3	Inhibitory_neurons	8	10	True	
+st105_pvalb_3	M_e4	Pvalb_3	Inhibitory_neurons	4	3	False	disease_arm_below_5
+st106_pvalb_2	F_e2	Pvalb_2	Inhibitory_neurons	1	6	False	disease_arm_below_5
+st106_pvalb_2	F_e33	Pvalb_2	Inhibitory_neurons	11	13	True	
+st106_pvalb_2	F_e4	Pvalb_2	Inhibitory_neurons	8	5	True	
+st106_pvalb_2	M_e2	Pvalb_2	Inhibitory_neurons	1	4	False	disease_arm_below_5
+st106_pvalb_2	M_e33	Pvalb_2	Inhibitory_neurons	8	10	True	
+st106_pvalb_2	M_e4	Pvalb_2	Inhibitory_neurons	4	3	False	disease_arm_below_5
+st107_pvalb_15	F_e2	Pvalb_15	Inhibitory_neurons	1	6	False	disease_arm_below_5
+st107_pvalb_15	F_e33	Pvalb_15	Inhibitory_neurons	13	13	True	
+st107_pvalb_15	F_e4	Pvalb_15	Inhibitory_neurons	9	5	True	
+st107_pvalb_15	M_e2	Pvalb_15	Inhibitory_neurons	1	4	False	disease_arm_below_5
+st107_pvalb_15	M_e33	Pvalb_15	Inhibitory_neurons	9	10	True	
+st107_pvalb_15	M_e4	Pvalb_15	Inhibitory_neurons	4	3	False	disease_arm_below_5
+st108_pvalb_14	F_e2	Pvalb_14	Inhibitory_neurons	1	4	False	disease_arm_below_5
+st108_pvalb_14	F_e33	Pvalb_14	Inhibitory_neurons	9	11	True	
+st108_pvalb_14	F_e4	Pvalb_14	Inhibitory_neurons	6	3	False	disease_arm_below_5
+st108_pvalb_14	M_e2	Pvalb_14	Inhibitory_neurons	1	4	False	disease_arm_below_5
+st108_pvalb_14	M_e33	Pvalb_14	Inhibitory_neurons	6	9	True	
+st108_pvalb_14	M_e4	Pvalb_14	Inhibitory_neurons	4	3	False	disease_arm_below_5
+st109_pvalb_12	F_e2	Pvalb_12	Inhibitory_neurons	1	4	False	disease_arm_below_5
+st109_pvalb_12	F_e33	Pvalb_12	Inhibitory_neurons	9	13	True	
+st109_pvalb_12	F_e4	Pvalb_12	Inhibitory_neurons	5	2	False	disease_arm_below_5
+st109_pvalb_12	M_e2	Pvalb_12	Inhibitory_neurons	1	3	False	disease_arm_below_5
+st109_pvalb_12	M_e33	Pvalb_12	Inhibitory_neurons	6	9	True	
+st109_pvalb_12	M_e4	Pvalb_12	Inhibitory_neurons	4	3	False	disease_arm_below_5
+st110_pvalb_10	F_e2	Pvalb_10	Inhibitory_neurons	1	4	False	disease_arm_below_5
+st110_pvalb_10	F_e33	Pvalb_10	Inhibitory_neurons	10	12	True	
+st110_pvalb_10	F_e4	Pvalb_10	Inhibitory_neurons	6	3	False	disease_arm_below_5
+st110_pvalb_10	M_e2	Pvalb_10	Inhibitory_neurons	1	3	False	disease_arm_below_5
+st110_pvalb_10	M_e33	Pvalb_10	Inhibitory_neurons	6	10	True	
+st110_pvalb_10	M_e4	Pvalb_10	Inhibitory_neurons	4	3	False	disease_arm_below_5
+st111_pvalb_13	F_e2	Pvalb_13	Inhibitory_neurons	1	3	False	disease_arm_below_5
+st111_pvalb_13	F_e33	Pvalb_13	Inhibitory_neurons	6	9	True	
+st111_pvalb_13	F_e4	Pvalb_13	Inhibitory_neurons	4	2	False	disease_arm_below_5
+st111_pvalb_13	M_e2	Pvalb_13	Inhibitory_neurons	1	2	False	disease_arm_below_5
+st111_pvalb_13	M_e33	Pvalb_13	Inhibitory_neurons	2	4	False	disease_arm_below_5
+st111_pvalb_13	M_e4	Pvalb_13	Inhibitory_neurons	4	3	False	disease_arm_below_5
+st112_pvalb_9	F_e2	Pvalb_9	Inhibitory_neurons	1	5	False	disease_arm_below_5
+st112_pvalb_9	F_e33	Pvalb_9	Inhibitory_neurons	12	12	True	
+st112_pvalb_9	F_e4	Pvalb_9	Inhibitory_neurons	8	5	True	
+st112_pvalb_9	M_e2	Pvalb_9	Inhibitory_neurons	1	4	False	disease_arm_below_5
+st112_pvalb_9	M_e33	Pvalb_9	Inhibitory_neurons	8	9	True	
+st112_pvalb_9	M_e4	Pvalb_9	Inhibitory_neurons	4	3	False	disease_arm_below_5
+st113_chandelier_1	F_e2	Chandelier_1	Inhibitory_neurons	1	6	False	disease_arm_below_5
+st113_chandelier_1	F_e33	Chandelier_1	Inhibitory_neurons	13	13	True	
+st113_chandelier_1	F_e4	Chandelier_1	Inhibitory_neurons	9	5	True	
+st113_chandelier_1	M_e2	Chandelier_1	Inhibitory_neurons	0	4	False	disease_arm_below_5
+st113_chandelier_1	M_e33	Chandelier_1	Inhibitory_neurons	9	10	True	
+st113_chandelier_1	M_e4	Chandelier_1	Inhibitory_neurons	4	3	False	disease_arm_below_5
+st114_chandelier_2	F_e2	Chandelier_2	Inhibitory_neurons	1	5	False	disease_arm_below_5
+st114_chandelier_2	F_e33	Chandelier_2	Inhibitory_neurons	10	13	True	
+st114_chandelier_2	F_e4	Chandelier_2	Inhibitory_neurons	7	5	True	
+st114_chandelier_2	M_e2	Chandelier_2	Inhibitory_neurons	0	4	False	disease_arm_below_5
+st114_chandelier_2	M_e33	Chandelier_2	Inhibitory_neurons	8	10	True	
+st114_chandelier_2	M_e4	Chandelier_2	Inhibitory_neurons	4	3	False	disease_arm_below_5
+st115_micro_pvm_1	F_e2	Micro-PVM_1	Microglia	0	0	False	disease_arm_below_5
+st115_micro_pvm_1	F_e33	Micro-PVM_1	Microglia	1	0	False	disease_arm_below_5
+st115_micro_pvm_1	F_e4	Micro-PVM_1	Microglia	2	0	False	disease_arm_below_5
+st115_micro_pvm_1	M_e2	Micro-PVM_1	Microglia	0	0	False	disease_arm_below_5
+st115_micro_pvm_1	M_e33	Micro-PVM_1	Microglia	1	1	False	disease_arm_below_5
+st115_micro_pvm_1	M_e4	Micro-PVM_1	Microglia	0	0	False	disease_arm_below_5
+st116_micro_pvm_2_1_seaad	F_e2	Micro-PVM_2_1-SEAAD	Microglia	0	0	False	disease_arm_below_5
+st116_micro_pvm_2_1_seaad	F_e33	Micro-PVM_2_1-SEAAD	Microglia	0	1	False	disease_arm_below_5
+st116_micro_pvm_2_1_seaad	F_e4	Micro-PVM_2_1-SEAAD	Microglia	1	0	False	disease_arm_below_5
+st116_micro_pvm_2_1_seaad	M_e2	Micro-PVM_2_1-SEAAD	Microglia	0	0	False	disease_arm_below_5
+st116_micro_pvm_2_1_seaad	M_e33	Micro-PVM_2_1-SEAAD	Microglia	0	0	False	disease_arm_below_5
+st116_micro_pvm_2_1_seaad	M_e4	Micro-PVM_2_1-SEAAD	Microglia	1	0	False	disease_arm_below_5
+st117_micro_pvm_2	F_e2	Micro-PVM_2	Microglia	1	6	False	disease_arm_below_5
+st117_micro_pvm_2	F_e33	Micro-PVM_2	Microglia	13	13	True	
+st117_micro_pvm_2	F_e4	Micro-PVM_2	Microglia	9	5	True	
+st117_micro_pvm_2	M_e2	Micro-PVM_2	Microglia	1	4	False	disease_arm_below_5
+st117_micro_pvm_2	M_e33	Micro-PVM_2	Microglia	9	10	True	
+st117_micro_pvm_2	M_e4	Micro-PVM_2	Microglia	4	3	False	disease_arm_below_5
+st118_micro_pvm_3_seaad	F_e2	Micro-PVM_3-SEAAD	Microglia	0	0	False	disease_arm_below_5
+st118_micro_pvm_3_seaad	F_e33	Micro-PVM_3-SEAAD	Microglia	7	0	False	disease_arm_below_5
+st118_micro_pvm_3_seaad	F_e4	Micro-PVM_3-SEAAD	Microglia	4	1	False	disease_arm_below_5
+st118_micro_pvm_3_seaad	M_e2	Micro-PVM_3-SEAAD	Microglia	0	1	False	disease_arm_below_5
+st118_micro_pvm_3_seaad	M_e33	Micro-PVM_3-SEAAD	Microglia	5	1	False	disease_arm_below_5
+st118_micro_pvm_3_seaad	M_e4	Micro-PVM_3-SEAAD	Microglia	2	1	False	disease_arm_below_5
+st119_opc_1	F_e2	OPC_1	OPCs	0	0	False	disease_arm_below_5
+st119_opc_1	F_e33	OPC_1	OPCs	0	0	False	disease_arm_below_5
+st119_opc_1	F_e4	OPC_1	OPCs	0	0	False	disease_arm_below_5
+st119_opc_1	M_e2	OPC_1	OPCs	0	0	False	disease_arm_below_5
+st119_opc_1	M_e33	OPC_1	OPCs	1	0	False	disease_arm_below_5
+st119_opc_1	M_e4	OPC_1	OPCs	0	0	False	disease_arm_below_5
+st120_opc_2	F_e2	OPC_2	OPCs	1	6	False	disease_arm_below_5
+st120_opc_2	F_e33	OPC_2	OPCs	13	13	True	
+st120_opc_2	F_e4	OPC_2	OPCs	9	5	True	
+st120_opc_2	M_e2	OPC_2	OPCs	1	4	False	disease_arm_below_5
+st120_opc_2	M_e33	OPC_2	OPCs	9	10	True	
+st120_opc_2	M_e4	OPC_2	OPCs	4	3	False	disease_arm_below_5
+st121_opc_2_2_seaad	F_e2	OPC_2_2-SEAAD	OPCs	0	0	False	disease_arm_below_5
+st121_opc_2_2_seaad	F_e33	OPC_2_2-SEAAD	OPCs	5	3	False	disease_arm_below_5
+st121_opc_2_2_seaad	F_e4	OPC_2_2-SEAAD	OPCs	3	1	False	disease_arm_below_5
+st121_opc_2_2_seaad	M_e2	OPC_2_2-SEAAD	OPCs	0	3	False	disease_arm_below_5
+st121_opc_2_2_seaad	M_e33	OPC_2_2-SEAAD	OPCs	2	4	False	disease_arm_below_5
+st121_opc_2_2_seaad	M_e4	OPC_2_2-SEAAD	OPCs	0	0	False	disease_arm_below_5
+st122_oligo_1	F_e2	Oligo_1	Oligodendrocytes	1	5	False	disease_arm_below_5
+st122_oligo_1	F_e33	Oligo_1	Oligodendrocytes	10	13	True	
+st122_oligo_1	F_e4	Oligo_1	Oligodendrocytes	7	5	True	
+st122_oligo_1	M_e2	Oligo_1	Oligodendrocytes	1	4	False	disease_arm_below_5
+st122_oligo_1	M_e33	Oligo_1	Oligodendrocytes	6	10	True	
+st122_oligo_1	M_e4	Oligo_1	Oligodendrocytes	4	3	False	disease_arm_below_5
+st123_oligo_2	F_e2	Oligo_2	Oligodendrocytes	1	6	False	disease_arm_below_5
+st123_oligo_2	F_e33	Oligo_2	Oligodendrocytes	12	13	True	
+st123_oligo_2	F_e4	Oligo_2	Oligodendrocytes	8	5	True	
+st123_oligo_2	M_e2	Oligo_2	Oligodendrocytes	1	4	False	disease_arm_below_5
+st123_oligo_2	M_e33	Oligo_2	Oligodendrocytes	9	10	True	
+st123_oligo_2	M_e4	Oligo_2	Oligodendrocytes	4	3	False	disease_arm_below_5
+st124_oligo_4	F_e2	Oligo_4	Oligodendrocytes	1	6	False	disease_arm_below_5
+st124_oligo_4	F_e33	Oligo_4	Oligodendrocytes	13	13	True	
+st124_oligo_4	F_e4	Oligo_4	Oligodendrocytes	9	5	True	
+st124_oligo_4	M_e2	Oligo_4	Oligodendrocytes	1	4	False	disease_arm_below_5
+st124_oligo_4	M_e33	Oligo_4	Oligodendrocytes	9	10	True	
+st124_oligo_4	M_e4	Oligo_4	Oligodendrocytes	4	3	False	disease_arm_below_5
+st125_oligo_3	F_e2	Oligo_3	Oligodendrocytes	0	1	False	disease_arm_below_5
+st125_oligo_3	F_e33	Oligo_3	Oligodendrocytes	2	5	False	disease_arm_below_5
+st125_oligo_3	F_e4	Oligo_3	Oligodendrocytes	2	3	False	disease_arm_below_5
+st125_oligo_3	M_e2	Oligo_3	Oligodendrocytes	0	2	False	disease_arm_below_5
+st125_oligo_3	M_e33	Oligo_3	Oligodendrocytes	3	4	False	disease_arm_below_5
+st125_oligo_3	M_e4	Oligo_3	Oligodendrocytes	1	1	False	disease_arm_below_5
+st126_endo_2	F_e2	Endo_2	Vasculature_cells	0	6	False	disease_arm_below_5
+st126_endo_2	F_e33	Endo_2	Vasculature_cells	11	9	True	
+st126_endo_2	F_e4	Endo_2	Vasculature_cells	7	4	False	disease_arm_below_5
+st126_endo_2	M_e2	Endo_2	Vasculature_cells	0	1	False	disease_arm_below_5
+st126_endo_2	M_e33	Endo_2	Vasculature_cells	7	6	True	
+st126_endo_2	M_e4	Endo_2	Vasculature_cells	1	1	False	disease_arm_below_5
+st127_vlmc_1	F_e2	VLMC_1	Vasculature_cells	0	1	False	disease_arm_below_5
+st127_vlmc_1	F_e33	VLMC_1	Vasculature_cells	7	7	True	
+st127_vlmc_1	F_e4	VLMC_1	Vasculature_cells	2	3	False	disease_arm_below_5
+st127_vlmc_1	M_e2	VLMC_1	Vasculature_cells	0	2	False	disease_arm_below_5
+st127_vlmc_1	M_e33	VLMC_1	Vasculature_cells	6	1	False	disease_arm_below_5
+st127_vlmc_1	M_e4	VLMC_1	Vasculature_cells	1	2	False	disease_arm_below_5
+st128_smc_seaad	F_e2	SMC-SEAAD	Vasculature_cells	0	0	False	disease_arm_below_5
+st128_smc_seaad	F_e33	SMC-SEAAD	Vasculature_cells	0	0	False	disease_arm_below_5
+st128_smc_seaad	F_e4	SMC-SEAAD	Vasculature_cells	0	0	False	disease_arm_below_5
+st128_smc_seaad	M_e2	SMC-SEAAD	Vasculature_cells	0	0	False	disease_arm_below_5
+st128_smc_seaad	M_e33	SMC-SEAAD	Vasculature_cells	0	0	False	disease_arm_below_5
+st128_smc_seaad	M_e4	SMC-SEAAD	Vasculature_cells	0	0	False	disease_arm_below_5
+st129_pericyte_1	F_e2	Pericyte_1	Vasculature_cells	1	5	False	disease_arm_below_5
+st129_pericyte_1	F_e33	Pericyte_1	Vasculature_cells	9	9	True	
+st129_pericyte_1	F_e4	Pericyte_1	Vasculature_cells	6	3	False	disease_arm_below_5
+st129_pericyte_1	M_e2	Pericyte_1	Vasculature_cells	0	2	False	disease_arm_below_5
+st129_pericyte_1	M_e33	Pericyte_1	Vasculature_cells	9	7	True	
+st129_pericyte_1	M_e4	Pericyte_1	Vasculature_cells	2	1	False	disease_arm_below_5

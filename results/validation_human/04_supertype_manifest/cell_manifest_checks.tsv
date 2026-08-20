@@ -1,0 +1,14 @@
+check	passed	observed	expected	details
+observation_count	True	1395601	1395601	
+observation_order	True	76a28a761003c4a538cad107cc2f92f0e76ae27cfe56076b7fe72d4de2fdc3ba	76a28a761003c4a538cad107cc2f92f0e76ae27cfe56076b7fe72d4de2fdc3ba	
+taxonomy_invariant_within_supertype	True	True	True	
+relevant_raw_supertypes	True	131	131	
+excluded_supertypes_exact	True	Lymphocyte|Monocyte	Lymphocyte|Monocyte	
+included_supertypes	True	129	129	
+broad_distribution	True	{'Astrocytes': 6, 'Excitatory_neurons': 41, 'Inhibitory_neurons': 67, 'Microglia': 4, 'OPCs': 3, 'Oligodendrocytes': 4, 'Vasculature_cells': 4}	{'Astrocytes': 6, 'Excitatory_neurons': 41, 'Inhibitory_neurons': 67, 'Microglia': 4, 'OPCs': 3, 'Oligodendrocytes': 4, 'Vasculature_cells': 4}	
+selected_nuclei	True	1189172	1189172	
+fine_profile_grid	True	10062	10062	
+fine_codes_valid	True	0	0	
+broad_codes_valid	True	0	0	
+support_preflight_rows	True	774	774	
+support_preflight_pass	True	260	260	

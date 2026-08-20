@@ -1,6 +1,6 @@
 # SEA-AD Fine-Supertype Pseudobulk DEG Processing Plan
 
-**Status:** proposed clean rebuild; not yet implemented or executed  
+**Status:** implemented and executed locally; VH00–VH08 validated complete on 2026-08-20  
 **Workload:** Advanced  
 **Date:** 2026-08-20  
 **Primary endpoint:** 129 SEA-AD `Supertype`s × 6 sex/APOE groups = 774 signed DEG contrasts and 1,548 structural downstream direction slots  
@@ -8,6 +8,16 @@
 **Result root:** `results/validation_human/`
 
 This is the canonical replacement for the retired broad-cell protocol. It assumes that no prior `scripts/validation_human/` implementation or `results/validation_human/` output can be reused. VH00–VH08 will be implemented and executed again from the raw inputs and frozen references.
+
+### Local execution outcome (2026-08-20)
+
+- All phase statuses from VH00 through VH08 are `validated_complete`; Minerva was not required.
+- VH05 streamed all 1,395,601 source nuclei and completed in 13.1 minutes, producing 129 fine-supertype and seven independently aggregated broad-network pseudobulk shards.
+- VH06 independently reloaded the shards and reproduced the exact selected total of 31,867,743,351 UMIs and exact fine-to-direct-broad reconciliation.
+- VH07 froze 774 fine contrast slots (260 eligible), seven eligible pooled broad contrasts, and 42 stratified broad slots (20 eligible).
+- VH08 completed 260 fine, seven pooled broad, and 20 stratified broad DEG results. It released all 1,548 structural fine direction slots, of which 520 are query-ready because they derive from completed fine contrasts.
+- The final release contains 287 full DEG result files and remains isolated under `results/validation_human/`; implementation and contract tests remain isolated under `scripts/validation_human/` and `tests/validation_human/`.
+- During execution, two implementation-only issues were corrected without changing the frozen analysis contract: R YAML parsing now handles 64-bit identity totals, and sparse non-estimable contexts use explicit grouped indicator columns so one-level factors remain auditable.
 
 The Advanced design is structurally closest to ROSMAP Phase 18: both cross fine cell labels with the same six sex/APOE groups and derive two signed query directions from each DEG contrast. It is not a one-to-one cell-taxonomy replication. ROSMAP has 54 fine types; SEA-AD has 129 included supertypes, and their labels are not directly interchangeable.
 
