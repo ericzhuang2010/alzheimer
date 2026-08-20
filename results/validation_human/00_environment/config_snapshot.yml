@@ -1,0 +1,138 @@
+schema_version: seaad_deg_config_v1
+project_root: "."
+output_root: results/validation_human
+
+inputs:
+  h5ad: data/seaad/SEAAD_A9_RNAseq_final-nuclei.2024-02-13.h5ad
+  metadata_csv: data/seaad/SEAAD_A9_RNAseq_final-nuclei_metadata.2024-02-13.csv
+
+references:
+  gencode_gtf: data/reference/gencode/gencode.v44.basic.annotation.gtf.gz
+  hgnc_complete_set: data/reference/hgnc/hgnc_complete_set_2026-06-05.txt
+  mitocarta_genes: results/minerva_production/03_annotations/mitocarta_measured_genes.tsv
+  mitocarta_aliases: results/minerva_production/03_annotations/gene_alias_mapping.tsv
+
+expected:
+  observations: 1395601
+  genes: 36601
+  csv_columns: 133
+  source_donors: 83
+  primary_donors: 78
+  dementia_donors: 37
+  no_dementia_donors: 41
+  primary_contrasts: 7
+  secondary_slots: 42
+  secondary_eligible: 20
+  secondary_not_estimable: 22
+  primary_eligible_profiles:
+    Astrocytes: 78
+    Excitatory_neurons: 78
+    Inhibitory_neurons: 78
+    Microglia: 78
+    OPCs: 78
+    Oligodendrocytes: 78
+    Vasculature_cells: 76
+
+cohort:
+  donor_field: Donor ID
+  neurotypical_reference_field: Neurotypical reference
+  diagnosis_field: Cognitive Status
+  sex_field: Sex
+  apoe_field: APOE Genotype
+  age_field: Age at Death
+  pmi_field: PMI
+  study_field: Primary Study Name
+  pathology_field: Overall AD neuropathological Change
+  included_diagnoses:
+    - Dementia
+    - No dementia
+  excluded_apoe:
+    - 2/4
+  apoe_groups:
+    e2:
+      - 2/2
+      - 2/3
+    e33:
+      - 3/3
+    e4:
+      - 3/4
+      - 4/4
+
+assay:
+  method_field: method
+  method_value: 10Xv3.1
+  used_field: Used in analysis
+  umi_layer: layers/UMIs
+
+broad_context_order:
+  - Astrocytes
+  - Excitatory_neurons
+  - Inhibitory_neurons
+  - Microglia
+  - OPCs
+  - Oligodendrocytes
+  - Vasculature_cells
+
+broad_contexts:
+  Astrocytes:
+    field: Subclass
+    values:
+      - Astrocyte
+  Excitatory_neurons:
+    field: Class
+    values:
+      - "Neuronal: Glutamatergic"
+  Inhibitory_neurons:
+    field: Class
+    values:
+      - "Neuronal: GABAergic"
+  Microglia:
+    field: Subclass
+    values:
+      - Microglia-PVM
+    excluded_supertypes:
+      - Lymphocyte
+      - Monocyte
+  OPCs:
+    field: Subclass
+    values:
+      - OPC
+  Oligodendrocytes:
+    field: Subclass
+    values:
+      - Oligodendrocyte
+  Vasculature_cells:
+    field: Subclass
+    values:
+      - Endothelial
+      - VLMC
+
+thresholds:
+  primary_min_nuclei: 20
+  sensitivity_min_nuclei: 50
+  min_donors_per_disease_arm: 5
+
+models:
+  primary_formula: "~ diagnosis + sex + apoe_group + age_death_scaled + pmi_scaled + study"
+  secondary_formula: "~ 0 + diagnosis_sex_apoe_group + age_death_scaled + pmi_scaled + study"
+  filter_group: diagnosis
+  normalization: TMM
+  robust: true
+  fdr_method: BH
+
+streaming:
+  default_block_observations: 1000
+  checkpoint_every_blocks: 100
+  smoke_observations: 10000
+  benchmark_safety_multiplier: 1.35
+  local_max_hours: 12
+
+random_seed: 20260819
+
+minerva:
+  repository_root: /sc/arion/work/zhuane01/alzheimer
+  python: /sc/arion/work/zhuane01/envs/alzheimer-seaad/bin/python
+  queue: premium
+  slots: 4
+  memory_mb: 64000
+  wall_hours: 24

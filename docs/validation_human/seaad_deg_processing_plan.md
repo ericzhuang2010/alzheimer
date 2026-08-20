@@ -219,7 +219,7 @@ At implementation time, the following are hard requirements:
 - Every phase must canonicalize its configured output path and fail before writing if that path is not inside `results/validation_human/`.
 - Output paths containing `..` or resolving through a symlink outside the validation result root must be rejected.
 - Pipeline-generated logs, plots, `.RData`, `Rplots.pdf`, caches, and temporary files must not be written to the repository root, existing result directories, or existing script directories.
-- Local and Minerva commands must use the same isolated relative roots under their respective repository checkout.
+- All pipeline commands must use the isolated relative roots under the repository checkout.
 
 The addition of this plan itself creates only:
 
@@ -233,19 +233,19 @@ It does not yet create the planned scripts or scientific results.
 
 The current local machine has 15 GiB RAM, 16 CPU cores, and adequate disk space. Most phases are small because they use metadata or the compact donor-level matrix.
 
-| Phase | Main task | Preferred execution | Minerva required? |
-|---|---|---|---|
-| VH00 | Environment/config freeze | Local | No |
-| VH01 | H5AD/CSV audit | Local | No |
-| VH02 | Donor cohort | Local | No |
-| VH03 | Gene harmonization | Local | No |
-| VH04 | Nucleus-to-group manifest | Local | No |
-| VH05 | Stream 8 billion UMI entries into pseudobulk | Local first; Minerva fallback | No; Minerva strongly recommended if local is too slow or unstable |
-| VH06 | Pseudobulk validation/export | Local | No |
-| VH07 | Contrast eligibility/design audit | Local | No |
-| VH08 | edgeR DEG models, complete-grid release, and final checks | Local | No |
+| Phase | Main task | Execution outcome |
+|---|---|---|
+| VH00 | Environment/config freeze | Completed locally |
+| VH01 | H5AD/CSV audit | Completed locally |
+| VH02 | Donor cohort | Completed locally |
+| VH03 | Gene harmonization | Completed locally |
+| VH04 | Nucleus-to-group manifest | Completed locally |
+| VH05 | Stream 8 billion UMI entries into pseudobulk | Completed locally in 6 minutes 40 seconds |
+| VH06 | Pseudobulk validation/export | Completed locally |
+| VH07 | Contrast eligibility/design audit | Completed locally |
+| VH08 | edgeR DEG models, complete-grid release, and final checks | Completed locally |
 
-No phase is scientifically required to run on Minerva. VH05 is the only phase for which Minerva is a likely operational requirement: the UMI CSR layer contains 7,989,685,110 stored entries, representing approximately 17.34 GiB of gzip-compressed HDF5 storage and 89.30 GiB of logical count/index data. The block-streaming implementation is designed to fit within local memory, so VH05 will be attempted locally first. If the complete local run reaches `validated_complete` and passes exact conservation and checksum gates, it must not be repeated on Minerva. Minerva is the fallback for excessive runtime, repeated interruption, memory pressure, or an otherwise unstable local production run.
+All phases completed locally. VH05 streamed the full UMI CSR layer, reached `validated_complete`, and passed the exact conservation and checksum gates in 6 minutes 40 seconds. No cluster execution was needed.
 
 ## 5. Common local invocation
 
@@ -275,7 +275,7 @@ Every script must support `--help`, fail on unknown arguments, write a one-row s
 
 ### Purpose
 
-Create the single machine-readable contract used by every later phase and verify that the local and Minerva software can read/write the required formats.
+Create the single machine-readable contract used by every later phase and verify that the local software can read and write the required formats.
 
 ### Inputs
 
@@ -295,7 +295,7 @@ Create the single machine-readable contract used by every later phase and verify
 - **Modify:** nothing existing
 - **Delete:** nothing
 
-The config will contain input paths, output root, expected dimensions, cohort rules, broad mappings, thresholds, formulas, random seeds, and expected contrast counts. Paths may be overridden on Minerva through explicit CLI options; scientific rules may not be overridden silently.
+The config contains input paths, output root, expected dimensions, cohort rules, broad mappings, thresholds, formulas, random seeds, and expected contrast counts. Scientific rules may not be overridden silently.
 
 ### Processing and checks
 
@@ -626,11 +626,11 @@ The local smoke test is deliberately nonproduction and writes outside the produc
 
 It must confirm block parsing, group assignment, count conservation, and resumability. It cannot promote production status.
 
-### Local production command — try first
+### Local production command — completed
 
-The local production run writes to the canonical VH05 output directory. A conservative block size of 1,000 observations limits temporary CSR memory. The process is resumable, so rerunning the same command continues from `checkpoint_latest.npz` rather than restarting.
+The completed local production run wrote to the canonical VH05 output directory. A conservative block size of 1,000 observations limited temporary CSR memory. The process is resumable, so rerunning the same command continues from `checkpoint_latest.npz` rather than restarting.
 
-Run from a persistent terminal such as `tmux`:
+The production command was:
 
 ```bash
 cd /home/ericzhuang2010/VscodeProjects/alzheimer
@@ -645,7 +645,7 @@ set -o pipefail
   2>&1 | tee results/validation_human/05_pseudobulk/logs/local_production.log
 ```
 
-If interrupted, run the same command again. Do not delete the checkpoint. After the command exits successfully, inspect:
+If interrupted, the same command can be run again without deleting the checkpoint. After the command exits successfully, inspect:
 
 ```bash
 sed -n '1,40p' results/validation_human/05_pseudobulk/status.tsv
@@ -653,62 +653,7 @@ sed -n '1,120p' results/validation_human/05_pseudobulk/pseudobulk_checks.tsv
 sed -n '1,120p' results/validation_human/05_pseudobulk/count_conservation.tsv
 ```
 
-Proceed directly to VH06 when the status is `validated_complete` and all checks pass. Do not submit the Minerva job in that case.
-
-### Minerva fallback production command
-
-Use Minerva only if the local production run is impractically slow, repeatedly interrupted, exceeds the safe local-memory envelope, or fails for a resource-related reason. The planned LSF request is one CPU job with four slots, approximately 64 GiB total memory, and a 24-hour walltime. GPU resources are not needed.
-
-The planned LSF file must explicitly keep scheduler stdout and stderr inside the isolated validation result root:
-
-```text
-#BSUB -oo /sc/arion/work/zhuane01/alzheimer/results/validation_human/05_pseudobulk/logs/minerva_%J.out
-#BSUB -eo /sc/arion/work/zhuane01/alzheimer/results/validation_human/05_pseudobulk/logs/minerva_%J.err
-```
-
-Before submission, the repository and VH00-VH04 outputs are assumed available at:
-
-```text
-/sc/arion/work/zhuane01/alzheimer
-```
-
-The H5AD is assumed available at the same configured relative path as locally. Large-file transfer should use Globus when it is not already present.
-
-Submit with:
-
-```bash
-ssh zhuane01@minerva.hpc.mssm.edu
-cd /sc/arion/work/zhuane01/alzheimer
-mkdir -p results/validation_human/05_pseudobulk/logs
-bsub < scripts/validation_human/minerva/05_stream_broad_pseudobulk.lsf
-```
-
-Monitor with:
-
-```bash
-bjobs
-bpeek <JOB_ID>
-```
-
-The LSF script will run the equivalent of:
-
-```bash
-/sc/arion/work/zhuane01/envs/alzheimer-seaad/bin/python \
-  scripts/validation_human/05_stream_broad_pseudobulk.py \
-  --config scripts/validation_human/seaad_deg_config.yml \
-  --resume
-```
-
-The exact Python executable is frozen in the config during VH00. If that environment does not yet exist, create it under `/sc/arion/work/zhuane01/envs/` using a Miniforge module and install only Python, h5py, NumPy, SciPy, pandas, and PyYAML.
-
-If Minerva was used, copy the compact pseudobulk outputs back locally after successful completion. For these outputs, `rsync` is acceptable:
-
-```bash
-cd /home/ericzhuang2010/VscodeProjects/alzheimer
-rsync -av --partial \
-  zhuane01@minerva.hpc.mssm.edu:/sc/arion/work/zhuane01/alzheimer/results/validation_human/05_pseudobulk/ \
-  results/validation_human/05_pseudobulk/
-```
+The completed run reached `validated_complete` and passed all checks; VH06 then ran locally.
 
 ### Completion gate
 
@@ -943,7 +888,7 @@ Rscript scripts/validation_human/08_run_broad_deg.R \
   --config "$SEAAD_DEG_CONFIG"
 ```
 
-VH08 should fit comfortably on the local machine because each context has at most 78 donor columns and 36,601 source genes. The large nucleus-level matrix is no longer opened. Minerva is optional, not required, and the same command can be used there after activating the project R environment and setting `SEAAD_DEG_CONFIG`.
+VH08 fit comfortably on the local machine because each context has at most 78 donor columns and 36,601 source genes. The large nucleus-level matrix is no longer opened, and the phase completed locally.
 
 ### Final completion gate
 
@@ -984,7 +929,7 @@ VH02 donor cohort
   ↓
 VH04 nucleus/group manifest ← VH03 feature-order gate
   ↓
-VH05 streaming pseudobulk [local first; Minerva fallback]
+VH05 streaming pseudobulk [completed locally]
   ↓
 VH06 pseudobulk validation [local]
   ↓

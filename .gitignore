@@ -92,3 +92,5 @@ results/minerva_production/13_respiratory_modifier/respiratory_pseudobulk_counts
 !results/minerva_production/15_mitonuclear_coupling
 !results/minerva_production/18_key_driver_selection
 !results/minerva_production/19_genetic_support
+
+!results/validation_human

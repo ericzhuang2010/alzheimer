@@ -1,0 +1,2 @@
+schema_version	phase	validation_status	failed_checks	started_at_utc	completed_at_utc	total_slots	primary_eligible	secondary_eligible	secondary_not_estimable	manifest_sha256	config_sha256
+seaad_phase_status_v1	VH07	validated_complete		2026-08-20 02:23:53 UTC	2026-08-20 02:23:54 UTC	49	7	20	22	8b12d832485e632954da384987e30663ca54add738acf2259a672707fc6aeca0	2344f73e2e8e07490737d9760c30f8df50528c4170f901eaa23579414a703944

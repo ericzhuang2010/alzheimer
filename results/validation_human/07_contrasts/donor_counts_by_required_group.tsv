@@ -1,0 +1,85 @@
+diagnosis	sex	apoe_group	donors	context
+No dementia	Female	e33	13	Astrocytes
+Dementia	Female	e33	13	Astrocytes
+No dementia	Male	e33	10	Astrocytes
+Dementia	Male	e33	9	Astrocytes
+No dementia	Female	e2	6	Astrocytes
+Dementia	Female	e2	1	Astrocytes
+No dementia	Male	e2	4	Astrocytes
+Dementia	Male	e2	1	Astrocytes
+No dementia	Female	e4	5	Astrocytes
+Dementia	Female	e4	9	Astrocytes
+No dementia	Male	e4	3	Astrocytes
+Dementia	Male	e4	4	Astrocytes
+No dementia	Female	e33	13	Excitatory_neurons
+Dementia	Female	e33	13	Excitatory_neurons
+No dementia	Male	e33	10	Excitatory_neurons
+Dementia	Male	e33	9	Excitatory_neurons
+No dementia	Female	e2	6	Excitatory_neurons
+Dementia	Female	e2	1	Excitatory_neurons
+No dementia	Male	e2	4	Excitatory_neurons
+Dementia	Male	e2	1	Excitatory_neurons
+No dementia	Female	e4	5	Excitatory_neurons
+Dementia	Female	e4	9	Excitatory_neurons
+No dementia	Male	e4	3	Excitatory_neurons
+Dementia	Male	e4	4	Excitatory_neurons
+No dementia	Female	e33	13	Inhibitory_neurons
+Dementia	Female	e33	13	Inhibitory_neurons
+No dementia	Male	e33	10	Inhibitory_neurons
+Dementia	Male	e33	9	Inhibitory_neurons
+No dementia	Female	e2	6	Inhibitory_neurons
+Dementia	Female	e2	1	Inhibitory_neurons
+No dementia	Male	e2	4	Inhibitory_neurons
+Dementia	Male	e2	1	Inhibitory_neurons
+No dementia	Female	e4	5	Inhibitory_neurons
+Dementia	Female	e4	9	Inhibitory_neurons
+No dementia	Male	e4	3	Inhibitory_neurons
+Dementia	Male	e4	4	Inhibitory_neurons
+No dementia	Female	e33	13	Microglia
+Dementia	Female	e33	13	Microglia
+No dementia	Male	e33	10	Microglia
+Dementia	Male	e33	9	Microglia
+No dementia	Female	e2	6	Microglia
+Dementia	Female	e2	1	Microglia
+No dementia	Male	e2	4	Microglia
+Dementia	Male	e2	1	Microglia
+No dementia	Female	e4	5	Microglia
+Dementia	Female	e4	9	Microglia
+No dementia	Male	e4	3	Microglia
+Dementia	Male	e4	4	Microglia
+No dementia	Female	e33	13	OPCs
+Dementia	Female	e33	13	OPCs
+No dementia	Male	e33	10	OPCs
+Dementia	Male	e33	9	OPCs
+No dementia	Female	e2	6	OPCs
+Dementia	Female	e2	1	OPCs
+No dementia	Male	e2	4	OPCs
+Dementia	Male	e2	1	OPCs
+No dementia	Female	e4	5	OPCs
+Dementia	Female	e4	9	OPCs
+No dementia	Male	e4	3	OPCs
+Dementia	Male	e4	4	OPCs
+No dementia	Female	e33	13	Oligodendrocytes
+Dementia	Female	e33	13	Oligodendrocytes
+No dementia	Male	e33	10	Oligodendrocytes
+Dementia	Male	e33	9	Oligodendrocytes
+No dementia	Female	e2	6	Oligodendrocytes
+Dementia	Female	e2	1	Oligodendrocytes
+No dementia	Male	e2	4	Oligodendrocytes
+Dementia	Male	e2	1	Oligodendrocytes
+No dementia	Female	e4	5	Oligodendrocytes
+Dementia	Female	e4	9	Oligodendrocytes
+No dementia	Male	e4	3	Oligodendrocytes
+Dementia	Male	e4	4	Oligodendrocytes
+No dementia	Female	e33	13	Vasculature_cells
+Dementia	Female	e33	13	Vasculature_cells
+No dementia	Male	e33	10	Vasculature_cells
+Dementia	Male	e33	9	Vasculature_cells
+No dementia	Female	e2	6	Vasculature_cells
+Dementia	Female	e2	1	Vasculature_cells
+No dementia	Male	e2	3	Vasculature_cells
+Dementia	Male	e2	1	Vasculature_cells
+No dementia	Female	e4	4	Vasculature_cells
+Dementia	Female	e4	9	Vasculature_cells
+No dementia	Male	e4	3	Vasculature_cells
+Dementia	Male	e4	4	Vasculature_cells

@@ -1,0 +1,359 @@
+field	level	n_observations
+Donor ID	H18.30.002	28629
+Donor ID	H19.30.001	29072
+Donor ID	H19.30.002	32878
+Donor ID	H19.33.004	15163
+Donor ID	H20.33.001	20060
+Donor ID	H20.33.002	16851
+Donor ID	H20.33.004	17166
+Donor ID	H20.33.005	16213
+Donor ID	H20.33.008	14968
+Donor ID	H20.33.011	22111
+Donor ID	H20.33.012	18951
+Donor ID	H20.33.013	21384
+Donor ID	H20.33.014	16900
+Donor ID	H20.33.015	25050
+Donor ID	H20.33.016	19351
+Donor ID	H20.33.017	25251
+Donor ID	H20.33.018	15824
+Donor ID	H20.33.019	19928
+Donor ID	H20.33.020	17409
+Donor ID	H20.33.024	19084
+Donor ID	H20.33.025	25216
+Donor ID	H20.33.026	20109
+Donor ID	H20.33.027	18560
+Donor ID	H20.33.028	9886
+Donor ID	H20.33.029	15723
+Donor ID	H20.33.030	17394
+Donor ID	H20.33.031	16848
+Donor ID	H20.33.032	18359
+Donor ID	H20.33.033	13625
+Donor ID	H20.33.034	14826
+Donor ID	H20.33.035	19259
+Donor ID	H20.33.036	9679
+Donor ID	H20.33.037	17763
+Donor ID	H20.33.038	8695
+Donor ID	H20.33.039	22878
+Donor ID	H20.33.040	20328
+Donor ID	H20.33.041	15410
+Donor ID	H20.33.044	17346
+Donor ID	H20.33.045	11967
+Donor ID	H20.33.046	14265
+Donor ID	H21.33.001	14933
+Donor ID	H21.33.002	21577
+Donor ID	H21.33.003	31101
+Donor ID	H21.33.004	20849
+Donor ID	H21.33.005	15753
+Donor ID	H21.33.006	17165
+Donor ID	H21.33.007	16992
+Donor ID	H21.33.008	12914
+Donor ID	H21.33.011	17954
+Donor ID	H21.33.012	14882
+Donor ID	H21.33.013	16069
+Donor ID	H21.33.014	13112
+Donor ID	H21.33.015	18631
+Donor ID	H21.33.016	15056
+Donor ID	H21.33.017	16293
+Donor ID	H21.33.018	15401
+Donor ID	H21.33.019	15824
+Donor ID	H21.33.020	3272
+Donor ID	H21.33.021	14138
+Donor ID	H21.33.022	16369
+Donor ID	H21.33.023	14476
+Donor ID	H21.33.025	12033
+Donor ID	H21.33.026	16006
+Donor ID	H21.33.027	19402
+Donor ID	H21.33.028	13020
+Donor ID	H21.33.029	13870
+Donor ID	H21.33.030	16029
+Donor ID	H21.33.031	12810
+Donor ID	H21.33.032	26024
+Donor ID	H21.33.033	12800
+Donor ID	H21.33.034	4952
+Donor ID	H21.33.035	16489
+Donor ID	H21.33.036	13284
+Donor ID	H21.33.037	18506
+Donor ID	H21.33.038	13694
+Donor ID	H21.33.040	18051
+Donor ID	H21.33.041	10595
+Donor ID	H21.33.042	14258
+Donor ID	H21.33.043	16962
+Donor ID	H21.33.044	9759
+Donor ID	H21.33.045	9284
+Donor ID	H21.33.046	13475
+Donor ID	H21.33.047	11158
+Neurotypical reference	False	1305022
+Neurotypical reference	True	90579
+Cognitive Status	Reference	90579
+Cognitive Status	No dementia	706189
+Cognitive Status	Dementia	598833
+Sex	Female	753410
+Sex	Male	642191
+APOE Genotype	NA	90579
+APOE Genotype	2/2	14826
+APOE Genotype	2/3	173259
+APOE Genotype	2/4	28752
+APOE Genotype	3/3	752906
+APOE Genotype	3/4	271536
+APOE Genotype	4/4	63743
+Age at Death	68.0	13625
+Age at Death	69.0	25251
+Age at Death	70.0	21577
+Age at Death	72.0	13020
+Age at Death	75.0	35933
+Age at Death	77.0	11967
+Age at Death	78.0	31101
+Age at Death	80.0	30096
+Age at Death	81.0	50579
+Age at Death	82.0	56601
+Age at Death	83.0	48805
+Age at Death	84.0	26504
+Age at Death	85.0	14826
+Age at Death	86.0	51552
+Age at Death	87.0	36776
+Age at Death	88.0	65348
+Age at Death	89.0	45300
+Age at Death	90.0	59895
+Age at Death	91.0	77256
+Age at Death	92.0	63775
+Age at Death	93.0	90477
+Age at Death	94.0	111160
+Age at Death	95.0	32715
+Age at Death	96.0	40641
+Age at Death	97.0	63980
+Age at Death	98.0	93937
+Age at Death	99.0	68170
+Age at Death	100.0	9679
+Age at Death	102.0	14476
+Age at Death	nan	90579
+PMI	3.2	21577
+PMI	3.3	11967
+PMI	3.5	35377
+PMI	3.6	17954
+PMI	4.0	22568
+PMI	4.1	34637
+PMI	4.4	28120
+PMI	4.5	62424
+PMI	4.6	19259
+PMI	4.7	17346
+PMI	4.8	16489
+PMI	4.333333333333333	16851
+PMI	4.833333333333333	16369
+PMI	5.0	74669
+PMI	5.03	20328
+PMI	5.5	56336
+PMI	5.6	35043
+PMI	5.916666666666667	15410
+PMI	6.0	39505
+PMI	6.1	15723
+PMI	6.2	8695
+PMI	6.3	19402
+PMI	6.5	32131
+PMI	6.9	14138
+PMI	6.9166666666667	18359
+PMI	6.633333333333334	17409
+PMI	7.0	58311
+PMI	7.3	16069
+PMI	7.4	26786
+PMI	7.5	10595
+PMI	7.6	16213
+PMI	7.7	20060
+PMI	7.7333333333333	19351
+PMI	7.716666666666667	18951
+PMI	7.833333333333333	14476
+PMI	7.916666666666667	16848
+PMI	8.0	14265
+PMI	8.1	14258
+PMI	8.2	12800
+PMI	8.3	13020
+PMI	8.6	12033
+PMI	8.9	12810
+PMI	8.1333333333333	15163
+PMI	8.833333333333334	17166
+PMI	9.5	13112
+PMI	9.6	14933
+PMI	9.8	17165
+PMI	9.233333333333333	18560
+PMI	10.0	48864
+PMI	10.2	15753
+PMI	10.3	22878
+PMI	10.6	9679
+PMI	10.8	8224
+PMI	10.016666666667	14826
+PMI	10.016666666666667	15824
+PMI	10.233333333333333	15401
+PMI	11.0	13694
+PMI	11.1	19928
+PMI	11.416666666667	25050
+PMI	11.033333333333331	13870
+PMI	Reference	90579
+Primary Study Name	ACT	1071918
+Primary Study Name	ADRC Clinical Core	233104
+Primary Study Name	Reference	90579
+Overall AD neuropathological Change	Reference	90579
+Overall AD neuropathological Change	Not AD	163594
+Overall AD neuropathological Change	Low	207062
+Overall AD neuropathological Change	Intermediate	332022
+Overall AD neuropathological Change	High	602344
+method	10Xv3	90579
+method	10Xv3.1	1218835
+method	10xMulti	86187
+Used in analysis	True	1395601
+Class	Neuronal: GABAergic	422449
+Class	Neuronal: Glutamatergic	660751
+Class	Non-neuronal and Non-neural	312401
+Subclass	Lamp5 Lhx6	22891
+Subclass	Lamp5	55968
+Subclass	Pax6	9446
+Subclass	Sncg	24792
+Subclass	Vip	100215
+Subclass	Sst Chodl	1877
+Subclass	Sst	75706
+Subclass	Pvalb	116142
+Subclass	Chandelier	15412
+Subclass	L2/3 IT	341960
+Subclass	L6 IT	47373
+Subclass	L4 IT	81869
+Subclass	L5 IT	104106
+Subclass	L5 ET	4097
+Subclass	L6 CT	29343
+Subclass	L6b	18903
+Subclass	L6 IT Car3	13909
+Subclass	L5/6 NP	19191
+Subclass	Astrocyte	87444
+Subclass	OPC	29041
+Subclass	Oligodendrocyte	145995
+Subclass	Endothelial	2575
+Subclass	VLMC	4860
+Subclass	Microglia-PVM	42486
+Supertype	Lamp5_Lhx6_1	22891
+Supertype	Lamp5_1	6174
+Supertype	Lamp5_2	26787
+Supertype	Lamp5_3	8544
+Supertype	Lamp5_4	1752
+Supertype	Lamp5_5	8937
+Supertype	Lamp5_6	3774
+Supertype	Pax6_1	4924
+Supertype	Pax6_2	1538
+Supertype	Pax6_3	1066
+Supertype	Pax6_4	1918
+Supertype	Sncg_3	2178
+Supertype	Sncg_6	3407
+Supertype	Sncg_2	1308
+Supertype	Sncg_1	3697
+Supertype	Sncg_8	3654
+Supertype	Sncg_4	6962
+Supertype	Sncg_5	3586
+Supertype	Vip_14	1306
+Supertype	Vip_15	8614
+Supertype	Vip_16	1728
+Supertype	Vip_4	13156
+Supertype	Vip_5	2375
+Supertype	Vip_6	2972
+Supertype	Vip_9	5565
+Supertype	Vip_2	7213
+Supertype	Vip_11	9649
+Supertype	Vip_13	6408
+Supertype	Vip_1	9907
+Supertype	Vip_12	4343
+Supertype	Vip_18	3710
+Supertype	Vip_19	11053
+Supertype	Vip_21	2496
+Supertype	Vip_23	9720
+Supertype	Sst Chodl_1	1211
+Supertype	Sst_1	2510
+Supertype	Sst_4	2994
+Supertype	Sst_5	3158
+Supertype	Sst_7	2174
+Supertype	Sst_3	19298
+Supertype	Sst_19	6841
+Supertype	Sst_9	4062
+Supertype	Sst_10	5079
+Supertype	Sst_13	8178
+Supertype	Sst_12	3063
+Supertype	Sst Chodl_2	666
+Supertype	Sst_11	2548
+Supertype	Sst_20	3601
+Supertype	Sst_22	1340
+Supertype	Sst_23	4059
+Supertype	Sst_25	2540
+Supertype	Sst_2	4261
+Supertype	Pvalb_6	4438
+Supertype	Pvalb_5	2731
+Supertype	Pvalb_8	2848
+Supertype	Pvalb_7	2667
+Supertype	Pvalb_1	7676
+Supertype	Pvalb_3	8969
+Supertype	Pvalb_2	20431
+Supertype	Pvalb_15	48946
+Supertype	Pvalb_14	3810
+Supertype	Pvalb_12	3027
+Supertype	Pvalb_10	3212
+Supertype	Pvalb_13	1919
+Supertype	Pvalb_9	5468
+Supertype	Chandelier_1	11445
+Supertype	Chandelier_2	3967
+Supertype	L2/3 IT_1	114872
+Supertype	L2/3 IT_2	1155
+Supertype	L2/3 IT_6	59793
+Supertype	L2/3 IT_7	3205
+Supertype	L2/3 IT_5	46273
+Supertype	L2/3 IT_13	40232
+Supertype	L2/3 IT_10	32987
+Supertype	L2/3 IT_8	12716
+Supertype	L2/3 IT_12	14317
+Supertype	L6 IT_1	5667
+Supertype	L6 IT_2	41706
+Supertype	L4 IT_2	33412
+Supertype	L4 IT_3	6009
+Supertype	L4 IT_4	23848
+Supertype	L5 IT_1	12229
+Supertype	L5 IT_3	4616
+Supertype	L2/3 IT_3	16410
+Supertype	L4 IT_1	18600
+Supertype	L5 IT_2	43783
+Supertype	L5 IT_5	18863
+Supertype	L5 IT_6	12829
+Supertype	L5 IT_7	11786
+Supertype	L5 ET_2	4097
+Supertype	L6 CT_1	11278
+Supertype	L6 CT_2	16934
+Supertype	L6 CT_3	571
+Supertype	L6 CT_4	560
+Supertype	L6b_1	698
+Supertype	L6b_2	3605
+Supertype	L6b_3	346
+Supertype	L6b_4	2618
+Supertype	L6b_5	1045
+Supertype	L6b_6	10591
+Supertype	L6 IT Car3_1	1203
+Supertype	L6 IT Car3_2	1471
+Supertype	L6 IT Car3_3	11235
+Supertype	L5/6 NP_1	8358
+Supertype	L5/6 NP_2	6861
+Supertype	L5/6 NP_3	79
+Supertype	L5/6 NP_6	405
+Supertype	L5/6 NP_4	3488
+Supertype	Astro_1	1878
+Supertype	Astro_2	65336
+Supertype	Astro_6-SEAAD	3437
+Supertype	Astro_5	3346
+Supertype	Astro_3	12106
+Supertype	Astro_4	1341
+Supertype	OPC_1	192
+Supertype	OPC_2	26144
+Supertype	OPC_2_2-SEAAD	2705
+Supertype	Oligo_1	15107
+Supertype	Oligo_2	71945
+Supertype	Oligo_4	57395
+Supertype	Oligo_3	1548
+Supertype	Endo_2	2575
+Supertype	VLMC_1	1716
+Supertype	SMC-SEAAD	156
+Supertype	Pericyte_1	2988
+Supertype	Monocyte	299
+Supertype	Micro-PVM_1	728
+Supertype	Micro-PVM_2_1-SEAAD	274
+Supertype	Micro-PVM_2	39122
+Supertype	Micro-PVM_3-SEAAD	1392
+Supertype	Lymphocyte	671

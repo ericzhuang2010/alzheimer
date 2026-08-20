@@ -1,0 +1,9 @@
+check	passed	observed	expected	details
+source_donor_count	True	83	83	
+donor_fields_invariant	True	0	0	
+primary_donor_count	True	78	78	
+dementia_donor_count	True	37	37	
+no_dementia_donor_count	True	41	41	
+complete_model_covariates	True	0	0	
+excluded_reference_count	True	3	3	
+excluded_APOE_2_4_count	True	2	2	

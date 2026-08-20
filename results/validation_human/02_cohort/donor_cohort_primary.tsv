@@ -1,0 +1,79 @@
+donor_id	source_nuclei	first_observation_index	neurotypical_reference	diagnosis_source	sex_source	apoe_genotype	age_death	pmi_source	study_source	pathology_source	pmi	diagnosis	sex	study	apoe_group	exclusion_reason	included_primary	age_death_scaled	pmi_scaled
+H19.33.004	15163	34	False	No dementia	Female	3/3	80.0	8.1333333333333	ACT	Not AD	8.1333333333333	No dementia	Female	ACT	e33	included	True	-1.1447977975731964	0.5183478131950284
+H20.33.001	20060	97	False	No dementia	Male	3/3	82.0	7.7	ACT	Low	7.7	No dementia	Male	ACT	e33	included	True	-0.8896714312568843	0.32802166799668786
+H20.33.002	16851	83	False	No dementia	Female	2/3	97.0	4.333333333333333	ACT	Not AD	4.333333333333333	No dementia	Female	ACT	e2	included	True	1.0237763161154578	-1.150666075467454
+H20.33.004	17166	107	False	Dementia	Male	3/4	86.0	8.833333333333334	ACT	High	8.833333333333334	Dementia	Male	ACT	e4	included	True	-0.37941869862425975	0.8257977400539239
+H20.33.005	16213	5	False	No dementia	Female	2/3	99.0	7.6	ACT	Intermediate	7.6	No dementia	Female	ACT	e2	included	True	1.27890268243177	0.28410024987399035
+H20.33.008	14968	13	False	No dementia	Female	3/4	92.0	7.0	ACT	High	7.0	No dementia	Female	ACT	e4	included	True	0.38596040032467704	0.020571741137806843
+H20.33.011	22111	51	False	Dementia	Female	3/4	93.0	6.0	ACT	High	6.0	Dementia	Female	ACT	e4	included	True	0.5135235834828332	-0.41864244008916596
+H20.33.012	18951	35	False	No dementia	Female	3/3	91.0	7.716666666666667	ACT	Low	7.716666666666667	No dementia	Female	ACT	e33	included	True	0.2583972171665209	0.33534190435047073
+H20.33.013	21384	67	False	No dementia	Male	3/3	94.0	4.5	ACT	Intermediate	4.5	No dementia	Male	ACT	e33	included	True	0.6410867666409893	-1.077463711929625
+H20.33.014	16900	23	False	No dementia	Female	3/3	82.0	7.4	ADRC Clinical Core	Intermediate	7.4	No dementia	Female	ADRC Clinical Core	e33	included	True	-0.8896714312568843	0.1962574136285961
+H20.33.015	25050	8	False	Dementia	Male	3/3	88.0	11.416666666667	ACT	Intermediate	11.416666666667	Dementia	Male	ACT	e33	included	True	-0.12429233230794746	1.9604343748904165
+H20.33.016	19351	61	False	Dementia	Female	2/3	93.0	7.7333333333333	ADRC Clinical Core	Intermediate	7.7333333333333	Dementia	Female	ADRC Clinical Core	e2	included	True	0.5135235834828332	0.3426621407042388
+H20.33.017	25251	44	False	Dementia	Male	3/3	69.0	5.5	ADRC Clinical Core	High	5.5	Dementia	Male	ADRC Clinical Core	e33	included	True	-2.547992812312914	-0.6382495307026523
+H20.33.018	15824	106	False	Dementia	Female	3/4	81.0	4.5	ACT	High	4.5	Dementia	Female	ACT	e4	included	True	-1.0172346144150404	-1.077463711929625
+H20.33.019	19928	40	False	No dementia	Female	3/4	87.0	11.1	ACT	Intermediate	11.1	No dementia	Female	ACT	e4	included	True	-0.2518555154661036	1.8213498841683953
+H20.33.020	17409	53	False	Dementia	Male	4/4	81.0	6.633333333333334	ADRC Clinical Core	High	6.633333333333334	Dementia	Male	ADRC Clinical Core	e4	included	True	-1.0172346144150404	-0.14047345864541633
+H20.33.024	19084	37	False	No dementia	Male	3/3	90.0	3.5	ACT	Intermediate	3.5	No dementia	Male	ACT	e33	included	True	0.1308340340083648	-1.516677893156598
+H20.33.025	25216	110	False	No dementia	Male	3/3	94.0	4.5	ACT	High	4.5	No dementia	Male	ACT	e33	included	True	0.6410867666409893	-1.077463711929625
+H20.33.026	20109	11	False	Dementia	Female	4/4	75.0	7.0	ADRC Clinical Core	High	7.0	Dementia	Female	ADRC Clinical Core	e4	included	True	-1.7826137133639772	0.020571741137806843
+H20.33.027	18560	92	False	No dementia	Female	3/3	99.0	9.233333333333333	ACT	Intermediate	9.233333333333333	No dementia	Female	ACT	e33	included	True	1.27890268243177	1.0014834125447123
+H20.33.028	9886	12	False	Dementia	Female	3/3	94.0	7.4	ACT	High	7.4	Dementia	Female	ACT	e33	included	True	0.6410867666409893	0.1962574136285961
+H20.33.029	15723	0	False	Dementia	Female	3/3	91.0	6.1	ACT	High	6.1	Dementia	Female	ACT	e33	included	True	0.2583972171665209	-0.37472102196646884
+H20.33.030	17394	304	False	No dementia	Female	3/4	86.0	6.0	ACT	High	6.0	No dementia	Female	ACT	e4	included	True	-0.37941869862425975	-0.41864244008916596
+H20.33.031	16848	7	False	Dementia	Female	3/3	87.0	7.916666666666667	ACT	High	7.916666666666667	Dementia	Female	ACT	e33	included	True	-0.2518555154661036	0.42318474059586536
+H20.33.032	18359	218	False	No dementia	Male	3/3	98.0	6.9166666666667	ACT	High	6.9166666666667	No dementia	Male	ACT	e33	included	True	1.151339499273614	-0.016029440631092993
+H20.33.033	13625	36	False	Dementia	Male	3/3	68.0	6.5	ADRC Clinical Core	High	6.5	Dementia	Male	ADRC Clinical Core	e33	included	True	-2.67555599547107	-0.19903534947567955
+H20.33.034	14826	131	False	No dementia	Female	2/2	85.0	10.016666666667	ACT	Intermediate	10.016666666667	No dementia	Female	ACT	e2	included	True	-0.5069818817824159	1.3455345211726544
+H20.33.035	19259	202	False	No dementia	Female	3/3	99.0	4.6	ACT	Not AD	4.6	No dementia	Female	ACT	e33	included	True	1.27890268243177	-1.033542293806928
+H20.33.036	9679	197	False	No dementia	Female	2/3	100.0	10.6	ADRC Clinical Core	High	10.6	No dementia	Female	ADRC Clinical Core	e2	included	True	1.406465865589926	1.6017427935549087
+H20.33.037	17763	68	False	Dementia	Female	3/3	96.0	10.0	ACT	High	10.0	Dementia	Female	ACT	e33	included	True	0.8962131329573015	1.3382142848187253
+H20.33.038	8695	245	False	Dementia	Female	3/3	90.0	6.2	ACT	High	6.2	Dementia	Female	ACT	e33	included	True	0.1308340340083648	-0.33079960384377133
+H20.33.039	22878	42	False	No dementia	Female	3/3	96.0	10.3	ACT	High	10.3	No dementia	Female	ACT	e33	included	True	0.8962131329573015	1.4699785391868174
+H20.33.040	20328	3	False	Dementia	Male	3/3	98.0	5.03	ACT	Intermediate	5.03	Dementia	Male	ACT	e33	included	True	1.151339499273614	-0.8446801958793294
+H20.33.041	15410	20	False	Dementia	Female	3/3	91.0	5.916666666666667	ACT	High	5.916666666666667	Dementia	Female	ACT	e33	included	True	0.2583972171665209	-0.4552436218580802
+H20.33.044	17346	82	False	No dementia	Male	2/3	81.0	4.7	ACT	Not AD	4.7	No dementia	Male	ACT	e2	included	True	-1.0172346144150404	-0.9896208756842305
+H20.33.045	11967	21	False	Dementia	Female	4/4	77.0	3.3	ADRC Clinical Core	High	3.3	Dementia	Female	ADRC Clinical Core	e4	included	True	-1.5274873470476649	-1.6045207294019925
+H20.33.046	14265	99	False	Dementia	Male	3/3	94.0	8.0	ACT	High	8.0	Dementia	Male	ACT	e33	included	True	0.6410867666409893	0.45978592236477966
+H21.33.001	14933	27	False	Dementia	Male	2/3	80.0	9.6	ACT	Low	9.6	Dementia	Male	ACT	e2	included	True	-1.1447977975731964	1.162528612327936
+H21.33.002	21577	26	False	Dementia	Female	3/4	70.0	3.2	ADRC Clinical Core	High	3.2	Dementia	Female	ADRC Clinical Core	e4	included	True	-2.420429629154758	-1.6484421475246898
+H21.33.003	31101	9	False	No dementia	Male	3/3	78.0	10.0	ACT	Not AD	10.0	No dementia	Male	ACT	e33	included	True	-1.3999241638895088	1.3382142848187253
+H21.33.004	20849	151	False	No dementia	Male	2/3	93.0	5.0	ACT	Not AD	5.0	No dementia	Male	ACT	e2	included	True	0.5135235834828332	-0.8578566213161387
+H21.33.005	15753	4	False	Dementia	Male	3/3	95.0	10.2	ACT	Intermediate	10.2	Dementia	Male	ACT	e33	included	True	0.7686499497991455	1.4260571210641195
+H21.33.006	17165	52	False	No dementia	Male	3/4	97.0	9.8	ACT	Intermediate	9.8	No dementia	Male	ACT	e4	included	True	1.0237763161154578	1.250371448573331
+H21.33.007	16992	6	False	Dementia	Female	3/3	86.0	5.6	ACT	High	5.6	Dementia	Female	ACT	e33	included	True	-0.37941869862425975	-0.5943281125799552
+H21.33.008	12914	28	False	Dementia	Female	3/3	91.0	5.0	ACT	High	5.0	Dementia	Female	ACT	e33	included	True	0.2583972171665209	-0.8578566213161387
+H21.33.011	17954	1	False	No dementia	Female	3/3	83.0	3.6	ACT	Not AD	3.6	No dementia	Female	ACT	e33	included	True	-0.7621082480987281	-1.4727564750339006
+H21.33.013	16069	272	False	Dementia	Female	3/4	94.0	7.3	ACT	High	7.3	Dementia	Female	ACT	e4	included	True	0.6410867666409893	0.1523359955058986
+H21.33.014	13112	69	False	No dementia	Male	2/3	92.0	9.5	ADRC Clinical Core	Intermediate	9.5	No dementia	Male	ADRC Clinical Core	e2	included	True	0.38596040032467704	1.118607194205239
+H21.33.015	18631	18	False	No dementia	Male	3/3	98.0	4.1	ACT	Low	4.1	No dementia	Male	ACT	e33	included	True	1.151339499273614	-1.2531493844204145
+H21.33.016	15056	50	False	Dementia	Female	3/3	94.0	5.5	ACT	Low	5.5	Dementia	Female	ACT	e33	included	True	0.6410867666409893	-0.6382495307026523
+H21.33.017	16293	74	False	Dementia	Female	3/3	92.0	3.5	ACT	High	3.5	Dementia	Female	ACT	e33	included	True	0.38596040032467704	-1.516677893156598
+H21.33.018	15401	89	False	Dementia	Female	3/3	89.0	10.233333333333333	ACT	Low	10.233333333333333	Dementia	Female	ACT	e33	included	True	0.003270850850208667	1.4406975937716853
+H21.33.019	15824	77	False	No dementia	Male	2/3	75.0	10.016666666666667	ACT	Low	10.016666666666667	No dementia	Male	ACT	e2	included	True	-1.7826137133639772	1.3455345211725085
+H21.33.020	3272	186	False	Dementia	Male	3/3	82.0	10.8	ACT	High	10.8	Dementia	Male	ACT	e33	included	True	-0.8896714312568843	1.6895856298003038
+H21.33.021	14138	87	False	Dementia	Male	3/3	99.0	6.9	ACT	Intermediate	6.9	Dementia	Male	ACT	e33	included	True	1.27890268243177	-0.02334967698489028
+H21.33.022	16369	102	False	No dementia	Female	3/3	82.0	4.833333333333333	ACT	Intermediate	4.833333333333333	No dementia	Female	ACT	e33	included	True	-0.8896714312568843	-0.9310589848539677
+H21.33.023	14476	16	False	No dementia	Male	3/3	102.0	7.833333333333333	ACT	Not AD	7.833333333333333	No dementia	Male	ACT	e33	included	True	1.6615922319062384	0.3865835588269507
+H21.33.025	12033	22	False	No dementia	Female	3/3	88.0	8.6	ACT	Intermediate	8.6	No dementia	Female	ACT	e33	included	True	-0.12429233230794746	0.7233144311009632
+H21.33.026	16006	14	False	No dementia	Female	3/4	90.0	4.1	ADRC Clinical Core	High	4.1	No dementia	Female	ADRC Clinical Core	e4	included	True	0.1308340340083648	-1.2531493844204145
+H21.33.027	19402	75	False	Dementia	Male	3/4	92.0	6.3	ACT	High	6.3	Dementia	Male	ACT	e4	included	True	0.38596040032467704	-0.2868781857210742
+H21.33.028	13020	24	False	No dementia	Male	3/3	72.0	8.3	ACT	Low	8.3	No dementia	Male	ACT	e33	included	True	-2.1653032628384454	0.5915501767328718
+H21.33.030	16029	25	False	No dementia	Male	3/4	89.0	5.5	ACT	Intermediate	5.5	No dementia	Male	ACT	e4	included	True	0.003270850850208667	-0.6382495307026523
+H21.33.031	12810	58	False	Dementia	Male	3/4	84.0	8.9	ADRC Clinical Core	High	8.9	Dementia	Male	ADRC Clinical Core	e4	included	True	-0.634545064940572	0.8550786854690553
+H21.33.032	26024	17	False	No dementia	Female	3/3	98.0	5.0	ADRC Clinical Core	Low	5.0	No dementia	Female	ADRC Clinical Core	e33	included	True	1.151339499273614	-0.8578566213161387
+H21.33.033	12800	55	False	No dementia	Female	3/4	83.0	8.2	ACT	High	8.2	No dementia	Female	ACT	e4	included	True	-0.7621082480987281	0.5476287586101739
+H21.33.034	4952	518	False	Dementia	Female	3/4	90.0	10.8	ACT	High	10.8	Dementia	Female	ACT	e4	included	True	0.1308340340083648	1.6895856298003038
+H21.33.035	16489	78	False	No dementia	Female	3/3	97.0	4.8	ACT	High	4.8	No dementia	Female	ACT	e33	included	True	1.0237763161154578	-0.9456994575615334
+H21.33.036	13284	147	False	No dementia	Female	3/3	93.0	4.0	ACT	High	4.0	No dementia	Female	ACT	e33	included	True	0.5135235834828332	-1.2970708025431115
+H21.33.037	18506	46	False	No dementia	Female	2/3	88.0	6.5	ACT	Low	6.5	No dementia	Female	ACT	e2	included	True	-0.12429233230794746	-0.19903534947567955
+H21.33.038	13694	86	False	No dementia	Female	3/3	84.0	11.0	ACT	Low	11.0	No dementia	Female	ACT	e33	included	True	-0.634545064940572	1.777428466045698
+H21.33.040	18051	90	False	No dementia	Male	3/4	83.0	5.6	ACT	High	5.6	No dementia	Male	ACT	e4	included	True	-0.7621082480987281	-0.5943281125799552
+H21.33.041	10595	19	False	No dementia	Female	2/3	98.0	7.5	ACT	Not AD	7.5	No dementia	Female	ACT	e2	included	True	1.151339499273614	0.24017883175129323
+H21.33.042	14258	113	False	Dementia	Female	4/4	91.0	8.1	ACT	High	8.1	Dementia	Female	ACT	e4	included	True	0.2583972171665209	0.5037073404874768
+H21.33.043	16962	30	False	Dementia	Female	3/3	95.0	4.4	ACT	Low	4.4	Dementia	Female	ACT	e33	included	True	0.7686499497991455	-1.1213851300523223
+H21.33.044	9759	139	False	Dementia	Female	3/3	88.0	7.0	ACT	Intermediate	7.0	Dementia	Female	ACT	e33	included	True	-0.12429233230794746	0.020571741137806843
+H21.33.045	9284	76	False	Dementia	Female	3/4	94.0	4.0	ADRC Clinical Core	High	4.0	Dementia	Female	ADRC Clinical Core	e4	included	True	0.6410867666409893	-1.2970708025431115
+H21.33.046	13475	140	False	Dementia	Male	3/3	97.0	7.0	ACT	High	7.0	Dementia	Male	ACT	e33	included	True	1.0237763161154578	0.020571741137806843
+H21.33.047	11158	352	False	No dementia	Male	3/3	90.0	4.4	ACT	Intermediate	4.4	No dementia	Male	ACT	e33	included	True	0.1308340340083648	-1.1213851300523223

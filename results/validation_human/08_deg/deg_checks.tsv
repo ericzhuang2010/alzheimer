@@ -1,0 +1,15 @@
+check	passed	observed	expected	details
+completed_primary_contrasts	TRUE	7	7	
+completed_secondary_contrasts	TRUE	20	20	
+secondary_not_estimable_explicit	TRUE	22	22	
+contrast_status_rows	TRUE	49	49	
+tested_statistics_finite	TRUE	TRUE	TRUE	
+FDR_range	TRUE	TRUE	TRUE	
+unique_genes_within_contrast	TRUE	TRUE	TRUE	
+primary_complete_grid	TRUE	256207	256207	
+secondary_complete_grid	TRUE	732020	732020	
+complete_test_status_values	TRUE	filtered;tested	tested;filtered	
+no_gene_rows_for_ineligible	TRUE	TRUE	TRUE	
+model_objects_reload_reproduce	TRUE	7	7	
+all_per_contrast_files_exist	TRUE	27	27	
+effect_direction_frozen	TRUE	TRUE	TRUE	

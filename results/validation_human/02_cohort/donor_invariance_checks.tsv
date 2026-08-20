@@ -1,0 +1,665 @@
+donor_id	field	invariant	mismatching_nuclei
+H18.30.002	Neurotypical reference	True	0
+H19.30.001	Neurotypical reference	True	0
+H19.30.002	Neurotypical reference	True	0
+H19.33.004	Neurotypical reference	True	0
+H20.33.001	Neurotypical reference	True	0
+H20.33.002	Neurotypical reference	True	0
+H20.33.004	Neurotypical reference	True	0
+H20.33.005	Neurotypical reference	True	0
+H20.33.008	Neurotypical reference	True	0
+H20.33.011	Neurotypical reference	True	0
+H20.33.012	Neurotypical reference	True	0
+H20.33.013	Neurotypical reference	True	0
+H20.33.014	Neurotypical reference	True	0
+H20.33.015	Neurotypical reference	True	0
+H20.33.016	Neurotypical reference	True	0
+H20.33.017	Neurotypical reference	True	0
+H20.33.018	Neurotypical reference	True	0
+H20.33.019	Neurotypical reference	True	0
+H20.33.020	Neurotypical reference	True	0
+H20.33.024	Neurotypical reference	True	0
+H20.33.025	Neurotypical reference	True	0
+H20.33.026	Neurotypical reference	True	0
+H20.33.027	Neurotypical reference	True	0
+H20.33.028	Neurotypical reference	True	0
+H20.33.029	Neurotypical reference	True	0
+H20.33.030	Neurotypical reference	True	0
+H20.33.031	Neurotypical reference	True	0
+H20.33.032	Neurotypical reference	True	0
+H20.33.033	Neurotypical reference	True	0
+H20.33.034	Neurotypical reference	True	0
+H20.33.035	Neurotypical reference	True	0
+H20.33.036	Neurotypical reference	True	0
+H20.33.037	Neurotypical reference	True	0
+H20.33.038	Neurotypical reference	True	0
+H20.33.039	Neurotypical reference	True	0
+H20.33.040	Neurotypical reference	True	0
+H20.33.041	Neurotypical reference	True	0
+H20.33.044	Neurotypical reference	True	0
+H20.33.045	Neurotypical reference	True	0
+H20.33.046	Neurotypical reference	True	0
+H21.33.001	Neurotypical reference	True	0
+H21.33.002	Neurotypical reference	True	0
+H21.33.003	Neurotypical reference	True	0
+H21.33.004	Neurotypical reference	True	0
+H21.33.005	Neurotypical reference	True	0
+H21.33.006	Neurotypical reference	True	0
+H21.33.007	Neurotypical reference	True	0
+H21.33.008	Neurotypical reference	True	0
+H21.33.011	Neurotypical reference	True	0
+H21.33.012	Neurotypical reference	True	0
+H21.33.013	Neurotypical reference	True	0
+H21.33.014	Neurotypical reference	True	0
+H21.33.015	Neurotypical reference	True	0
+H21.33.016	Neurotypical reference	True	0
+H21.33.017	Neurotypical reference	True	0
+H21.33.018	Neurotypical reference	True	0
+H21.33.019	Neurotypical reference	True	0
+H21.33.020	Neurotypical reference	True	0
+H21.33.021	Neurotypical reference	True	0
+H21.33.022	Neurotypical reference	True	0
+H21.33.023	Neurotypical reference	True	0
+H21.33.025	Neurotypical reference	True	0
+H21.33.026	Neurotypical reference	True	0
+H21.33.027	Neurotypical reference	True	0
+H21.33.028	Neurotypical reference	True	0
+H21.33.029	Neurotypical reference	True	0
+H21.33.030	Neurotypical reference	True	0
+H21.33.031	Neurotypical reference	True	0
+H21.33.032	Neurotypical reference	True	0
+H21.33.033	Neurotypical reference	True	0
+H21.33.034	Neurotypical reference	True	0
+H21.33.035	Neurotypical reference	True	0
+H21.33.036	Neurotypical reference	True	0
+H21.33.037	Neurotypical reference	True	0
+H21.33.038	Neurotypical reference	True	0
+H21.33.040	Neurotypical reference	True	0
+H21.33.041	Neurotypical reference	True	0
+H21.33.042	Neurotypical reference	True	0
+H21.33.043	Neurotypical reference	True	0
+H21.33.044	Neurotypical reference	True	0
+H21.33.045	Neurotypical reference	True	0
+H21.33.046	Neurotypical reference	True	0
+H21.33.047	Neurotypical reference	True	0
+H18.30.002	Cognitive Status	True	0
+H19.30.001	Cognitive Status	True	0
+H19.30.002	Cognitive Status	True	0
+H19.33.004	Cognitive Status	True	0
+H20.33.001	Cognitive Status	True	0
+H20.33.002	Cognitive Status	True	0
+H20.33.004	Cognitive Status	True	0
+H20.33.005	Cognitive Status	True	0
+H20.33.008	Cognitive Status	True	0
+H20.33.011	Cognitive Status	True	0
+H20.33.012	Cognitive Status	True	0
+H20.33.013	Cognitive Status	True	0
+H20.33.014	Cognitive Status	True	0
+H20.33.015	Cognitive Status	True	0
+H20.33.016	Cognitive Status	True	0
+H20.33.017	Cognitive Status	True	0
+H20.33.018	Cognitive Status	True	0
+H20.33.019	Cognitive Status	True	0
+H20.33.020	Cognitive Status	True	0
+H20.33.024	Cognitive Status	True	0
+H20.33.025	Cognitive Status	True	0
+H20.33.026	Cognitive Status	True	0
+H20.33.027	Cognitive Status	True	0
+H20.33.028	Cognitive Status	True	0
+H20.33.029	Cognitive Status	True	0
+H20.33.030	Cognitive Status	True	0
+H20.33.031	Cognitive Status	True	0
+H20.33.032	Cognitive Status	True	0
+H20.33.033	Cognitive Status	True	0
+H20.33.034	Cognitive Status	True	0
+H20.33.035	Cognitive Status	True	0
+H20.33.036	Cognitive Status	True	0
+H20.33.037	Cognitive Status	True	0
+H20.33.038	Cognitive Status	True	0
+H20.33.039	Cognitive Status	True	0
+H20.33.040	Cognitive Status	True	0
+H20.33.041	Cognitive Status	True	0
+H20.33.044	Cognitive Status	True	0
+H20.33.045	Cognitive Status	True	0
+H20.33.046	Cognitive Status	True	0
+H21.33.001	Cognitive Status	True	0
+H21.33.002	Cognitive Status	True	0
+H21.33.003	Cognitive Status	True	0
+H21.33.004	Cognitive Status	True	0
+H21.33.005	Cognitive Status	True	0
+H21.33.006	Cognitive Status	True	0
+H21.33.007	Cognitive Status	True	0
+H21.33.008	Cognitive Status	True	0
+H21.33.011	Cognitive Status	True	0
+H21.33.012	Cognitive Status	True	0
+H21.33.013	Cognitive Status	True	0
+H21.33.014	Cognitive Status	True	0
+H21.33.015	Cognitive Status	True	0
+H21.33.016	Cognitive Status	True	0
+H21.33.017	Cognitive Status	True	0
+H21.33.018	Cognitive Status	True	0
+H21.33.019	Cognitive Status	True	0
+H21.33.020	Cognitive Status	True	0
+H21.33.021	Cognitive Status	True	0
+H21.33.022	Cognitive Status	True	0
+H21.33.023	Cognitive Status	True	0
+H21.33.025	Cognitive Status	True	0
+H21.33.026	Cognitive Status	True	0
+H21.33.027	Cognitive Status	True	0
+H21.33.028	Cognitive Status	True	0
+H21.33.029	Cognitive Status	True	0
+H21.33.030	Cognitive Status	True	0
+H21.33.031	Cognitive Status	True	0
+H21.33.032	Cognitive Status	True	0
+H21.33.033	Cognitive Status	True	0
+H21.33.034	Cognitive Status	True	0
+H21.33.035	Cognitive Status	True	0
+H21.33.036	Cognitive Status	True	0
+H21.33.037	Cognitive Status	True	0
+H21.33.038	Cognitive Status	True	0
+H21.33.040	Cognitive Status	True	0
+H21.33.041	Cognitive Status	True	0
+H21.33.042	Cognitive Status	True	0
+H21.33.043	Cognitive Status	True	0
+H21.33.044	Cognitive Status	True	0
+H21.33.045	Cognitive Status	True	0
+H21.33.046	Cognitive Status	True	0
+H21.33.047	Cognitive Status	True	0
+H18.30.002	Sex	True	0
+H19.30.001	Sex	True	0
+H19.30.002	Sex	True	0
+H19.33.004	Sex	True	0
+H20.33.001	Sex	True	0
+H20.33.002	Sex	True	0
+H20.33.004	Sex	True	0
+H20.33.005	Sex	True	0
+H20.33.008	Sex	True	0
+H20.33.011	Sex	True	0
+H20.33.012	Sex	True	0
+H20.33.013	Sex	True	0
+H20.33.014	Sex	True	0
+H20.33.015	Sex	True	0
+H20.33.016	Sex	True	0
+H20.33.017	Sex	True	0
+H20.33.018	Sex	True	0
+H20.33.019	Sex	True	0
+H20.33.020	Sex	True	0
+H20.33.024	Sex	True	0
+H20.33.025	Sex	True	0
+H20.33.026	Sex	True	0
+H20.33.027	Sex	True	0
+H20.33.028	Sex	True	0
+H20.33.029	Sex	True	0
+H20.33.030	Sex	True	0
+H20.33.031	Sex	True	0
+H20.33.032	Sex	True	0
+H20.33.033	Sex	True	0
+H20.33.034	Sex	True	0
+H20.33.035	Sex	True	0
+H20.33.036	Sex	True	0
+H20.33.037	Sex	True	0
+H20.33.038	Sex	True	0
+H20.33.039	Sex	True	0
+H20.33.040	Sex	True	0
+H20.33.041	Sex	True	0
+H20.33.044	Sex	True	0
+H20.33.045	Sex	True	0
+H20.33.046	Sex	True	0
+H21.33.001	Sex	True	0
+H21.33.002	Sex	True	0
+H21.33.003	Sex	True	0
+H21.33.004	Sex	True	0
+H21.33.005	Sex	True	0
+H21.33.006	Sex	True	0
+H21.33.007	Sex	True	0
+H21.33.008	Sex	True	0
+H21.33.011	Sex	True	0
+H21.33.012	Sex	True	0
+H21.33.013	Sex	True	0
+H21.33.014	Sex	True	0
+H21.33.015	Sex	True	0
+H21.33.016	Sex	True	0
+H21.33.017	Sex	True	0
+H21.33.018	Sex	True	0
+H21.33.019	Sex	True	0
+H21.33.020	Sex	True	0
+H21.33.021	Sex	True	0
+H21.33.022	Sex	True	0
+H21.33.023	Sex	True	0
+H21.33.025	Sex	True	0
+H21.33.026	Sex	True	0
+H21.33.027	Sex	True	0
+H21.33.028	Sex	True	0
+H21.33.029	Sex	True	0
+H21.33.030	Sex	True	0
+H21.33.031	Sex	True	0
+H21.33.032	Sex	True	0
+H21.33.033	Sex	True	0
+H21.33.034	Sex	True	0
+H21.33.035	Sex	True	0
+H21.33.036	Sex	True	0
+H21.33.037	Sex	True	0
+H21.33.038	Sex	True	0
+H21.33.040	Sex	True	0
+H21.33.041	Sex	True	0
+H21.33.042	Sex	True	0
+H21.33.043	Sex	True	0
+H21.33.044	Sex	True	0
+H21.33.045	Sex	True	0
+H21.33.046	Sex	True	0
+H21.33.047	Sex	True	0
+H18.30.002	APOE Genotype	True	0
+H19.30.001	APOE Genotype	True	0
+H19.30.002	APOE Genotype	True	0
+H19.33.004	APOE Genotype	True	0
+H20.33.001	APOE Genotype	True	0
+H20.33.002	APOE Genotype	True	0
+H20.33.004	APOE Genotype	True	0
+H20.33.005	APOE Genotype	True	0
+H20.33.008	APOE Genotype	True	0
+H20.33.011	APOE Genotype	True	0
+H20.33.012	APOE Genotype	True	0
+H20.33.013	APOE Genotype	True	0
+H20.33.014	APOE Genotype	True	0
+H20.33.015	APOE Genotype	True	0
+H20.33.016	APOE Genotype	True	0
+H20.33.017	APOE Genotype	True	0
+H20.33.018	APOE Genotype	True	0
+H20.33.019	APOE Genotype	True	0
+H20.33.020	APOE Genotype	True	0
+H20.33.024	APOE Genotype	True	0
+H20.33.025	APOE Genotype	True	0
+H20.33.026	APOE Genotype	True	0
+H20.33.027	APOE Genotype	True	0
+H20.33.028	APOE Genotype	True	0
+H20.33.029	APOE Genotype	True	0
+H20.33.030	APOE Genotype	True	0
+H20.33.031	APOE Genotype	True	0
+H20.33.032	APOE Genotype	True	0
+H20.33.033	APOE Genotype	True	0
+H20.33.034	APOE Genotype	True	0
+H20.33.035	APOE Genotype	True	0
+H20.33.036	APOE Genotype	True	0
+H20.33.037	APOE Genotype	True	0
+H20.33.038	APOE Genotype	True	0
+H20.33.039	APOE Genotype	True	0
+H20.33.040	APOE Genotype	True	0
+H20.33.041	APOE Genotype	True	0
+H20.33.044	APOE Genotype	True	0
+H20.33.045	APOE Genotype	True	0
+H20.33.046	APOE Genotype	True	0
+H21.33.001	APOE Genotype	True	0
+H21.33.002	APOE Genotype	True	0
+H21.33.003	APOE Genotype	True	0
+H21.33.004	APOE Genotype	True	0
+H21.33.005	APOE Genotype	True	0
+H21.33.006	APOE Genotype	True	0
+H21.33.007	APOE Genotype	True	0
+H21.33.008	APOE Genotype	True	0
+H21.33.011	APOE Genotype	True	0
+H21.33.012	APOE Genotype	True	0
+H21.33.013	APOE Genotype	True	0
+H21.33.014	APOE Genotype	True	0
+H21.33.015	APOE Genotype	True	0
+H21.33.016	APOE Genotype	True	0
+H21.33.017	APOE Genotype	True	0
+H21.33.018	APOE Genotype	True	0
+H21.33.019	APOE Genotype	True	0
+H21.33.020	APOE Genotype	True	0
+H21.33.021	APOE Genotype	True	0
+H21.33.022	APOE Genotype	True	0
+H21.33.023	APOE Genotype	True	0
+H21.33.025	APOE Genotype	True	0
+H21.33.026	APOE Genotype	True	0
+H21.33.027	APOE Genotype	True	0
+H21.33.028	APOE Genotype	True	0
+H21.33.029	APOE Genotype	True	0
+H21.33.030	APOE Genotype	True	0
+H21.33.031	APOE Genotype	True	0
+H21.33.032	APOE Genotype	True	0
+H21.33.033	APOE Genotype	True	0
+H21.33.034	APOE Genotype	True	0
+H21.33.035	APOE Genotype	True	0
+H21.33.036	APOE Genotype	True	0
+H21.33.037	APOE Genotype	True	0
+H21.33.038	APOE Genotype	True	0
+H21.33.040	APOE Genotype	True	0
+H21.33.041	APOE Genotype	True	0
+H21.33.042	APOE Genotype	True	0
+H21.33.043	APOE Genotype	True	0
+H21.33.044	APOE Genotype	True	0
+H21.33.045	APOE Genotype	True	0
+H21.33.046	APOE Genotype	True	0
+H21.33.047	APOE Genotype	True	0
+H18.30.002	Age at Death	True	0
+H19.30.001	Age at Death	True	0
+H19.30.002	Age at Death	True	0
+H19.33.004	Age at Death	True	0
+H20.33.001	Age at Death	True	0
+H20.33.002	Age at Death	True	0
+H20.33.004	Age at Death	True	0
+H20.33.005	Age at Death	True	0
+H20.33.008	Age at Death	True	0
+H20.33.011	Age at Death	True	0
+H20.33.012	Age at Death	True	0
+H20.33.013	Age at Death	True	0
+H20.33.014	Age at Death	True	0
+H20.33.015	Age at Death	True	0
+H20.33.016	Age at Death	True	0
+H20.33.017	Age at Death	True	0
+H20.33.018	Age at Death	True	0
+H20.33.019	Age at Death	True	0
+H20.33.020	Age at Death	True	0
+H20.33.024	Age at Death	True	0
+H20.33.025	Age at Death	True	0
+H20.33.026	Age at Death	True	0
+H20.33.027	Age at Death	True	0
+H20.33.028	Age at Death	True	0
+H20.33.029	Age at Death	True	0
+H20.33.030	Age at Death	True	0
+H20.33.031	Age at Death	True	0
+H20.33.032	Age at Death	True	0
+H20.33.033	Age at Death	True	0
+H20.33.034	Age at Death	True	0
+H20.33.035	Age at Death	True	0
+H20.33.036	Age at Death	True	0
+H20.33.037	Age at Death	True	0
+H20.33.038	Age at Death	True	0
+H20.33.039	Age at Death	True	0
+H20.33.040	Age at Death	True	0
+H20.33.041	Age at Death	True	0
+H20.33.044	Age at Death	True	0
+H20.33.045	Age at Death	True	0
+H20.33.046	Age at Death	True	0
+H21.33.001	Age at Death	True	0
+H21.33.002	Age at Death	True	0
+H21.33.003	Age at Death	True	0
+H21.33.004	Age at Death	True	0
+H21.33.005	Age at Death	True	0
+H21.33.006	Age at Death	True	0
+H21.33.007	Age at Death	True	0
+H21.33.008	Age at Death	True	0
+H21.33.011	Age at Death	True	0
+H21.33.012	Age at Death	True	0
+H21.33.013	Age at Death	True	0
+H21.33.014	Age at Death	True	0
+H21.33.015	Age at Death	True	0
+H21.33.016	Age at Death	True	0
+H21.33.017	Age at Death	True	0
+H21.33.018	Age at Death	True	0
+H21.33.019	Age at Death	True	0
+H21.33.020	Age at Death	True	0
+H21.33.021	Age at Death	True	0
+H21.33.022	Age at Death	True	0
+H21.33.023	Age at Death	True	0
+H21.33.025	Age at Death	True	0
+H21.33.026	Age at Death	True	0
+H21.33.027	Age at Death	True	0
+H21.33.028	Age at Death	True	0
+H21.33.029	Age at Death	True	0
+H21.33.030	Age at Death	True	0
+H21.33.031	Age at Death	True	0
+H21.33.032	Age at Death	True	0
+H21.33.033	Age at Death	True	0
+H21.33.034	Age at Death	True	0
+H21.33.035	Age at Death	True	0
+H21.33.036	Age at Death	True	0
+H21.33.037	Age at Death	True	0
+H21.33.038	Age at Death	True	0
+H21.33.040	Age at Death	True	0
+H21.33.041	Age at Death	True	0
+H21.33.042	Age at Death	True	0
+H21.33.043	Age at Death	True	0
+H21.33.044	Age at Death	True	0
+H21.33.045	Age at Death	True	0
+H21.33.046	Age at Death	True	0
+H21.33.047	Age at Death	True	0
+H18.30.002	PMI	True	0
+H19.30.001	PMI	True	0
+H19.30.002	PMI	True	0
+H19.33.004	PMI	True	0
+H20.33.001	PMI	True	0
+H20.33.002	PMI	True	0
+H20.33.004	PMI	True	0
+H20.33.005	PMI	True	0
+H20.33.008	PMI	True	0
+H20.33.011	PMI	True	0
+H20.33.012	PMI	True	0
+H20.33.013	PMI	True	0
+H20.33.014	PMI	True	0
+H20.33.015	PMI	True	0
+H20.33.016	PMI	True	0
+H20.33.017	PMI	True	0
+H20.33.018	PMI	True	0
+H20.33.019	PMI	True	0
+H20.33.020	PMI	True	0
+H20.33.024	PMI	True	0
+H20.33.025	PMI	True	0
+H20.33.026	PMI	True	0
+H20.33.027	PMI	True	0
+H20.33.028	PMI	True	0
+H20.33.029	PMI	True	0
+H20.33.030	PMI	True	0
+H20.33.031	PMI	True	0
+H20.33.032	PMI	True	0
+H20.33.033	PMI	True	0
+H20.33.034	PMI	True	0
+H20.33.035	PMI	True	0
+H20.33.036	PMI	True	0
+H20.33.037	PMI	True	0
+H20.33.038	PMI	True	0
+H20.33.039	PMI	True	0
+H20.33.040	PMI	True	0
+H20.33.041	PMI	True	0
+H20.33.044	PMI	True	0
+H20.33.045	PMI	True	0
+H20.33.046	PMI	True	0
+H21.33.001	PMI	True	0
+H21.33.002	PMI	True	0
+H21.33.003	PMI	True	0
+H21.33.004	PMI	True	0
+H21.33.005	PMI	True	0
+H21.33.006	PMI	True	0
+H21.33.007	PMI	True	0
+H21.33.008	PMI	True	0
+H21.33.011	PMI	True	0
+H21.33.012	PMI	True	0
+H21.33.013	PMI	True	0
+H21.33.014	PMI	True	0
+H21.33.015	PMI	True	0
+H21.33.016	PMI	True	0
+H21.33.017	PMI	True	0
+H21.33.018	PMI	True	0
+H21.33.019	PMI	True	0
+H21.33.020	PMI	True	0
+H21.33.021	PMI	True	0
+H21.33.022	PMI	True	0
+H21.33.023	PMI	True	0
+H21.33.025	PMI	True	0
+H21.33.026	PMI	True	0
+H21.33.027	PMI	True	0
+H21.33.028	PMI	True	0
+H21.33.029	PMI	True	0
+H21.33.030	PMI	True	0
+H21.33.031	PMI	True	0
+H21.33.032	PMI	True	0
+H21.33.033	PMI	True	0
+H21.33.034	PMI	True	0
+H21.33.035	PMI	True	0
+H21.33.036	PMI	True	0
+H21.33.037	PMI	True	0
+H21.33.038	PMI	True	0
+H21.33.040	PMI	True	0
+H21.33.041	PMI	True	0
+H21.33.042	PMI	True	0
+H21.33.043	PMI	True	0
+H21.33.044	PMI	True	0
+H21.33.045	PMI	True	0
+H21.33.046	PMI	True	0
+H21.33.047	PMI	True	0
+H18.30.002	Primary Study Name	True	0
+H19.30.001	Primary Study Name	True	0
+H19.30.002	Primary Study Name	True	0
+H19.33.004	Primary Study Name	True	0
+H20.33.001	Primary Study Name	True	0
+H20.33.002	Primary Study Name	True	0
+H20.33.004	Primary Study Name	True	0
+H20.33.005	Primary Study Name	True	0
+H20.33.008	Primary Study Name	True	0
+H20.33.011	Primary Study Name	True	0
+H20.33.012	Primary Study Name	True	0
+H20.33.013	Primary Study Name	True	0
+H20.33.014	Primary Study Name	True	0
+H20.33.015	Primary Study Name	True	0
+H20.33.016	Primary Study Name	True	0
+H20.33.017	Primary Study Name	True	0
+H20.33.018	Primary Study Name	True	0
+H20.33.019	Primary Study Name	True	0
+H20.33.020	Primary Study Name	True	0
+H20.33.024	Primary Study Name	True	0
+H20.33.025	Primary Study Name	True	0
+H20.33.026	Primary Study Name	True	0
+H20.33.027	Primary Study Name	True	0
+H20.33.028	Primary Study Name	True	0
+H20.33.029	Primary Study Name	True	0
+H20.33.030	Primary Study Name	True	0
+H20.33.031	Primary Study Name	True	0
+H20.33.032	Primary Study Name	True	0
+H20.33.033	Primary Study Name	True	0
+H20.33.034	Primary Study Name	True	0
+H20.33.035	Primary Study Name	True	0
+H20.33.036	Primary Study Name	True	0
+H20.33.037	Primary Study Name	True	0
+H20.33.038	Primary Study Name	True	0
+H20.33.039	Primary Study Name	True	0
+H20.33.040	Primary Study Name	True	0
+H20.33.041	Primary Study Name	True	0
+H20.33.044	Primary Study Name	True	0
+H20.33.045	Primary Study Name	True	0
+H20.33.046	Primary Study Name	True	0
+H21.33.001	Primary Study Name	True	0
+H21.33.002	Primary Study Name	True	0
+H21.33.003	Primary Study Name	True	0
+H21.33.004	Primary Study Name	True	0
+H21.33.005	Primary Study Name	True	0
+H21.33.006	Primary Study Name	True	0
+H21.33.007	Primary Study Name	True	0
+H21.33.008	Primary Study Name	True	0
+H21.33.011	Primary Study Name	True	0
+H21.33.012	Primary Study Name	True	0
+H21.33.013	Primary Study Name	True	0
+H21.33.014	Primary Study Name	True	0
+H21.33.015	Primary Study Name	True	0
+H21.33.016	Primary Study Name	True	0
+H21.33.017	Primary Study Name	True	0
+H21.33.018	Primary Study Name	True	0
+H21.33.019	Primary Study Name	True	0
+H21.33.020	Primary Study Name	True	0
+H21.33.021	Primary Study Name	True	0
+H21.33.022	Primary Study Name	True	0
+H21.33.023	Primary Study Name	True	0
+H21.33.025	Primary Study Name	True	0
+H21.33.026	Primary Study Name	True	0
+H21.33.027	Primary Study Name	True	0
+H21.33.028	Primary Study Name	True	0
+H21.33.029	Primary Study Name	True	0
+H21.33.030	Primary Study Name	True	0
+H21.33.031	Primary Study Name	True	0
+H21.33.032	Primary Study Name	True	0
+H21.33.033	Primary Study Name	True	0
+H21.33.034	Primary Study Name	True	0
+H21.33.035	Primary Study Name	True	0
+H21.33.036	Primary Study Name	True	0
+H21.33.037	Primary Study Name	True	0
+H21.33.038	Primary Study Name	True	0
+H21.33.040	Primary Study Name	True	0
+H21.33.041	Primary Study Name	True	0
+H21.33.042	Primary Study Name	True	0
+H21.33.043	Primary Study Name	True	0
+H21.33.044	Primary Study Name	True	0
+H21.33.045	Primary Study Name	True	0
+H21.33.046	Primary Study Name	True	0
+H21.33.047	Primary Study Name	True	0
+H18.30.002	Overall AD neuropathological Change	True	0
+H19.30.001	Overall AD neuropathological Change	True	0
+H19.30.002	Overall AD neuropathological Change	True	0
+H19.33.004	Overall AD neuropathological Change	True	0
+H20.33.001	Overall AD neuropathological Change	True	0
+H20.33.002	Overall AD neuropathological Change	True	0
+H20.33.004	Overall AD neuropathological Change	True	0
+H20.33.005	Overall AD neuropathological Change	True	0
+H20.33.008	Overall AD neuropathological Change	True	0
+H20.33.011	Overall AD neuropathological Change	True	0
+H20.33.012	Overall AD neuropathological Change	True	0
+H20.33.013	Overall AD neuropathological Change	True	0
+H20.33.014	Overall AD neuropathological Change	True	0
+H20.33.015	Overall AD neuropathological Change	True	0
+H20.33.016	Overall AD neuropathological Change	True	0
+H20.33.017	Overall AD neuropathological Change	True	0
+H20.33.018	Overall AD neuropathological Change	True	0
+H20.33.019	Overall AD neuropathological Change	True	0
+H20.33.020	Overall AD neuropathological Change	True	0
+H20.33.024	Overall AD neuropathological Change	True	0
+H20.33.025	Overall AD neuropathological Change	True	0
+H20.33.026	Overall AD neuropathological Change	True	0
+H20.33.027	Overall AD neuropathological Change	True	0
+H20.33.028	Overall AD neuropathological Change	True	0
+H20.33.029	Overall AD neuropathological Change	True	0
+H20.33.030	Overall AD neuropathological Change	True	0
+H20.33.031	Overall AD neuropathological Change	True	0
+H20.33.032	Overall AD neuropathological Change	True	0
+H20.33.033	Overall AD neuropathological Change	True	0
+H20.33.034	Overall AD neuropathological Change	True	0
+H20.33.035	Overall AD neuropathological Change	True	0
+H20.33.036	Overall AD neuropathological Change	True	0
+H20.33.037	Overall AD neuropathological Change	True	0
+H20.33.038	Overall AD neuropathological Change	True	0
+H20.33.039	Overall AD neuropathological Change	True	0
+H20.33.040	Overall AD neuropathological Change	True	0
+H20.33.041	Overall AD neuropathological Change	True	0
+H20.33.044	Overall AD neuropathological Change	True	0
+H20.33.045	Overall AD neuropathological Change	True	0
+H20.33.046	Overall AD neuropathological Change	True	0
+H21.33.001	Overall AD neuropathological Change	True	0
+H21.33.002	Overall AD neuropathological Change	True	0
+H21.33.003	Overall AD neuropathological Change	True	0
+H21.33.004	Overall AD neuropathological Change	True	0
+H21.33.005	Overall AD neuropathological Change	True	0
+H21.33.006	Overall AD neuropathological Change	True	0
+H21.33.007	Overall AD neuropathological Change	True	0
+H21.33.008	Overall AD neuropathological Change	True	0
+H21.33.011	Overall AD neuropathological Change	True	0
+H21.33.012	Overall AD neuropathological Change	True	0
+H21.33.013	Overall AD neuropathological Change	True	0
+H21.33.014	Overall AD neuropathological Change	True	0
+H21.33.015	Overall AD neuropathological Change	True	0
+H21.33.016	Overall AD neuropathological Change	True	0
+H21.33.017	Overall AD neuropathological Change	True	0
+H21.33.018	Overall AD neuropathological Change	True	0
+H21.33.019	Overall AD neuropathological Change	True	0
+H21.33.020	Overall AD neuropathological Change	True	0
+H21.33.021	Overall AD neuropathological Change	True	0
+H21.33.022	Overall AD neuropathological Change	True	0
+H21.33.023	Overall AD neuropathological Change	True	0
+H21.33.025	Overall AD neuropathological Change	True	0
+H21.33.026	Overall AD neuropathological Change	True	0
+H21.33.027	Overall AD neuropathological Change	True	0
+H21.33.028	Overall AD neuropathological Change	True	0
+H21.33.029	Overall AD neuropathological Change	True	0
+H21.33.030	Overall AD neuropathological Change	True	0
+H21.33.031	Overall AD neuropathological Change	True	0
+H21.33.032	Overall AD neuropathological Change	True	0
+H21.33.033	Overall AD neuropathological Change	True	0
+H21.33.034	Overall AD neuropathological Change	True	0
+H21.33.035	Overall AD neuropathological Change	True	0
+H21.33.036	Overall AD neuropathological Change	True	0
+H21.33.037	Overall AD neuropathological Change	True	0
+H21.33.038	Overall AD neuropathological Change	True	0
+H21.33.040	Overall AD neuropathological Change	True	0
+H21.33.041	Overall AD neuropathological Change	True	0
+H21.33.042	Overall AD neuropathological Change	True	0
+H21.33.043	Overall AD neuropathological Change	True	0
+H21.33.044	Overall AD neuropathological Change	True	0
+H21.33.045	Overall AD neuropathological Change	True	0
+H21.33.046	Overall AD neuropathological Change	True	0
+H21.33.047	Overall AD neuropathological Change	True	0

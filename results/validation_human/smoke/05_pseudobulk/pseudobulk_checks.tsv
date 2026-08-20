@@ -1,0 +1,8 @@
+check	passed	observed	expected	details
+rows_visited_to_requested_limit	True	10000	10000	
+selected_umi_conservation	True	0	0	
+counts_nonnegative	True	0	>=0	
+group_code_checksum	True	659159e9295f29a7f7c838cd74ec6edee79dd52142d4146c959f351725b3ad1a	659159e9295f29a7f7c838cd74ec6edee79dd52142d4146c959f351725b3ad1a	
+feature_order_checksum	True	7dcafda20108ee578e451c410238e1b659478f02ca7a50bde24bd618b9ba972d	7dcafda20108ee578e451c410238e1b659478f02ca7a50bde24bd618b9ba972d	
+all_profiles_complete_if_production	True	0	not_applicable	
+all_input_rows_visited_if_production	True	10000	not_applicable	

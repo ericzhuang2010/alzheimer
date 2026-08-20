@@ -1,0 +1,11 @@
+check	passed	observed	expected	details
+manifest_slots	TRUE	49	49	
+unique_contrast_ids	TRUE	TRUE	TRUE	
+primary_slots	TRUE	7	7	
+secondary_slots	TRUE	42	42	
+primary_eligible	TRUE	7	7	
+secondary_eligible_expected	TRUE	20	20	
+secondary_not_estimable_expected	TRUE	22	22	
+all_primary_designs_full_rank	TRUE	7	7	
+eligible_arm_thresholds	TRUE	TRUE	TRUE	
+eligibility_status_complete	TRUE	eligible;not_estimable	eligible;not_estimable	

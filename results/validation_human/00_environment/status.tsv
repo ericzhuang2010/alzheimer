@@ -1,0 +1,2 @@
+schema_version	phase	validation_status	failed_checks	started_at_utc	completed_at_utc	git_revision	config_sha256	host	h5ad_bytes	metadata_csv_bytes	checks_passed	checks_total	code_files	code_manifest_sha256
+seaad_phase_status_v1	VH00	validated_complete		2026-08-20T02:33:09.182379+00:00	2026-08-20T02:33:11.145900+00:00	962f14edec6c97c9d6e2f8dec79d015105db98c5	2344f73e2e8e07490737d9760c30f8df50528c4170f901eaa23579414a703944	homedesktop	37938782321	1444844786	23	23	13	acd09dc11460fce1392db96994f68ec553de27a99b8e1bcafa908b0b39898274

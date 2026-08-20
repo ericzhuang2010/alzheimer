@@ -1,0 +1,7 @@
+object	member	shape	dtype	compression	chunks
+X	data	7989685110	float32	gzip	121913
+X	indices	7989685110	int64	gzip	60957
+X	indptr	1395602	int64	gzip	5452
+layers/UMIs	data	7989685110	float32	gzip	121913
+layers/UMIs	indices	7989685110	int64	gzip	60957
+layers/UMIs	indptr	1395602	int64	gzip	5452
