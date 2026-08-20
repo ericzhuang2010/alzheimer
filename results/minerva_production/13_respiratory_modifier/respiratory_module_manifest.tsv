@@ -1,5 +1,0 @@
-schema_version	module_order	module_id	module_label	module_role	reference_genes	minimum_fraction	minimum_genes	mtdna_specific_minimum	source	overlap_policy
-phase13_module_manifest_v1	1	mtdna_oxphos_13	mtDNA OXPHOS	direct_respiratory	13	0.7	10	10	MitoCarta3.0 frozen Phase 13 manifest	report overlap; do not treat modules as independent confirmations
-phase13_module_manifest_v1	2	nuclear_oxphos_structural_86	Nuclear OXPHOS structural	direct_respiratory	86	0.7	5	NA	MitoCarta3.0 frozen Phase 13 manifest	report overlap; do not treat modules as independent confirmations
-phase13_module_manifest_v1	3	mitochondrial_translation_155	Mitochondrial translation	respiration_supporting	155	0.7	5	NA	MitoCarta3.0 frozen Phase 13 manifest	report overlap; do not treat modules as independent confirmations
-phase13_module_manifest_v1	4	mib_micos_inner_membrane_19	MIB/MICOS inner membrane	respiration_supporting	19	0.7	5	NA	MitoCarta3.0 frozen Phase 13 manifest	report overlap; do not treat modules as independent confirmations

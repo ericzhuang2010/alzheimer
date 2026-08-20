@@ -23,7 +23,16 @@ export PYTHONDONTWRITEBYTECODE=1
 Rscript scripts/validation_human/06_validate_pseudobulk.R --config "$SEAAD_DEG_CONFIG"
 Rscript scripts/validation_human/07_build_contrast_manifest.R --config "$SEAAD_DEG_CONFIG"
 Rscript scripts/validation_human/08_run_broad_deg.R --config "$SEAAD_DEG_CONFIG"
+
+export SEAAD_PHASE18_CONFIG=scripts/validation_human/seaad_phase18_validation_config.yml
+.venv/bin/python scripts/validation_human/09_freeze_rosmap_kda_candidates.py \
+  --config "$SEAAD_PHASE18_CONFIG"
 ```
 
 Every phase requires validated upstream status, uses atomic output writes, and
 returns a nonzero exit code when a hard gate fails.
+
+VH09 uses its own frozen configuration because changing the completed VH00-VH08
+DEG configuration would invalidate their recorded provenance. VH09 only freezes
+Phase 18 candidate membership and creates the SEA-AD validation manifest; it
+does not rerun DEG, KDA, candidate selection, or scoring.
