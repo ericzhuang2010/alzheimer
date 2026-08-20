@@ -1,0 +1,15 @@
+check	passed	observed	expected	details
+vh08_validated_complete	True	validated_complete	validated_complete	
+explicit_row_count	True	95557	95557	
+explicit_run_gene_keys_unique	True	95557	95557	
+candidate_unit_count	True	10433	10433	
+candidate_fields_constant	True	0	0	
+passing_unit_count	True	78	78	
+selected_unit_count	True	47	47	
+selected_unique_gene_count	True	25	25	
+driver_classes_exact	True	mt_driver|non_mt_driver	mt_driver|non_mt_driver	
+selected_units_are_passing	True	True	True	
+selected_ranks_in_top5	True	1-5	1-5	
+selected_rank_keys_unique	True	True	True	
+seaad_network_scope_exact	True	Astrocytes|Excitatory_neurons|Inhibitory_neurons|Microglia|OPCs|Oligodendrocytes|Vasculature_cells	Astrocytes|Excitatory_neurons|Inhibitory_neurons|Microglia|OPCs|Oligodendrocytes|Vasculature_cells	
+selected_network_scope_exact	True	Astrocytes|Excitatory_neurons|Inhibitory_neurons|Microglia|OPCs|Oligodendrocytes|Vasculature_cells	Astrocytes|Excitatory_neurons|Inhibitory_neurons|Microglia|OPCs|Oligodendrocytes|Vasculature_cells	

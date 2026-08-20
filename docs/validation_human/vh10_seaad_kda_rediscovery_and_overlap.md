@@ -1,14 +1,45 @@
 # VH10 SEA-AD Fine-Supertype KDA Rediscovery and ROSMAP Overlap
 
-**Status:** revised plan; not implemented or executed
-**Planned code root:** `scripts/validation_human/`
-**Planned result root:** `results/validation_human/10_seaad_kda_rediscovery/`
+**Status:** executed; `validated_complete` on 2026-08-20
+**Code root:** `scripts/validation_human/`
+**Result root:** `results/validation_human/10_seaad_kda_rediscovery/`
 **ROSMAP reference:** Phase 18 candidate units frozen by VH09
-**Execution:** expected to run locally; no H5AD or pseudobulk matrix is read
+**Execution:** completed locally; no H5AD or pseudobulk matrix was read
+**Current scope:** one SEA-AD primary analysis using at least three effective
+query genes; all sensitivity analyses are deferred and optional
+
+## Execution result
+
+VH10 completed locally and passed every query, network, R/Python reconstruction,
+selection-freeze, Phase 18 conformance, and overlap check. The executed primary
+tier produced:
+
+| Stage | Executed result |
+|---|---:|
+| Structural SEA-AD direction slots | 1,548 |
+| Completed source DEG directions | 520 |
+| Active queries with at least 3 effective genes | 42 |
+| `call_key_drivers()` calls with significant returns | 29 |
+| `call_key_drivers()` calls with no significant return | 13 |
+| Significant R return rows | 208 |
+| Complete explicit gene-by-run rows after reconstruction | 9,596 |
+| Complete candidate/run evidence rows | 366,852 |
+| SEA-AD candidate units | 38,788 |
+| SEA-AD units passing all candidate gates | 13 |
+| SEA-AD top-five units | 13 |
+| Unique genes among SEA-AD top-five units | 11 |
+| Frozen ROSMAP top-five units | 47 |
+| ROSMAP units testable in the common SEA-AD universe | 36 |
+| Strict shared network-gene-class top-five units | 6 |
+| Unique shared genes | 6 |
+
+The six strict rediscoveries are `MT-CO2` and `MT-CYB` in Excitatory
+neurons, plus `MT-CO2`, `MT-CO3`, `MT-CYB`, and `MT-ND5` in Inhibitory
+neurons. No deferred sensitivity analysis was executed.
 
 ## 1. Decision and end goal
 
-VH10 will perform a Phase 18-shaped analysis with the executed SEA-AD fine DEG
+VH10 performed a Phase 18-shaped analysis with the executed SEA-AD fine DEG
 results:
 
 ```text
@@ -54,81 +85,80 @@ VH08 created the complete fine structural grid:
 129 supertypes x 6 sex/APOE groups x 2 directions = 1,548 direction slots
 ```
 
-The 1,548 slots are not 1,548 runnable KDA calls. The executed attrition is:
+The 1,548 slots are not 1,548 runnable KDA calls. Under the single active
+Phase 18-parity DEG query rule and its at-least-three-gene run threshold, the
+executed attrition is:
 
 | Stage | Direction slots | Meaning |
 |---|---:|---|
 | Structural fine grid | 1,548 | Every supertype, group, and signed direction |
 | Source DEG contrast not estimable | 1,028 | 514 non-estimable contrasts x 2 directions |
 | Completed DEG and ready for query construction | 520 | 260 completed contrasts x 2 directions |
-| Headline effective query size 0 | 462 | No Phase 18-parity query gene remains in the induced network |
-| Headline effective query size 1-2 | 16 | Nonempty but below the prespecified KDA minimum |
-| Headline effective query size 3-9 | 21 | Runnable and labeled `small_query` |
-| Headline effective query size at least 10 | 21 | Runnable and labeled `phase18_sized` |
-| **Headline runnable KDA queries** | **42** | Effective query size at least 3 |
+| Effective query size 0 | 462 | No Phase 18-parity query gene remains in the induced network |
+| Effective query size 1-2 | 16 | Below the active three-gene threshold |
+| Effective query size 3-9 | 21 | Active KDA calls labeled `small_query` |
+| Effective query size at least 10 | 21 | Active KDA calls labeled `phase18_sized` |
+| **Effective query size at least 3** | **42** | **All active primary KDA calls** |
 
-Only `F_e33`, `F_e4`, and `M_e33` produced completed fine contrasts. The other
-three groups remain in the structural manifest with their original
+Only `F_e33`, `F_e4`, and `M_e33` produced completed fine contrasts. The
+other three groups remain in the structural manifest with their original
 non-estimable reasons; they are not silently removed.
 
 A read-only replay of the actual DEG shards, frozen current-symbol/core-Mito
-annotations, and induced network backgrounds produced the following headline
+annotations, and induced network backgrounds produced the following active
 `phase18_parity_query` counts:
 
-| Broad network | Completed source directions | Runnable up | Runnable down | At least 10 up | At least 10 down |
-|---|---:|---:|---:|---:|---:|
-| Astrocytes | 20 | 1 | 0 | 0 | 0 |
-| Excitatory neurons | 176 | 10 | 10 | 6 | 5 |
-| Inhibitory neurons | 284 | 6 | 10 | 3 | 5 |
-| Microglia | 6 | 1 | 0 | 0 | 0 |
-| OPCs | 6 | 0 | 0 | 0 | 0 |
-| Oligodendrocytes | 18 | 2 | 2 | 2 | 0 |
-| Vasculature cells | 10 | 0 | 0 | 0 | 0 |
-| **Total** | **520** | **20** | **22** | **11** | **10** |
+| Broad network | Completed source directions | Active up calls | Active down calls |
+|---|---:|---:|---:|
+| Astrocytes | 20 | 1 | 0 |
+| Excitatory neurons | 176 | 10 | 10 |
+| Inhibitory neurons | 284 | 6 | 10 |
+| Microglia | 6 | 1 | 0 |
+| OPCs | 6 | 0 | 0 |
+| Oligodendrocytes | 18 | 2 | 2 |
+| Vasculature cells | 10 | 0 | 0 |
+| **Total** | **520** | **20** | **22** |
 
-Thus the primary minimum-three analysis has runs in five networks. OPCs and
-Vasculature are structurally present but not testable. The Phase 18-sized
-minimum-ten sensitivity has runs only in Excitatory neurons, Inhibitory
-neurons, and Oligodendrocytes.
-
-The prespecified `fdr_only_query_sensitivity` independently gives 42 runnable
-slots: 21 with 3-9 effective genes and 21 with at least 10. Its slot counts
-happen to match the headline branch, but its gene memberships and query sizes
-do not. The headline branch contains 491 total effective query memberships
-summed across slots and has a maximum size of 51; the FDR-only branch contains
-597 and has a maximum size of 60. The sensitivity branch therefore requires
-its own KDA and selection results.
+Thus the active analysis has runs in Astrocytes, Excitatory neurons,
+Inhibitory neurons, Microglia, and Oligodendrocytes. OPCs and Vasculature remain
+structurally represented but are `not_testable_no_included_runs` under the
+current three-gene threshold.
 
 These are audited planning values, not hard-coded analytical inputs. VH10A must
 recompute them from checksum-verified VH08 rows and frozen networks. A mismatch
 is blocking.
 
-## 3. Primary and sensitivity analyses
+## 3. Current primary analysis and deferred optional analyses
 
-Two query rules and two run-scope tiers are frozen:
+The current VH10 execution has exactly one query rule, one run scope, and one
+result tier:
 
-| Query rule | Predicate before network intersection | Role |
-|---|---|---|
-| `phase18_parity_query` | Core MitoCarta, within-contrast `FDR < 0.05`, `abs(logFC) > log2(1.3)`, correct sign | Headline |
-| `fdr_only_query_sensitivity` | Core MitoCarta, within-contrast `FDR < 0.05`, correct sign | Prespecified effect-gate sensitivity |
+| Component | Active value |
+|---|---|
+| Query rule | `phase18_parity_query`: core MitoCarta, within-contrast `FDR < 0.05`, `abs(logFC) > log2(1.3)`, and the correct AD-up or AD-down sign |
+| Run scope | `min3_all`: at least 3 effective query genes after network intersection |
+| Result tier | `phase18_parity_query__min3_all` |
 
-| Run scope | Included effective query sizes | Role |
-|---|---|---|
-| `min3_all` | At least 3 | Primary runnable rule inherited from Phase 12; 3-9 is explicitly small-query evidence |
-| `min10_phase18_sized` | At least 10 | Direct Phase 18 run-size sensitivity |
+This tier retains the Phase 18 DEG query-membership rule while using the
+prespecified three-gene minimum appropriate for the smaller SEA-AD query sets.
+It is the only tier that VH10 will execute, select, freeze, compare with ROSMAP,
+or require for completion now.
 
-This produces four separately aggregated result tiers:
+The following analyses are explicitly optional and deferred. They must not run
+as part of the current VH10 execution:
 
-1. `phase18_parity_query__min3_all` — primary SEA-AD result;
-2. `phase18_parity_query__min10_phase18_sized` — query-size sensitivity;
-3. `fdr_only_query_sensitivity__min3_all` — effect-gate sensitivity;
-4. `fdr_only_query_sensitivity__min10_phase18_sized` — combined strict-size
-   sensitivity.
+| Deferred analysis | Change from the active primary analysis |
+|---|---|
+| Minimum-ten Phase 18-sized analysis | Restrict aggregation to effective queries with at least 10 genes |
+| FDR-only query analysis | Remove the `abs(logFC) > log2(1.3)` gate while retaining the active three-gene minimum |
+| Combined FDR-only/minimum-ten analysis | Remove the effect-size gate and restrict aggregation to queries with at least 10 genes |
+| Leave-one-supertype-out stability | Recompute aggregation after removing one supertype at a time |
+| Missing-as-one ACAT | Replace absent-background missing evidence with `p = 1` |
+| Three-donor DEG/KDA analysis | Use a separately generated upstream DEG sensitivity release |
 
-The minimum-ten tiers reuse their branch's already computed per-run KDA tests,
-but they independently recompute the candidate universe, coverage denominator,
-ACAT values, aggregate BH family, candidate decisions, ranks, and top-five
-lists. They are not obtained by filtering the minimum-three winners.
+If a deferred analysis is authorized later, it must receive a separate tier ID,
+result namespace, status, artifacts, and overlap report. It must not overwrite,
+alter, or be pooled with the active primary result.
 
 The seven pooled broad DEG contrasts and 42 broad stratified support contrasts
 are not KDA selection inputs. They remain biological DEG anchors only. Mixing
@@ -203,10 +233,9 @@ Those files become inputs only to VH10D.
 
 ### 6.1 Structural manifest
 
-Start from exactly 1,548 unique VH08 direction slots. Cross each slot with the
-two query-rule IDs, producing exactly 3,096 query-rule/slot records. This does
-not double the biological structural grid; it records two prespecified query
-interpretations of each of the same 1,548 directions.
+Start from exactly 1,548 unique VH08 direction slots. Apply the single active
+`phase18_parity_query` rule to every slot, producing exactly 1,548
+query-rule/slot records. No optional query rule is constructed.
 
 Each row retains:
 
@@ -250,7 +279,7 @@ must not be substituted for the induced-network endpoint universe.
 
 ### 6.3 Directional query construction
 
-For each query rule and sign:
+For the active query rule and each sign:
 
 ```text
 source query
@@ -279,26 +308,23 @@ Every query-rule/slot row receives exactly one terminal state:
 - `source_contrast_not_estimable`;
 - `source_contrast_failed`;
 - `query_empty`;
-- `query_below_minimum`;
+- `query_below_minimum` for effective size 1-2;
 - `eligible_small_query` for effective size 3-9;
 - `eligible_phase18_sized` for effective size at least 10.
 
-Only the last two states enter minimum-three KDA. Only
-`eligible_phase18_sized` enters the minimum-ten aggregation.
+Both `eligible_small_query` and `eligible_phase18_sized` enter KDA in the
+current VH10 execution.
 
 ### 6.5 Blocking replay counts
 
 VH10A must independently reproduce:
 
 - 1,548 structural direction slots;
-- 3,096 query-rule/slot records;
-- 520 completed source direction slots per query rule;
-- 42 runnable queries per query rule;
-- 21 small and 21 Phase 18-sized queries per query rule;
+- 1,548 query-rule/slot records under the one active query rule;
+- 520 completed source direction slots;
+- 42 runnable queries with at least three effective genes;
+- 20 AD-up and 22 AD-down active calls;
 - the network/direction distribution in Section 2.
-
-The matching totals across query rules do not permit their memberships or KDA
-results to be pooled.
 
 ### VH10A outputs
 
@@ -316,22 +342,21 @@ results to be pooled.
 
 ## 7. VH10B — Run KDA and reconstruct complete run evidence
 
-### 7.1 Planned KDA calls
+### 7.1 Executed KDA calls
 
-The audited expectation is 84 query-rule-specific calls:
+The execution completed 42 active calls:
 
 ```text
-42 phase18_parity_query calls
-42 fdr_only_query_sensitivity calls
+1 Astrocyte call
+20 Excitatory-neuron calls
+16 Inhibitory-neuron calls
+1 Microglia call
+4 Oligodendrocyte calls
 ```
 
-The minimum-ten tier does not create additional calls. It selects 21 already
-computed runs per branch for a separate aggregation.
-
-Even if a slot has identical membership under both rules, branch provenance
-must remain separate. Any content-addressed reuse is allowed only when query,
-background, network, parameters, and engine hashes are identical and the
-result is replay-verified.
+No FDR-only KDA call or separate minimum-ten aggregation is part of the current
+execution. The 21 active calls that already contain at least 10 effective genes
+remain part of the single minimum-three primary tier.
 
 ### 7.2 Frozen call parameters
 
@@ -410,8 +435,8 @@ enrichment tests, not fitted edgeR objects.
 
 ### 8.1 Candidate unit and class
 
-Within each query rule, run scope, and broad network, define the candidate unit
-as:
+Within the active query rule, active run scope, and each broad network, define
+the candidate unit as:
 
 ```text
 broad_network + key_driver + case_id
@@ -426,7 +451,7 @@ Query membership changes self-exclusion only; it never creates a third class.
 
 ### 8.2 Cross-run aggregation
 
-For each of the four analysis tiers and each broad network:
+For the single active primary tier and each broad network:
 
 1. define the candidate universe as the union of included run backgrounds;
 2. include only successfully completed runs allowed by that tier;
@@ -446,31 +471,28 @@ For each of the four analysis tiers and each broad network:
    aggregate p, then alphabetical current symbol; and
 10. retain ranks 1-5 without backfilling.
 
-The Phase 18 missing-as-one ACAT remains a sensitivity field only and never
-replaces the primary omit-missing decision.
+Absent-from-background evidence is omitted from primary ACAT exactly as in the
+active Phase 18 rule. The optional missing-as-one ACAT is not calculated now.
 
 ### 8.3 Evidence-depth interpretation
 
-The primary minimum-three branch has these included-run counts before KDA
+The active at-least-three-gene tier has these included-run counts before KDA
 failure handling:
 
 - Astrocytes: 1;
 - Excitatory neurons: 20;
 - Inhibitory neurons: 16;
 - Microglia: 1;
+- OPCs: 0;
 - Oligodendrocytes: 4;
-- OPCs and Vasculature: 0.
+- Vasculature: 0.
 
 A one-run network can technically produce a Phase 18-gated candidate, but it
 must be labeled `single_run_network_evidence` and cannot be described as
 recurrent. A network with zero included runs receives
 `not_testable_no_included_runs`, not an empty biological result.
-
-Leave-one-supertype-out stability is descriptive and not a candidate gate. For
-a network with at least two contributing supertypes, remove all runs belonging
-to one supertype and recompute the complete aggregation and ranking. Networks
-with fewer than two contributing supertypes receive `stability_not_assessable`.
-This is the SEA-AD analog of Phase 18 leave-one-fine-cell-type-out stability.
+Leave-one-supertype-out stability is deferred and is not a current output or
+candidate gate.
 
 ### 8.4 Independence freeze
 
@@ -491,7 +513,6 @@ before opening a candidate-bearing VH09 file. The freeze records:
 ├── seaad_candidate_summary.tsv.gz
 ├── seaad_top5.tsv
 ├── seaad_list_status.tsv
-├── seaad_supertype_stability.tsv.gz
 ├── seaad_selection_freeze.tsv
 ├── selection_checks.tsv
 ├── artifacts.tsv
@@ -504,7 +525,9 @@ Five is a maximum per testable broad-network/driver-class list.
 ## 9. VH10D — Unblind ROSMAP and calculate overlap
 
 VH10D may start only after the VH10C freeze is valid and immutable. It then
-reads the VH09 47-unit primary set and 78-unit sensitivity set.
+reads the VH09-frozen 47-unit ROSMAP Phase 18 top-five set. The 78 passing
+Phase 18 candidate units are used only by the conformance gate, not as a second
+sensitivity overlap tier.
 
 ### 9.1 Phase 18 conformance gate
 
@@ -529,7 +552,8 @@ The primary overlap key is:
 broad_network + key_driver + case_id
 ```
 
-For each analysis tier, broad network, and driver class, define the common
+For the active primary tier, each broad network, and each driver class, define
+the common
 assessable universe `U` as units that:
 
 1. occur in both cohorts' union-of-backgrounds candidate universes;
@@ -543,7 +567,8 @@ must be restricted to `U`.
 
 ### 9.3 Required overlap results
 
-For every analysis tier and assessable broad-network/driver-class list, report:
+For every assessable broad-network/driver-class list in the active primary
+tier, report:
 
 - ROSMAP selected units in `U`;
 - independently selected SEA-AD units in `U`;
@@ -584,9 +609,9 @@ secondary descriptive analysis.
 └── status.tsv
 ```
 
-## 10. Proposed code and repository end state
+## 10. Implemented code and repository end state
 
-### New code
+### Implemented code
 
 ```text
 scripts/validation_human/
@@ -600,8 +625,8 @@ tests/validation_human/
 └── test_vh10_phase18_selection_parity.py
 ```
 
-The exact script split may change, but the SEA-AD selection freeze and ROSMAP
-unblinding must remain separate executable stages.
+The implemented split keeps the SEA-AD selection freeze and ROSMAP unblinding
+as separate executable stages.
 
 ### Result root
 
@@ -618,27 +643,28 @@ results/validation_human/10_seaad_kda_rediscovery/
 
 ### Added, changed, removed, and preserved
 
-- **Added now:** the revised VH09/VH10 process documents only.
-- **Added during implementation:** isolated VH09/VH10 scripts, configurations,
-  tests, and result directories.
-- **Changed during implementation:** no existing ROSMAP or VH00-VH08 analysis
-  result. A shared Phase 18 helper may be refactored only with exact canonical
-  parity tests and explicit review.
+- **Added:** isolated VH09/VH10 scripts, shared validation configuration,
+  contract tests, and result directories.
+- **Changed:** this process document now records the executed result. No
+  existing ROSMAP or VH00-VH08 analysis result was changed, and the Phase 18
+  authority code was reused read-only without refactoring.
 - **Removed:** nothing. The old broad-primary/98-slot design is removed from the
   plan, not deleted from an executed result tree.
 - **Preserved read-only:** VH00-VH08 outputs, Phase 18 outputs and authority
   files, Phase 09 annotation, seven network files, and `fKDA.R`.
 
 All new results and scripts remain inside the separate validation namespaces.
+No sensitivity-specific result directory or file is created in the current
+VH10 execution.
 
-## 11. Planned commands and execution environment
+## 11. Executed commands and environment
 
-VH10 reads compact DEG shards and network edge lists. It does not read the
-37.9-GB H5AD or the 6.4-GB pseudobulk bundle. Eighty-four KDA calls and their
-table reconstruction are expected to run locally within the 12-hour target.
-Minerva is not currently required.
+VH10 read compact DEG shards and network edge lists. It did not read the
+37.9-GB H5AD or the 6.4-GB pseudobulk bundle. All 42 KDA calls, the complete
+table reconstruction, and the 161-run ROSMAP conformance replay completed
+locally well within the 12-hour target. Minerva was not required.
 
-The intended local interfaces are:
+The executed local interfaces were:
 
 ```bash
 cd /home/ericzhuang2010/VscodeProjects/alzheimer
@@ -657,23 +683,22 @@ Rscript scripts/validation_human/10_run_seaad_kda.R \
   --config scripts/validation_human/seaad_kda_validation_config.yml
 ```
 
-These commands become authoritative only after the scripts exist, expose the
-specified interfaces, and pass help/contract tests. If local profiling later
-exceeds 12 hours, the implemented interfaces can be wrapped for Minerva without
-changing scientific inputs or outputs.
+The scripts' help and syntax checks passed, all four execution stages reported
+`validated_complete`, and the VH09/VH10 contract suite passed all six tests.
 
 ## 12. Completion criteria
 
-VH10 is complete only when:
+VH10 completed after all of the following criteria were met:
 
-1. all 1,548 structural direction slots remain present and crossing them with
-   both query rules produces exactly 3,096 combined query-rule/slot records;
+1. all 1,548 structural direction slots remain present and the single active
+   query rule produces exactly 1,548 query-rule/slot records;
 2. source-DEG terminal states are preserved without converting non-estimable
    slots into biological nulls;
 3. tested symbols, induced networks, backgrounds, query predicates, symbol set
    semantics, and core-Mito membership reproduce the frozen rules exactly;
-4. the audited 520 completed source directions and 42 runnable queries per rule
-   are independently reproduced, or any mismatch is resolved before KDA;
+4. the audited 520 completed source directions and 42 active queries with at
+   least three effective genes are independently reproduced, or any mismatch
+   is resolved before KDA;
 5. all effective queries are subsets of their recorded backgrounds and every
    member table is checksum-frozen;
 6. every eligible query receives a terminal KDA record and no ineligible slot
@@ -681,8 +706,8 @@ VH10 is complete only when:
 7. Phase 18 explicit-family reconstruction, directed-layer tests, within-run
    BH, self-exclusion, final BH, and conservative-support logic pass parity
    fixtures;
-8. both query rules and both run scopes recompute candidate universes, coverage,
-   ACAT, aggregate BH, gates, ranks, and lists independently;
+8. the single active tier recomputes its candidate universe, coverage, ACAT,
+   aggregate BH, gates, ranks, and lists;
 9. the primary selection uses fine-supertype runs only; broad DEG anchors never
    enter its denominator;
 10. SEA-AD top lists are checksum-frozen before any VH09 candidate-bearing file
@@ -691,7 +716,7 @@ VH10 is complete only when:
     and 47 selected units and their ranks;
 12. overlap uses the strict network-gene-class key and the common assessable
     universe, with `not_testable` excluded from replication denominators;
-13. all four analysis tiers remain labeled and unpooled;
+13. no deferred sensitivity analysis is executed or required for completion;
 14. all blocking checks pass; and
 15. the root `status.tsv` reports `validation_status = validated_complete`.
 
@@ -704,7 +729,9 @@ The strongest defensible conclusion will be:
 > queries on the same frozen broad-network scaffold.
 
 The denominator is not automatically 47. It is the number of frozen ROSMAP
-units in the common assessable universe for the stated analysis tier. Results
-from a 3-9-gene query and results from a one-run network must be labeled as such.
-A shared network-associated key driver supports prioritization and replication
-of network evidence; it does not by itself establish causal regulation.
+units in the common assessable universe for the active minimum-three primary
+tier. Results from 3-9-gene queries and one-run networks must be labeled with
+their evidence depth. Deferred sensitivity analyses contribute no evidence to
+the current interpretation. A shared network-associated key driver supports
+prioritization and replication of network evidence; it does not by itself
+establish causal regulation.

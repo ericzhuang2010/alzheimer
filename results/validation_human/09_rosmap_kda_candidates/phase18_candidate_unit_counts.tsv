@@ -1,0 +1,15 @@
+broad_network	case_id	explicit_candidate_units	passing_candidate_units	selected_top5_units
+Astrocytes	mt_driver	149	6	5
+Astrocytes	non_mt_driver	1677	5	5
+Excitatory_neurons	mt_driver	369	13	5
+Excitatory_neurons	non_mt_driver	3595	21	5
+Inhibitory_neurons	mt_driver	218	11	5
+Inhibitory_neurons	non_mt_driver	1958	5	5
+Microglia	mt_driver	36	2	2
+Microglia	non_mt_driver	769	1	1
+OPCs	mt_driver	87	3	3
+OPCs	non_mt_driver	1134	4	4
+Oligodendrocytes	mt_driver	29	2	2
+Oligodendrocytes	non_mt_driver	345	1	1
+Vasculature_cells	mt_driver	16	4	4
+Vasculature_cells	non_mt_driver	51	0	0

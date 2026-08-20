@@ -1,0 +1,9 @@
+check	passed	observed	expected	details
+phase18_structural_slots	True	648.0	648	
+phase18_included_runs	True	161.0	161	
+phase18_significant_returns	True	1641.0	1641	
+phase18_passing_units	True	78.0	78	
+phase18_selected_units	True	47.0	47	
+phase18_passing_keys_exact	True	0.0	0	
+phase18_selected_keys_and_ranks_exact	True	0.0	0	
+phase18_acat_regression	True	3.043421070714203e-11	<=1e-9	

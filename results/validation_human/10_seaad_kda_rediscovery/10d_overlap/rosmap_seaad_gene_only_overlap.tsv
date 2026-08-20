@@ -1,0 +1,31 @@
+gene	rosmap_top5_any_network_class	seaad_top5_any_network_class	shared_gene	rosmap_network_class_memberships	seaad_network_class_memberships
+ANKRD11	True	False	False	OPCs:non_mt_driver	
+APOE	True	False	False	Astrocytes:non_mt_driver	
+ATP6V1F	True	False	False	Inhibitory_neurons:non_mt_driver	
+BEX3	False	True	False		Inhibitory_neurons:non_mt_driver
+COX4I1	True	False	False	Astrocytes:mt_driver|Excitatory_neurons:mt_driver	
+COX6B1	True	False	False	Excitatory_neurons:mt_driver	
+COX7C	True	False	False	Astrocytes:mt_driver|Inhibitory_neurons:mt_driver	
+DYNLT1	True	False	False	Excitatory_neurons:non_mt_driver	
+FTL	True	False	False	OPCs:non_mt_driver	
+HGSNAT	False	True	False		Excitatory_neurons:non_mt_driver
+KANSL1L	False	True	False		Oligodendrocytes:non_mt_driver
+LAMTOR5	True	False	False	Excitatory_neurons:non_mt_driver|Inhibitory_neurons:non_mt_driver	
+LAPTM4A	True	False	False	Astrocytes:non_mt_driver	
+MT-ATP6	True	True	True	Astrocytes:mt_driver|Vasculature_cells:mt_driver	Excitatory_neurons:mt_driver
+MT-CO2	True	True	True	Astrocytes:mt_driver|Excitatory_neurons:mt_driver|Inhibitory_neurons:mt_driver|Microglia:mt_driver|OPCs:mt_driver|Oligodendrocytes:mt_driver|Vasculature_cells:mt_driver	Excitatory_neurons:mt_driver|Inhibitory_neurons:mt_driver
+MT-CO3	True	True	True	Astrocytes:mt_driver|Inhibitory_neurons:mt_driver|OPCs:mt_driver|Vasculature_cells:mt_driver	Inhibitory_neurons:mt_driver
+MT-CYB	True	True	True	Excitatory_neurons:mt_driver|Inhibitory_neurons:mt_driver	Excitatory_neurons:mt_driver|Inhibitory_neurons:mt_driver
+MT-ND4	True	True	True	Microglia:mt_driver|OPCs:mt_driver|Oligodendrocytes:mt_driver|Vasculature_cells:mt_driver	Excitatory_neurons:mt_driver
+MT-ND5	True	True	True	Inhibitory_neurons:mt_driver	Inhibitory_neurons:mt_driver
+NCOA1	True	False	False	OPCs:non_mt_driver	
+RPL11	True	False	False	Astrocytes:non_mt_driver|Excitatory_neurons:non_mt_driver|Microglia:non_mt_driver|Oligodendrocytes:non_mt_driver	
+RPL15	True	False	False	Astrocytes:non_mt_driver	
+RPL30	False	True	False		Inhibitory_neurons:non_mt_driver
+RPL38	True	False	False	Inhibitory_neurons:non_mt_driver	
+RPLP1	True	False	False	Astrocytes:non_mt_driver|Inhibitory_neurons:non_mt_driver	
+RPS13	True	False	False	Excitatory_neurons:non_mt_driver	
+RPS15	True	False	False	Inhibitory_neurons:non_mt_driver|OPCs:non_mt_driver	
+RPS27A	False	True	False		Inhibitory_neurons:non_mt_driver
+SELENOW	True	False	False	Excitatory_neurons:non_mt_driver	
+UQCR10	True	False	False	Excitatory_neurons:mt_driver	

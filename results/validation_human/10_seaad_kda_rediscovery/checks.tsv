@@ -1,0 +1,8 @@
+check	passed	observed	expected	details
+vh10a_validated	True	validated_complete	validated_complete	
+vh10b_validated	True	validated_complete	validated_complete	
+vh10c_validated	True	validated_complete	validated_complete	
+vh10d_validated	True	validated_complete	validated_complete	
+phase18_parity_checks_pass	True	8	8	
+overlap_checks_pass	True	8	8	
+no_deferred_sensitivity_executed	True	phase18_parity_query__min3_all	phase18_parity_query__min3_all	

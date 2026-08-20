@@ -1,0 +1,2 @@
+schema_version	phase	validation_status	failed_checks	started_at_utc	completed_at_utc	git_revision	config_sha256	host	rosmap_selected_units	seaad_selected_units	rosmap_testable_selected_units	strict_shared_top5_units	common_assessable_units	shared_unique_genes	artifact_count
+seaad_fine_phase_status_v2	VH10D	validated_complete		2026-08-20T22:06:25.499745+00:00	2026-08-20T22:07:06.162353+00:00	dd4f211b73eb08d882b053d63db76a9c05c0877d	b4ffdc36aac96f9a29383af25e58ff9a11c7616c3671986b4605323b9424dd0a	homedesktop	47	13	36	6	28725	6	6

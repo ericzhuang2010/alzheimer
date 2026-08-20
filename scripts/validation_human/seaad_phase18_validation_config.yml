@@ -1,0 +1,109 @@
+schema_version: seaad_phase18_validation_config_v1
+
+project_root: .
+output_root: results/validation_human
+
+vh09:
+  output_directory: 09_rosmap_kda_candidates
+  authority:
+    - role: phase18_call_returns
+      path: results/minerva_production/18_key_driver_selection/call_key_driver_returns.tsv
+      sha256: b917f70e6edcdf030f63e88ba8fbc5b22b80714599c12c80ea449e8c38bd51d8
+    - role: phase18_significant_returns
+      path: results/minerva_production/18_key_driver_selection/call_key_driver_significant_returns.tsv
+      sha256: 89dac9f82f9905c51a00654b1f8a9ed4b7626c657e8e0666e3415b8e1429e02f
+    - role: phase18_config
+      path: config/phase18_key_driver_selection.yml
+      sha256: d1979ef4b66d1e841633a2f235419147fa130da140d20b40c2d84b99cd90ae4f
+    - role: phase18_code
+      path: scripts/18_key_driver_selection.py
+      sha256: e34f478f2fb6f766287dd4524933717c42ac6cedfec22f456c1126aa8064a8e0
+    - role: phase18_process
+      path: docs/phase_18_key_driver_selection/key_driver_selection_process.md
+      sha256: f494668830ca54ed163d5c02034c076a56a000e6c1b77189c10c786fe5f02307
+    - role: vh08_status
+      path: results/validation_human/08_deg/status.tsv
+      sha256: 1d85549f1e242458bd3526edbfd1b6f4a11dc742c97e0646fb2be7ea20a84063
+    - role: supertype_network_map
+      path: results/validation_human/04_supertype_manifest/supertype_to_broad_network.tsv
+      sha256: 4f92810f7c32a21cf33b196e03bdcf92e2145e44b367c14dd747370ea47d32b7
+  expected:
+    explicit_rows: 95557
+    explicit_run_gene_keys: 95557
+    candidate_units: 10433
+    passing_units: 78
+    selected_units: 47
+    selected_unique_genes: 25
+    driver_classes: [mt_driver, non_mt_driver]
+    broad_networks:
+      - Astrocytes
+      - Excitatory_neurons
+      - Inhibitory_neurons
+      - Microglia
+      - OPCs
+      - Oligodendrocytes
+      - Vasculature_cells
+
+vh10:
+  output_directory: 10_seaad_kda_rediscovery
+  input_authority:
+    phase12_config:
+      path: config/phase12_kda.yml
+      sha256: 328ee9473cf95e91438730d166fb766684c6d22b44e6e36332b4dffa704c2fb1
+    fkda_source:
+      path: scripts/NetWeaver/fKDA.R
+      sha256: fed8f89f35a3f08f38a420eb9b26c590cdc5f13a12064af1b9fa4a4cb1168550
+    phase18_code:
+      path: scripts/18_key_driver_selection.py
+      sha256: e34f478f2fb6f766287dd4524933717c42ac6cedfec22f456c1126aa8064a8e0
+    phase18_config:
+      path: config/phase18_key_driver_selection.yml
+      sha256: d1979ef4b66d1e841633a2f235419147fa130da140d20b40c2d84b99cd90ae4f
+    phase18_annotation:
+      path: results/minerva_production/09_annotate_genes/gene_annotation_master.tsv.gz
+      sha256: b1a7e9b627c983d083df74cbe1173b8cb3e9007e1afc641747e8c30ec17f9203
+    vh08_status:
+      path: results/validation_human/08_deg/status.tsv
+      sha256: 1d85549f1e242458bd3526edbfd1b6f4a11dc742c97e0646fb2be7ea20a84063
+    vh08_artifacts:
+      path: results/validation_human/08_deg/artifacts.tsv
+      sha256: a2ec6f1537caa4cf35a57cacbbbcce34489f45de2b8c9bb6d8b87710838b659b
+    direction_manifest:
+      path: results/validation_human/08_deg/query_handoff/fine_direction_manifest.tsv
+      sha256: 2abbf09674b4bc97c9c72b8da6c9bc54bcbef3b462d0ef668167d2937c46ea30
+    query_input_index:
+      path: results/validation_human/08_deg/query_handoff/fine_query_input_index.tsv
+      sha256: 8ab868370af3603f0e01593e83ca1542724188d83046317e8bf942e9fa4750c9
+    seaad_annotation:
+      path: results/validation_human/03_genes/gene_annotation_master.tsv
+      sha256: c2b43261a5620a8648dd93213bf51bfddeef90527893c47053698222305bde6a
+  analysis:
+    query_rule_id: phase18_parity_query
+    result_tier_id: phase18_parity_query__min3_all
+    fdr_threshold_exclusive: 0.05
+    absolute_fold_change: 1.3
+    minimum_effective_query_genes: 3
+    small_query_warning_below: 10
+    directions: [AD_up_mito, AD_down_mito]
+    expected:
+      structural_direction_slots: 1548
+      completed_source_directions: 520
+      active_kda_calls: 42
+      small_query_calls: 21
+      phase18_sized_calls: 21
+      ad_up_calls: 20
+      ad_down_calls: 22
+  selection:
+    minimum_coverage: 0.80
+    aggregate_q_threshold: 0.05
+    minimum_conservative_supporting_runs: 1
+    display_limit: 5
+    driver_classes: [mt_driver, non_mt_driver]
+  network_order:
+    - Astrocytes
+    - Excitatory_neurons
+    - Inhibitory_neurons
+    - Microglia
+    - OPCs
+    - Oligodendrocytes
+    - Vasculature_cells

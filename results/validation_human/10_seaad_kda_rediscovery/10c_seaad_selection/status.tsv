@@ -1,0 +1,2 @@
+schema_version	phase	validation_status	failed_checks	started_at_utc	completed_at_utc	git_revision	config_sha256	host	candidate_units	passing_candidate_units	selected_top5_units	selected_unique_genes	testable_networks	artifact_count	freeze_sha256
+seaad_fine_phase_status_v2	VH10C	validated_complete		2026-08-20T22:06:10.080520+00:00	2026-08-20T22:06:24.708633+00:00	dd4f211b73eb08d882b053d63db76a9c05c0877d	b4ffdc36aac96f9a29383af25e58ff9a11c7616c3671986b4605323b9424dd0a	homedesktop	38788	13	13	11	5	5	33bef167577c0abd8b0ee26861f33ee8f3a26ed22537f449d35cc3d884e52168

@@ -1,0 +1,15 @@
+check	passed	observed	expected	details
+structural_direction_slots	True	1548	1548	
+direction_slot_ids_unique	True	1548	1548	
+one_active_query_rule	True	1	1	
+completed_source_directions	True	520	520	
+active_kda_calls	True	42	42	
+small_query_calls	True	21	21	
+phase18_sized_calls	True	21	21	
+ad_up_calls	True	20	20	
+ad_down_calls	True	22	22	
+network_direction_distribution	True	{('Astrocytes', 'AD_up_mito'): 1, ('Excitatory_neurons', 'AD_down_mito'): 10, ('Excitatory_neurons', 'AD_up_mito'): 10, ('Inhibitory_neurons', 'AD_down_mito'): 10, ('Inhibitory_neurons', 'AD_up_mito'): 6, ('Microglia', 'AD_up_mito'): 1, ('Oligodendrocytes', 'AD_down_mito'): 2, ('Oligodendrocytes', 'AD_up_mito'): 2}	{('Astrocytes', 'AD_up_mito'): 1, ('Excitatory_neurons', 'AD_up_mito'): 10, ('Excitatory_neurons', 'AD_down_mito'): 10, ('Inhibitory_neurons', 'AD_up_mito'): 6, ('Inhibitory_neurons', 'AD_down_mito'): 10, ('Microglia', 'AD_up_mito'): 1, ('Oligodendrocytes', 'AD_up_mito'): 2, ('Oligodendrocytes', 'AD_down_mito'): 2}	
+effective_queries_subset_background	True	True	True	
+eligible_run_ids_unique	True	42	42	
+result_hash_checks	True	260	260	
+seaad_phase18_annotation_agreement	True	0	0	

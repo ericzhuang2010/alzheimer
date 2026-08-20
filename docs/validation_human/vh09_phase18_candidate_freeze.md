@@ -1,10 +1,25 @@
 # VH09 ROSMAP Phase 18 Candidate Freeze
 
-**Status:** revised plan; not implemented or executed after the SEA-AD clean rebuild
-**Planned code:** `scripts/validation_human/09_freeze_rosmap_kda_candidates.py`
-**Planned configuration:** `scripts/validation_human/seaad_phase18_validation_config.yml`
-**Planned output:** `results/validation_human/09_rosmap_kda_candidates/`
-**Execution:** local; Minerva is not required
+**Status:** executed; `validated_complete` on 2026-08-20
+**Code:** `scripts/validation_human/09_freeze_rosmap_kda_candidates.py`
+**Configuration:** `scripts/validation_human/seaad_phase18_validation_config.yml`
+**Output:** `results/validation_human/09_rosmap_kda_candidates/`
+**Execution:** completed locally; Minerva was not required
+
+## Execution result
+
+VH09 passed every authority-hash, schema, uniqueness, class, rank, count, and
+network-identity gate. The frozen outputs contain:
+
+- 95,557 canonical explicit gene-by-run rows;
+- 10,433 canonical candidate units;
+- 78 passing Phase 18 candidate units retained as a conformance reference;
+- 47 top-five units used as the primary ROSMAP validation target; and
+- 25 unique genes among those 47 units.
+
+The 78-unit passing table was not used to execute a sensitivity comparison in
+VH10. It was used only to require exact Phase 18 selection parity before
+unblinding the primary 47-unit set.
 
 ## 1. Purpose and boundary
 
@@ -109,7 +124,7 @@ comparison:
 Create two immutable sets:
 
 - primary set: 47 units with `top5_display = TRUE`;
-- sensitivity set: 78 units with
+- conformance set: 78 units with
   `terminal_candidate_status = driver_candidate`.
 
 Require 25 unique genes in the primary set. Preserve network and driver-class
@@ -138,12 +153,12 @@ Write outputs atomically, then generate checksums and a terminal status. A
 failed count, key, class, rank, or checksum gate must yield `failed`, never a
 partial candidate freeze.
 
-## 5. Planned outputs
+## 5. Outputs
 
 | File | End state |
 |---|---|
 | `phase18_selected_candidate_units.tsv` | Exactly 47 selected gene-network-class units with ranks and aggregate evidence |
-| `phase18_passing_candidate_units.tsv` | Exactly 78 passing units for a prespecified sensitivity comparison |
+| `phase18_passing_candidate_units.tsv` | Exactly 78 passing units retained for Phase 18 conformance checking; no sensitivity comparison was executed |
 | `phase18_selected_genes.tsv` | The 25 unique selected symbols with all network/class memberships retained |
 | `phase18_candidate_unit_counts.tsv` | Counts by broad network, driver class, passing status, and display status |
 | `shared_network_scope.tsv` | Exact ROSMAP/SEA-AD broad-network identity crosswalk |
@@ -156,28 +171,28 @@ No SEA-AD candidate or contrast table is written in VH09.
 
 ## 6. End state and repository changes
 
-After VH09 completes:
+After the completed VH09 execution:
 
 - ROSMAP has one immutable 47-unit primary target and one immutable 78-unit
-  sensitivity target;
+  passing-unit conformance reference;
 - candidate units retain their broad-network and driver-class identity;
 - the independent SEA-AD selection code can checksum the VH09 authority but
   cannot read candidate-bearing tables before its own list is frozen; and
 - VH10D can unblind the frozen ROSMAP units for overlap analysis.
 
-Planned repository changes:
+Executed repository changes:
 
-- **Added:** the VH09 script, configuration, isolated result directory, and
-  validation tests;
-- **Changed:** this plan only until implementation begins;
+- **Added:** the VH09 script, shared validation configuration, isolated result
+  directory, and validation tests;
+- **Changed:** this document now records the executed result;
 - **Removed:** no repository file. The old proposed 553-row cross-product and
   selected-direction outputs are removed from the contract, but neither exists
   in the clean rebuilt results;
 - **Preserved read-only:** all Phase 18, VH08, network, and annotation inputs.
 
-## 7. Planned local command
+## 7. Executed local command
 
-The intended interface is:
+The executed interface was:
 
 ```bash
 cd /home/ericzhuang2010/VscodeProjects/alzheimer
@@ -186,9 +201,8 @@ export PYTHONDONTWRITEBYTECODE=1
   --config scripts/validation_human/seaad_phase18_validation_config.yml
 ```
 
-The command becomes authoritative only after the script and configuration are
-implemented and their `--help` and contract tests pass. VH09 is metadata-only
-and is expected to finish locally in minutes.
+The script's `--help`, Python compilation, contract checks, and full execution
+all passed. VH09 completed locally in under one minute.
 
 ## 8. Completion criteria
 

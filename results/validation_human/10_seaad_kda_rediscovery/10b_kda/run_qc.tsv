@@ -1,0 +1,43 @@
+schema_version	kda_run_id	broad_network	fine_cell_type	signature_group	signature_direction	effective_query_genes	effective_background_genes	induced_network_edges	significant_key_drivers	elapsed_seconds	terminal_status	message	explicit_candidates	implicit_candidates	layer_tests	r_python_significant_parity
+seaad_kda_run_qc_v1	seaad__st002_astro_2__F_e4__AD_up_mito	Astrocytes	Astro_2	F_e4	AD_up_mito	6	7387	7760	0	0.424	completed_no_significant		226	7161	461	True
+seaad_kda_run_qc_v1	seaad__st007_l2_3_it_1__F_e33__AD_up_mito	Excitatory_neurons	L2/3 IT_1	F_e33	AD_up_mito	10	9320	11887	12	0.212	completed_significant		77	9243	165	True
+seaad_kda_run_qc_v1	seaad__st007_l2_3_it_1__M_e33__AD_up_mito	Excitatory_neurons	L2/3 IT_1	M_e33	AD_up_mito	30	9320	11887	8	1.334	completed_significant		679	8641	1607	True
+seaad_kda_run_qc_v1	seaad__st007_l2_3_it_1__M_e33__AD_down_mito	Excitatory_neurons	L2/3 IT_1	M_e33	AD_down_mito	11	9320	11887	5	0.641000000000001	completed_significant		314	9006	697	True
+seaad_kda_run_qc_v1	seaad__st009_l2_3_it_6__M_e33__AD_up_mito	Excitatory_neurons	L2/3 IT_6	M_e33	AD_up_mito	14	9318	11883	0	0.508	completed_no_significant		268	9050	630	True
+seaad_kda_run_qc_v1	seaad__st009_l2_3_it_6__M_e33__AD_down_mito	Excitatory_neurons	L2/3 IT_6	M_e33	AD_down_mito	14	9318	11883	4	0.618	completed_significant		324	8994	735	True
+seaad_kda_run_qc_v1	seaad__st011_l2_3_it_5__M_e33__AD_up_mito	Excitatory_neurons	L2/3 IT_5	M_e33	AD_up_mito	18	9317	11880	0	0.925	completed_no_significant		488	8829	1149	True
+seaad_kda_run_qc_v1	seaad__st011_l2_3_it_5__M_e33__AD_down_mito	Excitatory_neurons	L2/3 IT_5	M_e33	AD_down_mito	19	9317	11880	5	0.855	completed_significant		442	8875	1024	True
+seaad_kda_run_qc_v1	seaad__st013_l2_3_it_10__M_e33__AD_up_mito	Excitatory_neurons	L2/3 IT_10	M_e33	AD_up_mito	4	9315	11877	8	0.136	completed_significant		66	9249	160	True
+seaad_kda_run_qc_v1	seaad__st013_l2_3_it_10__M_e33__AD_down_mito	Excitatory_neurons	L2/3 IT_10	M_e33	AD_down_mito	9	9315	11877	12	0.501	completed_significant		255	9060	572	True
+seaad_kda_run_qc_v1	seaad__st017_l6_it_2__M_e33__AD_up_mito	Excitatory_neurons	L6 IT_2	M_e33	AD_up_mito	4	9316	11879	16	0.175999999999999	completed_significant		87	9229	197	True
+seaad_kda_run_qc_v1	seaad__st018_l4_it_2__M_e33__AD_up_mito	Excitatory_neurons	L4 IT_2	M_e33	AD_up_mito	7	9311	11873	0	0.429	completed_no_significant		226	9085	516	True
+seaad_kda_run_qc_v1	seaad__st018_l4_it_2__M_e33__AD_down_mito	Excitatory_neurons	L4 IT_2	M_e33	AD_down_mito	4	9311	11873	12	0.220000000000001	completed_significant		110	9201	250	True
+seaad_kda_run_qc_v1	seaad__st023_l2_3_it_3__M_e33__AD_up_mito	Excitatory_neurons	L2/3 IT_3	M_e33	AD_up_mito	18	9308	11866	0	0.849	completed_no_significant		443	8865	1016	True
+seaad_kda_run_qc_v1	seaad__st023_l2_3_it_3__M_e33__AD_down_mito	Excitatory_neurons	L2/3 IT_3	M_e33	AD_down_mito	15	9308	11866	2	0.685000000000001	completed_significant		351	8957	814	True
+seaad_kda_run_qc_v1	seaad__st024_l4_it_1__M_e33__AD_up_mito	Excitatory_neurons	L4 IT_1	M_e33	AD_up_mito	10	9307	11866	0	0.472999999999999	completed_no_significant		244	9063	558	True
+seaad_kda_run_qc_v1	seaad__st024_l4_it_1__M_e33__AD_down_mito	Excitatory_neurons	L4 IT_1	M_e33	AD_down_mito	12	9307	11866	2	0.658999999999999	completed_significant		332	8975	757	True
+seaad_kda_run_qc_v1	seaad__st030_l6_ct_1__M_e33__AD_down_mito	Excitatory_neurons	L6 CT_1	M_e33	AD_down_mito	3	9218	11741	4	0.227	completed_significant		120	9098	274	True
+seaad_kda_run_qc_v1	seaad__st039_l6b_6__M_e33__AD_up_mito	Excitatory_neurons	L6b_6	M_e33	AD_up_mito	5	9267	11813	0	0.401999999999999	completed_no_significant		217	9050	496	True
+seaad_kda_run_qc_v1	seaad__st043_l5_6_np_1__M_e33__AD_down_mito	Excitatory_neurons	L5/6 NP_1	M_e33	AD_down_mito	3	9002	11411	10	0.241	completed_significant		125	8877	282	True
+seaad_kda_run_qc_v1	seaad__st044_l5_6_np_2__M_e33__AD_down_mito	Excitatory_neurons	L5/6 NP_2	M_e33	AD_down_mito	4	8896	11243	13	0.107000000000001	completed_significant		54	8842	116	True
+seaad_kda_run_qc_v1	seaad__st048_lamp5_lhx6_1__M_e33__AD_up_mito	Inhibitory_neurons	Lamp5_Lhx6_1	M_e33	AD_up_mito	20	8569	9248	0	0.525	completed_no_significant		298	8271	609	True
+seaad_kda_run_qc_v1	seaad__st048_lamp5_lhx6_1__M_e33__AD_down_mito	Inhibitory_neurons	Lamp5_Lhx6_1	M_e33	AD_down_mito	36	8569	9248	5	0.970000000000001	completed_significant		543	8026	1127	True
+seaad_kda_run_qc_v1	seaad__st050_lamp5_2__M_e33__AD_up_mito	Inhibitory_neurons	Lamp5_2	M_e33	AD_up_mito	5	8535	9212	8	0.133000000000001	completed_significant		70	8465	156	True
+seaad_kda_run_qc_v1	seaad__st050_lamp5_2__M_e33__AD_down_mito	Inhibitory_neurons	Lamp5_2	M_e33	AD_down_mito	11	8535	9212	0	0.391	completed_no_significant		217	8318	449	True
+seaad_kda_run_qc_v1	seaad__st051_lamp5_3__M_e33__AD_down_mito	Inhibitory_neurons	Lamp5_3	M_e33	AD_down_mito	4	8223	8857	15	0.0839999999999996	completed_significant		42	8181	92	True
+seaad_kda_run_qc_v1	seaad__st053_lamp5_5__M_e33__AD_down_mito	Inhibitory_neurons	Lamp5_5	M_e33	AD_down_mito	3	8234	8875	8	0.0879999999999992	completed_significant		46	8188	93	True
+seaad_kda_run_qc_v1	seaad__st100_pvalb_6__M_e33__AD_down_mito	Inhibitory_neurons	Pvalb_6	M_e33	AD_down_mito	4	7650	8204	1	0.132999999999999	completed_significant		76	7574	144	True
+seaad_kda_run_qc_v1	seaad__st105_pvalb_3__M_e33__AD_up_mito	Inhibitory_neurons	Pvalb_3	M_e33	AD_up_mito	4	8440	9101	3	0.162999999999998	completed_significant		91	8349	182	True
+seaad_kda_run_qc_v1	seaad__st105_pvalb_3__M_e33__AD_down_mito	Inhibitory_neurons	Pvalb_3	M_e33	AD_down_mito	15	8440	9101	3	0.587999999999999	completed_significant		328	8112	685	True
+seaad_kda_run_qc_v1	seaad__st106_pvalb_2__M_e33__AD_up_mito	Inhibitory_neurons	Pvalb_2	M_e33	AD_up_mito	18	8533	9202	0	0.633999999999999	completed_no_significant		353	8180	732	True
+seaad_kda_run_qc_v1	seaad__st106_pvalb_2__M_e33__AD_down_mito	Inhibitory_neurons	Pvalb_2	M_e33	AD_down_mito	51	8533	9202	19	1.075	completed_significant		589	7944	1217	True
+seaad_kda_run_qc_v1	seaad__st108_pvalb_14__M_e33__AD_up_mito	Inhibitory_neurons	Pvalb_14	M_e33	AD_up_mito	12	7595	8139	11	0.202999999999999	completed_significant		111	7484	257	True
+seaad_kda_run_qc_v1	seaad__st108_pvalb_14__M_e33__AD_down_mito	Inhibitory_neurons	Pvalb_14	M_e33	AD_down_mito	16	7595	8139	3	0.518000000000001	completed_significant		283	7312	584	True
+seaad_kda_run_qc_v1	seaad__st109_pvalb_12__M_e33__AD_down_mito	Inhibitory_neurons	Pvalb_12	M_e33	AD_down_mito	4	7284	7784	6	0.0620000000000012	completed_significant		34	7250	79	True
+seaad_kda_run_qc_v1	seaad__st114_chandelier_2__M_e33__AD_up_mito	Inhibitory_neurons	Chandelier_2	M_e33	AD_up_mito	3	7466	8006	3	0.0809999999999995	completed_significant		46	7420	92	True
+seaad_kda_run_qc_v1	seaad__st114_chandelier_2__M_e33__AD_down_mito	Inhibitory_neurons	Chandelier_2	M_e33	AD_down_mito	7	7466	8006	0	0.244	completed_no_significant		143	7323	279	True
+seaad_kda_run_qc_v1	seaad__st117_micro_pvm_2__M_e33__AD_up_mito	Microglia	Micro-PVM_2	M_e33	AD_up_mito	3	6133	6314	0	0.0859999999999985	completed_no_significant		49	6084	89	True
+seaad_kda_run_qc_v1	seaad__st123_oligo_2__M_e33__AD_up_mito	Oligodendrocytes	Oligo_2	M_e33	AD_up_mito	12	7351	8022	5	0.427	completed_significant		243	7108	533	True
+seaad_kda_run_qc_v1	seaad__st123_oligo_2__M_e33__AD_down_mito	Oligodendrocytes	Oligo_2	M_e33	AD_down_mito	5	7351	8022	1	0.242999999999999	completed_significant		143	7208	275	True
+seaad_kda_run_qc_v1	seaad__st124_oligo_4__M_e33__AD_up_mito	Oligodendrocytes	Oligo_4	M_e33	AD_up_mito	15	7352	8023	0	0.555	completed_no_significant		322	7030	690	True
+seaad_kda_run_qc_v1	seaad__st124_oligo_4__M_e33__AD_down_mito	Oligodendrocytes	Oligo_4	M_e33	AD_down_mito	4	7352	8023	4	0.206	completed_significant		121	7231	237	True
