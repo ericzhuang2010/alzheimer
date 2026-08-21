@@ -1,0 +1,15 @@
+execution:
+  execution_stage: local_production_equivalent
+  execution_phase: genetic_support_tier2
+  backend: direct
+  run_id: phase19_tier2_local_20260821
+  host: homedesktop
+  total_memory_gib: 15
+  reserve_memory_gib: 6
+  max_total_cores: 4
+  max_custom_coloc_workers: 1
+  max_peak_memory_gib: 8
+  minimum_free_disk_gib: 50
+  scratch_root: tmp/phase19_genetic_support_tier2
+  fail_fast: true
+  automatic_minerva_fallback: false

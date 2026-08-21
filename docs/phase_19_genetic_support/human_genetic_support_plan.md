@@ -8,8 +8,21 @@ output, and completion plan for Phase 19.
 Tier 1 status (2026-08-16): **implemented and validated locally** for all 25
 genes and 47 candidate-context units. See the
 [Tier 1 execution report](tier1_execution_report.md) and the validated bundle
-in `results/minerva_production/19_genetic_support/`. Tier 2 items below remain
-optional and are not represented as completed Tier 1 work.
+in `results/minerva_production/19_genetic_support/`.
+
+Tier 2 execution status (2026-08-21): **open-data alternative executed and
+validated locally**. The canonical 23-file bundle is in
+`results/minerva_production/19_genetic_support_tier2/`. The original
+exact-source FunGen-xQTL Synapse release is
+not readable by the current account, so it is retained as a later sensitivity
+route rather than a production prerequisite. The primary route uses immutable
+public NIAGADS, GWAS Catalog, and ancestry-matched LD releases and preserves an
+explicit `not_assessable` state wherever those releases do not support a valid
+classical colocalization. All 54 routes are terminal and technically valid,
+but none has classical H0-H4; this is not negative evidence. The separate
+[Tier 2 regional GWAS/QTL plan](tier2_regional_gwas_qtl_plan.md) defines that
+increment, and its [execution report](tier2_execution_report.md) records the
+execution outcome. Tier 1 remains an immutable completed bundle.
 
 Phase 19 promotes WP5 from the
 [Phase 18 cross-validation guide](../analysis/kda_phase_18/phase18_key_driver_cross_validation_guide.md)

@@ -1,0 +1,243 @@
+schema_version: phase19_genetic_support_tier2_config_v2
+
+analysis:
+  analysis_id: phase19_human_genetic_support_tier2_coloc_v1
+  tier: 2
+  genome_build: GRCh38
+  expected_candidate_contexts: 47
+  expected_unique_genes: 25
+  expected_nuclear_genes: 19
+  expected_nuclear_contexts: 27
+  expected_mtdna_contexts: 20
+  expected_base_routes: 54
+  qtl_types: [eQTL, sQTL]
+  definitions_frozen: true
+  source_inventory_frozen: true
+  primary_p1: 1.0e-4
+  primary_p2: 1.0e-4
+  primary_p12: 5.0e-6
+  sensitivity_p12: [1.0e-6, 5.0e-6, 1.0e-5]
+  strong_h4: 0.80
+  strong_conditional_h4: 0.80
+  suggestive_h4: 0.50
+  lead_proxy_r2: 0.80
+  released_model_min_posterior_mass: 0.95
+
+inputs:
+  tier1_root: results/minerva_production/19_genetic_support
+  tier1_config: config/phase19_genetic_support.yml
+  tier1_candidate_manifest: results/minerva_production/19_genetic_support/genetic_support_candidate_manifest.tsv
+  tier1_candidate_loci: results/minerva_production/19_genetic_support/genetic_support_candidate_loci.tsv
+  tier1_evidence_summary: results/minerva_production/19_genetic_support/genetic_support_evidence_summary.tsv
+  tier1_common_variant_evidence: results/minerva_production/19_genetic_support/genetic_support_common_variant_evidence.tsv.gz
+  tier1_artifacts: results/minerva_production/19_genetic_support/genetic_support_artifacts.tsv
+  tier1_status: results/minerva_production/19_genetic_support/genetic_support_status.tsv
+  external_root: data/reference/phase19_genetic_support/tier2
+  source_downloads: data/reference/phase19_genetic_support/tier2/source_downloads
+  inventory_dir: data/reference/phase19_genetic_support/tier2/inventory
+  niagads_qtl_dir: data/reference/phase19_genetic_support/tier2/niagads_ng00184
+  niagads_gene_queries_dir: data/reference/phase19_genetic_support/tier2/niagads_ng00184/gene_queries
+  gwas_catalog_dir: data/reference/phase19_genetic_support/tier2/gwas_catalog
+  precomputed_coloc_dir: data/reference/phase19_genetic_support/tier2/precomputed_coloc
+  regional_inputs_dir: data/reference/phase19_genetic_support/tier2/regional_inputs
+  model_objects_dir: data/reference/phase19_genetic_support/tier2/model_objects
+  ld_blocks_dir: data/reference/phase19_genetic_support/tier2/ld_blocks
+  custom_comparisons_manifest: data/reference/phase19_genetic_support/tier2/custom_comparisons.tsv
+
+source_release:
+  name: Phase 19 Tier 2 open-data alternative
+  release_id: open_alternative_2026_08_v1
+  inventory_date: "2026-08-21"
+  access_requirement: public downloads; source terms retained
+  exact_source_sensitivity_repository: https://github.com/statfungen/xqtl-resources
+  exact_source_sensitivity_commit: f6f63fc319a417213cf1e86ec0eb14fcb53d2427
+  exact_source_sensitivity_commit_date: "2026-07-29"
+
+alternative_sources:
+  - dataset_id: NG00184_eqtl_finemapping_manifest
+    accession: NG00184.v1
+    file_id: 57058
+    filename: ADSP_FunGen_xQTL.v1.eQTL.single_context_finemapping_all.manifest.txt
+    url: https://st1.niagads.org/portal/v1/download-public/NG00184/fileset/57058
+    bytes: 193964
+    md5: 2a8f099fae300737fbe8829f53b3e7ea
+    role: immutable eQTL fine-mapping child manifest
+  - dataset_id: NG00184_eqtl_finemapping_all
+    accession: NG00184.v1
+    file_id: 57059
+    filename: ADSP_FunGen_xQTL.v1.eQTL.single_context_finemapping_all.tar
+    url: https://st1.niagads.org/portal/v1/download-public/NG00184/fileset/57059
+    bytes: 365291520
+    md5: cb06f0fded0879612fa534066b255e63
+    role: released bulk-brain eQTL fine-mapping rows
+  - dataset_id: NG00184_sqtl_finemapping_manifest
+    accession: NG00184.v1
+    file_id: 57098
+    filename: ADSP_FunGen_xQTL.v1.sQTL.single_context_finemapping_all.manifest.txt
+    url: https://st1.niagads.org/portal/v1/download-public/NG00184/fileset/57098
+    bytes: 53063
+    md5: 8e321e9168a2acd8b0db2cba1ec5ca36
+    role: immutable sQTL fine-mapping child manifest
+  - dataset_id: NG00184_sqtl_finemapping_all
+    accession: NG00184.v1
+    file_id: 57099
+    filename: ADSP_FunGen_xQTL.v1.sQTL.single_context_finemapping_all.tar
+    url: https://st1.niagads.org/portal/v1/download-public/NG00184/fileset/57099
+    bytes: 563374080
+    md5: c1e0c85799b027849fbe64496d7ef326
+    role: released bulk-brain sQTL fine-mapping rows
+  - dataset_id: NG00184_snuc_eqtl_finemapping_manifest
+    accession: NG00184.v1
+    file_id: 57108
+    filename: ADSP_FunGen_xQTL.v1.snuc-eQTL.single_context_finemapping_all.manifest.txt
+    url: https://st1.niagads.org/portal/v1/download-public/NG00184/fileset/57108
+    bytes: 356256
+    md5: 7f6be77e94eca9ed825ab5f2498d5af3
+    role: immutable single-nucleus eQTL fine-mapping child manifest
+  - dataset_id: NG00184_snuc_eqtl_finemapping_all
+    accession: NG00184.v1
+    file_id: 57109
+    filename: ADSP_FunGen_xQTL.v1.snuc-eQTL.single_context_finemapping_all.tar
+    url: https://st1.niagads.org/portal/v1/download-public/NG00184/fileset/57109
+    bytes: 313733120
+    md5: f0d3457b1ed556f85cfbc2651a20190f
+    role: released single-nucleus eQTL fine-mapping rows
+  - dataset_id: NG00184_metadata_json
+    accession: NG00184.v1
+    file_id: 57112
+    filename: ADSP_FunGen_xQTL.v1.metadata.json
+    url: https://st1.niagads.org/portal/v1/download-public/NG00184/fileset/57112
+    bytes: 7986989
+    md5: f378f95597ab1422c941154fac92dd8b
+    role: QTL context and model metadata
+  - dataset_id: NG00184_metadata_tsv
+    accession: NG00184.v1
+    file_id: 57113
+    filename: ADSP_FunGen_xQTL.v1.metadata.txt
+    url: https://st1.niagads.org/portal/v1/download-public/NG00184/fileset/57113
+    bytes: 4177756
+    md5: 618ae1a9167160d5eb647f989c2e6531
+    role: QTL context and model metadata
+  - dataset_id: NG00184_combined_manifest
+    accession: NG00184.v1
+    file_id: 57120
+    filename: ADSP_FunGen_xQTL.v1.combined_manifest.txt
+    url: https://st1.niagads.org/portal/v1/download-public/NG00184/fileset/57120
+    bytes: 5955
+    md5: 69124495bc3c043cb015b413bfd22a30
+    role: immutable NG00184 release manifest
+  - dataset_id: Bellenguez2022_checksum
+    accession: GCST90027158
+    filename: md5sum.txt
+    url: https://ftp.ebi.ac.uk/pub/databases/gwas/summary_statistics/GCST90027001-GCST90028000/GCST90027158/md5sum.txt
+    bytes: 140
+    md5: e8581a790848446ca5145ea9bff0b426
+    role: official GWAS Catalog source checksum
+  - dataset_id: Bellenguez2022_AD_GWAS
+    accession: GCST90027158
+    filename: GCST90027158_buildGRCh38.tsv.gz
+    url: https://ftp.ebi.ac.uk/pub/databases/gwas/summary_statistics/GCST90027001-GCST90028000/GCST90027158/GCST90027158_buildGRCh38.tsv.gz
+    checksum_url: https://ftp.ebi.ac.uk/pub/databases/gwas/summary_statistics/GCST90027001-GCST90028000/GCST90027158/md5sum.txt
+    bytes: 755201909
+    md5: 9d23b9ba23532da38ab83fb061bab18f
+    role: full primary AD GWAS summary statistics
+  - dataset_id: ADSP_R5_NHW_LD
+    accession: NG00067.v20
+    sample_size: 26042
+    ancestry: non-Hispanic White
+    acquisition: deferred_until_custom_route_passes_upstream_gates
+    role: primary ancestry-matched LD
+  - dataset_id: EQTL_Catalogue
+    accession: current_at_2026-08-21
+    url: https://www.ebi.ac.uk/eqtl/Data_access/
+    acquisition: targeted_candidate_regions_only
+    role: dense regional QTL and matching SuSiE/LBF fallback
+  - dataset_id: Thousand_Genomes_30x_EUR
+    accession: 20220422_3202_phased
+    url: https://internationalgenome.org/data-portal/data-collections/1000genomes_30x/
+    acquisition: deferred_sensitivity_only
+    role: public GRCh38 European LD fallback
+
+public_files:
+  - role: tier1_variant_summary
+    path: data/reference/phase19_genetic_support/tier2/source_downloads/AD_loci_unified_cs95orColocs_Pval1e5_variant_level.csv.gz
+    sha256: c4c052cbc5e500b6f9b4d0e5f31a38fa15463dc95df9b6e27421c01d4467f6e1
+  - role: tier1_unified_workbook
+    path: data/reference/phase19_genetic_support/tier2/source_downloads/unified_AD_loci_xQTL_summary.xlsx
+    sha256: e3cb20c0c55502644db47337ea8f7bb0367267b819bc01c6327833071b5ed3c5
+  - role: context_metadata
+    path: data/reference/phase19_genetic_support/tier2/source_downloads/context_meta.tsv
+    sha256: e0c5e5eea791c848a4989c2d8d98cd391b6b0451978b7de2d4e4d1b3c00faf3e
+  - role: source_structure
+    path: data/reference/phase19_genetic_support/tier2/source_downloads/statfungen_synapse_staging_folder_structure.yml
+    sha256: 146f429fa32e53d678210e7456681f968e9845201e1d90fbbd8d489f62d137b8
+  - role: resource_description
+    path: data/reference/phase19_genetic_support/tier2/source_downloads/xqtl_resource_description.md
+    sha256: 5c44d523be30cc54f01fc83c33fdb40c03dc352a2090c4e5943f26fa55b87343
+  - role: resource_format
+    path: data/reference/phase19_genetic_support/tier2/source_downloads/xqtl_resource_format.md
+    sha256: 8d0a07409ebdde4d35f8ce0f227e80c1ef80fa4f283977d3583cf63a82c9a7df
+  - role: ad_gwas_metadata
+    path: data/reference/phase19_genetic_support/tier2/source_downloads/AD_GWAS.md
+    sha256: 4895bce0901e809ecec2119c219da1368391d3cc1067b8ed5c57879411f295c3
+  - role: ld_metadata
+    path: data/reference/phase19_genetic_support/tier2/source_downloads/ld_reference.md
+    sha256: 9061b95db5010fddbf825191f26355355734589bcf556efddacf31c44403ff49
+
+exact_source_sensitivity:
+  - dataset_id: AD_GWAS_finemapping
+    source_id: syn69670625
+    role: AD GWAS fine-mapping models/results
+  - dataset_id: AD_GWAS_coloc_results
+    source_id: syn69696846
+    role: AD GWAS colocalization results
+  - dataset_id: AD_GWAS_coloc_models
+    source_id: syn69865824
+    role: AD GWAS colocalization models
+  - dataset_id: AD_xQTL_coloc_results
+    source_id: syn69865816
+    role: AD-xQTL colocalization results
+  - dataset_id: AD_xQTL_coloc_models
+    source_id: syn69670630
+    role: AD-xQTL colocalization models
+  - dataset_id: xQTL_finemapping_models
+    source_id: syn69670592
+    role: molecular-QTL fine-mapping models
+  - dataset_id: raw_xQTL_statistics
+    source_id: syn69670632
+    role: full molecular-QTL summary statistics
+  - dataset_id: ADSP_EUR_LD
+    source_id: syn69670652
+    role: European-ancestry LD matrices
+
+optional_exact_source_precomputed_files:
+  - AD_xQTL_ROSMAP_colocboost_sorted.bed.gz
+  - AD_xQTL_MSBB_colocboost_sorted.bed.gz
+  - AD_xQTL_KNIGHT_colocboost_sorted.bed.gz
+  - AD_xQTL_MIGA_colocboost_sorted.bed.gz
+  - AD_xQTL_colocboost_filtered.bed.gz
+
+alternative_completion:
+  allow_terminal_not_assessable: true
+  require_all_routes_terminal: true
+  prohibit_grade_upgrade_without_classical_h0_h4: true
+  prohibit_significant_only_custom_coloc: true
+  qtl_gene_query_url_template: https://xqtl.niagads.org/download/gene/{gene}
+  qtl_gene_query_data_class: significant_only_coverage_screen
+  full_ng00184_association_archives_bytes: "821000000000"
+  full_archive_download_allowed: false
+
+context_aliases:
+  Astrocytes: [ast, astrocyte]
+  Excitatory_neurons: [exc, excitatory]
+  Inhibitory_neurons: [inh, inhibitory]
+  Microglia: [mic, microglia, myeloid]
+  OPCs: [opcs, opc]
+  Oligodendrocytes: [oli, oligodendrocyte]
+  Vasculature_cells: [vascular, endothelial, pericyte]
+
+outputs:
+  root: results/minerva_production/19_genetic_support_tier2
+  pilot_root: results/local_pilot/19_genetic_support_tier2
+  schema: human_genetic_support_tier2_coloc_v1
+  exact_file_count: 23

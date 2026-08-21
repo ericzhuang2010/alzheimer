@@ -1,0 +1,2 @@
+gene_ID	qtl_type	context	PP.H0.abf	PP.H1.abf	PP.H2.abf	PP.H3.abf	PP.H4.abf	nsnps	AD_hit	xQTL_hit
+ENSG00000130203.5	eQTL	Ast	0.01	0.01	0.01	0.02	0.95	200	AD_signal_1	eQTL_signal_1

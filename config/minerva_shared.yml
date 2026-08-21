@@ -9,6 +9,7 @@ project:
   phase14_modifier_heterogeneity_config: config/phase14_modifier_heterogeneity.yml
   phase15_mitonuclear_coupling_config: config/phase15_mitonuclear_coupling.yml
   phase19_genetic_support_config: config/phase19_genetic_support.yml
+  phase19_genetic_support_tier2_config: config/phase19_genetic_support_tier2.yml
   manifest: config/minerva_rds_manifest.tsv
 
 inputs:
@@ -55,3 +56,4 @@ scope:
     - modifier_heterogeneity
     - mitonuclear_coupling
     - genetic_support
+    - genetic_support_tier2
