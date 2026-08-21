@@ -1,0 +1,29 @@
+schema_version	figure_id	check_id	severity	status	observed	expected	details
+seaad_rosmap_top_driver_gene_venn_v1	seaad_rosmap_top_driver_gene_venn	upstream_phases_complete	blocking	pass	VH09|VH10C|VH10D validated_complete	VH09|VH10C|VH10D validated_complete	Validated during loading.
+seaad_rosmap_top_driver_gene_venn_v1	seaad_rosmap_top_driver_gene_venn	frozen_input_hashes	blocking	pass	14	14	Every compact input matches its frozen SHA-256.
+seaad_rosmap_top_driver_gene_venn_v1	seaad_rosmap_top_driver_gene_venn	seaad_rosmap_blinded_freeze	blocking	pass	False	False	SEA-AD was frozen before ROSMAP unblinding.
+seaad_rosmap_top_driver_gene_venn_v1	seaad_rosmap_top_driver_gene_venn	selected_unit_counts	blocking	pass	47|13	47|13	Selected network-gene units.
+seaad_rosmap_top_driver_gene_venn_v1	seaad_rosmap_top_driver_gene_venn	unique_gene_counts	blocking	pass	25|11	25|11	Unique symbols after network collapse.
+seaad_rosmap_top_driver_gene_venn_v1	seaad_rosmap_top_driver_gene_venn	plot_row_count	blocking	pass	30	30	Unique class-gene rows.
+seaad_rosmap_top_driver_gene_venn_v1	seaad_rosmap_top_driver_gene_venn	plot_keys_unique	blocking	pass	unique	unique	No gene is duplicated within a class.
+seaad_rosmap_top_driver_gene_venn_v1	seaad_rosmap_top_driver_gene_venn	region_summary_rows	blocking	pass	6	6	All three regions are explicit in both classes, including zero-count regions.
+seaad_rosmap_top_driver_gene_venn_v1	seaad_rosmap_top_driver_gene_venn	region_counts	blocking	pass	{('mt_driver', 'rosmap_only'): 4, ('mt_driver', 'common'): 6, ('mt_driver', 'seaad_only'): 0, ('non_mt_driver', 'rosmap_only'): 15, ('non_mt_driver', 'common'): 0, ('non_mt_driver', 'seaad_only'): 5}	{('mt_driver', 'rosmap_only'): 4, ('mt_driver', 'common'): 6, ('mt_driver', 'seaad_only'): 0, ('non_mt_driver', 'rosmap_only'): 15, ('non_mt_driver', 'common'): 0, ('non_mt_driver', 'seaad_only'): 5}	Frozen MT and non-MT regions.
+seaad_rosmap_top_driver_gene_venn_v1	seaad_rosmap_top_driver_gene_venn	region_gene_identities	blocking	pass	exact	exact	All gene labels match the frozen region lists.
+seaad_rosmap_top_driver_gene_venn_v1	seaad_rosmap_top_driver_gene_venn	common_area_scale	blocking	pass	0.43*sqrt(n)	0.43*sqrt(n)	One area-per-gene scale across panels.
+seaad_rosmap_top_driver_gene_venn_v1	seaad_rosmap_top_driver_gene_venn	geometry_logic	blocking	pass	{'mt_driver': 'nested_containment', 'non_mt_driver': 'disjoint'}	MT nested|non-MT disjoint	Zero regions are represented honestly.
+seaad_rosmap_top_driver_gene_venn_v1	seaad_rosmap_top_driver_gene_venn	frozen_geometry_fields	blocking	pass	{'mt_driver': (0.0, 0.25, 0.0, -2.2, 2.2, -1.8, 2.0), 'non_mt_driver': (-1.55, 1.25, 0.0, -3.35, 2.55, -1.9, 1.95)}	{'mt_driver': (0.0, 0.25, 0.0, -2.2, 2.2, -1.8, 2.0), 'non_mt_driver': (-1.55, 1.25, 0.0, -3.35, 2.55, -1.9, 1.95)}	Circle centers and panel limits match the designed layout.
+seaad_rosmap_top_driver_gene_venn_v1	seaad_rosmap_top_driver_gene_venn	mt_containment_inequality	blocking	pass	0.056498804	>=0	SEA-AD MT circle is fully contained.
+seaad_rosmap_top_driver_gene_venn_v1	seaad_rosmap_top_driver_gene_venn	non_mt_disjoint_inequality	blocking	pass	0.173107931	>=0	Non-MT circles are separated.
+seaad_rosmap_top_driver_gene_venn_v1	seaad_rosmap_top_driver_gene_venn	svg_all_gene_labels	blocking	pass	30	30	Every frozen region gene is searchable SVG text.
+seaad_rosmap_top_driver_gene_venn_v1	seaad_rosmap_top_driver_gene_venn	svg_empty_set_labels	blocking	pass	both present	both present	Both zero regions are stated with the empty-set symbol.
+seaad_rosmap_top_driver_gene_venn_v1	seaad_rosmap_top_driver_gene_venn	minimum_font_size	blocking	pass	7.2	>=7.0	Minimum visible font.
+seaad_rosmap_top_driver_gene_venn_v1	seaad_rosmap_top_driver_gene_venn	canvas_text_clipping	blocking	pass	0	0	No text leaves the canvas.
+seaad_rosmap_top_driver_gene_venn_v1	seaad_rosmap_top_driver_gene_venn	image_export_set	blocking	pass	.pdf|.png|.svg	.pdf|.png|.svg	Three image formats.
+seaad_rosmap_top_driver_gene_venn_v1	seaad_rosmap_top_driver_gene_venn	image_exports_nonempty	blocking	pass	all >1000	all >1000	Image exports are nontrivial.
+seaad_rosmap_top_driver_gene_venn_v1	seaad_rosmap_top_driver_gene_venn	svg_searchable_text	blocking	pass	present	present	SVG text remains searchable.
+seaad_rosmap_top_driver_gene_venn_v1	seaad_rosmap_top_driver_gene_venn	svg_vector_paths	blocking	pass	present	present	SVG includes vector paths.
+seaad_rosmap_top_driver_gene_venn_v1	seaad_rosmap_top_driver_gene_venn	pdf_signature	blocking	pass	%PDF-	%PDF-	PDF signature is valid.
+seaad_rosmap_top_driver_gene_venn_v1	seaad_rosmap_top_driver_gene_venn	png_dimensions	blocking	pass	5400x3240	5400x3240	PNG dimensions are frozen.
+seaad_rosmap_top_driver_gene_venn_v1	seaad_rosmap_top_driver_gene_venn	png_resolution	blocking	pass	450.01|450.01	450|450	Embedded PNG resolution.
+seaad_rosmap_top_driver_gene_venn_v1	seaad_rosmap_top_driver_gene_venn	png_color_mode	blocking	pass	RGBA	RGB or RGBA	Slide-compatible color mode.
+seaad_rosmap_top_driver_gene_venn_v1	seaad_rosmap_top_driver_gene_venn	visual_review	nonblocking	pass	complete	complete	Reviewed at slide size in color and grayscale.
