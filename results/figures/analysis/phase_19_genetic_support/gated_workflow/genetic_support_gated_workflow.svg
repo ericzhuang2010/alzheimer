@@ -216,119 +216,120 @@ z
 " clip-path="url(#pca04678265)" style="fill: #4d4d4d; stroke: #4d4d4d; stroke-width: 1.35; stroke-linecap: round"/>
    </g>
    <g id="text_1">
-    <text style="font-weight: 700; font-size: 9.5px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #0072b2" x="196.416" y="22.069852" transform="rotate(-0 196.416 22.069852)">PARALLEL LANE A  ·  DIRECT PUBLIC-SUMMARY EVIDENCE</text>
+    <text style="font-weight: 700; font-size: 9.5px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #0072b2" x="196.416" y="22.069852" transform="rotate(-0 196.416 22.069852)">LANE A  ·  LOOK UP RESULTS IN PUBLIC DATA</text>
    </g>
    <g id="text_2">
-    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: end; fill: #5b6573" x="874.944" y="21.967312" transform="rotate(-0 874.944 21.967312)">All 47 frozen contexts</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: end; fill: #5b6573" x="874.944" y="21.095437" transform="rotate(-0 874.944 21.095437)">All 47 gene–network pairs</text>
    </g>
    <g id="text_3">
-    <text style="font-weight: 700; font-size: 9.5px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="196.416" y="114.504188" transform="rotate(-0 196.416 114.504188)">PARALLEL LANE B  ·  NUCLEAR REGIONAL + MOLECULAR-QTL PATH</text>
+    <text style="font-weight: 700; font-size: 9.5px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="196.416" y="115.129852" transform="rotate(-0 196.416 115.129852)">LANE B  ·  DOES THE SAME DNA SIGNAL LINK TO AD AND THE GENE?</text>
    </g>
    <g id="text_4">
-    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: end; fill: #5b6573" x="874.944" y="114.075984" transform="rotate(-0 874.944 114.075984)">27 contexts  ·  19 genes</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: end; fill: #5b6573" x="874.944" y="114.155438" transform="rotate(-0 874.944 114.155438)">27 gene–network pairs  ·  19 non-mitochondrial genes</text>
    </g>
    <g id="text_5">
-    <text style="font-weight: 700; font-size: 10px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #ffffff" transform="translate(34.8192 102.649419)">Frozen</text>
-    <text style="font-weight: 700; font-size: 10px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #ffffff" transform="translate(34.8192 112.803325)">candidate set</text>
+    <text style="font-weight: 700; font-size: 10px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #ffffff" transform="translate(34.8192 101.795513)">Starting gene list</text>
+    <text style="font-weight: 700; font-size: 10px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #ffffff" transform="translate(34.8192 112.215044)">(chosen in advance)</text>
    </g>
    <g id="text_6">
-    <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #ffffff" transform="translate(56.341313 136.913063)">47 contexts</text>
+    <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #ffffff" transform="translate(18.990375 135.888375)">47 gene–network pairs</text>
     <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #ffffff" transform="translate(39.937875 148.128375)">25 unique genes</text>
    </g>
    <g id="text_7">
-    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #ffffff" transform="translate(50.479594 164.928038)">Top-five network set</text>
-    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #ffffff" transform="translate(49.231547 174.378038)">no genetic reranking</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #ffffff" transform="translate(53.656313 164.928038)">Top network genes</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #ffffff" transform="translate(26.138109 174.378038)">not changed by genetic results</text>
    </g>
    <g id="text_8">
-    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #d7dee8" x="95.976" y="191.987438" transform="rotate(-0 95.976 191.987438)">Frozen before genetic results</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #d7dee8" x="95.976" y="192.859313" transform="rotate(-0 95.976 192.859313)">List fixed in advance</text>
    </g>
    <g id="text_9">
-    <text style="font-weight: 700; font-size: 10.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="208.0224" y="54.170719" transform="rotate(-0 208.0224 54.170719)">FunGen-xQTL direct-summary screen</text>
+    <text style="font-weight: 700; font-size: 10.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="208.0224" y="54.210563" transform="rotate(-0 208.0224 54.210563)">Search public FunGen results</text>
    </g>
    <g id="text_10">
-    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #333333" x="208.0224" y="71.819437" transform="rotate(-0 208.0224 71.819437)">AD fine-mapping  ·  brain xQTL  ·  TWAS</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #333333" x="208.0224" y="71.819437" transform="rotate(-0 208.0224 71.819437)">Likely AD variants  ·  effects on gene activity or splicing</text>
    </g>
    <g id="text_11">
-    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #5b6573" x="208.0224" y="82.043438" transform="rotate(-0 208.0224 82.043438)">Pinned public snapshot  f6f63fc…</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #5b6573" x="208.0224" y="82.043438" transform="rotate(-0 208.0224 82.043438)">Pre-computed results from a fixed public data snapshot</text>
    </g>
    <g id="text_12">
-    <text style="font-weight: 700; font-size: 10.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="556.2144" y="54.170719" transform="rotate(-0 556.2144 54.170719)">Direct candidate mapping + formal grade</text>
+    <text style="font-weight: 700; font-size: 10.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="556.2144" y="54.170719" transform="rotate(-0 556.2144 54.170719)">Match results directly to each gene</text>
    </g>
    <g id="text_13">
-    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #333333" x="556.2144" y="71.819437" transform="rotate(-0 556.2144 71.819437)">Source inclusion/confidence fields retain their meaning</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #333333" x="556.2144" y="71.819437" transform="rotate(-0 556.2144 71.819437)">Keep the source's original confidence labels</text>
    </g>
    <g id="text_14">
-    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #5b6573" x="556.2144" y="82.915313" transform="rotate(-0 556.2144 82.915313)">Not classical PP.H4 values</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #5b6573" x="556.2144" y="82.043438" transform="rotate(-0 556.2144 82.043438)">Support grade—not a shared-signal probability</text>
    </g>
    <g id="text_15">
-    <text style="font-weight: 700; font-size: 10px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="206.2368" y="152.140313" transform="rotate(-0 206.2368 152.140313)">1  Regional signal</text>
+    <text style="font-weight: 700; font-size: 10px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="206.2368" y="152.140313" transform="rotate(-0 206.2368 152.140313)">1  AD-linked DNA region</text>
    </g>
    <g id="text_16">
     <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #333333" x="206.2368" y="172.324238" transform="rotate(-0 206.2368 172.324238)">Bellenguez AD  ·  GCST90027158</text>
    </g>
    <g id="text_17">
-    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(206.2368 187.667859)">CSF GWAS: GCST90726396</text>
-    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(206.2368 197.747859)">GCST90726397  ·  GCST90726398</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(206.2368 186.875438)">Spinal-fluid biomarkers (CSF):</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(206.2368 197.747859)">GCST90726396  ·  GCST90726397</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(206.2368 207.827859)">GCST90726398</text>
    </g>
    <g id="text_18">
-    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #5b6573" x="206.2368" y="221.063766" transform="rotate(-0 206.2368 221.063766)">54 AD e/sQTL routes  ·  57 CSF screens</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #5b6573" x="206.2368" y="220.707984" transform="rotate(-0 206.2368 220.707984)">54 AD gene tests  ·  57 CSF screens</text>
    </g>
    <g id="text_19">
-    <text style="font-weight: 700; font-size: 10px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="389.2608" y="152.489531" transform="rotate(-0 389.2608 152.489531)">2  Candidate molecular QTL</text>
+    <text style="font-weight: 700; font-size: 10px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="389.2608" y="152.140313" transform="rotate(-0 389.2608 152.140313)">2  Variant affects the gene</text>
    </g>
    <g id="text_20">
-    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #333333" x="389.2608" y="172.324238" transform="rotate(-0 389.2608 172.324238)">NG00184.v1  ·  eQTL Catalogue r7</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #333333" x="389.2608" y="172.324238" transform="rotate(-0 389.2608 172.324238)">DNA-to-gene link (QTL)</text>
    </g>
    <g id="text_21">
-    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(389.2608 186.875438)">eQTL  ·  sQTL  ·  targeted pQTL</text>
-    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(389.2608 197.747859)">APOE: NG00130.v2</text>
-    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(389.2608 207.907313)">RPS15: NG00184.v1 audit</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(389.2608 186.875438)">Activity (eQTL)  ·  splicing (sQTL)</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(389.2608 196.955438)">APOE protein (pQTL; NG00130.v2)</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(389.2608 207.377859)">RPS15 check (NG00184.v1)</text>
    </g>
    <g id="text_22">
-    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #5b6573" x="389.2608" y="220.787438" transform="rotate(-0 389.2608 220.787438)">Exact → lineage → bulk-brain fallback</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #5b6573" x="389.2608" y="220.787438" transform="rotate(-0 389.2608 220.787438)">eQTL Catalogue r7</text>
    </g>
    <g id="text_23">
-    <text style="font-weight: 700; font-size: 10px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="581.2128" y="152.179375" transform="rotate(-0 581.2128 152.179375)">3  Compatible inputs</text>
+    <text style="font-weight: 700; font-size: 10px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="581.2128" y="152.179375" transform="rotate(-0 581.2128 152.179375)">3  Data can be compared</text>
    </g>
    <g id="text_24">
-    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #333333" x="581.2128" y="173.196112" transform="rotate(-0 581.2128 173.196112)">Alleles  ·  build  ·  variant order</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #333333" x="581.2128" y="172.324238" transform="rotate(-0 581.2128 172.324238)">Matching variants + genome</text>
    </g>
    <g id="text_25">
-    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(581.2128 186.875438)">Complete fitted model</text>
-    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(581.2128 197.368172)">Source-matched,</text>
-    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(581.2128 207.035438)">ancestry-compatible LD</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(581.2128 186.875438)">Complete statistical model</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(581.2128 196.955438)">Matched ancestry and</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(581.2128 207.377859)">variant correlation (LD)</text>
    </g>
    <g id="text_26">
-    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #5b6573" x="581.2128" y="220.787438" transform="rotate(-0 581.2128 220.787438)">All inputs are required</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #5b6573" x="581.2128" y="220.787438" transform="rotate(-0 581.2128 220.787438)">Every item is required</text>
    </g>
    <g id="text_27">
-    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="755.3088" y="151.308281" transform="rotate(-0 755.3088 151.308281)">4  Shared-signal test</text>
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="755.3088" y="151.308281" transform="rotate(-0 755.3088 151.308281)">4  Same DNA signal?</text>
    </g>
    <g id="text_28">
-    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #333333" x="755.3088" y="172.324238" transform="rotate(-0 755.3088 172.324238)">Multi-signal H0–H4</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #333333" x="755.3088" y="172.324238" transform="rotate(-0 755.3088 172.324238)">Probability both match</text>
    </g>
    <g id="text_29">
-    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(755.3088 186.875438)">Runs only after all</text>
-    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(755.3088 196.695984)">upstream gates pass</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(755.3088 187.212938)">(PP.H4)</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(755.3088 196.955438)">Runs only if steps 1–3 pass</text>
    </g>
    <g id="text_30">
-    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #5b6573" x="755.3088" y="221.659312" transform="rotate(-0 755.3088 221.659312)">Else PP.H4 is unavailable</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #5b6573" x="755.3088" y="221.659312" transform="rotate(-0 755.3088 221.659312)">Otherwise: not calculated</text>
    </g>
    <g id="text_31">
-    <text style="font-weight: 700; font-size: 10px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="33.9264" y="267.534713" transform="rotate(-0 33.9264 267.534713)">Separate mtDNA design</text>
+    <text style="font-weight: 700; font-size: 10px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="33.9264" y="267.534713" transform="rotate(-0 33.9264 267.534713)">Mitochondrial genes</text>
    </g>
    <g id="text_32">
-    <text style="font-size: 9.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #333333" x="33.9264" y="286.375006" transform="rotate(-0 33.9264 286.375006)">20 contexts  ·  6 genes</text>
+    <text style="font-size: 9.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #333333" x="33.9264" y="286.456225" transform="rotate(-0 33.9264 286.456225)">20 pairs  ·  6 genes</text>
    </g>
    <g id="text_33">
-    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(33.9264 302.277038)">Nuclear routes not applicable</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(33.9264 303.148913)">Need a different test</text>
     <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(33.9264 311.997038)">—not a negative result</text>
    </g>
    <g id="text_34">
-    <text style="font-weight: 700; font-size: 10.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="212.4864" y="288.085763" transform="rotate(-0 212.4864 288.085763)">A route stops at the first failed requirement.</text>
+    <text style="font-weight: 700; font-size: 10.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="212.4864" y="288.045919" transform="rotate(-0 212.4864 288.045919)">Testing stops when a required step fails.</text>
    </g>
    <g id="text_35">
-    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #333333" x="212.4864" y="307.381838" transform="rotate(-0 212.4864 307.381838)">Arrows show analysis flow—not a causal mechanism.</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #333333" x="212.4864" y="308.253713" transform="rotate(-0 212.4864 308.253713)">Arrows show test order—not cause and effect.</text>
    </g>
    <g id="text_36">
     <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #0072b2" x="180.3456" y="98.032781" transform="rotate(-0 180.3456 98.032781)">A</text>

@@ -1,22 +1,23 @@
 schema_version	record_id	record_type	lane	display_order	title	subtitle	detail	source_note	style_key	x	y	width	height
-genetic_support_gated_workflow_v1	freeze	scope	shared	1	"Frozen
-candidate set"	"47 contexts
-25 unique genes"	"Top-five network set
-no genetic reranking"	call_key_driver_returns.tsv	freeze_navy	0.025	0.41	0.165	0.35
-genetic_support_gated_workflow_v1	tier1_lane	lane_heading	direct_summary	1	PARALLEL LANE A  ·  DIRECT PUBLIC-SUMMARY EVIDENCE	All 47 frozen contexts	NA	genetic_support_dataset_registry.tsv	lane_blue	0.22	0.925	0.76	0.04
-genetic_support_gated_workflow_v1	tier1_screen	analysis_step	direct_summary	2	FunGen-xQTL direct-summary screen	AD fine-mapping  ·  brain xQTL  ·  TWAS	Pinned public snapshot  f6f63fc…	FunGen_AD_unified / FunGen_xQTL / FunGen_TWAS	direct_blue	0.22	0.73	0.34	0.17
-genetic_support_gated_workflow_v1	tier1_grade	analysis_step	direct_summary	3	Direct candidate mapping + formal grade	Source inclusion/confidence fields retain their meaning	Not classical PP.H4 values	Tier 1 evidence matrix	direct_output	0.61	0.73	0.37	0.17
-genetic_support_gated_workflow_v1	nuclear_lane	lane_heading	nuclear_gated	1	PARALLEL LANE B  ·  NUCLEAR REGIONAL + MOLECULAR-QTL PATH	27 contexts  ·  19 genes	NA	tier2_candidate_route_manifest.tsv	lane_navy	0.22	0.65	0.76	0.04
-genetic_support_gated_workflow_v1	regional_gate	gate	nuclear_gated	2	1  Regional signal	Bellenguez AD  ·  GCST90027158	"CSF GWAS: GCST90726396
-GCST90726397  ·  GCST90726398"	54 AD e/sQTL routes  ·  57 CSF screens	gate_white	0.22	0.315	0.185	0.3
-genetic_support_gated_workflow_v1	qtl_gate	gate	nuclear_gated	3	2  Candidate molecular QTL	NG00184.v1  ·  eQTL Catalogue r7	"eQTL  ·  sQTL  ·  targeted pQTL
-APOE: NG00130.v2
-RPS15: NG00184.v1 audit"	Exact → lineage → bulk-brain fallback	gate_white	0.425	0.315	0.195	0.3
-genetic_support_gated_workflow_v1	compatibility_gate	gate	nuclear_gated	4	3  Compatible inputs	Alleles  ·  build  ·  variant order	"Complete fitted model
-Source-matched,
-ancestry-compatible LD"	All inputs are required	gate_white	0.64	0.315	0.175	0.3
-genetic_support_gated_workflow_v1	primary_test	gate	nuclear_gated	5	4  Shared-signal test	Multi-signal H0–H4	"Runs only after all
-upstream gates pass"	Else PP.H4 is unavailable	primary_blue	0.835	0.315	0.145	0.3
-genetic_support_gated_workflow_v1	mtdna_scope	separate_scope	mtdna	1	Separate mtDNA design	20 contexts  ·  6 genes	"Nuclear routes not applicable
+genetic_support_gated_workflow_v1	freeze	scope	shared	1	"Starting gene list
+(chosen in advance)"	"47 gene–network pairs
+25 unique genes"	"Top network genes
+not changed by genetic results"	call_key_driver_returns.tsv	freeze_navy	0.025	0.41	0.165	0.35
+genetic_support_gated_workflow_v1	tier1_lane	lane_heading	direct_summary	1	LANE A  ·  LOOK UP RESULTS IN PUBLIC DATA	All 47 gene–network pairs	NA	genetic_support_dataset_registry.tsv	lane_blue	0.22	0.925	0.76	0.04
+genetic_support_gated_workflow_v1	tier1_screen	analysis_step	direct_summary	2	Search public FunGen results	Likely AD variants  ·  effects on gene activity or splicing	Pre-computed results from a fixed public data snapshot	FunGen_AD_unified / FunGen_xQTL / FunGen_TWAS	direct_blue	0.22	0.73	0.34	0.17
+genetic_support_gated_workflow_v1	tier1_grade	analysis_step	direct_summary	3	Match results directly to each gene	Keep the source's original confidence labels	Support grade—not a shared-signal probability	Tier 1 evidence matrix	direct_output	0.61	0.73	0.37	0.17
+genetic_support_gated_workflow_v1	nuclear_lane	lane_heading	nuclear_gated	1	LANE B  ·  DOES THE SAME DNA SIGNAL LINK TO AD AND THE GENE?	27 gene–network pairs  ·  19 non-mitochondrial genes	NA	tier2_candidate_route_manifest.tsv	lane_navy	0.22	0.65	0.76	0.04
+genetic_support_gated_workflow_v1	regional_gate	gate	nuclear_gated	2	1  AD-linked DNA region	Bellenguez AD  ·  GCST90027158	"Spinal-fluid biomarkers (CSF):
+GCST90726396  ·  GCST90726397
+GCST90726398"	54 AD gene tests  ·  57 CSF screens	gate_white	0.22	0.315	0.185	0.3
+genetic_support_gated_workflow_v1	qtl_gate	gate	nuclear_gated	3	2  Variant affects the gene	DNA-to-gene link (QTL)	"Activity (eQTL)  ·  splicing (sQTL)
+APOE protein (pQTL; NG00130.v2)
+RPS15 check (NG00184.v1)"	eQTL Catalogue r7	gate_white	0.425	0.315	0.195	0.3
+genetic_support_gated_workflow_v1	compatibility_gate	gate	nuclear_gated	4	3  Data can be compared	Matching variants + genome	"Complete statistical model
+Matched ancestry and
+variant correlation (LD)"	Every item is required	gate_white	0.64	0.315	0.175	0.3
+genetic_support_gated_workflow_v1	primary_test	gate	nuclear_gated	5	4  Same DNA signal?	Probability both match	"(PP.H4)
+Runs only if steps 1–3 pass"	Otherwise: not calculated	primary_blue	0.835	0.315	0.145	0.3
+genetic_support_gated_workflow_v1	mtdna_scope	separate_scope	mtdna	1	Mitochondrial genes	20 pairs  ·  6 genes	"Need a different test
 —not a negative result"	Not assessed negatively	mtdna_outline	0.025	0.045	0.165	0.225
-genetic_support_gated_workflow_v1	boundary	boundary	shared	99	A route stops at the first failed requirement.	Arrows show analysis flow—not a causal mechanism.	NA	recovery_route_decisions.tsv	boundary	0.22	0.045	0.76	0.18
+genetic_support_gated_workflow_v1	boundary	boundary	shared	99	Testing stops when a required step fails.	Arrows show test order—not cause and effect.	NA	recovery_route_decisions.tsv	boundary	0.22	0.045	0.76	0.18

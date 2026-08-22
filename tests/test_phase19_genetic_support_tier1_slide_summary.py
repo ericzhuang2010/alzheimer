@@ -45,6 +45,11 @@ def test_plot_data_preserves_scope_and_interpretive_categories() -> None:
     assert set(derived["not_assessable_genes"]) == FIGURE.EXPECTED_MTDNA
     assert "phase 19" not in derived["visible_text"].lower()
     assert "phase19" not in derived["visible_text"].lower()
+    assert "top candidate AD variant" in derived["visible_text"]
+    assert "brain RNA-splicing link" in derived["visible_text"]
+    assert "predicted gene activity to AD (TWAS)" in derived["visible_text"]
+    assert "candidate-context" not in derived["visible_text"].lower()
+    assert "colocalization" not in derived["visible_text"].lower()
 
 
 def test_full_figure_package(tmp_path: Path) -> None:

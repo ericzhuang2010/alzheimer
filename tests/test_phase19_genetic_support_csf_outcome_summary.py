@@ -81,7 +81,11 @@ def test_plot_data_preserves_gene_by_trait_scope_and_interpretation() -> None:
     assert forbidden.isdisjoint(plot_data.columns)
     visible = derived["visible_text"].lower()
     assert "one gene, not three genes" in visible
-    assert "do not establish a molecular mechanism" in visible
+    assert "do not show how the gene works" in visible
+    assert "prove both signals share one variant" in visible
+    assert "gwas" not in visible
+    assert "magma" not in visible
+    assert "colocalization" not in visible
     assert "phase 19" not in visible
     assert "phase19" not in visible
 
@@ -164,5 +168,9 @@ def test_full_figure_package(tmp_path: Path) -> None:
     assert "phase19" not in svg
     assert "-log10" not in svg
     assert "pp.h4" not in svg
+    assert "gwas" not in svg
+    assert "magma" not in svg
+    assert "colocalization" not in svg
+    assert "csf" not in svg
+    assert "both genetic tests" in svg
     assert (output / "genetic_support_csf_outcome_summary.pdf").read_bytes()[:5] == b"%PDF-"
-

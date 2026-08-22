@@ -74,16 +74,16 @@ EXPECTED_TERMINAL_COUNTS = {
     "not_assessable": 6,
 }
 TERMINAL_LABELS = {
-    "no_regional_gwas_signal": "No regional AD\nGWAS signal",
-    "no_regional_qtl_signal": "No candidate\nQTL signal",
-    "model_or_ld_incompatible": "Model or LD\nincompatible",
-    "not_assessable": "Not assessable",
+    "no_regional_gwas_signal": "No strong nearby\nAD variant signal",
+    "no_regional_qtl_signal": "No strong gene-\nexpression signal",
+    "model_or_ld_incompatible": "Required inputs\nunavailable",
+    "not_assessable": "Could not assess",
 }
 TERMINAL_DETAILS = {
-    "no_regional_gwas_signal": "Regional P gate\nnot passed",
-    "no_regional_qtl_signal": "Candidate eQTL gate\nnot passed",
-    "model_or_ld_incompatible": "Required model or\nmatched LD unavailable",
-    "not_assessable": "Target sQTL status\nunresolved",
+    "no_regional_gwas_signal": "Nearby AD-signal\ncutoff not passed",
+    "no_regional_qtl_signal": "Expression-signal\ncutoff not passed",
+    "model_or_ld_incompatible": "Prediction method or\nvariant correlations missing",
+    "not_assessable": "Splicing-data status\nunresolved",
 }
 STYLE_KEYS = {
     "no_regional_gwas_signal": "signal_negative_gray",
@@ -279,10 +279,10 @@ def derive_plot_data(
             "record_type": "posterior_boundary",
             "display_order": 1,
             "terminal_state": "valid_primary_h0_h4",
-            "display_label": "Valid primary H0-H4 results",
+            "display_label": "Completed shared-variant tests",
             "route_count": 0,
             "share": 0.0,
-            "detail": "PP.H4 unavailable; no route reached posterior estimation",
+            "detail": "Shared-variant probability unavailable; no test reached calculation",
             "style_key": "posterior_unavailable_vermillion",
             "source_field": "recovery_colocalization.tsv.gz:data_rows",
         }
@@ -375,7 +375,7 @@ def render_figure(plot_data: pd.DataFrame, derived: dict[str, Any]):
     panel_heading(
         axis,
         "A",
-        "Terminal outcomes across 54 prespecified routes",
+        "Why 54 planned gene tests stopped",
         0.032,
         0.892,
     )
@@ -383,7 +383,7 @@ def render_figure(plot_data: pd.DataFrame, derived: dict[str, Any]):
         axis,
         0.056,
         0.817,
-        "27 nuclear candidate contexts  •  27 eQTL routes  •  27 sQTL routes",
+        "27 gene–network pairs  •  27 expression tests  •  27 splicing tests",
         size=10.2,
         color=MID,
     )
@@ -427,7 +427,7 @@ def render_figure(plot_data: pd.DataFrame, derived: dict[str, Any]):
                 axis,
                 center,
                 bar_y + bar_height / 2,
-                "42   No regional AD GWAS signal",
+                "42   No strong AD variant signal near the gene",
                 size=11.2,
                 color=text_colors[row.terminal_state],
                 weight="bold",
@@ -504,7 +504,7 @@ def render_figure(plot_data: pd.DataFrame, derived: dict[str, Any]):
         edge=VERMILLION,
         linewidth=1.2,
     )
-    panel_heading(axis, "B", "Posterior boundary", 0.773, 0.892)
+    panel_heading(axis, "B", "Same variant?", 0.773, 0.892)
     add_text(
         axis,
         0.869,
@@ -519,7 +519,7 @@ def render_figure(plot_data: pd.DataFrame, derived: dict[str, Any]):
         axis,
         0.869,
         0.535,
-        "valid primary\nH0–H4 results",
+        "completed tests",
         size=13.0,
         color=DARK,
         weight="bold",
@@ -538,7 +538,7 @@ def render_figure(plot_data: pd.DataFrame, derived: dict[str, Any]):
         axis,
         0.869,
         0.337,
-        "PP.H4 unavailable",
+        "Probability not calculated",
         size=13.2,
         color=VERMILLION,
         weight="bold",
@@ -548,7 +548,7 @@ def render_figure(plot_data: pd.DataFrame, derived: dict[str, Any]):
         axis,
         0.869,
         0.240,
-        "No route reached\nposterior estimation",
+        "No test had all\nrequired inputs",
         size=9.5,
         color=MID,
         ha="center",
@@ -559,7 +559,7 @@ def render_figure(plot_data: pd.DataFrame, derived: dict[str, Any]):
         axis,
         0.032,
         0.115,
-        "Terminal categories are mutually exclusive—not sequential funnel losses.",
+        "Each test appears in one category—not a sequence of losses.",
         size=9.0,
         color=NAVY,
         weight="bold",
@@ -568,7 +568,7 @@ def render_figure(plot_data: pd.DataFrame, derived: dict[str, Any]):
         axis,
         0.707,
         0.115,
-        "A route stops at its first unmet input gate.",
+        "A test stops at its first missing requirement.",
         size=9.0,
         color=MID,
         ha="right",
@@ -577,15 +577,14 @@ def render_figure(plot_data: pd.DataFrame, derived: dict[str, Any]):
 
 
 CAPTION = """
-**Tier 2 routes stopped before a valid primary shared-signal analysis.** The 54
-prespecified nuclear molecular-QTL routes comprise paired eQTL and sQTL routes
-for 27 gene-by-network contexts. Their mutually exclusive terminal outcomes
-were: 42 without a regional clinical-AD GWAS signal, four without a candidate
-QTL signal, two with incomplete or incompatible model/LD inputs, and six not
-assessable because target sQTL measurement status was unresolved. The primary
-H0-H4 result table contains zero data rows; consequently, PP.H4 is unavailable,
-not equal to zero. Counts are terminal categories rather than sequential funnel
-losses.
+**All planned tests stopped before the shared-variant analysis.** The 54 tests
+comprise one expression test and one splicing test for each of 27 gene–network
+pairs. The reasons were: 42 lacked a strong AD variant signal near the gene,
+four lacked a strong gene-expression signal, two lacked the required prediction
+method or matching variant-correlation data, and six had unresolved splicing
+measurements. No test had all required inputs, so the probability that the AD
+and gene-activity signals share one variant was unavailable, not zero. Each
+test appears in exactly one category; the counts are not sequential losses.
 """
 
 

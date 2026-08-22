@@ -60,8 +60,12 @@ def test_plot_data_preserves_candidate_evidence_boundaries() -> None:
         "resolved": 0,
     }
     assert derived["rps15_unique_tracks"] == 3
-    assert "PP.H4 unavailable" in derived["visible_text"]
-    assert "PP.H4 = 0" not in derived["visible_text"]
+    assert "shared-variant test" in derived["visible_text"]
+    assert "PP.H4" not in derived["visible_text"]
+    assert "eQTL" not in derived["visible_text"]
+    assert "sQTL" not in derived["visible_text"]
+    assert "TWAS" not in derived["visible_text"]
+    assert "LD" not in derived["visible_text"]
     assert "causal" not in derived["visible_text"].lower()
 
 
@@ -109,5 +113,12 @@ def test_full_figure_package(tmp_path: Path) -> None:
         assert min(image.info["dpi"]) >= 449
     svg = (output / f"{FIGURE.STEM}.svg").read_text(encoding="utf-8")
     assert "<text" in svg
-    assert "PP.H4 = 0" not in svg
-
+    assert "PP.H4" not in svg
+    assert "eQTL" not in svg
+    assert "sQTL" not in svg
+    assert "TWAS" not in svg
+    assert "GWAS" not in svg
+    assert "MAGMA" not in svg
+    assert "CSF" not in svg
+    assert "WHAT THIS DOES NOT PROVE" in svg
+    assert "shared-variant test" in svg

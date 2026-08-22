@@ -582,13 +582,13 @@ z
     <text style="font-weight: 700; font-size: 13px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="17.856" y="19.966906" transform="rotate(-0 17.856 19.966906)">A</text>
    </g>
    <g id="text_2">
-    <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="40.176" y="18.492375" transform="rotate(-0 40.176 18.492375)">Trait-level gate decisions</text>
+    <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="40.176" y="18.53925" transform="rotate(-0 40.176 18.53925)">Each cerebrospinal-fluid biomarker</text>
    </g>
    <g id="text_3">
     <text style="font-weight: 700; font-size: 13px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="682.992" y="19.966906" transform="rotate(-0 682.992 19.966906)">B</text>
    </g>
    <g id="text_4">
-    <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="705.312" y="19.70175" transform="rotate(-0 705.312 19.70175)">All 57 screens</text>
+    <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="705.312" y="19.70175" transform="rotate(-0 705.312 19.70175)">All 57 tests</text>
    </g>
    <g id="text_5">
     <text style="font-weight: 700; font-size: 13.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="33.9264" y="62.900531" transform="rotate(-0 33.9264 62.900531)">Amyloid-β 42</text>
@@ -603,7 +603,7 @@ z
     <text style="font-weight: 700; font-size: 15px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="75.888" y="113.070966" transform="rotate(-0 75.888 113.070966)">APOE</text>
    </g>
    <g id="text_9">
-    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #0072b2" x="75.888" y="126.979481" transform="rotate(-0 75.888 126.979481)">regional + gene-based signal</text>
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #0072b2" x="75.888" y="126.979481" transform="rotate(-0 75.888 126.979481)">both genetic tests passed</text>
    </g>
    <g id="text_10">
     <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #0072b2" x="33.9264" y="181.951059" transform="rotate(-0 33.9264 181.951059)">1 APOE</text>
@@ -618,7 +618,7 @@ z
     <text style="font-weight: 700; font-size: 10.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #333333" x="82.1376" y="217.658719" transform="rotate(-0 82.1376 217.658719)">other nuclear genes</text>
    </g>
    <g id="text_14">
-    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #5b6573" x="33.9264" y="243.762638" transform="rotate(-0 33.9264 243.762638)">No qualifying regional + MAGMA signal</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #5b6573" x="33.9264" y="243.762638" transform="rotate(-0 33.9264 243.762638)">Did not pass both genetic tests</text>
    </g>
    <g id="text_15">
     <text style="font-weight: 700; font-size: 13.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="253.5552" y="64.141125" transform="rotate(-0 253.5552 64.141125)">Total tau</text>
@@ -633,7 +633,7 @@ z
     <text style="font-weight: 700; font-size: 15px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="295.5168" y="113.070966" transform="rotate(-0 295.5168 113.070966)">APOE</text>
    </g>
    <g id="text_19">
-    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #0072b2" x="295.5168" y="126.979481" transform="rotate(-0 295.5168 126.979481)">regional + gene-based signal</text>
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #0072b2" x="295.5168" y="126.979481" transform="rotate(-0 295.5168 126.979481)">both genetic tests passed</text>
    </g>
    <g id="text_20">
     <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #0072b2" x="253.5552" y="181.951059" transform="rotate(-0 253.5552 181.951059)">1 APOE</text>
@@ -648,7 +648,7 @@ z
     <text style="font-weight: 700; font-size: 10.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #333333" x="301.7664" y="217.658719" transform="rotate(-0 301.7664 217.658719)">other nuclear genes</text>
    </g>
    <g id="text_24">
-    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #5b6573" x="253.5552" y="243.762638" transform="rotate(-0 253.5552 243.762638)">No qualifying regional + MAGMA signal</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #5b6573" x="253.5552" y="243.762638" transform="rotate(-0 253.5552 243.762638)">Did not pass both genetic tests</text>
    </g>
    <g id="text_25">
     <text style="font-weight: 700; font-size: 13.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="473.184" y="62.745844" transform="rotate(-0 473.184 62.745844)">p-tau181</text>
@@ -663,7 +663,7 @@ z
     <text style="font-weight: 700; font-size: 15px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="515.1456" y="113.070966" transform="rotate(-0 515.1456 113.070966)">APOE</text>
    </g>
    <g id="text_29">
-    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #0072b2" x="515.1456" y="126.979481" transform="rotate(-0 515.1456 126.979481)">regional + gene-based signal</text>
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #0072b2" x="515.1456" y="126.979481" transform="rotate(-0 515.1456 126.979481)">both genetic tests passed</text>
    </g>
    <g id="text_30">
     <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #0072b2" x="473.184" y="181.951059" transform="rotate(-0 473.184 181.951059)">1 APOE</text>
@@ -678,7 +678,7 @@ z
     <text style="font-weight: 700; font-size: 10.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #333333" x="521.3952" y="217.658719" transform="rotate(-0 521.3952 217.658719)">other nuclear genes</text>
    </g>
    <g id="text_34">
-    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #5b6573" x="473.184" y="243.762638" transform="rotate(-0 473.184 243.762638)">No qualifying regional + MAGMA signal</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #5b6573" x="473.184" y="243.762638" transform="rotate(-0 473.184 243.762638)">Did not pass both genetic tests</text>
    </g>
    <g id="text_35">
     <text style="font-weight: 700; font-size: 33px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #0072b2" x="700.848" y="72.923484" transform="rotate(-0 700.848 72.923484)">3</text>
@@ -687,10 +687,10 @@ z
     <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="749.952" y="59.14725" transform="rotate(-0 749.952 59.14725)">APOE-positive</text>
    </g>
    <g id="text_37">
-    <text style="font-weight: 700; font-size: 10px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #5b6573" x="749.952" y="73.784312" transform="rotate(-0 749.952 73.784312)">gate decisions</text>
+    <text style="font-weight: 700; font-size: 10px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #5b6573" x="749.952" y="74.792125" transform="rotate(-0 749.952 74.792125)">results</text>
    </g>
    <g id="text_38">
-    <text style="font-weight: 700; font-size: 9.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #0072b2" x="700.848" y="94.547488" transform="rotate(-0 700.848 94.547488)">Same gene in all three traits</text>
+    <text style="font-weight: 700; font-size: 9.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #0072b2" x="700.848" y="94.547488" transform="rotate(-0 700.848 94.547488)">Same gene in all 3 tests</text>
    </g>
    <g id="text_39">
     <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #0072b2" x="700.848" y="153.863859" transform="rotate(-0 700.848 153.863859)">3</text>
@@ -702,10 +702,10 @@ z
     <text style="font-weight: 700; font-size: 27px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #333333" x="700.848" y="188.325591" transform="rotate(-0 700.848 188.325591)">54</text>
    </g>
    <g id="text_42">
-    <text style="font-weight: 700; font-size: 9.5px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #333333" x="756.2016" y="176.860297" transform="rotate(-0 756.2016 176.860297)">without qualifying</text>
+    <text style="font-weight: 700; font-size: 9.5px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #333333" x="756.2016" y="176.897406" transform="rotate(-0 756.2016 176.897406)">did not pass both</text>
    </g>
    <g id="text_43">
-    <text style="font-weight: 700; font-size: 9.5px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #333333" x="756.2016" y="190.396297" transform="rotate(-0 756.2016 190.396297)">GWAS signal</text>
+    <text style="font-weight: 700; font-size: 9.5px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #333333" x="756.2016" y="190.396297" transform="rotate(-0 756.2016 190.396297)">genetic tests</text>
    </g>
    <g id="text_44">
     <text style="font-weight: 700; font-size: 25px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #0072b2" x="718.704" y="237.181209" transform="rotate(-0 718.704 237.181209)">0</text>
@@ -717,10 +717,10 @@ z
     <text style="font-weight: 700; font-size: 9.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="758.88" y="239.140206" transform="rotate(-0 758.88 239.140206)">genes</text>
    </g>
    <g id="text_47">
-    <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #ffffff" x="446.4" y="306.470775" transform="rotate(-0 446.4 306.470775)">Three positive decisions = APOE across three traits, not three genes</text>
+    <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #ffffff" x="446.4" y="306.470775" transform="rotate(-0 446.4 306.470775)">Three positive results = APOE for three biomarkers, not three genes</text>
    </g>
    <g id="text_48">
-    <text style="font-size: 9.4px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #dde7f2" x="446.4" y="319.674613" transform="rotate(-0 446.4 319.674613)">Regional + MAGMA gates do not establish a molecular mechanism or colocalization.</text>
+    <text style="font-size: 9.4px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #dde7f2" x="446.4" y="319.674613" transform="rotate(-0 446.4 319.674613)">Nearby-variant + whole-gene tests do not show how APOE works or prove a shared variant.</text>
    </g>
   </g>
  </g>

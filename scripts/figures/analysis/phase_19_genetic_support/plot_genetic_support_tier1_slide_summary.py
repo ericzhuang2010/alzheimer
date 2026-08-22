@@ -184,9 +184,9 @@ def derive_plot_data(frames: dict[str, pd.DataFrame]) -> tuple[pd.DataFrame, dic
     outcome_labels = {
         "strong": "Strong",
         "moderate": "Moderate",
-        "weak": "Weak / limited",
-        "none_found": "No direct mapping",
-        "not_assessable": "Not assessable",
+        "weak": "Limited",
+        "none_found": "No direct public match",
+        "not_assessable": "Needs different data",
     }
     style_keys = {
         "strong": "strong_blue",
@@ -211,7 +211,7 @@ def derive_plot_data(frames: dict[str, pd.DataFrame]) -> tuple[pd.DataFrame, dic
                 "value": count,
                 "share": count / len(summary),
                 "primary_label": outcome_labels[grade],
-                "secondary_label": f"{count} candidate-context units",
+                "secondary_label": f"{count} gene–network pairs",
                 "tertiary_label": "NA",
                 "evidence_id": "NA",
                 "style_key": style_keys[grade],
@@ -237,22 +237,23 @@ def derive_plot_data(frames: dict[str, pd.DataFrame]) -> tuple[pd.DataFrame, dic
         grade = str(gene_rows["final_grade"].iloc[0])
         if gene == "APOE":
             detail = (
-                f"{apoe['rsid']}  •  AD fine-map inclusion {float(apoe['ad_max_inclusion_score']):.1f}"
-                f"  •  P ≈ {format_scientific(float(apoe['min_pvalue']))}"
+                f"{apoe['rsid']}  •  top candidate AD variant (score {float(apoe['ad_max_inclusion_score']):.1f})"
+                f"  •  AD P ≈ {format_scientific(float(apoe['min_pvalue']))}"
             )
-            limit = "Fallback brain evidence; not an exact astrocyte colocalization"
+            limit = "Brain-tissue support; an exact astrocyte match was not available"
             evidence_id = str(apoe["rsid"])
         elif gene == "COX7C":
             confidence = str(cox_coloc.iloc[0]["public_confidence_level"])
+            confidence_level = confidence.removeprefix("CL")
             detail = (
-                f"{cox7c['rsid']}  •  bulk sQTL {confidence}"
+                f"{cox7c['rsid']}  •  brain RNA-splicing link (source confidence level {confidence_level})"
                 f"  •  AD P ≈ {format_scientific(float(cox7c['min_pvalue']))}"
             )
-            limit = "One source result shown in two network contexts; not two replications"
+            limit = "The same source result appears in two networks; it is not two separate confirmations"
             evidence_id = str(cox7c["rsid"])
         else:
-            detail = "Reported in the source TWAS gene list"
-            limit = "Model statistic and exact excitatory context unavailable in the public table"
+            detail = "Listed in a study linking predicted gene activity to AD (TWAS)"
+            limit = "The public table lacks the test score and exact neuron type"
             evidence_id = "TWAS_gene_list"
         card_specs.append((gene, contexts, grade, len(gene_rows), detail, limit, evidence_id))
 
@@ -268,7 +269,7 @@ def derive_plot_data(frames: dict[str, pd.DataFrame]) -> tuple[pd.DataFrame, dic
                 "context_count": context_count,
                 "value": context_count,
                 "share": context_count / len(summary),
-                "primary_label": "STRONG GENE-LEVEL SUPPORT" if grade == "strong" else "WEAK / LIMITED",
+                "primary_label": "STRONG GENETIC SUPPORT" if grade == "strong" else "LIMITED GENETIC SUPPORT",
                 "secondary_label": detail,
                 "tertiary_label": limit,
                 "evidence_id": evidence_id,
@@ -320,8 +321,8 @@ def derive_plot_data(frames: dict[str, pd.DataFrame]) -> tuple[pd.DataFrame, dic
             "context_count": 47,
             "value": 47,
             "share": 1.0,
-            "primary_label": "No direct map ≠ no genetic role    •    Not assessable ≠ negative",
-            "secondary_label": "Evidence categories summarize source coverage and direct mapping; they are not causal probabilities.",
+            "primary_label": "No public match ≠ no genetic role    •    Missing data ≠ negative result",
+            "secondary_label": "Categories show what the public data search could test; they do not measure cause.",
             "tertiary_label": "NA",
             "evidence_id": "NA",
             "style_key": "boundary_navy",
@@ -387,7 +388,7 @@ def panel_heading(ax: plt.Axes, letter: str, title: str, x: float, y: float) -> 
 
 def draw_outcome_panel(ax: plt.Axes, plot_data: pd.DataFrame, total: int) -> None:
     rounded_box(ax, 0.012, 0.735, 0.976, 0.252, face=WHITE, edge=LIGHT, linewidth=0.9)
-    panel_heading(ax, "A", f"Candidate-context outcomes  (n = {total})", 0.028, 0.953)
+    panel_heading(ax, "A", f"Results across gene–network pairs  (n = {total})", 0.028, 0.953)
     text(ax, 0.965, 0.953, "Moderate = 0", size=9.6, color=GREEN, weight="bold", ha="right")
     segments = plot_data.loc[
         plot_data["record_type"].eq("outcome_segment") & plot_data["value"].gt(0)
@@ -413,16 +414,16 @@ def draw_outcome_panel(ax: plt.Axes, plot_data: pd.DataFrame, total: int) -> Non
         centers[row.final_grade] = bar_x + offset + width / 2
         if row.final_grade == "none_found":
             text(ax, centers[row.final_grade], bar_y + bar_h / 2,
-                 f"No direct mapping  •  {int(row.value)}", size=10.2,
+                 f"No direct public match  •  {int(row.value)}", size=10.2,
                  color=DARK, weight="bold", ha="center")
         elif row.final_grade == "not_assessable":
             text(ax, centers[row.final_grade], bar_y + bar_h / 2,
-                 f"Not assessable  •  {int(row.value)}", size=10.2,
+                 f"Needs different data  •  {int(row.value)}", size=10.2,
                  color=DARK, weight="bold", ha="center")
         offset += width
     for grade, label, label_x, color in [
         ("strong", "Strong  •  1", 0.064, BLUE),
-        ("weak", "Weak / limited  •  3", 0.174, ORANGE),
+        ("weak", "Limited  •  3", 0.174, ORANGE),
     ]:
         center = centers[grade]
         ax.annotate(
@@ -433,13 +434,13 @@ def draw_outcome_panel(ax: plt.Axes, plot_data: pd.DataFrame, total: int) -> Non
             zorder=6,
         )
     text(ax, 0.048, 0.763,
-         "One unit = one displayed gene × broad-network context; repeated genes can contribute more than one unit.",
+         "Each unit is one gene in one network; a gene may appear in more than one network.",
          size=9.0, color=MID)
 
 
 def draw_candidate_cards(ax: plt.Axes, plot_data: pd.DataFrame) -> None:
     rounded_box(ax, 0.012, 0.147, 0.528, 0.572, face=WHITE, edge=LIGHT, linewidth=0.9)
-    panel_heading(ax, "B", "Direct candidate-level findings", 0.028, 0.687)
+    panel_heading(ax, "B", "Genes with public genetic evidence", 0.028, 0.687)
     cards = plot_data.loc[plot_data["record_type"].eq("candidate_card")].sort_values("display_order")
     ys = [0.512, 0.345, 0.178]
     for row, y in zip(cards.itertuples(index=False), ys):
@@ -465,14 +466,14 @@ def draw_chip(ax: plt.Axes, x: float, y: float, w: float, label: str, *,
 
 def draw_unresolved_panel(ax: plt.Axes, plot_data: pd.DataFrame, derived: dict[str, Any]) -> None:
     rounded_box(ax, 0.552, 0.147, 0.436, 0.572, face=WHITE, edge=LIGHT, linewidth=0.9)
-    panel_heading(ax, "C", "Unresolved candidates", 0.568, 0.687)
+    panel_heading(ax, "C", "Genes without a clear result", 0.568, 0.687)
 
     rounded_box(ax, 0.570, 0.402, 0.400, 0.244, face=PALE_GRAY, edge=GRAY,
                 linewidth=0.9, radius=0.010)
-    text(ax, 0.586, 0.616, "NO DIRECT MAPPING IN THE REGISTERED FILTERED SOURCE",
+    text(ax, 0.586, 0.616, "NO DIRECT MATCH IN THE PUBLIC DATA SEARCH",
          size=9.2, color=NAVY, weight="bold")
     text(ax, 0.586, 0.584,
-         f"{len(derived['no_direct_genes'])} nuclear genes  •  {derived['no_direct_contexts']} contexts",
+         f"{len(derived['no_direct_genes'])} non-mitochondrial genes  •  {derived['no_direct_contexts']} gene–network pairs",
          size=9.3, color=MID, weight="bold")
     genes = plot_data.loc[plot_data["record_type"].eq("no_direct_gene")].sort_values("display_order")
     chip_x = [0.584, 0.678, 0.772, 0.866]
@@ -483,19 +484,19 @@ def draw_unresolved_panel(ax: plt.Axes, plot_data: pd.DataFrame, derived: dict[s
 
     rounded_box(ax, 0.570, 0.174, 0.400, 0.190, face=WHITE, edge=DARK,
                 linewidth=1.0, radius=0.010)
-    text(ax, 0.586, 0.337, "NOT ASSESSABLE WITH THE AVAILABLE SOURCE",
+    text(ax, 0.586, 0.337, "MITOCHONDRIAL GENES NEED DIFFERENT DATA",
          size=9.2, color=NAVY, weight="bold")
     text(ax, 0.586, 0.305,
-         f"{len(derived['not_assessable_genes'])} mtDNA genes  •  {derived['not_assessable_contexts']} contexts",
+         f"{len(derived['not_assessable_genes'])} mitochondrial-DNA genes  •  {derived['not_assessable_contexts']} gene–network pairs",
          size=9.3, color=MID, weight="bold")
     mt = plot_data.loc[plot_data["record_type"].eq("not_assessable_gene")].sort_values("display_order")
     mt_x = [0.584, 0.711, 0.838]
     mt_y = [0.250, 0.202]
     for index, row in enumerate(mt.itertuples(index=False)):
-        draw_chip(ax, mt_x[index % 3], mt_y[index // 3], 0.114, f"NA · {row.gene}",
+        draw_chip(ax, mt_x[index % 3], mt_y[index // 3], 0.114, row.gene,
                   face=WHITE, edge=DARK)
     text(ax, 0.586, 0.184,
-         "Requires mtDNA-specific heteroplasmy, haplogroup, copy-number + NUMT controls.",
+         "Needs mitochondrial-DNA measurements and special quality checks.",
          size=9.0, color=MID)
 
 
@@ -520,14 +521,23 @@ def render_figure(plot_data: pd.DataFrame, derived: dict[str, Any], staging: Pat
     rounded_box(ax, 0.012, 0.020, 0.976, 0.092, face=NAVY, edge=NAVY,
                 linewidth=0.8, radius=0.008)
     text(ax, 0.500, 0.077,
-         "No direct map ≠ no genetic role    •    Not assessable ≠ negative",
+         "No public match ≠ no genetic role    •    Missing data ≠ negative result",
          size=12.0, color=WHITE, weight="bold", ha="center")
     text(ax, 0.500, 0.044,
-         "Evidence categories summarize source coverage and direct mapping; they are not causal probabilities.",
+         "Categories show what the public data search could test; they do not measure cause.",
          size=9.0, color="#DDE7F2", ha="center")
     fig.savefig(staging / OUTPUT_FILES[0], dpi=PNG_DPI, facecolor=WHITE)
     fig.savefig(staging / OUTPUT_FILES[1], facecolor=WHITE, metadata={"CreationDate": None})
-    fig.savefig(staging / OUTPUT_FILES[2], facecolor=WHITE, metadata={"Date": None})
+    svg_path = staging / OUTPUT_FILES[2]
+    fig.savefig(svg_path, facecolor=WHITE, metadata={"Date": None})
+    # Matplotlib can leave spaces at the ends of wrapped SVG path lines.
+    # Normalize them before checksums are recorded so generated artifacts also
+    # satisfy the repository's whitespace check.
+    svg_text = svg_path.read_text(encoding="utf-8")
+    svg_path.write_text(
+        "\n".join(line.rstrip() for line in svg_text.splitlines()) + "\n",
+        encoding="utf-8",
+    )
     plt.close(fig)
 
 

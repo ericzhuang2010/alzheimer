@@ -70,9 +70,14 @@ def test_source_contract_and_plot_data() -> None:
     assert all(accession in visible for accession in FIGURE.CSF_ACCESSIONS)
     assert "NG00130.v2" in visible
     assert "NG00184.v1" in visible
-    assert "source-matched" in visible.lower()
-    assert "ancestry-compatible ld" in visible.lower()
-    assert "analysis flow—not a causal mechanism" in visible
+    assert "DNA-to-gene link (QTL)" in visible
+    assert "variant correlation (LD)" in visible
+    assert "Probability both match" in visible
+    assert "(PP.H4)" in visible
+    assert "Matched ancestry" in visible
+    assert "test order—not cause and effect" in visible
+    assert "direct public-summary" not in visible.lower()
+    assert "H0–H4" not in visible
     assert not any(value in visible for value in FIGURE.OMITTED_SAMPLE_COUNTS)
 
 

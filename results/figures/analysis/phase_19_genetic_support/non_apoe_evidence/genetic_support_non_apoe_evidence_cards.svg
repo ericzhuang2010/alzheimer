@@ -208,93 +208,103 @@ L 859.7664 252.4464
     <text style="font-weight: 700; font-size: 16.5px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="31.248" y="26.986542" transform="rotate(-0 31.248 26.986542)">COX7C</text>
    </g>
    <g id="text_2">
-    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: end; fill: #e69f00" x="423.1872" y="23.902988" transform="rotate(-0 423.1872 23.902988)">WEAK / UNRESOLVED</text>
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: end; fill: #e69f00" x="423.1872" y="23.902988" transform="rotate(-0 423.1872 23.902988)">WEAK / INCOMPLETE</text>
    </g>
    <g id="text_3">
     <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #e69f00" x="33.0336" y="50.990259" transform="rotate(-0 33.0336 50.990259)">WHAT THE DATA SHOW</text>
    </g>
    <g id="text_4">
-    <text style="font-weight: 700; font-size: 9.4px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(33.0336 67.793094)">One bulk-brain AD×sQTL summary entry (rs2010322)</text>
-    <text style="font-weight: 700; font-size: 9.4px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(33.0336 79.449094)">Bellenguez ±1 Mb: Pmin 8.579 × 10⁻¹⁴ (rs62375397)</text>
+    <text style="font-weight: 700; font-size: 8.5px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(33.0336 63.686266)">One published bulk-brain summary record: AD + RNA splicing</text>
+    <text style="font-weight: 700; font-size: 8.5px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(33.0336 73.376266)">Within 1 Mb (Bellenguez): smallest P 8.579 × 10⁻¹⁴</text>
+    <text style="font-weight: 700; font-size: 8.5px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(33.0336 83.922906)">Lead variant rs62375397</text>
    </g>
    <g id="text_5">
-    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #5b6573" x="33.0336" y="104.119059" transform="rotate(-0 33.0336 104.119059)">INTERPRETIVE BOUNDARY</text>
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #5b6573" x="33.0336" y="104.119059" transform="rotate(-0 33.0336 104.119059)">WHAT THIS DOES NOT PROVE</text>
    </g>
    <g id="text_6">
-    <text style="font-size: 9.1px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(33.0336 121.152831)">One Tier 1 record appears in two network contexts.</text>
-    <text style="font-size: 9.1px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(33.0336 132.254831)">Dense eQTL gates failed; sQTL/H0–H4 remains unresolved.</text>
+    <text style="font-size: 7.9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(33.0336 117.524706)">One evidence record is repeated in two network settings.</text>
+    <text style="font-size: 7.9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(33.0336 126.372706)">The expression test did not pass.</text>
+    <text style="font-size: 7.9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(33.0336 135.220706)">The splicing shared-variant test was incomplete.</text>
    </g>
    <g id="text_7">
-    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #5b6573" x="226.3248" y="149.687438" transform="rotate(-0 226.3248 149.687438)">Tier 1 weak · 2 contexts     CSF 0/3 passed</text>
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #5b6573" x="226.3248" y="149.652281" transform="rotate(-0 226.3248 149.652281)">Initial: weak · 2 network settings     Spinal-fluid: 0/3</text>
    </g>
    <g id="text_8">
     <text style="font-weight: 700; font-size: 16.5px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="471.3984" y="26.986542" transform="rotate(-0 471.3984 26.986542)">SELENOW</text>
    </g>
    <g id="text_9">
-    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: end; fill: #e69f00" x="863.3376" y="24.256659" transform="rotate(-0 863.3376 24.256659)">WEAK SUMMARY EVIDENCE ONLY</text>
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: end; fill: #e69f00" x="863.3376" y="24.256659" transform="rotate(-0 863.3376 24.256659)">WEAK GENE-LIST EVIDENCE</text>
    </g>
    <g id="text_10">
     <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #e69f00" x="473.184" y="50.990259" transform="rotate(-0 473.184 50.990259)">WHAT THE DATA SHOW</text>
    </g>
    <g id="text_11">
-    <text style="font-weight: 700; font-size: 9.4px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(473.184 67.793094)">FunGen public TWAS gene-list membership</text>
-    <text style="font-weight: 700; font-size: 9.4px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(473.184 79.449094)">Bellenguez window: Pmin 6.410 × 10⁻⁵; fails 5 × 10⁻⁸ gate</text>
+    <text style="font-weight: 700; font-size: 8.5px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(473.184 63.719469)">Published list based on predicted expression includes SELENOW</text>
+    <text style="font-weight: 700; font-size: 8.5px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(473.184 73.376266)">Bellenguez: smallest P 6.410 × 10⁻⁵</text>
+    <text style="font-weight: 700; font-size: 8.5px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(473.184 83.066266)">Significance cutoff 5 × 10⁻⁸: not passed</text>
    </g>
    <g id="text_12">
-    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #5b6573" x="473.184" y="104.119059" transform="rotate(-0 473.184 104.119059)">INTERPRETIVE BOUNDARY</text>
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #5b6573" x="473.184" y="104.119059" transform="rotate(-0 473.184 104.119059)">WHAT THIS DOES NOT PROVE</text>
    </g>
    <g id="text_13">
-    <text style="font-size: 9.1px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(473.184 121.152831)">No model statistic, replication, or exact excitatory context.</text>
-    <text style="font-size: 9.1px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(473.184 132.254831)">Nearby Wightman variants are proximity-only; QTL route not triggered.</text>
+    <text style="font-size: 7.9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(473.184 117.524706)">No score, independent confirmation, or exact excitatory-neuron match.</text>
+    <text style="font-size: 7.9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(473.184 126.372706)">Wightman variants were only nearby.</text>
+    <text style="font-size: 7.9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(473.184 135.220706)">No expression or splicing follow-up started.</text>
    </g>
    <g id="text_14">
-    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #5b6573" x="666.4752" y="149.687438" transform="rotate(-0 666.4752 149.687438)">Tier 1 weak · 1 context     CSF 0/3 passed</text>
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #5b6573" x="666.4752" y="149.652281" transform="rotate(-0 666.4752 149.652281)">Initial: weak · 1 network setting     Spinal-fluid: 0/3</text>
    </g>
    <g id="text_15">
     <text style="font-weight: 700; font-size: 16.5px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="31.248" y="188.403342" transform="rotate(-0 31.248 188.403342)">RPS15</text>
    </g>
    <g id="text_16">
-    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: end; fill: #d55e00" x="423.1872" y="185.673459" transform="rotate(-0 423.1872 185.673459)">HIGHEST-PRIORITY UNRESOLVED</text>
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: end; fill: #d55e00" x="423.1872" y="185.098303" transform="rotate(-0 423.1872 185.098303)">TOP FOLLOW-UP; INCOMPLETE</text>
    </g>
    <g id="text_17">
     <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #d55e00" x="33.0336" y="212.407059" transform="rotate(-0 33.0336 212.407059)">WHAT THE DATA SHOW</text>
    </g>
    <g id="text_18">
-    <text style="font-weight: 700; font-size: 9.4px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(33.0336 229.209894)">Bellenguez ±1 Mb: Pmin 4.089 × 10⁻³⁰ (rs12151021)</text>
-    <text style="font-weight: 700; font-size: 9.4px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(33.0336 240.865894)">Walker neocortex eQTL: P 2.120 × 10⁻⁶; passes 3.759 × 10⁻⁶ gate</text>
+    <text style="font-weight: 700; font-size: 8.1px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(33.0336 220.833253)">Within 1 Mb (Bellenguez): smallest P 4.089 × 10⁻³⁰</text>
+    <text style="font-weight: 700; font-size: 8.1px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(33.0336 230.883581)">Lead variant rs12151021</text>
+    <text style="font-weight: 700; font-size: 8.1px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(33.0336 239.332894)">Walker neocortex expression: P 2.120 × 10⁻⁶</text>
+    <text style="font-weight: 700; font-size: 8.1px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(33.0336 248.566894)">Corrected cutoff 3.759 × 10⁻⁶: passed</text>
    </g>
    <g id="text_19">
-    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #5b6573" x="33.0336" y="265.535859" transform="rotate(-0 33.0336 265.535859)">INTERPRETIVE BOUNDARY</text>
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #5b6573" x="33.0336" y="265.535859" transform="rotate(-0 33.0336 265.535859)">WHAT THIS DOES NOT PROVE</text>
    </g>
    <g id="text_20">
-    <text style="font-size: 9.1px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(33.0336 282.569631)">Complete candidate-QTL model and source-matched LD unavailable.</text>
-    <text style="font-size: 9.1px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(33.0336 293.671631)">3 bulk-brain tracks; gene/context unresolved; PP.H4 unavailable.</text>
+    <text style="font-size: 7.9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(33.0336 278.941506)">Expression-prediction data and matching variant correlations were missing.</text>
+    <text style="font-size: 7.9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(33.0336 287.789506)">Three bulk-brain tracks had signals, but the gene and cell setting</text>
+    <text style="font-size: 7.9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(33.0336 297.402819)">and a shared variant remain untested.</text>
    </g>
    <g id="text_21">
-    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #5b6573" x="226.3248" y="311.104238" transform="rotate(-0 226.3248 311.104238)">Supplemental: 31/37 measured · 3 tracks     CSF 0/3 passed</text>
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #5b6573" x="226.3248" y="311.104238" transform="rotate(-0 226.3248 311.104238)">Follow-up: 31/37 measured · 3 tracks     Spinal-fluid: 0/3</text>
    </g>
    <g id="text_22">
     <text style="font-weight: 700; font-size: 16.5px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="471.3984" y="188.412366" transform="rotate(-0 471.3984 188.412366)">ANKRD11</text>
    </g>
    <g id="text_23">
-    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: end; fill: #d55e00" x="863.3376" y="185.673459" transform="rotate(-0 863.3376 185.673459)">REGIONAL EVIDENCE ONLY</text>
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: end; fill: #d55e00" x="863.3376" y="185.673459" transform="rotate(-0 863.3376 185.673459)">AD SIGNAL NEARBY ONLY</text>
    </g>
    <g id="text_24">
     <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #d55e00" x="473.184" y="212.407059" transform="rotate(-0 473.184 212.407059)">WHAT THE DATA SHOW</text>
    </g>
    <g id="text_25">
-    <text style="font-weight: 700; font-size: 9.4px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(473.184 229.209894)">Bellenguez ±1 Mb: Pmin 1.283 × 10⁻¹¹ (rs56407236)</text>
-    <text style="font-weight: 700; font-size: 9.4px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(473.184 240.865894)">Walker eQTL: P 1.819 × 10⁻⁴; fails 4.522 × 10⁻⁶ gate</text>
+    <text style="font-weight: 700; font-size: 8.1px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(473.184 220.833253)">Within 1 Mb (Bellenguez): smallest P 1.283 × 10⁻¹¹</text>
+    <text style="font-weight: 700; font-size: 8.1px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(473.184 230.883581)">Lead variant rs56407236</text>
+    <text style="font-weight: 700; font-size: 8.1px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(473.184 239.332894)">Walker brain expression: P 1.819 × 10⁻⁴</text>
+    <text style="font-weight: 700; font-size: 8.1px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(473.184 248.566894)">Corrected cutoff 4.522 × 10⁻⁶: not passed</text>
    </g>
    <g id="text_26">
-    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #5b6573" x="473.184" y="265.535859" transform="rotate(-0 473.184 265.535859)">INTERPRETIVE BOUNDARY</text>
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #5b6573" x="473.184" y="265.535859" transform="rotate(-0 473.184 265.535859)">WHAT THIS DOES NOT PROVE</text>
    </g>
    <g id="text_27">
-    <text style="font-size: 9.1px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(473.184 282.569631)">sQTL measurement unresolved; no primary H0–H4 result.</text>
-    <text style="font-size: 9.1px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(473.184 293.671631)">Regional proximity does not assign the candidate gene.</text>
+    <text style="font-size: 7.9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(473.184 278.941506)">We could not confirm whether splicing data were available.</text>
+    <text style="font-size: 7.9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(473.184 288.554819)">The shared-variant test could not be run.</text>
+    <text style="font-size: 7.9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(473.184 296.637506)">A nearby AD signal does not prove ANKRD11 is the affected gene.</text>
    </g>
    <g id="text_28">
-    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #5b6573" x="666.4752" y="311.104238" transform="rotate(-0 666.4752 311.104238)">Tier 1 none found · 1 context     CSF 0/3 passed</text>
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #5b6573" x="666.4752" y="311.069081" transform="rotate(-0 666.4752 311.069081)">Initial: none found · 1 network setting     Spinal-fluid: 0/3</text>
    </g>
   </g>
  </g>

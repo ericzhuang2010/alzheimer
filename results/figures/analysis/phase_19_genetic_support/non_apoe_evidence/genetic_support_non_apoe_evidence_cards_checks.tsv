@@ -10,7 +10,8 @@ genetic_support_non_apoe_evidence_cards_v1	rps15_unique_source_tracks	blocking	p
 genetic_support_non_apoe_evidence_cards_v1	rps15_resolved_h0_h4	blocking	pass	0	0	PP.H4 remains unavailable.
 genetic_support_non_apoe_evidence_cards_v1	regional_signal_genes	blocking	pass	ANKRD11|COX7C|RPS15	ANKRD11|COX7C|RPS15	Bellenguez frozen gate among the four cards.
 genetic_support_non_apoe_evidence_cards_v1	csf_passed_traits	blocking	pass	0	0	All four genes have zero qualifying CSF gates.
-genetic_support_non_apoe_evidence_cards_v1	pp_h4_zero_claim	blocking	pass	absent	absent	Unavailable posterior is not rendered as zero.
+genetic_support_non_apoe_evidence_cards_v1	posterior_shorthand_visible	blocking	pass	absent	absent	Posterior shorthand is replaced by a shared-variant explanation.
+genetic_support_non_apoe_evidence_cards_v1	shared_variant_explanation	blocking	pass	present	present	Shared-signal analysis is described in plain language.
 genetic_support_non_apoe_evidence_cards_v1	causal_claim	blocking	pass	absent	absent	Regional signal is not candidate-gene causality.
 genetic_support_non_apoe_evidence_cards_v1	png_dimensions	blocking	pass	5580x2115	5580x2115	Exact slide-native raster dimensions at 450 DPI.
 genetic_support_non_apoe_evidence_cards_v1	png_dpi	blocking	pass	450	450	PNG metadata resolution rounded to the requested DPI.

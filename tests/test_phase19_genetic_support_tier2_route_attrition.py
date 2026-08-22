@@ -69,6 +69,15 @@ def test_derivation_preserves_terminal_partition_and_posterior_boundary() -> Non
     assert len(boundary) == 1
     assert int(boundary.iloc[0]["route_count"]) == 0
     assert "unavailable" in str(boundary.iloc[0]["detail"]).lower()
+    assert "shared-variant probability" in str(boundary.iloc[0]["detail"]).lower()
+    visible = " ".join(
+        plot_data[["display_label", "detail"]].astype(str).to_numpy().ravel()
+    ).lower()
+    assert "gwas" not in visible
+    assert "qtl" not in visible
+    assert "h0" not in visible
+    assert "pp.h4" not in visible
+    assert " ld " not in f" {visible} "
 
     checks = FIGURE.build_science_checks(derived)
     assert checks["status"].eq("pass").all()
@@ -146,6 +155,9 @@ def test_full_figure_package_in_temporary_directory(tmp_path: Path) -> None:
         dpi = image.info.get("dpi")
         assert dpi and min(dpi) >= 449
     svg = (output / f"{FIGURE.STEM}.svg").read_text(encoding="utf-8")
-    assert "PP.H4 unavailable" in svg
+    assert "Probability not calculated" in svg
+    assert "Same variant?" in svg
+    for jargon in ("GWAS", "QTL", "H0", "PP.H4", " LD "):
+        assert jargon not in svg
     caption = (output / f"{FIGURE.STEM}_caption.md").read_text(encoding="utf-8")
-    assert "not equal to zero" in caption
+    assert "unavailable, not zero" in caption

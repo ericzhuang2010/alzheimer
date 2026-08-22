@@ -147,13 +147,13 @@ L 850.8384 196.272
     <text style="font-weight: 700; font-size: 13px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="28.5696" y="41.286106" transform="rotate(-0 28.5696 41.286106)">A</text>
    </g>
    <g id="text_2">
-    <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="50.8896" y="39.85845" transform="rotate(-0 50.8896 39.85845)">Terminal outcomes across 54 prespecified routes</text>
+    <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="50.8896" y="39.811575" transform="rotate(-0 50.8896 39.811575)">Why 54 planned gene tests stopped</text>
    </g>
    <g id="text_3">
-    <text style="font-size: 10.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #5b6573" x="49.9968" y="65.144981" transform="rotate(-0 49.9968 65.144981)">27 nuclear candidate contexts  •  27 eQTL routes  •  27 sQTL routes</text>
+    <text style="font-size: 10.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #5b6573" x="49.9968" y="64.741763" transform="rotate(-0 49.9968 64.741763)">27 gene–network pairs  •  27 expression tests  •  27 splicing tests</text>
    </g>
    <g id="text_4">
-    <text style="font-weight: 700; font-size: 11.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #333333" x="269.576" y="127.40875" transform="rotate(-0 269.576 127.40875)">42   No regional AD GWAS signal</text>
+    <text style="font-weight: 700; font-size: 11.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #333333" x="269.576" y="127.40875" transform="rotate(-0 269.576 127.40875)">42   No strong AD variant signal near the gene</text>
    </g>
    <g id="text_5">
     <text style="font-weight: 700; font-size: 11px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #333333" x="511.045333" y="128.371844" transform="rotate(-0 511.045333 128.371844)">4</text>
@@ -168,70 +168,69 @@ L 850.8384 196.272
     <text style="font-weight: 700; font-size: 16px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="39.2832" y="203.2247" transform="rotate(-0 39.2832 203.2247)">42</text>
    </g>
    <g id="text_9">
-    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(39.2832 222.894281)">No regional AD</text>
-    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(39.2832 232.074281)">GWAS signal</text>
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(39.2832 222.894281)">No strong nearby</text>
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(39.2832 232.074281)">AD variant signal</text>
    </g>
    <g id="text_10">
-    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(39.2832 246.347438)">Regional P gate</text>
-    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(39.2832 256.067437)">not passed</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(39.2832 246.347438)">Nearby AD-signal</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(39.2832 256.067437)">cutoff not passed</text>
    </g>
    <g id="text_11">
     <text style="font-weight: 700; font-size: 16px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="193.7376" y="203.1197" transform="rotate(-0 193.7376 203.1197)">4</text>
    </g>
    <g id="text_12">
-    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(193.7376 223.801313)">No candidate</text>
-    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(193.7376 232.074281)">QTL signal</text>
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(193.7376 222.755766)">No strong gene-</text>
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(193.7376 232.074281)">expression signal</text>
    </g>
    <g id="text_13">
-    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(193.7376 246.347438)">Candidate eQTL gate</text>
-    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(193.7376 256.067437)">not passed</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(193.7376 246.347438)">Expression-signal</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(193.7376 256.067437)">cutoff not passed</text>
    </g>
    <g id="text_14">
     <text style="font-weight: 700; font-size: 16px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #d55e00" x="348.192" y="203.2247" transform="rotate(-0 348.192 203.2247)">2</text>
    </g>
    <g id="text_15">
-    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(348.192 223.801313)">Model or LD</text>
-    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(348.192 232.109438)">incompatible</text>
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(348.192 222.929438)">Required inputs</text>
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(348.192 232.981313)">unavailable</text>
    </g>
    <g id="text_16">
-    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(348.192 246.347438)">Required model or</text>
-    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(348.192 256.939313)">matched LD unavailable</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(348.192 247.219313)">Prediction method or</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(348.192 256.067437)">variant correlations missing</text>
    </g>
    <g id="text_17">
     <text style="font-weight: 700; font-size: 16px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="502.6464" y="203.10345" transform="rotate(-0 502.6464 203.10345)">6</text>
    </g>
    <g id="text_18">
-    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #333333" x="502.6464" y="228.391313" transform="rotate(-0 502.6464 228.391313)">Not assessable</text>
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #333333" x="502.6464" y="228.391313" transform="rotate(-0 502.6464 228.391313)">Could not assess</text>
    </g>
    <g id="text_19">
-    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(502.6464 246.267984)">Target sQTL status</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(502.6464 246.347438)">Splicing-data status</text>
     <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(502.6464 256.939313)">unresolved</text>
    </g>
    <g id="text_20">
     <text style="font-weight: 700; font-size: 13px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="690.1344" y="41.286106" transform="rotate(-0 690.1344 41.286106)">B</text>
    </g>
    <g id="text_21">
-    <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="712.4544" y="39.811575" transform="rotate(-0 712.4544 39.811575)">Posterior boundary</text>
+    <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="712.4544" y="41.02095" transform="rotate(-0 712.4544 41.02095)">Same variant?</text>
    </g>
    <g id="text_22">
     <text style="font-weight: 700; font-size: 48px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #d55e00" x="775.8432" y="130.83525" transform="rotate(-0 775.8432 130.83525)">0</text>
    </g>
    <g id="text_23">
-    <text style="font-weight: 700; font-size: 13px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(727.159216 153.872406)">valid primary</text>
-    <text style="font-weight: 700; font-size: 13px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(725.092419 169.222562)">H0–H4 results</text>
+    <text style="font-weight: 700; font-size: 13px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #333333" x="775.8432" y="160.943187" transform="rotate(-0 775.8432 160.943187)">completed tests</text>
    </g>
    <g id="text_24">
-    <text style="font-weight: 700; font-size: 13.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #d55e00" x="775.8432" y="229.280325" transform="rotate(-0 775.8432 229.280325)">PP.H4 unavailable</text>
+    <text style="font-weight: 700; font-size: 13.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #d55e00" x="775.8432" y="227.950013" transform="rotate(-0 775.8432 227.950013)">Probability not calculated</text>
    </g>
    <g id="text_25">
-    <text style="font-size: 9.5px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(734.57238 255.405719)">No route reached</text>
-    <text style="font-size: 9.5px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(727.805856 265.125406)">posterior estimation</text>
+    <text style="font-size: 9.5px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(741.24613 255.405719)">No test had all</text>
+    <text style="font-size: 9.5px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(739.738747 265.125406)">required inputs</text>
    </g>
    <g id="text_26">
-    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="28.5696" y="301.932281" transform="rotate(-0 28.5696 301.932281)">Terminal categories are mutually exclusive—not sequential funnel losses.</text>
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="28.5696" y="301.932281" transform="rotate(-0 28.5696 301.932281)">Each test appears in one category—not a sequence of losses.</text>
    </g>
    <g id="text_27">
-    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: end; fill: #5b6573" x="631.2096" y="301.967438" transform="rotate(-0 631.2096 301.967438)">A route stops at its first unmet input gate.</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: end; fill: #5b6573" x="631.2096" y="301.967438" transform="rotate(-0 631.2096 301.967438)">A test stops at its first missing requirement.</text>
    </g>
   </g>
  </g>

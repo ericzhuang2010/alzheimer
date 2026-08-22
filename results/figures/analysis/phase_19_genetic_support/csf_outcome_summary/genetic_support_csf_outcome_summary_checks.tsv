@@ -10,7 +10,8 @@ genetic_support_csf_outcome_summary_v1	per_trait_no_signal_counts	blocking	pass	
 genetic_support_csf_outcome_summary_v1	positive_gene_identity	blocking	pass	APOE	APOE	All positive decisions are APOE.
 genetic_support_csf_outcome_summary_v1	newly_supported_unique_genes	blocking	pass	0	0	APOE was supported previously.
 genetic_support_csf_outcome_summary_v1	pvalue_geometry_columns	blocking	pass	absent	absent	No P value or -log10(P) enters plotted data.
-genetic_support_csf_outcome_summary_v1	mechanism_boundary_visible	blocking	pass	present	present	Gate evidence is not mechanistic colocalization.
+genetic_support_csf_outcome_summary_v1	mechanism_boundary_visible	blocking	pass	present	present	The figure explains that the tests do not establish a mechanism.
+genetic_support_csf_outcome_summary_v1	plain_language_visible	blocking	pass	present	present	Shared-signal analysis is explained without specialist shorthand.
 genetic_support_csf_outcome_summary_v1	internal_phase_label_visible	blocking	pass	absent	absent	Artwork remains reusable.
 genetic_support_csf_outcome_summary_v1	png_dimensions	blocking	pass	5580x2115	5580x2115	Exact slide-native raster dimensions at 450 DPI.
 genetic_support_csf_outcome_summary_v1	png_dpi	blocking	pass	450	450	PNG metadata resolution rounded to the requested DPI.

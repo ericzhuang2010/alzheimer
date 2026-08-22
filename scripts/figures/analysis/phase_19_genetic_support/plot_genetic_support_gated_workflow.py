@@ -443,9 +443,9 @@ def derive_plot_data(derived: dict[str, Any]) -> pd.DataFrame:
             "record_type": "scope",
             "lane": "shared",
             "display_order": 1,
-            "title": "Frozen\ncandidate set",
-            "subtitle": "47 contexts\n25 unique genes",
-            "detail": "Top-five network set\nno genetic reranking",
+            "title": "Starting gene list\n(chosen in advance)",
+            "subtitle": "47 gene–network pairs\n25 unique genes",
+            "detail": "Top network genes\nnot changed by genetic results",
             "source_note": "call_key_driver_returns.tsv",
             "style_key": "freeze_navy",
             "x": 0.025,
@@ -458,8 +458,8 @@ def derive_plot_data(derived: dict[str, Any]) -> pd.DataFrame:
             "record_type": "lane_heading",
             "lane": "direct_summary",
             "display_order": 1,
-            "title": "PARALLEL LANE A  ·  DIRECT PUBLIC-SUMMARY EVIDENCE",
-            "subtitle": "All 47 frozen contexts",
+            "title": "LANE A  ·  LOOK UP RESULTS IN PUBLIC DATA",
+            "subtitle": "All 47 gene–network pairs",
             "detail": "NA",
             "source_note": "genetic_support_dataset_registry.tsv",
             "style_key": "lane_blue",
@@ -473,9 +473,9 @@ def derive_plot_data(derived: dict[str, Any]) -> pd.DataFrame:
             "record_type": "analysis_step",
             "lane": "direct_summary",
             "display_order": 2,
-            "title": "FunGen-xQTL direct-summary screen",
-            "subtitle": "AD fine-mapping  ·  brain xQTL  ·  TWAS",
-            "detail": "Pinned public snapshot  f6f63fc…",
+            "title": "Search public FunGen results",
+            "subtitle": "Likely AD variants  ·  effects on gene activity or splicing",
+            "detail": "Pre-computed results from a fixed public data snapshot",
             "source_note": "FunGen_AD_unified / FunGen_xQTL / FunGen_TWAS",
             "style_key": "direct_blue",
             "x": 0.220,
@@ -488,9 +488,9 @@ def derive_plot_data(derived: dict[str, Any]) -> pd.DataFrame:
             "record_type": "analysis_step",
             "lane": "direct_summary",
             "display_order": 3,
-            "title": "Direct candidate mapping + formal grade",
-            "subtitle": "Source inclusion/confidence fields retain their meaning",
-            "detail": "Not classical PP.H4 values",
+            "title": "Match results directly to each gene",
+            "subtitle": "Keep the source's original confidence labels",
+            "detail": "Support grade—not a shared-signal probability",
             "source_note": "Tier 1 evidence matrix",
             "style_key": "direct_output",
             "x": 0.610,
@@ -503,8 +503,8 @@ def derive_plot_data(derived: dict[str, Any]) -> pd.DataFrame:
             "record_type": "lane_heading",
             "lane": "nuclear_gated",
             "display_order": 1,
-            "title": "PARALLEL LANE B  ·  NUCLEAR REGIONAL + MOLECULAR-QTL PATH",
-            "subtitle": "27 contexts  ·  19 genes",
+            "title": "LANE B  ·  DOES THE SAME DNA SIGNAL LINK TO AD AND THE GENE?",
+            "subtitle": "27 gene–network pairs  ·  19 non-mitochondrial genes",
             "detail": "NA",
             "source_note": "tier2_candidate_route_manifest.tsv",
             "style_key": "lane_navy",
@@ -518,10 +518,10 @@ def derive_plot_data(derived: dict[str, Any]) -> pd.DataFrame:
             "record_type": "gate",
             "lane": "nuclear_gated",
             "display_order": 2,
-            "title": "1  Regional signal",
+            "title": "1  AD-linked DNA region",
             "subtitle": "Bellenguez AD  ·  GCST90027158",
-            "detail": "CSF GWAS: GCST90726396\nGCST90726397  ·  GCST90726398",
-            "source_note": "54 AD e/sQTL routes  ·  57 CSF screens",
+            "detail": "Spinal-fluid biomarkers (CSF):\nGCST90726396  ·  GCST90726397\nGCST90726398",
+            "source_note": "54 AD gene tests  ·  57 CSF screens",
             "style_key": "gate_white",
             "x": 0.220,
             "y": 0.315,
@@ -533,10 +533,10 @@ def derive_plot_data(derived: dict[str, Any]) -> pd.DataFrame:
             "record_type": "gate",
             "lane": "nuclear_gated",
             "display_order": 3,
-            "title": "2  Candidate molecular QTL",
-            "subtitle": "NG00184.v1  ·  eQTL Catalogue r7",
-            "detail": "eQTL  ·  sQTL  ·  targeted pQTL\nAPOE: NG00130.v2\nRPS15: NG00184.v1 audit",
-            "source_note": "Exact → lineage → bulk-brain fallback",
+            "title": "2  Variant affects the gene",
+            "subtitle": "DNA-to-gene link (QTL)",
+            "detail": "Activity (eQTL)  ·  splicing (sQTL)\nAPOE protein (pQTL; NG00130.v2)\nRPS15 check (NG00184.v1)",
+            "source_note": "eQTL Catalogue r7",
             "style_key": "gate_white",
             "x": 0.425,
             "y": 0.315,
@@ -548,10 +548,10 @@ def derive_plot_data(derived: dict[str, Any]) -> pd.DataFrame:
             "record_type": "gate",
             "lane": "nuclear_gated",
             "display_order": 4,
-            "title": "3  Compatible inputs",
-            "subtitle": "Alleles  ·  build  ·  variant order",
-            "detail": "Complete fitted model\nSource-matched,\nancestry-compatible LD",
-            "source_note": "All inputs are required",
+            "title": "3  Data can be compared",
+            "subtitle": "Matching variants + genome",
+            "detail": "Complete statistical model\nMatched ancestry and\nvariant correlation (LD)",
+            "source_note": "Every item is required",
             "style_key": "gate_white",
             "x": 0.640,
             "y": 0.315,
@@ -563,10 +563,10 @@ def derive_plot_data(derived: dict[str, Any]) -> pd.DataFrame:
             "record_type": "gate",
             "lane": "nuclear_gated",
             "display_order": 5,
-            "title": "4  Shared-signal test",
-            "subtitle": "Multi-signal H0–H4",
-            "detail": "Runs only after all\nupstream gates pass",
-            "source_note": "Else PP.H4 is unavailable",
+            "title": "4  Same DNA signal?",
+            "subtitle": "Probability both match",
+            "detail": "(PP.H4)\nRuns only if steps 1–3 pass",
+            "source_note": "Otherwise: not calculated",
             "style_key": "primary_blue",
             "x": 0.835,
             "y": 0.315,
@@ -578,9 +578,9 @@ def derive_plot_data(derived: dict[str, Any]) -> pd.DataFrame:
             "record_type": "separate_scope",
             "lane": "mtdna",
             "display_order": 1,
-            "title": "Separate mtDNA design",
-            "subtitle": "20 contexts  ·  6 genes",
-            "detail": "Nuclear routes not applicable\n—not a negative result",
+            "title": "Mitochondrial genes",
+            "subtitle": "20 pairs  ·  6 genes",
+            "detail": "Need a different test\n—not a negative result",
             "source_note": "Not assessed negatively",
             "style_key": "mtdna_outline",
             "x": 0.025,
@@ -593,8 +593,8 @@ def derive_plot_data(derived: dict[str, Any]) -> pd.DataFrame:
             "record_type": "boundary",
             "lane": "shared",
             "display_order": 99,
-            "title": "A route stops at the first failed requirement.",
-            "subtitle": "Arrows show analysis flow—not a causal mechanism.",
+            "title": "Testing stops when a required step fails.",
+            "subtitle": "Arrows show test order—not cause and effect.",
             "detail": "NA",
             "source_note": "recovery_route_decisions.tsv",
             "style_key": "boundary",
@@ -616,8 +616,8 @@ def derive_plot_data(derived: dict[str, Any]) -> pd.DataFrame:
     require("GCST90027158" in visible, "Bellenguez accession is not visible")
     for accession in CSF_ACCESSIONS:
         require(accession in visible, f"CSF accession is not visible: {accession}")
-    require("route stops at the first failed requirement" in visible.lower(), "Stop rule missing")
-    require("analysis flow—not a causal mechanism" in visible.lower(), "Arrow boundary missing")
+    require("testing stops when a required step fails" in visible.lower(), "Stop rule missing")
+    require("test order—not cause and effect" in visible.lower(), "Arrow boundary missing")
     require(not any(value in visible for value in OMITTED_SAMPLE_COUNTS), "Conflicting Bellenguez sample counts leaked into figure")
     require(int(derived["candidate_contexts"]) == 47, "Derived scope changed before plotting")
     return plot_data
@@ -659,8 +659,8 @@ def build_science_checks(
         ("all_csf_accessions_visible", True, all(value in visible for value in CSF_ACCESSIONS), "All three CSF GWAS labels."),
         ("bellenguez_sample_counts_omitted", True, not any(value in visible for value in OMITTED_SAMPLE_COUNTS), "Conflicting sample counts are intentionally omitted."),
         ("parallel_lanes", 2, plot_data.loc[plot_data["record_type"].eq("lane_heading"), "lane"].nunique(), "Direct-summary and nuclear gated paths."),
-        ("route_stop_rule_visible", True, "route stops at the first failed requirement" in visible.lower(), "Gated interpretation boundary."),
-        ("arrows_not_causal_visible", True, "analysis flow—not a causal mechanism" in visible.lower(), "Arrow semantics are explicit."),
+        ("route_stop_rule_visible", True, "testing stops when a required step fails" in visible.lower(), "Gated interpretation boundary."),
+        ("arrows_not_causal_visible", True, "test order—not cause and effect" in visible.lower(), "Arrow semantics are explicit."),
     ]
     return make_checks(SCHEMA, values)
 
@@ -719,7 +719,7 @@ def render_node(axis: Any, row: pd.Series) -> None:
         add_text(axis, x + 0.014, y + height - 0.038, str(row["title"]), size=10.0, color=WHITE, weight="bold", va="top", linespacing=1.0)
         add_text(axis, x + width / 2, y + 0.180, str(row["subtitle"]), size=12.0, color=WHITE, weight="bold", ha="center", linespacing=1.02)
         add_text(axis, x + width / 2, y + 0.096, str(row["detail"]), size=9.0, color=WHITE, ha="center", linespacing=1.05)
-        add_text(axis, x + width / 2, y + 0.030, "Frozen before genetic results", size=9.0, color=LIGHT, ha="center")
+        add_text(axis, x + width / 2, y + 0.030, "List fixed in advance", size=9.0, color=LIGHT, ha="center")
         return
     if style == "boundary":
         add_text(axis, x + 0.018, y + 0.112, str(row["title"]), size=10.2, color=NAVY, weight="bold")

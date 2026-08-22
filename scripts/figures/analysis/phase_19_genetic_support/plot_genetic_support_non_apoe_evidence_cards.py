@@ -334,71 +334,75 @@ def derive_plot_data(
     cards = [
         {
             "gene": "COX7C",
-            "status_label": "WEAK / UNRESOLVED",
+            "status_label": "WEAK / INCOMPLETE",
             "style_key": "weak_amber",
             "evidence_text": (
-                "One bulk-brain AD×sQTL summary entry (rs2010322)\n"
-                f"Bellenguez ±1 Mb: Pmin {format_sci(gwas_rows['COX7C']['regional_min_p'])} "
-                f"({gwas_rows['COX7C']['regional_lead_variant']})"
+                "One published bulk-brain summary record: AD + RNA splicing\n"
+                f"Within 1 Mb (Bellenguez): smallest P {format_sci(gwas_rows['COX7C']['regional_min_p'])}\n"
+                f"Lead variant {gwas_rows['COX7C']['regional_lead_variant']}"
             ),
             "boundary_text": (
-                "One Tier 1 record appears in two network contexts.\n"
-                "Dense eQTL gates failed; sQTL/H0–H4 remains unresolved."
+                "One evidence record is repeated in two network settings.\n"
+                "The expression test did not pass.\n"
+                "The splicing shared-variant test was incomplete."
             ),
-            "footer_text": "Tier 1 weak · 2 contexts     CSF 0/3 passed",
+            "footer_text": "Initial: weak · 2 network settings     Spinal-fluid: 0/3",
             "qtl_p": float(qtl_rows["cox_walker"]["dense_minimum_p_value"]),
             "qtl_threshold": float(qtl_rows["cox_walker"]["dense_bonferroni_threshold"]),
         },
         {
             "gene": "SELENOW",
-            "status_label": "WEAK SUMMARY EVIDENCE ONLY",
+            "status_label": "WEAK GENE-LIST EVIDENCE",
             "style_key": "weak_amber",
             "evidence_text": (
-                "FunGen public TWAS gene-list membership\n"
-                f"Bellenguez window: Pmin {format_sci(gwas_rows['SELENOW']['regional_min_p'])}; "
-                f"fails {format_sci(5e-8, 0)} gate"
+                "Published list based on predicted expression includes SELENOW\n"
+                f"Bellenguez: smallest P {format_sci(gwas_rows['SELENOW']['regional_min_p'])}\n"
+                f"Significance cutoff {format_sci(5e-8, 0)}: not passed"
             ),
             "boundary_text": (
-                "No model statistic, replication, or exact excitatory context.\n"
-                "Nearby Wightman variants are proximity-only; QTL route not triggered."
+                "No score, independent confirmation, or exact excitatory-neuron match.\n"
+                "Wightman variants were only nearby.\n"
+                "No expression or splicing follow-up started."
             ),
-            "footer_text": "Tier 1 weak · 1 context     CSF 0/3 passed",
+            "footer_text": "Initial: weak · 1 network setting     Spinal-fluid: 0/3",
             "qtl_p": float("nan"),
             "qtl_threshold": float("nan"),
         },
         {
             "gene": "RPS15",
-            "status_label": "HIGHEST-PRIORITY UNRESOLVED",
+            "status_label": "TOP FOLLOW-UP; INCOMPLETE",
             "style_key": "unresolved_vermillion",
             "evidence_text": (
-                f"Bellenguez ±1 Mb: Pmin {format_sci(gwas_rows['RPS15']['regional_min_p'])} "
-                f"({gwas_rows['RPS15']['regional_lead_variant']})\n"
-                f"Walker neocortex eQTL: P {format_sci(qtl_rows['rps_walker']['dense_minimum_p_value'])}; "
-                f"passes {format_sci(qtl_rows['rps_walker']['dense_bonferroni_threshold'])} gate"
+                f"Within 1 Mb (Bellenguez): smallest P {format_sci(gwas_rows['RPS15']['regional_min_p'])}\n"
+                f"Lead variant {gwas_rows['RPS15']['regional_lead_variant']}\n"
+                f"Walker neocortex expression: P {format_sci(qtl_rows['rps_walker']['dense_minimum_p_value'])}\n"
+                f"Corrected cutoff {format_sci(qtl_rows['rps_walker']['dense_bonferroni_threshold'])}: passed"
             ),
             "boundary_text": (
-                "Complete candidate-QTL model and source-matched LD unavailable.\n"
-                "3 bulk-brain tracks; gene/context unresolved; PP.H4 unavailable."
+                "Expression-prediction data and matching variant correlations were missing.\n"
+                "Three bulk-brain tracks had signals, but the gene and cell setting\n"
+                "and a shared variant remain untested."
             ),
-            "footer_text": "Supplemental: 31/37 measured · 3 tracks     CSF 0/3 passed",
+            "footer_text": "Follow-up: 31/37 measured · 3 tracks     Spinal-fluid: 0/3",
             "qtl_p": float(qtl_rows["rps_walker"]["dense_minimum_p_value"]),
             "qtl_threshold": float(qtl_rows["rps_walker"]["dense_bonferroni_threshold"]),
         },
         {
             "gene": "ANKRD11",
-            "status_label": "REGIONAL EVIDENCE ONLY",
+            "status_label": "AD SIGNAL NEARBY ONLY",
             "style_key": "regional_only_gray",
             "evidence_text": (
-                f"Bellenguez ±1 Mb: Pmin {format_sci(gwas_rows['ANKRD11']['regional_min_p'])} "
-                f"({gwas_rows['ANKRD11']['regional_lead_variant']})\n"
-                f"Walker eQTL: P {format_sci(qtl_rows['ank_walker']['dense_minimum_p_value'])}; "
-                f"fails {format_sci(qtl_rows['ank_walker']['dense_bonferroni_threshold'])} gate"
+                f"Within 1 Mb (Bellenguez): smallest P {format_sci(gwas_rows['ANKRD11']['regional_min_p'])}\n"
+                f"Lead variant {gwas_rows['ANKRD11']['regional_lead_variant']}\n"
+                f"Walker brain expression: P {format_sci(qtl_rows['ank_walker']['dense_minimum_p_value'])}\n"
+                f"Corrected cutoff {format_sci(qtl_rows['ank_walker']['dense_bonferroni_threshold'])}: not passed"
             ),
             "boundary_text": (
-                "sQTL measurement unresolved; no primary H0–H4 result.\n"
-                "Regional proximity does not assign the candidate gene."
+                "We could not confirm whether splicing data were available.\n"
+                "The shared-variant test could not be run.\n"
+                "A nearby AD signal does not prove ANKRD11 is the affected gene."
             ),
-            "footer_text": "Tier 1 none found · 1 context     CSF 0/3 passed",
+            "footer_text": "Initial: none found · 1 network setting     Spinal-fluid: 0/3",
             "qtl_p": float(qtl_rows["ank_walker"]["dense_minimum_p_value"]),
             "qtl_threshold": float(qtl_rows["ank_walker"]["dense_bonferroni_threshold"]),
         },
@@ -451,7 +455,8 @@ def derive_plot_data(
         .to_numpy()
         .ravel()
     )
-    require("PP.H4 = 0" not in visible_text, "Unavailable PP.H4 was rendered as zero")
+    require("PP.H4" not in visible_text, "Specialist posterior shorthand leaked into the cards")
+    require("shared-variant test" in visible_text, "Shared-signal analysis lacks a plain-language explanation")
     require("causal" not in visible_text.lower(), "Causal language leaked into the cards")
     derived = {
         "direct_cox_rsid": str(direct_cox["rsid"]),
@@ -481,6 +486,8 @@ def render_figure(plot_data: pd.DataFrame, staging: Path) -> None:
     cards = plot_data.sort_values("display_order")
     for row, (x, y, width, height) in zip(cards.itertuples(index=False), geometry):
         face, edge, accent = styles[row.style_key]
+        evidence_lines = str(row.evidence_text).count("\n") + 1
+        boundary_lines = str(row.boundary_text).count("\n") + 1
         rounded_box(
             axis,
             x,
@@ -520,11 +527,11 @@ def render_figure(plot_data: pd.DataFrame, staging: Path) -> None:
             x + 0.022,
             y + height - 0.194,
             row.evidence_text,
-            size=9.4,
+            size=8.1 if evidence_lines >= 4 else 8.5,
             color=DARK,
             weight="bold",
             va="center",
-            linespacing=1.24,
+            linespacing=1.14,
         )
         axis.plot(
             [x + 0.022, x + width - 0.022],
@@ -534,16 +541,16 @@ def render_figure(plot_data: pd.DataFrame, staging: Path) -> None:
             linewidth=0.8,
             zorder=3,
         )
-        add_text(axis, x + 0.022, y + height - 0.282, "INTERPRETIVE BOUNDARY", size=9.0, color=MID, weight="bold")
+        add_text(axis, x + 0.022, y + height - 0.282, "WHAT THIS DOES NOT PROVE", size=9.0, color=MID, weight="bold")
         add_text(
             axis,
             x + 0.022,
             y + height - 0.351,
             row.boundary_text,
-            size=9.1,
+            size=7.9 if boundary_lines >= 3 else 8.2,
             color=DARK,
             va="center",
-            linespacing=1.22,
+            linespacing=1.12,
         )
         rounded_box(
             axis,
@@ -585,7 +592,8 @@ def build_checks(plot_data: pd.DataFrame, derived: dict[str, Any]) -> pd.DataFra
         ("rps15_resolved_h0_h4", 0, derived["rps15_totals"]["resolved"], "PP.H4 remains unavailable."),
         ("regional_signal_genes", "ANKRD11|COX7C|RPS15", "|".join(sorted(gene for gene, value in regional_flags.items() if value)), "Bellenguez frozen gate among the four cards."),
         ("csf_passed_traits", 0, int(plot_data["csf_traits_passed"].sum()), "All four genes have zero qualifying CSF gates."),
-        ("pp_h4_zero_claim", "absent", "absent" if "PP.H4 = 0" not in derived["visible_text"] else "present", "Unavailable posterior is not rendered as zero."),
+        ("posterior_shorthand_visible", "absent", "absent" if "PP.H4" not in derived["visible_text"] else "present", "Posterior shorthand is replaced by a shared-variant explanation."),
+        ("shared_variant_explanation", "present", "present" if "shared-variant test" in derived["visible_text"] else "absent", "Shared-signal analysis is described in plain language."),
         ("causal_claim", "absent", "absent" if "causal" not in derived["visible_text"].lower() else "present", "Regional signal is not candidate-gene causality."),
     ]
     return make_checks(SCHEMA, values)
@@ -669,4 +677,3 @@ def main(argv: Sequence[str] | None = None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

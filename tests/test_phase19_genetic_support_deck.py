@@ -43,7 +43,8 @@ def test_builds_and_validates_external_facing_genetic_support_deck(tmp_path):
     builder.validate_deck(output)
 
     presentation = Presentation(output)
-    assert len(presentation.slides) == 18
+    assert builder.EXPECTED_SLIDE_COUNT == 27
+    assert len(presentation.slides) == builder.EXPECTED_SLIDE_COUNT
     assert presentation.slide_width == builder.SLIDE_W
     assert presentation.slide_height == builder.SLIDE_H
     assert all(
@@ -52,9 +53,32 @@ def test_builds_and_validates_external_facing_genetic_support_deck(tmp_path):
     )
 
     text = "\n".join(slide_text(slide) for slide in presentation.slides)
-    assert "full_genetic_support_complete = FALSE" in text
-    assert "The six mtDNA genes were not tested negatively." in text
-    assert "PP.H4 is unavailable" in text
+    for title in [
+        "The presentation moves from the study design to results and next steps",
+        "Study design and public data",
+        "What the genetic evidence showed",
+        "How to interpret the results and what to do next",
+        "Supporting details",
+    ]:
+        assert title in text
+
+    for dataset_label in [
+        "GCST90027158",
+        "GCST90726396",
+        "GCST90726397",
+        "GCST90726398",
+        "NG00184.v1",
+        "eQTL Catalogue r7",
+        "FunGen-xQTL",
+        "GENCODE v44",
+        "HGNC",
+    ]:
+        assert dataset_label in text
+
+    assert "Status: important follow-up remains" in text
+    assert "The six mitochondrial genes were not found negative" in text
+    assert "No shared-signal probability was available" in text
+    assert "full_genetic_support_complete = FALSE" not in text
     assert "PP.H4 = 0" not in text
     assert "mtDNA genes were negative" not in text
     assert "Phase 18" not in text
