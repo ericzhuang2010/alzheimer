@@ -182,11 +182,11 @@ def derive_plot_data(frames: dict[str, pd.DataFrame]) -> tuple[pd.DataFrame, dic
     common = frames["common"].copy()
     coloc = frames["coloc"].copy()
     outcome_labels = {
-        "strong": "Strong",
-        "moderate": "Moderate",
-        "weak": "Limited",
-        "none_found": "No direct public match",
-        "not_assessable": "Needs different data",
+        "strong": "Source grade: strong",
+        "moderate": "Source grade: moderate",
+        "weak": "Source grade: weak",
+        "none_found": "No direct match in this search",
+        "not_assessable": "Dedicated mitochondrial route",
     }
     style_keys = {
         "strong": "strong_blue",
@@ -240,7 +240,7 @@ def derive_plot_data(frames: dict[str, pd.DataFrame]) -> tuple[pd.DataFrame, dic
                 f"{apoe['rsid']}  •  top candidate AD variant (score {float(apoe['ad_max_inclusion_score']):.1f})"
                 f"  •  AD P ≈ {format_scientific(float(apoe['min_pvalue']))}"
             )
-            limit = "Brain-tissue support; an exact astrocyte match was not available"
+            limit = "Brain-tissue support; cell-specific astrocyte validation is a future step"
             evidence_id = str(apoe["rsid"])
         elif gene == "COX7C":
             confidence = str(cox_coloc.iloc[0]["public_confidence_level"])
@@ -249,11 +249,11 @@ def derive_plot_data(frames: dict[str, pd.DataFrame]) -> tuple[pd.DataFrame, dic
                 f"{cox7c['rsid']}  •  brain RNA-splicing link (source confidence level {confidence_level})"
                 f"  •  AD P ≈ {format_scientific(float(cox7c['min_pvalue']))}"
             )
-            limit = "The same source result appears in two networks; it is not two separate confirmations"
+            limit = "One source result spans two networks; an independent dataset can validate it"
             evidence_id = str(cox7c["rsid"])
         else:
-            detail = "Listed in a study linking predicted gene activity to AD (TWAS)"
-            limit = "The public table lacks the test score and exact neuron type"
+            detail = "Listed in a study linking predicted gene activity to AD"
+            limit = "Future data can add the test score and exact neuron type"
             evidence_id = "TWAS_gene_list"
         card_specs.append((gene, contexts, grade, len(gene_rows), detail, limit, evidence_id))
 
@@ -269,7 +269,11 @@ def derive_plot_data(frames: dict[str, pd.DataFrame]) -> tuple[pd.DataFrame, dic
                 "context_count": context_count,
                 "value": context_count,
                 "share": context_count / len(summary),
-                "primary_label": "STRONG GENETIC SUPPORT" if grade == "strong" else "LIMITED GENETIC SUPPORT",
+                "primary_label": (
+                    "FIRST-SCREEN GRADE: STRONG"
+                    if grade == "strong"
+                    else "FIRST-SCREEN GRADE: WEAK"
+                ),
                 "secondary_label": detail,
                 "tertiary_label": limit,
                 "evidence_id": evidence_id,
@@ -321,8 +325,8 @@ def derive_plot_data(frames: dict[str, pd.DataFrame]) -> tuple[pd.DataFrame, dic
             "context_count": 47,
             "value": 47,
             "share": 1.0,
-            "primary_label": "No public match ≠ no genetic role    •    Missing data ≠ negative result",
-            "secondary_label": "Categories show what the public data search could test; they do not measure cause.",
+            "primary_label": "Public data highlighted APOE, COX7C, and SELENOW",
+            "secondary_label": "Source grades describe this search; additional datasets can expand validation",
             "tertiary_label": "NA",
             "evidence_id": "NA",
             "style_key": "boundary_navy",
@@ -388,8 +392,8 @@ def panel_heading(ax: plt.Axes, letter: str, title: str, x: float, y: float) -> 
 
 def draw_outcome_panel(ax: plt.Axes, plot_data: pd.DataFrame, total: int) -> None:
     rounded_box(ax, 0.012, 0.735, 0.976, 0.252, face=WHITE, edge=LIGHT, linewidth=0.9)
-    panel_heading(ax, "A", f"Results across gene–network pairs  (n = {total})", 0.028, 0.953)
-    text(ax, 0.965, 0.953, "Moderate = 0", size=9.6, color=GREEN, weight="bold", ha="right")
+    panel_heading(ax, "A", "Public-data search highlighted APOE, COX7C, and SELENOW", 0.028, 0.953)
+    text(ax, 0.965, 0.953, f"{total} gene–network pairs  •  moderate source grade: 0", size=8.7, color=GREEN, weight="bold", ha="right")
     segments = plot_data.loc[
         plot_data["record_type"].eq("outcome_segment") & plot_data["value"].gt(0)
     ].sort_values("display_order")
@@ -414,16 +418,16 @@ def draw_outcome_panel(ax: plt.Axes, plot_data: pd.DataFrame, total: int) -> Non
         centers[row.final_grade] = bar_x + offset + width / 2
         if row.final_grade == "none_found":
             text(ax, centers[row.final_grade], bar_y + bar_h / 2,
-                 f"No direct public match  •  {int(row.value)}", size=10.2,
+                 f"No direct match in this search  •  {int(row.value)}", size=10.0,
                  color=DARK, weight="bold", ha="center")
         elif row.final_grade == "not_assessable":
             text(ax, centers[row.final_grade], bar_y + bar_h / 2,
-                 f"Needs different data  •  {int(row.value)}", size=10.2,
+                 f"Dedicated mitochondrial route  •  {int(row.value)}", size=9.8,
                  color=DARK, weight="bold", ha="center")
         offset += width
     for grade, label, label_x, color in [
-        ("strong", "Strong  •  1", 0.064, BLUE),
-        ("weak", "Limited  •  3", 0.174, ORANGE),
+        ("strong", "Direct match  ·  source grade: strong  •  1", 0.125, BLUE),
+        ("weak", "Direct matches  ·  source grade: weak  •  3", 0.375, ORANGE),
     ]:
         center = centers[grade]
         ax.annotate(
@@ -440,7 +444,7 @@ def draw_outcome_panel(ax: plt.Axes, plot_data: pd.DataFrame, total: int) -> Non
 
 def draw_candidate_cards(ax: plt.Axes, plot_data: pd.DataFrame) -> None:
     rounded_box(ax, 0.012, 0.147, 0.528, 0.572, face=WHITE, edge=LIGHT, linewidth=0.9)
-    panel_heading(ax, "B", "Genes with public genetic evidence", 0.028, 0.687)
+    panel_heading(ax, "B", "Three genes with direct public-data matches", 0.028, 0.687)
     cards = plot_data.loc[plot_data["record_type"].eq("candidate_card")].sort_values("display_order")
     ys = [0.512, 0.345, 0.178]
     for row, y in zip(cards.itertuples(index=False), ys):
@@ -451,7 +455,7 @@ def draw_candidate_cards(ax: plt.Axes, plot_data: pd.DataFrame) -> None:
         text(ax, 0.045, y + 0.103, row.gene, size=15.2, color=NAVY, weight="bold")
         context_x = {"APOE": 0.126, "COX7C": 0.135, "SELENOW": 0.151}[row.gene]
         text(ax, context_x, y + 0.103, row.contexts, size=9.8, color=MID, weight="bold")
-        text(ax, 0.506, y + 0.103, row.primary_label, size=9.0, color=edge, weight="bold", ha="right")
+        text(ax, 0.506, y + 0.103, row.primary_label, size=7.8, color=edge, weight="bold", ha="right")
         text(ax, 0.045, y + 0.063, row.secondary_label, size=9.6, color=DARK, weight="bold")
         text(ax, 0.045, y + 0.025, row.tertiary_label, size=9.0, color=MID)
 
@@ -466,14 +470,14 @@ def draw_chip(ax: plt.Axes, x: float, y: float, w: float, label: str, *,
 
 def draw_unresolved_panel(ax: plt.Axes, plot_data: pd.DataFrame, derived: dict[str, Any]) -> None:
     rounded_box(ax, 0.552, 0.147, 0.436, 0.572, face=WHITE, edge=LIGHT, linewidth=0.9)
-    panel_heading(ax, "C", "Genes without a clear result", 0.568, 0.687)
+    panel_heading(ax, "C", "Next validation routes for other genes", 0.568, 0.687)
 
     rounded_box(ax, 0.570, 0.402, 0.400, 0.244, face=PALE_GRAY, edge=GRAY,
                 linewidth=0.9, radius=0.010)
-    text(ax, 0.586, 0.616, "NO DIRECT MATCH IN THE PUBLIC DATA SEARCH",
+    text(ax, 0.586, 0.616, "16 NUCLEAR GENES FOR ADDITIONAL VALIDATION",
          size=9.2, color=NAVY, weight="bold")
     text(ax, 0.586, 0.584,
-         f"{len(derived['no_direct_genes'])} non-mitochondrial genes  •  {derived['no_direct_contexts']} gene–network pairs",
+         f"{derived['no_direct_contexts']} gene–network pairs  •  no direct match in this registered search",
          size=9.3, color=MID, weight="bold")
     genes = plot_data.loc[plot_data["record_type"].eq("no_direct_gene")].sort_values("display_order")
     chip_x = [0.584, 0.678, 0.772, 0.866]
@@ -484,7 +488,7 @@ def draw_unresolved_panel(ax: plt.Axes, plot_data: pd.DataFrame, derived: dict[s
 
     rounded_box(ax, 0.570, 0.174, 0.400, 0.190, face=WHITE, edge=DARK,
                 linewidth=1.0, radius=0.010)
-    text(ax, 0.586, 0.337, "MITOCHONDRIAL GENES NEED DIFFERENT DATA",
+    text(ax, 0.586, 0.337, "DEDICATED MITOCHONDRIAL-GENETICS ROUTE",
          size=9.2, color=NAVY, weight="bold")
     text(ax, 0.586, 0.305,
          f"{len(derived['not_assessable_genes'])} mitochondrial-DNA genes  •  {derived['not_assessable_contexts']} gene–network pairs",
@@ -496,7 +500,7 @@ def draw_unresolved_panel(ax: plt.Axes, plot_data: pd.DataFrame, derived: dict[s
         draw_chip(ax, mt_x[index % 3], mt_y[index // 3], 0.114, row.gene,
                   face=WHITE, edge=DARK)
     text(ax, 0.586, 0.184,
-         "Needs mitochondrial-DNA measurements and special quality checks.",
+         "Future validation: mitochondrial-DNA measurements and special quality checks.",
          size=9.0, color=MID)
 
 
@@ -521,10 +525,10 @@ def render_figure(plot_data: pd.DataFrame, derived: dict[str, Any], staging: Pat
     rounded_box(ax, 0.012, 0.020, 0.976, 0.092, face=NAVY, edge=NAVY,
                 linewidth=0.8, radius=0.008)
     text(ax, 0.500, 0.077,
-         "No public match ≠ no genetic role    •    Missing data ≠ negative result",
-         size=12.0, color=WHITE, weight="bold", ha="center")
+         "PUBLIC DATA HIGHLIGHTED APOE, COX7C, AND SELENOW",
+         size=11.2, color=WHITE, weight="bold", ha="center")
     text(ax, 0.500, 0.044,
-         "Categories show what the public data search could test; they do not measure cause.",
+         "Source grades describe this search; additional nuclear and mitochondrial datasets can expand validation.",
          size=9.0, color="#DDE7F2", ha="center")
     fig.savefig(staging / OUTPUT_FILES[0], dpi=PNG_DPI, facecolor=WHITE)
     fig.savefig(staging / OUTPUT_FILES[1], facecolor=WHITE, metadata={"CreationDate": None})
@@ -582,15 +586,15 @@ def build_checks(plot_data: pd.DataFrame, derived: dict[str, Any], frames: dict[
 def write_documentation(staging: Path) -> None:
     caption = """# Human genetic support across key-driver candidates
 
-Panel A summarizes 47 gene × broad-network candidate contexts across
-prespecified evidence grades. One APOE/astrocyte context has strong gene-level
-AD support, while two COX7C contexts and one SELENOW context have weak or
-limited support. Panel B states the direct evidence and context limitations for
-these three genes. Panel C shows 16 nuclear genes (23 contexts) with no direct
-mapping in the registered filtered summary and six mtDNA genes (20 contexts)
-that cannot be assessed with the available nuclear GWAS/xQTL resource. “No
-direct mapping” is a source-search outcome rather than evidence of no genetic
-role; “not assessable” is not a negative result.
+The registered public-data screen highlighted APOE, COX7C, and SELENOW across
+four of 47 gene × broad-network candidate contexts. The formal source grade is
+strong for one APOE/astrocyte context and weak for two COX7C contexts and one
+SELENOW context. Panel B shows the source records behind those matches and
+identifies cell-specific or independent validation that can strengthen them.
+Panel C maps the next validation routes: 16 nuclear genes (23 contexts) had no
+direct match in this registered search, while six mtDNA genes (20 contexts)
+have a dedicated mitochondrial-genetics route. The source grades describe the
+registered search, and additional datasets can expand validation.
 """
     methods = """# Figure methods
 
@@ -602,10 +606,13 @@ labels were checked against `genetic_support_colocalization.tsv.gz`; and route
 limitations were checked against `genetic_support_assessability.tsv`.
 
 Counts are deterministic classifications, not statistical estimates, so no
-error bars or significance annotations are shown. The horizontal bar counts
-each displayed gene × broad-network context once. Gene chips list each unique
-gene once within its terminal gene-level category. The two COX7C contexts use
-the same underlying bulk-sQTL source record and are not independent
+error bars or significance annotations are shown. The source values `strong`,
+`moderate`, `weak`, `none_found`, and `not_assessable` are preserved exactly
+from `final_grade`; the visible wording frames them as categories from the
+registered first screen rather than total-evidence conclusions. The horizontal
+bar counts each displayed gene × broad-network context once. Gene chips list
+each unique gene once within its terminal gene-level category. The two COX7C
+contexts use the same underlying bulk-sQTL source record and are not independent
 replications. Inclusion/confidence scores were not relabeled as classical
 colocalization H0-H4 probabilities. The 12.4 × 4.7 inch composition uses direct
 labels, colorblind-safe colors, filled versus open/hatch encoding, and vector

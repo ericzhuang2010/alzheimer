@@ -75,7 +75,14 @@ def test_source_contract_and_plot_data() -> None:
     assert "Probability both match" in visible
     assert "(PP.H4)" in visible
     assert "Matched ancestry" in visible
-    assert "test order—not cause and effect" in visible
+    assert "Public-data matches highlighted three genes" in visible
+    assert "APOE  ·  COX7C  ·  SELENOW" in visible
+    assert "Four gene–network pairs" in visible
+    assert "Top network genes retained" in visible
+    assert "Each completed step adds one layer of evidence" in visible
+    assert "remaining steps guide future validation" in visible
+    assert "Testing stops when a required step fails" not in visible
+    assert "not changed by genetic results" not in visible
     assert "direct public-summary" not in visible.lower()
     assert "H0–H4" not in visible
     assert not any(value in visible for value in FIGURE.OMITTED_SAMPLE_COUNTS)
@@ -133,3 +140,7 @@ def test_full_package_in_temporary_directory(tmp_path: Path) -> None:
         .ravel()
     )
     assert not any(value in visible for value in FIGURE.OMITTED_SAMPLE_COUNTS)
+    assert "Public-data matches highlighted three genes" in visible
+    assert "After steps 1–3" in visible
+    assert "Dedicated mitochondrial data" in visible
+    assert "remaining steps guide future validation" in visible

@@ -194,8 +194,11 @@ def derive_plot_data(frames: dict[str, pd.DataFrame]) -> tuple[pd.DataFrame, dic
                 "other_gene_no_signal_decisions": len(no_signal),
                 "newly_supported_unique_genes": 0,
                 "primary_label": "APOE",
-                "secondary_label": "Nearby-variant + whole-gene tests passed",
-                "tertiary_label": "Other nuclear genes did not pass both tests",
+                "secondary_label": "APOE was below both pre-set screening references",
+                "tertiary_label": (
+                    "For 18 additional genes, one or both P values were at or "
+                    "above the pre-set screening references"
+                ),
                 "style_key": "apoe_blue_vs_no_signal_gray",
                 "source_rows": "endophenotype_gate_decisions.tsv",
             }
@@ -216,9 +219,12 @@ def derive_plot_data(frames: dict[str, pd.DataFrame]) -> tuple[pd.DataFrame, dic
             "apoe_positive_decisions": len(positive),
             "other_gene_no_signal_decisions": len(no_signal),
             "newly_supported_unique_genes": newly_supported,
-            "primary_label": "Same gene across three biomarkers: APOE",
-            "secondary_label": "Three positive results; 54 did not pass both tests",
-            "tertiary_label": "Does not show how APOE works or prove a shared variant",
+            "primary_label": "APOE linked to all three spinal-fluid biomarkers",
+            "secondary_label": (
+                "Three APOE results were below both references; 54 additional "
+                "comparisons were at or above one or both"
+            ),
+            "tertiary_label": "Zero additional genes were added beyond APOE",
             "style_key": "aggregate_blue_gray",
             "source_rows": "endophenotype_gate_decisions.tsv;endophenotype_status.tsv",
         }
@@ -235,9 +241,15 @@ def derive_plot_data(frames: dict[str, pd.DataFrame]) -> tuple[pd.DataFrame, dic
             "apoe_positive_decisions": len(positive),
             "other_gene_no_signal_decisions": len(no_signal),
             "newly_supported_unique_genes": newly_supported,
-            "primary_label": "Three positive results represent one gene, not three genes",
-            "secondary_label": "These tests do not show how the gene works or prove both signals share one variant",
-            "tertiary_label": "APOE already had genetic support before this follow-up",
+            "primary_label": "Evidence found: APOE across three biomarkers",
+            "secondary_label": (
+                "Next validation can test how APOE works and whether the disease "
+                "and biomarker results trace to one variant"
+            ),
+            "tertiary_label": (
+                "Screening references organize this comparison; they do not "
+                "summarize all genetic evidence"
+            ),
             "style_key": "interpretive_boundary_navy",
             "source_rows": "endophenotype_gate_decisions.tsv;endophenotype_status.tsv",
         }
@@ -290,8 +302,10 @@ def science_checks(plot_data: pd.DataFrame, derived: dict[str, Any], frames: dic
             ("positive_gene_identity", "APOE", "|".join(derived["positive_genes"]), "All positive decisions are APOE."),
             ("newly_supported_unique_genes", 0, derived["newly_supported_unique_genes"], "APOE was supported previously."),
             ("pvalue_geometry_columns", "absent", "absent" if not pvalue_columns else "|".join(pvalue_columns), "No P value or -log10(P) enters plotted data."),
-            ("mechanism_boundary_visible", "present", "present" if "do not show how the gene works" in visible_lower else "absent", "The figure explains that the tests do not establish a mechanism."),
-            ("plain_language_visible", "present", "present" if "prove both signals share one variant" in visible_lower else "absent", "Shared-signal analysis is explained without specialist shorthand."),
+            ("mechanism_validation_visible", "present", "present" if "next validation can test how apoe works" in visible_lower else "absent", "Mechanism is presented as a future validation question."),
+            ("plain_language_visible", "present", "present" if "trace to one variant" in visible_lower else "absent", "Shared-signal analysis is explained without specialist shorthand."),
+            ("screening_boundary_visible", "present", "present" if "do not summarize all genetic evidence" in visible_lower else "absent", "The screening result is bounded from the complete genetic evidence."),
+            ("binary_failure_language_visible", "absent", "present" if "did not pass" in visible_lower or "failed" in visible_lower else "absent", "Above-reference results use neutral screening language."),
             ("internal_phase_label_visible", "absent", "absent" if "phase 19" not in visible_lower and "phase19" not in visible_lower else "present", "Artwork remains reusable."),
         ],
     )
@@ -317,8 +331,8 @@ def draw_unit_bar(axis: Any, x: float, y: float, width: float, height: float) ->
 
 def render_figure(plot_data: pd.DataFrame) -> Any:
     figure, axis = new_canvas()
-    panel_heading(axis, "A", "Each cerebrospinal-fluid biomarker", 0.020, 0.955)
-    panel_heading(axis, "B", "All 57 tests", 0.765, 0.955)
+    panel_heading(axis, "A", "APOE across three cerebrospinal-fluid biomarkers", 0.020, 0.955)
+    panel_heading(axis, "B", "APOE-led summary", 0.765, 0.955)
 
     tiles = plot_data.loc[plot_data["record_type"].eq("trait_tile")].sort_values("display_order")
     tile_x = [0.020, 0.266, 0.512]
@@ -329,22 +343,31 @@ def render_figure(plot_data: pd.DataFrame) -> Any:
 
         add_text(axis, x + 0.018, 0.665, str(row.apoe_positive_decisions), size=31.0, color=BLUE, weight="bold")
         add_text(axis, x + 0.065, 0.682, "APOE", size=15.0, color=NAVY, weight="bold")
-        add_text(axis, x + 0.065, 0.632, "both genetic tests passed", size=9.0, color=BLUE, weight="bold")
+        add_text(axis, x + 0.065, 0.632, "P below both pre-set references", size=8.4, color=BLUE, weight="bold")
 
         draw_unit_bar(axis, x + 0.018, 0.515, 0.190, 0.052)
         add_text(axis, x + 0.018, 0.472, "1 APOE", size=9.0, color=BLUE, weight="bold")
         add_text(axis, x + 0.208, 0.472, "18 other genes", size=9.0, color=DARK, weight="bold", ha="right")
 
-        add_text(axis, x + 0.018, 0.350, str(row.other_gene_no_signal_decisions), size=27.0, color=DARK, weight="bold")
-        add_text(axis, x + 0.072, 0.365, "other nuclear genes", size=10.2, color=DARK, weight="bold")
-        add_text(axis, x + 0.018, 0.287, "Did not pass both genetic tests", size=9.0, color=MID)
+        add_text(axis, x + 0.018, 0.350, str(row.other_gene_no_signal_decisions), size=21.0, color=MID, weight="bold")
+        add_text(axis, x + 0.066, 0.365, "additional genes", size=9.8, color=DARK, weight="bold")
+        add_text(
+            axis,
+            x + 0.018,
+            0.287,
+            "P at/above one or both\npre-set screening references",
+            size=8.0,
+            color=MID,
+            va="center",
+            linespacing=1.08,
+        )
 
     aggregate = plot_data.loc[plot_data["record_type"].eq("aggregate")].iloc[0]
     rounded_box(axis, 0.765, 0.205, 0.215, 0.680, face=WHITE, edge=NAVY, linewidth=1.5, radius=0.012)
     add_text(axis, 0.785, 0.820, "3", size=33.0, color=BLUE, weight="bold")
-    add_text(axis, 0.840, 0.835, "APOE-positive", size=12.0, color=NAVY, weight="bold")
-    add_text(axis, 0.840, 0.790, "results", size=10.0, color=MID, weight="bold")
-    add_text(axis, 0.785, 0.728, "Same gene in all 3 tests", size=9.2, color=BLUE, weight="bold")
+    add_text(axis, 0.840, 0.835, "APOE results", size=12.0, color=NAVY, weight="bold")
+    add_text(axis, 0.840, 0.790, "one per biomarker", size=9.3, color=MID, weight="bold")
+    add_text(axis, 0.785, 0.728, "APOE across 3 biomarkers", size=9.2, color=BLUE, weight="bold")
 
     axis.add_patch(
         Rectangle(
@@ -360,38 +383,39 @@ def render_figure(plot_data: pd.DataFrame) -> Any:
     )
     add_text(axis, 0.785, 0.555, "3", size=9.0, color=BLUE, weight="bold")
     add_text(axis, 0.959, 0.555, "54", size=9.0, color=DARK, weight="bold", ha="right")
-    add_text(axis, 0.785, 0.472, str(aggregate.other_gene_no_signal_decisions), size=27.0, color=DARK, weight="bold")
-    add_text(axis, 0.847, 0.485, "did not pass both", size=9.5, color=DARK, weight="bold")
-    add_text(axis, 0.847, 0.445, "genetic tests", size=9.5, color=DARK, weight="bold")
+    add_text(axis, 0.785, 0.472, str(aggregate.other_gene_no_signal_decisions), size=20.0, color=MID, weight="bold")
+    add_text(axis, 0.837, 0.485, "additional comparisons", size=8.2, color=DARK, weight="bold")
+    add_text(axis, 0.837, 0.445, "at/above one or both references", size=7.7, color=MID, weight="bold")
 
     rounded_box(axis, 0.785, 0.270, 0.174, 0.105, face=PALE_BLUE, edge=BLUE, linewidth=1.0, radius=0.009)
     add_text(axis, 0.805, 0.326, str(aggregate.newly_supported_unique_genes), size=25.0, color=BLUE, weight="bold")
-    add_text(axis, 0.850, 0.337, "newly supported", size=9.2, color=NAVY, weight="bold")
-    add_text(axis, 0.850, 0.298, "genes", size=9.2, color=NAVY, weight="bold")
+    add_text(axis, 0.850, 0.337, "additional genes", size=8.7, color=NAVY, weight="bold")
+    add_text(axis, 0.850, 0.298, "beyond APOE", size=8.7, color=NAVY, weight="bold")
 
     rounded_box(axis, 0.020, 0.030, 0.960, 0.120, face=NAVY, edge=NAVY, linewidth=1.0, radius=0.010)
     add_text(
         axis, 0.500, 0.104,
-        "Three positive results = APOE for three biomarkers, not three genes",
-        size=12.0, color=WHITE, weight="bold", ha="center",
+        "Evidence found: APOE across all 3 biomarkers",
+        size=11.5, color=WHITE, weight="bold", ha="center",
     )
     add_text(
         axis, 0.500, 0.063,
-        "Nearby-variant + whole-gene tests do not show how APOE works or prove a shared variant.",
-        size=9.4, color="#DDE7F2", ha="center",
+        "Next validation: test how APOE works and whether the disease and biomarker results trace to one DNA variant.",
+        size=8.5, color="#DDE7F2", ha="center",
     )
     return figure
 
 
 CAPTION = """# Cerebrospinal fluid (CSF) biomarker results
 
-Across amyloid-β 42, total tau, and p-tau181, APOE was the only nuclear
-candidate to pass both a nearby-variant test and the corrected MAGMA whole-gene
-test. This produced three positive gene-by-biomarker results, while the other
-18 nuclear genes produced 54 results that did not pass both tests. The three
-positive results represent the same previously supported gene across three
-biomarkers; the follow-up added zero newly supported genes. Passing both tests
-does not show how APOE works or prove that both signals share one variant.
+APOE was linked to all three spinal-fluid biomarkers: amyloid-β 42, total tau,
+and p-tau181. For each biomarker, APOE's nearby-variant and corrected whole-gene
+P values were below both pre-set screening references. This produced three
+APOE gene-by-biomarker results. The other 18 nuclear genes produced 54 results
+with a P value at or above one or both references, so this screen added zero
+genes beyond APOE. Future validation can test how APOE works and whether the
+disease and biomarker results trace to the same DNA variant. The screening
+categories organize this comparison without summarizing all genetic evidence.
 """
 
 
@@ -406,10 +430,10 @@ uncertainty intervals and significance annotations are not applicable.
 
 No P value is transformed or plotted. In particular, the stored APOE
 amyloid-β 42 regional P value underflows to numerical zero, so the renderer
-deliberately avoids `-log10(P)` geometry. Passing the regional and corrected
-MAGMA tests is not relabeled as proof that the genetic signals share a variant
-or as mechanistic validation. Blue and gray are supplemented by direct labels
-and unit bars;
+deliberately avoids `-log10(P)` geometry. Having P values below the regional
+and corrected whole-gene screening references prioritizes APOE for future
+mechanism and shared-variant validation; it is not relabeled as proof of either.
+Blue and gray are supplemented by direct labels and unit bars;
 PDF and SVG are vector outputs and the PNG is exported at 450 DPI.
 """
 

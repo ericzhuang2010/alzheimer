@@ -21,8 +21,8 @@ genetic_support_gated_workflow_v1	bellenguez_accession_visible	blocking	pass	Tru
 genetic_support_gated_workflow_v1	all_csf_accessions_visible	blocking	pass	True	True	All three CSF GWAS labels.
 genetic_support_gated_workflow_v1	bellenguez_sample_counts_omitted	blocking	pass	True	True	Conflicting sample counts are intentionally omitted.
 genetic_support_gated_workflow_v1	parallel_lanes	blocking	pass	2	2	Direct-summary and nuclear gated paths.
-genetic_support_gated_workflow_v1	route_stop_rule_visible	blocking	pass	True	True	Gated interpretation boundary.
-genetic_support_gated_workflow_v1	arrows_not_causal_visible	blocking	pass	True	True	Arrow semantics are explicit.
+genetic_support_gated_workflow_v1	evidence_layer_message_visible	blocking	pass	True	True	The workflow emphasizes evidence accumulated at each completed step.
+genetic_support_gated_workflow_v1	future_validation_message_visible	blocking	pass	True	True	The workflow presents incomplete steps as a future-validation map.
 genetic_support_gated_workflow_v1	png_dimensions	blocking	pass	5580x2115	5580x2115	Exact slide-native raster dimensions at 450 DPI.
 genetic_support_gated_workflow_v1	png_dpi	blocking	pass	450	450	PNG metadata resolution rounded to the requested DPI.
 genetic_support_gated_workflow_v1	pdf_signature	blocking	pass	%PDF-	%PDF-	Vector PDF has the expected file signature.

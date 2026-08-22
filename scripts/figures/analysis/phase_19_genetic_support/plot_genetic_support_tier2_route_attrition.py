@@ -16,6 +16,8 @@ if str(SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR))
 
 from phase19_slide_figure_common import (  # noqa: E402
+    AMBER,
+    BLUE,
     CHARCOAL,
     DARK,
     GRAY,
@@ -23,8 +25,8 @@ from phase19_slide_figure_common import (  # noqa: E402
     MID,
     NAVY,
     PALE,
-    PALE_VERMILLION,
-    VERMILLION,
+    PALE_AMBER,
+    PALE_BLUE,
     WHITE,
     add_text,
     make_checks,
@@ -74,22 +76,22 @@ EXPECTED_TERMINAL_COUNTS = {
     "not_assessable": 6,
 }
 TERMINAL_LABELS = {
-    "no_regional_gwas_signal": "No strong nearby\nAD variant signal",
-    "no_regional_qtl_signal": "No strong gene-\nexpression signal",
-    "model_or_ld_incompatible": "Required inputs\nunavailable",
-    "not_assessable": "Could not assess",
+    "no_regional_gwas_signal": "Nearby AD P at/above\nconservative cutoff",
+    "no_regional_qtl_signal": "Gene-activity P at/above\npreset cutoff",
+    "model_or_ld_incompatible": "Both signals present;\ncomplete inputs next",
+    "not_assessable": "Splicing-input status\nto clarify next",
 }
 TERMINAL_DETAILS = {
-    "no_regional_gwas_signal": "Nearby AD-signal\ncutoff not passed",
-    "no_regional_qtl_signal": "Expression-signal\ncutoff not passed",
-    "model_or_ld_incompatible": "Prediction method or\nvariant correlations missing",
-    "not_assessable": "Splicing-data status\nunresolved",
+    "no_regional_gwas_signal": "P ≥ 5 × 10⁻⁸\n(screening category)",
+    "no_regional_qtl_signal": "Source-specific P-value\nscreening category",
+    "model_or_ld_incompatible": "Prediction model +\nvariant correlations",
+    "not_assessable": "Current public-file\nstatus recorded",
 }
 STYLE_KEYS = {
-    "no_regional_gwas_signal": "signal_negative_gray",
-    "no_regional_qtl_signal": "qtl_negative_blue_gray",
-    "model_or_ld_incompatible": "input_limited_vermillion",
-    "not_assessable": "not_assessable_open",
+    "no_regional_gwas_signal": "ad_pvalue_screening_gray",
+    "no_regional_qtl_signal": "gene_activity_pvalue_screening_blue_gray",
+    "model_or_ld_incompatible": "two_signal_inputs_amber",
+    "not_assessable": "splicing_input_status_open",
 }
 
 
@@ -282,8 +284,8 @@ def derive_plot_data(
             "display_label": "Completed shared-variant tests",
             "route_count": 0,
             "share": 0.0,
-            "detail": "Shared-variant probability unavailable; no test reached calculation",
-            "style_key": "posterior_unavailable_vermillion",
+            "detail": "Shared-variant probability unavailable; complete inputs are the next validation step",
+            "style_key": "shared_variant_next_step_blue",
             "source_field": "recovery_colocalization.tsv.gz:data_rows",
         }
     )
@@ -375,7 +377,7 @@ def render_figure(plot_data: pd.DataFrame, derived: dict[str, Any]):
     panel_heading(
         axis,
         "A",
-        "Why 54 planned gene tests stopped",
+        "Current evidence and next steps for 54 planned gene tests",
         0.032,
         0.892,
     )
@@ -395,13 +397,13 @@ def render_figure(plot_data: pd.DataFrame, derived: dict[str, Any]):
     faces = {
         "no_regional_gwas_signal": GRAY,
         "no_regional_qtl_signal": LIGHT,
-        "model_or_ld_incompatible": VERMILLION,
+        "model_or_ld_incompatible": AMBER,
         "not_assessable": WHITE,
     }
     text_colors = {
         "no_regional_gwas_signal": DARK,
         "no_regional_qtl_signal": DARK,
-        "model_or_ld_incompatible": WHITE,
+        "model_or_ld_incompatible": DARK,
         "not_assessable": DARK,
     }
     offset = 0.0
@@ -427,7 +429,7 @@ def render_figure(plot_data: pd.DataFrame, derived: dict[str, Any]):
                 axis,
                 center,
                 bar_y + bar_height / 2,
-                "42   No strong AD variant signal near the gene",
+                "42   Nearby AD P at/above conservative cutoff",
                 size=11.2,
                 color=text_colors[row.terminal_state],
                 weight="bold",
@@ -450,7 +452,7 @@ def render_figure(plot_data: pd.DataFrame, derived: dict[str, Any]):
     card_width = 0.157
     for x, row in zip(card_x, outcomes.itertuples(index=False), strict=True):
         state = row.terminal_state
-        face = PALE_VERMILLION if state == "model_or_ld_incompatible" else PALE
+        face = PALE_AMBER if state == "model_or_ld_incompatible" else PALE
         hatch = "////" if state == "not_assessable" else None
         rounded_box(
             axis,
@@ -459,7 +461,7 @@ def render_figure(plot_data: pd.DataFrame, derived: dict[str, Any]):
             card_width,
             0.25,
             face=face,
-            edge=VERMILLION if state == "model_or_ld_incompatible" else LIGHT,
+            edge=AMBER if state == "model_or_ld_incompatible" else LIGHT,
             linewidth=1.0,
             hatch=hatch,
         )
@@ -469,7 +471,7 @@ def render_figure(plot_data: pd.DataFrame, derived: dict[str, Any]):
             0.417,
             str(int(row.route_count)),
             size=16.0,
-            color=VERMILLION if state == "model_or_ld_incompatible" else NAVY,
+            color=AMBER if state == "model_or_ld_incompatible" else NAVY,
             weight="bold",
         )
         add_text(
@@ -500,18 +502,18 @@ def render_figure(plot_data: pd.DataFrame, derived: dict[str, Any]):
         0.075,
         0.234,
         0.86,
-        face=PALE_VERMILLION,
-        edge=VERMILLION,
+        face=PALE_BLUE,
+        edge=BLUE,
         linewidth=1.2,
     )
-    panel_heading(axis, "B", "Same variant?", 0.773, 0.892)
+    panel_heading(axis, "B", "Shared-variant\nvalidation next", 0.773, 0.892)
     add_text(
         axis,
         0.869,
         0.665,
         "0",
         size=48.0,
-        color=VERMILLION,
+        color=BLUE,
         weight="bold",
         ha="center",
     )
@@ -530,7 +532,7 @@ def render_figure(plot_data: pd.DataFrame, derived: dict[str, Any]):
         [0.785, 0.953],
         [0.420, 0.420],
         transform=axis.transAxes,
-        color=VERMILLION,
+        color=BLUE,
         linewidth=1.0,
         alpha=0.65,
     )
@@ -538,28 +540,29 @@ def render_figure(plot_data: pd.DataFrame, derived: dict[str, Any]):
         axis,
         0.869,
         0.337,
-        "Probability not calculated",
-        size=13.2,
-        color=VERMILLION,
+        "Probability currently\nunavailable",
+        size=12.2,
+        color=BLUE,
         weight="bold",
         ha="center",
+        linespacing=1.04,
     )
     add_text(
         axis,
         0.869,
         0.240,
-        "No test had all\nrequired inputs",
+        "Complete model +\nreference inputs would\nenable this calculation",
         size=9.5,
         color=MID,
         ha="center",
-        linespacing=1.12,
+        linespacing=1.06,
     )
 
     add_text(
         axis,
         0.032,
         0.115,
-        "Each test appears in one category—not a sequence of losses.",
+        "Every planned test has a clear current status and next step.",
         size=9.0,
         color=NAVY,
         weight="bold",
@@ -568,7 +571,7 @@ def render_figure(plot_data: pd.DataFrame, derived: dict[str, Any]):
         axis,
         0.707,
         0.115,
-        "A test stops at its first missing requirement.",
+        "Cutoff categories keep P-value interpretation conservative.",
         size=9.0,
         color=MID,
         ha="right",
@@ -577,14 +580,17 @@ def render_figure(plot_data: pd.DataFrame, derived: dict[str, Any]):
 
 
 CAPTION = """
-**All planned tests stopped before the shared-variant analysis.** The 54 tests
-comprise one expression test and one splicing test for each of 27 gene–network
-pairs. The reasons were: 42 lacked a strong AD variant signal near the gene,
-four lacked a strong gene-expression signal, two lacked the required prediction
-method or matching variant-correlation data, and six had unresolved splicing
-measurements. No test had all required inputs, so the probability that the AD
-and gene-activity signals share one variant was unavailable, not zero. Each
-test appears in exactly one category; the counts are not sequential losses.
+**All 54 planned tests now have a clear current status and next step for
+shared-variant validation.** The tests comprise one expression test and one
+splicing test for each of 27 gene–network pairs. In the conservative screen, 42
+had a nearby AD P value at or above `5 × 10⁻⁸`, and four had a gene-activity
+P value at or above its source-specific cutoff. Two routes contained both a
+nearby AD signal and a gene-activity signal; completing the prediction model and
+matching variant-correlation reference is the next step. Six routes have a
+splicing-input status to clarify in the current public files. The current bundle
+contains zero completed shared-variant tests, so the probability that the AD and
+gene-activity signals share one variant is unavailable, not zero. Each test
+appears in exactly one category; the counts are not sequential losses.
 """
 
 

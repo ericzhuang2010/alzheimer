@@ -9,8 +9,8 @@ uncertainty intervals and significance annotations are not applicable.
 
 No P value is transformed or plotted. In particular, the stored APOE
 amyloid-β 42 regional P value underflows to numerical zero, so the renderer
-deliberately avoids `-log10(P)` geometry. Passing the regional and corrected
-MAGMA tests is not relabeled as proof that the genetic signals share a variant
-or as mechanistic validation. Blue and gray are supplemented by direct labels
-and unit bars;
+deliberately avoids `-log10(P)` geometry. Having P values below the regional
+and corrected whole-gene screening references prioritizes APOE for future
+mechanism and shared-variant validation; it is not relabeled as proof of either.
+Blue and gray are supplemented by direct labels and unit bars;
 PDF and SVG are vector outputs and the PNG is exported at 450 DPI.

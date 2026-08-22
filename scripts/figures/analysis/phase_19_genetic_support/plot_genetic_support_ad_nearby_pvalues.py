@@ -65,7 +65,7 @@ REQUIRED_INPUTS = [
 GWAS_CUTOFF = 5e-8
 CUTOFF_MINUS_LOG10 = -math.log10(GWAS_CUTOFF)
 SOURCE_ACCESSION = "GCST90027158"
-EXPECTED_PASS_GENES = {"ANKRD11", "APOE", "COX7C", "RPS15"}
+EXPECTED_BELOW_CUTOFF_GENES = {"ANKRD11", "APOE", "COX7C", "RPS15"}
 EXPECTED_RAW_P = {
     "ANKRD11": "1.283e-11",
     "APOE": "0",
@@ -199,18 +199,21 @@ def derive_plot_data(
         source = group.iloc[0]
         raw_p = str(source["regional_min_p"])
         numeric_p = float(Decimal(raw_p))
-        source_pass = truth(source["regional_gwas_signal"])
+        source_below_cutoff = truth(source["regional_gwas_signal"])
         if numeric_p > 0:
-            computed_pass = numeric_p < GWAS_CUTOFF
+            computed_below_cutoff = numeric_p < GWAS_CUTOFF
             require(
-                computed_pass == source_pass,
+                computed_below_cutoff == source_below_cutoff,
                 f"Source cutoff flag disagrees with P value for {gene}",
             )
             minus_log10_p: float | Any = -math.log10(numeric_p)
             minus_log10_display = f"{minus_log10_p:.2f}"
         else:
             require(gene == "APOE", "Only APOE may have a zero source P value")
-            require(source_pass, "The APOE underflow row must pass the source cutoff")
+            require(
+                source_below_cutoff,
+                "The APOE underflow row must be classified below the source cutoff",
+            )
             minus_log10_p = pd.NA
             minus_log10_display = "beyond range*"
         rows.append(
@@ -228,36 +231,47 @@ def derive_plot_data(
                 "minus_log10_display": minus_log10_display,
                 "cutoff_p": GWAS_CUTOFF,
                 "cutoff_minus_log10": CUTOFF_MINUS_LOG10,
-                "cutoff_pass": source_pass,
-                "result_label": "Passed cutoff" if source_pass else "Did not pass",
-                "style_key": "pass_filled_blue_diamond" if source_pass else "fail_open_gray_circle",
+                "below_cutoff": source_below_cutoff,
+                "cutoff_class": (
+                    "Below conservative cutoff"
+                    if source_below_cutoff
+                    else "At or above conservative cutoff"
+                ),
+                "style_key": (
+                    "below_cutoff_filled_blue_diamond"
+                    if source_below_cutoff
+                    else "at_or_above_cutoff_open_gray_circle"
+                ),
                 "source_accession": str(source["source_accession"]),
                 "source_table": "recovery_regional_gwas_summary.tsv",
             }
         )
 
     plot_data = pd.DataFrame(rows)
-    plot_data["display_group"] = plot_data["cutoff_pass"].map(
-        {True: "four_passing_regions", False: "fifteen_non_passing_regions"}
+    plot_data["display_group"] = plot_data["below_cutoff"].map(
+        {
+            True: "four_values_below_cutoff",
+            False: "fifteen_values_at_or_above_cutoff",
+        }
     )
     sort_value = pd.to_numeric(plot_data["minus_log10_p"], errors="coerce")
     plot_data["sort_minus_log10_p"] = sort_value.fillna(math.inf)
     plot_data = plot_data.sort_values(
-        ["cutoff_pass", "sort_minus_log10_p", "gene"],
+        ["below_cutoff", "sort_minus_log10_p", "gene"],
         ascending=[True, False, True],
         kind="stable",
     ).reset_index(drop=True)
     plot_data["display_order"] = range(1, len(plot_data) + 1)
 
-    passing = plot_data.loc[plot_data["cutoff_pass"]]
-    non_passing = plot_data.loc[~plot_data["cutoff_pass"]]
+    below_cutoff = plot_data.loc[plot_data["below_cutoff"]]
+    at_or_above_cutoff = plot_data.loc[~plot_data["below_cutoff"]]
     derived = {
         "source_row_count": len(regional),
         "unique_gene_count": plot_data["gene"].nunique(),
-        "pass_count": len(passing),
-        "non_pass_count": len(non_passing),
-        "pass_genes": sorted(passing["gene"].tolist()),
-        "non_pass_genes": sorted(non_passing["gene"].tolist()),
+        "below_cutoff_count": len(below_cutoff),
+        "at_or_above_cutoff_count": len(at_or_above_cutoff),
+        "below_cutoff_genes": sorted(below_cutoff["gene"].tolist()),
+        "at_or_above_cutoff_genes": sorted(at_or_above_cutoff["gene"].tolist()),
         "underflow_count": int(plot_data["minus_log10_p"].isna().sum()),
         "underflow_genes": sorted(
             plot_data.loc[plot_data["minus_log10_p"].isna(), "gene"].tolist()
@@ -276,13 +290,23 @@ def build_science_checks(derived: dict[str, Any]) -> pd.DataFrame:
         [
             ("source_row_count", 19, derived["source_row_count"], "Recovery summary rows."),
             ("unique_gene_count", 19, derived["unique_gene_count"], "One row per nuclear gene."),
-            ("cutoff_pass_count", 4, derived["pass_count"], "Regions below the frozen AD cutoff."),
-            ("cutoff_non_pass_count", 15, derived["non_pass_count"], "Regions at or above the cutoff."),
             (
-                "cutoff_pass_gene_set",
-                "|".join(sorted(EXPECTED_PASS_GENES)),
-                "|".join(derived["pass_genes"]),
-                "Genes whose regional minimum passed P < 5e-8.",
+                "below_cutoff_count",
+                4,
+                derived["below_cutoff_count"],
+                "Regional minimum P values below the conservative cutoff.",
+            ),
+            (
+                "at_or_above_cutoff_count",
+                15,
+                derived["at_or_above_cutoff_count"],
+                "Regional minimum P values at or above the conservative cutoff.",
+            ),
+            (
+                "below_cutoff_gene_set",
+                "|".join(sorted(EXPECTED_BELOW_CUTOFF_GENES)),
+                "|".join(derived["below_cutoff_genes"]),
+                "Genes whose regional minimum is below P = 5e-8.",
             ),
             ("underflow_count", 1, derived["underflow_count"], "Numerically underflowed P values."),
             ("underflow_gene", "APOE", "|".join(derived["underflow_genes"]), "APOE is explicitly labeled as underflow."),
@@ -303,9 +327,10 @@ def render_figure(plot_data: pd.DataFrame, derived: dict[str, Any]):
     matplotlib.rcParams["savefig.bbox"] = None
     matplotlib.rcParams["savefig.pad_inches"] = 0.0
 
-    # Main panel: make the 15 non-passing genes the most readable content.
+    # Main panel: retain all 15 additional exact values alongside the four
+    # priority regions in panel B.
     rounded_box(axis, 0.014, 0.055, 0.645, 0.89, face=WHITE, edge=LIGHT, linewidth=1.0)
-    panel_heading(axis, "A", "The 15 genes that did not pass", 0.032, 0.906)
+    panel_heading(axis, "A", "All 19 exact values • 15 additional regions", 0.032, 0.906)
     add_text(
         axis,
         0.057,
@@ -334,10 +359,10 @@ def render_figure(plot_data: pd.DataFrame, derived: dict[str, Any]):
         return plot_x0 + (value - x_min) / (x_max - x_min) * (plot_x1 - plot_x0)
 
     row_top, row_bottom = 0.744, 0.135
-    non_passing = plot_data.loc[~plot_data["cutoff_pass"]].sort_values(
+    at_or_above_cutoff = plot_data.loc[~plot_data["below_cutoff"]].sort_values(
         ["sort_minus_log10_p", "gene"], ascending=[False, True], kind="stable"
     )
-    row_step = (row_top - row_bottom) / (len(non_passing) - 1)
+    row_step = (row_top - row_bottom) / (len(at_or_above_cutoff) - 1)
 
     for tick in [4.0, 5.0, 6.0, 7.0]:
         x = map_x(tick)
@@ -358,14 +383,14 @@ def render_figure(plot_data: pd.DataFrame, derived: dict[str, Any]):
         axis,
         cutoff_x,
         0.773,
-        "7.30 cutoff",
+        "7.30 conservative cutoff",
         size=7.3,
         color=AMBER,
         weight="bold",
         ha="center",
     )
 
-    for index, row in enumerate(non_passing.itertuples(index=False)):
+    for index, row in enumerate(at_or_above_cutoff.itertuples(index=False)):
         y = row_top - index * row_step
         value = float(row.minus_log10_p)
         x = map_x(value)
@@ -408,23 +433,25 @@ def render_figure(plot_data: pd.DataFrame, derived: dict[str, Any]):
         axis,
         0.036,
         0.085,
-        "○ Open circles + dotted lines = did not pass   •   All 15 exact minima are shown",
+        "○ 15 additional values at/above cutoff   •   Exact minima retained for transparent follow-up",
         size=8.1,
         color=MID,
     )
 
-    # Compact callout: the four regions that did pass.
+    # Compact callout: the four regional minima below the cutoff.
     rounded_box(axis, 0.680, 0.595, 0.305, 0.35, face=PALE_BLUE, edge=BLUE, linewidth=1.1)
-    panel_heading(axis, "B", "Four regions passed", 0.699, 0.907)
+    panel_heading(axis, "B", "Four priority regions below cutoff", 0.699, 0.907)
     add_text(axis, 0.702, 0.852, "Gene", size=7.5, color=NAVY, weight="bold")
-    add_text(axis, 0.770, 0.852, "Exact regional P", size=7.5, color=NAVY, weight="bold")
+    add_text(axis, 0.790, 0.852, "Exact regional P", size=7.5, color=NAVY, weight="bold")
     add_text(axis, 0.963, 0.852, "−log₁₀", size=7.5, color=NAVY, weight="bold", ha="right")
 
-    passing = plot_data.loc[plot_data["cutoff_pass"]].sort_values(
+    below_cutoff = plot_data.loc[plot_data["below_cutoff"]].sort_values(
         ["sort_minus_log10_p", "gene"], ascending=[False, True], kind="stable"
     )
-    pass_ys = [0.800, 0.747, 0.694, 0.641]
-    for y, row in zip(pass_ys, passing.itertuples(index=False), strict=True):
+    below_cutoff_ys = [0.800, 0.747, 0.694, 0.641]
+    for y, row in zip(
+        below_cutoff_ys, below_cutoff.itertuples(index=False), strict=True
+    ):
         axis.scatter(
             [0.705],
             [y],
@@ -438,7 +465,7 @@ def render_figure(plot_data: pd.DataFrame, derived: dict[str, Any]):
         )
         add_text(axis, 0.718, y, row.gene, size=8.0, color=DARK, weight="bold")
         p_label = "underflow* (stored 0)" if row.gene == "APOE" else row.regional_min_p_display
-        add_text(axis, 0.770, y, p_label, size=7.3, color=DARK)
+        add_text(axis, 0.790, y, p_label, size=6.9, color=DARK)
         add_text(axis, 0.963, y, row.minus_log10_display, size=7.3, color=DARK, ha="right")
 
     add_text(
@@ -451,63 +478,79 @@ def render_figure(plot_data: pd.DataFrame, derived: dict[str, Any]):
     )
 
     # Plain-language threshold rationale.
-    rounded_box(axis, 0.680, 0.292, 0.305, 0.276, face=PALE_AMBER, edge=AMBER, linewidth=1.0)
-    panel_heading(axis, "C", "Why use P < 5 × 10⁻⁸?", 0.699, 0.533)
+    rounded_box(axis, 0.680, 0.315, 0.305, 0.253, face=PALE_AMBER, edge=AMBER, linewidth=1.0)
+    panel_heading(axis, "C", "Why a conservative cutoff?", 0.699, 0.533)
     add_text(
         axis,
         0.701,
-        0.474,
+        0.478,
         "A genome-wide study checks millions of DNA variants.",
         size=8.1,
         color=DARK,
     )
-    add_text(axis, 0.701, 0.425, "0.05  ÷  about 1,000,000 independent tests", size=8.2, color=MID)
-    add_text(axis, 0.701, 0.372, "≈  5 × 10⁻⁸", size=13.0, color=AMBER, weight="bold")
+    add_text(axis, 0.701, 0.433, "0.05  ÷  about 1,000,000 independent tests", size=8.2, color=MID)
+    add_text(axis, 0.701, 0.386, "≈  5 × 10⁻⁸", size=13.0, color=AMBER, weight="bold")
     add_text(
         axis,
         0.701,
-        0.324,
-        "This greatly reduces chance findings; it is a screening rule, not a magic boundary.",
-        size=7.4,
+        0.343,
+        "This greatly reduces chance findings.\nIt is a screening rule, not a magic boundary.",
+        size=6.9,
         color=DARK,
+        va="center",
+        linespacing=1.08,
     )
 
-    # Interpretation boundary.
-    rounded_box(axis, 0.680, 0.055, 0.305, 0.205, face=WHITE, edge=LIGHT, linewidth=1.0)
-    panel_heading(axis, "D", "What does “nearby” mean?", 0.699, 0.226)
+    # Future-validation guidance.
+    rounded_box(axis, 0.680, 0.055, 0.305, 0.235, face=WHITE, edge=LIGHT, linewidth=1.0)
+    panel_heading(axis, "D", "How the results guide validation", 0.699, 0.256)
     add_text(
         axis,
         0.701,
-        0.166,
-        "The scan used a region extending 1 Mb on each side of the gene.",
-        size=7.7,
+        0.205,
+        "All 19 exact P values remain available for comparison.",
+        size=7.1,
         color=DARK,
     )
     add_text(
         axis,
         0.701,
-        0.105,
-        "A signal there does not prove the named gene caused it; another nearby gene or control element may be responsible.",
-        size=7.5,
+        0.145,
+        "The four below-cutoff regions are priorities for matched\ngene-activity and shared-variant analyses.",
+        size=6.7,
         color=NAVY,
         weight="bold",
+        va="center",
+        linespacing=1.08,
+    )
+    add_text(
+        axis,
+        0.701,
+        0.085,
+        "Nearby = 1 Mb on each side. Gene-level validation can test\nwhich gene or DNA “switch” is responsible.",
+        size=6.3,
+        color=MID,
+        va="center",
         linespacing=1.08,
     )
     return figure
 
 
 CAPTION = """
-**The exact Bellenguez regional minimum P values explain the 15-of-19 result.**
+**Four regions are priorities for validation, with all 19 exact P values
+shown.**
 For each of the 19 nuclear genes, the smallest Alzheimer’s disease association
-P value in the recovery table is shown. The main panel gives all 15 regions that
-did not pass the conventional genome-wide cutoff of `P < 5 × 10⁻⁸`; the four
-passing regions are listed separately. Horizontal position is `−log₁₀(P)`, so a
-point farther right represents a smaller P value. APOE’s regional minimum was
-stored as zero because it underflowed the source number representation; a P
-value is not literally zero. The cutoff is approximately `0.05 / 1,000,000`,
-reflecting the roughly one million independent common-variant comparisons in a
-genome-wide study. A signal inside a gene’s nearby region does not by itself
-identify that gene as causal.
+P value in the recovery table is shown. Four values are below the conventional
+genome-wide cutoff of `P = 5 × 10⁻⁸`, prioritizing those regions for
+gene-activity and shared-variant validation; the 15 additional values are shown
+at or above the cutoff.
+Horizontal position is `−log₁₀(P)`, so a point farther right represents a
+smaller P value. APOE’s regional minimum was stored as zero because it
+underflowed the source number representation; a P value is not literally zero.
+The conservative screening cutoff is approximately `0.05 / 1,000,000`, reflecting the
+roughly one million independent common-variant comparisons in a genome-wide
+study. The cutoff is one evidence layer for prioritizing validation. A signal
+inside a gene’s nearby region does not by itself identify that gene as causal.
 """
 
 
@@ -518,12 +561,14 @@ Values were read from the validated
 each of 19 unique nuclear genes, and its run status and blocking checks were
 required to pass. The exact source strings were retained for the displayed P
 labels. For positive P values, `−log₁₀(P)` was computed directly and the source
-pass flag was checked against the frozen `P < 5e-8` rule. APOE’s stored zero was
-treated only as numerical underflow: no finite `−log₁₀(P)` was calculated or
-substituted. Filled blue diamonds identify the four passing regions; open gray
-circles and dotted lines identify the 15 non-passing regions, providing
-redundant shape and line-style encoding in addition to color. Candidate windows
-extend 1 Mb on either side of the gene span. The graphic was exported at
+regional-signal flag was checked against the frozen `P < 5e-8` rule. APOE’s
+stored zero was treated only as numerical underflow: no finite `−log₁₀(P)` was
+calculated or substituted. Filled blue diamonds identify the four values below
+the cutoff; open gray circles and dotted lines identify the 15 values at or
+above it, providing redundant shape and line-style encoding in addition to
+color. These screening-cutoff positions guide follow-up without serving as
+total-evidence ratings. Candidate windows extend 1 Mb on either side of the
+gene span. The graphic was exported at
 12.4 × 4.7 inches as a 450-DPI PNG plus editable PDF and SVG.
 """
 
@@ -556,8 +601,9 @@ def main() -> None:
             "unique_gene_count": derived["unique_gene_count"],
             "cutoff_p": GWAS_CUTOFF,
             "cutoff_minus_log10": CUTOFF_MINUS_LOG10,
-            "cutoff_pass_count": derived["pass_count"],
-            "cutoff_non_pass_count": derived["non_pass_count"],
+            "below_cutoff_count": derived["below_cutoff_count"],
+            "at_or_above_cutoff_count": derived["at_or_above_cutoff_count"],
+            "cutoff_class_is_total_evidence_conclusion": False,
             "apoe_numeric_underflow": True,
             "nearby_signal_assigns_gene": False,
             "visible_internal_phase_label": False,

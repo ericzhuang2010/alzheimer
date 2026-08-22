@@ -445,7 +445,7 @@ def derive_plot_data(derived: dict[str, Any]) -> pd.DataFrame:
             "display_order": 1,
             "title": "Starting gene list\n(chosen in advance)",
             "subtitle": "47 gene–network pairs\n25 unique genes",
-            "detail": "Top network genes\nnot changed by genetic results",
+            "detail": "Top network genes retained\nfor genetic follow-up",
             "source_note": "call_key_driver_returns.tsv",
             "style_key": "freeze_navy",
             "x": 0.025,
@@ -488,9 +488,9 @@ def derive_plot_data(derived: dict[str, Any]) -> pd.DataFrame:
             "record_type": "analysis_step",
             "lane": "direct_summary",
             "display_order": 3,
-            "title": "Match results directly to each gene",
-            "subtitle": "Keep the source's original confidence labels",
-            "detail": "Support grade—not a shared-signal probability",
+            "title": "Public-data matches highlighted three genes",
+            "subtitle": "APOE  ·  COX7C  ·  SELENOW",
+            "detail": "Four gene–network pairs  ·  original source grades retained",
             "source_note": "Tier 1 evidence matrix",
             "style_key": "direct_output",
             "x": 0.610,
@@ -503,7 +503,7 @@ def derive_plot_data(derived: dict[str, Any]) -> pd.DataFrame:
             "record_type": "lane_heading",
             "lane": "nuclear_gated",
             "display_order": 1,
-            "title": "LANE B  ·  DOES THE SAME DNA SIGNAL LINK TO AD AND THE GENE?",
+            "title": "LANE B  ·  TEST WHETHER AD AND GENE ACTIVITY SHARE A DNA SIGNAL",
             "subtitle": "27 gene–network pairs  ·  19 non-mitochondrial genes",
             "detail": "NA",
             "source_note": "tier2_candidate_route_manifest.tsv",
@@ -548,7 +548,7 @@ def derive_plot_data(derived: dict[str, Any]) -> pd.DataFrame:
             "record_type": "gate",
             "lane": "nuclear_gated",
             "display_order": 4,
-            "title": "3  Data can be compared",
+            "title": "3  Prepare matching data",
             "subtitle": "Matching variants + genome",
             "detail": "Complete statistical model\nMatched ancestry and\nvariant correlation (LD)",
             "source_note": "Every item is required",
@@ -563,10 +563,10 @@ def derive_plot_data(derived: dict[str, Any]) -> pd.DataFrame:
             "record_type": "gate",
             "lane": "nuclear_gated",
             "display_order": 5,
-            "title": "4  Same DNA signal?",
+            "title": "4  Shared DNA signal",
             "subtitle": "Probability both match",
-            "detail": "(PP.H4)\nRuns only if steps 1–3 pass",
-            "source_note": "Otherwise: not calculated",
+            "detail": "(PP.H4)\nAfter steps 1–3",
+            "source_note": "With compatible inputs",
             "style_key": "primary_blue",
             "x": 0.835,
             "y": 0.315,
@@ -580,8 +580,8 @@ def derive_plot_data(derived: dict[str, Any]) -> pd.DataFrame:
             "display_order": 1,
             "title": "Mitochondrial genes",
             "subtitle": "20 pairs  ·  6 genes",
-            "detail": "Need a different test\n—not a negative result",
-            "source_note": "Not assessed negatively",
+            "detail": "Dedicated mitochondrial data\ncan add validation",
+            "source_note": "Future validation route",
             "style_key": "mtdna_outline",
             "x": 0.025,
             "y": 0.045,
@@ -593,8 +593,8 @@ def derive_plot_data(derived: dict[str, Any]) -> pd.DataFrame:
             "record_type": "boundary",
             "lane": "shared",
             "display_order": 99,
-            "title": "Testing stops when a required step fails.",
-            "subtitle": "Arrows show test order—not cause and effect.",
+            "title": "Each completed step adds one layer of evidence.",
+            "subtitle": "Arrows show test order; remaining steps guide future validation.",
             "detail": "NA",
             "source_note": "recovery_route_decisions.tsv",
             "style_key": "boundary",
@@ -616,8 +616,14 @@ def derive_plot_data(derived: dict[str, Any]) -> pd.DataFrame:
     require("GCST90027158" in visible, "Bellenguez accession is not visible")
     for accession in CSF_ACCESSIONS:
         require(accession in visible, f"CSF accession is not visible: {accession}")
-    require("testing stops when a required step fails" in visible.lower(), "Stop rule missing")
-    require("test order—not cause and effect" in visible.lower(), "Arrow boundary missing")
+    require(
+        "each completed step adds one layer of evidence" in visible.lower(),
+        "Evidence-layer message missing",
+    )
+    require(
+        "remaining steps guide future validation" in visible.lower(),
+        "Future-validation message missing",
+    )
     require(not any(value in visible for value in OMITTED_SAMPLE_COUNTS), "Conflicting Bellenguez sample counts leaked into figure")
     require(int(derived["candidate_contexts"]) == 47, "Derived scope changed before plotting")
     return plot_data
@@ -659,8 +665,18 @@ def build_science_checks(
         ("all_csf_accessions_visible", True, all(value in visible for value in CSF_ACCESSIONS), "All three CSF GWAS labels."),
         ("bellenguez_sample_counts_omitted", True, not any(value in visible for value in OMITTED_SAMPLE_COUNTS), "Conflicting sample counts are intentionally omitted."),
         ("parallel_lanes", 2, plot_data.loc[plot_data["record_type"].eq("lane_heading"), "lane"].nunique(), "Direct-summary and nuclear gated paths."),
-        ("route_stop_rule_visible", True, "testing stops when a required step fails" in visible.lower(), "Gated interpretation boundary."),
-        ("arrows_not_causal_visible", True, "test order—not cause and effect" in visible.lower(), "Arrow semantics are explicit."),
+        (
+            "evidence_layer_message_visible",
+            True,
+            "each completed step adds one layer of evidence" in visible.lower(),
+            "The workflow emphasizes evidence accumulated at each completed step.",
+        ),
+        (
+            "future_validation_message_visible",
+            True,
+            "remaining steps guide future validation" in visible.lower(),
+            "The workflow presents incomplete steps as a future-validation map.",
+        ),
     ]
     return make_checks(SCHEMA, values)
 
@@ -779,7 +795,7 @@ def render_figure(plot_data: pd.DataFrame, staging: Path) -> None:
 
 
 def caption_text() -> str:
-    return """# Frozen, gated workflow for human-genetic support
+    return """# Two-path workflow for human-genetic support
 
 The frozen Phase 18 set contains 47 gene-by-network contexts representing 25
 unique genes. It enters two parallel evidence paths. The direct-summary path
@@ -788,8 +804,9 @@ and TWAS evidence. The nuclear path evaluates regional clinical-AD or CSF
 biomarker signals, candidate molecular-QTL signals, and allele/build/model/LD
 compatibility before any primary multi-signal H0-H4 analysis. Nineteen nuclear
 genes across 27 contexts generate 54 clinical-AD eQTL/sQTL routes and 57 CSF
-gene-by-trait screens. Six mtDNA genes across 20 contexts require a separate
-mitochondrial design. A route stops when its first required input fails; arrows
+gene-by-trait screens. Six mtDNA genes across 20 contexts have a dedicated
+mitochondrial validation route. Each completed step contributes a layer of
+evidence, while remaining inputs define clear future-validation work. Arrows
 show analysis flow and do not imply a causal mechanism.
 """
 

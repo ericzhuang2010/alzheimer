@@ -8,10 +8,13 @@ labels were checked against `genetic_support_colocalization.tsv.gz`; and route
 limitations were checked against `genetic_support_assessability.tsv`.
 
 Counts are deterministic classifications, not statistical estimates, so no
-error bars or significance annotations are shown. The horizontal bar counts
-each displayed gene × broad-network context once. Gene chips list each unique
-gene once within its terminal gene-level category. The two COX7C contexts use
-the same underlying bulk-sQTL source record and are not independent
+error bars or significance annotations are shown. The source values `strong`,
+`moderate`, `weak`, `none_found`, and `not_assessable` are preserved exactly
+from `final_grade`; the visible wording frames them as categories from the
+registered first screen rather than total-evidence conclusions. The horizontal
+bar counts each displayed gene × broad-network context once. Gene chips list
+each unique gene once within its terminal gene-level category. The two COX7C
+contexts use the same underlying bulk-sQTL source record and are not independent
 replications. Inclusion/confidence scores were not relabeled as classical
 colocalization H0-H4 probabilities. The 12.4 × 4.7 inch composition uses direct
 labels, colorblind-safe colors, filled versus open/hatch encoding, and vector

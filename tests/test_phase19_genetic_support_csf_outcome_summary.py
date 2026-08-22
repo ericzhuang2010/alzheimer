@@ -80,9 +80,15 @@ def test_plot_data_preserves_gene_by_trait_scope_and_interpretation() -> None:
     forbidden = {"regional_min_p", "magma_p", "minus_log10_p", "neg_log10_p"}
     assert forbidden.isdisjoint(plot_data.columns)
     visible = derived["visible_text"].lower()
-    assert "one gene, not three genes" in visible
-    assert "do not show how the gene works" in visible
-    assert "prove both signals share one variant" in visible
+    assert "apoe linked to all three spinal-fluid biomarkers" in visible
+    assert "zero additional genes were added beyond apoe" in visible
+    assert "evidence found: apoe across three biomarkers" in visible
+    assert "next validation can test how apoe works" in visible
+    assert "trace to one variant" in visible
+    assert "one or both p values were at or above the pre-set screening references" in visible
+    assert "do not summarize all genetic evidence" in visible
+    assert "did not pass" not in visible
+    assert "failed" not in visible
     assert "gwas" not in visible
     assert "magma" not in visible
     assert "colocalization" not in visible
@@ -172,5 +178,15 @@ def test_full_figure_package(tmp_path: Path) -> None:
     assert "magma" not in svg
     assert "colocalization" not in svg
     assert "csf" not in svg
-    assert "both genetic tests" in svg
+    assert "p at/above one or both" in svg
+    assert "pre-set screening references" in svg
+    assert "apoe-led summary" in svg
+    assert "evidence found: apoe across all 3 biomarkers" in svg
+    assert "additional genes" in svg
+    assert "beyond apoe" in svg
+    assert "next validation:" in svg
+    assert "trace to one dna variant" in svg
+    assert "total-evidence verdict" not in svg
+    assert "did not pass" not in svg
+    assert "failed" not in svg
     assert (output / "genetic_support_csf_outcome_summary.pdf").read_bytes()[:5] == b"%PDF-"

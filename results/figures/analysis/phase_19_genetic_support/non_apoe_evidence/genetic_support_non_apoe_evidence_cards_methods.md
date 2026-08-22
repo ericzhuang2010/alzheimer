@@ -16,5 +16,6 @@ sources and tests are not comparable effect sizes. Values are deterministic
 source summaries, so no error bars or significance annotations are applicable.
 Color, direct text labels, borders, and card headings provide redundant
 encoding. “PP.H4 unavailable” means no valid primary posterior was produced; it
-does not mean PP.H4 was estimated as zero. Regional association is described as
-locus evidence and not as assignment of the candidate gene.
+does not mean PP.H4 was estimated as zero. Below/above-reference labels describe
+pre-set screening comparisons and are paired with future validation steps.
+Regional association is not treated as assignment of the candidate gene.

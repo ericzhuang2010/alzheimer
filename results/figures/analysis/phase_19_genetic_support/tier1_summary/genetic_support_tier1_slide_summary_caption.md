@@ -1,11 +1,11 @@
 # Human genetic support across key-driver candidates
 
-Panel A summarizes 47 gene × broad-network candidate contexts across
-prespecified evidence grades. One APOE/astrocyte context has strong gene-level
-AD support, while two COX7C contexts and one SELENOW context have weak or
-limited support. Panel B states the direct evidence and context limitations for
-these three genes. Panel C shows 16 nuclear genes (23 contexts) with no direct
-mapping in the registered filtered summary and six mtDNA genes (20 contexts)
-that cannot be assessed with the available nuclear GWAS/xQTL resource. “No
-direct mapping” is a source-search outcome rather than evidence of no genetic
-role; “not assessable” is not a negative result.
+The registered public-data screen highlighted APOE, COX7C, and SELENOW across
+four of 47 gene × broad-network candidate contexts. The formal source grade is
+strong for one APOE/astrocyte context and weak for two COX7C contexts and one
+SELENOW context. Panel B shows the source records behind those matches and
+identifies cell-specific or independent validation that can strengthen them.
+Panel C maps the next validation routes: 16 nuclear genes (23 contexts) had no
+direct match in this registered search, while six mtDNA genes (20 contexts)
+have a dedicated mitochondrial-genetics route. The source grades describe the
+registered search, and additional datasets can expand validation.

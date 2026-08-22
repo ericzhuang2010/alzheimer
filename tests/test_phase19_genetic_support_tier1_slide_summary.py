@@ -39,6 +39,19 @@ def test_plot_data_preserves_scope_and_interpretive_categories() -> None:
     assert derived["grade_counts"] == FIGURE.EXPECTED_GRADE_COUNTS
     cards = plot_data.loc[plot_data["record_type"].eq("candidate_card")]
     assert set(cards["gene"]) == {"APOE", "COX7C", "SELENOW"}
+    cards_by_gene = cards.set_index("gene")
+    assert cards_by_gene.loc["APOE", "final_grade"] == "strong"
+    assert cards_by_gene.loc["COX7C", "final_grade"] == "weak"
+    assert cards_by_gene.loc["SELENOW", "final_grade"] == "weak"
+    assert cards_by_gene.loc["APOE", "primary_label"] == "FIRST-SCREEN GRADE: STRONG"
+    assert cards_by_gene.loc["COX7C", "primary_label"] == "FIRST-SCREEN GRADE: WEAK"
+    assert cards_by_gene.loc["SELENOW", "primary_label"] == "FIRST-SCREEN GRADE: WEAK"
+    segments = plot_data.loc[plot_data["record_type"].eq("outcome_segment")].set_index("final_grade")
+    assert segments.loc["strong", "primary_label"] == "Source grade: strong"
+    assert segments.loc["moderate", "primary_label"] == "Source grade: moderate"
+    assert segments.loc["weak", "primary_label"] == "Source grade: weak"
+    assert segments.loc["none_found", "primary_label"] == "No direct match in this search"
+    assert segments.loc["not_assessable", "primary_label"] == "Dedicated mitochondrial route"
     displayed = set(plot_data.loc[plot_data["gene"].ne("NA"), "gene"])
     assert len(displayed) == 25
     assert set(derived["no_direct_genes"]) == FIGURE.EXPECTED_NO_DIRECT
@@ -47,9 +60,15 @@ def test_plot_data_preserves_scope_and_interpretive_categories() -> None:
     assert "phase19" not in derived["visible_text"].lower()
     assert "top candidate AD variant" in derived["visible_text"]
     assert "brain RNA-splicing link" in derived["visible_text"]
-    assert "predicted gene activity to AD (TWAS)" in derived["visible_text"]
+    assert "predicted gene activity to AD" in derived["visible_text"]
     assert "candidate-context" not in derived["visible_text"].lower()
     assert "colocalization" not in derived["visible_text"].lower()
+    assert "first-screen grade: strong" in derived["visible_text"].lower()
+    assert "first-screen grade: weak" in derived["visible_text"].lower()
+    assert "public data highlighted apoe, cox7c, and selenow" in derived["visible_text"].lower()
+    assert "additional datasets can expand validation" in derived["visible_text"].lower()
+    assert "limited genetic support" not in derived["visible_text"].lower()
+    assert "strong genetic support" not in derived["visible_text"].lower()
 
 
 def test_full_figure_package(tmp_path: Path) -> None:
@@ -83,3 +102,26 @@ def test_full_figure_package(tmp_path: Path) -> None:
     svg = (output / "genetic_support_tier1_slide_summary.svg").read_text(encoding="utf-8").lower()
     assert "phase 19" not in svg
     assert "phase19" not in svg
+    assert "public-data search highlighted apoe, cox7c, and selenow" in svg
+    assert "source grade: strong" in svg
+    assert "source grade: weak" in svg
+    assert "first-screen grade: strong" in svg
+    assert "first-screen grade: weak" in svg
+    assert "three genes with direct public-data matches" in svg
+    assert "16 nuclear genes for additional validation" in svg
+    assert "no direct match in this registered search" in svg
+    assert "dedicated mitochondrial-genetics route" in svg
+    assert "public data highlighted apoe, cox7c, and selenow" in svg
+    assert "additional nuclear and mitochondrial datasets can expand validation" in svg
+    assert "entries behind the first-screen grades" not in svg
+    assert "other outcomes in the registered search" not in svg
+    assert "mitochondrial genes need different data" not in svg
+    assert "limited genetic support" not in svg
+    assert "strong genetic support" not in svg
+    caption = (output / "genetic_support_tier1_slide_summary_caption.md").read_text(
+        encoding="utf-8"
+    ).lower()
+    assert "public-data screen highlighted apoe, cox7c, and selenow" in caption
+    assert "next validation routes" in caption
+    assert "additional datasets can expand validation" in caption
+    assert "limited support" not in caption

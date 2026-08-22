@@ -1,10 +1,10 @@
 schema_version	record_type	display_order	terminal_state	display_label	route_count	share	detail	style_key	source_field
-genetic_support_tier2_route_attrition_v1	terminal_outcome	1	no_regional_gwas_signal	No strong nearby AD variant signal	42	0.7777777777777778	"Nearby AD-signal
-cutoff not passed"	signal_negative_gray	recovery_route_decisions.tsv:terminal_state
-genetic_support_tier2_route_attrition_v1	terminal_outcome	2	no_regional_qtl_signal	No strong gene- expression signal	4	0.07407407407407407	"Expression-signal
-cutoff not passed"	qtl_negative_blue_gray	recovery_route_decisions.tsv:terminal_state
-genetic_support_tier2_route_attrition_v1	terminal_outcome	3	model_or_ld_incompatible	Required inputs unavailable	2	0.037037037037037035	"Prediction method or
-variant correlations missing"	input_limited_vermillion	recovery_route_decisions.tsv:terminal_state
-genetic_support_tier2_route_attrition_v1	terminal_outcome	4	not_assessable	Could not assess	6	0.1111111111111111	"Splicing-data status
-unresolved"	not_assessable_open	recovery_route_decisions.tsv:terminal_state
-genetic_support_tier2_route_attrition_v1	posterior_boundary	1	valid_primary_h0_h4	Completed shared-variant tests	0	0.0	Shared-variant probability unavailable; no test reached calculation	posterior_unavailable_vermillion	recovery_colocalization.tsv.gz:data_rows
+genetic_support_tier2_route_attrition_v1	terminal_outcome	1	no_regional_gwas_signal	Nearby AD P at/above conservative cutoff	42	0.7777777777777778	"P ≥ 5 × 10⁻⁸
+(screening category)"	ad_pvalue_screening_gray	recovery_route_decisions.tsv:terminal_state
+genetic_support_tier2_route_attrition_v1	terminal_outcome	2	no_regional_qtl_signal	Gene-activity P at/above preset cutoff	4	0.07407407407407407	"Source-specific P-value
+screening category"	gene_activity_pvalue_screening_blue_gray	recovery_route_decisions.tsv:terminal_state
+genetic_support_tier2_route_attrition_v1	terminal_outcome	3	model_or_ld_incompatible	Both signals present; complete inputs next	2	0.037037037037037035	"Prediction model +
+variant correlations"	two_signal_inputs_amber	recovery_route_decisions.tsv:terminal_state
+genetic_support_tier2_route_attrition_v1	terminal_outcome	4	not_assessable	Splicing-input status to clarify next	6	0.1111111111111111	"Current public-file
+status recorded"	splicing_input_status_open	recovery_route_decisions.tsv:terminal_state
+genetic_support_tier2_route_attrition_v1	posterior_boundary	1	valid_primary_h0_h4	Completed shared-variant tests	0	0.0	Shared-variant probability unavailable; complete inputs are the next validation step	shared_variant_next_step_blue	recovery_colocalization.tsv.gz:data_rows

@@ -1,23 +1,28 @@
-schema_version	record_type	display_order	gene	status_label	style_key	tier1_grade	tier1_contexts	regional_min_p	regional_lead_variant	regional_signal	qtl_min_p	qtl_threshold	terminal_state_summary	csf_traits_passed	evidence_text	boundary_text	footer_text	source_rows
-genetic_support_non_apoe_evidence_cards_v1	candidate_card	1	COX7C	WEAK / INCOMPLETE	weak_amber	weak	2	8.579e-14	rs62375397	True	0.00258275	5.16689056525783e-06	no_regional_qtl_signal:2;not_assessable:2	0	"One published bulk-brain summary record: AD + RNA splicing
-Within 1 Mb (Bellenguez): smallest P 8.579 × 10⁻¹⁴
-Lead variant rs62375397"	"One evidence record is repeated in two network settings.
-The expression test did not pass.
-The splicing shared-variant test was incomplete."	Initial: weak · 2 network settings     Spinal-fluid: 0/3	genetic_support_evidence_summary.tsv|genetic_support_common_variant_evidence.tsv.gz|recovery_regional_gwas_summary.tsv|recovery_regional_qtl_summary.tsv|recovery_route_decisions.tsv|opc_rps15_evidence_summary.tsv|endophenotype_gate_decisions.tsv
-genetic_support_non_apoe_evidence_cards_v1	candidate_card	2	SELENOW	WEAK GENE-LIST EVIDENCE	weak_amber	weak	1	6.41e-05	rs17206581	False	NA	NA	no_regional_gwas_signal:2	0	"Published list based on predicted expression includes SELENOW
+schema_version	record_type	display_order	gene	source_result_label	style_key	original_first_screen_source_category	tier1_contexts	regional_min_p	regional_lead_variant	regional_p_below_reference	qtl_min_p	qtl_threshold	terminal_state_summary	csf_traits_below_both_references	evidence_text	boundary_text	footer_text	source_rows
+genetic_support_non_apoe_evidence_cards_v1	candidate_card	1	COX7C	BULK-BRAIN SUMMARY RECORD	source_record_amber	weak	2	8.579e-14	rs62375397	True	0.00258275	5.16689056525783e-06	no_regional_qtl_signal:2;not_assessable:2	0	"Published bulk-brain summary record: AD + RNA splicing
+Bellenguez ±1 Mb: P 8.579 × 10⁻¹⁴; lead rs62375397
+Walker brain expression: P 2.583 × 10⁻³
+Comparison: P above pre-set screening reference 5.167 × 10⁻⁶"	"One source record contributes to two network settings.
+Next: use complete splicing and AD variant files for a
+shared-variant comparison, then test cell-specific data."	"Original first-screen source category: weak · 2 networks
+Spinal-fluid screens below both pre-set references: 0/3"	genetic_support_evidence_summary.tsv|genetic_support_common_variant_evidence.tsv.gz|recovery_regional_gwas_summary.tsv|recovery_regional_qtl_summary.tsv|recovery_route_decisions.tsv|opc_rps15_evidence_summary.tsv|endophenotype_gate_decisions.tsv
+genetic_support_non_apoe_evidence_cards_v1	candidate_card	2	SELENOW	PREDICTED-EXPRESSION GENE LIST	source_record_amber	weak	1	6.41e-05	rs17206581	False	NA	NA	no_regional_gwas_signal:2	0	"Published list based on predicted expression includes SELENOW
 Bellenguez: smallest P 6.410 × 10⁻⁵
-Significance cutoff 5 × 10⁻⁸: not passed"	"No score, independent confirmation, or exact excitatory-neuron match.
-Wightman variants were only nearby.
-No expression or splicing follow-up started."	Initial: weak · 1 network setting     Spinal-fluid: 0/3	genetic_support_evidence_summary.tsv|genetic_support_common_variant_evidence.tsv.gz|recovery_regional_gwas_summary.tsv|recovery_regional_qtl_summary.tsv|recovery_route_decisions.tsv|opc_rps15_evidence_summary.tsv|endophenotype_gate_decisions.tsv
-genetic_support_non_apoe_evidence_cards_v1	candidate_card	3	RPS15	TOP FOLLOW-UP; INCOMPLETE	unresolved_vermillion	none_found	2	4.089e-30	rs12151021	True	2.11971e-06	3.75883325815667e-06	model_or_ld_incompatible:1;no_regional_qtl_signal:1;not_assessable:2	0	"Within 1 Mb (Bellenguez): smallest P 4.089 × 10⁻³⁰
+Comparison: P above pre-set AD screening reference 5 × 10⁻⁸"	"Next: recover the model score and precise cell-type annotation.
+Add expression or splicing data for a direct variant-level
+comparison in a matching brain-cell setting."	"Original first-screen source category: weak · 1 network
+Spinal-fluid screens below both pre-set references: 0/3"	genetic_support_evidence_summary.tsv|genetic_support_common_variant_evidence.tsv.gz|recovery_regional_gwas_summary.tsv|recovery_regional_qtl_summary.tsv|recovery_route_decisions.tsv|opc_rps15_evidence_summary.tsv|endophenotype_gate_decisions.tsv
+genetic_support_non_apoe_evidence_cards_v1	candidate_card	3	RPS15	AD REGION + BRAIN EXPRESSION	ad_expression_blue	none_found	2	4.089e-30	rs12151021	True	2.11971e-06	3.75883325815667e-06	model_or_ld_incompatible:1;no_regional_qtl_signal:1;not_assessable:2	0	"Within 1 Mb (Bellenguez): smallest P 4.089 × 10⁻³⁰
 Lead variant rs12151021
 Walker neocortex expression: P 2.120 × 10⁻⁶
-Corrected cutoff 3.759 × 10⁻⁶: passed"	"Expression-prediction data and matching variant correlations were missing.
-Three bulk-brain tracks had signals, but the gene and cell setting
-and a shared variant remain untested."	Follow-up: 31/37 measured · 3 tracks     Spinal-fluid: 0/3	genetic_support_evidence_summary.tsv|genetic_support_common_variant_evidence.tsv.gz|recovery_regional_gwas_summary.tsv|recovery_regional_qtl_summary.tsv|recovery_route_decisions.tsv|opc_rps15_evidence_summary.tsv|endophenotype_gate_decisions.tsv
-genetic_support_non_apoe_evidence_cards_v1	candidate_card	4	ANKRD11	AD SIGNAL NEARBY ONLY	regional_only_gray	none_found	1	1.283e-11	rs56407236	True	0.000181941	4.52161331162959e-06	no_regional_qtl_signal:1;not_assessable:1	0	"Within 1 Mb (Bellenguez): smallest P 1.283 × 10⁻¹¹
+Comparison: P below pre-set screening reference 3.759 × 10⁻⁶"	"Three bulk-brain tracks make RPS15 a focused follow-up.
+Next: add the prediction model and matching variant reference
+to test whether both results trace to one DNA variant."	"Follow-up measured: 31/37 routes · 3 source tracks
+Spinal-fluid screens below both pre-set references: 0/3"	genetic_support_evidence_summary.tsv|genetic_support_common_variant_evidence.tsv.gz|recovery_regional_gwas_summary.tsv|recovery_regional_qtl_summary.tsv|recovery_route_decisions.tsv|opc_rps15_evidence_summary.tsv|endophenotype_gate_decisions.tsv
+genetic_support_non_apoe_evidence_cards_v1	candidate_card	4	ANKRD11	AD REGION + BRAIN EXPRESSION	ad_expression_gray	none_found	1	1.283e-11	rs56407236	True	0.000181941	4.52161331162959e-06	no_regional_qtl_signal:1;not_assessable:1	0	"Within 1 Mb (Bellenguez): smallest P 1.283 × 10⁻¹¹
 Lead variant rs56407236
 Walker brain expression: P 1.819 × 10⁻⁴
-Corrected cutoff 4.522 × 10⁻⁶: not passed"	"We could not confirm whether splicing data were available.
-The shared-variant test could not be run.
-A nearby AD signal does not prove ANKRD11 is the affected gene."	Initial: none found · 1 network setting     Spinal-fluid: 0/3	genetic_support_evidence_summary.tsv|genetic_support_common_variant_evidence.tsv.gz|recovery_regional_gwas_summary.tsv|recovery_regional_qtl_summary.tsv|recovery_route_decisions.tsv|opc_rps15_evidence_summary.tsv|endophenotype_gate_decisions.tsv
+Comparison: P above pre-set screening reference 4.522 × 10⁻⁶"	"The nearby AD result prioritizes this region for follow-up.
+Next: confirm splicing coverage and use complete variant files
+for a shared-variant comparison that directly tests ANKRD11."	"Original first-screen source category: none found · 1 network
+Spinal-fluid screens below both pre-set references: 0/3"	genetic_support_evidence_summary.tsv|genetic_support_common_variant_evidence.tsv.gz|recovery_regional_gwas_summary.tsv|recovery_regional_qtl_summary.tsv|recovery_route_decisions.tsv|opc_rps15_evidence_summary.tsv|endophenotype_gate_decisions.tsv

@@ -1,0 +1,15 @@
+schema_version	check_id	severity	status	expected	observed	detail
+genetic_support_ad_nearby_pvalues_v1	source_row_count	blocking	pass	19	19	Recovery summary rows.
+genetic_support_ad_nearby_pvalues_v1	unique_gene_count	blocking	pass	19	19	One row per nuclear gene.
+genetic_support_ad_nearby_pvalues_v1	below_cutoff_count	blocking	pass	4	4	Regional minimum P values below the conservative cutoff.
+genetic_support_ad_nearby_pvalues_v1	at_or_above_cutoff_count	blocking	pass	15	15	Regional minimum P values at or above the conservative cutoff.
+genetic_support_ad_nearby_pvalues_v1	below_cutoff_gene_set	blocking	pass	ANKRD11|APOE|COX7C|RPS15	ANKRD11|APOE|COX7C|RPS15	Genes whose regional minimum is below P = 5e-8.
+genetic_support_ad_nearby_pvalues_v1	underflow_count	blocking	pass	1	1	Numerically underflowed P values.
+genetic_support_ad_nearby_pvalues_v1	underflow_gene	blocking	pass	APOE	APOE	APOE is explicitly labeled as underflow.
+genetic_support_ad_nearby_pvalues_v1	source_accession	blocking	pass	GCST90027158	GCST90027158	Frozen Bellenguez GWAS accession.
+genetic_support_ad_nearby_pvalues_v1	exact_p_fingerprint	blocking	pass	ANKRD11:1.283e-11|APOE:0|ATP6V1F:4e-05|COX4I1:2.929e-06|COX6B1:3.932e-05|COX7C:8.579e-14|DYNLT1:6.079e-05|FTL:5.711e-06|LAMTOR5:6.605e-05|LAPTM4A:5.651e-06|NCOA1:1.213e-05|RPL11:8.157e-06|RPL15:2.677e-05|RPL38:1.05e-05|RPLP1:0.0002931|RPS13:8.997e-05|RPS15:4.089e-30|SELENOW:6.41e-05|UQCR10:1.248e-05	ANKRD11:1.283e-11|APOE:0|ATP6V1F:4e-05|COX4I1:2.929e-06|COX6B1:3.932e-05|COX7C:8.579e-14|DYNLT1:6.079e-05|FTL:5.711e-06|LAMTOR5:6.605e-05|LAPTM4A:5.651e-06|NCOA1:1.213e-05|RPL11:8.157e-06|RPL15:2.677e-05|RPL38:1.05e-05|RPLP1:0.0002931|RPS13:8.997e-05|RPS15:4.089e-30|SELENOW:6.41e-05|UQCR10:1.248e-05	All exact source P strings are retained.
+genetic_support_ad_nearby_pvalues_v1	png_dimensions	blocking	pass	5580x2115	5580x2115	Exact slide-native raster dimensions at 450 DPI.
+genetic_support_ad_nearby_pvalues_v1	png_dpi	blocking	pass	450	450	PNG metadata resolution rounded to the requested DPI.
+genetic_support_ad_nearby_pvalues_v1	pdf_signature	blocking	pass	%PDF-	%PDF-	Vector PDF has the expected file signature.
+genetic_support_ad_nearby_pvalues_v1	svg_vector_root	blocking	pass	present	present	SVG contains a vector root element.
+genetic_support_ad_nearby_pvalues_v1	svg_editable_text	blocking	pass	present	present	SVG preserves labels as editable text.

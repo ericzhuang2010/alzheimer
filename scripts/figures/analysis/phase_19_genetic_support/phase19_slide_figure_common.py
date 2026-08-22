@@ -230,10 +230,19 @@ def render_triplet(figure: plt.Figure, staging: Path, stem: str) -> None:
         facecolor=WHITE,
         metadata={"CreationDate": None, "Creator": "matplotlib"},
     )
+    svg_path = staging / f"{stem}.svg"
     figure.savefig(
-        staging / f"{stem}.svg",
+        svg_path,
         facecolor=WHITE,
         metadata={"Date": None, "Creator": "matplotlib"},
+    )
+    # Matplotlib writes trailing spaces in multi-line SVG path data. Normalize
+    # them before hashing/publishing so generated artifacts pass repository
+    # whitespace checks without changing any vector geometry.
+    svg_text = svg_path.read_text(encoding="utf-8")
+    svg_path.write_text(
+        "\n".join(line.rstrip() for line in svg_text.splitlines()) + "\n",
+        encoding="utf-8",
     )
     plt.close(figure)
 

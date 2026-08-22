@@ -20,561 +20,561 @@
  </defs>
  <g id="figure_1">
   <g id="patch_1">
-   <path d="M 0 338.4 
-L 892.8 338.4 
-L 892.8 0 
-L 0 0 
+   <path d="M 0 338.4
+L 892.8 338.4
+L 892.8 0
+L 0 0
 z
 " style="fill: #ffffff"/>
   </g>
   <g id="axes_1">
    <g id="patch_2">
-    <path d="M 24.9984 270.3816 
-L 212.4864 270.3816 
-Q 223.2 270.3816 223.2 266.3208 
-L 223.2 41.6232 
-Q 223.2 37.5624 212.4864 37.5624 
-L 24.9984 37.5624 
-Q 14.2848 37.5624 14.2848 41.6232 
-L 14.2848 266.3208 
-Q 14.2848 270.3816 24.9984 270.3816 
+    <path d="M 24.9984 270.3816
+L 212.4864 270.3816
+Q 223.2 270.3816 223.2 266.3208
+L 223.2 41.6232
+Q 223.2 37.5624 212.4864 37.5624
+L 24.9984 37.5624
+Q 14.2848 37.5624 14.2848 41.6232
+L 14.2848 266.3208
+Q 14.2848 270.3816 24.9984 270.3816
 z
 " clip-path="url(#pca04678265)" style="fill: #f7f9fc; stroke: #d7dee8; stroke-width: 1.2; stroke-linejoin: miter"/>
    </g>
    <g id="patch_3">
-    <path d="M 244.6272 270.3816 
-L 432.1152 270.3816 
-Q 442.8288 270.3816 442.8288 266.3208 
-L 442.8288 41.6232 
-Q 442.8288 37.5624 432.1152 37.5624 
-L 244.6272 37.5624 
-Q 233.9136 37.5624 233.9136 41.6232 
-L 233.9136 266.3208 
-Q 233.9136 270.3816 244.6272 270.3816 
+    <path d="M 244.6272 270.3816
+L 432.1152 270.3816
+Q 442.8288 270.3816 442.8288 266.3208
+L 442.8288 41.6232
+Q 442.8288 37.5624 432.1152 37.5624
+L 244.6272 37.5624
+Q 233.9136 37.5624 233.9136 41.6232
+L 233.9136 266.3208
+Q 233.9136 270.3816 244.6272 270.3816
 z
 " clip-path="url(#pca04678265)" style="fill: #f7f9fc; stroke: #d7dee8; stroke-width: 1.2; stroke-linejoin: miter"/>
    </g>
    <g id="patch_4">
-    <path d="M 464.256 270.3816 
-L 651.744 270.3816 
-Q 662.4576 270.3816 662.4576 266.3208 
-L 662.4576 41.6232 
-Q 662.4576 37.5624 651.744 37.5624 
-L 464.256 37.5624 
-Q 453.5424 37.5624 453.5424 41.6232 
-L 453.5424 266.3208 
-Q 453.5424 270.3816 464.256 270.3816 
+    <path d="M 464.256 270.3816
+L 651.744 270.3816
+Q 662.4576 270.3816 662.4576 266.3208
+L 662.4576 41.6232
+Q 662.4576 37.5624 651.744 37.5624
+L 464.256 37.5624
+Q 453.5424 37.5624 453.5424 41.6232
+L 453.5424 266.3208
+Q 453.5424 270.3816 464.256 270.3816
 z
 " clip-path="url(#pca04678265)" style="fill: #f7f9fc; stroke: #d7dee8; stroke-width: 1.2; stroke-linejoin: miter"/>
    </g>
    <g id="patch_5">
-    <path d="M 690.1344 270.3816 
-L 867.8016 270.3816 
-Q 878.5152 270.3816 878.5152 266.3208 
-L 878.5152 41.6232 
-Q 878.5152 37.5624 867.8016 37.5624 
-L 690.1344 37.5624 
-Q 679.4208 37.5624 679.4208 41.6232 
-L 679.4208 266.3208 
-Q 679.4208 270.3816 690.1344 270.3816 
+    <path d="M 690.1344 270.3816
+L 867.8016 270.3816
+Q 878.5152 270.3816 878.5152 266.3208
+L 878.5152 41.6232
+Q 878.5152 37.5624 867.8016 37.5624
+L 690.1344 37.5624
+Q 679.4208 37.5624 679.4208 41.6232
+L 679.4208 266.3208
+Q 679.4208 270.3816 690.1344 270.3816
 z
 " clip-path="url(#pca04678265)" style="fill: #ffffff; stroke: #17365d; stroke-width: 1.5; stroke-linejoin: miter"/>
    </g>
    <g id="patch_6">
-    <path d="M 705.312 248.3856 
-L 851.7312 248.3856 
-Q 859.7664 248.3856 859.7664 245.34 
-L 859.7664 213.192 
-Q 859.7664 210.1464 851.7312 210.1464 
-L 705.312 210.1464 
-Q 697.2768 210.1464 697.2768 213.192 
-L 697.2768 245.34 
-Q 697.2768 248.3856 705.312 248.3856 
+    <path d="M 705.312 248.3856
+L 851.7312 248.3856
+Q 859.7664 248.3856 859.7664 245.34
+L 859.7664 213.192
+Q 859.7664 210.1464 851.7312 210.1464
+L 705.312 210.1464
+Q 697.2768 210.1464 697.2768 213.192
+L 697.2768 245.34
+Q 697.2768 248.3856 705.312 248.3856
 z
 " clip-path="url(#pca04678265)" style="fill: #e9f3f8; stroke: #0072b2; stroke-linejoin: miter"/>
    </g>
    <g id="patch_7">
-    <path d="M 23.2128 329.6016 
-L 869.5872 329.6016 
-Q 878.5152 329.6016 878.5152 326.2176 
-L 878.5152 289.6704 
-Q 878.5152 286.2864 869.5872 286.2864 
-L 23.2128 286.2864 
-Q 14.2848 286.2864 14.2848 289.6704 
-L 14.2848 326.2176 
-Q 14.2848 329.6016 23.2128 329.6016 
+    <path d="M 23.2128 329.6016
+L 869.5872 329.6016
+Q 878.5152 329.6016 878.5152 326.2176
+L 878.5152 289.6704
+Q 878.5152 286.2864 869.5872 286.2864
+L 23.2128 286.2864
+Q 14.2848 286.2864 14.2848 289.6704
+L 14.2848 326.2176
+Q 14.2848 329.6016 23.2128 329.6016
 z
 " clip-path="url(#pca04678265)" style="fill: #17365d; stroke: #17365d; stroke-linejoin: miter"/>
    </g>
    <g id="patch_8">
-    <path d="M 700.848 138.744 
-L 856.1952 138.744 
-L 856.1952 117.4248 
-L 700.848 117.4248 
+    <path d="M 700.848 138.744
+L 856.1952 138.744
+L 856.1952 117.4248
+L 700.848 117.4248
 z
 " clip-path="url(#pca04678265)" style="fill: #bdbdbd; stroke: #333333; stroke-width: 0.7; stroke-linejoin: miter"/>
    </g>
    <g id="patch_9">
-    <path d="M 33.9264 164.124 
-L 41.501103 164.124 
-L 41.501103 146.5272 
-L 33.9264 146.5272 
+    <path d="M 33.9264 164.124
+L 41.501103 164.124
+L 41.501103 146.5272
+L 33.9264 146.5272
 z
 " clip-path="url(#pca04678265)" style="fill: #0072b2; stroke: #333333; stroke-width: 0.35; stroke-linejoin: miter"/>
    </g>
    <g id="patch_10">
-    <path d="M 42.929583 164.124 
-L 50.504286 164.124 
-L 50.504286 146.5272 
-L 42.929583 146.5272 
+    <path d="M 42.929583 164.124
+L 50.504286 164.124
+L 50.504286 146.5272
+L 42.929583 146.5272
 z
 " clip-path="url(#pca04678265)" style="fill: #bdbdbd; stroke: #333333; stroke-width: 0.35; stroke-linejoin: miter"/>
    </g>
    <g id="patch_11">
-    <path d="M 51.932766 164.124 
-L 59.507469 164.124 
-L 59.507469 146.5272 
-L 51.932766 146.5272 
+    <path d="M 51.932766 164.124
+L 59.507469 164.124
+L 59.507469 146.5272
+L 51.932766 146.5272
 z
 " clip-path="url(#pca04678265)" style="fill: #bdbdbd; stroke: #333333; stroke-width: 0.35; stroke-linejoin: miter"/>
    </g>
    <g id="patch_12">
-    <path d="M 60.935949 164.124 
-L 68.510653 164.124 
-L 68.510653 146.5272 
-L 60.935949 146.5272 
+    <path d="M 60.935949 164.124
+L 68.510653 164.124
+L 68.510653 146.5272
+L 60.935949 146.5272
 z
 " clip-path="url(#pca04678265)" style="fill: #bdbdbd; stroke: #333333; stroke-width: 0.35; stroke-linejoin: miter"/>
    </g>
    <g id="patch_13">
-    <path d="M 69.939133 164.124 
-L 77.513836 164.124 
-L 77.513836 146.5272 
-L 69.939133 146.5272 
+    <path d="M 69.939133 164.124
+L 77.513836 164.124
+L 77.513836 146.5272
+L 69.939133 146.5272
 z
 " clip-path="url(#pca04678265)" style="fill: #bdbdbd; stroke: #333333; stroke-width: 0.35; stroke-linejoin: miter"/>
    </g>
    <g id="patch_14">
-    <path d="M 78.942316 164.124 
-L 86.517019 164.124 
-L 86.517019 146.5272 
-L 78.942316 146.5272 
+    <path d="M 78.942316 164.124
+L 86.517019 164.124
+L 86.517019 146.5272
+L 78.942316 146.5272
 z
 " clip-path="url(#pca04678265)" style="fill: #bdbdbd; stroke: #333333; stroke-width: 0.35; stroke-linejoin: miter"/>
    </g>
    <g id="patch_15">
-    <path d="M 87.945499 164.124 
-L 95.520202 164.124 
-L 95.520202 146.5272 
-L 87.945499 146.5272 
+    <path d="M 87.945499 164.124
+L 95.520202 164.124
+L 95.520202 146.5272
+L 87.945499 146.5272
 z
 " clip-path="url(#pca04678265)" style="fill: #bdbdbd; stroke: #333333; stroke-width: 0.35; stroke-linejoin: miter"/>
    </g>
    <g id="patch_16">
-    <path d="M 96.948682 164.124 
-L 104.523385 164.124 
-L 104.523385 146.5272 
-L 96.948682 146.5272 
+    <path d="M 96.948682 164.124
+L 104.523385 164.124
+L 104.523385 146.5272
+L 96.948682 146.5272
 z
 " clip-path="url(#pca04678265)" style="fill: #bdbdbd; stroke: #333333; stroke-width: 0.35; stroke-linejoin: miter"/>
    </g>
    <g id="patch_17">
-    <path d="M 105.951865 164.124 
-L 113.526568 164.124 
-L 113.526568 146.5272 
-L 105.951865 146.5272 
+    <path d="M 105.951865 164.124
+L 113.526568 164.124
+L 113.526568 146.5272
+L 105.951865 146.5272
 z
 " clip-path="url(#pca04678265)" style="fill: #bdbdbd; stroke: #333333; stroke-width: 0.35; stroke-linejoin: miter"/>
    </g>
    <g id="patch_18">
-    <path d="M 114.955048 164.124 
-L 122.529752 164.124 
-L 122.529752 146.5272 
-L 114.955048 146.5272 
+    <path d="M 114.955048 164.124
+L 122.529752 164.124
+L 122.529752 146.5272
+L 114.955048 146.5272
 z
 " clip-path="url(#pca04678265)" style="fill: #bdbdbd; stroke: #333333; stroke-width: 0.35; stroke-linejoin: miter"/>
    </g>
    <g id="patch_19">
-    <path d="M 123.958232 164.124 
-L 131.532935 164.124 
-L 131.532935 146.5272 
-L 123.958232 146.5272 
+    <path d="M 123.958232 164.124
+L 131.532935 164.124
+L 131.532935 146.5272
+L 123.958232 146.5272
 z
 " clip-path="url(#pca04678265)" style="fill: #bdbdbd; stroke: #333333; stroke-width: 0.35; stroke-linejoin: miter"/>
    </g>
    <g id="patch_20">
-    <path d="M 132.961415 164.124 
-L 140.536118 164.124 
-L 140.536118 146.5272 
-L 132.961415 146.5272 
+    <path d="M 132.961415 164.124
+L 140.536118 164.124
+L 140.536118 146.5272
+L 132.961415 146.5272
 z
 " clip-path="url(#pca04678265)" style="fill: #bdbdbd; stroke: #333333; stroke-width: 0.35; stroke-linejoin: miter"/>
    </g>
    <g id="patch_21">
-    <path d="M 141.964598 164.124 
-L 149.539301 164.124 
-L 149.539301 146.5272 
-L 141.964598 146.5272 
+    <path d="M 141.964598 164.124
+L 149.539301 164.124
+L 149.539301 146.5272
+L 141.964598 146.5272
 z
 " clip-path="url(#pca04678265)" style="fill: #bdbdbd; stroke: #333333; stroke-width: 0.35; stroke-linejoin: miter"/>
    </g>
    <g id="patch_22">
-    <path d="M 150.967781 164.124 
-L 158.542484 164.124 
-L 158.542484 146.5272 
-L 150.967781 146.5272 
+    <path d="M 150.967781 164.124
+L 158.542484 164.124
+L 158.542484 146.5272
+L 150.967781 146.5272
 z
 " clip-path="url(#pca04678265)" style="fill: #bdbdbd; stroke: #333333; stroke-width: 0.35; stroke-linejoin: miter"/>
    </g>
    <g id="patch_23">
-    <path d="M 159.970964 164.124 
-L 167.545667 164.124 
-L 167.545667 146.5272 
-L 159.970964 146.5272 
+    <path d="M 159.970964 164.124
+L 167.545667 164.124
+L 167.545667 146.5272
+L 159.970964 146.5272
 z
 " clip-path="url(#pca04678265)" style="fill: #bdbdbd; stroke: #333333; stroke-width: 0.35; stroke-linejoin: miter"/>
    </g>
    <g id="patch_24">
-    <path d="M 168.974147 164.124 
-L 176.548851 164.124 
-L 176.548851 146.5272 
-L 168.974147 146.5272 
+    <path d="M 168.974147 164.124
+L 176.548851 164.124
+L 176.548851 146.5272
+L 168.974147 146.5272
 z
 " clip-path="url(#pca04678265)" style="fill: #bdbdbd; stroke: #333333; stroke-width: 0.35; stroke-linejoin: miter"/>
    </g>
    <g id="patch_25">
-    <path d="M 177.977331 164.124 
-L 185.552034 164.124 
-L 185.552034 146.5272 
-L 177.977331 146.5272 
+    <path d="M 177.977331 164.124
+L 185.552034 164.124
+L 185.552034 146.5272
+L 177.977331 146.5272
 z
 " clip-path="url(#pca04678265)" style="fill: #bdbdbd; stroke: #333333; stroke-width: 0.35; stroke-linejoin: miter"/>
    </g>
    <g id="patch_26">
-    <path d="M 186.980514 164.124 
-L 194.555217 164.124 
-L 194.555217 146.5272 
-L 186.980514 146.5272 
+    <path d="M 186.980514 164.124
+L 194.555217 164.124
+L 194.555217 146.5272
+L 186.980514 146.5272
 z
 " clip-path="url(#pca04678265)" style="fill: #bdbdbd; stroke: #333333; stroke-width: 0.35; stroke-linejoin: miter"/>
    </g>
    <g id="patch_27">
-    <path d="M 195.983697 164.124 
-L 203.5584 164.124 
-L 203.5584 146.5272 
-L 195.983697 146.5272 
+    <path d="M 195.983697 164.124
+L 203.5584 164.124
+L 203.5584 146.5272
+L 195.983697 146.5272
 z
 " clip-path="url(#pca04678265)" style="fill: #bdbdbd; stroke: #333333; stroke-width: 0.35; stroke-linejoin: miter"/>
    </g>
    <g id="patch_28">
-    <path d="M 253.5552 164.124 
-L 261.129903 164.124 
-L 261.129903 146.5272 
-L 253.5552 146.5272 
+    <path d="M 253.5552 164.124
+L 261.129903 164.124
+L 261.129903 146.5272
+L 253.5552 146.5272
 z
 " clip-path="url(#pca04678265)" style="fill: #0072b2; stroke: #333333; stroke-width: 0.35; stroke-linejoin: miter"/>
    </g>
    <g id="patch_29">
-    <path d="M 262.558383 164.124 
-L 270.133086 164.124 
-L 270.133086 146.5272 
-L 262.558383 146.5272 
+    <path d="M 262.558383 164.124
+L 270.133086 164.124
+L 270.133086 146.5272
+L 262.558383 146.5272
 z
 " clip-path="url(#pca04678265)" style="fill: #bdbdbd; stroke: #333333; stroke-width: 0.35; stroke-linejoin: miter"/>
    </g>
    <g id="patch_30">
-    <path d="M 271.561566 164.124 
-L 279.136269 164.124 
-L 279.136269 146.5272 
-L 271.561566 146.5272 
+    <path d="M 271.561566 164.124
+L 279.136269 164.124
+L 279.136269 146.5272
+L 271.561566 146.5272
 z
 " clip-path="url(#pca04678265)" style="fill: #bdbdbd; stroke: #333333; stroke-width: 0.35; stroke-linejoin: miter"/>
    </g>
    <g id="patch_31">
-    <path d="M 280.564749 164.124 
-L 288.139453 164.124 
-L 288.139453 146.5272 
-L 280.564749 146.5272 
+    <path d="M 280.564749 164.124
+L 288.139453 164.124
+L 288.139453 146.5272
+L 280.564749 146.5272
 z
 " clip-path="url(#pca04678265)" style="fill: #bdbdbd; stroke: #333333; stroke-width: 0.35; stroke-linejoin: miter"/>
    </g>
    <g id="patch_32">
-    <path d="M 289.567933 164.124 
-L 297.142636 164.124 
-L 297.142636 146.5272 
-L 289.567933 146.5272 
+    <path d="M 289.567933 164.124
+L 297.142636 164.124
+L 297.142636 146.5272
+L 289.567933 146.5272
 z
 " clip-path="url(#pca04678265)" style="fill: #bdbdbd; stroke: #333333; stroke-width: 0.35; stroke-linejoin: miter"/>
    </g>
    <g id="patch_33">
-    <path d="M 298.571116 164.124 
-L 306.145819 164.124 
-L 306.145819 146.5272 
-L 298.571116 146.5272 
+    <path d="M 298.571116 164.124
+L 306.145819 164.124
+L 306.145819 146.5272
+L 298.571116 146.5272
 z
 " clip-path="url(#pca04678265)" style="fill: #bdbdbd; stroke: #333333; stroke-width: 0.35; stroke-linejoin: miter"/>
    </g>
    <g id="patch_34">
-    <path d="M 307.574299 164.124 
-L 315.149002 164.124 
-L 315.149002 146.5272 
-L 307.574299 146.5272 
+    <path d="M 307.574299 164.124
+L 315.149002 164.124
+L 315.149002 146.5272
+L 307.574299 146.5272
 z
 " clip-path="url(#pca04678265)" style="fill: #bdbdbd; stroke: #333333; stroke-width: 0.35; stroke-linejoin: miter"/>
    </g>
    <g id="patch_35">
-    <path d="M 316.577482 164.124 
-L 324.152185 164.124 
-L 324.152185 146.5272 
-L 316.577482 146.5272 
+    <path d="M 316.577482 164.124
+L 324.152185 164.124
+L 324.152185 146.5272
+L 316.577482 146.5272
 z
 " clip-path="url(#pca04678265)" style="fill: #bdbdbd; stroke: #333333; stroke-width: 0.35; stroke-linejoin: miter"/>
    </g>
    <g id="patch_36">
-    <path d="M 325.580665 164.124 
-L 333.155368 164.124 
-L 333.155368 146.5272 
-L 325.580665 146.5272 
+    <path d="M 325.580665 164.124
+L 333.155368 164.124
+L 333.155368 146.5272
+L 325.580665 146.5272
 z
 " clip-path="url(#pca04678265)" style="fill: #bdbdbd; stroke: #333333; stroke-width: 0.35; stroke-linejoin: miter"/>
    </g>
    <g id="patch_37">
-    <path d="M 334.583848 164.124 
-L 342.158552 164.124 
-L 342.158552 146.5272 
-L 334.583848 146.5272 
+    <path d="M 334.583848 164.124
+L 342.158552 164.124
+L 342.158552 146.5272
+L 334.583848 146.5272
 z
 " clip-path="url(#pca04678265)" style="fill: #bdbdbd; stroke: #333333; stroke-width: 0.35; stroke-linejoin: miter"/>
    </g>
    <g id="patch_38">
-    <path d="M 343.587032 164.124 
-L 351.161735 164.124 
-L 351.161735 146.5272 
-L 343.587032 146.5272 
+    <path d="M 343.587032 164.124
+L 351.161735 164.124
+L 351.161735 146.5272
+L 343.587032 146.5272
 z
 " clip-path="url(#pca04678265)" style="fill: #bdbdbd; stroke: #333333; stroke-width: 0.35; stroke-linejoin: miter"/>
    </g>
    <g id="patch_39">
-    <path d="M 352.590215 164.124 
-L 360.164918 164.124 
-L 360.164918 146.5272 
-L 352.590215 146.5272 
+    <path d="M 352.590215 164.124
+L 360.164918 164.124
+L 360.164918 146.5272
+L 352.590215 146.5272
 z
 " clip-path="url(#pca04678265)" style="fill: #bdbdbd; stroke: #333333; stroke-width: 0.35; stroke-linejoin: miter"/>
    </g>
    <g id="patch_40">
-    <path d="M 361.593398 164.124 
-L 369.168101 164.124 
-L 369.168101 146.5272 
-L 361.593398 146.5272 
+    <path d="M 361.593398 164.124
+L 369.168101 164.124
+L 369.168101 146.5272
+L 361.593398 146.5272
 z
 " clip-path="url(#pca04678265)" style="fill: #bdbdbd; stroke: #333333; stroke-width: 0.35; stroke-linejoin: miter"/>
    </g>
    <g id="patch_41">
-    <path d="M 370.596581 164.124 
-L 378.171284 164.124 
-L 378.171284 146.5272 
-L 370.596581 146.5272 
+    <path d="M 370.596581 164.124
+L 378.171284 164.124
+L 378.171284 146.5272
+L 370.596581 146.5272
 z
 " clip-path="url(#pca04678265)" style="fill: #bdbdbd; stroke: #333333; stroke-width: 0.35; stroke-linejoin: miter"/>
    </g>
    <g id="patch_42">
-    <path d="M 379.599764 164.124 
-L 387.174467 164.124 
-L 387.174467 146.5272 
-L 379.599764 146.5272 
+    <path d="M 379.599764 164.124
+L 387.174467 164.124
+L 387.174467 146.5272
+L 379.599764 146.5272
 z
 " clip-path="url(#pca04678265)" style="fill: #bdbdbd; stroke: #333333; stroke-width: 0.35; stroke-linejoin: miter"/>
    </g>
    <g id="patch_43">
-    <path d="M 388.602947 164.124 
-L 396.177651 164.124 
-L 396.177651 146.5272 
-L 388.602947 146.5272 
+    <path d="M 388.602947 164.124
+L 396.177651 164.124
+L 396.177651 146.5272
+L 388.602947 146.5272
 z
 " clip-path="url(#pca04678265)" style="fill: #bdbdbd; stroke: #333333; stroke-width: 0.35; stroke-linejoin: miter"/>
    </g>
    <g id="patch_44">
-    <path d="M 397.606131 164.124 
-L 405.180834 164.124 
-L 405.180834 146.5272 
-L 397.606131 146.5272 
+    <path d="M 397.606131 164.124
+L 405.180834 164.124
+L 405.180834 146.5272
+L 397.606131 146.5272
 z
 " clip-path="url(#pca04678265)" style="fill: #bdbdbd; stroke: #333333; stroke-width: 0.35; stroke-linejoin: miter"/>
    </g>
    <g id="patch_45">
-    <path d="M 406.609314 164.124 
-L 414.184017 164.124 
-L 414.184017 146.5272 
-L 406.609314 146.5272 
+    <path d="M 406.609314 164.124
+L 414.184017 164.124
+L 414.184017 146.5272
+L 406.609314 146.5272
 z
 " clip-path="url(#pca04678265)" style="fill: #bdbdbd; stroke: #333333; stroke-width: 0.35; stroke-linejoin: miter"/>
    </g>
    <g id="patch_46">
-    <path d="M 415.612497 164.124 
-L 423.1872 164.124 
-L 423.1872 146.5272 
-L 415.612497 146.5272 
+    <path d="M 415.612497 164.124
+L 423.1872 164.124
+L 423.1872 146.5272
+L 415.612497 146.5272
 z
 " clip-path="url(#pca04678265)" style="fill: #bdbdbd; stroke: #333333; stroke-width: 0.35; stroke-linejoin: miter"/>
    </g>
    <g id="patch_47">
-    <path d="M 473.184 164.124 
-L 480.758703 164.124 
-L 480.758703 146.5272 
-L 473.184 146.5272 
+    <path d="M 473.184 164.124
+L 480.758703 164.124
+L 480.758703 146.5272
+L 473.184 146.5272
 z
 " clip-path="url(#pca04678265)" style="fill: #0072b2; stroke: #333333; stroke-width: 0.35; stroke-linejoin: miter"/>
    </g>
    <g id="patch_48">
-    <path d="M 482.187183 164.124 
-L 489.761886 164.124 
-L 489.761886 146.5272 
-L 482.187183 146.5272 
+    <path d="M 482.187183 164.124
+L 489.761886 164.124
+L 489.761886 146.5272
+L 482.187183 146.5272
 z
 " clip-path="url(#pca04678265)" style="fill: #bdbdbd; stroke: #333333; stroke-width: 0.35; stroke-linejoin: miter"/>
    </g>
    <g id="patch_49">
-    <path d="M 491.190366 164.124 
-L 498.765069 164.124 
-L 498.765069 146.5272 
-L 491.190366 146.5272 
+    <path d="M 491.190366 164.124
+L 498.765069 164.124
+L 498.765069 146.5272
+L 491.190366 146.5272
 z
 " clip-path="url(#pca04678265)" style="fill: #bdbdbd; stroke: #333333; stroke-width: 0.35; stroke-linejoin: miter"/>
    </g>
    <g id="patch_50">
-    <path d="M 500.193549 164.124 
-L 507.768253 164.124 
-L 507.768253 146.5272 
-L 500.193549 146.5272 
+    <path d="M 500.193549 164.124
+L 507.768253 164.124
+L 507.768253 146.5272
+L 500.193549 146.5272
 z
 " clip-path="url(#pca04678265)" style="fill: #bdbdbd; stroke: #333333; stroke-width: 0.35; stroke-linejoin: miter"/>
    </g>
    <g id="patch_51">
-    <path d="M 509.196733 164.124 
-L 516.771436 164.124 
-L 516.771436 146.5272 
-L 509.196733 146.5272 
+    <path d="M 509.196733 164.124
+L 516.771436 164.124
+L 516.771436 146.5272
+L 509.196733 146.5272
 z
 " clip-path="url(#pca04678265)" style="fill: #bdbdbd; stroke: #333333; stroke-width: 0.35; stroke-linejoin: miter"/>
    </g>
    <g id="patch_52">
-    <path d="M 518.199916 164.124 
-L 525.774619 164.124 
-L 525.774619 146.5272 
-L 518.199916 146.5272 
+    <path d="M 518.199916 164.124
+L 525.774619 164.124
+L 525.774619 146.5272
+L 518.199916 146.5272
 z
 " clip-path="url(#pca04678265)" style="fill: #bdbdbd; stroke: #333333; stroke-width: 0.35; stroke-linejoin: miter"/>
    </g>
    <g id="patch_53">
-    <path d="M 527.203099 164.124 
-L 534.777802 164.124 
-L 534.777802 146.5272 
-L 527.203099 146.5272 
+    <path d="M 527.203099 164.124
+L 534.777802 164.124
+L 534.777802 146.5272
+L 527.203099 146.5272
 z
 " clip-path="url(#pca04678265)" style="fill: #bdbdbd; stroke: #333333; stroke-width: 0.35; stroke-linejoin: miter"/>
    </g>
    <g id="patch_54">
-    <path d="M 536.206282 164.124 
-L 543.780985 164.124 
-L 543.780985 146.5272 
-L 536.206282 146.5272 
+    <path d="M 536.206282 164.124
+L 543.780985 164.124
+L 543.780985 146.5272
+L 536.206282 146.5272
 z
 " clip-path="url(#pca04678265)" style="fill: #bdbdbd; stroke: #333333; stroke-width: 0.35; stroke-linejoin: miter"/>
    </g>
    <g id="patch_55">
-    <path d="M 545.209465 164.124 
-L 552.784168 164.124 
-L 552.784168 146.5272 
-L 545.209465 146.5272 
+    <path d="M 545.209465 164.124
+L 552.784168 164.124
+L 552.784168 146.5272
+L 545.209465 146.5272
 z
 " clip-path="url(#pca04678265)" style="fill: #bdbdbd; stroke: #333333; stroke-width: 0.35; stroke-linejoin: miter"/>
    </g>
    <g id="patch_56">
-    <path d="M 554.212648 164.124 
-L 561.787352 164.124 
-L 561.787352 146.5272 
-L 554.212648 146.5272 
+    <path d="M 554.212648 164.124
+L 561.787352 164.124
+L 561.787352 146.5272
+L 554.212648 146.5272
 z
 " clip-path="url(#pca04678265)" style="fill: #bdbdbd; stroke: #333333; stroke-width: 0.35; stroke-linejoin: miter"/>
    </g>
    <g id="patch_57">
-    <path d="M 563.215832 164.124 
-L 570.790535 164.124 
-L 570.790535 146.5272 
-L 563.215832 146.5272 
+    <path d="M 563.215832 164.124
+L 570.790535 164.124
+L 570.790535 146.5272
+L 563.215832 146.5272
 z
 " clip-path="url(#pca04678265)" style="fill: #bdbdbd; stroke: #333333; stroke-width: 0.35; stroke-linejoin: miter"/>
    </g>
    <g id="patch_58">
-    <path d="M 572.219015 164.124 
-L 579.793718 164.124 
-L 579.793718 146.5272 
-L 572.219015 146.5272 
+    <path d="M 572.219015 164.124
+L 579.793718 164.124
+L 579.793718 146.5272
+L 572.219015 146.5272
 z
 " clip-path="url(#pca04678265)" style="fill: #bdbdbd; stroke: #333333; stroke-width: 0.35; stroke-linejoin: miter"/>
    </g>
    <g id="patch_59">
-    <path d="M 581.222198 164.124 
-L 588.796901 164.124 
-L 588.796901 146.5272 
-L 581.222198 146.5272 
+    <path d="M 581.222198 164.124
+L 588.796901 164.124
+L 588.796901 146.5272
+L 581.222198 146.5272
 z
 " clip-path="url(#pca04678265)" style="fill: #bdbdbd; stroke: #333333; stroke-width: 0.35; stroke-linejoin: miter"/>
    </g>
    <g id="patch_60">
-    <path d="M 590.225381 164.124 
-L 597.800084 164.124 
-L 597.800084 146.5272 
-L 590.225381 146.5272 
+    <path d="M 590.225381 164.124
+L 597.800084 164.124
+L 597.800084 146.5272
+L 590.225381 146.5272
 z
 " clip-path="url(#pca04678265)" style="fill: #bdbdbd; stroke: #333333; stroke-width: 0.35; stroke-linejoin: miter"/>
    </g>
    <g id="patch_61">
-    <path d="M 599.228564 164.124 
-L 606.803267 164.124 
-L 606.803267 146.5272 
-L 599.228564 146.5272 
+    <path d="M 599.228564 164.124
+L 606.803267 164.124
+L 606.803267 146.5272
+L 599.228564 146.5272
 z
 " clip-path="url(#pca04678265)" style="fill: #bdbdbd; stroke: #333333; stroke-width: 0.35; stroke-linejoin: miter"/>
    </g>
    <g id="patch_62">
-    <path d="M 608.231747 164.124 
-L 615.806451 164.124 
-L 615.806451 146.5272 
-L 608.231747 146.5272 
+    <path d="M 608.231747 164.124
+L 615.806451 164.124
+L 615.806451 146.5272
+L 608.231747 146.5272
 z
 " clip-path="url(#pca04678265)" style="fill: #bdbdbd; stroke: #333333; stroke-width: 0.35; stroke-linejoin: miter"/>
    </g>
    <g id="patch_63">
-    <path d="M 617.234931 164.124 
-L 624.809634 164.124 
-L 624.809634 146.5272 
-L 617.234931 146.5272 
+    <path d="M 617.234931 164.124
+L 624.809634 164.124
+L 624.809634 146.5272
+L 617.234931 146.5272
 z
 " clip-path="url(#pca04678265)" style="fill: #bdbdbd; stroke: #333333; stroke-width: 0.35; stroke-linejoin: miter"/>
    </g>
    <g id="patch_64">
-    <path d="M 626.238114 164.124 
-L 633.812817 164.124 
-L 633.812817 146.5272 
-L 626.238114 146.5272 
+    <path d="M 626.238114 164.124
+L 633.812817 164.124
+L 633.812817 146.5272
+L 626.238114 146.5272
 z
 " clip-path="url(#pca04678265)" style="fill: #bdbdbd; stroke: #333333; stroke-width: 0.35; stroke-linejoin: miter"/>
    </g>
    <g id="patch_65">
-    <path d="M 635.241297 164.124 
-L 642.816 164.124 
-L 642.816 146.5272 
-L 635.241297 146.5272 
+    <path d="M 635.241297 164.124
+L 642.816 164.124
+L 642.816 146.5272
+L 635.241297 146.5272
 z
 " clip-path="url(#pca04678265)" style="fill: #bdbdbd; stroke: #333333; stroke-width: 0.35; stroke-linejoin: miter"/>
    </g>
    <g id="patch_66">
-    <path d="M 700.848 138.744 
-L 709.024168 138.744 
-L 709.024168 117.4248 
-L 700.848 117.4248 
+    <path d="M 700.848 138.744
+L 709.024168 138.744
+L 709.024168 117.4248
+L 700.848 117.4248
 z
 " clip-path="url(#pca04678265)" style="fill: #0072b2; stroke: #333333; stroke-width: 0.7; stroke-linejoin: miter"/>
    </g>
@@ -582,13 +582,13 @@ z
     <text style="font-weight: 700; font-size: 13px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="17.856" y="19.966906" transform="rotate(-0 17.856 19.966906)">A</text>
    </g>
    <g id="text_2">
-    <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="40.176" y="18.53925" transform="rotate(-0 40.176 18.53925)">Each cerebrospinal-fluid biomarker</text>
+    <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="40.176" y="18.53925" transform="rotate(-0 40.176 18.53925)">APOE across three cerebrospinal-fluid biomarkers</text>
    </g>
    <g id="text_3">
     <text style="font-weight: 700; font-size: 13px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="682.992" y="19.966906" transform="rotate(-0 682.992 19.966906)">B</text>
    </g>
    <g id="text_4">
-    <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="705.312" y="19.70175" transform="rotate(-0 705.312 19.70175)">All 57 tests</text>
+    <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="705.312" y="18.492375" transform="rotate(-0 705.312 18.492375)">APOE-led summary</text>
    </g>
    <g id="text_5">
     <text style="font-weight: 700; font-size: 13.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="33.9264" y="62.900531" transform="rotate(-0 33.9264 62.900531)">Amyloid-β 42</text>
@@ -603,7 +603,7 @@ z
     <text style="font-weight: 700; font-size: 15px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="75.888" y="113.070966" transform="rotate(-0 75.888 113.070966)">APOE</text>
    </g>
    <g id="text_9">
-    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #0072b2" x="75.888" y="126.979481" transform="rotate(-0 75.888 126.979481)">both genetic tests passed</text>
+    <text style="font-weight: 700; font-size: 8.4px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #0072b2" x="75.888" y="126.849075" transform="rotate(-0 75.888 126.849075)">P below both pre-set references</text>
    </g>
    <g id="text_10">
     <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #0072b2" x="33.9264" y="181.951059" transform="rotate(-0 33.9264 181.951059)">1 APOE</text>
@@ -612,13 +612,14 @@ z
     <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: end; fill: #333333" x="203.5584" y="181.123481" transform="rotate(-0 203.5584 181.123481)">18 other genes</text>
    </g>
    <g id="text_12">
-    <text style="font-weight: 700; font-size: 27px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #333333" x="33.9264" y="229.787578" transform="rotate(-0 33.9264 229.787578)">18</text>
+    <text style="font-weight: 700; font-size: 21px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #5b6573" x="33.9264" y="227.603672" transform="rotate(-0 33.9264 227.603672)">18</text>
    </g>
    <g id="text_13">
-    <text style="font-weight: 700; font-size: 10.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #333333" x="82.1376" y="217.658719" transform="rotate(-0 82.1376 217.658719)">other nuclear genes</text>
+    <text style="font-weight: 700; font-size: 9.8px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #333333" x="76.7808" y="217.549906" transform="rotate(-0 76.7808 217.549906)">additional genes</text>
    </g>
    <g id="text_14">
-    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #5b6573" x="33.9264" y="243.762638" transform="rotate(-0 33.9264 243.762638)">Did not pass both genetic tests</text>
+    <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(33.9264 239.627325)">P at/above one or both</text>
+    <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(33.9264 247.8067)">pre-set screening references</text>
    </g>
    <g id="text_15">
     <text style="font-weight: 700; font-size: 13.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="253.5552" y="64.141125" transform="rotate(-0 253.5552 64.141125)">Total tau</text>
@@ -633,7 +634,7 @@ z
     <text style="font-weight: 700; font-size: 15px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="295.5168" y="113.070966" transform="rotate(-0 295.5168 113.070966)">APOE</text>
    </g>
    <g id="text_19">
-    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #0072b2" x="295.5168" y="126.979481" transform="rotate(-0 295.5168 126.979481)">both genetic tests passed</text>
+    <text style="font-weight: 700; font-size: 8.4px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #0072b2" x="295.5168" y="126.849075" transform="rotate(-0 295.5168 126.849075)">P below both pre-set references</text>
    </g>
    <g id="text_20">
     <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #0072b2" x="253.5552" y="181.951059" transform="rotate(-0 253.5552 181.951059)">1 APOE</text>
@@ -642,13 +643,14 @@ z
     <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: end; fill: #333333" x="423.1872" y="181.123481" transform="rotate(-0 423.1872 181.123481)">18 other genes</text>
    </g>
    <g id="text_22">
-    <text style="font-weight: 700; font-size: 27px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #333333" x="253.5552" y="229.787578" transform="rotate(-0 253.5552 229.787578)">18</text>
+    <text style="font-weight: 700; font-size: 21px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #5b6573" x="253.5552" y="227.603672" transform="rotate(-0 253.5552 227.603672)">18</text>
    </g>
    <g id="text_23">
-    <text style="font-weight: 700; font-size: 10.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #333333" x="301.7664" y="217.658719" transform="rotate(-0 301.7664 217.658719)">other nuclear genes</text>
+    <text style="font-weight: 700; font-size: 9.8px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #333333" x="296.4096" y="217.549906" transform="rotate(-0 296.4096 217.549906)">additional genes</text>
    </g>
    <g id="text_24">
-    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #5b6573" x="253.5552" y="243.762638" transform="rotate(-0 253.5552 243.762638)">Did not pass both genetic tests</text>
+    <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(253.5552 239.627325)">P at/above one or both</text>
+    <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(253.5552 247.8067)">pre-set screening references</text>
    </g>
    <g id="text_25">
     <text style="font-weight: 700; font-size: 13.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="473.184" y="62.745844" transform="rotate(-0 473.184 62.745844)">p-tau181</text>
@@ -663,7 +665,7 @@ z
     <text style="font-weight: 700; font-size: 15px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="515.1456" y="113.070966" transform="rotate(-0 515.1456 113.070966)">APOE</text>
    </g>
    <g id="text_29">
-    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #0072b2" x="515.1456" y="126.979481" transform="rotate(-0 515.1456 126.979481)">both genetic tests passed</text>
+    <text style="font-weight: 700; font-size: 8.4px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #0072b2" x="515.1456" y="126.849075" transform="rotate(-0 515.1456 126.849075)">P below both pre-set references</text>
    </g>
    <g id="text_30">
     <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #0072b2" x="473.184" y="181.951059" transform="rotate(-0 473.184 181.951059)">1 APOE</text>
@@ -672,25 +674,26 @@ z
     <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: end; fill: #333333" x="642.816" y="181.123481" transform="rotate(-0 642.816 181.123481)">18 other genes</text>
    </g>
    <g id="text_32">
-    <text style="font-weight: 700; font-size: 27px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #333333" x="473.184" y="229.787578" transform="rotate(-0 473.184 229.787578)">18</text>
+    <text style="font-weight: 700; font-size: 21px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #5b6573" x="473.184" y="227.603672" transform="rotate(-0 473.184 227.603672)">18</text>
    </g>
    <g id="text_33">
-    <text style="font-weight: 700; font-size: 10.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #333333" x="521.3952" y="217.658719" transform="rotate(-0 521.3952 217.658719)">other nuclear genes</text>
+    <text style="font-weight: 700; font-size: 9.8px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #333333" x="516.0384" y="217.549906" transform="rotate(-0 516.0384 217.549906)">additional genes</text>
    </g>
    <g id="text_34">
-    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #5b6573" x="473.184" y="243.762638" transform="rotate(-0 473.184 243.762638)">Did not pass both genetic tests</text>
+    <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(473.184 239.627325)">P at/above one or both</text>
+    <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(473.184 247.8067)">pre-set screening references</text>
    </g>
    <g id="text_35">
     <text style="font-weight: 700; font-size: 33px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #0072b2" x="700.848" y="72.923484" transform="rotate(-0 700.848 72.923484)">3</text>
    </g>
    <g id="text_36">
-    <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="749.952" y="59.14725" transform="rotate(-0 749.952 59.14725)">APOE-positive</text>
+    <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="749.952" y="60.30975" transform="rotate(-0 749.952 60.30975)">APOE results</text>
    </g>
    <g id="text_37">
-    <text style="font-weight: 700; font-size: 10px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #5b6573" x="749.952" y="74.792125" transform="rotate(-0 749.952 74.792125)">results</text>
+    <text style="font-weight: 700; font-size: 9.3px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #5b6573" x="749.952" y="73.630219" transform="rotate(-0 749.952 73.630219)">one per biomarker</text>
    </g>
    <g id="text_38">
-    <text style="font-weight: 700; font-size: 9.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #0072b2" x="700.848" y="94.547488" transform="rotate(-0 700.848 94.547488)">Same gene in all 3 tests</text>
+    <text style="font-weight: 700; font-size: 9.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #0072b2" x="700.848" y="95.474675" transform="rotate(-0 700.848 95.474675)">APOE across 3 biomarkers</text>
    </g>
    <g id="text_39">
     <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #0072b2" x="700.848" y="153.863859" transform="rotate(-0 700.848 153.863859)">3</text>
@@ -699,28 +702,28 @@ z
     <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: end; fill: #333333" x="856.1952" y="153.804797" transform="rotate(-0 856.1952 153.804797)">54</text>
    </g>
    <g id="text_41">
-    <text style="font-weight: 700; font-size: 27px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #333333" x="700.848" y="188.325591" transform="rotate(-0 700.848 188.325591)">54</text>
+    <text style="font-weight: 700; font-size: 20px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #5b6573" x="700.848" y="185.823638" transform="rotate(-0 700.848 185.823638)">54</text>
    </g>
    <g id="text_42">
-    <text style="font-weight: 700; font-size: 9.5px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #333333" x="756.2016" y="176.897406" transform="rotate(-0 756.2016 176.897406)">did not pass both</text>
+    <text style="font-weight: 700; font-size: 8.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #333333" x="747.2736" y="176.538688" transform="rotate(-0 747.2736 176.538688)">additional comparisons</text>
    </g>
    <g id="text_43">
-    <text style="font-weight: 700; font-size: 9.5px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #333333" x="756.2016" y="190.396297" transform="rotate(-0 756.2016 190.396297)">genetic tests</text>
+    <text style="font-weight: 700; font-size: 7.7px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #5b6573" x="747.2736" y="190.38007" transform="rotate(-0 747.2736 190.38007)">at/above one or both references</text>
    </g>
    <g id="text_44">
     <text style="font-weight: 700; font-size: 25px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #0072b2" x="718.704" y="237.181209" transform="rotate(-0 718.704 237.181209)">0</text>
    </g>
    <g id="text_45">
-    <text style="font-weight: 700; font-size: 9.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="758.88" y="226.861888" transform="rotate(-0 758.88 226.861888)">newly supported</text>
+    <text style="font-weight: 700; font-size: 8.7px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="758.88" y="226.725872" transform="rotate(-0 758.88 226.725872)">additional genes</text>
    </g>
    <g id="text_46">
-    <text style="font-weight: 700; font-size: 9.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="758.88" y="239.140206" transform="rotate(-0 758.88 239.140206)">genes</text>
+    <text style="font-weight: 700; font-size: 8.7px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="758.88" y="239.923472" transform="rotate(-0 758.88 239.923472)">beyond APOE</text>
    </g>
    <g id="text_47">
-    <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #ffffff" x="446.4" y="306.470775" transform="rotate(-0 446.4 306.470775)">Three positive results = APOE for three biomarkers, not three genes</text>
+    <text style="font-weight: 700; font-size: 11.5px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #ffffff" x="446.4" y="307.493744" transform="rotate(-0 446.4 307.493744)">Evidence found: APOE across all 3 biomarkers</text>
    </g>
    <g id="text_48">
-    <text style="font-size: 9.4px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #dde7f2" x="446.4" y="319.674613" transform="rotate(-0 446.4 319.674613)">Nearby-variant + whole-gene tests do not show how APOE works or prove a shared variant.</text>
+    <text style="font-size: 8.5px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #dde7f2" x="446.4" y="320.249706" transform="rotate(-0 446.4 320.249706)">Next validation: test how APOE works and whether the disease and biomarker results trace to one DNA variant.</text>
    </g>
   </g>
  </g>

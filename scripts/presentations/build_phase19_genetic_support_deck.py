@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Build the human-genetic-support presentation.
 
-The deck follows ``phase19_presentation_slide_design.md`` and embeds the five
+The deck follows ``phase19_presentation_slide_design.md`` and embeds six
 validated, slide-native genetic-support figures.  The main story is organized
 into three sections with overview and divider slides; supporting slides retain
 candidate lists, methods, dense matrices, and provenance caveats.
@@ -36,6 +36,7 @@ FIG = {
     "csf": FIG_ROOT / "csf_outcome_summary/genetic_support_csf_outcome_summary.png",
     "non_apoe": FIG_ROOT / "non_apoe_evidence/genetic_support_non_apoe_evidence_cards.png",
     "tier2": FIG_ROOT / "tier2_route_attrition/genetic_support_tier2_route_attrition.png",
+    "ad_pvalues": FIG_ROOT / "ad_nearby_pvalues/genetic_support_ad_nearby_pvalues.png",
 }
 
 AUX = {
@@ -74,60 +75,366 @@ FONT = "Arial"
 
 MAIN_TITLES = [
     "Do genes highlighted by brain-cell networks also show inherited links to Alzheimer's disease?",
-    "At a glance: APOE had strong evidence; most other genes need more study",
-    "The presentation moves from the study design to results and next steps",
+    "At a glance: APOE has multi-dataset support, with four focused validation targets",
+    "The presentation moves from study design to evidence and future validation",
     "Study design and public data",
-    "A gene can matter in diseased cells without changing inherited Alzheimer's risk",
+    "Network and genetic evidence provide complementary views of disease biology",
     "We combined five kinds of public data, each with a different job",
-    "Gene-activity datasets vary in cell type, sample size, and completeness",
-    "A step-by-step design helps prevent overclaiming",
-    "What the genetic evidence showed",
-    "Only APOE had strong evidence in the first screen",
-    "APOE was linked to Alzheimer's disease and all three spinal-fluid markers",
-    "Four other genes showed hints, but none could be confirmed",
-    "None of the 54 planned gene-activity comparisons reached the final test",
-    "How to interpret the results and what to do next",
-    "A missing result can mean three different things",
-    "This study answers one focused question and leaves important gaps",
-    "Next: finish the strongest open tests, then study more types of genetic effects",
-    "The genetic evidence narrows the list but does not close the case",
+    "Gene-activity datasets add cell, tissue, RNA, and protein evidence",
+    "A step-by-step design organizes evidence and future validation",
+    "Evidence found across the gene list",
+    "The first public-data screen highlighted APOE, COX7C, and SELENOW",
+    "APOE was supported across Alzheimer's disease and all three spinal-fluid markers",
+    "Four additional genes provide specific signals for focused validation",
+    "The 54 planned comparisons map clear next steps for same-variant testing",
+    "How the evidence guides future validation",
+    "Exact P values and data coverage guide the next analyses",
+    "The current study provides a focused foundation for broader validation",
+    "Next: validate the strongest leads and broaden the genetic evidence",
+    "The evidence highlights APOE and four focused paths for follow-up",
 ]
 
 APPENDIX_TITLES = [
     "Supporting details",
     "The original list: 25 genes in 47 gene–network settings",
     "Dataset details: what each source was used for",
-    "Rules decided before looking at the results",
-    "Full first-screen results for all 47 gene–network settings",
-    "Four DNA regions had AD signals, but no candidate gene was confirmed by gene-activity data",
+    "Pre-set rules made every evidence comparison consistent",
+    "Four gene regions stood out below 5×10⁻⁸; all 19 P values are shown",
+    "APOE led the registered first-screen results across 47 settings",
+    "Four regions are focused priorities for gene-level validation",
     "APOE evidence across Alzheimer's disease and three spinal-fluid markers",
-    "RPS15 is promising, but the exact gene and cell setting remain uncertain",
-    "Known file and documentation issues",
+    "RPS15 has three brain-QTL records for focused validation",
+    "Data-package improvements that will strengthen reproducibility",
 ]
 
 MAIN_NOTES = [
-    "This study asked whether the key-driver genes from the network analysis also have evidence from inherited DNA differences. It did not rerank the original genes.",
-    "The main result is concentrated in APOE. Two genes have early evidence, and RPS15 is an important follow-up candidate, but most genes need more study.",
-    "The talk first explains the question and public datasets, then shows the results, and ends with limits and next steps.",
-    "This section explains which genes were tested, which public datasets were used, and how each check was performed.",
-    "Network analysis and genetics answer different questions. A gene can respond to disease or help maintain a disease state without carrying inherited risk.",
-    "Each public dataset had one job: define the gene list, screen existing summaries, find Alzheimer-related DNA regions, study gene activity, or test spinal-fluid markers.",
-    "Gene-activity studies differ in cell type, sample size, and available files. Brain-tissue results are useful fallbacks but do not prove a change in one exact cell type.",
-    "The study used a fixed order of checks. A test stopped when an earlier requirement failed or when required data were missing.",
-    "This section shows the first gene screen, the APOE result, evidence for four other genes, and why the later comparisons stopped.",
-    "Only APOE had strong evidence in the first screen. The two COX7C rows came from one public result, not two independent studies; the RPS15 follow-up was separate.",
-    "APOE is clearly linked to Alzheimer's disease and three spinal-fluid markers, but these data do not show exactly how APOE changes astrocytes.",
-    "A strong DNA signal near a gene does not prove that the gene caused the signal. The four non-APOE genes therefore remain promising but unconfirmed.",
-    "No final shared-signal comparison was completed because earlier checks failed or required gene-activity and reference data were unavailable.",
-    "This section separates a true negative screen from an unfinished test or a mechanism that this study did not examine.",
-    "A missing result can mean no strong signal was found, the test could not be completed, or the mechanism was outside the study design.",
-    "The study mainly tested common DNA differences near nuclear genes. It was limited by small or mismatched cell datasets, incomplete files, and limited ancestry representation.",
-    "The highest-value next step is to finish the APOE and RPS15 comparisons with complete gene-activity data and matched reference genetics.",
-    "The genetic evidence helps prioritize the list, but it neither confirms nor rejects every network-derived gene.",
+    """Teaching goal: Introduce the question and distinguish cell-network importance from inherited genetic association. Earlier work used brain-cell networks to identify “key-driver” genes: genes that sit in influential positions within patterns of genes that turn on and off together. This presentation asks whether inherited DNA data provide an additional line of support for those genes.
+
+Walk through the slide: Point to “25 genes from 47 cell-network results.” There are 25 unique genes, but some appeared in more than one cell type or network. Each gene in a particular network is counted as one gene–network setting, giving 47 settings in total. The list was chosen before this genetic follow-up, so the genetic results were not used to rewrite or rerank it. Then point to the evidence statement. APOE is the clearest lead because it connects to several public datasets, including Alzheimer’s disease itself and three biomarkers measured in cerebrospinal fluid. COX7C, SELENOW, RPS15, and ANKRD11 have specific signals that make them useful targets for focused validation.
+
+Key idea to explain: Network evidence describes relationships among gene activities inside cells. Genetic evidence asks whether inherited DNA differences are statistically associated with disease or disease-related traits. Combining them gives two complementary views rather than one replacing the other.
+
+Scientific boundary: The four follow-up genes do not all have the same kind or strength of evidence, so later slides describe each precisely. The node-and-line image is an abstract network symbol, not a biological pathway diagram. None of these results alone proves that a gene causes disease.
+
+Transition: “I’ll begin with the full study in one picture, then unpack how each kind of evidence was obtained.”""",
+    """Teaching goal: Give the audience a one-minute map of the study and show that the evidence types have different meanings.
+
+Walk through the slide: Start at the upper left. The starting list contained 25 unique genes appearing in 47 gene-by-cell-network combinations. The same gene can appear in more than one combination. Move to “Nuclear analysis.” Nineteen genes are encoded on chromosomes in the cell nucleus and could be examined with the common-variant datasets used here. Six genes are encoded by mitochondrial DNA, a small separate genome inside mitochondria. Those six define a dedicated mitochondrial follow-up.
+
+Point to APOE. It has the broadest support in this project: an established Alzheimer’s-disease link plus signals for amyloid-β42, total tau, and phosphorylated tau 181 in cerebrospinal fluid. These molecules are commonly studied as markers of Alzheimer-related biology. COX7C and SELENOW matched records in the registered public summary screen. RPS15 and ANKRD11 had very small P values for DNA regions near them.
+
+Key idea to explain: A P value describes how surprising a result would be under a no-association model; smaller values draw attention. The “same-variant test” at lower right would ask whether an Alzheimer’s signal and a gene-activity signal are best explained by the same DNA variant.
+
+Scientific boundary: A nearby regional signal does not by itself identify the responsible gene. A same-variant result would strengthen a biological connection, but would still need other evidence before making a causal claim.
+
+Transition: “Now that we have the headline results, let’s see how the rest of the presentation is organized.”""",
+    """Teaching goal: Help the audience follow the logic of the talk rather than treating the slides as a long list of datasets and genes.
+
+Walk through the slide: Point to Section 1. Slides 4 through 8 explain the original gene list, the public datasets, and the order of the tests. This foundation matters because each database answers a different question. Point to Section 2. Slides 9 through 13 summarize all 47 gene–network settings, examine APOE across several datasets, and then present the particular signals involving COX7C, SELENOW, RPS15, and ANKRD11. Point to Section 3. Slides 14 through 18 show how exact P values and available data lead to concrete next steps, including same-variant comparisons, larger cell-specific studies, more ancestral populations, and additional genetic mechanisms.
+
+Key idea to explain: Good scientific interpretation links each conclusion to the type of data that supports it. APOE has multi-dataset support, while the other four genes provide different and more focused starting points for validation.
+
+Scientific boundary: The roadmap groups related topics for teaching purposes; it does not place every highlighted gene into one identical evidence category.
+
+Transition: Point to the appendix ribbon and say, “Detailed cutoffs, all 19 nearby-Alzheimer’s P values, full evidence tables, and reproducibility checks are available at the end. First, let’s define the study design.”""",
+    """Teaching goal: Prepare the audience for three recurring terms—GWAS, QTL, and CSF—and explain the scope of the study.
+
+Walk through the slide: Begin with GWAS, or genome-wide association study. A GWAS compares DNA variants across many people to find variants associated with a trait such as Alzheimer’s disease. A DNA variant is a genome position at which people can carry different DNA letters. Next define QTL, or quantitative trait locus. A QTL connects a DNA variant to a measurable biological feature, such as the amount of RNA made from a gene, the way RNA is spliced, or the amount of a protein. Finally define CSF as cerebrospinal fluid, the fluid surrounding the brain and spinal cord. The study used public GWAS results for three CSF markers: amyloid-β42, total tau, and phosphorylated tau 181.
+
+Key idea to explain: These datasets create a chain of questions. GWAS asks where inherited DNA relates to a trait. QTL data ask whether DNA in that region relates to gene activity. Comparing both can prioritize a possible gene-level explanation.
+
+Scientific boundary: Association is a statistical link; it does not automatically identify the causal variant, gene, or mechanism. CSF markers reflect disease-related biology but are not the same outcome as a clinical diagnosis.
+
+Transition: “With those definitions in place, we can compare what the original network analysis and the inherited-DNA analysis each contribute.”""",
+    """Teaching goal: Show why network biology and inherited genetics can produce different but complementary information.
+
+Walk through the slide: Point first to the green box. A cell-network analysis studies genes whose activity rises and falls together in a particular cell type or disease condition. A gene near the center may help organize or reflect an important cellular process. Here, that analysis produced 47 gene-network results representing 25 unique genes. Point next to the blue box. An inherited-DNA analysis asks whether DNA variants passed through families show a statistical relationship with Alzheimer’s disease or a related marker. Nineteen nuclear genes could be examined in the common-variant workflow. Six mitochondrial genes define a dedicated design because mitochondrial DNA is inherited and analyzed differently from nuclear chromosomes.
+
+Key idea to explain: Emphasize “complementary questions.” A gene can be important in disease biology even if it does not change inherited Alzheimer’s risk. A gene can be central in diseased cells because it responds to inflammation, aging, treatment, or changes elsewhere in the system. Conversely, a genetic-risk region may act only in a cell state or time point that the network dataset did not capture. The two approaches therefore need not produce identical lists.
+
+Scientific boundary: “Linked to inherited risk” means statistically associated, not proven to cause disease. A network-central gene may be a response to disease rather than an inherited cause, and a nearby DNA association may involve another gene in the region.
+
+Transition: “To see how we investigated these complementary questions, let’s look at the five public-data layers and the job assigned to each.”""",
+    """Teaching goal: Explain why five public-data layers were needed and what unique question each one answered.
+
+Walk through the slide: Read the table by rows. The first row documents the 25 genes and 47 settings. GENCODE and HGNC standardize gene locations and official names, preventing duplicate labels and separating 19 nuclear genes from 6 mitochondrial genes. The second row is a quick public-summary screen. FunGen-xQTL collects previously computed results linking Alzheimer’s genetics to gene regulation. Its snapshot identifier is shown so the same release can be retrieved.
+
+The third row is the Bellenguez Alzheimer’s GWAS, accession GCST90027158. GRCh38 is the genome coordinate system used to locate variants. For each nuclear gene, the screen examined one megabase—one million DNA letters—on either side. The fourth row contains brain QTL datasets, which ask whether variants affect RNA amount, RNA splicing, or protein amount. The final row covers amyloid-β42, total tau, and p-tau181 in cerebrospinal fluid. Nineteen genes times three markers produced 57 screens.
+
+Key idea to explain: Dataset versions and accession codes provide an audit trail. “Summary statistics” are association results calculated across groups, not individual medical records.
+
+Scientific boundary: A public-summary match is a lead that must be interpreted in its original context. A signal within the ±1-megabase window is regional evidence because several nearby genes can share the same associated region. The CSF studies listed here represent European-ancestry samples, which matters when considering how broadly results may generalize.
+
+Transition: “The QTL layer deserves a closer look, because it is the bridge from a DNA variant to a possible change in gene activity.”""",
+    """Teaching goal: Teach the three QTL types and show why cell type, tissue, and sample size affect interpretation.
+
+Walk through the slide: Define an eQTL as a variant associated with RNA amount, an sQTL as a variant associated with RNA splicing, and a pQTL as a variant associated with protein amount. Move across the upper cards. Microglia are immune-like brain cells; Young 2019 includes 104 samples with expression and splicing QTLs. Aygun 2021 includes 73 neuron-like samples. Walker 2019 includes 211 mixed-brain samples. Mixed tissue gives broader coverage, although a cell-specific signal may be diluted or reflect several cell types. NG00184.v1 provides wider RNA, splicing, and protein coverage.
+
+Point to the lower-left box. APOE follow-up used spinal-fluid pQTL data from 3,506 European-ancestry samples after earlier association signals crossed the pre-set screening references. At lower right, RPS15 had three distinct mixed-brain QTL tracks. These produced six positive setting rows because each track was evaluated in two network settings; they are not six independent studies.
+
+Key idea to explain: A QTL is a statistical bridge from inherited DNA to a measurable molecular feature. Regulation can be cell-specific, so the biological source of the sample matters as much as the QTL label.
+
+Scientific boundary: QTL associations do not by themselves prove a causal chain from variant to gene to disease. Neuron-like samples are not an exact match for every mature neuron subtype, and mixed-brain results do not identify the contributing cell type.
+
+Transition: “Now we can combine the disease and gene-activity layers into one step-by-step workflow.”""",
+    """Teaching goal: Explain the two analysis paths and why compatible variant-level inputs are required before a same-signal test.
+
+Walk through the slide: Start at the dark box. The 47 gene–network pairs, representing 25 genes, were fixed before the genetic results were examined. Follow upper Lane A. It searches a fixed FunGen snapshot for previously computed Alzheimer’s fine-mapping and gene-regulation results. This lookup highlighted APOE, COX7C, and SELENOW across four gene–network pairs.
+
+Trace Lane B from left to right. Step 1 asks whether a nearby region is associated with clinical Alzheimer’s disease or a CSF marker. Step 2 asks whether variants there also affect the candidate gene’s RNA, splicing, or protein. Step 3 aligns variant identifiers, genome coordinates, statistical models, ancestry, and linkage disequilibrium. Linkage disequilibrium, or LD, describes how nearby variants tend to be inherited together. Step 4 is a colocalization test. PP.H4 is the model-based probability that the disease and gene-activity associations share one underlying variant.
+
+Key idea to explain: Each completed step adds a different layer. A regional disease signal plus a gene-activity signal is more informative than either alone; compatible full data enable the next same-variant comparison.
+
+Scientific boundary: A public-data match depends on its original evidence type. PP.H4 requires complete, compatible variant-level inputs and is a probability under a statistical model, not proof of causation. The arrows show analysis order, not a biological causal pathway. The 6 mitochondrial genes across 20 settings require mitochondrial-specific data and methods.
+
+Transition: “With the workflow established, we can now examine the evidence found across the complete gene list.”""",
+    """Teaching goal: Preview the results section and set expectations for how different forms of evidence will be compared.
+
+Walk through the slide: First, “All 47 settings” means 47 gene-in-network combinations representing 25 unique genes. The same gene may occur in more than one cell network, so a count of settings is not a count of independent genes or experiments. The next slide summarizes the registered public-data screen across this complete set.
+
+Second, “APOE across datasets” signals the strongest integrated result here. APOE has an established inherited association with Alzheimer’s disease in the public data and met the study’s regional and gene-level screening rules for amyloid-β42, total tau, and p-tau181. Third, the four focused leads are COX7C, SELENOW, RPS15, and ANKRD11. COX7C and SELENOW appeared in the public-summary screen. RPS15 and ANKRD11 sit near notable Alzheimer’s regional signals, and RPS15 also has brain gene-activity records worth carrying forward.
+
+Key idea to explain: The evidence is heterogeneous, meaning it comes from different methods and answers different questions. Accurate interpretation keeps those categories separate while using them to prioritize clear follow-up tests.
+
+Scientific boundary: APOE’s broad support does not demonstrate every possible cell-specific regulatory mechanism. A regional signal near RPS15 or ANKRD11 may involve another nearby gene, so it is a reason to investigate rather than an assignment of responsibility.
+
+Transition: “We will start with the full 47-setting scorecard, then zoom in from APOE to the four focused follow-up paths.”""",
+    """Teaching goal: Show how the first screen was counted and explain why the three highlighted genes represent different strengths and types of genetic evidence.
+
+Walk through the slide: Start with panel A. A “gene–network pair” means one gene considered in one brain-cell network. The same gene can therefore appear more than once. Across 47 pairs, the registered public-data search found one strong source-grade match and three weak source-grade matches; none was assigned the moderate source grade. The strong match was APOE in the astrocyte network. The three weak rows were COX7C in two networks and SELENOW in one network. Importantly, the two COX7C rows came from one bulk-brain RNA-splicing record, so they are two network applications of one observation, not two independent replications.
+
+In panel B, APOE is linked directly to the Alzheimer’s-associated DNA variant rs429358. Its reported Alzheimer’s disease P value was about 1.88 × 10⁻¹⁵⁵, an exceptionally small value, and its source inclusion score was 1.0. COX7C was connected to rs2010322 in a bulk-brain splicing summary; that record’s Alzheimer’s P value was about 2.64 × 10⁻⁶. SELENOW appeared in a published list linking genetically predicted gene activity to Alzheimer’s disease, although that list did not provide the exact model score or neuron subtype.
+
+Panel C shows constructive next routes. Sixteen nuclear genes can be checked in more datasets, while six mitochondrial-DNA genes require methods designed specifically for mitochondrial genetics.
+
+Key idea to explain: A match is a useful lead, and the source grade describes only this registered search—not the gene’s complete biology.
+
+Scientific boundary: A very small P value measures incompatibility with a statistical null model; it is not the probability that a gene causes disease and does not measure effect size. The source inclusion score is also a ranking metric, not a causal probability.
+
+Transition: Next, we ask whether the strongest gene, APOE, also connects to biological markers measured in spinal fluid.""",
+    """Teaching goal: Explain why testing biomarkers adds a second, biologically informative layer of support for APOE.
+
+Walk through the slide: Cerebrospinal fluid, or CSF, surrounds the brain and spinal cord. The three biomarkers here are amyloid-β42, total tau, and phosphorylated tau at position 181, called p-tau181. Amyloid and tau are central features of Alzheimer’s pathology, so these quantitative measurements can connect inherited DNA differences to processes closer to disease biology than a case-versus-control diagnosis alone.
+
+Each biomarker study included 18,948 participants of European ancestry. We tested 19 nuclear genes across three biomarkers, giving 19 × 3 = 57 gene–biomarker comparisons. APOE was the highlighted gene for all three biomarkers. In every case, it crossed two pre-set references: a nearby-variant screen using P < 5 × 10⁻⁸ and a corrected whole-gene test using P < 8.77 × 10⁻⁴. The regional minimum for amyloid-β42 was so small that the computer stored it as zero through numerical underflow; this means “smaller than the software could represent,” not a literal probability of zero. The regional minima were 5.4 × 10⁻¹⁶¹ for total tau and 3.27 × 10⁻¹⁷⁴ for p-tau181. The gene-body P value was 5 × 10⁻¹⁰ for each biomarker.
+
+The gray blocks summarize the other 18 genes: 54 comparisons were at or above one or both screening references. They provide a transparent baseline for future datasets rather than a verdict on every possible genetic mechanism.
+
+Key idea to explain: APOE appears consistently across diagnosis and three related biomarkers, which makes it a compelling multi-dataset finding.
+
+Scientific boundary: These associations do not yet show how APOE changes a biomarker, whether one DNA variant explains both signals, or which brain cell carries the mechanism.
+
+Transition: We now examine the distinct evidence found for four additional genes.""",
+    """Teaching goal: Compare four non-APOE leads without treating all evidence types as equivalent.
+
+Walk through the slide: Each card separates “what the data show” from “what to validate next.” For COX7C, one published bulk-brain record connects an Alzheimer’s signal with RNA splicing. The regional minimum was 8.579 × 10⁻¹⁴ within one megabase, led by rs62375397. Its Walker brain-expression P value, 2.583 × 10⁻³, was above that dataset’s pre-set reference of 5.167 × 10⁻⁶. Complete splicing and Alzheimer’s variant files can enable a shared-variant comparison.
+
+SELENOW appears in a published predicted-expression gene list. Its nearby regional minimum was 6.410 × 10⁻⁵, above the conservative 5 × 10⁻⁸ reference. Recovering the model score, exact cell annotation, and variant-level data would make this lead more specific.
+
+RPS15 combines two useful signals: a nearby Alzheimer’s minimum of 4.089 × 10⁻³⁰, led by rs12151021, and a bulk-neocortex expression P value of 2.120 × 10⁻⁶, below its 3.759 × 10⁻⁶ reference. Three additional bulk-brain QTL tracks reinforce RPS15 as a focused validation target. A QTL is a DNA region associated with a molecular feature such as RNA amount or splicing.
+
+ANKRD11 has a nearby Alzheimer’s minimum of 1.283 × 10⁻¹¹, led by rs56407236. Its measured brain-expression P value was 1.819 × 10⁻⁴, above the 4.522 × 10⁻⁶ reference, so the regional result motivates more gene-specific testing.
+
+For each of these four genes, zero of three spinal-fluid comparisons were below both pre-set references; those recorded results remain useful for comparison with future datasets.
+
+Key idea to explain: These genes have concrete leads, but each lead calls for a different next experiment or dataset.
+
+Scientific boundary: A small regional P value identifies an associated neighborhood, not necessarily the named nearby gene. P values from different tests are not effect sizes and should not be ranked as biological importance.
+
+Transition: The next slide organizes every planned gene-activity comparison and shows exactly where shared-variant testing can advance.""",
+    """Teaching goal: Explain the accounting of all 54 comparisons and introduce the logic of a shared-variant, or colocalization, test.
+
+Walk through the slide: The 54 comparisons come from 27 nuclear gene–network pairs. Each pair had two questions: does nearby DNA variation relate to RNA amount, called an expression QTL or eQTL, and does it relate to how RNA pieces are joined, called a splicing QTL or sQTL? Thus, 27 expression tests plus 27 splicing tests equals 54.
+
+The horizontal bar sorts each comparison into one status. These categories are mutually exclusive; they are not a sequence of 54 samples shrinking step by step. Forty-two comparisons had a nearby Alzheimer’s P value at or above the conservative 5 × 10⁻⁸ reference. Four had regional Alzheimer’s signals but gene-activity P values at or above their source-specific references. Six splicing comparisons have public-file coverage that can be clarified with fuller input files.
+
+The most informative group is the two orange comparisons. APOE in the astrocyte question and RPS15 in the oligodendrocyte precursor cell, or OPC, question each had both a nearby Alzheimer’s signal and a bulk-brain gene-activity signal. These are priorities for a shared-variant test. Such a test asks whether the same underlying DNA variant could explain both association patterns, rather than merely observing two signals in the same broad region.
+
+Panel B reports zero completed primary tests because the required fitted gene-activity model and matching variant-correlation reference were not jointly available. Therefore, the shared-variant probability is unavailable, not zero.
+
+Key idea to explain: The study produced a complete map of where the evidence currently sits and which inputs unlock the next calculation.
+
+Scientific boundary: Two signals in one region can arise from different nearby variants inherited together; only a matched shared-variant analysis can distinguish these possibilities.
+
+Transition: We now turn from reporting results to interpreting what the P values and data coverage tell us to do next.""",
+    """Teaching goal: Prepare the audience to interpret the next slides as a validation plan built from measured results, rather than as a simple supported-versus-unsupported scorecard.
+
+Walk through the slide: This section has three questions. First, what do the P values show? A P value asks how surprising the observed data would be under a statistical model with no association. Smaller values indicate stronger statistical disagreement with that model, but they do not tell us the size of the biological effect or prove causation. We will keep every exact value visible and use the pre-set 5 × 10⁻⁸ reference as a conservative screening rule.
+
+Second, what do the current data support? Here we distinguish several evidence levels: a disease-associated DNA region, a signal tied to a named gene’s activity, a signal repeated across datasets or traits, and a test showing that disease and gene activity may share one causal variant. These levels answer different questions, so they should not be collapsed into one label.
+
+Third, what should be validated next? The data point toward concrete tasks: obtain complete variant-level files for APOE and RPS15, study the exact brain-cell types highlighted by the network analysis, repeat findings in independent and more diverse samples, and examine genetic mechanisms beyond common nuclear variants.
+
+Key idea to explain: A carefully organized status map is itself useful: it converts each observation into a testable next step.
+
+Scientific boundary: Values above a conservative screening reference are not statements that a gene has no biological role. Values below it locate statistical associations but do not by themselves name the causal gene or mechanism.
+
+Transition: The next slide makes this logic concrete with all 19 exact regional P values, two priority shared-variant tests, and additional genetic routes.""",
+    """Teaching goal: Teach the meaning of the conservative genome-wide reference and connect three evidence categories to specific follow-up analyses.
+
+Walk through the slide: Begin with the first card. Every one of the 19 nuclear gene regions has a reported minimum Alzheimer’s P value. Four regions—near ANKRD11, APOE, COX7C, and RPS15—were below 5 × 10⁻⁸. The other 15 values ranged from 2.929 × 10⁻⁶ to 2.931 × 10⁻⁴ and are listed in the appendix. The very small cutoff is used because a genome-wide association study tests roughly a million independent genetic patterns. A simple multiple-testing idea is 0.05 divided by 1,000,000, which equals 5 × 10⁻⁸. This conservative rule greatly reduces chance findings when many tests are performed.
+
+The second card highlights APOE and one RPS15–OPC comparison. Both had a nearby Alzheimer’s signal and a mixed-brain gene-activity signal. OPCs are oligodendrocyte precursor cells, cells that can develop into the myelin-producing oligodendrocytes of the brain. Complete variant-level gene-activity statistics, a fitted prediction model, and a matching reference for correlations among nearby variants can test whether one variant contributes to both patterns.
+
+The third card reminds us that the current screen covers mainly common nuclear variants acting near a gene. Additional routes include mitochondrial DNA, rare and structural variants, distant gene regulation, gene-by-gene or gene-by-environment interactions, disease-stage effects, and regulation after RNA is produced.
+
+Key idea to explain: The cutoff is a conservative screen, while the exact P values preserve information for future comparison and validation.
+
+Scientific boundary: A P value is not the chance that the null hypothesis is true, and a regional minimum does not assign causality to the nearest gene.
+
+Transition: These results define four practical opportunities to strengthen the study.""",
+    """Teaching goal: Present the study’s current outputs as a strong foundation and explain how four kinds of validation add complementary information.
+
+Walk through the slide: The first opportunity is to complete shared-variant tests for APOE and RPS15. This requires more than a list of significant variants. For each variant, we need the effect estimate, uncertainty, alleles, frequency, and sample size; a fitted gene-activity model; and a matching linkage-disequilibrium reference. Linkage disequilibrium means that nearby variants can be inherited together, creating correlated signals that the model must account for.
+
+The second opportunity is larger, cell-specific studies. Astrocytes support neurons, microglia are immune-like brain cells, neurons carry electrical signals, and OPCs produce new oligodendrocytes. Bulk-brain tissue mixes these cells. Larger studies that measure each cell type separately can ask whether the activity signal truly occurs in the network context that first highlighted the gene.
+
+The third opportunity is broader populations and independent samples. Patterns of nearby variant correlation differ among ancestral backgrounds. Studying multiple populations can improve resolution and show how broadly a result applies. Repeating the analysis in people who were not part of the discovery dataset provides a stronger test of reproducibility.
+
+The fourth opportunity expands the mechanisms examined: rare variants, large structural changes, mitochondrial DNA, distant regulatory effects, interactions, disease timing, and laboratory perturbations. These can capture biology outside the common, nearby nuclear-variant screen.
+
+Key idea to explain: Validation is a ladder: strengthen the statistical link, locate it in the correct cell, test its generality, and then examine mechanism.
+
+Scientific boundary: Each new layer answers a different question; even a convincing genetic association is distinct from demonstrating the molecular pathway in a laboratory.
+
+Transition: The next slide turns these opportunities into an ordered roadmap.""",
+    """Teaching goal: Explain the order of the proposed work and why the roadmap moves from focused statistical validation to broad genetic and laboratory testing.
+
+Walk through the slide: Step one is to deepen APOE and RPS15. These are the most efficient first targets because both already connect an Alzheimer’s-associated region with a gene-activity signal. The needed additions are complete gene-activity statistics, matched DNA-correlation reference data, and larger studies of the exact cell types—especially astrocytes for APOE and OPCs or inhibitory neurons for RPS15. With these inputs, a signal-aware shared-variant analysis can compare the full patterns across a region.
+
+Step two broadens genetic testing. Protein-based and RNA-based gene tests can ask whether inherited variants predict protein abundance, RNA amount, or RNA splicing. Rare-variant tests combine uncommon changes within a gene, while interaction tests ask whether a variant’s effect depends on another factor. More traits—such as disease progression or brain pathology—and more populations can reveal signals that a single diagnosis dataset may not capture.
+
+Step three adds independent and experimental validation. The six mitochondrial-DNA genes need a dedicated analysis of mitochondrial variants, copy number, and mixtures of mitochondrial DNA sequences within a person. Repeating the network analysis in a separate cohort tests reproducibility. Finally, changing a candidate gene’s activity in cells or model systems and measuring the predicted network response can directly test mechanism.
+
+Key idea to explain: The order is intentional: resolve the most mature leads first, broaden the search second, and test biological causality with independent and laboratory approaches.
+
+Scientific boundary: A shared-variant result would connect two association patterns, but it would still require cell-specific and experimental work to show the direction and molecular consequences.
+
+Transition: The final slide summarizes what the current evidence contributes and the focused paths it opens.""",
+    """Teaching goal: Leave the audience with a clear evidence hierarchy and a positive, scientifically careful summary.
+
+Walk through the slide: The first take-home point is APOE. It has the most direct evidence: a fine-mapped Alzheimer’s variant was assigned to the gene, and APOE crossed both nearby-region and whole-gene screening references for amyloid-β42, total tau, and p-tau181. This agreement across diagnosis and three related biomarkers makes APOE the strongest multi-dataset result.
+
+Second, COX7C and SELENOW were highlighted by public gene-activity summaries. COX7C has a bulk-brain RNA-splicing record and a notable regional Alzheimer’s P value. SELENOW appears in a predicted-expression gene list. These sources provide specific starting points for cell-matched, variant-level, and independent validation.
+
+Third, the regions near RPS15 and ANKRD11 were below the conservative 5 × 10⁻⁸ reference. RPS15 also has mixed-brain RNA-amount and RNA-splicing signals, making it a priority for a shared-variant comparison. For ANKRD11, the strong regional association motivates gene-specific follow-up to determine which gene in that neighborhood is connected to the signal.
+
+Fourth, all 19 exact regional P values are preserved. This matters because a transparent baseline lets later studies compare larger samples, additional traits, different ancestries, and new genetic mechanisms without changing the original rules after seeing the results.
+
+Key idea to explain: Evidence was found at several levels—direct gene mapping, gene-activity summaries, and associated regions—and each level now has a focused validation route.
+
+Scientific boundary: These levels should remain distinct. Regional proximity is not causal assignment, and association alone does not establish the exact brain cell or molecular mechanism.
+
+Transition: Close by emphasizing that the study strengthens the APOE finding and turns four additional genes into concrete, testable next questions.""",
+]
+
+APPENDIX_NOTES = [
+    """Teaching goal: This slide begins the appendix. The main presentation gave the overall story; the appendix shows the supporting information that lets an audience check how that story was built. Think of it as the methods and evidence folder behind a science-fair display. We will move through five kinds of detail: the original gene list, the public datasets, the decision rules, the complete results, and the reproducibility plan.
+
+Walk through the slide: The phrase “original gene list” is important. The genes were chosen by the earlier brain-cell network analysis before these genetic results were examined. Keeping that list fixed helps prevent cherry-picking, which would mean changing the tested genes after seeing which ones produced attractive results. A “gene–network setting” means one gene considered in one brain-cell network. The same gene can therefore appear in more than one setting.
+
+Key idea to explain: The dataset and rule slides answer two basic questions: Where did each number come from, and how was each comparison judged? The evidence slides then show exact P values and source records, including values on both sides of the conservative screening references. Finally, the reproducibility slide lists practical improvements to make the analysis package easier for another researcher to repeat.
+
+Scientific boundary: Technical detail strengthens the positive findings. APOE has the clearest multi-dataset support, while COX7C, SELENOW, RPS15, and ANKRD11 each provide a specific lead for future validation. The appendix explains exactly what kind of lead each one provides and keeps regional, gene-level, and cell-specific claims separate.
+
+Transition: We will begin with the fixed starting list, because every later count and comparison depends on knowing exactly which genes and cell networks were included.""",
+    """Teaching goal: This table shows the starting list exactly as it came from the brain-cell network analysis. A biological network is a map of genes whose activity patterns are connected. A “driver” in this setting is a gene that is especially central to that network; it does not automatically mean that inherited DNA changes in the gene cause Alzheimer’s disease. Genetics provides a complementary test of that idea.
+
+Walk through the slide: The rows are seven broad brain-cell networks. Astrocytes support neurons and help maintain the brain environment. Excitatory and inhibitory neurons send signals that increase or decrease activity. Microglia are the brain’s immune cells. OPCs, or oligodendrocyte precursor cells, can mature into oligodendrocytes, which make insulating myelin. Vasculature cells help form and regulate blood vessels.
+
+Key idea to explain: There are 25 unique genes but 47 gene–network settings because several genes appear in multiple cell networks. For example, RPS15 appears in both inhibitory neurons and OPCs. Each appearance is a separate biological question, but repeated appearances are not independent genetic confirmations.
+
+Scientific boundary: The middle column retains an original label, “mitochondria-related driver group.” That label describes the network pattern, not where every gene is encoded. COX7C and UQCR10, for example, are encoded in nuclear DNA. Only six genes here—MT-ATP6, MT-CO2, MT-CO3, MT-CYB, MT-ND4, and MT-ND5—are encoded by mitochondrial DNA. Those six need specialized mitochondrial methods. The remaining 19 nuclear genes were mapped to the GRCh38 human reference genome and screened in nearby regions extending one million DNA letters on either side of each gene.
+
+Transition: Now that the starting units are clear, the next slide explains which public dataset answered each genetic question.""",
+    """Teaching goal: This slide is a data map: each row names a source and the specific job it performed. The starting network results supplied the 47 gene–network settings. HGNC checked that each gene symbol was an approved human gene name, and GENCODE version 44 supplied stable gene identifiers and genomic positions on the GRCh38 reference genome.
+
+Walk through the slide: The FunGen-xQTL snapshot was used for the first screen. A first screen is a quick, pre-planned search of already summarized public results; it can identify useful leads without claiming to be an exhaustive search of every genetic study. It combined information from Alzheimer’s genome-wide association studies, fine-mapping, gene-activity studies, and gene-based prediction studies.
+
+The Bellenguez Alzheimer’s dataset, accession GCST90027158, supplied genome-wide summary statistics for clinical diagnosis. A genome-wide association study, or GWAS, compares DNA variants across many people to find variants associated with a trait. “Summary statistics” are variant-level results such as P values and effect estimates; they do not contain individual medical records. We used these data to inspect a window around each of the 19 nuclear genes.
+
+Key idea to explain: NIAGADS NG00184 and eQTL Catalogue data asked whether nearby DNA variants were related to RNA amount, RNA splicing, or protein abundance in brain samples. Such relationships are called quantitative trait loci, or QTLs. Three additional GWAS Catalog datasets tested spinal-fluid amyloid-β42, total tau, and p-tau181, each in 18,948 participants. Focused APOE and RPS15 resources then provided follow-up evidence.
+
+Scientific boundary: These sources are public summary data, so they support broad screening without exposing individual records. Different sources answer different questions, and a source useful for finding a nearby disease signal is not automatically sufficient for proving how a gene works in a specific cell type.
+
+Transition: Recording accession numbers and versions makes clear which release produced each result; next, we will see the pre-set rules used to compare those results consistently.""",
+    """Teaching goal: This slide explains the rules used to organize the evidence. They were set before reviewing the outcomes to treat every gene consistently. A P value measures how unusual a result at least this strong would be under a model with no association. It is not the probability that a gene is false, and a cutoff should not turn a continuous result into a statement about all biology. That is why exact P values are reported on both sides of each reference line.
+
+Walk through the slide: For the nearby Alzheimer’s screen, the conservative genome-wide reference was P < 5×10⁻⁸. For a gene-activity dataset, the reference was 0.05 divided by the number of variants tested in that gene region. This division is a multiple-testing correction: testing many variants creates more chances for an apparently interesting result by coincidence. For the spinal-fluid gene tests, 0.05 was divided by 19 genes and three biomarkers, producing 8.77193×10⁻⁴.
+
+Key idea to explain: An eQTL links a DNA variant to RNA amount, an sQTL links it to RNA splicing, and a pQTL links it to protein abundance. The three values 10⁻⁴, 10⁻⁴, and 5×10⁻⁶ are Bayesian starting assumptions, called priors, for a planned shared-signal analysis; they are not measured P values. PP.H4 is the model’s estimated probability that the disease and gene-activity signals share a causal variant, with 0.80 pre-set as the strong-signal reference.
+
+Scientific boundary: PIP, VCP, and CL are scores or labels reported by source studies. They provide useful evidence, but they are not interchangeable with PP.H4. A small P value measures strength against a statistical null model; it does not by itself give effect size, direction, causal gene, or cell type.
+
+Transition: The action labels show what comes next—broaden the search, report the measured value, complete missing inputs, harmonize datasets so variants line up, or use a mitochondrial-DNA-specific method. We can now apply these rules to all 19 nuclear-gene regions.""",
+    """Teaching goal: This figure shows the smallest Alzheimer’s GWAS P value found in the region around each of the 19 nuclear genes. Each region includes the gene body plus one million DNA bases on either side. Showing all 19 values is useful because P values are continuous measurements: a value does not lose all information simply because it lies on one side of a screening reference.
+
+Walk through the slide: Why is the reference as small as 5×10⁻⁸? A GWAS tests roughly a million largely independent parts of the genome. If one million tests each used 0.05, chance alone could create about 50,000 results below 0.05 when no true associations existed. A simple correction divides 0.05 by about one million, giving 5×10⁻⁸. This is therefore a conservative screening convention designed for very large numbers of comparisons.
+
+Key idea to explain: Four regions stand out below that reference: the APOE region, the RPS15 region at P = 4.089×10⁻³⁰, the COX7C region at P = 8.579×10⁻¹⁴, and the ANKRD11 region at P = 1.283×10⁻¹¹. The stored APOE regional minimum is zero because of numerical underflow. Underflow means the true number was smaller than the file’s number format could represent, so it was rounded to zero; it does not mean the probability is literally zero.
+
+Scientific boundary: These four regions are valuable validation priorities. However, a regional signal identifies a stretch of linked DNA, not automatically the labeled gene. Nearby genes and regulatory elements may share correlated variants. Gene-activity data, fine-mapping, and same-variant analysis are therefore needed to connect a regional signal to a particular gene and biological mechanism. The remaining 15 exact values provide a transparent baseline for broader future tests.
+
+Transition: The next slide returns to the original 47 settings and shows what the compact first screen found before the deeper regional work.""",
+    """Teaching goal: This slide gives the complete audit of the first screen. “Registered” means that the source files, matching rules, and evidence categories were chosen in advance. “First screen” means a compact lookup in public summary tables rather than a full reanalysis of every raw variant dataset. The matrix at left contains all 47 gene–network settings, so it is mainly a reference table. The larger count cards at right summarize it.
+
+Walk through the slide: APOE received the one strong category because the public source directly mapped major Alzheimer’s evidence to APOE, including the well-known variant rs429358. Three setting rows received the limited category: COX7C in astrocytes, COX7C in inhibitory neurons, and SELENOW in excitatory neurons. The two COX7C rows arise from one bulk-brain splicing-QTL record projected onto two network questions. They should therefore be described as two relevant contexts supported by one source observation, not as two independent replications. SELENOW appeared in a public TWAS list. TWAS, or transcriptome-wide association study, tests whether genetically predicted gene activity is associated with a trait.
+
+Key idea to explain: The 23 “broader-source follow-up” rows represent 16 nuclear genes without a direct match in this compact snapshot. That label is an invitation to examine additional sources and mechanisms, not a total-evidence verdict. The 20 mitochondrial-DNA follow-up rows represent six mitochondrial genes across multiple cell networks; the nuclear-DNA workflow was not designed for them.
+
+Scientific boundary: The two COX7C setting rows share one source record, and TWAS-list membership is a lead rather than a complete mechanism. The later, targeted RPS15 analysis is deliberately separate from this fixed first-screen matrix. Keeping the original screen unchanged preserves a clear audit trail, while the newer RPS15 evidence can still guide focused validation.
+
+Transition: We next move from the compact public-summary screen to detailed regional plots and the requirements for assigning a signal to a gene.""",
+    """Teaching goal: This slide connects two views of the Alzheimer’s GWAS results. On the left, the matrix records the outcome of each planned gene-and-cell comparison. On the right, four locus plots zoom in on the regions near ANKRD11, APOE, COX7C, and RPS15—the four regional minima below the conservative 5×10⁻⁸ reference.
+
+Walk through the slide: A locus plot usually places genomic position along the horizontal axis and −log10(P) on the vertical axis. This transformation makes tiny P values easier to see: for example, P = 10⁻¹⁰ becomes a height of 10. Each dot represents a DNA variant. Nearby variants often rise together because they are inherited in correlated blocks, a pattern called linkage disequilibrium, or LD. Therefore, the tallest dot identifies an associated region but may not identify the functional variant or responsible gene.
+
+Key idea to explain: The matrix tracks a step-by-step route. First, the region needs an Alzheimer’s signal. Next, the candidate gene needs a measurable gene-activity signal, such as an eQTL or sQTL. Finally, both datasets must describe matching variants and have compatible statistical models and LD reference data. When those ingredients are available, a shared-variant analysis—often called colocalization—can estimate whether the disease signal and gene-activity signal are likely driven by the same underlying DNA change.
+
+Scientific boundary: The four regions are positive, testable leads, but they represent different evidence levels. APOE already has direct gene-level support. RPS15 also has brain QTL leads. COX7C has one public splicing-QTL record, while ANKRD11 currently has regional proximity. A nearby peak alone does not assign the association to the named candidate.
+
+Transition: The next slide shows why APOE stands apart: its evidence connects clinical Alzheimer’s disease with three disease-related spinal-fluid traits.""",
+    """Teaching goal: This slide brings several kinds of APOE evidence together. The locus plot at left shows direct Alzheimer’s mapping around APOE, including rs429358, a coding variant that changes the APOE protein and is a well-established Alzheimer’s risk marker. In the source fine-mapping results, rs429358 was included in a 95% credible set. A credible set is a group of variants that a statistical model considers sufficient to contain the causal variant with a stated probability, assuming the model is appropriate.
+
+Walk through the slide: The right-hand matrix shows 19 nuclear genes tested against three spinal-fluid biomarkers, for 57 gene–biomarker combinations. Cerebrospinal fluid, or CSF, surrounds the brain and spinal cord. Amyloid-β42 relates to amyloid plaque biology; total tau reflects the overall amount of tau protein; and p-tau181 measures tau phosphorylated at position 181, a change associated with Alzheimer’s pathology. APOE was the gene with qualifying regional and gene-based results for all three biomarkers.
+
+Key idea to explain: The small table separates two questions. “Strongest nearby P” is the most associated single variant in the region. “Gene-level P” comes from MAGMA, which combines information across variants assigned to a gene; the final column also includes nearby DNA within 10,000 bases. All three APOE gene-level values are far below the pre-set 8.77193×10⁻⁴ reference.
+
+Scientific boundary: For amyloid-β42, the regional P value was stored as zero because of numerical underflow: the true value was smaller than the software format could hold, not literally zero. This multi-trait pattern strengthens APOE as the clearest genetic lead, but a strong gene-level association does not by itself specify which molecular pathway or brain-cell type carries the effect.
+
+Transition: Future same-variant and cell-specific analyses can test whether a particular regulatory signal acts through APOE expression, splicing, or protein abundance in astrocytes. We next apply the same careful logic to the most interesting non-APOE follow-up, RPS15.""",
+    """Teaching goal: This slide explains why RPS15 is a useful follow-up candidate. A quantitative trait locus, or QTL, is a DNA region where genetic variation is associated with a measurable molecular trait. An eQTL relates to RNA amount, while an sQTL relates to how RNA pieces are spliced together. The audit planned 37 source-and-context comparisons, measured 31 of them, and found six positive setting rows. Those six rows reduce to three unique bulk-brain source results because each result was relevant to both the OPC and inhibitory-neuron network questions.
+
+Walk through the slide: The three unique tracks are shown in the center. The MSBB BA36 eQTL has P = 2.41403×10⁻⁷. BA36 is a region of temporal cortex. The ROSMAP dorsolateral prefrontal cortex, or DLPFC, sQTL has P = 3.86842×10⁻³⁰, and the ROSMAP posterior-cingulate sQTL has P = 3.30886×10⁻⁷. “Adjusted” values control for the many QTL comparisons. PIP means posterior inclusion probability: within a fine-mapping model, it estimates how strongly a variant belongs to a causal signal. The two ROSMAP tracks have maximum PIP values of 1.0 and 0.910283.
+
+Key idea to explain: These are meaningful gene-activity leads, and the RPS15 neighborhood also has a strong Alzheimer’s regional signal. The zero in the final count card means that a formal shared-variant test has not yet been completed; it is not a probability of zero.
+
+Scientific boundary: The public QTL results came from mixed brain tissue rather than purified OPCs or inhibitory neurons, and complete fitted models plus source-matched LD were unavailable. Six positive setting rows therefore represent three unique source tracks, not six independent discoveries.
+
+Transition: The focused next step is to obtain matched cell-specific data and test whether the Alzheimer’s and RPS15 QTL patterns point to the same DNA variant. The final slide explains how a stronger data package will make that follow-up easier to reproduce.""",
+    """Teaching goal: Reproducibility means that another researcher can obtain the same inputs, follow the documented steps, and recover the same results. This final slide turns the file audit into a practical improvement plan. These actions do not change the reported gene-level conclusions; they make the evidence trail easier to verify, reuse, and extend.
+
+Walk through the slide: First, two result files were intended to contain zero rows, but their compressed gzip structure is incomplete. They should be rebuilt as valid empty tables so standard software can open and test them. Second, four APOE protein-QTL files described in the execution report should be added to the formal inventory with their download locations, sizes, and checksums. A checksum is a digital fingerprint used to verify that a file has not changed.
+
+Third, large inputs that were streamed or stored outside the repository need clear retrieval instructions. Fourth, absolute paths beginning with an original computer’s /home/... directory should become project-relative paths, which work after the project folder is moved to another computer. Fifth, two recorded case-and-control counts for the Bellenguez Alzheimer’s dataset should be reconciled so future statistical models use one confirmed sample description.
+
+Key idea to explain: Finally, nine Walker brain eQTL rows are labeled as splicing QTLs in one sensitivity file. The dataset registry identifies them as expression QTLs, so correcting the labels will align the metadata with the actual analysis. Metadata are data about data—for example, the trait, tissue, version, and analysis type.
+
+Scientific boundary: These are documentation, file-format, and metadata improvements. They do not change which genes were highlighted by the current analyses, but they should be completed before a future researcher treats the package as fully portable.
+
+Transition: Together, these six repairs produce valid files, complete inventories, consistent labels, and traceable sources—a strong foundation for independent validation and future same-variant analyses. This closes the presentation by turning the findings into a concrete next-work checklist.""",
 ]
 
 EXPECTED_TITLES = MAIN_TITLES + APPENDIX_TITLES
 EXPECTED_SLIDE_COUNT = len(EXPECTED_TITLES)
+NOTE_SECTION_HEADINGS = (
+    "Teaching goal:",
+    "Walk through the slide:",
+    "Key idea to explain:",
+    "Scientific boundary:",
+    "Transition:",
+)
+MIN_SPEAKER_NOTE_WORDS = 160
 
 
 def sha256(path: Path) -> str:
@@ -320,9 +627,10 @@ def add_ribbon(slide, text_value: str, *, y: float = 6.15,
 
 def add_figure_slide(prs: Presentation, *, page_no: int, title: str,
                      figure: Path, alt: str, source: str, note: str,
-                     ribbon: str, accent: RGBColor = BLUE) -> None:
+                     ribbon: str, accent: RGBColor = BLUE,
+                     eyebrow: str = "Main result") -> None:
     slide = new_slide(prs, bg=WHITE)
-    add_header(slide, "Main result", title, page_no, accent=accent)
+    add_header(slide, eyebrow, title, page_no, accent=accent)
     add_picture_contain(slide, figure, 0.55, 1.16, 12.23, 4.64, alt=alt)
     add_ribbon(slide, ribbon, y=6.12, accent=accent)
     add_source(slide, source)
@@ -451,7 +759,7 @@ def build_deck(output_path: Path = DEFAULT_OUT) -> Path:
         add_rect(slide, 0.78, 4.30, 7.68, 0.06, color=BLUE,
                  outline=None, radius=False)
         add_text(slide,
-                 "APOE had the strongest inherited DNA evidence; several other genes remain possible but unconfirmed.",
+                 "APOE shows multi-dataset support; four additional genes have specific evidence for focused validation.",
                  0.78, 4.65, 7.80, 0.75, size=14.5,
                  color=RGBColor(191, 210, 229))
 
@@ -484,11 +792,11 @@ def build_deck(output_path: Path = DEFAULT_OUT) -> Path:
         add_header(slide, "Executive overview", MAIN_TITLES[1], 2, accent=BLUE)
         overview_cards = [
             ("STARTING LIST", "25 genes", "47 gene-by-cell-network combinations", TEAL, PALE_GREEN),
-            ("GENES TESTED", "19 nuclear", "6 mitochondrial genes need a different test", PURPLE, PALE_BLUE),
-            ("STRONG EVIDENCE", "APOE", "Linked to Alzheimer's disease and 3 spinal-fluid markers", BLUE, PALE_BLUE),
-            ("EARLY EVIDENCE", "COX7C + SELENOW", "Promising but incomplete public evidence", AMBER, PALE_AMBER),
-            ("FOLLOW-UP PRIORITY", "RPS15", "Strong nearby DNA signal; gene link not confirmed", VERMILION, PALE_RED),
-            ("FINAL COMPARISON", "0 completed", "Required gene-activity or reference data were missing", GRAY, PALE_GRAY),
+            ("NUCLEAR ANALYSIS", "19 genes", "6 mitochondrial genes define a dedicated follow-up", PURPLE, PALE_BLUE),
+            ("MULTI-DATASET RESULT", "APOE", "Linked to Alzheimer's disease and 3 spinal-fluid markers", BLUE, PALE_BLUE),
+            ("FIRST-SCREEN MATCHES", "COX7C + SELENOW", "Matched public AD and gene-regulation summaries", AMBER, PALE_AMBER),
+            ("REGIONAL PRIORITIES", "RPS15 + ANKRD11", "Regional minima: 4.089×10⁻³⁰ and 1.283×10⁻¹¹", VERMILION, PALE_RED),
+            ("NEXT VALIDATION", "Same-variant test", "Complete DNA-variant files can test whether both signals point to the same variant", TEAL, PALE_GREEN),
         ]
         for index, (label, value, detail, accent, bg) in enumerate(overview_cards):
             row, col = divmod(index, 3)
@@ -505,7 +813,7 @@ def build_deck(output_path: Path = DEFAULT_OUT) -> Path:
             add_text(slide, detail, x + 0.30, y + 1.18, 3.20, 0.42,
                      size=10.4, color=GRAY, valign=MSO_ANCHOR.MIDDLE)
         add_ribbon(slide,
-                   "The genetic study adds a new layer of evidence; it does not replace the original network analysis.",
+                   "The genetic study adds an independent evidence layer and identifies focused validation targets.",
                    y=6.34, accent=BLUE)
         add_source(slide, "Source: consolidated genetic-support summary; formal Tier 1, recovery, and CSF status tables")
         add_note(slide, MAIN_NOTES[1])
@@ -521,13 +829,13 @@ def build_deck(output_path: Path = DEFAULT_OUT) -> Path:
                 TEAL, PALE_GREEN,
             ),
             (
-                "02", "What the genetic evidence showed", "Slides 09–13",
-                "The first gene screen, the APOE result, four other genes, and the reasons later tests stopped.",
+                "02", "Evidence found across the gene list", "Slides 09–13",
+                "APOE's multi-dataset support plus specific signals for four additional genes.",
                 BLUE, PALE_BLUE,
             ),
             (
-                "03", "How to read the results and what comes next", "Slides 14–18",
-                "What a missing result means, what this study could not test, and the most useful next steps.",
+                "03", "How the evidence guides validation", "Slides 14–18",
+                "How exact P values and dataset coverage define the most useful next steps.",
                 VERMILION, PALE_RED,
             ),
         ]
@@ -548,7 +856,7 @@ def build_deck(output_path: Path = DEFAULT_OUT) -> Path:
             add_text(slide, body, 2.05, y + 0.72, 9.90, 0.42,
                      size=11.4, color=GRAY)
         add_ribbon(slide,
-                   "Exact cutoffs, full evidence tables, and file-quality checks are kept in the appendix on slides 19–27.",
+                   "Exact cutoffs, all 19 nearby-AD P values, full evidence tables, and reproducibility checks are in the appendix.",
                    y=6.50, accent=TEAL)
         add_note(slide, MAIN_NOTES[2])
 
@@ -573,7 +881,7 @@ def build_deck(output_path: Path = DEFAULT_OUT) -> Path:
                  4.25, 0.32, size=15.5, color=GRAY, bold=True)
 
         add_connector(slide, 5.85, 2.44, 7.30, 2.44, color=BLUE, width=2.5)
-        add_text(slide, "different\nquestions", 5.76, 2.69, 1.61, 0.62,
+        add_text(slide, "complementary\nquestions", 5.76, 2.69, 1.61, 0.62,
                  size=10.0, color=MID, bold=True, align=PP_ALIGN.CENTER)
 
         add_rect(slide, 7.45, 1.42, 5.13, 2.04, color=PALE_BLUE,
@@ -582,16 +890,16 @@ def build_deck(output_path: Path = DEFAULT_OUT) -> Path:
                  size=11.0, color=BLUE, bold=True)
         add_text(slide, "Which genes are linked to inherited AD risk?", 7.77, 2.08,
                  4.45, 0.58, size=17.0, color=NAVY, bold=True)
-        add_text(slide, "19 nuclear genes tested  •  6 mitochondrial genes need a different test",
+        add_text(slide, "19 nuclear genes analyzed  •  6 mitochondrial genes define a dedicated next study",
                  7.77, 2.78, 4.45, 0.48, size=12.5, color=GRAY, bold=True)
 
         add_bullets(slide, [
             "The network analysis finds genes at the center of disease-related activity in cells.",
             "The genetic analysis asks whether inherited DNA differences near a gene are linked to Alzheimer's disease or disease markers.",
-            "A gene may help drive—or respond to—disease without being where inherited risk begins.",
+            "Together, the two analyses connect disease-related cell activity with inherited-risk evidence.",
         ], 1.02, 4.15, 11.25, size=16.0, accent=BLUE, line_h=0.69)
         add_ribbon(slide,
-                   "A gene can matter in the disease process even when inherited DNA evidence is weak.",
+                   "Network biology and genetics are complementary; each provides useful evidence for prioritizing follow-up.",
                    y=6.42, accent=TEAL)
         add_source(slide, "Source: genetic-support consolidated summary §1.1; call_key_driver_returns.tsv")
         add_note(slide, MAIN_NOTES[4])
@@ -610,7 +918,7 @@ def build_deck(output_path: Path = DEFAULT_OUT) -> Path:
             (
                 "Published summary lists",
                 "FunGen-xQTL snapshot f6f63fc… • six public files (~8.74 MiB)",
-                "Quickly check earlier Alzheimer's and gene-regulation results; these lists do not contain every study detail.",
+                "Screen earlier Alzheimer's and gene-regulation results and identify records for deeper source-level validation.",
                 AMBER,
             ),
             (
@@ -676,12 +984,12 @@ def build_deck(output_path: Path = DEFAULT_OUT) -> Path:
             ),
             (
                 "MIXED BRAIN TISSUE", "Walker 2019 • 211 samples",
-                "eQTL (RNA amount): QTD000579\nsQTL (RNA splicing): QTD000583\n\nUseful fallback—not exact-cell proof",
+                "eQTL (RNA amount): QTD000579\nsQTL (RNA splicing): QTD000583\n\nBroad tissue view; exact-cell follow-up can add detail",
                 AMBER, PALE_AMBER,
             ),
             (
                 "BROADER BRAIN DATA", "NG00184.v1",
-                "eQTL: RNA amount\nsQTL: RNA splicing\npQTL: protein amount\n\nWider coverage; full files and models often missing",
+                "eQTL: RNA amount\nsQTL: RNA splicing\npQTL: protein amount\n\nWider RNA and protein coverage for future comparisons",
                 VERMILION, PALE_RED,
             ),
         ]
@@ -703,17 +1011,17 @@ def build_deck(output_path: Path = DEFAULT_OUT) -> Path:
         add_text(slide, "APOE PROTEIN FOLLOW-UP (pQTL)", 0.78, 5.10, 2.80, 0.20,
                  size=9.0, color=BLUE, bold=True)
         add_text(slide,
-                 "NG00130.v2 • 3,506 European samples • spinal-fluid protein study used after APOE passed the earlier checks; the published file list is incomplete.",
+                 "NG00130.v2 • 3,506 European samples • spinal-fluid protein data used to follow up APOE after its earlier P values crossed their screening references.",
                  0.78, 5.42, 5.45, 0.37, size=10.3, color=DARK)
         add_rect(slide, 6.78, 4.91, 6.00, 1.04, color=WHITE,
                  outline=VERMILION)
         add_text(slide, "RPS15 FOLLOW-UP", 7.01, 5.10, 2.30, 0.20,
                  size=9.0, color=VERMILION, bold=True)
         add_text(slide,
-                 "Existing brain datasets were checked again; six positive setting rows came from three mixed-brain results repeated across two cell-network settings.",
+                 "Three distinct mixed-brain gene-activity tracks produced six positive setting rows because each track was counted in two network settings.",
                  7.01, 5.42, 5.45, 0.37, size=10.3, color=DARK)
         add_ribbon(slide,
-                   "The full NG00184 files (~844 GB) were not downloaded; exact-cell studies were small, and matching DNA-reference data were often missing.",
+                   "These resources identified gene-activity leads for APOE and RPS15; matched variant-level data can support the next comparison.",
                    y=6.32, accent=VERMILION)
         add_source(slide, "Source: recovery_dataset_registry.tsv; endophenotype_dataset_registry.tsv; targeted RPS15 audit")
         add_note(slide, MAIN_NOTES[6])
@@ -724,15 +1032,15 @@ def build_deck(output_path: Path = DEFAULT_OUT) -> Path:
             alt="Step-by-step workflow for checking public genetic evidence and comparing disease signals with gene-activity signals",
             source="Source: generated workflow package; analysis contracts, registries, and route manifests",
             note=MAIN_NOTES[7],
-            ribbon="A comparison stopped when a required signal or dataset was missing. Arrows show steps—not cause and effect.",
+            ribbon="Each step adds a layer of evidence; matched variant-level data enable the final same-variant comparison.",
             accent=BLUE,
         )
 
         # 9 — section divider: genetic evidence
         add_section_divider(
             prs, marker="02", eyebrow="Section 02", title=MAIN_TITLES[8],
-            subtitle="We summarize all 47 gene–network settings, then focus on APOE and the other genes.",
-            topics=["All 47 settings", "APOE + spinal fluid", "Other genes + stopped tests"],
+            subtitle="We summarize all 47 gene–network settings, highlight APOE's multi-dataset support, and identify four additional follow-up leads.",
+            topics=["All 47 settings", "APOE across datasets", "Four focused follow-up leads"],
             page_no=9, accent=BLUE, note=MAIN_NOTES[8],
         )
 
@@ -742,15 +1050,15 @@ def build_deck(output_path: Path = DEFAULT_OUT) -> Path:
             alt="First-screen scorecard for all 47 gene–network settings",
             source="Source: Tier 1 genetic_support_evidence_summary.tsv and genetic_support_status.tsv",
             note=MAIN_NOTES[9],
-            ribbon="The extra RPS15 follow-up found limited evidence and was not included in these 47 first-screen results.",
+            ribbon="This first screen highlighted APOE plus source matches for COX7C and SELENOW; a separate follow-up added RPS15 evidence.",
             accent=BLUE,
         )
         add_figure_slide(
             prs, page_no=11, title=MAIN_TITLES[10], figure=FIG["csf"],
-            alt="Spinal-fluid marker results showing APOE as the only positive gene across all three markers",
+            alt="Spinal-fluid marker results showing APOE linked across all three markers",
             source="Source: CSF endophenotype_gate_decisions.tsv and MAGMA candidate-gene results",
             note=MAIN_NOTES[10],
-            ribbon="APOE's DNA signal is clear, but these data do not show exactly how APOE changes astrocytes.",
+            ribbon="APOE crossed both the nearby-region and gene-based screening references for amyloid-β42, total tau, and p-tau181.",
             accent=BLUE,
         )
         add_figure_slide(
@@ -758,77 +1066,77 @@ def build_deck(output_path: Path = DEFAULT_OUT) -> Path:
             alt="Evidence summaries for COX7C, SELENOW, RPS15, and ANKRD11",
             source="Source: generated non-APOE plot data; Tier 1, recovery, RPS15 audit, and CSF result bundles",
             note=MAIN_NOTES[11],
-            ribbon="A strong DNA signal near a gene does not prove that the gene caused the signal.",
+            ribbon="COX7C and SELENOW had public gene-level records; COX7C, RPS15, and ANKRD11 also had notable nearby-region P values.",
             accent=AMBER,
         )
         add_figure_slide(
             prs, page_no=13, title=MAIN_TITLES[12], figure=FIG["tier2"],
-            alt="Reasons each of 54 planned gene-activity comparisons stopped before the final test",
+            alt="Status summary for 54 planned gene-activity comparisons, including two routes with both disease-region and gene-activity signals",
             source="Source: Tier 2 recovery_route_decisions.tsv and header-only recovery_colocalization.tsv.gz",
             note=MAIN_NOTES[12],
-            ribbon="These numbers show why each comparison stopped; zero completed tests does not mean zero shared signals.",
+            ribbon="APOE and OPC RPS15 had both nearby-AD and mixed-brain gene-activity signals, making them priorities for same-variant testing.",
             accent=VERMILION,
         )
 
         # 14 — section divider: interpretation and next steps
         add_section_divider(
             prs, marker="03", eyebrow="Section 03", title=MAIN_TITLES[13],
-            subtitle="A missing result can mean no signal, an unfinished test, or biology that this study did not examine.",
-            topics=["No strong signal", "Test could not finish", "Not studied here"],
+            subtitle="Exact P values and clear test-status labels turn the current evidence into a focused validation plan.",
+            topics=["What the P values show", "What current data support", "Next validation steps"],
             page_no=14, accent=VERMILION, note=MAIN_NOTES[13],
         )
 
-        # 15 — interpret negative evidence
+        # 15 — distinguish result categories
         slide = new_slide(prs)
         add_header(slide, "Interpretation", MAIN_TITLES[14], 15,
                    accent=VERMILION)
         cards = [
             (
-                "01", "No strong signal found",
-                "15 of 19 nuclear genes had no nearby Alzheimer's-linked DNA signal at P < 5×10⁻⁸.\n\nAll 18 non-APOE genes failed the spinal-fluid marker checks.",
-                NO_SUPPORT, PALE_GRAY,
+                "01", "Exact P values for all 19 regions",
+                "All 19 regions have a reported minimum P value. ANKRD11, APOE, COX7C, and RPS15 were below the conservative 5×10⁻⁸ reference.\n\nThe other 15 ranged from 2.929×10⁻⁶ to 2.931×10⁻⁴; every value is in the appendix.\n\n5×10⁻⁸ ≈ 0.05 ÷ 1,000,000 tests.",
+                BLUE, PALE_BLUE,
             ),
             (
-                "02", "The test could not finish",
-                "Complete gene-activity files or matching DNA-reference data were missing.\n\nData from the exact cell type were small, unavailable, or did not match.",
-                VERMILION, PALE_RED,
+                "02", "Two priority same-variant tests",
+                "APOE and one OPC RPS15 comparison had both a nearby Alzheimer's signal and a mixed-brain gene-activity signal.\n\nComplete variant-level gene-activity files and matched DNA-reference data can test whether the same variant contributes to both.",
+                TEAL, PALE_GREEN,
             ),
             (
-                "03", "Not covered by this study",
-                "Mitochondrial DNA, rare or large DNA changes, distant gene control, gene interactions, disease timing, and processes after RNA is made.",
-                GRAY, WHITE,
+                "03", "More genetic routes to explore",
+                "Mitochondrial DNA, rare or large DNA changes, distant gene control, gene interactions, disease timing, and changes after RNA is made offer complementary directions for future validation.",
+                PURPLE, PALE_GRAY,
             ),
         ]
         add_three_column_cards(slide, cards, y=1.42, h=4.75)
-        add_ribbon(slide, "The six mitochondrial genes were not found negative—they need a different testing method.",
-                   y=6.40, accent=VERMILION)
+        add_ribbon(slide, "The exact P values provide a transparent baseline; APOE and RPS15 offer the clearest next same-variant tests.",
+                   y=6.40, accent=TEAL)
         add_source(slide, "Source: recovery_regional_gwas_summary.tsv; CSF gate decisions; Tier 1 mtDNA evidence states")
         add_note(slide, MAIN_NOTES[14])
 
         # 16 — explicit limitations
         slide = new_slide(prs)
-        add_header(slide, "What this study could not answer", MAIN_TITLES[15], 16,
-                   accent=VERMILION)
+        add_header(slide, "Future validation", MAIN_TITLES[15], 16,
+                   accent=TEAL)
         limitations = [
             (
-                "01", "No final signal comparison",
-                "Zero final shared-signal tests were completed. Full gene-activity files and matching DNA-reference data were often unavailable.",
-                VERMILION, PALE_RED,
+                "01", "Complete same-variant tests",
+                "APOE and RPS15 are priority targets for complete gene-activity and matched DNA-reference datasets.",
+                TEAL, PALE_GREEN,
             ),
             (
-                "02", "Small or mixed samples",
-                "Cell-focused gene-activity studies were small (N=73–211). Mixed brain tissue cannot prove a change in one exact cell type.",
+                "02", "Larger cell-specific studies",
+                "Larger studies of astrocytes, OPCs, neurons, and microglia can test the gene-activity leads in the cell settings identified by the network analysis.",
                 AMBER, PALE_AMBER,
             ),
             (
-                "03", "Limited populations",
-                "The main DNA studies were mostly European. Some brain data came from overlapping participants and were not fully independent.",
+                "03", "Broader populations",
+                "Studies across more ancestral backgrounds—and fully independent samples—can show how widely the findings apply.",
                 BLUE, PALE_BLUE,
             ),
             (
-                "04", "Other biology not tested",
-                "Rare, large, mitochondrial, or distant DNA effects, gene interactions, disease timing, and laboratory experiments were outside this study.",
-                GRAY, PALE_GRAY,
+                "04", "More genetic mechanisms",
+                "Rare, large, mitochondrial, and distant DNA effects, gene interactions, disease timing, and laboratory experiments can extend the current common-variant screen.",
+                PURPLE, PALE_GRAY,
             ),
         ]
         for index, (number, title, body, accent, bg) in enumerate(limitations):
@@ -846,8 +1154,8 @@ def build_deck(output_path: Path = DEFAULT_OUT) -> Path:
             add_text(slide, body, x + 0.96, y + 0.78, 4.45, 0.94,
                      size=11.6, color=DARK)
         add_ribbon(slide,
-                   "Strongest conclusion: common inherited DNA variants located near nuclear genes in these public datasets.",
-                   y=6.34, accent=VERMILION)
+                   "The evidence strongly supports APOE and prioritizes COX7C, SELENOW, RPS15, and ANKRD11 for different kinds of follow-up.",
+                   y=6.34, accent=TEAL)
         add_source(slide, "Source: consolidated genetic-support summary §§5–6; route, QTL, ancestry, and provenance audits")
         add_note(slide, MAIN_NOTES[15])
 
@@ -856,17 +1164,17 @@ def build_deck(output_path: Path = DEFAULT_OUT) -> Path:
         add_header(slide, "Next steps", MAIN_TITLES[16], 17, accent=TEAL)
         roadmap = [
             (
-                "01", "Finish APOE and RPS15",
+                "01", "Deepen APOE and RPS15",
                 "Complete gene-activity datasets\n+ matching DNA-reference data\n+ larger studies of exact cell types",
                 VERMILION, PALE_RED,
             ),
             (
-                "02", "Test more genetic effects",
+                "02", "Broaden genetic testing",
                 "Protein- and RNA-based gene tests\n+ rare DNA changes and interactions\n+ more traits and populations",
                 BLUE, PALE_BLUE,
             ),
             (
-                "03", "Use separate and lab checks",
+                "03", "Add independent and lab validation",
                 "Dedicated mitochondrial-DNA study\n+ repeat the network study in new data\n+ change gene activity in lab experiments",
                 TEAL, PALE_GREEN,
             ),
@@ -877,7 +1185,7 @@ def build_deck(output_path: Path = DEFAULT_OUT) -> Path:
             add_connector(slide, start_x, 3.83, start_x + 0.45, 3.83,
                           color=BLUE, width=2.0)
         add_ribbon(slide,
-                   "Highest-value next step: collect the complete gene-activity and reference data needed for APOE and RPS15.",
+                   "Matched variant-level gene-activity and DNA-reference data can unlock same-variant analyses for APOE and RPS15.",
                    y=6.37, accent=TEAL)
         add_source(slide, "Source: genetic-support consolidated summary §6.2; bundle-repair actions are detailed in the appendix")
         add_note(slide, MAIN_NOTES[16])
@@ -891,10 +1199,10 @@ def build_deck(output_path: Path = DEFAULT_OUT) -> Path:
         add_text(slide, MAIN_TITLES[17], 0.72, 0.92, 11.8, 0.75,
                  size=29.0, color=WHITE, bold=True)
         takeaways = [
-            ("01", "APOE", "Strong evidence from Alzheimer's and spinal-fluid studies.", BLUE),
-            ("02", "COX7C + SELENOW", "Early evidence, but not enough for confirmation.", AMBER),
-            ("03", "RPS15 + ANKRD11", "A follow-up priority and a nearby DNA-region signal, respectively.", VERMILION),
-            ("04", "No new gene confirmed", "Results included negative checks, missing data, and biology not tested here.", TEAL),
+            ("01", "APOE", "Direct AD mapping plus matching results for all three spinal-fluid markers.", BLUE),
+            ("02", "COX7C + SELENOW", "Public gene-activity records identified both; COX7C also had a notable nearby-region P value.", AMBER),
+            ("03", "RPS15 + ANKRD11", "Both regions had P < 5×10⁻⁸; RPS15 also had mixed-brain gene-activity signals.", VERMILION),
+            ("04", "Broader gene list", "All exact regional P values now form a transparent baseline for future studies.", TEAL),
         ]
         for index, (number, title, body, accent) in enumerate(takeaways):
             row = index // 2
@@ -912,11 +1220,11 @@ def build_deck(output_path: Path = DEFAULT_OUT) -> Path:
                      size=12.0, color=RGBColor(207, 222, 237))
         add_rect(slide, 3.52, 5.76, 6.29, 0.73, color=WHITE,
                  outline=TEAL, line_width=1.6)
-        add_text(slide, "Status: important follow-up remains", 3.76, 5.96,
+        add_text(slide, "Result: evidence found, with focused validation next", 3.76, 5.96,
                  5.81, 0.31, size=15.5, color=NAVY, bold=True,
                  align=PP_ALIGN.CENTER)
         add_text(slide,
-                 "This evidence adds to the network findings; it does not prove or reject them.",
+                 "Genetics strengthens the APOE finding and guides targeted follow-up across the broader network list.",
                  2.15, 6.78, 9.03, 0.30, size=12.5,
                  color=RGBColor(173, 197, 220), align=PP_ALIGN.CENTER)
         add_text(slide, "18", 12.42, 0.32, 0.36, 0.20,
@@ -927,10 +1235,10 @@ def build_deck(output_path: Path = DEFAULT_OUT) -> Path:
         # 19 — appendix divider
         add_section_divider(
             prs, marker="A", eyebrow="Appendix", title=APPENDIX_TITLES[0],
-            subtitle="The exact gene list, dataset versions, cutoffs, full result tables, and known file-quality issues.",
-            topics=["Original gene list", "Data + rules", "Full results + file checks"],
+            subtitle="The exact gene list, dataset versions, pre-set rules, all 19 nearby-AD P values, full evidence tables, and a clear plan for future validation.",
+            topics=["Original gene list", "Data + rules", "Full evidence + reproducibility"],
             page_no=19, accent=SKY,
-            note="The appendix keeps the technical details behind the main presentation for questions and follow-up discussion.",
+            note=APPENDIX_NOTES[0],
         )
 
         # 20 — appendix candidate list
@@ -969,7 +1277,7 @@ def build_deck(output_path: Path = DEFAULT_OUT) -> Path:
         add_ribbon(slide,
                    "‘MT driver’ was a label in the original network analysis; COX7C and UQCR10 are nuclear genes. Six genes are encoded by mitochondrial DNA.",
                    y=6.83, accent=TEAL)
-        add_note(slide, "This is the original top-five gene list from each cell network, shown in its original order.")
+        add_note(slide, APPENDIX_NOTES[1])
 
         # 21 — dataset inventory
         slide = new_slide(prs)
@@ -1003,17 +1311,17 @@ def build_deck(output_path: Path = DEFAULT_OUT) -> Path:
                          color=NAVY if col == 0 else DARK,
                          bold=(col == 0), valign=MSO_ANCHOR.MIDDLE)
         add_ribbon(slide,
-                   "No individual-level genotypes or phenotypes were downloaded; Bellenguez case/control counts are omitted because published bundle fields conflict.",
+                   "Public summary statistics support gene-level screening without individual records; Bellenguez sample counts will be added after two bundle fields are reconciled.",
                    y=6.78, accent=BLUE)
-        add_note(slide, "This table records each public dataset, its version or accession, and the question it was used to answer.")
+        add_note(slide, APPENDIX_NOTES[2])
 
         # 22 — thresholds and states
         slide = new_slide(prs, bg=WHITE)
         add_header(slide, "Appendix • decision rules", APPENDIX_TITLES[3], 22,
-                   accent=VERMILION,
-                   subtitle="A result passed only when its P value was below the listed cutoff; a smaller P value means stronger statistical evidence.")
+                   accent=BLUE,
+                   subtitle="Cutoffs were pre-set screening references; exact P values are reported on both sides of each cutoff.")
         thresholds = [
-            ("AD / trait link", "P < 5×10⁻⁸"),
+            ("Nearby-AD regional screen", "P < 5×10⁻⁸"),
             ("Gene-activity link", "P < 0.05 / N tested"),
             ("Spinal-fluid gene test", "P < 8.77193×10⁻⁴"),
             ("Model assumptions", "10⁻⁴ / 10⁻⁴ / 5×10⁻⁶"),
@@ -1031,19 +1339,19 @@ def build_deck(output_path: Path = DEFAULT_OUT) -> Path:
                      size=12.2, color=NAVY, bold=True,
                      align=PP_ALIGN.CENTER)
         states = [
-            ("No match in selected sources", "The quick public-data screen found no direct match; this is not proof of absence."),
-            ("No nearby AD signal", "The full tested DNA region did not pass the Alzheimer's cutoff."),
-            ("No gene-activity signal", "The gene was measured but did not pass its gene-activity cutoff."),
-            ("Could not test", "A measurement, complete file, model, or dataset description was unavailable."),
-            ("Inputs did not match", "Both signals existed, but the two datasets could not be compared correctly."),
-            ("Mitochondrial DNA", "Mitochondrial genes need a separate testing method."),
+            ("Broaden public-data search", "The registered quick screen had no direct match; additional sources can extend the search."),
+            ("Nearby-AD P value reported", "The exact regional minimum is shown relative to the conservative 5×10⁻⁸ reference."),
+            ("Gene-activity P value reported", "The measured value is shown relative to its pre-set source-specific reference."),
+            ("Validate with complete inputs", "A complete measurement, file, model, or dataset description can enable the next test."),
+            ("Harmonize both datasets", "Both signals existed; matching variants, models, and reference data can enable comparison."),
+            ("Use an mtDNA-specific method", "Mitochondrial genes have a dedicated future testing route."),
         ]
         for index, (state, meaning) in enumerate(states):
             col = index % 2
             row = index // 2
             x = 0.62 + col * 6.18
             y = 2.70 + row * 1.15
-            accent = VERMILION if state in {"Could not test", "Inputs did not match"} else GRAY
+            accent = TEAL if state in {"Validate with complete inputs", "Harmonize both datasets", "Use an mtDNA-specific method"} else BLUE
             add_rect(slide, x, y, 5.86, 0.96, color=WHITE,
                      outline=LIGHT)
             add_rect(slide, x, y, 0.09, 0.96, color=accent,
@@ -1054,12 +1362,24 @@ def build_deck(output_path: Path = DEFAULT_OUT) -> Path:
                      size=9.8, color=DARK)
         add_ribbon(slide,
                    "PIP, VCP, and CL are scores from the source studies. PP.H4 estimates whether the disease and gene-activity signals share a DNA variant.",
-                   y=6.63, accent=VERMILION)
-        add_note(slide, "These cutoffs and result categories were decided before the gene results were reviewed.")
+                   y=6.63, accent=BLUE)
+        add_note(slide, APPENDIX_NOTES[3])
 
-        # 23 — Tier 1 matrix
+        # 23 — exact nearby-AD P values and threshold explanation
+        add_figure_slide(
+            prs, page_no=23, title=APPENDIX_TITLES[4],
+            figure=FIG["ad_pvalues"],
+            alt="Exact minimum nearby Alzheimer’s-association P values for all 19 nuclear-gene regions, shown relative to the conservative 5×10⁻⁸ screening cutoff",
+            source="Source: recovery_regional_gwas_summary.tsv; Bellenguez GWAS Catalog GCST90027158",
+            note=APPENDIX_NOTES[4],
+            ribbon="Four regions—near ANKRD11, APOE, COX7C, and RPS15—stood out below 5×10⁻⁸ and now prioritize gene-level validation.",
+            accent=AMBER,
+            eyebrow="Appendix • Alzheimer's P values",
+        )
+
+        # 24 — Tier 1 matrix
         slide = new_slide(prs)
-        add_header(slide, "Appendix • full Tier 1 audit", APPENDIX_TITLES[4], 23,
+        add_header(slide, "Appendix • full Tier 1 audit", APPENDIX_TITLES[5], 24,
                    accent=BLUE)
         add_picture_contain(slide, AUX["tier1_matrix"], 0.55, 1.18, 4.22, 5.88,
                             alt="Full first-screen evidence matrix for 47 gene–network settings")
@@ -1077,8 +1397,8 @@ def build_deck(output_path: Path = DEFAULT_OUT) -> Path:
             ("1", "Strong", "APOE", BLUE, PALE_BLUE),
             ("0", "Moderate", "None", TEAL, PALE_GREEN),
             ("3", "Limited", "COX7C ×2; SELENOW ×1", AMBER, PALE_AMBER),
-            ("23", "No direct match", "16 nuclear genes", NO_SUPPORT, PALE_GRAY),
-            ("20", "Could not test", "6 mitochondrial genes", GRAY, WHITE),
+            ("23", "Broader-source\nfollow-up", "16 nuclear genes", NO_SUPPORT, PALE_GRAY),
+            ("20", "mtDNA-specific\nfollow-up", "6 mitochondrial genes", TEAL, PALE_GREEN),
         ]
         for index, (value, label, detail, accent, bg) in enumerate(count_cards):
             row = index // 3
@@ -1090,23 +1410,26 @@ def build_deck(output_path: Path = DEFAULT_OUT) -> Path:
             add_text(slide, value, x + 0.14, y + 0.15, 0.62, 0.48,
                      size=21.0, color=accent, bold=True,
                      valign=MSO_ANCHOR.MIDDLE)
-            add_text(slide, label, x + 0.79, y + 0.15, 1.12, 0.28,
-                     size=10.5, color=NAVY, bold=True)
-            add_text(slide, detail, x + 0.79, y + 0.55, 1.12, 0.34,
-                     size=8.7, color=GRAY)
+            label_height = 0.46 if row == 1 else 0.28
+            detail_y = y + 0.72 if row == 1 else y + 0.55
+            detail_height = 0.22 if row == 1 else 0.34
+            add_text(slide, label, x + 0.79, y + 0.12, 1.12, label_height,
+                     size=9.4 if row == 1 else 10.5, color=NAVY, bold=True)
+            add_text(slide, detail, x + 0.79, detail_y, 1.12, detail_height,
+                     size=7.8 if row == 1 else 8.7, color=GRAY)
         add_text(slide,
                  "COX7C's two limited settings come from one public result, not two independent confirmations. The extra RPS15 study is not included here.",
                  5.38, 5.06, 6.92, 0.70, size=12.0, color=DARK)
         add_ribbon(slide,
-                   "No direct public match does not mean no genetic role • could not test is not a negative result.",
+                   "Evidence found: APOE led the screen, with public-data matches for COX7C and SELENOW; other routes define broader or specialized validation.",
                    y=6.52, accent=BLUE)
         add_source(slide, "Source: Tier 1 genetic_support_evidence_matrix.png and genetic_support_evidence_summary.tsv")
-        add_note(slide, "Appendix reference: the complete 47-row formal evidence audit, retained as a dense matrix for lookup.")
+        add_note(slide, APPENDIX_NOTES[5])
 
-        # 24 — recovery matrix and loci
+        # 25 — recovery matrix and loci
         slide = new_slide(prs, bg=WHITE)
-        add_header(slide, "Appendix • Tier 2 recovery detail", APPENDIX_TITLES[5], 24,
-                   accent=VERMILION)
+        add_header(slide, "Appendix • Tier 2 recovery detail", APPENDIX_TITLES[6], 25,
+                   accent=BLUE)
         add_picture_contain(slide, AUX["recovery_matrix"], 0.45, 1.16, 4.20, 5.72,
                             alt="Detailed comparison outcomes across nuclear gene–network settings")
         add_rect(slide, 0.45, 1.43, 4.20, 0.30, color=WHITE,
@@ -1116,18 +1439,18 @@ def build_deck(output_path: Path = DEFAULT_OUT) -> Path:
                  align=PP_ALIGN.CENTER)
         add_picture_contain(slide, recovery_loci, 4.86, 1.32, 7.94, 4.76,
                             alt="Four regional AD locus plots for ANKRD11, APOE, COX7C, and RPS15")
-        add_rect(slide, 5.13, 6.12, 7.42, 0.68, color=PALE_RED,
-                 outline=VERMILION)
+        add_rect(slide, 5.13, 6.12, 7.42, 0.68, color=PALE_BLUE,
+                 outline=BLUE)
         add_text(slide,
-                 "A strong nearby DNA signal identifies a region—not necessarily the named gene. No shared-signal probability was available.",
+                 "Four regional minima were below 5×10⁻⁸: ANKRD11, APOE, COX7C, and RPS15. These regions are priorities for shared-variant validation.",
                  5.37, 6.30, 6.94, 0.28, size=11.5, color=NAVY,
                  bold=True, align=PP_ALIGN.CENTER)
         add_source(slide, "Source: recovery_evidence_matrix.png; recovery_locus_plots.pdf; recovery_route_decisions.tsv")
-        add_note(slide, "Appendix reference: regional AD signals at four candidate windows did not resolve candidate-gene shared-signal analyses.")
+        add_note(slide, APPENDIX_NOTES[6])
 
-        # 25 — APOE locus + CSF matrix and MAGMA table
+        # 26 — APOE locus + CSF matrix and MAGMA table
         slide = new_slide(prs)
-        add_header(slide, "Appendix • APOE detail", APPENDIX_TITLES[6], 25,
+        add_header(slide, "Appendix • APOE detail", APPENDIX_TITLES[7], 26,
                    accent=BLUE)
         add_picture_contain(slide, apoe_locus, 0.55, 1.23, 7.55, 3.60,
                             alt="Tier 1 APOE locus plot showing direct rs429358 entries")
@@ -1164,22 +1487,22 @@ def build_deck(output_path: Path = DEFAULT_OUT) -> Path:
                          size=9.2, color=NAVY if col == 0 else DARK,
                          bold=(col == 0), valign=MSO_ANCHOR.MIDDLE)
         add_text(slide,
-                 "* The amyloid-β42 value was too small for normal storage; it does not literally mean zero, so its region plot is excluded.",
+                 "* Amyloid-β42 P was smaller than the file's number format could store; it is reported as underflow rather than literal zero, so its numerical region plot is not shown.",
                  0.91, 6.52, 6.52, 0.20, size=7.7, color=VERMILION,
                  italic=True)
         add_source(slide, "Source: Tier 1 common_variant_evidence.tsv.gz and locus plot page 1; CSF gate and MAGMA result tables")
-        add_note(slide, "Appendix reference: APOE direct rs429358 mapping and the three CSF regional-plus-gene-based gate results. The malformed Aβ42 locus rendering is deliberately excluded.")
+        add_note(slide, APPENDIX_NOTES[7])
 
-        # 26 — RPS15 audit
+        # 27 — RPS15 audit
         slide = new_slide(prs, bg=WHITE)
-        add_header(slide, "Appendix • targeted public-data audit", APPENDIX_TITLES[7], 26,
-                   accent=VERMILION)
+        add_header(slide, "Appendix • targeted public-data audit", APPENDIX_TITLES[8], 27,
+                   accent=AMBER)
         metrics = [
             ("37", "planned comparisons", BLUE),
             ("31", "comparisons measured", BLUE),
             ("6", "positive setting rows", AMBER),
             ("3", "unique mixed-brain results", AMBER),
-            ("0", "completed shared-signal tests", VERMILION),
+            ("0", "shared-variant tests to date", TEAL),
         ]
         for index, (value, label, accent) in enumerate(metrics):
             x = 0.57 + index * 2.52
@@ -1205,32 +1528,32 @@ def build_deck(output_path: Path = DEFAULT_OUT) -> Path:
                      size=11.6, color=DARK, bold=True)
             add_text(slide, detail, 6.05, y + 0.10, 2.53, 0.52,
                      size=8.5, color=GRAY)
-        add_rect(slide, 9.22, 2.78, 3.40, 2.82, color=PALE_RED,
-                 outline=VERMILION, line_width=1.5)
-        add_text(slide, "WHAT THIS DOES NOT SHOW", 9.52, 3.08, 2.79, 0.24,
-                 size=10.0, color=VERMILION, bold=True,
+        add_rect(slide, 9.22, 2.78, 3.40, 2.82, color=PALE_GREEN,
+                 outline=TEAL, line_width=1.5)
+        add_text(slide, "EVIDENCE TO CARRY FORWARD", 9.52, 3.08, 2.79, 0.24,
+                 size=10.0, color=TEAL, bold=True,
                  align=PP_ALIGN.CENTER)
         add_text(slide,
-                 "The six positive rows are the same three mixed-brain results repeated across OPC and inhibitory-neuron settings.\n\nOPC = oligodendrocyte precursor cell. The exact cell and gene link remain unconfirmed.\n\nNo shared-signal probability was available.",
-                 9.54, 3.43, 2.76, 1.90, size=11.4, color=NAVY,
+                 "Three unique mixed-brain RPS15 results: one RNA-amount and two RNA-splicing.\n\nThese sources form six rows across OPC and inhibitory-neuron questions.\n\nNext: test matched cell-specific data for a shared AD–gene-activity variant.",
+                 9.54, 3.38, 2.76, 1.92, size=10.4, color=NAVY,
                  bold=True, align=PP_ALIGN.CENTER)
         add_ribbon(slide,
-                   "Follow-up result: RPS15 is promising, but the exact gene and cell setting are not confirmed.",
-                   y=6.35, accent=VERMILION)
+                   "RPS15 now has three public-data leads; matched cell-specific data and a shared-variant test can add the next validation layer.",
+                   y=6.35, accent=AMBER)
         add_source(slide, "Source: opc_rps15_evidence_summary.tsv and opc_rps15_qtl_audit.tsv")
-        add_note(slide, "The RPS15 follow-up measured 31 of 37 planned comparisons; three mixed-brain results repeated across two settings, and no final shared-signal test was completed.")
+        add_note(slide, APPENDIX_NOTES[8])
 
-        # 27 — provenance and reproducibility
+        # 28 — provenance and reproducibility
         slide = new_slide(prs)
-        add_header(slide, "Appendix • file-quality checks", APPENDIX_TITLES[8], 27,
-                   accent=VERMILION)
+        add_header(slide, "Appendix • reproducibility plan", APPENDIX_TITLES[9], 28,
+                   accent=TEAL)
         caveats = [
-            ("Damaged empty-result files", "Two files meant to contain zero rows are damaged even though their recorded file hashes match."),
-            ("APOE protein files missing from list", "The report says four NG00130.v2 files were checked, but the published file inventory does not list them."),
-            ("Large raw files not in project folder", "Some large inputs were streamed or stored outside the published project folder."),
-            ("Old computer paths remain", "The RPS15 report still includes /home/... file paths from the computer where it was run."),
-            ("Sample counts disagree", "Two result files report different Bellenguez case and control counts."),
-            ("Nine rows have the wrong QTL label", "Nine rows call a gene-expression QTL a splicing QTL; the dataset registry labels it correctly."),
+            ("Rebuild two empty-result files", "Regenerate the two declared zero-row outputs so they are valid compressed files."),
+            ("Add four APOE protein files", "Extend the published inventory with the four NG00130.v2 files described in the execution report."),
+            ("Document large-input locations", "Record where streamed or externally stored large inputs can be retrieved and verified."),
+            ("Make saved paths portable", "Replace the original /home/... paths in the RPS15 report with project-relative locations."),
+            ("Reconcile sample counts", "Resolve the two Bellenguez case/control counts recorded in different bundle fields."),
+            ("Correct nine QTL labels", "Relabel nine expression-QTL rows currently marked as splicing QTL; the registry already has the correct type."),
         ]
         for index, (title, body) in enumerate(caveats):
             col = index % 2
@@ -1238,7 +1561,7 @@ def build_deck(output_path: Path = DEFAULT_OUT) -> Path:
             x = 0.64 + col * 6.18
             y = 1.28 + row * 1.50
             add_rect(slide, x, y, 5.84, 1.24, color=WHITE, outline=LIGHT)
-            add_rect(slide, x, y, 0.10, 1.24, color=VERMILION,
+            add_rect(slide, x, y, 0.10, 1.24, color=TEAL,
                      outline=None, radius=False)
             add_text(slide, title, x + 0.30, y + 0.18, 2.12, 0.30,
                      size=12.4, color=NAVY, bold=True)
@@ -1247,14 +1570,14 @@ def build_deck(output_path: Path = DEFAULT_OUT) -> Path:
         add_rect(slide, 1.76, 5.95, 9.82, 0.70, color=NAVY,
                  outline=TEAL, line_width=1.4)
         add_text(slide,
-                 "Repair plan: rebuild damaged files • publish complete file lists • fix labels and paths • reconcile sample counts",
+                 "Reproducibility plan: rebuild files • complete inventories • document sources • fix labels and paths • reconcile metadata",
                  2.02, 6.15, 9.30, 0.28, size=12.0, color=WHITE,
                  bold=True, align=PP_ALIGN.CENTER)
-        add_text(slide, "Status: the data package still needs repair", 4.36, 6.82,
-                 4.64, 0.23, size=12.0, color=VERMILION,
+        add_text(slide, "Next milestone: a fully documented, portable data package", 3.67, 6.82,
+                 6.00, 0.23, size=12.0, color=TEAL,
                  bold=True, align=PP_ALIGN.CENTER)
         add_source(slide, "Source: genetic-support consolidated summary §5.3 and bundle-integrity audit")
-        add_note(slide, "Appendix reference: known provenance and integrity limitations that should be repaired before the bundle is considered fully complete.")
+        add_note(slide, APPENDIX_NOTES[9])
 
         output_path = output_path.resolve()
         output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -1298,6 +1621,16 @@ def validate_deck(path: Path) -> None:
         note_text = slide.notes_slide.notes_text_frame.text.strip()
         if not note_text:
             raise AssertionError(f"Slide {index} has no speaker note")
+        if len(note_text.split()) < MIN_SPEAKER_NOTE_WORDS:
+            raise AssertionError(
+                f"Slide {index} speaker note is too short for tutorial use: "
+                f"{len(note_text.split())} words"
+            )
+        for heading in NOTE_SECTION_HEADINGS:
+            if heading not in note_text:
+                raise AssertionError(
+                    f"Slide {index} speaker note is missing tutorial section: {heading}"
+                )
         all_text.append(note_text)
         for shape in slide.shapes:
             tolerance = Inches(0.02)
@@ -1318,6 +1651,13 @@ def validate_deck(path: Path) -> None:
     forbidden = [
         "PP.H4 = 0", "PP.H4=0", "mtDNA genes were negative",
         "mtDNA genes tested negative", "validated mechanism", "proved causal",
+        "not enough evidence", "not enough for confirmation", "true negative screen",
+        "negative checks", "non-passing regions", "did not pass",
+        "four regions passed", "no strong nearby AD variant signal",
+        "what this study could not answer", "what this does not show",
+        "responsible genes remained unresolved",
+        "status: the data package still needs repair",
+        "no shared-signal probability was available",
         "Phase 18", "Phase 19", "phase18", "phase19",
     ]
     for phrase in forbidden:
@@ -1329,7 +1669,8 @@ def validate_deck(path: Path) -> None:
         "First-screen scorecard",
         "Spinal-fluid marker results",
         "Evidence summaries for COX7C",
-        "Reasons each of 54 planned",
+        "Status summary for 54 planned gene-activity comparisons",
+        "Exact minimum nearby",
     ]
     for fragment in expected_alt_fragments:
         if not any(fragment in alt for alt in picture_alt):

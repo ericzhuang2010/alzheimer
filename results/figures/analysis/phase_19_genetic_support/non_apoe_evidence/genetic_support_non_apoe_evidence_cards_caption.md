@@ -1,11 +1,14 @@
-# Non-APOE evidence remains suggestive, regional, or unresolved
+# Evidence and next validation steps for four non-APOE genes
 
-Four equal cards summarize the strongest non-APOE observations without using
-regional P values as comparable effect sizes. COX7C has one weak bulk-brain
-AD–sQTL summary record represented in two network contexts. SELENOW has public
-TWAS-list membership but lacks model statistics and exact-context support.
-RPS15 combines a highly significant AD region with one passing bulk-neocortex
-eQTL gate and three supplemental bulk-brain tracks, but the required model and
-source-matched LD are incomplete. ANKRD11 has regional locus evidence only.
-None of these four genes passed a CSF follow-up gate, and no primary H0–H4
-result was resolved.
+Four equal cards lead with the exact evidence found and pair each source result
+with a concrete validation step. COX7C has one published bulk-brain
+AD–splicing summary record represented in two network contexts. SELENOW appears
+in a predicted-expression gene list. RPS15 combines an AD regional P value and
+a bulk-neocortex expression P value below their pre-set references with three
+supplemental bulk-brain tracks. ANKRD11 has an AD regional P value below the
+pre-set reference and a measured brain-expression P value. The original
+first-screen source categories and all zero spinal-fluid counts remain visible
+as source-specific context. Next validation can add complete variant-level
+files, matching brain-cell data, shared-variant comparisons, and independent
+datasets. The cards do not use regional P values as comparable effect sizes or
+overall evidence grades.

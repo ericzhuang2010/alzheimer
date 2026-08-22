@@ -20,198 +20,198 @@
  </defs>
  <g id="figure_1">
   <g id="patch_1">
-   <path d="M 0 338.4 
-L 892.8 338.4 
-L 892.8 0 
-L 0 0 
+   <path d="M 0 338.4
+L 892.8 338.4
+L 892.8 0
+L 0 0
 z
 " style="fill: #ffffff"/>
   </g>
   <g id="axes_1">
    <g id="patch_2">
-    <path d="M 27.6768 201.0096 
-L 164.2752 201.0096 
-Q 173.2032 201.0096 173.2032 197.6256 
-L 173.2032 83.2464 
-Q 173.2032 79.8624 164.2752 79.8624 
-L 27.6768 79.8624 
-Q 18.7488 79.8624 18.7488 83.2464 
-L 18.7488 197.6256 
-Q 18.7488 201.0096 27.6768 201.0096 
+    <path d="M 27.6768 201.0096
+L 164.2752 201.0096
+Q 173.2032 201.0096 173.2032 197.6256
+L 173.2032 83.2464
+Q 173.2032 79.8624 164.2752 79.8624
+L 27.6768 79.8624
+Q 18.7488 79.8624 18.7488 83.2464
+L 18.7488 197.6256
+Q 18.7488 201.0096 27.6768 201.0096
 z
 " clip-path="url(#pca04678265)" style="fill: #17365d; stroke: #17365d; stroke-width: 1.3; stroke-linejoin: miter"/>
    </g>
    <g id="patch_3">
-    <path d="M 201.7728 92.7216 
-L 494.6112 92.7216 
-Q 503.5392 92.7216 503.5392 89.3376 
-L 503.5392 35.8704 
-Q 503.5392 32.4864 494.6112 32.4864 
-L 201.7728 32.4864 
-Q 192.8448 32.4864 192.8448 35.8704 
-L 192.8448 89.3376 
-Q 192.8448 92.7216 201.7728 92.7216 
+    <path d="M 201.7728 92.7216
+L 494.6112 92.7216
+Q 503.5392 92.7216 503.5392 89.3376
+L 503.5392 35.8704
+Q 503.5392 32.4864 494.6112 32.4864
+L 201.7728 32.4864
+Q 192.8448 32.4864 192.8448 35.8704
+L 192.8448 89.3376
+Q 192.8448 92.7216 201.7728 92.7216
 z
 " clip-path="url(#pca04678265)" style="fill: #e9f3f8; stroke: #0072b2; stroke-width: 1.3; stroke-linejoin: miter"/>
    </g>
    <g id="patch_4">
-    <path d="M 549.9648 92.7216 
-L 869.5872 92.7216 
-Q 878.5152 92.7216 878.5152 89.3376 
-L 878.5152 35.8704 
-Q 878.5152 32.4864 869.5872 32.4864 
-L 549.9648 32.4864 
-Q 541.0368 32.4864 541.0368 35.8704 
-L 541.0368 89.3376 
-Q 541.0368 92.7216 549.9648 92.7216 
+    <path d="M 549.9648 92.7216
+L 869.5872 92.7216
+Q 878.5152 92.7216 878.5152 89.3376
+L 878.5152 35.8704
+Q 878.5152 32.4864 869.5872 32.4864
+L 549.9648 32.4864
+Q 541.0368 32.4864 541.0368 35.8704
+L 541.0368 89.3376
+Q 541.0368 92.7216 549.9648 92.7216
 z
 " clip-path="url(#pca04678265)" style="fill: #ffffff; stroke: #0072b2; stroke-width: 1.3; stroke-linejoin: miter"/>
    </g>
    <g id="patch_5">
-    <path d="M 201.7728 233.1576 
-L 356.2272 233.1576 
-Q 365.1552 233.1576 365.1552 229.7736 
-L 365.1552 132.3144 
-Q 365.1552 128.9304 356.2272 128.9304 
-L 201.7728 128.9304 
-Q 192.8448 128.9304 192.8448 132.3144 
-L 192.8448 229.7736 
-Q 192.8448 233.1576 201.7728 233.1576 
+    <path d="M 201.7728 233.1576
+L 356.2272 233.1576
+Q 365.1552 233.1576 365.1552 229.7736
+L 365.1552 132.3144
+Q 365.1552 128.9304 356.2272 128.9304
+L 201.7728 128.9304
+Q 192.8448 128.9304 192.8448 132.3144
+L 192.8448 229.7736
+Q 192.8448 233.1576 201.7728 233.1576
 z
 " clip-path="url(#pca04678265)" style="fill: #ffffff; stroke: #d7dee8; stroke-width: 1.1; stroke-linejoin: miter"/>
    </g>
    <g id="patch_6">
-    <path d="M 384.7968 233.1576 
-L 548.1792 233.1576 
-Q 557.1072 233.1576 557.1072 229.7736 
-L 557.1072 132.3144 
-Q 557.1072 128.9304 548.1792 128.9304 
-L 384.7968 128.9304 
-Q 375.8688 128.9304 375.8688 132.3144 
-L 375.8688 229.7736 
-Q 375.8688 233.1576 384.7968 233.1576 
+    <path d="M 384.7968 233.1576
+L 548.1792 233.1576
+Q 557.1072 233.1576 557.1072 229.7736
+L 557.1072 132.3144
+Q 557.1072 128.9304 548.1792 128.9304
+L 384.7968 128.9304
+Q 375.8688 128.9304 375.8688 132.3144
+L 375.8688 229.7736
+Q 375.8688 233.1576 384.7968 233.1576
 z
 " clip-path="url(#pca04678265)" style="fill: #ffffff; stroke: #d7dee8; stroke-width: 1.1; stroke-linejoin: miter"/>
    </g>
    <g id="patch_7">
-    <path d="M 576.7488 233.1576 
-L 722.2752 233.1576 
-Q 731.2032 233.1576 731.2032 229.7736 
-L 731.2032 132.3144 
-Q 731.2032 128.9304 722.2752 128.9304 
-L 576.7488 128.9304 
-Q 567.8208 128.9304 567.8208 132.3144 
-L 567.8208 229.7736 
-Q 567.8208 233.1576 576.7488 233.1576 
+    <path d="M 576.7488 233.1576
+L 722.2752 233.1576
+Q 731.2032 233.1576 731.2032 229.7736
+L 731.2032 132.3144
+Q 731.2032 128.9304 722.2752 128.9304
+L 576.7488 128.9304
+Q 567.8208 128.9304 567.8208 132.3144
+L 567.8208 229.7736
+Q 567.8208 233.1576 576.7488 233.1576
 z
 " clip-path="url(#pca04678265)" style="fill: #ffffff; stroke: #d7dee8; stroke-width: 1.1; stroke-linejoin: miter"/>
    </g>
    <g id="patch_8">
-    <path d="M 750.8448 233.1576 
-L 869.5872 233.1576 
-Q 878.5152 233.1576 878.5152 229.7736 
-L 878.5152 132.3144 
-Q 878.5152 128.9304 869.5872 128.9304 
-L 750.8448 128.9304 
-Q 741.9168 128.9304 741.9168 132.3144 
-L 741.9168 229.7736 
-Q 741.9168 233.1576 750.8448 233.1576 
+    <path d="M 750.8448 233.1576
+L 869.5872 233.1576
+Q 878.5152 233.1576 878.5152 229.7736
+L 878.5152 132.3144
+Q 878.5152 128.9304 869.5872 128.9304
+L 750.8448 128.9304
+Q 741.9168 128.9304 741.9168 132.3144
+L 741.9168 229.7736
+Q 741.9168 233.1576 750.8448 233.1576
 z
 " clip-path="url(#pca04678265)" style="fill: #e9f3f8; stroke: #0072b2; stroke-width: 1.4; stroke-linejoin: miter"/>
    </g>
    <g id="patch_9">
-    <path d="M 27.6768 324.5256 
-L 164.2752 324.5256 
-Q 173.2032 324.5256 173.2032 321.1416 
-L 173.2032 249.0624 
-Q 173.2032 245.6784 164.2752 245.6784 
-L 27.6768 245.6784 
-Q 18.7488 245.6784 18.7488 249.0624 
-L 18.7488 321.1416 
-Q 18.7488 324.5256 27.6768 324.5256 
+    <path d="M 27.6768 324.5256
+L 164.2752 324.5256
+Q 173.2032 324.5256 173.2032 321.1416
+L 173.2032 249.0624
+Q 173.2032 245.6784 164.2752 245.6784
+L 27.6768 245.6784
+Q 18.7488 245.6784 18.7488 249.0624
+L 18.7488 321.1416
+Q 18.7488 324.5256 27.6768 324.5256
 z
 " clip-path="url(#pca04678265)" style="fill: #ffffff; stroke: #4d4d4d; stroke-width: 1.2; stroke-linejoin: miter"/>
    </g>
    <g id="patch_10">
-    <path d="M 201.7728 324.5256 
-L 869.5872 324.5256 
-Q 878.5152 324.5256 878.5152 321.1416 
-L 878.5152 264.2904 
-Q 878.5152 260.9064 869.5872 260.9064 
-L 201.7728 260.9064 
-Q 192.8448 260.9064 192.8448 264.2904 
-L 192.8448 321.1416 
-Q 192.8448 324.5256 201.7728 324.5256 
+    <path d="M 201.7728 324.5256
+L 869.5872 324.5256
+Q 878.5152 324.5256 878.5152 321.1416
+L 878.5152 264.2904
+Q 878.5152 260.9064 869.5872 260.9064
+L 201.7728 260.9064
+Q 192.8448 260.9064 192.8448 264.2904
+L 192.8448 321.1416
+Q 192.8448 324.5256 201.7728 324.5256
 z
 " clip-path="url(#pca04678265)" style="fill: #f1f1f1; stroke: #bdbdbd; stroke-width: 0.9; stroke-linejoin: miter"/>
    </g>
    <g id="patch_11">
-    <path d="M 169.632 118.44 
-Q 183.024 90.522 195.763201 63.964874 
+    <path d="M 169.632 118.44
+Q 183.024 90.522 195.763201 63.964874
 " clip-path="url(#pca04678265)" style="fill: none; stroke: #0072b2; stroke-width: 1.35; stroke-linecap: round"/>
-    <path d="M 191.876593 66.980545 
-L 195.763201 63.964874 
-L 195.843773 68.883564 
+    <path d="M 191.876593 66.980545
+L 195.763201 63.964874
+L 195.843773 68.883564
 z
 " clip-path="url(#pca04678265)" style="fill: #0072b2; stroke: #0072b2; stroke-width: 1.35; stroke-linecap: round"/>
    </g>
    <g id="patch_12">
-    <path d="M 499.968 62.604 
-Q 522.288 62.604 543.098654 62.604 
+    <path d="M 499.968 62.604
+Q 522.288 62.604 543.098654 62.604
 " clip-path="url(#pca04678265)" style="fill: none; stroke: #0072b2; stroke-width: 1.35; stroke-linecap: round"/>
-    <path d="M 538.698654 60.404 
-L 543.098654 62.604 
-L 538.698654 64.804 
+    <path d="M 538.698654 60.404
+L 543.098654 62.604
+L 538.698654 64.804
 z
 " clip-path="url(#pca04678265)" style="fill: #0072b2; stroke: #0072b2; stroke-width: 1.35; stroke-linecap: round"/>
    </g>
    <g id="patch_13">
-    <path d="M 169.632 160.74 
-Q 183.024 170.892 195.213195 180.132196 
+    <path d="M 169.632 160.74
+Q 183.024 170.892 195.213195 180.132196
 " clip-path="url(#pca04678265)" style="fill: none; stroke: #17365d; stroke-width: 1.35; stroke-linecap: round"/>
-    <path d="M 193.035846 175.720944 
-L 195.213195 180.132196 
-L 190.377784 179.227324 
+    <path d="M 193.035846 175.720944
+L 195.213195 180.132196
+L 190.377784 179.227324
 z
 " clip-path="url(#pca04678265)" style="fill: #17365d; stroke: #17365d; stroke-width: 1.35; stroke-linecap: round"/>
    </g>
    <g id="patch_14">
-    <path d="M 361.584 181.044 
-Q 370.512 181.044 377.930654 181.044 
+    <path d="M 361.584 181.044
+Q 370.512 181.044 377.930654 181.044
 " clip-path="url(#pca04678265)" style="fill: none; stroke: #17365d; stroke-width: 1.35; stroke-linecap: round"/>
-    <path d="M 373.530654 178.844 
-L 377.930654 181.044 
-L 373.530654 183.244 
+    <path d="M 373.530654 178.844
+L 377.930654 181.044
+L 373.530654 183.244
 z
 " clip-path="url(#pca04678265)" style="fill: #17365d; stroke: #17365d; stroke-width: 1.35; stroke-linecap: round"/>
    </g>
    <g id="patch_15">
-    <path d="M 553.536 181.044 
-Q 562.464 181.044 569.882654 181.044 
+    <path d="M 553.536 181.044
+Q 562.464 181.044 569.882654 181.044
 " clip-path="url(#pca04678265)" style="fill: none; stroke: #17365d; stroke-width: 1.35; stroke-linecap: round"/>
-    <path d="M 565.482654 178.844 
-L 569.882654 181.044 
-L 565.482654 183.244 
+    <path d="M 565.482654 178.844
+L 569.882654 181.044
+L 565.482654 183.244
 z
 " clip-path="url(#pca04678265)" style="fill: #17365d; stroke: #17365d; stroke-width: 1.35; stroke-linecap: round"/>
    </g>
    <g id="patch_16">
-    <path d="M 727.632 181.044 
-Q 736.56 181.044 743.978654 181.044 
+    <path d="M 727.632 181.044
+Q 736.56 181.044 743.978654 181.044
 " clip-path="url(#pca04678265)" style="fill: none; stroke: #17365d; stroke-width: 1.35; stroke-linecap: round"/>
-    <path d="M 739.578654 178.844 
-L 743.978654 181.044 
-L 739.578654 183.244 
+    <path d="M 739.578654 178.844
+L 743.978654 181.044
+L 739.578654 183.244
 z
 " clip-path="url(#pca04678265)" style="fill: #17365d; stroke: #17365d; stroke-width: 1.35; stroke-linecap: round"/>
    </g>
    <g id="patch_17">
-    <path d="M 95.976 199.656 
-Q 95.976 223.344 95.976 245.522654 
+    <path d="M 95.976 199.656
+Q 95.976 223.344 95.976 245.522654
 " clip-path="url(#pca04678265)" style="fill: none; stroke: #4d4d4d; stroke-width: 1.35; stroke-linecap: round"/>
-    <path d="M 98.176 241.122654 
-L 95.976 245.522654 
-L 93.776 241.122654 
+    <path d="M 98.176 241.122654
+L 95.976 245.522654
+L 93.776 241.122654
 z
 " clip-path="url(#pca04678265)" style="fill: #4d4d4d; stroke: #4d4d4d; stroke-width: 1.35; stroke-linecap: round"/>
    </g>
@@ -222,7 +222,7 @@ z
     <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: end; fill: #5b6573" x="874.944" y="21.095437" transform="rotate(-0 874.944 21.095437)">All 47 gene–network pairs</text>
    </g>
    <g id="text_3">
-    <text style="font-weight: 700; font-size: 9.5px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="196.416" y="115.129852" transform="rotate(-0 196.416 115.129852)">LANE B  ·  DOES THE SAME DNA SIGNAL LINK TO AD AND THE GENE?</text>
+    <text style="font-weight: 700; font-size: 9.5px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="196.416" y="115.129852" transform="rotate(-0 196.416 115.129852)">LANE B  ·  TEST WHETHER AD AND GENE ACTIVITY SHARE A DNA SIGNAL</text>
    </g>
    <g id="text_4">
     <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: end; fill: #5b6573" x="874.944" y="114.155438" transform="rotate(-0 874.944 114.155438)">27 gene–network pairs  ·  19 non-mitochondrial genes</text>
@@ -236,8 +236,8 @@ z
     <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #ffffff" transform="translate(39.937875 148.128375)">25 unique genes</text>
    </g>
    <g id="text_7">
-    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #ffffff" transform="translate(53.656313 164.928038)">Top network genes</text>
-    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #ffffff" transform="translate(26.138109 174.378038)">not changed by genetic results</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #ffffff" transform="translate(33.456938 164.928038)">Top network genes retained</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #ffffff" transform="translate(49.589438 174.378038)">for genetic follow-up</text>
    </g>
    <g id="text_8">
     <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #d7dee8" x="95.976" y="192.859313" transform="rotate(-0 95.976 192.859313)">List fixed in advance</text>
@@ -252,13 +252,13 @@ z
     <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #5b6573" x="208.0224" y="82.043438" transform="rotate(-0 208.0224 82.043438)">Pre-computed results from a fixed public data snapshot</text>
    </g>
    <g id="text_12">
-    <text style="font-weight: 700; font-size: 10.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="556.2144" y="54.170719" transform="rotate(-0 556.2144 54.170719)">Match results directly to each gene</text>
+    <text style="font-weight: 700; font-size: 10.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="556.2144" y="54.170719" transform="rotate(-0 556.2144 54.170719)">Public-data matches highlighted three genes</text>
    </g>
    <g id="text_13">
-    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #333333" x="556.2144" y="71.819437" transform="rotate(-0 556.2144 71.819437)">Keep the source's original confidence labels</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #333333" x="556.2144" y="72.611859" transform="rotate(-0 556.2144 72.611859)">APOE  ·  COX7C  ·  SELENOW</text>
    </g>
    <g id="text_14">
-    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #5b6573" x="556.2144" y="82.043438" transform="rotate(-0 556.2144 82.043438)">Support grade—not a shared-signal probability</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #5b6573" x="556.2144" y="82.043438" transform="rotate(-0 556.2144 82.043438)">Four gene–network pairs  ·  original source grades retained</text>
    </g>
    <g id="text_15">
     <text style="font-weight: 700; font-size: 10px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="206.2368" y="152.140313" transform="rotate(-0 206.2368 152.140313)">1  AD-linked DNA region</text>
@@ -289,7 +289,7 @@ z
     <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #5b6573" x="389.2608" y="220.787438" transform="rotate(-0 389.2608 220.787438)">eQTL Catalogue r7</text>
    </g>
    <g id="text_23">
-    <text style="font-weight: 700; font-size: 10px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="581.2128" y="152.179375" transform="rotate(-0 581.2128 152.179375)">3  Data can be compared</text>
+    <text style="font-weight: 700; font-size: 10px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="581.2128" y="152.140313" transform="rotate(-0 581.2128 152.140313)">3  Prepare matching data</text>
    </g>
    <g id="text_24">
     <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #333333" x="581.2128" y="172.324238" transform="rotate(-0 581.2128 172.324238)">Matching variants + genome</text>
@@ -303,17 +303,17 @@ z
     <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #5b6573" x="581.2128" y="220.787438" transform="rotate(-0 581.2128 220.787438)">Every item is required</text>
    </g>
    <g id="text_27">
-    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="755.3088" y="151.308281" transform="rotate(-0 755.3088 151.308281)">4  Same DNA signal?</text>
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="755.3088" y="151.308281" transform="rotate(-0 755.3088 151.308281)">4  Shared DNA signal</text>
    </g>
    <g id="text_28">
     <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #333333" x="755.3088" y="172.324238" transform="rotate(-0 755.3088 172.324238)">Probability both match</text>
    </g>
    <g id="text_29">
     <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(755.3088 187.212938)">(PP.H4)</text>
-    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(755.3088 196.955438)">Runs only if steps 1–3 pass</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(755.3088 196.955438)">After steps 1–3</text>
    </g>
    <g id="text_30">
-    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #5b6573" x="755.3088" y="221.659312" transform="rotate(-0 755.3088 221.659312)">Otherwise: not calculated</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #5b6573" x="755.3088" y="220.787438" transform="rotate(-0 755.3088 220.787438)">With compatible inputs</text>
    </g>
    <g id="text_31">
     <text style="font-weight: 700; font-size: 10px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="33.9264" y="267.534713" transform="rotate(-0 33.9264 267.534713)">Mitochondrial genes</text>
@@ -322,14 +322,14 @@ z
     <text style="font-size: 9.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #333333" x="33.9264" y="286.456225" transform="rotate(-0 33.9264 286.456225)">20 pairs  ·  6 genes</text>
    </g>
    <g id="text_33">
-    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(33.9264 303.148913)">Need a different test</text>
-    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(33.9264 311.997038)">—not a negative result</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(33.9264 303.148913)">Dedicated mitochondrial data</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(33.9264 312.868913)">can add validation</text>
    </g>
    <g id="text_34">
-    <text style="font-weight: 700; font-size: 10.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="212.4864" y="288.045919" transform="rotate(-0 212.4864 288.045919)">Testing stops when a required step fails.</text>
+    <text style="font-weight: 700; font-size: 10.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="212.4864" y="288.045919" transform="rotate(-0 212.4864 288.045919)">Each completed step adds one layer of evidence.</text>
    </g>
    <g id="text_35">
-    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #333333" x="212.4864" y="308.253713" transform="rotate(-0 212.4864 308.253713)">Arrows show test order—not cause and effect.</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #333333" x="212.4864" y="307.381838" transform="rotate(-0 212.4864 307.381838)">Arrows show test order; remaining steps guide future validation.</text>
    </g>
    <g id="text_36">
     <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #0072b2" x="180.3456" y="98.032781" transform="rotate(-0 180.3456 98.032781)">A</text>

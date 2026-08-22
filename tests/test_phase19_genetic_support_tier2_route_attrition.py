@@ -70,9 +70,15 @@ def test_derivation_preserves_terminal_partition_and_posterior_boundary() -> Non
     assert int(boundary.iloc[0]["route_count"]) == 0
     assert "unavailable" in str(boundary.iloc[0]["detail"]).lower()
     assert "shared-variant probability" in str(boundary.iloc[0]["detail"]).lower()
+    assert "next validation step" in str(boundary.iloc[0]["detail"]).lower()
     visible = " ".join(
         plot_data[["display_label", "detail"]].astype(str).to_numpy().ravel()
     ).lower()
+    assert "both signals present" in visible
+    assert "complete inputs next" in visible
+    assert "splicing-input status to clarify next" in visible
+    assert "required inputs unavailable" not in visible
+    assert "could not assess" not in visible
     assert "gwas" not in visible
     assert "qtl" not in visible
     assert "h0" not in visible
@@ -155,9 +161,21 @@ def test_full_figure_package_in_temporary_directory(tmp_path: Path) -> None:
         dpi = image.info.get("dpi")
         assert dpi and min(dpi) >= 449
     svg = (output / f"{FIGURE.STEM}.svg").read_text(encoding="utf-8")
-    assert "Probability not calculated" in svg
-    assert "Same variant?" in svg
+    assert "Probability currently" in svg
+    assert "Shared-variant" in svg
+    assert "validation next" in svg
+    assert "Nearby AD P at/above conservative cutoff" in svg
+    assert "Every planned test has a clear current status and next step." in svg
+    assert "Cutoff categories keep P-value interpretation conservative." in svg
+    assert "Complete model +" in svg
+    assert "Probability not calculated" not in svg
+    assert "Same variant?" not in svg
+    assert "No comparison met every" not in svg
+    assert "No strong AD variant signal" not in svg
     for jargon in ("GWAS", "QTL", "H0", "PP.H4", " LD "):
         assert jargon not in svg
     caption = (output / f"{FIGURE.STEM}_caption.md").read_text(encoding="utf-8")
+    assert "clear current status and next step" in caption
+    assert "Two routes contained both" in caption
+    assert "zero completed shared-variant tests" in caption
     assert "unavailable, not zero" in caption

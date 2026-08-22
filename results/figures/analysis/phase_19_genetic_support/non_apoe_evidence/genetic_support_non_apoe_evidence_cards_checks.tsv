@@ -8,11 +8,12 @@ genetic_support_non_apoe_evidence_cards_v1	rps15_measured_routes	blocking	pass	3
 genetic_support_non_apoe_evidence_cards_v1	rps15_positive_context_rows	blocking	pass	6	6	Three source tracks repeated across two contexts.
 genetic_support_non_apoe_evidence_cards_v1	rps15_unique_source_tracks	blocking	pass	3	3	Deduplicated after removing candidate prefix.
 genetic_support_non_apoe_evidence_cards_v1	rps15_resolved_h0_h4	blocking	pass	0	0	PP.H4 remains unavailable.
-genetic_support_non_apoe_evidence_cards_v1	regional_signal_genes	blocking	pass	ANKRD11|COX7C|RPS15	ANKRD11|COX7C|RPS15	Bellenguez frozen gate among the four cards.
-genetic_support_non_apoe_evidence_cards_v1	csf_passed_traits	blocking	pass	0	0	All four genes have zero qualifying CSF gates.
+genetic_support_non_apoe_evidence_cards_v1	regional_p_below_reference_genes	blocking	pass	ANKRD11|COX7C|RPS15	ANKRD11|COX7C|RPS15	Bellenguez regional P values below the frozen reference.
+genetic_support_non_apoe_evidence_cards_v1	csf_traits_below_both_references	blocking	pass	0	0	All four genes have zero CSF traits below both pre-set references.
 genetic_support_non_apoe_evidence_cards_v1	posterior_shorthand_visible	blocking	pass	absent	absent	Posterior shorthand is replaced by a shared-variant explanation.
 genetic_support_non_apoe_evidence_cards_v1	shared_variant_explanation	blocking	pass	present	present	Shared-signal analysis is described in plain language.
 genetic_support_non_apoe_evidence_cards_v1	causal_claim	blocking	pass	absent	absent	Regional signal is not candidate-gene causality.
+genetic_support_non_apoe_evidence_cards_v1	future_validation_guidance_visible	blocking	pass	present	present	Screening categories are paired with concrete future validation layers.
 genetic_support_non_apoe_evidence_cards_v1	png_dimensions	blocking	pass	5580x2115	5580x2115	Exact slide-native raster dimensions at 450 DPI.
 genetic_support_non_apoe_evidence_cards_v1	png_dpi	blocking	pass	450	450	PNG metadata resolution rounded to the requested DPI.
 genetic_support_non_apoe_evidence_cards_v1	pdf_signature	blocking	pass	%PDF-	%PDF-	Vector PDF has the expected file signature.
