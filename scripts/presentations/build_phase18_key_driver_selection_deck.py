@@ -41,7 +41,7 @@ FIG = {
     "rpl11_exc_string": FIG_ROOT / "RPL11/excitatory/stringdb_full_medium_conf.png",
     "apoe_astro_pathway": FIG_ROOT / "APOE/astrocytes/phase18_apoe_astrocyte_consensus_network_pathways.png",
     "apoe_astro_string": FIG_ROOT / "APOE/astrocytes/stringdb_full_medium_conf.png",
-    "genetic_support": GENETIC_SUPPORT_FIG_ROOT / "genetic_support_slide_summary.png",
+    "genetic_support": GENETIC_SUPPORT_FIG_ROOT / "genetic_support_tier1_slide_summary.png",
 }
 
 DATA = {

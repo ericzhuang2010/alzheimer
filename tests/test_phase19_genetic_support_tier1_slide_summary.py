@@ -11,8 +11,8 @@ from PIL import Image
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SCRIPT = ROOT / "scripts/figures/analysis/phase_19_genetic_support/plot_genetic_support_slide_summary.py"
-SPEC = importlib.util.spec_from_file_location("genetic_support_slide_summary", SCRIPT)
+SCRIPT = ROOT / "scripts/figures/analysis/phase_19_genetic_support/plot_genetic_support_tier1_slide_summary.py"
+SPEC = importlib.util.spec_from_file_location("genetic_support_tier1_slide_summary", SCRIPT)
 assert SPEC and SPEC.loader
 FIGURE = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(FIGURE)
@@ -56,19 +56,19 @@ def test_full_figure_package(tmp_path: Path) -> None:
         check=True,
     )
     assert sorted(path.name for path in output.iterdir()) == sorted(FIGURE.OUTPUT_FILES)
-    status = pd.read_csv(output / "genetic_support_slide_summary_status.tsv", sep="\t")
+    status = pd.read_csv(output / "genetic_support_tier1_slide_summary_status.tsv", sep="\t")
     assert status.loc[0, "technical_status"] == "validated_complete"
     assert not bool(status.loc[0, "visible_internal_phase_label"])
-    checks = pd.read_csv(output / "genetic_support_slide_summary_checks.tsv", sep="\t")
+    checks = pd.read_csv(output / "genetic_support_tier1_slide_summary_checks.tsv", sep="\t")
     assert checks["status"].eq("pass").all()
-    artifacts = pd.read_csv(output / "genetic_support_slide_summary_artifacts.tsv", sep="\t", dtype=str)
+    artifacts = pd.read_csv(output / "genetic_support_tier1_slide_summary_artifacts.tsv", sep="\t", dtype=str)
     assert len(artifacts) == len(FIGURE.OUTPUT_FILES) - 2
     for row in artifacts.itertuples(index=False):
         assert digest(output / row.path) == row.sha256
-    image = Image.open(output / "genetic_support_slide_summary.png")
+    image = Image.open(output / "genetic_support_tier1_slide_summary.png")
     assert image.size == (int(FIGURE.FIGURE_SIZE[0] * FIGURE.PNG_DPI), int(FIGURE.FIGURE_SIZE[1] * FIGURE.PNG_DPI))
     dpi = image.info.get("dpi")
     assert dpi and min(dpi) >= 449
-    svg = (output / "genetic_support_slide_summary.svg").read_text(encoding="utf-8").lower()
+    svg = (output / "genetic_support_tier1_slide_summary.svg").read_text(encoding="utf-8").lower()
     assert "phase 19" not in svg
     assert "phase19" not in svg

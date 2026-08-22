@@ -5,14 +5,14 @@
 **Implemented and validated:** 2026-08-16.
 
 The reproducible renderer is
-[`plot_genetic_support_slide_summary.py`](../../../../scripts/figures/analysis/phase_19_genetic_support/plot_genetic_support_slide_summary.py),
+[`plot_genetic_support_tier1_slide_summary.py`](../../../../scripts/figures/analysis/phase_19_genetic_support/plot_genetic_support_tier1_slide_summary.py),
 with automated validation in
-[`test_phase19_genetic_support_slide_summary.py`](../../../../tests/test_phase19_genetic_support_slide_summary.py).
+[`test_phase19_genetic_support_tier1_slide_summary.py`](../../../../tests/test_phase19_genetic_support_tier1_slide_summary.py).
 The nine-file validated package is under
 [`results/figures/analysis/phase_19_genetic_support`](../../../../results/figures/analysis/phase_19_genetic_support/),
-including the [PNG slide asset](../../../../results/figures/analysis/phase_19_genetic_support/genetic_support_slide_summary.png),
-[vector PDF](../../../../results/figures/analysis/phase_19_genetic_support/genetic_support_slide_summary.pdf),
-and [editable SVG](../../../../results/figures/analysis/phase_19_genetic_support/genetic_support_slide_summary.svg).
+including the [PNG slide asset](../../../../results/figures/analysis/phase_19_genetic_support/genetic_support_tier1_slide_summary.png),
+[vector PDF](../../../../results/figures/analysis/phase_19_genetic_support/genetic_support_tier1_slide_summary.pdf),
+and [editable SVG](../../../../results/figures/analysis/phase_19_genetic_support/genetic_support_tier1_slide_summary.svg).
 
 All automated tests and independent artifact checks passed. The final graphic
 was reviewed in color and grayscale at the intended slide size. The
@@ -356,10 +356,10 @@ The displayed counts must satisfy:
 
 ```text
 scripts/figures/analysis/phase_19_genetic_support/
-    plot_genetic_support_slide_summary.py
+    plot_genetic_support_tier1_slide_summary.py
 
 tests/
-    test_phase19_genetic_support_slide_summary.py
+    test_phase19_genetic_support_tier1_slide_summary.py
 ```
 
 The plotting script will contain separate functions for:
@@ -375,15 +375,15 @@ The plotting script will contain separate functions for:
 
 ```text
 results/figures/analysis/phase_19_genetic_support/
-    genetic_support_slide_summary.png
-    genetic_support_slide_summary.pdf
-    genetic_support_slide_summary.svg
-    genetic_support_slide_summary_plot_data.tsv
-    genetic_support_slide_summary_checks.tsv
-    genetic_support_slide_summary_caption.md
-    genetic_support_slide_summary_methods.md
-    genetic_support_slide_summary_artifacts.tsv
-    genetic_support_slide_summary_status.tsv
+    genetic_support_tier1_slide_summary.png
+    genetic_support_tier1_slide_summary.pdf
+    genetic_support_tier1_slide_summary.svg
+    genetic_support_tier1_slide_summary_plot_data.tsv
+    genetic_support_tier1_slide_summary_checks.tsv
+    genetic_support_tier1_slide_summary_caption.md
+    genetic_support_tier1_slide_summary_methods.md
+    genetic_support_tier1_slide_summary_artifacts.tsv
+    genetic_support_tier1_slide_summary_status.tsv
 ```
 
 The plot-data table must contain every displayed number, gene, context label,

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Render the standalone human-genetic-support slide summary figure."""
+"""Render the standalone Tier 1 human-genetic-support slide summary figure."""
 
 from __future__ import annotations
 
@@ -23,20 +23,20 @@ from matplotlib.patches import FancyBboxPatch, Rectangle
 import pandas as pd
 
 
-SCHEMA = "genetic_support_slide_summary_v1"
+SCHEMA = "genetic_support_tier1_slide_summary_v1"
 INPUT_SCHEMA = "human_genetic_support_tier1_v1"
 FIGURE_SIZE = (12.4, 4.7)
 PNG_DPI = 450
 OUTPUT_FILES = [
-    "genetic_support_slide_summary.png",
-    "genetic_support_slide_summary.pdf",
-    "genetic_support_slide_summary.svg",
-    "genetic_support_slide_summary_plot_data.tsv",
-    "genetic_support_slide_summary_checks.tsv",
-    "genetic_support_slide_summary_caption.md",
-    "genetic_support_slide_summary_methods.md",
-    "genetic_support_slide_summary_artifacts.tsv",
-    "genetic_support_slide_summary_status.tsv",
+    "genetic_support_tier1_slide_summary.png",
+    "genetic_support_tier1_slide_summary.pdf",
+    "genetic_support_tier1_slide_summary.svg",
+    "genetic_support_tier1_slide_summary_plot_data.tsv",
+    "genetic_support_tier1_slide_summary_checks.tsv",
+    "genetic_support_tier1_slide_summary_caption.md",
+    "genetic_support_tier1_slide_summary_methods.md",
+    "genetic_support_tier1_slide_summary_artifacts.tsv",
+    "genetic_support_tier1_slide_summary_status.tsv",
 ]
 REQUIRED_INPUTS = [
     "genetic_support_candidate_manifest.tsv",
@@ -608,7 +608,7 @@ def publish(input_root: Path, output_root: Path, force: bool) -> None:
     frames = validate_inputs(input_root)
     plot_data, derived = derive_plot_data(frames)
     output_root.parent.mkdir(parents=True, exist_ok=True)
-    staging = Path(tempfile.mkdtemp(prefix=".genetic_support_slide_summary.", dir=output_root.parent))
+    staging = Path(tempfile.mkdtemp(prefix=".genetic_support_tier1_slide_summary.", dir=output_root.parent))
     try:
         render_figure(plot_data, derived, staging)
         checks = build_checks(plot_data, derived, frames)
