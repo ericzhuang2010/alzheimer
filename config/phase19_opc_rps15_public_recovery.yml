@@ -1,0 +1,115 @@
+schema_version: phase19_opc_rps15_public_recovery_config_v1
+
+analysis:
+  analysis_id: phase19_opc_rps15_public_recovery_v1
+  gene: RPS15
+  ensembl_gene_id: ENSG00000115268
+  chromosome: 19
+  gene_start: 1438358
+  gene_end: 1440495
+  locus_start: 438358
+  locus_end: 2440495
+  genome_build: GRCh38
+  gwas_accession: GCST90027158
+  gwas_min_p: 4.089e-30
+  gwas_lead_variant: rs12151021
+  gwas_cases: 85934
+  gwas_controls: 401577
+  definitions_frozen: true
+  selection_frozen_before_target_lookup: true
+  primary_p1: 1.0e-4
+  primary_p2: 1.0e-4
+  primary_p12: 5.0e-6
+  sensitivity_p12: [1.0e-6, 5.0e-6, 1.0e-5]
+  strong_h4: 0.80
+  strong_conditional_h4: 0.80
+  suggestive_h4: 0.50
+
+candidates:
+  - candidate_id: GS045
+    context: OPCs
+    context_label: Oligodendrocyte progenitor cell
+    context_code: OPC
+    primary: true
+  - candidate_id: GS044
+    context: Inhibitory_neurons
+    context_label: Inhibitory neuron
+    context_code: Inh
+    primary: false
+
+context_rules:
+  opc_exact: [Oligodendrocyte progenitor cell]
+  opc_lineage: [Oligodendrocyte]
+  inhibitory_exact: [Inhibitory neuron]
+  inhibitory_lineage: []
+  bulk_biosample_type: Primary tissue
+  required_tissue_category: Brain
+  ineligible_cell_types:
+    - Astrocyte
+    - Excitatory neuron
+    - Microglia
+    - Monocyte
+
+inputs:
+  tier1_root: results/minerva_production/19_genetic_support
+  tier2_root: results/minerva_production/19_genetic_support_tier2
+  recovery_root: results/minerva_production/19_genetic_support_tier2_recovery
+  endophenotype_root: results/minerva_production/19_genetic_support_endophenotype_gwas_qtl_extension
+  candidate_manifest: results/minerva_production/19_genetic_support/genetic_support_candidate_manifest.tsv
+  candidate_loci: results/minerva_production/19_genetic_support/genetic_support_candidate_loci.tsv
+  recovery_route_manifest: results/minerva_production/19_genetic_support_tier2_recovery/recovery_route_manifest.tsv
+  recovery_route_decisions: results/minerva_production/19_genetic_support_tier2_recovery/recovery_route_decisions.tsv
+  recovery_regional_gwas: results/minerva_production/19_genetic_support_tier2_recovery/recovery_regional_gwas_summary.tsv
+  recovery_regional_qtl: results/minerva_production/19_genetic_support_tier2_recovery/recovery_regional_qtl_summary.tsv
+  ng00184_root: data/reference/phase19_genetic_support/endophenotype_gwas_qtl_extension/qtl_coverage/NG00184
+  ng00184_chr19_root: data/reference/phase19_genetic_support/endophenotype_gwas_qtl_extension/qtl_regional/NG00184
+  ng00184_inventory: data/reference/phase19_genetic_support/endophenotype_gwas_qtl_extension/inventory/NG00184.v1.csv
+  ng00184_metadata: data/reference/phase19_genetic_support/endophenotype_gwas_qtl_extension/qtl_coverage/NG00184/ADSP_FunGen_xQTL.v1.metadata.json
+
+paths:
+  targeted_download_root: data/reference/phase19_genetic_support/opc_rps15_public_recovery/targeted_downloads
+  regional_extract_root: data/reference/phase19_genetic_support/opc_rps15_public_recovery/regional_extracts
+  work_root: data/reference/phase19_genetic_support/opc_rps15_public_recovery/work
+  staging_root: results/minerva_production/.19_genetic_support_opc_rps15_public_recovery.staging
+  final_root: results/minerva_production/19_genetic_support_opc_rps15_public_recovery
+  execution_report: docs/phase_19_genetic_support/opc_rps15/opc_rps15_public_data_first_execution_report.md
+
+storage:
+  automatic_full_archive_download: false
+  initial_new_download_limit_gib: 0
+  maximum_targeted_download_gib: 5
+  maximum_total_new_download_gib: 10
+  maximum_working_directory_gib: 10
+  maximum_staging_result_gib: 1
+  maximum_total_new_disk_footprint_gib: 20
+  minimum_free_disk_after_processing_gib: 50
+  allow_full_all_archives: false
+  stream_existing_archive_members: true
+
+outputs:
+  exact_file_count: 24
+  declared_files:
+    - opc_rps15_analysis_manifest.tsv
+    - opc_rps15_frozen_scope.tsv
+    - opc_rps15_route_manifest.tsv
+    - opc_rps15_dataset_registry.tsv
+    - opc_rps15_request_manifest.tsv
+    - opc_rps15_input_inventory.tsv
+    - opc_rps15_source_checks.tsv
+    - opc_rps15_qtl_audit.tsv
+    - opc_rps15_acquisition_decisions.tsv
+    - opc_rps15_variant_harmonization.tsv.gz
+    - opc_rps15_variant_harmonization_summary.tsv
+    - opc_rps15_ld_qc.tsv
+    - opc_rps15_gwas_finemapping.tsv.gz
+    - opc_rps15_qtl_finemapping.tsv.gz
+    - opc_rps15_colocalization.tsv.gz
+    - opc_rps15_colocalization_qc.tsv
+    - opc_rps15_prior_sensitivity.tsv.gz
+    - opc_rps15_twas_pwas_smr.tsv
+    - opc_rps15_sample_overlap_audit.tsv
+    - opc_rps15_assessability.tsv
+    - opc_rps15_evidence_summary.tsv
+    - opc_rps15_checks.tsv
+    - opc_rps15_artifacts.tsv
+    - opc_rps15_status.tsv

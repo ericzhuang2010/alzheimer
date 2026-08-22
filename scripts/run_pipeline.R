@@ -69,12 +69,13 @@ registry <- data.frame(
     "normalize", "descriptive", "pseudobulk", "contrasts", "pseudobulk_de",
     "mast", "annotate_genes", "similarity", "pathway", "kda",
     "respiratory_modifier", "modifier_heterogeneity", "mitonuclear_coupling",
-    "genetic_support", "genetic_support_tier2"
+    "genetic_support", "genetic_support_tier2", "genetic_support_tier2_recovery",
+    "genetic_support_endophenotype"
   ),
   scope = c(
     "global", "global", "rds", "global", "global", "rds", "rds", "rds",
     "rds", "global", "rds", "rds", "global", "global", "global", "global",
-    "global", "global", "global", "global", "global"
+    "global", "global", "global", "global", "global", "global", "global"
   ),
   script = c(
     "scripts/00_check_environment.R",
@@ -97,11 +98,13 @@ registry <- data.frame(
     "scripts/14_run_modifier_heterogeneity.R",
     "scripts/15_run_mitonuclear_coupling.R",
     "scripts/19_run_genetic_support.py",
-    "scripts/19_run_genetic_support_tier2.R"
+    "scripts/19_run_genetic_support_tier2.R",
+    "scripts/19_run_genetic_support_tier2_recovery.R",
+    "scripts/19_run_endophenotype_extension.py"
   ),
   argument_names = c(
     "config,execution-config,report,status",
-    rep("config,execution-config,manifest-row,task-mode", 20L)
+    rep("config,execution-config,manifest-row,task-mode", 22L)
   ),
   output_schema = c(
     "environment_checks_v1", "parity_v1", "rds_audit_v1", "cohort_v1",
@@ -114,7 +117,9 @@ registry <- data.frame(
     "mitochondrial_modifier_heterogeneity_v1",
     "mitochondrial_mitonuclear_coupling_v1",
     "human_genetic_support_tier1_v1",
-    "human_genetic_support_tier2_coloc_v1"
+    "human_genetic_support_tier2_coloc_v1",
+    "human_genetic_support_tier2_classical_coloc_recovery_v1",
+    "human_genetic_support_endophenotype_gwas_qtl_v1"
   ),
   stringsAsFactors = FALSE
 )
@@ -150,6 +155,12 @@ registry$argument_names[registry$task_mode == "genetic_support"] <- paste(
   c("config", "execution-config", "task-mode"), collapse = ","
 )
 registry$argument_names[registry$task_mode == "genetic_support_tier2"] <- paste(
+  c("config", "execution-config", "task-mode"), collapse = ","
+)
+registry$argument_names[registry$task_mode == "genetic_support_tier2_recovery"] <- paste(
+  c("config", "execution-config", "task-mode"), collapse = ","
+)
+registry$argument_names[registry$task_mode == "genetic_support_endophenotype"] <- paste(
   c("config", "execution-config", "task-mode"), collapse = ","
 )
 args <- parse_cli(commandArgs(trailingOnly = TRUE))
@@ -278,6 +289,18 @@ for (i in seq_len(nrow(selected_registry))) {
         stop("project.phase19_genetic_support_tier2_config is required for genetic_support_tier2", call. = FALSE)
       }
       absolute_path(phase19_tier2_config, root)
+    } else if (task$task_mode == "genetic_support_tier2_recovery") {
+    } else if (task$task_mode == "genetic_support_endophenotype") {
+      extension_config <- config$project$phase19_endophenotype_gwas_qtl_extension_config
+      if (is.null(extension_config)) {
+        stop("project.phase19_endophenotype_gwas_qtl_extension_config is required", call. = FALSE)
+      }
+      absolute_path(extension_config, root)
+      recovery_config <- config$project$phase19_genetic_support_tier2_recovery_config
+      if (is.null(recovery_config)) {
+        stop("project.phase19_genetic_support_tier2_recovery_config is required", call. = FALSE)
+      }
+      absolute_path(recovery_config, root)
     } else {
       analysis_path
     }
@@ -357,7 +380,8 @@ if (args$phase == "environment") {
 implemented_global_modes <- c(
   "cohort", "annotations", "contrasts", "annotate_genes", "similarity",
   "pathway", "kda", "respiratory_modifier", "modifier_heterogeneity",
-  "mitonuclear_coupling", "genetic_support", "genetic_support_tier2"
+  "mitonuclear_coupling", "genetic_support", "genetic_support_tier2",
+  "genetic_support_tier2_recovery", "genetic_support_endophenotype"
 )
 unsupported_global <- task_graph$task_mode[
   is.na(task_graph$manifest_row) &

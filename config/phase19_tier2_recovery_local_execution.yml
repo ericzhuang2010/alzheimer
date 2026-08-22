@@ -1,0 +1,18 @@
+execution:
+  execution_stage: local_production_equivalent
+  execution_phase: genetic_support_tier2_recovery
+  backend: direct
+  run_id: phase19_tier2_recovery_local_20260821
+  host: homedesktop
+  total_memory_gib: 15
+  reserve_memory_gib: 6
+  max_total_cores: 4
+  max_workers: 1
+  planned_working_memory_per_locus_gib: 8
+  hard_memory_limit_per_locus_gib: 16
+  minimum_free_disk_gib: 50
+  scratch_root: tmp/phase19_genetic_support_tier2_recovery
+  process_one_locus_at_a_time: true
+  deterministic_gzip_mtime: 0
+  fail_fast: true
+  automatic_minerva_fallback: false

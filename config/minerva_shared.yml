@@ -10,6 +10,8 @@ project:
   phase15_mitonuclear_coupling_config: config/phase15_mitonuclear_coupling.yml
   phase19_genetic_support_config: config/phase19_genetic_support.yml
   phase19_genetic_support_tier2_config: config/phase19_genetic_support_tier2.yml
+  phase19_genetic_support_tier2_recovery_config: config/phase19_genetic_support_tier2_recovery.yml
+  phase19_endophenotype_gwas_qtl_extension_config: config/phase19_endophenotype_gwas_qtl_extension.yml
   manifest: config/minerva_rds_manifest.tsv
 
 inputs:
@@ -57,3 +59,5 @@ scope:
     - mitonuclear_coupling
     - genetic_support
     - genetic_support_tier2
+    - genetic_support_tier2_recovery
+    - genetic_support_endophenotype

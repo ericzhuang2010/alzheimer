@@ -1,0 +1,25 @@
+schema_version: phase19_opc_rps15_local_execution_v1
+execution:
+  execution_stage: local_production_equivalent
+  execution_phase: genetic_support_opc_rps15_public_recovery
+  backend: direct
+  run_id: phase19_opc_rps15_local_20260821
+  host: homedesktop
+  total_memory_gib: 15
+  reserve_memory_gib: 6
+  max_total_cores: 4
+  max_workers: 1
+  hard_memory_limit_per_locus_gib: 9
+  minimum_free_disk_gib: 50
+  maximum_working_directory_gib: 10
+  maximum_staging_result_gib: 1
+  maximum_total_new_disk_footprint_gib: 20
+  process_one_locus_at_a_time: true
+  stream_existing_archive_members: true
+  deterministic_gzip_mtime: 0
+  fail_fast: true
+  automatic_minerva_fallback: false
+  automatic_full_archive_download: false
+  publication_namespace: minerva_production
+  use_minerva: false
+  gpu_required: false

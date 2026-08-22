@@ -57,6 +57,7 @@ data/processed/*
 !data/bayesian_network
 untracked/
 ad_research/
+external_tools/
 
 # Workstation-only local-pilot configuration; Minerva uses the shared and
 # Minerva-production configuration files instead.

@@ -1,0 +1,201 @@
+schema_version: phase19_genetic_support_tier2_recovery_config_v1
+
+analysis:
+  analysis_id: phase19_human_genetic_support_tier2_classical_coloc_recovery_v1
+  genome_build: GRCh38
+  expected_candidate_contexts: 47
+  expected_unique_genes: 25
+  expected_nuclear_genes: 19
+  expected_nuclear_contexts: 27
+  expected_mtdna_contexts: 20
+  expected_base_routes: 54
+  qtl_types: [eQTL, sQTL]
+  definitions_frozen: true
+  dataset_selection_frozen_before_result: true
+  primary_method: coloc_bf_bf_susie_models
+  single_signal_sensitivity: coloc.abf
+  primary_p1: 1.0e-4
+  primary_p2: 1.0e-4
+  primary_p12: 5.0e-6
+  sensitivity_p12: [1.0e-6, 5.0e-6, 1.0e-5]
+  strong_h4: 0.80
+  strong_conditional_h4: 0.80
+  gwas_signal_p: 5.0e-8
+  qtl_bonferroni_alpha: 0.05
+  credible_set_coverage: 0.95
+  custom_susie_L: 10
+  custom_susie_maxit: 1000
+  minimum_harmonized_variants: 50
+  minimum_model_overlap_fraction: 0.50
+  case_fraction: 0.14109955905595642
+
+inputs:
+  tier1_root: results/minerva_production/19_genetic_support
+  tier2_root: results/minerva_production/19_genetic_support_tier2
+  tier1_candidate_manifest: results/minerva_production/19_genetic_support/genetic_support_candidate_manifest.tsv
+  tier1_candidate_loci: results/minerva_production/19_genetic_support/genetic_support_candidate_loci.tsv
+  tier1_evidence_summary: results/minerva_production/19_genetic_support/genetic_support_evidence_summary.tsv
+  tier1_artifacts: results/minerva_production/19_genetic_support/genetic_support_artifacts.tsv
+  tier1_status: results/minerva_production/19_genetic_support/genetic_support_status.tsv
+  tier2_route_manifest: results/minerva_production/19_genetic_support_tier2/tier2_candidate_route_manifest.tsv
+  tier2_evidence_summary: results/minerva_production/19_genetic_support_tier2/tier2_evidence_summary.tsv
+  tier2_artifacts: results/minerva_production/19_genetic_support_tier2/tier2_artifacts.tsv
+  tier2_status: results/minerva_production/19_genetic_support_tier2/tier2_status.tsv
+  candidate_gwas: data/reference/phase19_genetic_support/tier2/regional_inputs/bellenguez_candidate_gwas.tsv.gz
+  external_root: data/reference/phase19_genetic_support/tier2_recovery
+  inventory_dir: data/reference/phase19_genetic_support/tier2_recovery/inventory
+  eqtl_catalogue_dir: data/reference/phase19_genetic_support/tier2_recovery/eqtl_catalogue
+  regional_qtl_dir: data/reference/phase19_genetic_support/tier2_recovery/regional_qtl
+  released_qtl_models_dir: data/reference/phase19_genetic_support/tier2_recovery/released_qtl_models
+  gwas_models_dir: data/reference/phase19_genetic_support/tier2_recovery/gwas_models
+  ld_source_dir: data/reference/phase19_genetic_support/tier2_recovery/ld_source
+  ld_candidate_blocks_dir: data/reference/phase19_genetic_support/tier2_recovery/ld_candidate_blocks
+  source_manifest_dir: data/reference/phase19_genetic_support/tier2_recovery/source_manifest
+
+source_release:
+  name: eQTL Catalogue r7 plus NIAGADS ADSP R5 NHW recovery
+  release_id: tier2_recovery_2026_08_v1
+  inventory_date: "2026-08-21"
+  eqtl_catalogue_metadata_repository: https://github.com/eQTL-Catalogue/eQTL-Catalogue-resources
+  eqtl_catalogue_metadata_commit: 10966d360a4394c16e338fb9345ec71f4cd5b1fa
+  eqtl_catalogue_metadata_release: r7
+  eqtl_catalogue_build: GRCh38
+  eqtl_catalogue_effect_allele: ALT
+  niagads_accession: NG00067.v21
+  niagads_fileset: fsa000165
+  niagads_panel: ADSP_R5_NHW
+  niagads_panel_sample_size: 26042
+  niagads_panel_build: GRCh38
+  gwas_accession: GCST90027158
+  gwas_ancestry: European
+  gwas_cases: 111326
+  gwas_controls: 677663
+
+qtl_datasets:
+  - dataset_id: QTD000569
+    study_id: QTS000032
+    study_label: Aygun_2021
+    sample_group: Neuron
+    tissue_label: neuron
+    sample_size: 73
+    qtl_type: eQTL
+    quant_method: ge
+    source_class: lineage_neuron
+    context_match_level: lineage
+    applies_to: [Excitatory_neurons, Inhibitory_neurons]
+    lbf_url: https://ftp.ebi.ac.uk/pub/databases/spot/eQTL/susie/QTS000032/QTD000569/QTD000569.lbf_variable.txt.gz
+    dense_url: ftp://ftp.ebi.ac.uk/pub/databases/spot/eQTL/sumstats/QTS000032/QTD000569/QTD000569.all.tsv.gz
+    lbf_bytes: 139050463
+    credible_sets_url: https://ftp.ebi.ac.uk/pub/databases/spot/eQTL/susie/QTS000032/QTD000569/QTD000569.credible_sets.tsv.gz
+  - dataset_id: QTD000573
+    study_id: QTS000032
+    study_label: Aygun_2021
+    sample_group: Neuron
+    tissue_label: neuron
+    sample_size: 73
+    qtl_type: sQTL
+    quant_method: leafcutter
+    source_class: lineage_neuron
+    context_match_level: lineage
+    applies_to: [Excitatory_neurons, Inhibitory_neurons]
+    lbf_url: https://ftp.ebi.ac.uk/pub/databases/spot/eQTL/susie/QTS000032/QTD000573/QTD000573.lbf_variable.txt.gz
+    lbf_bytes: 138569265
+    mapping_url: https://ftp.ebi.ac.uk/pub/databases/spot/eQTL/sumstats/QTS000032/QTD000573/QTD000573.cc.tsv.gz
+    mapping_bytes: 71561246
+    credible_sets_url: https://ftp.ebi.ac.uk/pub/databases/spot/eQTL/susie/QTS000032/QTD000573/QTD000573.credible_sets.tsv.gz
+  - dataset_id: QTD000559
+    study_id: QTS000031
+    study_label: Young_2019
+    sample_group: microglia_naive
+    tissue_label: microglia
+    sample_size: 104
+    qtl_type: eQTL
+    quant_method: ge
+    source_class: exact_microglia
+    context_match_level: exact
+    applies_to: [Microglia]
+    lbf_url: https://ftp.ebi.ac.uk/pub/databases/spot/eQTL/susie/QTS000031/QTD000559/QTD000559.lbf_variable.txt.gz
+    dense_url: ftp://ftp.ebi.ac.uk/pub/databases/spot/eQTL/sumstats/QTS000031/QTD000559/QTD000559.all.tsv.gz
+    lbf_bytes: 61626446
+    credible_sets_url: https://ftp.ebi.ac.uk/pub/databases/spot/eQTL/susie/QTS000031/QTD000559/QTD000559.credible_sets.tsv.gz
+  - dataset_id: QTD000563
+    study_id: QTS000031
+    study_label: Young_2019
+    sample_group: microglia_naive
+    tissue_label: microglia
+    sample_size: 104
+    qtl_type: sQTL
+    quant_method: leafcutter
+    source_class: exact_microglia
+    context_match_level: exact
+    applies_to: [Microglia]
+    lbf_url: https://ftp.ebi.ac.uk/pub/databases/spot/eQTL/susie/QTS000031/QTD000563/QTD000563.lbf_variable.txt.gz
+    lbf_bytes: 138362478
+    mapping_url: https://ftp.ebi.ac.uk/pub/databases/spot/eQTL/sumstats/QTS000031/QTD000563/QTD000563.cc.tsv.gz
+    mapping_bytes: 84923307
+    credible_sets_url: https://ftp.ebi.ac.uk/pub/databases/spot/eQTL/susie/QTS000031/QTD000563/QTD000563.credible_sets.tsv.gz
+  - dataset_id: QTD000579
+    study_id: QTS000034
+    study_label: Walker_2019
+    sample_group: Neocortex
+    tissue_label: neocortex
+    sample_size: 211
+    qtl_type: eQTL
+    quant_method: ge
+    source_class: bulk_neocortex_fallback
+    context_match_level: bulk_brain_fallback
+    applies_to: [Astrocytes, OPCs, Oligodendrocytes]
+    lbf_url: https://ftp.ebi.ac.uk/pub/databases/spot/eQTL/susie/QTS000034/QTD000579/QTD000579.lbf_variable.txt.gz
+    dense_url: ftp://ftp.ebi.ac.uk/pub/databases/spot/eQTL/sumstats/QTS000034/QTD000579/QTD000579.all.tsv.gz
+    lbf_bytes: 1537470314
+    credible_sets_url: https://ftp.ebi.ac.uk/pub/databases/spot/eQTL/susie/QTS000034/QTD000579/QTD000579.credible_sets.tsv.gz
+  - dataset_id: QTD000583
+    study_id: QTS000034
+    study_label: Walker_2019
+    sample_group: Neocortex
+    tissue_label: neocortex
+    sample_size: 211
+    qtl_type: sQTL
+    quant_method: leafcutter
+    source_class: bulk_neocortex_fallback
+    context_match_level: bulk_brain_fallback
+    applies_to: [Astrocytes, OPCs, Oligodendrocytes]
+    lbf_url: https://ftp.ebi.ac.uk/pub/databases/spot/eQTL/susie/QTS000034/QTD000583/QTD000583.lbf_variable.txt.gz
+    lbf_bytes: 486774759
+    mapping_url: https://ftp.ebi.ac.uk/pub/databases/spot/eQTL/sumstats/QTS000034/QTD000583/QTD000583.cc.tsv.gz
+    mapping_bytes: 295789816
+    credible_sets_url: https://ftp.ebi.ac.uk/pub/databases/spot/eQTL/susie/QTS000034/QTD000583/QTD000583.credible_sets.tsv.gz
+
+ld_sources:
+  - chromosome: 5
+    file_id: 55120
+    filename: adsp.wgs.r5.NHW.chr5.26042.2026.01.26.ld.output.txt.gz
+    bytes: "4418916732"
+    md5: 75384d6009038a506e40822839037078
+    url: https://st1.niagads.org/portal/v1/download-public/NG00067/fileset/55120
+  - chromosome: 16
+    file_id: 55110
+    filename: adsp.wgs.r5.NHW.chr16.26042.2026.01.26.ld.output.txt.gz
+    bytes: "1864825280"
+    md5: 00a171a9dfa9e5d1065594a9ae3ed165
+    url: https://st1.niagads.org/portal/v1/download-public/NG00067/fileset/55110
+  - chromosome: 19
+    file_id: 55113
+    filename: adsp.wgs.r5.NHW.chr19.26042.2026.01.26.ld.output.txt.gz
+    bytes: "1077925598"
+    md5: d35ff7db149bd8ad738329df1b46a8ec
+    url: https://st1.niagads.org/portal/v1/download-public/NG00067/fileset/55113
+
+context_policy:
+  Excitatory_neurons: lineage_neuron
+  Inhibitory_neurons: lineage_neuron
+  Microglia: exact_microglia
+  Astrocytes: bulk_neocortex_fallback
+  OPCs: bulk_neocortex_fallback
+  Oligodendrocytes: bulk_neocortex_fallback
+
+outputs:
+  root: results/minerva_production/19_genetic_support_tier2_recovery
+  pilot_root: results/local_pilot/19_genetic_support_tier2_recovery
+  schema: human_genetic_support_tier2_classical_coloc_recovery_v1
+  exact_file_count: 26

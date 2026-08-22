@@ -1,0 +1,169 @@
+schema_version: phase19_endophenotype_gwas_qtl_extension_config_v1
+
+analysis:
+  analysis_id: phase19_endophenotype_gwas_qtl_extension_v1
+  genome_build: GRCh38
+  expected_candidate_contexts: 47
+  expected_unique_genes: 25
+  expected_nuclear_genes: 19
+  expected_mtdna_genes: 6
+  expected_nuclear_contexts: 27
+  expected_mtdna_contexts: 20
+  expected_biomarkers: 3
+  expected_gene_biomarker_rows: 75
+  expected_nuclear_screens: 57
+  expected_context_biomarker_rows: 141
+  expected_nuclear_context_biomarker_rows: 81
+  expected_mtdna_context_biomarker_rows: 60
+  regional_signal_p: 5.0e-8
+  descriptive_p_1: 1.0e-6
+  descriptive_p_2: 1.0e-5
+  candidate_magma_alpha: 0.05
+  candidate_magma_tests: 57
+  candidate_magma_p: 8.771929824561404e-4
+  minimum_variant_density_per_mb: 500
+  minimum_relative_chromosome_density: 0.50
+  minimum_finite_p_fraction: 0.99
+  minimum_beta_se_fraction_for_model: 0.95
+  minimum_harmonized_variants: 500
+  minimum_smaller_input_overlap_fraction: 0.80
+  primary_p1: 1.0e-4
+  primary_p2: 1.0e-4
+  primary_p12: 5.0e-6
+  sensitivity_p12: [1.0e-6, 5.0e-6, 1.0e-5]
+  strong_h4: 0.80
+  strong_conditional_h4: 0.80
+  suggestive_h4: 0.50
+  definitions_frozen: true
+  selection_frozen_before_qtl_result: true
+
+inputs:
+  tier1_root: results/minerva_production/19_genetic_support
+  tier2_root: results/minerva_production/19_genetic_support_tier2
+  recovery_root: results/minerva_production/19_genetic_support_tier2_recovery
+  candidate_manifest: results/minerva_production/19_genetic_support/genetic_support_candidate_manifest.tsv
+  tier1_artifacts: results/minerva_production/19_genetic_support/genetic_support_artifacts.tsv
+  tier2_artifacts: results/minerva_production/19_genetic_support_tier2/tier2_artifacts.tsv
+  recovery_artifacts: results/minerva_production/19_genetic_support_tier2_recovery/recovery_artifacts.tsv
+  recovery_evidence_summary: results/minerva_production/19_genetic_support_tier2_recovery/recovery_evidence_summary.tsv
+  recovery_regions: results/minerva_production/19_genetic_support_tier2_recovery/recovery_regional_gwas_summary.tsv
+  source_root: data/reference/phase19_genetic_support/endophenotype_gwas_qtl_extension
+  inventory_dir: data/reference/phase19_genetic_support/endophenotype_gwas_qtl_extension/inventory
+  raw_gwas_dir: data/reference/phase19_genetic_support/endophenotype_gwas_qtl_extension/gwas_raw
+  harmonized_gwas_dir: data/reference/phase19_genetic_support/endophenotype_gwas_qtl_extension/gwas_normalized
+  qtl_coverage_dir: data/reference/phase19_genetic_support/endophenotype_gwas_qtl_extension/qtl_coverage
+  qtl_regional_dir: data/reference/phase19_genetic_support/endophenotype_gwas_qtl_extension/qtl_regional
+  released_models_dir: data/reference/phase19_genetic_support/endophenotype_gwas_qtl_extension/released_models
+  ld_source_dir: data/reference/phase19_genetic_support/endophenotype_gwas_qtl_extension/ld_source
+  ld_candidate_blocks_dir: data/reference/phase19_genetic_support/endophenotype_gwas_qtl_extension/ld_candidate_blocks
+  prediction_weights_dir: data/reference/phase19_genetic_support/endophenotype_gwas_qtl_extension/prediction_weights
+  source_manifest_dir: data/reference/phase19_genetic_support/endophenotype_gwas_qtl_extension/source_manifest
+  work_dir: data/reference/phase19_genetic_support/endophenotype_gwas_qtl_extension/work
+  publication_supplement_8: data/reference/phase19_genetic_support/endophenotype_gwas_qtl_extension/inventory/supplementary_data_8.xlsx
+  publication_supplement_9: data/reference/phase19_genetic_support/endophenotype_gwas_qtl_extension/inventory/supplementary_data_9.xlsx
+  magma_binary: external_tools/magma_v1.10/magma
+  magma_gene_locations: data/reference/phase19_genetic_support/endophenotype_gwas_qtl_extension/inventory/MAGMAgenev110.txt
+  magma_reference_prefix: external_tools/magma_reference/official/g1000_eur
+
+biomarkers:
+  - trait_id: csf_abeta42
+    trait_label: CSF amyloid-beta 42
+    source_accession: GCST90726396
+    expected_trait_description: Cerebrospinal fluid amyloid beta 42 levels
+    source_url: https://ftp.ebi.ac.uk/pub/databases/gwas/summary_statistics/GCST90726001-GCST90727000/GCST90726396/GCST90726396.tsv
+    harmonized_url: https://ftp.ebi.ac.uk/pub/databases/gwas/summary_statistics/GCST90726001-GCST90727000/GCST90726396/harmonised/GCST90726396.h.tsv.gz
+    raw_file: data/reference/phase19_genetic_support/endophenotype_gwas_qtl_extension/gwas_raw/GCST90726396.tsv
+    harmonized_file: data/reference/phase19_genetic_support/endophenotype_gwas_qtl_extension/gwas_normalized/GCST90726396.h.tsv.gz
+    metadata_file: data/reference/phase19_genetic_support/endophenotype_gwas_qtl_extension/inventory/GCST90726396.tsv-meta.yaml
+    expected_md5: 4cb99e5a870ebf9d6f0d9601f4bbee08
+    sample_size: 18948
+  - trait_id: csf_total_tau
+    trait_label: CSF total tau
+    source_accession: GCST90726397
+    expected_trait_description: Cerebrospinal fluid t-tau levels
+    source_url: https://ftp.ebi.ac.uk/pub/databases/gwas/summary_statistics/GCST90726001-GCST90727000/GCST90726397/GCST90726397.tsv
+    harmonized_url: https://ftp.ebi.ac.uk/pub/databases/gwas/summary_statistics/GCST90726001-GCST90727000/GCST90726397/harmonised/GCST90726397.h.tsv.gz
+    raw_file: data/reference/phase19_genetic_support/endophenotype_gwas_qtl_extension/gwas_raw/GCST90726397.tsv
+    harmonized_file: data/reference/phase19_genetic_support/endophenotype_gwas_qtl_extension/gwas_normalized/GCST90726397.h.tsv.gz
+    metadata_file: data/reference/phase19_genetic_support/endophenotype_gwas_qtl_extension/inventory/GCST90726397.tsv-meta.yaml
+    expected_md5: e54e8dd64b2c9fc8893ddf04f0be5716
+    sample_size: 18948
+  - trait_id: csf_ptau181
+    trait_label: CSF phosphorylated tau 181
+    source_accession: GCST90726398
+    expected_trait_description: Cerebrospinal fluid p-tau181 levels
+    source_url: https://ftp.ebi.ac.uk/pub/databases/gwas/summary_statistics/GCST90726001-GCST90727000/GCST90726398/GCST90726398.tsv
+    harmonized_url: https://ftp.ebi.ac.uk/pub/databases/gwas/summary_statistics/GCST90726001-GCST90727000/GCST90726398/harmonised/GCST90726398.h.tsv.gz
+    raw_file: data/reference/phase19_genetic_support/endophenotype_gwas_qtl_extension/gwas_raw/GCST90726398.tsv
+    harmonized_file: data/reference/phase19_genetic_support/endophenotype_gwas_qtl_extension/gwas_normalized/GCST90726398.h.tsv.gz
+    metadata_file: data/reference/phase19_genetic_support/endophenotype_gwas_qtl_extension/inventory/GCST90726398.tsv-meta.yaml
+    expected_md5: e867ec48c1a490be5613746f70a557a8
+    sample_size: 18948
+
+qtl_sources:
+  - source_id: NG00184.v1
+    modality: eQTL_snuc-eQTL_sQTL_pQTL
+    context: twenty_brain_cell_types_and_regions
+    context_match_level: exact_lineage_or_bulk_per_fileset
+    ancestry: source_reported
+    sample_size: source_reported
+    build: GRCh38
+    access_url: https://dss.niagads.org/datasets/ng00184/
+    full_statistics_access: public_packaged_all_and_released_finemapping
+    overlap_state: known_ROSMAP_and_other_cohort_overlap
+  - source_id: NG00130.v2
+    modality: pQTL
+    context: CSF
+    context_match_level: gene_level_csf_protein
+    ancestry: European
+    sample_size: 3506
+    build: GRCh38
+    access_url: https://dss.niagads.org/datasets/ng00130/
+    full_statistics_access: public_gwas_catalog_or_application
+    overlap_state: known_overlap_unquantified
+  - source_id: scMetaBrain_2026
+    modality: eQTL
+    context: major_brain_cell_types
+    context_match_level: exact_or_lineage
+    ancestry: mixed_source_meta_analysis
+    sample_size: 785
+    build: GRCh38
+    access_url: https://pubmed.ncbi.nlm.nih.gov/41394650/
+    full_statistics_access: inventory_required
+    overlap_state: possible_overlap
+  - source_id: PsychAD_snRNA_eQTL
+    modality: eQTL
+    context: DLPFC_cell_classes_and_subclasses
+    context_match_level: exact_or_lineage
+    ancestry: multi_ancestry
+    sample_size: 1384
+    build: GRCh38
+    access_url: https://pmc.ncbi.nlm.nih.gov/articles/PMC11661307/
+    full_statistics_access: inventory_required
+    overlap_state: known_overlap_quantified
+  - source_id: EQTL_Catalogue_r7
+    modality: eQTL_sQTL
+    context: exact_lineage_or_bulk_brain
+    context_match_level: registered_per_dataset
+    ancestry: source_reported
+    sample_size: source_reported
+    build: GRCh38
+    access_url: https://www.ebi.ac.uk/eqtl/Data_access/
+    full_statistics_access: public_targeted
+    overlap_state: source_specific
+
+outputs:
+  root: results/minerva_production/19_genetic_support_endophenotype_gwas_qtl_extension
+  pilot_root: results/local_pilot/19_genetic_support_endophenotype_gwas_qtl_extension
+  schema: phase19_endophenotype_gwas_qtl_extension_v1
+  exact_file_count: 36
+
+execution:
+  stage: local_production_equivalent
+  backend: direct
+  publication_namespace: minerva_production
+  max_download_workers: 2
+  max_finemapping_workers: 1
+  minimum_free_space_gib: 50
+  deterministic_gzip_mtime: 0
+
