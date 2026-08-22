@@ -284,16 +284,26 @@ Finish with: `full_phase19_complete = FALSE`.
 
 ### New figures recommended for the main deck
 
-| Figure | Slide | Data source | Priority |
-|---|---:|---|---|
-| Frozen gated workflow with dataset labels | 3 | Analysis contracts and execution reports | Essential |
-| Compact 47-context formal outcome scorecard | 4 | [`genetic_support_status.tsv`](../../results/minerva_production/19_genetic_support_tier1/genetic_support_status.tsv) and [`genetic_support_evidence_summary.tsv`](../../results/minerva_production/19_genetic_support_tier1/genetic_support_evidence_summary.tsv) | Essential |
-| Four-gene evidence cards | 6 | Tier 1, Tier 2 recovery, CSF, and RPS15 summaries | Essential |
-| 54-route terminal-state/attrition graphic | 7 | [`recovery_route_decisions.tsv`](../../results/minerva_production/19_genetic_support_tier2_recovery/recovery_route_decisions.tsv) | Essential |
-| Compact CSF outcome graphic: 3 APOE-positive decisions versus 54 without qualifying signal | 5 or appendix | [`endophenotype_gate_decisions.tsv`](../../results/minerva_production/19_genetic_support_endophenotype_gwas_qtl_extension/endophenotype_gate_decisions.tsv) | Optional |
+| Figure | Slide | Data source | Generated figure | Priority |
+|---|---:|---|---|---|
+| Frozen gated workflow with dataset labels | 3 | Analysis contracts and execution reports | [PNG](../../results/figures/analysis/phase_19_genetic_support/gated_workflow/genetic_support_gated_workflow.png) · [PDF](../../results/figures/analysis/phase_19_genetic_support/gated_workflow/genetic_support_gated_workflow.pdf) · [SVG](../../results/figures/analysis/phase_19_genetic_support/gated_workflow/genetic_support_gated_workflow.svg) | Essential |
+| Compact 47-context formal outcome scorecard | 4 | [`genetic_support_status.tsv`](../../results/minerva_production/19_genetic_support_tier1/genetic_support_status.tsv) and [`genetic_support_evidence_summary.tsv`](../../results/minerva_production/19_genetic_support_tier1/genetic_support_evidence_summary.tsv) | [PNG](../../results/figures/analysis/phase_19_genetic_support/tier1_summary/genetic_support_tier1_slide_summary.png) · [PDF](../../results/figures/analysis/phase_19_genetic_support/tier1_summary/genetic_support_tier1_slide_summary.pdf) · [SVG](../../results/figures/analysis/phase_19_genetic_support/tier1_summary/genetic_support_tier1_slide_summary.svg) | Essential |
+| Four-gene evidence cards | 6 | Tier 1, Tier 2 recovery, CSF, and RPS15 summaries | [PNG](../../results/figures/analysis/phase_19_genetic_support/non_apoe_evidence/genetic_support_non_apoe_evidence_cards.png) · [PDF](../../results/figures/analysis/phase_19_genetic_support/non_apoe_evidence/genetic_support_non_apoe_evidence_cards.pdf) · [SVG](../../results/figures/analysis/phase_19_genetic_support/non_apoe_evidence/genetic_support_non_apoe_evidence_cards.svg) | Essential |
+| 54-route terminal-state graphic | 7 | [`recovery_route_decisions.tsv`](../../results/minerva_production/19_genetic_support_tier2_recovery/recovery_route_decisions.tsv) | [PNG](../../results/figures/analysis/phase_19_genetic_support/tier2_route_attrition/genetic_support_tier2_route_attrition.png) · [PDF](../../results/figures/analysis/phase_19_genetic_support/tier2_route_attrition/genetic_support_tier2_route_attrition.pdf) · [SVG](../../results/figures/analysis/phase_19_genetic_support/tier2_route_attrition/genetic_support_tier2_route_attrition.svg) | Essential |
+| Compact CSF outcome graphic: 3 APOE-positive decisions versus 54 without qualifying signal | 5 or appendix | [`endophenotype_gate_decisions.tsv`](../../results/minerva_production/19_genetic_support_endophenotype_gwas_qtl_extension/endophenotype_gate_decisions.tsv) | [PNG](../../results/figures/analysis/phase_19_genetic_support/csf_outcome_summary/genetic_support_csf_outcome_summary.png) · [PDF](../../results/figures/analysis/phase_19_genetic_support/csf_outcome_summary/genetic_support_csf_outcome_summary.pdf) · [SVG](../../results/figures/analysis/phase_19_genetic_support/csf_outcome_summary/genetic_support_csf_outcome_summary.svg) | Optional |
 
 These figures can all be generated from existing result tables; no external or
 stock imagery is needed.
+
+Each figure is a separate, validated package containing slide-native PNG,
+editable PDF and SVG, source-derived plot data, checks, caption, methods,
+artifact hashes, and status. The reproducible renderers are
+[`plot_genetic_support_gated_workflow.py`](../../scripts/figures/analysis/phase_19_genetic_support/plot_genetic_support_gated_workflow.py),
+[`plot_genetic_support_tier1_slide_summary.py`](../../scripts/figures/analysis/phase_19_genetic_support/plot_genetic_support_tier1_slide_summary.py),
+[`plot_genetic_support_non_apoe_evidence_cards.py`](../../scripts/figures/analysis/phase_19_genetic_support/plot_genetic_support_non_apoe_evidence_cards.py),
+[`plot_genetic_support_tier2_route_attrition.py`](../../scripts/figures/analysis/phase_19_genetic_support/plot_genetic_support_tier2_route_attrition.py),
+and
+[`plot_genetic_support_csf_outcome_summary.py`](../../scripts/figures/analysis/phase_19_genetic_support/plot_genetic_support_csf_outcome_summary.py).
 
 ### Existing figures to reuse
 

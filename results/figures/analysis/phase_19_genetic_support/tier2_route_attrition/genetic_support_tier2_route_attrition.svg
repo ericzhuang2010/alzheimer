@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="892.8pt" height="338.4pt" viewBox="0 0 892.8 338.4" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>matplotlib</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 338.4 
+L 892.8 338.4 
+L 892.8 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 19.6416 314.3736 
+L 644.6016 314.3736 
+Q 655.3152 314.3736 655.3152 310.3128 
+L 655.3152 24.7032 
+Q 655.3152 20.6424 644.6016 20.6424 
+L 19.6416 20.6424 
+Q 8.928 20.6424 8.928 24.7032 
+L 8.928 310.3128 
+Q 8.928 314.3736 19.6416 314.3736 
+z
+" clip-path="url(#pca04678265)" style="fill: #ffffff; stroke: #d7dee8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 35.712 266.9976 
+L 161.5968 266.9976 
+Q 172.3104 266.9976 172.3104 262.9368 
+L 172.3104 183.7512 
+Q 172.3104 179.6904 161.5968 179.6904 
+L 35.712 179.6904 
+Q 24.9984 179.6904 24.9984 183.7512 
+L 24.9984 262.9368 
+Q 24.9984 266.9976 35.712 266.9976 
+z
+" clip-path="url(#pca04678265)" style="fill: #f7f9fc; stroke: #d7dee8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 190.1664 266.9976 
+L 316.0512 266.9976 
+Q 326.7648 266.9976 326.7648 262.9368 
+L 326.7648 183.7512 
+Q 326.7648 179.6904 316.0512 179.6904 
+L 190.1664 179.6904 
+Q 179.4528 179.6904 179.4528 183.7512 
+L 179.4528 262.9368 
+Q 179.4528 266.9976 190.1664 266.9976 
+z
+" clip-path="url(#pca04678265)" style="fill: #f7f9fc; stroke: #d7dee8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 344.6208 266.9976 
+L 470.5056 266.9976 
+Q 481.2192 266.9976 481.2192 262.9368 
+L 481.2192 183.7512 
+Q 481.2192 179.6904 470.5056 179.6904 
+L 344.6208 179.6904 
+Q 333.9072 179.6904 333.9072 183.7512 
+L 333.9072 262.9368 
+Q 333.9072 266.9976 344.6208 266.9976 
+z
+" clip-path="url(#pca04678265)" style="fill: #fbeae4; stroke: #d55e00; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 499.0752 266.9976 
+L 624.96 266.9976 
+Q 635.6736 266.9976 635.6736 262.9368 
+L 635.6736 183.7512 
+Q 635.6736 179.6904 624.96 179.6904 
+L 499.0752 179.6904 
+Q 488.3616 179.6904 488.3616 183.7512 
+L 488.3616 262.9368 
+Q 488.3616 266.9976 499.0752 266.9976 
+z
+" clip-path="url(#pca04678265)" style="fill: url(#h46ce59a915); stroke: #d7dee8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 678.528 314.3736 
+L 873.1584 314.3736 
+Q 883.872 314.3736 883.872 310.3128 
+L 883.872 24.7032 
+Q 883.872 20.6424 873.1584 20.6424 
+L 678.528 20.6424 
+Q 667.8144 20.6424 667.8144 24.7032 
+L 667.8144 310.3128 
+Q 667.8144 314.3736 678.528 314.3736 
+z
+" clip-path="url(#pca04678265)" style="fill: #fbeae4; stroke: #d55e00; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 49.104 147.204 
+L 490.048 147.204 
+L 490.048 101.52 
+L 49.104 101.52 
+z
+" clip-path="url(#pca04678265)" style="fill: #bdbdbd; stroke: #4d4d4d; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 490.048 147.204 
+L 532.042667 147.204 
+L 532.042667 101.52 
+L 490.048 101.52 
+z
+" clip-path="url(#pca04678265)" style="fill: #d7dee8; stroke: #4d4d4d; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 532.042667 147.204 
+L 553.04 147.204 
+L 553.04 101.52 
+L 532.042667 101.52 
+z
+" clip-path="url(#pca04678265)" style="fill: #d55e00; stroke: #4d4d4d; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 553.04 147.204 
+L 616.032 147.204 
+L 616.032 101.52 
+L 553.04 101.52 
+z
+" clip-path="url(#pca04678265)" style="fill: url(#h7dd968a8c4); stroke: #4d4d4d; stroke-linejoin: miter"/>
+   </g>
+   <g id="line2d_1">
+    <path d="M 700.848 196.272 
+L 850.8384 196.272 
+" clip-path="url(#pca04678265)" style="fill: none; stroke: #d55e00; stroke-opacity: 0.65; stroke-linecap: square"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 13px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="28.5696" y="41.286106" transform="rotate(-0 28.5696 41.286106)">A</text>
+   </g>
+   <g id="text_2">
+    <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="50.8896" y="39.85845" transform="rotate(-0 50.8896 39.85845)">Terminal outcomes across 54 prespecified routes</text>
+   </g>
+   <g id="text_3">
+    <text style="font-size: 10.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #5b6573" x="49.9968" y="65.144981" transform="rotate(-0 49.9968 65.144981)">27 nuclear candidate contexts  •  27 eQTL routes  •  27 sQTL routes</text>
+   </g>
+   <g id="text_4">
+    <text style="font-weight: 700; font-size: 11.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #333333" x="269.576" y="127.40875" transform="rotate(-0 269.576 127.40875)">42   No regional AD GWAS signal</text>
+   </g>
+   <g id="text_5">
+    <text style="font-weight: 700; font-size: 11px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #333333" x="511.045333" y="128.371844" transform="rotate(-0 511.045333 128.371844)">4</text>
+   </g>
+   <g id="text_6">
+    <text style="font-weight: 700; font-size: 11px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #ffffff" x="542.541333" y="128.444031" transform="rotate(-0 542.541333 128.444031)">2</text>
+   </g>
+   <g id="text_7">
+    <text style="font-weight: 700; font-size: 11px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #333333" x="584.536" y="128.360672" transform="rotate(-0 584.536 128.360672)">6</text>
+   </g>
+   <g id="text_8">
+    <text style="font-weight: 700; font-size: 16px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="39.2832" y="203.2247" transform="rotate(-0 39.2832 203.2247)">42</text>
+   </g>
+   <g id="text_9">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(39.2832 222.894281)">No regional AD</text>
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(39.2832 232.074281)">GWAS signal</text>
+   </g>
+   <g id="text_10">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(39.2832 246.347438)">Regional P gate</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(39.2832 256.067437)">not passed</text>
+   </g>
+   <g id="text_11">
+    <text style="font-weight: 700; font-size: 16px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="193.7376" y="203.1197" transform="rotate(-0 193.7376 203.1197)">4</text>
+   </g>
+   <g id="text_12">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(193.7376 223.801313)">No candidate</text>
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(193.7376 232.074281)">QTL signal</text>
+   </g>
+   <g id="text_13">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(193.7376 246.347438)">Candidate eQTL gate</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(193.7376 256.067437)">not passed</text>
+   </g>
+   <g id="text_14">
+    <text style="font-weight: 700; font-size: 16px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #d55e00" x="348.192" y="203.2247" transform="rotate(-0 348.192 203.2247)">2</text>
+   </g>
+   <g id="text_15">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(348.192 223.801313)">Model or LD</text>
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(348.192 232.109438)">incompatible</text>
+   </g>
+   <g id="text_16">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(348.192 246.347438)">Required model or</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(348.192 256.939313)">matched LD unavailable</text>
+   </g>
+   <g id="text_17">
+    <text style="font-weight: 700; font-size: 16px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="502.6464" y="203.10345" transform="rotate(-0 502.6464 203.10345)">6</text>
+   </g>
+   <g id="text_18">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #333333" x="502.6464" y="228.391313" transform="rotate(-0 502.6464 228.391313)">Not assessable</text>
+   </g>
+   <g id="text_19">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(502.6464 246.267984)">Target sQTL status</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(502.6464 256.939313)">unresolved</text>
+   </g>
+   <g id="text_20">
+    <text style="font-weight: 700; font-size: 13px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="690.1344" y="41.286106" transform="rotate(-0 690.1344 41.286106)">B</text>
+   </g>
+   <g id="text_21">
+    <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="712.4544" y="39.811575" transform="rotate(-0 712.4544 39.811575)">Posterior boundary</text>
+   </g>
+   <g id="text_22">
+    <text style="font-weight: 700; font-size: 48px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #d55e00" x="775.8432" y="130.83525" transform="rotate(-0 775.8432 130.83525)">0</text>
+   </g>
+   <g id="text_23">
+    <text style="font-weight: 700; font-size: 13px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(727.159216 153.872406)">valid primary</text>
+    <text style="font-weight: 700; font-size: 13px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(725.092419 169.222562)">H0–H4 results</text>
+   </g>
+   <g id="text_24">
+    <text style="font-weight: 700; font-size: 13.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #d55e00" x="775.8432" y="229.280325" transform="rotate(-0 775.8432 229.280325)">PP.H4 unavailable</text>
+   </g>
+   <g id="text_25">
+    <text style="font-size: 9.5px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(734.57238 255.405719)">No route reached</text>
+    <text style="font-size: 9.5px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(727.805856 265.125406)">posterior estimation</text>
+   </g>
+   <g id="text_26">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="28.5696" y="301.932281" transform="rotate(-0 28.5696 301.932281)">Terminal categories are mutually exclusive—not sequential funnel losses.</text>
+   </g>
+   <g id="text_27">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: end; fill: #5b6573" x="631.2096" y="301.967438" transform="rotate(-0 631.2096 301.967438)">A route stops at its first unmet input gate.</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pca04678265">
+   <rect x="0" y="0" width="892.8" height="338.4"/>
+  </clipPath>
+ </defs>
+ <defs>
+  <pattern id="h46ce59a915" patternUnits="userSpaceOnUse" x="0" y="0" width="72" height="72">
+   <rect x="0" y="0" width="73" height="73" fill="#f7f9fc"/>
+   <path d="M -36 36 
+L 36 -36 
+M -33 39 
+L 39 -33 
+M -30 42 
+L 42 -30 
+M -27 45 
+L 45 -27 
+M -24 48 
+L 48 -24 
+M -21 51 
+L 51 -21 
+M -18 54 
+L 54 -18 
+M -15 57 
+L 57 -15 
+M -12 60 
+L 60 -12 
+M -9 63 
+L 63 -9 
+M -6 66 
+L 66 -6 
+M -3 69 
+L 69 -3 
+M 0 72 
+L 72 0 
+M 3 75 
+L 75 3 
+M 6 78 
+L 78 6 
+M 9 81 
+L 81 9 
+M 12 84 
+L 84 12 
+M 15 87 
+L 87 15 
+M 18 90 
+L 90 18 
+M 21 93 
+L 93 21 
+M 24 96 
+L 96 24 
+M 27 99 
+L 99 27 
+M 30 102 
+L 102 30 
+M 33 105 
+L 105 33 
+M 36 108 
+L 108 36 
+" style="fill: #d7dee8; stroke: #d7dee8; stroke-width: 0.7; stroke-linecap: butt; stroke-linejoin: miter"/>
+  </pattern>
+  <pattern id="h7dd968a8c4" patternUnits="userSpaceOnUse" x="0" y="0" width="72" height="72">
+   <rect x="0" y="0" width="73" height="73" fill="#ffffff"/>
+   <path d="M -36 36 
+L 36 -36 
+M -33 39 
+L 39 -33 
+M -30 42 
+L 42 -30 
+M -27 45 
+L 45 -27 
+M -24 48 
+L 48 -24 
+M -21 51 
+L 51 -21 
+M -18 54 
+L 54 -18 
+M -15 57 
+L 57 -15 
+M -12 60 
+L 60 -12 
+M -9 63 
+L 63 -9 
+M -6 66 
+L 66 -6 
+M -3 69 
+L 69 -3 
+M 0 72 
+L 72 0 
+M 3 75 
+L 75 3 
+M 6 78 
+L 78 6 
+M 9 81 
+L 81 9 
+M 12 84 
+L 84 12 
+M 15 87 
+L 87 15 
+M 18 90 
+L 90 18 
+M 21 93 
+L 93 21 
+M 24 96 
+L 96 24 
+M 27 99 
+L 99 27 
+M 30 102 
+L 102 30 
+M 33 105 
+L 105 33 
+M 36 108 
+L 108 36 
+" style="fill: #4d4d4d; stroke: #4d4d4d; stroke-width: 0.7; stroke-linecap: butt; stroke-linejoin: miter"/>
+  </pattern>
+ </defs>
+</svg>

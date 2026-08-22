@@ -1,0 +1,19 @@
+schema_version	check_id	severity	status	expected	observed	detail
+genetic_support_tier2_route_attrition_v1	route_count	blocking	pass	54	54	Prespecified nuclear QTL routes.
+genetic_support_tier2_route_attrition_v1	candidate_context_count	blocking	pass	27	27	Nuclear gene-by-network contexts represented by paired routes.
+genetic_support_tier2_route_attrition_v1	unique_gene_count	blocking	pass	19	19	Unique nuclear genes.
+genetic_support_tier2_route_attrition_v1	eqtl_route_count	blocking	pass	27	27	One eQTL route per context.
+genetic_support_tier2_route_attrition_v1	sqtl_route_count	blocking	pass	27	27	One sQTL route per context.
+genetic_support_tier2_route_attrition_v1	terminal_count__no_regional_gwas_signal	blocking	pass	42	42	Mutually exclusive terminal-route count.
+genetic_support_tier2_route_attrition_v1	terminal_count__no_regional_qtl_signal	blocking	pass	4	4	Mutually exclusive terminal-route count.
+genetic_support_tier2_route_attrition_v1	terminal_count__model_or_ld_incompatible	blocking	pass	2	2	Mutually exclusive terminal-route count.
+genetic_support_tier2_route_attrition_v1	terminal_count__not_assessable	blocking	pass	6	6	Mutually exclusive terminal-route count.
+genetic_support_tier2_route_attrition_v1	terminal_partition_total	blocking	pass	54	54	Terminal categories partition all routes and are not sequential losses.
+genetic_support_tier2_route_attrition_v1	valid_primary_h0_h4_results	blocking	pass	0	0	The primary colocalization result table is header-only.
+genetic_support_tier2_route_attrition_v1	qc_posterior_rows	blocking	pass	0	0	No QC route reached posterior estimation.
+genetic_support_tier2_route_attrition_v1	pp_h4_state	blocking	pass	unavailable	unavailable	No posterior estimate may be interpreted as PP.H4 equal to zero.
+genetic_support_tier2_route_attrition_v1	png_dimensions	blocking	pass	5580x2115	5580x2115	Exact slide-native raster dimensions at 450 DPI.
+genetic_support_tier2_route_attrition_v1	png_dpi	blocking	pass	450	450	PNG metadata resolution rounded to the requested DPI.
+genetic_support_tier2_route_attrition_v1	pdf_signature	blocking	pass	%PDF-	%PDF-	Vector PDF has the expected file signature.
+genetic_support_tier2_route_attrition_v1	svg_vector_root	blocking	pass	present	present	SVG contains a vector root element.
+genetic_support_tier2_route_attrition_v1	svg_editable_text	blocking	pass	present	present	SVG preserves labels as editable text.

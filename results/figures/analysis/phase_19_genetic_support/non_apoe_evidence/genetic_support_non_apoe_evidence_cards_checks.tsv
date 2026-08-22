@@ -1,0 +1,19 @@
+schema_version	check_id	severity	status	expected	observed	detail
+genetic_support_non_apoe_evidence_cards_v1	card_count	blocking	pass	4	4	Four equal candidate cards.
+genetic_support_non_apoe_evidence_cards_v1	card_gene_order	blocking	pass	COX7C|SELENOW|RPS15|ANKRD11	COX7C|SELENOW|RPS15|ANKRD11	Frozen card order.
+genetic_support_non_apoe_evidence_cards_v1	cox7c_direct_entry	blocking	pass	rs2010322	rs2010322	Tier 1 direct summary record.
+genetic_support_non_apoe_evidence_cards_v1	selenow_twas_target	blocking	pass	SELENOW	SELENOW	Tier 1 TWAS-list membership.
+genetic_support_non_apoe_evidence_cards_v1	rps15_eligible_routes	blocking	pass	37	37	Sum across two frozen contexts.
+genetic_support_non_apoe_evidence_cards_v1	rps15_measured_routes	blocking	pass	31	31	Sum across two frozen contexts.
+genetic_support_non_apoe_evidence_cards_v1	rps15_positive_context_rows	blocking	pass	6	6	Three source tracks repeated across two contexts.
+genetic_support_non_apoe_evidence_cards_v1	rps15_unique_source_tracks	blocking	pass	3	3	Deduplicated after removing candidate prefix.
+genetic_support_non_apoe_evidence_cards_v1	rps15_resolved_h0_h4	blocking	pass	0	0	PP.H4 remains unavailable.
+genetic_support_non_apoe_evidence_cards_v1	regional_signal_genes	blocking	pass	ANKRD11|COX7C|RPS15	ANKRD11|COX7C|RPS15	Bellenguez frozen gate among the four cards.
+genetic_support_non_apoe_evidence_cards_v1	csf_passed_traits	blocking	pass	0	0	All four genes have zero qualifying CSF gates.
+genetic_support_non_apoe_evidence_cards_v1	pp_h4_zero_claim	blocking	pass	absent	absent	Unavailable posterior is not rendered as zero.
+genetic_support_non_apoe_evidence_cards_v1	causal_claim	blocking	pass	absent	absent	Regional signal is not candidate-gene causality.
+genetic_support_non_apoe_evidence_cards_v1	png_dimensions	blocking	pass	5580x2115	5580x2115	Exact slide-native raster dimensions at 450 DPI.
+genetic_support_non_apoe_evidence_cards_v1	png_dpi	blocking	pass	450	450	PNG metadata resolution rounded to the requested DPI.
+genetic_support_non_apoe_evidence_cards_v1	pdf_signature	blocking	pass	%PDF-	%PDF-	Vector PDF has the expected file signature.
+genetic_support_non_apoe_evidence_cards_v1	svg_vector_root	blocking	pass	present	present	SVG contains a vector root element.
+genetic_support_non_apoe_evidence_cards_v1	svg_editable_text	blocking	pass	present	present	SVG preserves labels as editable text.

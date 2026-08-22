@@ -24,6 +24,12 @@ def digest(path: Path) -> str:
     return value.hexdigest()
 
 
+def test_default_output_root_is_tier1_summary() -> None:
+    assert FIGURE.DEFAULT_OUTPUT_ROOT == (
+        "results/figures/analysis/phase_19_genetic_support/tier1_summary"
+    )
+
+
 def test_plot_data_preserves_scope_and_interpretive_categories() -> None:
     source = ROOT / "results/minerva_production/19_genetic_support_tier1"
     frames = FIGURE.validate_inputs(source)

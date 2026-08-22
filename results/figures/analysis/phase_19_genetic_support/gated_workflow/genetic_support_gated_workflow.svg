@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="892.8pt" height="338.4pt" viewBox="0 0 892.8 338.4" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>matplotlib</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 338.4 
+L 892.8 338.4 
+L 892.8 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 27.6768 201.0096 
+L 164.2752 201.0096 
+Q 173.2032 201.0096 173.2032 197.6256 
+L 173.2032 83.2464 
+Q 173.2032 79.8624 164.2752 79.8624 
+L 27.6768 79.8624 
+Q 18.7488 79.8624 18.7488 83.2464 
+L 18.7488 197.6256 
+Q 18.7488 201.0096 27.6768 201.0096 
+z
+" clip-path="url(#pca04678265)" style="fill: #17365d; stroke: #17365d; stroke-width: 1.3; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 201.7728 92.7216 
+L 494.6112 92.7216 
+Q 503.5392 92.7216 503.5392 89.3376 
+L 503.5392 35.8704 
+Q 503.5392 32.4864 494.6112 32.4864 
+L 201.7728 32.4864 
+Q 192.8448 32.4864 192.8448 35.8704 
+L 192.8448 89.3376 
+Q 192.8448 92.7216 201.7728 92.7216 
+z
+" clip-path="url(#pca04678265)" style="fill: #e9f3f8; stroke: #0072b2; stroke-width: 1.3; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 549.9648 92.7216 
+L 869.5872 92.7216 
+Q 878.5152 92.7216 878.5152 89.3376 
+L 878.5152 35.8704 
+Q 878.5152 32.4864 869.5872 32.4864 
+L 549.9648 32.4864 
+Q 541.0368 32.4864 541.0368 35.8704 
+L 541.0368 89.3376 
+Q 541.0368 92.7216 549.9648 92.7216 
+z
+" clip-path="url(#pca04678265)" style="fill: #ffffff; stroke: #0072b2; stroke-width: 1.3; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 201.7728 233.1576 
+L 356.2272 233.1576 
+Q 365.1552 233.1576 365.1552 229.7736 
+L 365.1552 132.3144 
+Q 365.1552 128.9304 356.2272 128.9304 
+L 201.7728 128.9304 
+Q 192.8448 128.9304 192.8448 132.3144 
+L 192.8448 229.7736 
+Q 192.8448 233.1576 201.7728 233.1576 
+z
+" clip-path="url(#pca04678265)" style="fill: #ffffff; stroke: #d7dee8; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 384.7968 233.1576 
+L 548.1792 233.1576 
+Q 557.1072 233.1576 557.1072 229.7736 
+L 557.1072 132.3144 
+Q 557.1072 128.9304 548.1792 128.9304 
+L 384.7968 128.9304 
+Q 375.8688 128.9304 375.8688 132.3144 
+L 375.8688 229.7736 
+Q 375.8688 233.1576 384.7968 233.1576 
+z
+" clip-path="url(#pca04678265)" style="fill: #ffffff; stroke: #d7dee8; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 576.7488 233.1576 
+L 722.2752 233.1576 
+Q 731.2032 233.1576 731.2032 229.7736 
+L 731.2032 132.3144 
+Q 731.2032 128.9304 722.2752 128.9304 
+L 576.7488 128.9304 
+Q 567.8208 128.9304 567.8208 132.3144 
+L 567.8208 229.7736 
+Q 567.8208 233.1576 576.7488 233.1576 
+z
+" clip-path="url(#pca04678265)" style="fill: #ffffff; stroke: #d7dee8; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 750.8448 233.1576 
+L 869.5872 233.1576 
+Q 878.5152 233.1576 878.5152 229.7736 
+L 878.5152 132.3144 
+Q 878.5152 128.9304 869.5872 128.9304 
+L 750.8448 128.9304 
+Q 741.9168 128.9304 741.9168 132.3144 
+L 741.9168 229.7736 
+Q 741.9168 233.1576 750.8448 233.1576 
+z
+" clip-path="url(#pca04678265)" style="fill: #e9f3f8; stroke: #0072b2; stroke-width: 1.4; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 27.6768 324.5256 
+L 164.2752 324.5256 
+Q 173.2032 324.5256 173.2032 321.1416 
+L 173.2032 249.0624 
+Q 173.2032 245.6784 164.2752 245.6784 
+L 27.6768 245.6784 
+Q 18.7488 245.6784 18.7488 249.0624 
+L 18.7488 321.1416 
+Q 18.7488 324.5256 27.6768 324.5256 
+z
+" clip-path="url(#pca04678265)" style="fill: #ffffff; stroke: #4d4d4d; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 201.7728 324.5256 
+L 869.5872 324.5256 
+Q 878.5152 324.5256 878.5152 321.1416 
+L 878.5152 264.2904 
+Q 878.5152 260.9064 869.5872 260.9064 
+L 201.7728 260.9064 
+Q 192.8448 260.9064 192.8448 264.2904 
+L 192.8448 321.1416 
+Q 192.8448 324.5256 201.7728 324.5256 
+z
+" clip-path="url(#pca04678265)" style="fill: #f1f1f1; stroke: #bdbdbd; stroke-width: 0.9; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 169.632 118.44 
+Q 183.024 90.522 195.763201 63.964874 
+" clip-path="url(#pca04678265)" style="fill: none; stroke: #0072b2; stroke-width: 1.35; stroke-linecap: round"/>
+    <path d="M 191.876593 66.980545 
+L 195.763201 63.964874 
+L 195.843773 68.883564 
+z
+" clip-path="url(#pca04678265)" style="fill: #0072b2; stroke: #0072b2; stroke-width: 1.35; stroke-linecap: round"/>
+   </g>
+   <g id="patch_12">
+    <path d="M 499.968 62.604 
+Q 522.288 62.604 543.098654 62.604 
+" clip-path="url(#pca04678265)" style="fill: none; stroke: #0072b2; stroke-width: 1.35; stroke-linecap: round"/>
+    <path d="M 538.698654 60.404 
+L 543.098654 62.604 
+L 538.698654 64.804 
+z
+" clip-path="url(#pca04678265)" style="fill: #0072b2; stroke: #0072b2; stroke-width: 1.35; stroke-linecap: round"/>
+   </g>
+   <g id="patch_13">
+    <path d="M 169.632 160.74 
+Q 183.024 170.892 195.213195 180.132196 
+" clip-path="url(#pca04678265)" style="fill: none; stroke: #17365d; stroke-width: 1.35; stroke-linecap: round"/>
+    <path d="M 193.035846 175.720944 
+L 195.213195 180.132196 
+L 190.377784 179.227324 
+z
+" clip-path="url(#pca04678265)" style="fill: #17365d; stroke: #17365d; stroke-width: 1.35; stroke-linecap: round"/>
+   </g>
+   <g id="patch_14">
+    <path d="M 361.584 181.044 
+Q 370.512 181.044 377.930654 181.044 
+" clip-path="url(#pca04678265)" style="fill: none; stroke: #17365d; stroke-width: 1.35; stroke-linecap: round"/>
+    <path d="M 373.530654 178.844 
+L 377.930654 181.044 
+L 373.530654 183.244 
+z
+" clip-path="url(#pca04678265)" style="fill: #17365d; stroke: #17365d; stroke-width: 1.35; stroke-linecap: round"/>
+   </g>
+   <g id="patch_15">
+    <path d="M 553.536 181.044 
+Q 562.464 181.044 569.882654 181.044 
+" clip-path="url(#pca04678265)" style="fill: none; stroke: #17365d; stroke-width: 1.35; stroke-linecap: round"/>
+    <path d="M 565.482654 178.844 
+L 569.882654 181.044 
+L 565.482654 183.244 
+z
+" clip-path="url(#pca04678265)" style="fill: #17365d; stroke: #17365d; stroke-width: 1.35; stroke-linecap: round"/>
+   </g>
+   <g id="patch_16">
+    <path d="M 727.632 181.044 
+Q 736.56 181.044 743.978654 181.044 
+" clip-path="url(#pca04678265)" style="fill: none; stroke: #17365d; stroke-width: 1.35; stroke-linecap: round"/>
+    <path d="M 739.578654 178.844 
+L 743.978654 181.044 
+L 739.578654 183.244 
+z
+" clip-path="url(#pca04678265)" style="fill: #17365d; stroke: #17365d; stroke-width: 1.35; stroke-linecap: round"/>
+   </g>
+   <g id="patch_17">
+    <path d="M 95.976 199.656 
+Q 95.976 223.344 95.976 245.522654 
+" clip-path="url(#pca04678265)" style="fill: none; stroke: #4d4d4d; stroke-width: 1.35; stroke-linecap: round"/>
+    <path d="M 98.176 241.122654 
+L 95.976 245.522654 
+L 93.776 241.122654 
+z
+" clip-path="url(#pca04678265)" style="fill: #4d4d4d; stroke: #4d4d4d; stroke-width: 1.35; stroke-linecap: round"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 9.5px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #0072b2" x="196.416" y="22.069852" transform="rotate(-0 196.416 22.069852)">PARALLEL LANE A  ·  DIRECT PUBLIC-SUMMARY EVIDENCE</text>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: end; fill: #5b6573" x="874.944" y="21.967312" transform="rotate(-0 874.944 21.967312)">All 47 frozen contexts</text>
+   </g>
+   <g id="text_3">
+    <text style="font-weight: 700; font-size: 9.5px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="196.416" y="114.504188" transform="rotate(-0 196.416 114.504188)">PARALLEL LANE B  ·  NUCLEAR REGIONAL + MOLECULAR-QTL PATH</text>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: end; fill: #5b6573" x="874.944" y="114.075984" transform="rotate(-0 874.944 114.075984)">27 contexts  ·  19 genes</text>
+   </g>
+   <g id="text_5">
+    <text style="font-weight: 700; font-size: 10px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #ffffff" transform="translate(34.8192 102.649419)">Frozen</text>
+    <text style="font-weight: 700; font-size: 10px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #ffffff" transform="translate(34.8192 112.803325)">candidate set</text>
+   </g>
+   <g id="text_6">
+    <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #ffffff" transform="translate(56.341313 136.913063)">47 contexts</text>
+    <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #ffffff" transform="translate(39.937875 148.128375)">25 unique genes</text>
+   </g>
+   <g id="text_7">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #ffffff" transform="translate(50.479594 164.928038)">Top-five network set</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #ffffff" transform="translate(49.231547 174.378038)">no genetic reranking</text>
+   </g>
+   <g id="text_8">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #d7dee8" x="95.976" y="191.987438" transform="rotate(-0 95.976 191.987438)">Frozen before genetic results</text>
+   </g>
+   <g id="text_9">
+    <text style="font-weight: 700; font-size: 10.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="208.0224" y="54.170719" transform="rotate(-0 208.0224 54.170719)">FunGen-xQTL direct-summary screen</text>
+   </g>
+   <g id="text_10">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #333333" x="208.0224" y="71.819437" transform="rotate(-0 208.0224 71.819437)">AD fine-mapping  ·  brain xQTL  ·  TWAS</text>
+   </g>
+   <g id="text_11">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #5b6573" x="208.0224" y="82.043438" transform="rotate(-0 208.0224 82.043438)">Pinned public snapshot  f6f63fc…</text>
+   </g>
+   <g id="text_12">
+    <text style="font-weight: 700; font-size: 10.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="556.2144" y="54.170719" transform="rotate(-0 556.2144 54.170719)">Direct candidate mapping + formal grade</text>
+   </g>
+   <g id="text_13">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #333333" x="556.2144" y="71.819437" transform="rotate(-0 556.2144 71.819437)">Source inclusion/confidence fields retain their meaning</text>
+   </g>
+   <g id="text_14">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #5b6573" x="556.2144" y="82.915313" transform="rotate(-0 556.2144 82.915313)">Not classical PP.H4 values</text>
+   </g>
+   <g id="text_15">
+    <text style="font-weight: 700; font-size: 10px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="206.2368" y="152.140313" transform="rotate(-0 206.2368 152.140313)">1  Regional signal</text>
+   </g>
+   <g id="text_16">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #333333" x="206.2368" y="172.324238" transform="rotate(-0 206.2368 172.324238)">Bellenguez AD  ·  GCST90027158</text>
+   </g>
+   <g id="text_17">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(206.2368 187.667859)">CSF GWAS: GCST90726396</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(206.2368 197.747859)">GCST90726397  ·  GCST90726398</text>
+   </g>
+   <g id="text_18">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #5b6573" x="206.2368" y="221.063766" transform="rotate(-0 206.2368 221.063766)">54 AD e/sQTL routes  ·  57 CSF screens</text>
+   </g>
+   <g id="text_19">
+    <text style="font-weight: 700; font-size: 10px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="389.2608" y="152.489531" transform="rotate(-0 389.2608 152.489531)">2  Candidate molecular QTL</text>
+   </g>
+   <g id="text_20">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #333333" x="389.2608" y="172.324238" transform="rotate(-0 389.2608 172.324238)">NG00184.v1  ·  eQTL Catalogue r7</text>
+   </g>
+   <g id="text_21">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(389.2608 186.875438)">eQTL  ·  sQTL  ·  targeted pQTL</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(389.2608 197.747859)">APOE: NG00130.v2</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(389.2608 207.907313)">RPS15: NG00184.v1 audit</text>
+   </g>
+   <g id="text_22">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #5b6573" x="389.2608" y="220.787438" transform="rotate(-0 389.2608 220.787438)">Exact → lineage → bulk-brain fallback</text>
+   </g>
+   <g id="text_23">
+    <text style="font-weight: 700; font-size: 10px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="581.2128" y="152.179375" transform="rotate(-0 581.2128 152.179375)">3  Compatible inputs</text>
+   </g>
+   <g id="text_24">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #333333" x="581.2128" y="173.196112" transform="rotate(-0 581.2128 173.196112)">Alleles  ·  build  ·  variant order</text>
+   </g>
+   <g id="text_25">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(581.2128 186.875438)">Complete fitted model</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(581.2128 197.368172)">Source-matched,</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(581.2128 207.035438)">ancestry-compatible LD</text>
+   </g>
+   <g id="text_26">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #5b6573" x="581.2128" y="220.787438" transform="rotate(-0 581.2128 220.787438)">All inputs are required</text>
+   </g>
+   <g id="text_27">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="755.3088" y="151.308281" transform="rotate(-0 755.3088 151.308281)">4  Shared-signal test</text>
+   </g>
+   <g id="text_28">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #333333" x="755.3088" y="172.324238" transform="rotate(-0 755.3088 172.324238)">Multi-signal H0–H4</text>
+   </g>
+   <g id="text_29">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(755.3088 186.875438)">Runs only after all</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(755.3088 196.695984)">upstream gates pass</text>
+   </g>
+   <g id="text_30">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #5b6573" x="755.3088" y="221.659312" transform="rotate(-0 755.3088 221.659312)">Else PP.H4 is unavailable</text>
+   </g>
+   <g id="text_31">
+    <text style="font-weight: 700; font-size: 10px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="33.9264" y="267.534713" transform="rotate(-0 33.9264 267.534713)">Separate mtDNA design</text>
+   </g>
+   <g id="text_32">
+    <text style="font-size: 9.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #333333" x="33.9264" y="286.375006" transform="rotate(-0 33.9264 286.375006)">20 contexts  ·  6 genes</text>
+   </g>
+   <g id="text_33">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(33.9264 302.277038)">Nuclear routes not applicable</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #5b6573" transform="translate(33.9264 311.997038)">—not a negative result</text>
+   </g>
+   <g id="text_34">
+    <text style="font-weight: 700; font-size: 10.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="212.4864" y="288.085763" transform="rotate(-0 212.4864 288.085763)">A route stops at the first failed requirement.</text>
+   </g>
+   <g id="text_35">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #333333" x="212.4864" y="307.381838" transform="rotate(-0 212.4864 307.381838)">Arrows show analysis flow—not a causal mechanism.</text>
+   </g>
+   <g id="text_36">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #0072b2" x="180.3456" y="98.032781" transform="rotate(-0 180.3456 98.032781)">A</text>
+   </g>
+   <g id="text_37">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #17365d" x="180.3456" y="174.849581" transform="rotate(-0 180.3456 174.849581)">B</text>
+   </g>
+   <g id="text_38">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #4d4d4d" x="95.976" y="230.008781" transform="rotate(-0 95.976 230.008781)">mtDNA</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pca04678265">
+   <rect x="0" y="0" width="892.8" height="338.4"/>
+  </clipPath>
+ </defs>
+</svg>

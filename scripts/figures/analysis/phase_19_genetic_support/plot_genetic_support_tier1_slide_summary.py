@@ -27,6 +27,7 @@ SCHEMA = "genetic_support_tier1_slide_summary_v1"
 INPUT_SCHEMA = "human_genetic_support_tier1_v1"
 FIGURE_SIZE = (12.4, 4.7)
 PNG_DPI = 450
+DEFAULT_OUTPUT_ROOT = "results/figures/analysis/phase_19_genetic_support/tier1_summary"
 OUTPUT_FILES = [
     "genetic_support_tier1_slide_summary.png",
     "genetic_support_tier1_slide_summary.pdf",
@@ -85,7 +86,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--output-root",
-        default="results/figures/analysis/phase_19_genetic_support",
+        default=DEFAULT_OUTPUT_ROOT,
     )
     parser.add_argument("--force", action="store_true")
     return parser.parse_args()

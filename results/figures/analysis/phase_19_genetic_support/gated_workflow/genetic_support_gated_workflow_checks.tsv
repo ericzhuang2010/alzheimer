@@ -1,0 +1,30 @@
+schema_version	check_id	severity	status	expected	observed	detail
+genetic_support_gated_workflow_v1	candidate_contexts	blocking	pass	47	47	Frozen gene × network contexts.
+genetic_support_gated_workflow_v1	unique_genes	blocking	pass	25	25	Frozen unique genes.
+genetic_support_gated_workflow_v1	nuclear_contexts	blocking	pass	27	27	Contexts entering the nuclear path.
+genetic_support_gated_workflow_v1	nuclear_genes	blocking	pass	19	19	Genes entering the nuclear path.
+genetic_support_gated_workflow_v1	mtdna_contexts	blocking	pass	20	20	Contexts requiring a separate mtDNA design.
+genetic_support_gated_workflow_v1	mtdna_genes	blocking	pass	6	6	Unique mtDNA genes.
+genetic_support_gated_workflow_v1	phase18_sha256	blocking	pass	b917f70e6edcdf030f63e88ba8fbc5b22b80714599c12c80ea449e8c38bd51d8	b917f70e6edcdf030f63e88ba8fbc5b22b80714599c12c80ea449e8c38bd51d8	Frozen upstream identity.
+genetic_support_gated_workflow_v1	candidate_manifest_parity	blocking	pass	True	True	Phase 18 and Tier 1 scopes match.
+genetic_support_gated_workflow_v1	clinical_ad_routes	blocking	pass	54	54	Nuclear candidate-context × eQTL/sQTL routes.
+genetic_support_gated_workflow_v1	recovery_decisions	blocking	pass	54	54	Every AD route has a frozen decision row.
+genetic_support_gated_workflow_v1	csf_gene_trait_screens	blocking	pass	57	57	Nineteen nuclear genes × three CSF traits.
+genetic_support_gated_workflow_v1	tier1_status	blocking	pass	validated_complete_tier1	validated_complete_tier1	Tier 1 bundle status.
+genetic_support_gated_workflow_v1	tier2_status	blocking	pass	validated_complete_tier2	validated_complete_tier2	Tier 2 regional bundle status.
+genetic_support_gated_workflow_v1	recovery_status	blocking	pass	validated_complete_tier2_recovery	validated_complete_tier2_recovery	Recovery bundle status.
+genetic_support_gated_workflow_v1	endophenotype_status	blocking	pass	validated_complete	validated_complete	Endophenotype bundle status.
+genetic_support_gated_workflow_v1	rps15_status	blocking	pass	validated_complete_opc_rps15_public_recovery	validated_complete_opc_rps15_public_recovery	RPS15 audit bundle status.
+genetic_support_gated_workflow_v1	fungen_release	blocking	pass	f6f63fc319a417213cf1e86ec0eb14fcb53d2427	f6f63fc319a417213cf1e86ec0eb14fcb53d2427	Pinned Tier 1 public release.
+genetic_support_gated_workflow_v1	recovery_qtl_datasets	blocking	pass	6	6	Frozen eQTL Catalogue recovery datasets.
+genetic_support_gated_workflow_v1	bellenguez_accession_visible	blocking	pass	True	True	Clinical-AD dataset label.
+genetic_support_gated_workflow_v1	all_csf_accessions_visible	blocking	pass	True	True	All three CSF GWAS labels.
+genetic_support_gated_workflow_v1	bellenguez_sample_counts_omitted	blocking	pass	True	True	Conflicting sample counts are intentionally omitted.
+genetic_support_gated_workflow_v1	parallel_lanes	blocking	pass	2	2	Direct-summary and nuclear gated paths.
+genetic_support_gated_workflow_v1	route_stop_rule_visible	blocking	pass	True	True	Gated interpretation boundary.
+genetic_support_gated_workflow_v1	arrows_not_causal_visible	blocking	pass	True	True	Arrow semantics are explicit.
+genetic_support_gated_workflow_v1	png_dimensions	blocking	pass	5580x2115	5580x2115	Exact slide-native raster dimensions at 450 DPI.
+genetic_support_gated_workflow_v1	png_dpi	blocking	pass	450	450	PNG metadata resolution rounded to the requested DPI.
+genetic_support_gated_workflow_v1	pdf_signature	blocking	pass	%PDF-	%PDF-	Vector PDF has the expected file signature.
+genetic_support_gated_workflow_v1	svg_vector_root	blocking	pass	present	present	SVG contains a vector root element.
+genetic_support_gated_workflow_v1	svg_editable_text	blocking	pass	present	present	SVG preserves labels as editable text.

@@ -9,10 +9,10 @@ The reproducible renderer is
 with automated validation in
 [`test_phase19_genetic_support_tier1_slide_summary.py`](../../../../tests/test_phase19_genetic_support_tier1_slide_summary.py).
 The nine-file validated package is under
-[`results/figures/analysis/phase_19_genetic_support`](../../../../results/figures/analysis/phase_19_genetic_support/),
-including the [PNG slide asset](../../../../results/figures/analysis/phase_19_genetic_support/genetic_support_tier1_slide_summary.png),
-[vector PDF](../../../../results/figures/analysis/phase_19_genetic_support/genetic_support_tier1_slide_summary.pdf),
-and [editable SVG](../../../../results/figures/analysis/phase_19_genetic_support/genetic_support_tier1_slide_summary.svg).
+[`results/figures/analysis/phase_19_genetic_support/tier1_summary`](../../../../results/figures/analysis/phase_19_genetic_support/tier1_summary/),
+including the [PNG slide asset](../../../../results/figures/analysis/phase_19_genetic_support/tier1_summary/genetic_support_tier1_slide_summary.png),
+[vector PDF](../../../../results/figures/analysis/phase_19_genetic_support/tier1_summary/genetic_support_tier1_slide_summary.pdf),
+and [editable SVG](../../../../results/figures/analysis/phase_19_genetic_support/tier1_summary/genetic_support_tier1_slide_summary.svg).
 
 All automated tests and independent artifact checks passed. The final graphic
 was reviewed in color and grayscale at the intended slide size. The
@@ -374,7 +374,7 @@ The plotting script will contain separate functions for:
 ### Generated figure package
 
 ```text
-results/figures/analysis/phase_19_genetic_support/
+results/figures/analysis/phase_19_genetic_support/tier1_summary/
     genetic_support_tier1_slide_summary.png
     genetic_support_tier1_slide_summary.pdf
     genetic_support_tier1_slide_summary.svg

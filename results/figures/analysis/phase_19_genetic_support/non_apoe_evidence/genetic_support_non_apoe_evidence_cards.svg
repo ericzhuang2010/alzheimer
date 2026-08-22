@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="892.8pt" height="338.4pt" viewBox="0 0 892.8 338.4" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>matplotlib</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 338.4 
+L 892.8 338.4 
+L 892.8 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 20.5344 163.1088 
+L 432.1152 163.1088 
+Q 442.8288 163.1088 442.8288 159.048 
+L 442.8288 8.1216 
+Q 442.8288 4.0608 432.1152 4.0608 
+L 20.5344 4.0608 
+Q 9.8208 4.0608 9.8208 8.1216 
+L 9.8208 159.048 
+Q 9.8208 163.1088 20.5344 163.1088 
+z
+" clip-path="url(#pca04678265)" style="fill: #ffffff; stroke: #e69f00; stroke-width: 1.25; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 19.6416 37.5624 
+L 433.008 37.5624 
+Q 441.936 37.5624 441.936 34.1784 
+L 441.936 8.7984 
+Q 441.936 5.4144 433.008 5.4144 
+L 19.6416 5.4144 
+Q 10.7136 5.4144 10.7136 8.7984 
+L 10.7136 34.1784 
+Q 10.7136 37.5624 19.6416 37.5624 
+z
+" clip-path="url(#pca04678265)" style="fill: #fff4dd"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 33.9264 157.356 
+L 418.7232 157.356 
+Q 424.9728 157.356 424.9728 154.9872 
+L 424.9728 139.4208 
+Q 424.9728 137.052 418.7232 137.052 
+L 33.9264 137.052 
+Q 27.6768 137.052 27.6768 139.4208 
+L 27.6768 154.9872 
+Q 27.6768 157.356 33.9264 157.356 
+z
+" clip-path="url(#pca04678265)" style="fill: #f1f1f1; stroke: #d7dee8; stroke-width: 0.7; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 460.6848 163.1088 
+L 872.2656 163.1088 
+Q 882.9792 163.1088 882.9792 159.048 
+L 882.9792 8.1216 
+Q 882.9792 4.0608 872.2656 4.0608 
+L 460.6848 4.0608 
+Q 449.9712 4.0608 449.9712 8.1216 
+L 449.9712 159.048 
+Q 449.9712 163.1088 460.6848 163.1088 
+z
+" clip-path="url(#pca04678265)" style="fill: #ffffff; stroke: #e69f00; stroke-width: 1.25; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 459.792 37.5624 
+L 873.1584 37.5624 
+Q 882.0864 37.5624 882.0864 34.1784 
+L 882.0864 8.7984 
+Q 882.0864 5.4144 873.1584 5.4144 
+L 459.792 5.4144 
+Q 450.864 5.4144 450.864 8.7984 
+L 450.864 34.1784 
+Q 450.864 37.5624 459.792 37.5624 
+z
+" clip-path="url(#pca04678265)" style="fill: #fff4dd"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 474.0768 157.356 
+L 858.8736 157.356 
+Q 865.1232 157.356 865.1232 154.9872 
+L 865.1232 139.4208 
+Q 865.1232 137.052 858.8736 137.052 
+L 474.0768 137.052 
+Q 467.8272 137.052 467.8272 139.4208 
+L 467.8272 154.9872 
+Q 467.8272 157.356 474.0768 157.356 
+z
+" clip-path="url(#pca04678265)" style="fill: #f1f1f1; stroke: #d7dee8; stroke-width: 0.7; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 20.5344 324.5256 
+L 432.1152 324.5256 
+Q 442.8288 324.5256 442.8288 320.4648 
+L 442.8288 169.5384 
+Q 442.8288 165.4776 432.1152 165.4776 
+L 20.5344 165.4776 
+Q 9.8208 165.4776 9.8208 169.5384 
+L 9.8208 320.4648 
+Q 9.8208 324.5256 20.5344 324.5256 
+z
+" clip-path="url(#pca04678265)" style="fill: #ffffff; stroke: #d55e00; stroke-width: 1.25; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 19.6416 198.9792 
+L 433.008 198.9792 
+Q 441.936 198.9792 441.936 195.5952 
+L 441.936 170.2152 
+Q 441.936 166.8312 433.008 166.8312 
+L 19.6416 166.8312 
+Q 10.7136 166.8312 10.7136 170.2152 
+L 10.7136 195.5952 
+Q 10.7136 198.9792 19.6416 198.9792 
+z
+" clip-path="url(#pca04678265)" style="fill: #fbeae4"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 33.9264 318.7728 
+L 418.7232 318.7728 
+Q 424.9728 318.7728 424.9728 316.404 
+L 424.9728 300.8376 
+Q 424.9728 298.4688 418.7232 298.4688 
+L 33.9264 298.4688 
+Q 27.6768 298.4688 27.6768 300.8376 
+L 27.6768 316.404 
+Q 27.6768 318.7728 33.9264 318.7728 
+z
+" clip-path="url(#pca04678265)" style="fill: #f1f1f1; stroke: #d7dee8; stroke-width: 0.7; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 460.6848 324.5256 
+L 872.2656 324.5256 
+Q 882.9792 324.5256 882.9792 320.4648 
+L 882.9792 169.5384 
+Q 882.9792 165.4776 872.2656 165.4776 
+L 460.6848 165.4776 
+Q 449.9712 165.4776 449.9712 169.5384 
+L 449.9712 320.4648 
+Q 449.9712 324.5256 460.6848 324.5256 
+z
+" clip-path="url(#pca04678265)" style="fill: #ffffff; stroke: #4d4d4d; stroke-width: 1.25; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_12">
+    <path d="M 459.792 198.9792 
+L 873.1584 198.9792 
+Q 882.0864 198.9792 882.0864 195.5952 
+L 882.0864 170.2152 
+Q 882.0864 166.8312 873.1584 166.8312 
+L 459.792 166.8312 
+Q 450.864 166.8312 450.864 170.2152 
+L 450.864 195.5952 
+Q 450.864 198.9792 459.792 198.9792 
+z
+" clip-path="url(#pca04678265)" style="fill: #f1f1f1"/>
+   </g>
+   <g id="patch_13">
+    <path d="M 474.0768 318.7728 
+L 858.8736 318.7728 
+Q 865.1232 318.7728 865.1232 316.404 
+L 865.1232 300.8376 
+Q 865.1232 298.4688 858.8736 298.4688 
+L 474.0768 298.4688 
+Q 467.8272 298.4688 467.8272 300.8376 
+L 467.8272 316.404 
+Q 467.8272 318.7728 474.0768 318.7728 
+z
+" clip-path="url(#pca04678265)" style="fill: #f1f1f1; stroke: #d7dee8; stroke-width: 0.7; stroke-linejoin: miter"/>
+   </g>
+   <g id="line2d_1">
+    <path d="M 33.0336 91.0296 
+L 419.616 91.0296 
+" clip-path="url(#pca04678265)" style="fill: none; stroke: #d7dee8; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_2">
+    <path d="M 473.184 91.0296 
+L 859.7664 91.0296 
+" clip-path="url(#pca04678265)" style="fill: none; stroke: #d7dee8; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_3">
+    <path d="M 33.0336 252.4464 
+L 419.616 252.4464 
+" clip-path="url(#pca04678265)" style="fill: none; stroke: #d7dee8; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_4">
+    <path d="M 473.184 252.4464 
+L 859.7664 252.4464 
+" clip-path="url(#pca04678265)" style="fill: none; stroke: #d7dee8; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 16.5px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="31.248" y="26.986542" transform="rotate(-0 31.248 26.986542)">COX7C</text>
+   </g>
+   <g id="text_2">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: end; fill: #e69f00" x="423.1872" y="23.902988" transform="rotate(-0 423.1872 23.902988)">WEAK / UNRESOLVED</text>
+   </g>
+   <g id="text_3">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #e69f00" x="33.0336" y="50.990259" transform="rotate(-0 33.0336 50.990259)">WHAT THE DATA SHOW</text>
+   </g>
+   <g id="text_4">
+    <text style="font-weight: 700; font-size: 9.4px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(33.0336 67.793094)">One bulk-brain AD×sQTL summary entry (rs2010322)</text>
+    <text style="font-weight: 700; font-size: 9.4px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(33.0336 79.449094)">Bellenguez ±1 Mb: Pmin 8.579 × 10⁻¹⁴ (rs62375397)</text>
+   </g>
+   <g id="text_5">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #5b6573" x="33.0336" y="104.119059" transform="rotate(-0 33.0336 104.119059)">INTERPRETIVE BOUNDARY</text>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 9.1px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(33.0336 121.152831)">One Tier 1 record appears in two network contexts.</text>
+    <text style="font-size: 9.1px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(33.0336 132.254831)">Dense eQTL gates failed; sQTL/H0–H4 remains unresolved.</text>
+   </g>
+   <g id="text_7">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #5b6573" x="226.3248" y="149.687438" transform="rotate(-0 226.3248 149.687438)">Tier 1 weak · 2 contexts     CSF 0/3 passed</text>
+   </g>
+   <g id="text_8">
+    <text style="font-weight: 700; font-size: 16.5px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="471.3984" y="26.986542" transform="rotate(-0 471.3984 26.986542)">SELENOW</text>
+   </g>
+   <g id="text_9">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: end; fill: #e69f00" x="863.3376" y="24.256659" transform="rotate(-0 863.3376 24.256659)">WEAK SUMMARY EVIDENCE ONLY</text>
+   </g>
+   <g id="text_10">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #e69f00" x="473.184" y="50.990259" transform="rotate(-0 473.184 50.990259)">WHAT THE DATA SHOW</text>
+   </g>
+   <g id="text_11">
+    <text style="font-weight: 700; font-size: 9.4px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(473.184 67.793094)">FunGen public TWAS gene-list membership</text>
+    <text style="font-weight: 700; font-size: 9.4px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(473.184 79.449094)">Bellenguez window: Pmin 6.410 × 10⁻⁵; fails 5 × 10⁻⁸ gate</text>
+   </g>
+   <g id="text_12">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #5b6573" x="473.184" y="104.119059" transform="rotate(-0 473.184 104.119059)">INTERPRETIVE BOUNDARY</text>
+   </g>
+   <g id="text_13">
+    <text style="font-size: 9.1px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(473.184 121.152831)">No model statistic, replication, or exact excitatory context.</text>
+    <text style="font-size: 9.1px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(473.184 132.254831)">Nearby Wightman variants are proximity-only; QTL route not triggered.</text>
+   </g>
+   <g id="text_14">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #5b6573" x="666.4752" y="149.687438" transform="rotate(-0 666.4752 149.687438)">Tier 1 weak · 1 context     CSF 0/3 passed</text>
+   </g>
+   <g id="text_15">
+    <text style="font-weight: 700; font-size: 16.5px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="31.248" y="188.403342" transform="rotate(-0 31.248 188.403342)">RPS15</text>
+   </g>
+   <g id="text_16">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: end; fill: #d55e00" x="423.1872" y="185.673459" transform="rotate(-0 423.1872 185.673459)">HIGHEST-PRIORITY UNRESOLVED</text>
+   </g>
+   <g id="text_17">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #d55e00" x="33.0336" y="212.407059" transform="rotate(-0 33.0336 212.407059)">WHAT THE DATA SHOW</text>
+   </g>
+   <g id="text_18">
+    <text style="font-weight: 700; font-size: 9.4px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(33.0336 229.209894)">Bellenguez ±1 Mb: Pmin 4.089 × 10⁻³⁰ (rs12151021)</text>
+    <text style="font-weight: 700; font-size: 9.4px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(33.0336 240.865894)">Walker neocortex eQTL: P 2.120 × 10⁻⁶; passes 3.759 × 10⁻⁶ gate</text>
+   </g>
+   <g id="text_19">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #5b6573" x="33.0336" y="265.535859" transform="rotate(-0 33.0336 265.535859)">INTERPRETIVE BOUNDARY</text>
+   </g>
+   <g id="text_20">
+    <text style="font-size: 9.1px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(33.0336 282.569631)">Complete candidate-QTL model and source-matched LD unavailable.</text>
+    <text style="font-size: 9.1px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(33.0336 293.671631)">3 bulk-brain tracks; gene/context unresolved; PP.H4 unavailable.</text>
+   </g>
+   <g id="text_21">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #5b6573" x="226.3248" y="311.104238" transform="rotate(-0 226.3248 311.104238)">Supplemental: 31/37 measured · 3 tracks     CSF 0/3 passed</text>
+   </g>
+   <g id="text_22">
+    <text style="font-weight: 700; font-size: 16.5px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #17365d" x="471.3984" y="188.412366" transform="rotate(-0 471.3984 188.412366)">ANKRD11</text>
+   </g>
+   <g id="text_23">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: end; fill: #d55e00" x="863.3376" y="185.673459" transform="rotate(-0 863.3376 185.673459)">REGIONAL EVIDENCE ONLY</text>
+   </g>
+   <g id="text_24">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #d55e00" x="473.184" y="212.407059" transform="rotate(-0 473.184 212.407059)">WHAT THE DATA SHOW</text>
+   </g>
+   <g id="text_25">
+    <text style="font-weight: 700; font-size: 9.4px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(473.184 229.209894)">Bellenguez ±1 Mb: Pmin 1.283 × 10⁻¹¹ (rs56407236)</text>
+    <text style="font-weight: 700; font-size: 9.4px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(473.184 240.865894)">Walker eQTL: P 1.819 × 10⁻⁴; fails 4.522 × 10⁻⁶ gate</text>
+   </g>
+   <g id="text_26">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #5b6573" x="473.184" y="265.535859" transform="rotate(-0 473.184 265.535859)">INTERPRETIVE BOUNDARY</text>
+   </g>
+   <g id="text_27">
+    <text style="font-size: 9.1px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(473.184 282.569631)">sQTL measurement unresolved; no primary H0–H4 result.</text>
+    <text style="font-size: 9.1px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #333333" transform="translate(473.184 293.671631)">Regional proximity does not assign the candidate gene.</text>
+   </g>
+   <g id="text_28">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #5b6573" x="666.4752" y="311.104238" transform="rotate(-0 666.4752 311.104238)">Tier 1 none found · 1 context     CSF 0/3 passed</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pca04678265">
+   <rect x="0" y="0" width="892.8" height="338.4"/>
+  </clipPath>
+ </defs>
+</svg>

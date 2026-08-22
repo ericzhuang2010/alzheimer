@@ -24,7 +24,7 @@ from pptx.util import Inches, Pt
 
 REPO = Path(__file__).resolve().parents[2]
 FIG_ROOT = REPO / "results/figures/analysis/phase_18_key_driver_selection"
-GENETIC_SUPPORT_FIG_ROOT = REPO / "results/figures/analysis/phase_19_genetic_support"
+GENETIC_SUPPORT_FIG_ROOT = REPO / "results/figures/analysis/phase_19_genetic_support/tier1_summary"
 DEFAULT_OUT = REPO / "docs/presentations/key_driver_selection_analysis 08192026.pptx"
 
 FIG = {
