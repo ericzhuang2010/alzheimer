@@ -1,0 +1,7 @@
+schema_version	figure_id	case_id	region	region_count	region_genes	rosmap_unique_genes	seaad_unique_genes	rosmap_center_x	seaad_center_x	rosmap_radius	seaad_radius	geometry	center_distance	geometry_margin
+seaad_rosmap_top_driver_gene_overlap_slide_region_summary_v1	seaad_rosmap_top_driver_gene_overlap_slide	mt_driver	rosmap_only	4	COX4I1|COX6B1|COX7C|UQCR10	10	6	-0.1	0.2	1.25	0.93	nested_containment	0.30000000000000004	0.019999999999999907
+seaad_rosmap_top_driver_gene_overlap_slide_region_summary_v1	seaad_rosmap_top_driver_gene_overlap_slide	mt_driver	common	6	MT-ATP6|MT-CO2|MT-CO3|MT-CYB|MT-ND4|MT-ND5	10	6	-0.1	0.2	1.25	0.93	nested_containment	0.30000000000000004	0.019999999999999907
+seaad_rosmap_top_driver_gene_overlap_slide_region_summary_v1	seaad_rosmap_top_driver_gene_overlap_slide	mt_driver	seaad_only	0		10	6	-0.1	0.2	1.25	0.93	nested_containment	0.30000000000000004	0.019999999999999907
+seaad_rosmap_top_driver_gene_overlap_slide_region_summary_v1	seaad_rosmap_top_driver_gene_overlap_slide	non_mt_driver	rosmap_only	15	ANKRD11|APOE|ATP6V1F|DYNLT1|FTL|LAMTOR5|LAPTM4A|NCOA1|RPL11|RPL15|RPL38|RPLP1|RPS13|RPS15|SELENOW	15	5	-1.55	1.75	1.42	0.82	disjoint	3.3	1.06
+seaad_rosmap_top_driver_gene_overlap_slide_region_summary_v1	seaad_rosmap_top_driver_gene_overlap_slide	non_mt_driver	common	0		15	5	-1.55	1.75	1.42	0.82	disjoint	3.3	1.06
+seaad_rosmap_top_driver_gene_overlap_slide_region_summary_v1	seaad_rosmap_top_driver_gene_overlap_slide	non_mt_driver	seaad_only	5	BEX3|HGSNAT|KANSL1L|RPL30|RPS27A	15	5	-1.55	1.75	1.42	0.82	disjoint	3.3	1.06

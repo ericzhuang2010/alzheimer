@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="864pt" height="381.6pt" viewBox="0 0 864 381.6" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <title>Gene-level ROSMAP and SEA-AD key-driver overlap</title>
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:title>Gene-level ROSMAP and SEA-AD key-driver overlap</dc:title>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Validation-human slide figure renderer</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 381.6 
+L 864 381.6 
+L 864 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 246.00531 265.459881 
+C 270.865417 265.459881 294.710666 255.582856 312.289416 238.004106 
+C 329.868166 220.425355 339.745192 196.580107 339.745192 171.72 
+C 339.745192 146.859893 329.868166 123.014645 312.289416 105.435894 
+C 294.710666 87.857144 270.865417 77.980119 246.00531 77.980119 
+C 221.145203 77.980119 197.299955 87.857144 179.721205 105.435894 
+C 162.142454 123.014645 152.265429 146.859893 152.265429 171.72 
+C 152.265429 196.580107 162.142454 220.425355 179.721205 238.004106 
+C 197.299955 255.582856 221.145203 265.459881 246.00531 265.459881 
+z
+" clip-path="url(#p65ca39c30a)" style="fill: url(#h49f6b465a4); stroke: #e69f00; stroke-width: 2.3; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 268.502882 241.462472 
+C 286.998802 241.462472 304.739666 234.113965 317.818256 221.035375 
+C 330.896847 207.956784 338.245353 190.21592 338.245353 171.72 
+C 338.245353 153.22408 330.896847 135.483216 317.818256 122.404625 
+C 304.739666 109.326035 286.998802 101.977528 268.502882 101.977528 
+C 250.006962 101.977528 232.266097 109.326035 219.187507 122.404625 
+C 206.108917 135.483216 198.76041 153.22408 198.76041 171.72 
+C 198.76041 190.21592 206.108917 207.956784 219.187507 221.035375 
+C 232.266097 234.113965 250.006962 241.462472 268.502882 241.462472 
+z
+" clip-path="url(#p65ca39c30a)" style="fill: #bfe8dc; stroke: #009e73; stroke-width: 2.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 20px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #20252b" x="17.28" y="41.378863" transform="rotate(-0 17.28 41.378863)">A</text>
+   </g>
+   <g id="text_2">
+    <text style="font-weight: 700; font-size: 17px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #e69f00" x="192.011139" y="74.147025" transform="rotate(-0 192.011139 74.147025)">ROSMAP • 10</text>
+   </g>
+   <g id="text_3">
+    <text style="font-weight: 700; font-size: 17px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #009e73" x="301.49932" y="101.89403" transform="rotate(-0 301.49932 101.89403)">SEA-AD • 6</text>
+   </g>
+   <g id="text_4">
+    <text style="font-weight: 700; font-size: 17px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #0f233d" x="268.502882" y="135.640387" transform="rotate(-0 268.502882 135.640387)">Common • 6</text>
+   </g>
+   <g id="text_5">
+    <text style="font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #5e6670" x="270.00272" y="273.366352" transform="rotate(-0 270.00272 273.366352)">SEA-AD only: 0 (∅)</text>
+   </g>
+   <g id="text_6">
+    <text style="font-weight: 700; font-size: 20px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #20252b" x="221.632941" y="47.482547" transform="rotate(-0 221.632941 47.482547)">MT driver class</text>
+   </g>
+   <g id="text_7">
+    <text style="font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #20252b" x="268.502882" y="156.378355" transform="rotate(-0 268.502882 156.378355)">MT-ATP6*</text>
+   </g>
+   <g id="text_8">
+    <text style="font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #20252b" x="268.502882" y="171.376736" transform="rotate(-0 268.502882 171.376736)">MT-CO2</text>
+   </g>
+   <g id="text_9">
+    <text style="font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #20252b" x="268.502882" y="186.375117" transform="rotate(-0 268.502882 186.375117)">MT-CO3</text>
+   </g>
+   <g id="text_10">
+    <text style="font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #20252b" x="268.502882" y="201.373498" transform="rotate(-0 268.502882 201.373498)">MT-CYB</text>
+   </g>
+   <g id="text_11">
+    <text style="font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #20252b" x="268.502882" y="216.371879" transform="rotate(-0 268.502882 216.371879)">MT-ND4*</text>
+   </g>
+   <g id="text_12">
+    <text style="font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #20252b" x="268.502882" y="231.37026" transform="rotate(-0 268.502882 231.37026)">MT-ND5</text>
+   </g>
+   <g id="patch_4">
+    <path d="M 101.774557 171.72 
+Q 133.893521 171.72 166.012485 171.72 
+" style="fill: none; stroke: #e69f00; stroke-width: 2; stroke-linecap: round"/>
+   </g>
+   <g id="text_13">
+    <g id="patch_5">
+     <path d="M 30.229846 205.645312 
+L 169.312346 205.645312 
+Q 174.432346 205.645312 174.432346 200.525312 
+L 174.432346 142.914687 
+Q 174.432346 137.794687 169.312346 137.794687 
+L 30.229846 137.794687 
+Q 25.109846 137.794687 25.109846 142.914687 
+L 25.109846 200.525312 
+Q 25.109846 205.645312 30.229846 205.645312 
+z
+" style="fill: url(#h4761492750); stroke: #e69f00; stroke-width: 2; stroke-linejoin: miter"/>
+    </g>
+    <text style="font-size: 16px; font-family: 'DejaVu Sans'; fill: #20252b" transform="translate(31.278596 156.67375)">ROSMAP only • 4</text>
+    <text style="font-size: 16px; font-family: 'DejaVu Sans'; fill: #20252b" transform="translate(30.229846 175.876875)">COX4I1   COX6B1</text>
+    <text style="font-size: 16px; font-family: 'DejaVu Sans'; fill: #20252b" transform="translate(31.137346 195.08)">COX7C   UQCR10</text>
+   </g>
+  </g>
+  <g id="axes_2">
+   <g id="patch_6">
+    <path d="M 552.23822 274.411646 
+C 578.106102 274.411646 602.917985 264.134228 621.209339 245.842873 
+C 639.500693 227.551519 649.778112 202.739636 649.778112 176.871755 
+C 649.778112 151.003873 639.500693 126.191991 621.209339 107.900636 
+C 602.917985 89.609282 578.106102 79.331864 552.23822 79.331864 
+C 526.370339 79.331864 501.558456 89.609282 483.267102 107.900636 
+C 464.975747 126.191991 454.698329 151.003873 454.698329 176.871755 
+C 454.698329 202.739636 464.975747 227.551519 483.267102 245.842873 
+C 501.558456 264.134228 526.370339 274.411646 552.23822 274.411646 
+z
+" clip-path="url(#pf052fa4baa)" style="fill: url(#h49f6b465a4); stroke: #e69f00; stroke-width: 2.3; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 778.915433 233.197608 
+C 793.853223 233.197608 808.181212 227.26276 818.743825 216.700147 
+C 829.306438 206.137534 835.241285 191.809546 835.241285 176.871755 
+C 835.241285 161.933964 829.306438 147.605976 818.743825 137.043362 
+C 808.181212 126.480749 793.853223 120.545902 778.915433 120.545902 
+C 763.977642 120.545902 749.649653 126.480749 739.08704 137.043362 
+C 728.524427 147.605976 722.58958 161.933964 722.58958 176.871755 
+C 722.58958 191.809546 728.524427 206.137534 739.08704 216.700147 
+C 749.649653 227.26276 763.977642 233.197608 778.915433 233.197608 
+z
+" clip-path="url(#pf052fa4baa)" style="fill: #bfe8dc; stroke: #009e73; stroke-width: 2.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_14">
+    <text style="font-weight: 700; font-size: 20px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #20252b" x="442.334118" y="46.36425" transform="rotate(-0 442.334118 46.36425)">B</text>
+   </g>
+   <g id="text_15">
+    <text style="font-weight: 700; font-size: 17px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #e69f00" x="552.23822" y="76.192636" transform="rotate(-0 552.23822 76.192636)">ROSMAP only • 15</text>
+   </g>
+   <g id="text_16">
+    <text style="font-weight: 700; font-size: 17px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #009e73" x="778.915433" y="113.972172" transform="rotate(-0 778.915433 113.972172)">SEA-AD only • 5</text>
+   </g>
+   <g id="text_17">
+    <text style="font-weight: 700; font-size: 17px; font-family: 'DejaVu Sans'; fill: #0f233d" transform="translate(642.475772 76.332697)">Common:</text>
+    <text style="font-weight: 700; font-size: 17px; font-family: 'DejaVu Sans'; fill: #0f233d" transform="translate(663.63546 92.4734)">0 (∅)</text>
+   </g>
+   <g id="text_18">
+    <text style="font-weight: 700; font-size: 20px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #20252b" x="646.687059" y="52.098646" transform="rotate(-0 646.687059 52.098646)">Non-MT driver class</text>
+   </g>
+   <g id="text_19">
+    <text style="font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #20252b" x="511.024182" y="117.146245" transform="rotate(-0 511.024182 117.146245)">ANKRD11†</text>
+   </g>
+   <g id="text_20">
+    <text style="font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #20252b" x="593.452259" y="117.146245" transform="rotate(-0 593.452259 117.146245)">APOE</text>
+   </g>
+   <g id="text_21">
+    <text style="font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #20252b" x="511.024182" y="135.005662" transform="rotate(-0 511.024182 135.005662)">ATP6V1F</text>
+   </g>
+   <g id="text_22">
+    <text style="font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #20252b" x="593.452259" y="135.005662" transform="rotate(-0 593.452259 135.005662)">DYNLT1</text>
+   </g>
+   <g id="text_23">
+    <text style="font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #20252b" x="511.024182" y="152.865078" transform="rotate(-0 511.024182 152.865078)">FTL†</text>
+   </g>
+   <g id="text_24">
+    <text style="font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #20252b" x="593.452259" y="152.865078" transform="rotate(-0 593.452259 152.865078)">LAMTOR5</text>
+   </g>
+   <g id="text_25">
+    <text style="font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #20252b" x="511.024182" y="170.724495" transform="rotate(-0 511.024182 170.724495)">LAPTM4A</text>
+   </g>
+   <g id="text_26">
+    <text style="font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #20252b" x="593.452259" y="170.724495" transform="rotate(-0 593.452259 170.724495)">NCOA1†</text>
+   </g>
+   <g id="text_27">
+    <text style="font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #20252b" x="511.024182" y="188.583912" transform="rotate(-0 511.024182 188.583912)">RPL11</text>
+   </g>
+   <g id="text_28">
+    <text style="font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #20252b" x="593.452259" y="188.583912" transform="rotate(-0 593.452259 188.583912)">RPL15</text>
+   </g>
+   <g id="text_29">
+    <text style="font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #20252b" x="511.024182" y="206.443329" transform="rotate(-0 511.024182 206.443329)">RPL38</text>
+   </g>
+   <g id="text_30">
+    <text style="font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #20252b" x="593.452259" y="206.443329" transform="rotate(-0 593.452259 206.443329)">RPLP1</text>
+   </g>
+   <g id="text_31">
+    <text style="font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #20252b" x="511.024182" y="224.302745" transform="rotate(-0 511.024182 224.302745)">RPS13</text>
+   </g>
+   <g id="text_32">
+    <text style="font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #20252b" x="593.452259" y="224.302745" transform="rotate(-0 593.452259 224.302745)">RPS15</text>
+   </g>
+   <g id="text_33">
+    <text style="font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #20252b" x="511.024182" y="242.162162" transform="rotate(-0 511.024182 242.162162)">SELENOW</text>
+   </g>
+   <g id="text_34">
+    <text style="font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #20252b" x="778.915433" y="155.612681" transform="rotate(-0 778.915433 155.612681)">BEX3</text>
+   </g>
+   <g id="text_35">
+    <text style="font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #20252b" x="778.915433" y="172.785197" transform="rotate(-0 778.915433 172.785197)">HGSNAT</text>
+   </g>
+   <g id="text_36">
+    <text style="font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #20252b" x="778.915433" y="189.957713" transform="rotate(-0 778.915433 189.957713)">KANSL1L</text>
+   </g>
+   <g id="text_37">
+    <text style="font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #20252b" x="778.915433" y="207.130229" transform="rotate(-0 778.915433 207.130229)">RPL30</text>
+   </g>
+   <g id="text_38">
+    <text style="font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #20252b" x="778.915433" y="224.302745" transform="rotate(-0 778.915433 224.302745)">RPS27A</text>
+   </g>
+  </g>
+  <g id="text_39">
+   <text style="font-weight: 700; font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #0f233d" x="432" y="338.056875" transform="rotate(-0 432 338.056875)">Descriptive gene-level view; network identity collapsed  •  no gene-level overlap p value</text>
+  </g>
+  <g id="text_40">
+   <text style="font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #5e6670" x="432" y="366.676875" transform="rotate(-0 432 366.676875)">* MT-ATP6 and MT-ND4 are common only after networks are collapsed  •  † SEA-AD OPC KDA unavailable</text>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p65ca39c30a">
+   <rect x="17.28" y="55.482547" width="408.705882" height="232.474906"/>
+  </clipPath>
+  <clipPath id="pf052fa4baa">
+   <rect x="442.334118" y="60.098646" width="408.705882" height="223.242709"/>
+  </clipPath>
+ </defs>
+ <defs>
+  <pattern id="h49f6b465a4" patternUnits="userSpaceOnUse" x="0" y="0" width="72" height="72">
+   <rect x="0" y="0" width="73" height="73" fill="#f9e5b8"/>
+   <path d="M -36 36 
+L 36 -36 
+M -33 39 
+L 39 -33 
+M -30 42 
+L 42 -30 
+M -27 45 
+L 45 -27 
+M -24 48 
+L 48 -24 
+M -21 51 
+L 51 -21 
+M -18 54 
+L 54 -18 
+M -15 57 
+L 57 -15 
+M -12 60 
+L 60 -12 
+M -9 63 
+L 63 -9 
+M -6 66 
+L 66 -6 
+M -3 69 
+L 69 -3 
+M 0 72 
+L 72 0 
+M 3 75 
+L 75 3 
+M 6 78 
+L 78 6 
+M 9 81 
+L 81 9 
+M 12 84 
+L 84 12 
+M 15 87 
+L 87 15 
+M 18 90 
+L 90 18 
+M 21 93 
+L 93 21 
+M 24 96 
+L 96 24 
+M 27 99 
+L 99 27 
+M 30 102 
+L 102 30 
+M 33 105 
+L 105 33 
+M 36 108 
+L 108 36 
+" style="fill: #e69f00; stroke: #e69f00; stroke-width: 1.0; stroke-linecap: butt; stroke-linejoin: miter"/>
+  </pattern>
+  <pattern id="h4761492750" patternUnits="userSpaceOnUse" x="0" y="0" width="72" height="72">
+   <rect x="0" y="0" width="73" height="73" fill="#ffffff"/>
+   <path d="M -36 36 
+L 36 -36 
+M -33 39 
+L 39 -33 
+M -30 42 
+L 42 -30 
+M -27 45 
+L 45 -27 
+M -24 48 
+L 48 -24 
+M -21 51 
+L 51 -21 
+M -18 54 
+L 54 -18 
+M -15 57 
+L 57 -15 
+M -12 60 
+L 60 -12 
+M -9 63 
+L 63 -9 
+M -6 66 
+L 66 -6 
+M -3 69 
+L 69 -3 
+M 0 72 
+L 72 0 
+M 3 75 
+L 75 3 
+M 6 78 
+L 78 6 
+M 9 81 
+L 81 9 
+M 12 84 
+L 84 12 
+M 15 87 
+L 87 15 
+M 18 90 
+L 90 18 
+M 21 93 
+L 93 21 
+M 24 96 
+L 96 24 
+M 27 99 
+L 99 27 
+M 30 102 
+L 102 30 
+M 33 105 
+L 105 33 
+M 36 108 
+L 108 36 
+" style="fill: #e69f00; stroke: #e69f00; stroke-width: 1.0; stroke-linecap: butt; stroke-linejoin: miter"/>
+  </pattern>
+ </defs>
+</svg>

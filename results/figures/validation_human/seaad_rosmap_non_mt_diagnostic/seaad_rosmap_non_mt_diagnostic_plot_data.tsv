@@ -1,0 +1,22 @@
+schema_version	figure_id	broad_network	gene	rosmap_within_class_rank	seaad_assessability	seaad_qualifying_return_count	seaad_supporting_runs	seaad_supporting_fine_types	seaad_supporting_groups	seaad_final_driver_candidate	seaad_top5	replication_status	rosmap_support_groups	rosmap_unavailable_in_seaad_support_groups	rosmap_has_unavailable_stratum_support	unavailable_support_is_exclusive
+seaad_rosmap_non_mt_diagnostic_v1_plot_data	seaad_rosmap_non_mt_diagnostic	Astrocytes	RPL11	1	assessable	0				False	False	tested_not_selected	F_e2|M_e2|M_e4	F_e2|M_e2|M_e4	True	True
+seaad_rosmap_non_mt_diagnostic_v1_plot_data	seaad_rosmap_non_mt_diagnostic	Astrocytes	RPLP1	2	assessable	0				False	False	tested_not_selected	F_e2|M_e2|M_e4	F_e2|M_e2|M_e4	True	True
+seaad_rosmap_non_mt_diagnostic_v1_plot_data	seaad_rosmap_non_mt_diagnostic	Astrocytes	RPL15	3	assessable	0				False	False	tested_not_selected	F_e2|F_e4|M_e2	F_e2|M_e2	True	False
+seaad_rosmap_non_mt_diagnostic_v1_plot_data	seaad_rosmap_non_mt_diagnostic	Astrocytes	APOE	4	assessable	0				False	False	tested_not_selected	F_e2|M_e2|M_e4	F_e2|M_e2|M_e4	True	True
+seaad_rosmap_non_mt_diagnostic_v1_plot_data	seaad_rosmap_non_mt_diagnostic	Astrocytes	LAPTM4A	5	assessable	0				False	False	tested_not_selected	M_e2	M_e2	True	True
+seaad_rosmap_non_mt_diagnostic_v1_plot_data	seaad_rosmap_non_mt_diagnostic	Excitatory_neurons	RPL11	1	assessable	0				False	False	tested_not_selected	F_e2|F_e33|F_e4|M_e2|M_e33	F_e2|M_e2	True	False
+seaad_rosmap_non_mt_diagnostic_v1_plot_data	seaad_rosmap_non_mt_diagnostic	Excitatory_neurons	RPS13	2	assessable	0				False	False	tested_not_selected	F_e2|F_e4|M_e2	F_e2|M_e2	True	False
+seaad_rosmap_non_mt_diagnostic_v1_plot_data	seaad_rosmap_non_mt_diagnostic	Excitatory_neurons	SELENOW	3	assessable	0				False	False	tested_not_selected	F_e2|F_e4|M_e2|M_e33	F_e2|M_e2	True	False
+seaad_rosmap_non_mt_diagnostic_v1_plot_data	seaad_rosmap_non_mt_diagnostic	Excitatory_neurons	LAMTOR5	4	assessable	0				False	False	tested_not_selected	F_e2|F_e4|M_e2	F_e2|M_e2	True	False
+seaad_rosmap_non_mt_diagnostic_v1_plot_data	seaad_rosmap_non_mt_diagnostic	Excitatory_neurons	DYNLT1	5	assessable	1	seaad__st013_l2_3_it_10__M_e33__AD_down_mito	L2/3 IT_10	M_e33	False	False	tested_not_selected	F_e33|M_e2	M_e2	True	False
+seaad_rosmap_non_mt_diagnostic_v1_plot_data	seaad_rosmap_non_mt_diagnostic	Inhibitory_neurons	RPS15	1	assessable	1	seaad__st106_pvalb_2__M_e33__AD_down_mito	Pvalb_2	M_e33	False	False	tested_not_selected	F_e2|F_e4|M_e2|M_e4	F_e2|M_e2|M_e4	True	False
+seaad_rosmap_non_mt_diagnostic_v1_plot_data	seaad_rosmap_non_mt_diagnostic	Inhibitory_neurons	LAMTOR5	2	assessable	0				False	False	tested_not_selected	F_e4|M_e2	M_e2	True	False
+seaad_rosmap_non_mt_diagnostic_v1_plot_data	seaad_rosmap_non_mt_diagnostic	Inhibitory_neurons	RPLP1	3	assessable	1	seaad__st106_pvalb_2__M_e33__AD_down_mito	Pvalb_2	M_e33	False	False	tested_not_selected	F_e2|F_e4|M_e2|M_e4	F_e2|M_e2|M_e4	True	False
+seaad_rosmap_non_mt_diagnostic_v1_plot_data	seaad_rosmap_non_mt_diagnostic	Inhibitory_neurons	ATP6V1F	4	assessable	0				False	False	tested_not_selected	F_e4|M_e2|M_e4	M_e2|M_e4	True	False
+seaad_rosmap_non_mt_diagnostic_v1_plot_data	seaad_rosmap_non_mt_diagnostic	Inhibitory_neurons	RPL38	5	assessable	1	seaad__st048_lamp5_lhx6_1__M_e33__AD_down_mito	Lamp5_Lhx6_1	M_e33	False	False	tested_not_selected	M_e2	M_e2	True	True
+seaad_rosmap_non_mt_diagnostic_v1_plot_data	seaad_rosmap_non_mt_diagnostic	Microglia	RPL11	1	assessable	0				False	False	tested_not_selected	M_e4	M_e4	True	True
+seaad_rosmap_non_mt_diagnostic_v1_plot_data	seaad_rosmap_non_mt_diagnostic	OPCs	RPS15	1	not_testable_no_included_opc_run	0				False	False	not_testable	F_e33|M_e2	M_e2	True	False
+seaad_rosmap_non_mt_diagnostic_v1_plot_data	seaad_rosmap_non_mt_diagnostic	OPCs	FTL	2	not_testable_no_included_opc_run	0				False	False	not_testable	F_e33|M_e2	M_e2	True	False
+seaad_rosmap_non_mt_diagnostic_v1_plot_data	seaad_rosmap_non_mt_diagnostic	OPCs	ANKRD11	3	not_testable_no_included_opc_run	0				False	False	not_testable	F_e33|M_e2	M_e2	True	False
+seaad_rosmap_non_mt_diagnostic_v1_plot_data	seaad_rosmap_non_mt_diagnostic	OPCs	NCOA1	4	not_testable_no_included_opc_run	0				False	False	not_testable	F_e4		False	False
+seaad_rosmap_non_mt_diagnostic_v1_plot_data	seaad_rosmap_non_mt_diagnostic	Oligodendrocytes	RPL11	1	assessable	0				False	False	tested_not_selected	M_e2	M_e2	True	True

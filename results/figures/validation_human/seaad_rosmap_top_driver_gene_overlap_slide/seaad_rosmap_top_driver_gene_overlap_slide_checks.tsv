@@ -1,0 +1,26 @@
+schema_version	figure_id	check_id	severity	status	observed	expected	details
+seaad_rosmap_overlap_slide_figure_v1	seaad_rosmap_top_driver_gene_overlap_slide	upstream_phases_complete	blocking	pass	VH09|VH10C|VH10D validated_complete	VH09|VH10C|VH10D validated_complete	Validated during loading.
+seaad_rosmap_overlap_slide_figure_v1	seaad_rosmap_top_driver_gene_overlap_slide	frozen_input_hashes	blocking	pass	15	15	Every compact input matches frozen SHA-256.
+seaad_rosmap_overlap_slide_figure_v1	seaad_rosmap_top_driver_gene_overlap_slide	seaad_blinded_freeze	blocking	pass	rosmap_candidate_files_read=False	False	SEA-AD list was frozen before candidate-bearing ROSMAP files were opened.
+seaad_rosmap_overlap_slide_figure_v1	seaad_rosmap_top_driver_gene_overlap_slide	minimum_font_size	blocking	pass	16.0	>=16	Projection-scale typography.
+seaad_rosmap_overlap_slide_figure_v1	seaad_rosmap_top_driver_gene_overlap_slide	canvas_text_clipping	blocking	pass	0	0	No text leaves the canvas.
+seaad_rosmap_overlap_slide_figure_v1	seaad_rosmap_top_driver_gene_overlap_slide	no_vh05_vh06_inputs	blocking	pass	none	none	Figure does not require missing pseudobulk/QC phases.
+seaad_rosmap_overlap_slide_figure_v1	seaad_rosmap_top_driver_gene_overlap_slide	gene_rows	blocking	pass	30	30	Unique class-gene symbols.
+seaad_rosmap_overlap_slide_figure_v1	seaad_rosmap_top_driver_gene_overlap_slide	gene_keys_unique	blocking	pass	unique	unique	One row per class and symbol.
+seaad_rosmap_overlap_slide_figure_v1	seaad_rosmap_top_driver_gene_overlap_slide	region_counts	blocking	pass	{('mt_driver', 'rosmap_only'): 4, ('mt_driver', 'common'): 6, ('mt_driver', 'seaad_only'): 0, ('non_mt_driver', 'rosmap_only'): 15, ('non_mt_driver', 'common'): 0, ('non_mt_driver', 'seaad_only'): 5}	{('mt_driver', 'rosmap_only'): 4, ('mt_driver', 'common'): 6, ('mt_driver', 'seaad_only'): 0, ('non_mt_driver', 'rosmap_only'): 15, ('non_mt_driver', 'common'): 0, ('non_mt_driver', 'seaad_only'): 5}	Frozen MT containment and non-MT disjoint regions.
+seaad_rosmap_overlap_slide_figure_v1	seaad_rosmap_top_driver_gene_overlap_slide	region_geometry	blocking	pass	0.019999999999999907	>=0	Nested MT and disjoint non-MT geometry.
+seaad_rosmap_overlap_slide_figure_v1	seaad_rosmap_top_driver_gene_overlap_slide	svg_all_gene_labels	blocking	pass	30	30	All region genes remain searchable.
+seaad_rosmap_overlap_slide_figure_v1	seaad_rosmap_top_driver_gene_overlap_slide	svg_empty_regions	blocking	pass	both present	both present	Zero regions are explicit.
+seaad_rosmap_overlap_slide_figure_v1	seaad_rosmap_top_driver_gene_overlap_slide	network_collapse_guardrail	blocking	pass	present	present	Secondary endpoint cannot be mistaken for strict overlap.
+seaad_rosmap_overlap_slide_figure_v1	seaad_rosmap_top_driver_gene_overlap_slide	opcs_guardrail	blocking	pass	visible|3	visible|3	ROSMAP OPC-only genes are not treated as negative tests.
+seaad_rosmap_overlap_slide_figure_v1	seaad_rosmap_top_driver_gene_overlap_slide	no_gene_level_p_value	blocking	pass	absent	absent	No gene-level inferential overlap statistic.
+seaad_rosmap_overlap_slide_figure_v1	seaad_rosmap_top_driver_gene_overlap_slide	image_export_set	blocking	pass	.pdf|.png|.svg	.pdf|.png|.svg	Three slide and vector formats.
+seaad_rosmap_overlap_slide_figure_v1	seaad_rosmap_top_driver_gene_overlap_slide	image_exports_nonempty	blocking	pass	all >1000	all >1000	Exports are nontrivial.
+seaad_rosmap_overlap_slide_figure_v1	seaad_rosmap_top_driver_gene_overlap_slide	svg_searchable_text	blocking	pass	present	present	SVG text remains searchable.
+seaad_rosmap_overlap_slide_figure_v1	seaad_rosmap_top_driver_gene_overlap_slide	svg_vector_paths	blocking	pass	present	present	SVG preserves vector geometry.
+seaad_rosmap_overlap_slide_figure_v1	seaad_rosmap_top_driver_gene_overlap_slide	pdf_signature	blocking	pass	%PDF-	%PDF-	PDF signature.
+seaad_rosmap_overlap_slide_figure_v1	seaad_rosmap_top_driver_gene_overlap_slide	png_dimensions	blocking	pass	5400x2385	5400x2385	Frozen 12 × 5.3 inch slide asset.
+seaad_rosmap_overlap_slide_figure_v1	seaad_rosmap_top_driver_gene_overlap_slide	png_resolution	blocking	pass	450.01|450.01	450|450	Embedded PNG DPI.
+seaad_rosmap_overlap_slide_figure_v1	seaad_rosmap_top_driver_gene_overlap_slide	png_color_mode	blocking	pass	RGBA	RGB or RGBA	PowerPoint-compatible color mode.
+seaad_rosmap_overlap_slide_figure_v1	seaad_rosmap_top_driver_gene_overlap_slide	manual_color_review	nonblocking	pass	complete	complete	Reviewed at intended slide size in color.
+seaad_rosmap_overlap_slide_figure_v1	seaad_rosmap_top_driver_gene_overlap_slide	manual_grayscale_review	nonblocking	pass	complete	complete	Reviewed in grayscale; redundant encodings remain interpretable.

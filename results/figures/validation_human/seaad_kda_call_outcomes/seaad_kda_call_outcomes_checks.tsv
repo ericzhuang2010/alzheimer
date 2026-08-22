@@ -1,0 +1,27 @@
+schema_version	figure_id	check_id	severity	status	observed	expected	details
+seaad_kda_call_outcomes_figure_v1	seaad_kda_call_outcomes	upstream_phases_complete	blocking	pass	VH10B|VH10C validated_complete	VH10B|VH10C validated_complete	Validated during input loading.
+seaad_kda_call_outcomes_figure_v1	seaad_kda_call_outcomes	frozen_input_hashes	blocking	pass	6	6	Every compact source matches its frozen SHA-256.
+seaad_kda_call_outcomes_figure_v1	seaad_kda_call_outcomes	call_count	blocking	pass	42	42	One plot record per completed KDA call.
+seaad_kda_call_outcomes_figure_v1	seaad_kda_call_outcomes	call_ids_unique	blocking	pass	unique	unique	KDA call IDs are unique.
+seaad_kda_call_outcomes_figure_v1	seaad_kda_call_outcomes	calls_with_returns	blocking	pass	29	29	Calls with at least one significant return.
+seaad_kda_call_outcomes_figure_v1	seaad_kda_call_outcomes	calls_without_returns	blocking	pass	13	13	Calls without a significant return.
+seaad_kda_call_outcomes_figure_v1	seaad_kda_call_outcomes	significant_return_rows	blocking	pass	208	208	Significant KDA return rows.
+seaad_kda_call_outcomes_figure_v1	seaad_kda_call_outcomes	outcome_cell_count	blocking	pass	14	14	Seven networks by two signed directions.
+seaad_kda_call_outcomes_figure_v1	seaad_kda_call_outcomes	outcome_matrix	blocking	pass	{('Astrocytes', 'up'): (0, 1), ('Astrocytes', 'down'): (0, 0), ('Excitatory_neurons', 'up'): (4, 6), ('Excitatory_neurons', 'down'): (10, 0), ('Inhibitory_neurons', 'up'): (4, 2), ('Inhibitory_neurons', 'down'): (8, 2), ('Microglia', 'up'): (0, 1), ('Microglia', 'down'): (0, 0), ('OPCs', 'up'): (0, 0), ('OPCs', 'down'): (0, 0), ('Oligodendrocytes', 'up'): (1, 1), ('Oligodendrocytes', 'down'): (2, 0), ('Vasculature_cells', 'up'): (0, 0), ('Vasculature_cells', 'down'): (0, 0)}	{('Astrocytes', 'up'): (0, 1), ('Astrocytes', 'down'): (0, 0), ('Excitatory_neurons', 'up'): (4, 6), ('Excitatory_neurons', 'down'): (10, 0), ('Inhibitory_neurons', 'up'): (4, 2), ('Inhibitory_neurons', 'down'): (8, 2), ('Microglia', 'up'): (0, 1), ('Microglia', 'down'): (0, 0), ('OPCs', 'up'): (0, 0), ('OPCs', 'down'): (0, 0), ('Oligodendrocytes', 'up'): (1, 1), ('Oligodendrocytes', 'down'): (2, 0), ('Vasculature_cells', 'up'): (0, 0), ('Vasculature_cells', 'down'): (0, 0)}	Exact with-return/without-return counts, including zero-call cells.
+seaad_kda_call_outcomes_figure_v1	seaad_kda_call_outcomes	selection_sequence	blocking	pass	[('completed_calls', 42, 'completed KDA calls'), ('calls_with_return', 29, 'calls with ≥1 significant return'), ('significant_rows', 208, 'significant return rows'), ('aggregate_candidates', 38788, 'aggregate candidate units'), ('selected_units', 13, 'units passed all gates')]	[('completed_calls', 42, 'completed KDA calls'), ('calls_with_return', 29, 'calls with ≥1 significant return'), ('significant_rows', 208, 'significant return rows'), ('aggregate_candidates', 38788, 'aggregate candidate units'), ('selected_units', 13, 'units passed all gates')]	Exact evidence-to-selection stage values.
+seaad_kda_call_outcomes_figure_v1	seaad_kda_call_outcomes	candidate_units	blocking	pass	38788	38788	Aggregate candidate units.
+seaad_kda_call_outcomes_figure_v1	seaad_kda_call_outcomes	selected_units	blocking	pass	13	13	Units passing all gates and displayed.
+seaad_kda_call_outcomes_figure_v1	seaad_kda_call_outcomes	method_steps	blocking	pass	6	6	Six frozen aggregation steps.
+seaad_kda_call_outcomes_figure_v1	seaad_kda_call_outcomes	plot_record_count	blocking	pass	67	67	Calls, outcome cells, stages, and method steps.
+seaad_kda_call_outcomes_figure_v1	seaad_kda_call_outcomes	plot_record_ids_unique	blocking	pass	unique	unique	Plot records are uniquely keyed.
+seaad_kda_call_outcomes_figure_v1	seaad_kda_call_outcomes	minimum_font_size	blocking	pass	16.0	>=16.0	All visible text is projection scale.
+seaad_kda_call_outcomes_figure_v1	seaad_kda_call_outcomes	canvas_text_clipping	blocking	pass	0	0	No visible text leaves the canvas.
+seaad_kda_call_outcomes_figure_v1	seaad_kda_call_outcomes	image_export_set	blocking	pass	.pdf|.png|.svg	.pdf|.png|.svg	PNG, PDF, and SVG exports are present.
+seaad_kda_call_outcomes_figure_v1	seaad_kda_call_outcomes	image_exports_nonempty	blocking	pass	all >1000	all >1000	Image exports are nontrivial.
+seaad_kda_call_outcomes_figure_v1	seaad_kda_call_outcomes	svg_searchable_text	blocking	pass	present	present	SVG text remains searchable.
+seaad_kda_call_outcomes_figure_v1	seaad_kda_call_outcomes	svg_vector_paths	blocking	pass	present	present	SVG contains vector geometry.
+seaad_kda_call_outcomes_figure_v1	seaad_kda_call_outcomes	pdf_signature	blocking	pass	%PDF-	%PDF-	PDF signature is valid.
+seaad_kda_call_outcomes_figure_v1	seaad_kda_call_outcomes	png_dimensions	blocking	pass	5400x2385	5400x2385	PNG dimensions match the frozen slide canvas.
+seaad_kda_call_outcomes_figure_v1	seaad_kda_call_outcomes	png_resolution	blocking	pass	450.01|450.01	450|450	Embedded PNG resolution is 450 DPI.
+seaad_kda_call_outcomes_figure_v1	seaad_kda_call_outcomes	png_color_mode	blocking	pass	RGBA	RGB or RGBA	PNG uses a slide-compatible color mode.
+seaad_kda_call_outcomes_figure_v1	seaad_kda_call_outcomes	visual_review	nonblocking	pass	complete	complete	Reviewed at slide size in color and grayscale.

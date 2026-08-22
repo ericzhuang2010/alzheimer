@@ -49,3 +49,6 @@ Next, write an initial analysis report and put under /Users/rzhuang/Documents/Vs
 I have executed the plan on a separate machine and downloaded the results. They are under results/validation_human.
 Please take a look at the results especially the DEG results. We want to do something similar to phase 18 for ROSMAP. This means we use supertype x six group DEG results as query to KDA analysis. Please update the plan for VH09 and VH10: /Users/rzhuang/Documents/VscodeProjects/alzheimer/docs/validation_human/vh09_phase18_candidate_freeze.md
 /Users/rzhuang/Documents/VscodeProjects/alzheimer/docs/validation_human/vh10_seaad_kda_rediscovery_and_overlap.md
+
+For /Users/rzhuang/Documents/VscodeProjects/alzheimer/docs/validation_human/seaad_rosmap_human_validation_presentation_design.md
+Please do not get into too much details. Slides should be easy to understand and explain. Please revise.
