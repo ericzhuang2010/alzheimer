@@ -422,7 +422,7 @@ phase18_human_mouse_ortholog_map.tsv
 ## 9. WP5 — Human genetic support
 
 WP5 is implemented as a standalone next phase. Detailed plan:
-[Phase 19 human genetic support plan](../../phase_19_genetic_support/human_genetic_support_plan.md).
+[Phase 19 human genetic support overall plan](../../phase_19_genetic_support/overall_plan.md).
 The Phase 19 plan is authoritative for scope, source freezing, assessability,
 evidence grading, execution, and outputs.
 
@@ -465,7 +465,7 @@ For mtDNA-encoded candidates, examine mtDNA variation, heteroplasmy, copy number
 ### Output
 
 ```text
-results/minerva_production/19_genetic_support/genetic_support_evidence_summary.tsv
+results/minerva_production/19_genetic_support_tier1/genetic_support_evidence_summary.tsv
 ```
 
 ## 10. WP6 — Human proteomics and proteogenomics

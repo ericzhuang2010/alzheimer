@@ -68,7 +68,7 @@ grading:
     rule: required data_or_statistics_absent_from_public_tier1_snapshot
 
 outputs:
-  root: results/minerva_production/19_genetic_support
+  root: results/minerva_production/19_genetic_support_tier1
   schema: human_genetic_support_tier1_v1
   exact_file_count: 23
 

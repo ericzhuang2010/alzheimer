@@ -24,14 +24,14 @@ analysis:
   released_model_min_posterior_mass: 0.95
 
 inputs:
-  tier1_root: results/minerva_production/19_genetic_support
+  tier1_root: results/minerva_production/19_genetic_support_tier1
   tier1_config: config/phase19_genetic_support.yml
-  tier1_candidate_manifest: results/minerva_production/19_genetic_support/genetic_support_candidate_manifest.tsv
-  tier1_candidate_loci: results/minerva_production/19_genetic_support/genetic_support_candidate_loci.tsv
-  tier1_evidence_summary: results/minerva_production/19_genetic_support/genetic_support_evidence_summary.tsv
-  tier1_common_variant_evidence: results/minerva_production/19_genetic_support/genetic_support_common_variant_evidence.tsv.gz
-  tier1_artifacts: results/minerva_production/19_genetic_support/genetic_support_artifacts.tsv
-  tier1_status: results/minerva_production/19_genetic_support/genetic_support_status.tsv
+  tier1_candidate_manifest: results/minerva_production/19_genetic_support_tier1/genetic_support_candidate_manifest.tsv
+  tier1_candidate_loci: results/minerva_production/19_genetic_support_tier1/genetic_support_candidate_loci.tsv
+  tier1_evidence_summary: results/minerva_production/19_genetic_support_tier1/genetic_support_evidence_summary.tsv
+  tier1_common_variant_evidence: results/minerva_production/19_genetic_support_tier1/genetic_support_common_variant_evidence.tsv.gz
+  tier1_artifacts: results/minerva_production/19_genetic_support_tier1/genetic_support_artifacts.tsv
+  tier1_status: results/minerva_production/19_genetic_support_tier1/genetic_support_status.tsv
   external_root: data/reference/phase19_genetic_support/tier2
   source_downloads: data/reference/phase19_genetic_support/tier2/source_downloads
   inventory_dir: data/reference/phase19_genetic_support/tier2/inventory
@@ -237,7 +237,7 @@ context_aliases:
   Vasculature_cells: [vascular, endothelial, pericyte]
 
 outputs:
-  root: results/minerva_production/19_genetic_support_tier2
+  root: results/minerva_production/19_genetic_support_tier2_regional
   pilot_root: results/local_pilot/19_genetic_support_tier2
   schema: human_genetic_support_tier2_coloc_v1
   exact_file_count: 23

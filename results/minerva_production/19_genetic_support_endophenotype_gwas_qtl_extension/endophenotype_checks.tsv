@@ -1,0 +1,15 @@
+schema_version	check_id	expected	observed	status	detail
+phase19_endophenotype_gwas_qtl_extension_v1	candidate_context_count	47	47	pass	frozen Phase 19 contexts
+phase19_endophenotype_gwas_qtl_extension_v1	unique_gene_count	25	25	pass	frozen genes
+phase19_endophenotype_gwas_qtl_extension_v1	gene_biomarker_units	75	75	pass	25 x 3
+phase19_endophenotype_gwas_qtl_extension_v1	nuclear_gate_decisions	57	57	pass	19 x 3
+phase19_endophenotype_gwas_qtl_extension_v1	context_biomarker_rows	141	141	pass	47 x 3
+phase19_endophenotype_gwas_qtl_extension_v1	mtdna_context_biomarker_rows	60	60	pass	20 x 3
+phase19_endophenotype_gwas_qtl_extension_v1	all_gate_states_terminal	57	57	pass	no missing gate state
+phase19_endophenotype_gwas_qtl_extension_v1	all_qtl_routes_terminal	27	27	pass	zero routes is permitted
+phase19_endophenotype_gwas_qtl_extension_v1	baseline_hashes	all_pass	66	pass	all upstream files immutable
+phase19_endophenotype_gwas_qtl_extension_v1	gwas_source_checks	all_pass	3	pass	metadata and checksums
+phase19_endophenotype_gwas_qtl_extension_v1	candidate_magma_threshold	0.0008771929824561404	0.0008771929824561404	pass	frozen Bonferroni
+phase19_endophenotype_gwas_qtl_extension_v1	gene_based_only_no_coloc	0	0	pass	MAGMA-only routes prohibited
+phase19_endophenotype_gwas_qtl_extension_v1	baseline_not_downgraded	all	141	pass	extension cannot downgrade
+phase19_endophenotype_gwas_qtl_extension_v1	execution_backend	direct	direct	pass	truthful local execution

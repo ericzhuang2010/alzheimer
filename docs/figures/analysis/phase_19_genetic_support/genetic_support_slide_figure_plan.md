@@ -287,7 +287,7 @@ The figure must remain interpretable after grayscale conversion:
 The renderer will read only the validated human-genetic-support bundle:
 
 ```text
-results/minerva_production/19_genetic_support/
+results/minerva_production/19_genetic_support_tier1/
 ├── genetic_support_candidate_manifest.tsv
 ├── genetic_support_common_variant_evidence.tsv.gz
 ├── genetic_support_colocalization.tsv.gz

@@ -1,0 +1,15 @@
+schema_version	check_id	severity	status	expected	observed	detail
+human_genetic_support_tier2_coloc_v1	tier1_artifact_hashes	blocking	pass	all published Tier 1 hashes	all matched	Tier 1 bundle remains immutable
+human_genetic_support_tier2_coloc_v1	candidate_context_count	blocking	pass	47	47	One row per Phase 18 candidate context
+human_genetic_support_tier2_coloc_v1	unique_gene_count	blocking	pass	25	25	Full Phase 18 gene scope
+human_genetic_support_tier2_coloc_v1	nuclear_gene_count	blocking	pass	19	19	Nuclear Tier 2 gene scope
+human_genetic_support_tier2_coloc_v1	nuclear_context_count	blocking	pass	27	27	Nuclear candidate contexts
+human_genetic_support_tier2_coloc_v1	mtdna_context_count	blocking	pass	20	20	mtDNA contexts retained but excluded from nuclear route
+human_genetic_support_tier2_coloc_v1	base_route_count	blocking	pass	54	54	27 nuclear contexts crossed with eQTL/sQTL
+human_genetic_support_tier2_coloc_v1	public_source_hashes	blocking	pass	8	8	Original public metadata snapshots matched checksums
+human_genetic_support_tier2_coloc_v1	alternative_required_files_verified	blocking	pass	11	11	NIAGADS archives/metadata and GWAS Catalog source matched frozen byte/MD5 gates
+human_genetic_support_tier2_coloc_v1	candidate_gene_queries	blocking	pass	19	19	Significant-only gene downloads are coverage screens, not coloc inputs
+human_genetic_support_tier2_coloc_v1	candidate_qtl_finemapping_extract	blocking	pass	>0 candidate fine-mapping rows	9363	Candidate rows streamed from immutable released QTL fine-mapping archives
+human_genetic_support_tier2_coloc_v1	candidate_gwas_extract	blocking	pass	>0 dense candidate-region GWAS rows	311180	Full Bellenguez GWAS streamed without P-value filtering
+human_genetic_support_tier2_coloc_v1	synthetic_multisignal_coloc	blocking	pass	two shared and two distinct signal pairs	2 shared; 2 distinct	Local coloc/susieR stack converged on deterministic two-signal fixture
+human_genetic_support_tier2_coloc_v1	exact_synapse_source_sensitivity	nonblocking	not_run	optional exact-source sensitivity	Synapse entities unreadable; not required for open alternative	No claim of exact FunGen-xQTL Synapse reproduction

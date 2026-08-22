@@ -1,18 +1,19 @@
-# Phase 19: Human Genetic Support for Phase 18 Key Drivers
+# Phase 19 Tier 1: Human Genetic Support for Phase 18 Key Drivers
 
 ## Status and phase boundary
 
 This document is the scientific, implementation, data-acquisition, execution,
-output, and completion plan for Phase 19.
+output, and completion plan for Phase 19 Tier 1. The cross-workstream status and
+future priorities are maintained in the [Phase 19 overall roadmap](../overall_plan.md).
 
 Tier 1 status (2026-08-16): **implemented and validated locally** for all 25
 genes and 47 candidate-context units. See the
 [Tier 1 execution report](tier1_execution_report.md) and the validated bundle
-in `results/minerva_production/19_genetic_support/`.
+in `results/minerva_production/19_genetic_support_tier1/`.
 
 Tier 2 execution status (2026-08-21): **open-data alternative executed and
 validated locally**. The canonical 23-file bundle is in
-`results/minerva_production/19_genetic_support_tier2/`. The original
+`results/minerva_production/19_genetic_support_tier2_regional/`. The original
 exact-source FunGen-xQTL Synapse release is
 not readable by the current account, so it is retained as a later sensitivity
 route rather than a production prerequisite. The primary route uses immutable
@@ -20,12 +21,12 @@ public NIAGADS, GWAS Catalog, and ancestry-matched LD releases and preserves an
 explicit `not_assessable` state wherever those releases do not support a valid
 classical colocalization. All 54 routes are terminal and technically valid,
 but none has classical H0-H4; this is not negative evidence. The separate
-[Tier 2 regional GWAS/QTL plan](tier2_regional_gwas_qtl_plan.md) defines that
-increment, and its [execution report](tier2_execution_report.md) records the
+[Tier 2 regional GWAS/QTL plan](../tier2/tier2_regional_gwas_qtl_plan.md) defines that
+increment, and its [execution report](../tier2/tier2_execution_report.md) records the
 execution outcome. Tier 1 remains an immutable completed bundle.
 
 Phase 19 promotes WP5 from the
-[Phase 18 cross-validation guide](../analysis/kda_phase_18/phase18_key_driver_cross_validation_guide.md)
+[Phase 18 cross-validation guide](../../analysis/kda_phase_18/phase18_key_driver_cross_validation_guide.md)
 into a standalone, reproducible phase. It asks:
 
 > Is inherited human genetic variation associated with Alzheimer disease (AD)
@@ -46,7 +47,7 @@ scientific stage and no optional later expansion.
 
 ```text
 results/local_pilot/19_genetic_support/
-results/minerva_production/19_genetic_support/
+results/minerva_production/19_genetic_support_tier1/
 ```
 
 Pilot files are nonfinal. They must not be copied into, combined with, or
@@ -288,7 +289,7 @@ phase.
 
 | Existing file | Change made now |
 |---|---|
-| `docs/phase_19_genetic_support/human_genetic_support_plan.md` | Rewritten from a WP5 guide into this Phase 19 end-state and implementation contract. |
+| `docs/phase_19_genetic_support/tier1/human_genetic_support_plan.md` | Rewritten from a WP5 guide into this Phase 19 end-state and implementation contract. |
 | `docs/analysis/kda_phase_18/phase18_key_driver_cross_validation_guide.md` | WP5 now points to this renamed Phase 19 plan. |
 
 ### Files Phase 19 implementation will add
@@ -1115,7 +1116,7 @@ validated, and has `validation_status = validated_complete`.
 Final production root:
 
 ```text
-results/minerva_production/19_genetic_support/
+results/minerva_production/19_genetic_support_tier1/
 ```
 
 | File | Required content |

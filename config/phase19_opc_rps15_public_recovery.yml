@@ -51,12 +51,12 @@ context_rules:
     - Monocyte
 
 inputs:
-  tier1_root: results/minerva_production/19_genetic_support
-  tier2_root: results/minerva_production/19_genetic_support_tier2
+  tier1_root: results/minerva_production/19_genetic_support_tier1
+  tier2_root: results/minerva_production/19_genetic_support_tier2_regional
   recovery_root: results/minerva_production/19_genetic_support_tier2_recovery
   endophenotype_root: results/minerva_production/19_genetic_support_endophenotype_gwas_qtl_extension
-  candidate_manifest: results/minerva_production/19_genetic_support/genetic_support_candidate_manifest.tsv
-  candidate_loci: results/minerva_production/19_genetic_support/genetic_support_candidate_loci.tsv
+  candidate_manifest: results/minerva_production/19_genetic_support_tier1/genetic_support_candidate_manifest.tsv
+  candidate_loci: results/minerva_production/19_genetic_support_tier1/genetic_support_candidate_loci.tsv
   recovery_route_manifest: results/minerva_production/19_genetic_support_tier2_recovery/recovery_route_manifest.tsv
   recovery_route_decisions: results/minerva_production/19_genetic_support_tier2_recovery/recovery_route_decisions.tsv
   recovery_regional_gwas: results/minerva_production/19_genetic_support_tier2_recovery/recovery_regional_gwas_summary.tsv

@@ -66,7 +66,8 @@ This plan implements the next analysis recommended in
 [Remaining GWAS/QTL analyses and recommended next step](remaining_gwas_qtl_analyses_and_next_step.md).
 Where it is silent, these documents remain authoritative:
 
-- [Phase 19 master plan](../human_genetic_support_plan.md);
+- [Phase 19 overall roadmap](../overall_plan.md);
+- [Phase 19 Tier 1 plan](../tier1/human_genetic_support_plan.md);
 - [Tier 2 regional GWAS/QTL plan](../tier2/tier2_regional_gwas_qtl_plan.md); and
 - [Tier 2 classical colocalization recovery plan](../tier2/tier2_classical_coloc_recovery_plan.md).
 
@@ -74,8 +75,8 @@ The extension is additive and immutable with respect to the three completed
 result bundles:
 
 ```text
-results/minerva_production/19_genetic_support/
-results/minerva_production/19_genetic_support_tier2/
+results/minerva_production/19_genetic_support_tier1/
+results/minerva_production/19_genetic_support_tier2_regional/
 results/minerva_production/19_genetic_support_tier2_recovery/
 ```
 

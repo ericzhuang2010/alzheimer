@@ -81,7 +81,7 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--input-root",
-        default="results/minerva_production/19_genetic_support",
+        default="results/minerva_production/19_genetic_support_tier1",
     )
     parser.add_argument(
         "--output-root",

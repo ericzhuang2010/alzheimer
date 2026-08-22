@@ -1,0 +1,4 @@
+schema_version	trait_id	source_accession	total_source_rows	valid_autosomal_rows	invalid_rows	chromosomes_observed	candidate_region_rows	candidate_regions_passing_coverage	candidate_regions_with_gws_signal	status
+phase19_endophenotype_gwas_qtl_extension_v1	csf_abeta42	GCST90726396	7345582	7345582	0	22	108321	19	1	pass
+phase19_endophenotype_gwas_qtl_extension_v1	csf_total_tau	GCST90726397	7346530	7346530	0	22	108321	19	1	pass
+phase19_endophenotype_gwas_qtl_extension_v1	csf_ptau181	GCST90726398	7396296	7396296	0	22	109071	19	1	pass

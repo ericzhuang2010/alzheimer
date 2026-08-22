@@ -1,0 +1,9 @@
+schema_version	stage_order	stage	status	dependencies	detail
+human_genetic_support_tier2_coloc_v1	1	freeze_tier1	complete		Validated immutable 47-context/25-gene Tier 1 handoff
+human_genetic_support_tier2_coloc_v1	2	inventory_sources	complete	freeze_tier1	Frozen public NIAGADS/GWAS/LD inventory; Synapse retained as optional sensitivity
+human_genetic_support_tier2_coloc_v1	3	acquire_tier2	complete	inventory_sources	Acquired immutable QTL fine mapping, full GWAS, and 19 gene coverage queries
+human_genetic_support_tier2_coloc_v1	4	harmonize	terminal_not_run_no_custom_route	acquire_tier2	No route had compatible dense QTL plus ancestry-matched LD for custom harmonization
+human_genetic_support_tier2_coloc_v1	5	fine_map	complete_released_models	harmonize	Retained candidate rows from released SuSiE/fSuSiE QTL models
+human_genetic_support_tier2_coloc_v1	6	colocalize	complete_terminal_no_valid_h0_h4_inputs	fine_map	No classical H0-H4 was manufactured from fine-mapping coverage
+human_genetic_support_tier2_coloc_v1	7	integrate	complete_with_source_limit	colocalize	47-row cumulative summary retained Tier 1 grades
+human_genetic_support_tier2_coloc_v1	8	validate_bundle	complete	integrate	23-file production contract validated

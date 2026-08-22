@@ -38,12 +38,12 @@ analysis:
   selection_frozen_before_qtl_result: true
 
 inputs:
-  tier1_root: results/minerva_production/19_genetic_support
-  tier2_root: results/minerva_production/19_genetic_support_tier2
+  tier1_root: results/minerva_production/19_genetic_support_tier1
+  tier2_root: results/minerva_production/19_genetic_support_tier2_regional
   recovery_root: results/minerva_production/19_genetic_support_tier2_recovery
-  candidate_manifest: results/minerva_production/19_genetic_support/genetic_support_candidate_manifest.tsv
-  tier1_artifacts: results/minerva_production/19_genetic_support/genetic_support_artifacts.tsv
-  tier2_artifacts: results/minerva_production/19_genetic_support_tier2/tier2_artifacts.tsv
+  candidate_manifest: results/minerva_production/19_genetic_support_tier1/genetic_support_candidate_manifest.tsv
+  tier1_artifacts: results/minerva_production/19_genetic_support_tier1/genetic_support_artifacts.tsv
+  tier2_artifacts: results/minerva_production/19_genetic_support_tier2_regional/tier2_artifacts.tsv
   recovery_artifacts: results/minerva_production/19_genetic_support_tier2_recovery/recovery_artifacts.tsv
   recovery_evidence_summary: results/minerva_production/19_genetic_support_tier2_recovery/recovery_evidence_summary.tsv
   recovery_regions: results/minerva_production/19_genetic_support_tier2_recovery/recovery_regional_gwas_summary.tsv

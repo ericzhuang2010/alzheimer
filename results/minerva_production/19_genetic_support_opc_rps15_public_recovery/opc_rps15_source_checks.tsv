@@ -1,0 +1,15 @@
+schema_version	check_id	status	observed	expected	blocking	detail
+phase19_opc_rps15_public_recovery_v1	candidate_identity	pass	GS044;GS045	GS044;GS045	TRUE	candidate rows and contexts
+phase19_opc_rps15_public_recovery_v1	locus_identity	pass	chr19:438358-2440495	chr19:438358-2440495	TRUE	candidate locus
+phase19_opc_rps15_public_recovery_v1	gwas_identity	pass	GCST90027158:4.089e-30:rs12151021	GCST90027158:4.089e-30:rs12151021	TRUE	frozen AD GWAS
+phase19_opc_rps15_public_recovery_v1	prior_route_states	pass	4	4	TRUE	completed recovery routes
+phase19_opc_rps15_public_recovery_v1	ng00184_archive_count	pass	8	8	TRUE	local archives
+phase19_opc_rps15_public_recovery_v1	ng00184_chr19_data_files	pass	140	140	TRUE	BED.GZ members
+phase19_opc_rps15_public_recovery_v1	ng00184_chr19_indexes	pass	140	140	TRUE	Tabix indexes
+phase19_opc_rps15_public_recovery_v1	ng00184_metadata_rows	pass	8580	8580	TRUE	official metadata
+phase19_opc_rps15_public_recovery_v1	free_disk_gate	pass	413814050816	>=53687091200	TRUE	bytes free
+phase19_opc_rps15_public_recovery_v1	initial_new_download_bytes	pass	0	0	TRUE	targeted download directory
+phase19_opc_rps15_public_recovery_v1	full_archive_downloads	pass	0	0	TRUE	full archives prohibited
+phase19_opc_rps15_public_recovery_v1	target_lookup_before_freeze	pass	FALSE	FALSE	TRUE	new NG00184 target scan not performed
+phase19_opc_rps15_public_recovery_v1	execution_backend	pass	direct	direct	TRUE	local execution
+phase19_opc_rps15_public_recovery_v1	use_minerva	pass	false	false	TRUE	local only

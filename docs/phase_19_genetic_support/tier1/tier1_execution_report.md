@@ -6,8 +6,13 @@ Tier 1 was executed locally on 2026-08-16 for all 25 Phase 18 genes in all 47
 selected gene × broad-cell-type × driver-class units. The validated output is:
 
 ```text
-results/minerva_production/19_genetic_support/
+results/minerva_production/19_genetic_support_tier1/
 ```
+
+Path-only migration (2026-08-21): the canonical directory was renamed from
+`results/minerva_production/19_genetic_support/` to the Tier 1 path above. No
+scientific analysis was rerun, and the 23 Tier 1 result-file contents and their
+recorded artifact hashes were unchanged.
 
 The run completed the 23-file Tier 1 output contract. It is technically
 complete for Tier 1, but it is not marked as full Phase 19 completion because
@@ -117,7 +122,7 @@ Changed:
 - `scripts/run_pipeline.R`
 - `config/minerva_shared.yml`
 - workstation-only `config/local_pilot.yml`
-- `docs/phase_19_genetic_support/human_genetic_support_plan.md`
+- `docs/phase_19_genetic_support/tier1/human_genetic_support_plan.md`
 
 Deleted: none.
 

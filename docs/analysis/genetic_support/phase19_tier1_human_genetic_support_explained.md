@@ -374,7 +374,7 @@ where evidence is currently missing or unassessable.
 The workflow produced a flat, 23-file validated output bundle at:
 
 ```text
-results/minerva_production/19_genetic_support/
+results/minerva_production/19_genetic_support_tier1/
 ```
 
 The key checks were:
@@ -397,20 +397,20 @@ directory and passed all three tests.
 
 The most useful files are:
 
-- `results/minerva_production/19_genetic_support/genetic_support_evidence_summary.tsv`
+- `results/minerva_production/19_genetic_support_tier1/genetic_support_evidence_summary.tsv`
   — one conclusion row for each of the 47 candidate contexts;
-- `results/minerva_production/19_genetic_support/genetic_support_common_variant_evidence.tsv.gz`
+- `results/minerva_production/19_genetic_support_tier1/genetic_support_common_variant_evidence.tsv.gz`
   — all regional and direct-target variant evidence;
-- `results/minerva_production/19_genetic_support/genetic_support_colocalization.tsv.gz`
+- `results/minerva_production/19_genetic_support_tier1/genetic_support_colocalization.tsv.gz`
   — the eight precomputed candidate-gene records and explicit missing H0-H4;
-- `results/minerva_production/19_genetic_support/genetic_support_assessability.tsv`
+- `results/minerva_production/19_genetic_support_tier1/genetic_support_assessability.tsv`
   — the reason each route is positive, none found, ambiguous, not applicable,
   or not assessable;
-- `results/minerva_production/19_genetic_support/genetic_support_checks.tsv`
+- `results/minerva_production/19_genetic_support_tier1/genetic_support_checks.tsv`
   — blocking and expected-limitation checks;
-- `results/minerva_production/19_genetic_support/genetic_support_status.tsv`
+- `results/minerva_production/19_genetic_support_tier1/genetic_support_status.tsv`
   — the final Tier 1 completion status; and
-- `results/minerva_production/19_genetic_support/genetic_support_evidence_matrix.png`
+- `results/minerva_production/19_genetic_support_tier1/genetic_support_evidence_matrix.png`
   — a visual summary of all 47 results.
 
 The runnable implementation and frozen configuration are:

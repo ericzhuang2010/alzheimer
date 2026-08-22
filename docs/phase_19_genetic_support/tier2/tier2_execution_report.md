@@ -3,7 +3,12 @@
 Execution date: 2026-08-21  
 Execution host: `homedesktop`  
 Execution backend: local direct execution  
-Canonical results: `results/minerva_production/19_genetic_support_tier2/`
+Canonical results: `results/minerva_production/19_genetic_support_tier2_regional/`
+
+Path-only migration (2026-08-21): this directory was renamed from
+`results/minerva_production/19_genetic_support_tier2/` by adding the
+`_regional` suffix. No scientific analysis was rerun, and all 23 regional
+result-file contents and their recorded artifact hashes were unchanged.
 
 ## Outcome
 

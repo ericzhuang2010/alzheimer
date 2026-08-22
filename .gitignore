@@ -92,7 +92,12 @@ results/minerva_production/09_annotate_genes/deg_all_annotated.tsv.gz
 results/minerva_production/13_respiratory_modifier/respiratory_pseudobulk_counts.rds
 !results/minerva_production/15_mitonuclear_coupling
 !results/minerva_production/18_key_driver_selection
-!results/minerva_production/19_genetic_support
+# Validated Phase 19 result bundles.
+!results/minerva_production/19_genetic_support_tier1
+!results/minerva_production/19_genetic_support_tier2_regional
+!results/minerva_production/19_genetic_support_tier2_recovery
+!results/minerva_production/19_genetic_support_endophenotype_gwas_qtl_extension
+!results/minerva_production/19_genetic_support_opc_rps15_public_recovery
 
 !results/validation_human/
 # SEA-AD validation keeps bulky matrices, compressed per-feature tables,

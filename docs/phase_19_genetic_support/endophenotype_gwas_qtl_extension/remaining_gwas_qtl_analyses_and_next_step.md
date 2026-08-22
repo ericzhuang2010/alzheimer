@@ -72,9 +72,9 @@ are not valid targets for nuclear cis-eQTL colocalization.
 
 The authoritative route-level evidence is in:
 
-- [`recovery_route_decisions.tsv`](../../results/minerva_production/19_genetic_support_tier2_recovery/recovery_route_decisions.tsv)
-- [`recovery_regional_gwas_summary.tsv`](../../results/minerva_production/19_genetic_support_tier2_recovery/recovery_regional_gwas_summary.tsv)
-- [`recovery_regional_qtl_summary.tsv`](../../results/minerva_production/19_genetic_support_tier2_recovery/recovery_regional_qtl_summary.tsv)
+- [`recovery_route_decisions.tsv`](../../../results/minerva_production/19_genetic_support_tier2_recovery/recovery_route_decisions.tsv)
+- [`recovery_regional_gwas_summary.tsv`](../../../results/minerva_production/19_genetic_support_tier2_recovery/recovery_regional_gwas_summary.tsv)
+- [`recovery_regional_qtl_summary.tsv`](../../../results/minerva_production/19_genetic_support_tier2_recovery/recovery_regional_qtl_summary.tsv)
 
 ## Best remaining GWAS/QTL analyses
 

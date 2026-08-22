@@ -25,7 +25,7 @@ def digest(path: Path) -> str:
 
 
 def test_plot_data_preserves_scope_and_interpretive_categories() -> None:
-    source = ROOT / "results/minerva_production/19_genetic_support"
+    source = ROOT / "results/minerva_production/19_genetic_support_tier1"
     frames = FIGURE.validate_inputs(source)
     plot_data, derived = FIGURE.derive_plot_data(frames)
     assert derived["total_contexts"] == 47
@@ -48,7 +48,7 @@ def test_full_figure_package(tmp_path: Path) -> None:
     subprocess.run(
         [
             str(ROOT / ".venv/bin/python"), str(SCRIPT),
-            "--input-root", str(ROOT / "results/minerva_production/19_genetic_support"),
+            "--input-root", str(ROOT / "results/minerva_production/19_genetic_support_tier1"),
             "--output-root", str(output),
         ],
         cwd=ROOT,

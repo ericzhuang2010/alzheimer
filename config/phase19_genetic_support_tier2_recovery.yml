@@ -30,17 +30,17 @@ analysis:
   case_fraction: 0.14109955905595642
 
 inputs:
-  tier1_root: results/minerva_production/19_genetic_support
-  tier2_root: results/minerva_production/19_genetic_support_tier2
-  tier1_candidate_manifest: results/minerva_production/19_genetic_support/genetic_support_candidate_manifest.tsv
-  tier1_candidate_loci: results/minerva_production/19_genetic_support/genetic_support_candidate_loci.tsv
-  tier1_evidence_summary: results/minerva_production/19_genetic_support/genetic_support_evidence_summary.tsv
-  tier1_artifacts: results/minerva_production/19_genetic_support/genetic_support_artifacts.tsv
-  tier1_status: results/minerva_production/19_genetic_support/genetic_support_status.tsv
-  tier2_route_manifest: results/minerva_production/19_genetic_support_tier2/tier2_candidate_route_manifest.tsv
-  tier2_evidence_summary: results/minerva_production/19_genetic_support_tier2/tier2_evidence_summary.tsv
-  tier2_artifacts: results/minerva_production/19_genetic_support_tier2/tier2_artifacts.tsv
-  tier2_status: results/minerva_production/19_genetic_support_tier2/tier2_status.tsv
+  tier1_root: results/minerva_production/19_genetic_support_tier1
+  tier2_root: results/minerva_production/19_genetic_support_tier2_regional
+  tier1_candidate_manifest: results/minerva_production/19_genetic_support_tier1/genetic_support_candidate_manifest.tsv
+  tier1_candidate_loci: results/minerva_production/19_genetic_support_tier1/genetic_support_candidate_loci.tsv
+  tier1_evidence_summary: results/minerva_production/19_genetic_support_tier1/genetic_support_evidence_summary.tsv
+  tier1_artifacts: results/minerva_production/19_genetic_support_tier1/genetic_support_artifacts.tsv
+  tier1_status: results/minerva_production/19_genetic_support_tier1/genetic_support_status.tsv
+  tier2_route_manifest: results/minerva_production/19_genetic_support_tier2_regional/tier2_candidate_route_manifest.tsv
+  tier2_evidence_summary: results/minerva_production/19_genetic_support_tier2_regional/tier2_evidence_summary.tsv
+  tier2_artifacts: results/minerva_production/19_genetic_support_tier2_regional/tier2_artifacts.tsv
+  tier2_status: results/minerva_production/19_genetic_support_tier2_regional/tier2_status.tsv
   candidate_gwas: data/reference/phase19_genetic_support/tier2/regional_inputs/bellenguez_candidate_gwas.tsv.gz
   external_root: data/reference/phase19_genetic_support/tier2_recovery
   inventory_dir: data/reference/phase19_genetic_support/tier2_recovery/inventory

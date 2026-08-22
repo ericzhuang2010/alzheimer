@@ -1,9 +1,9 @@
 # Phase 19 Tier 2: Candidate-region GWAS/QTL Fine-mapping and Colocalization
 
-## Decision and relationship to the master plan
+## Decision and relationship to the Tier 1 plan
 
 The existing
-[Phase 19 master plan](human_genetic_support_plan.md) **partly includes Tier
+[Phase 19 Tier 1 plan](../tier1/human_genetic_support_plan.md) **partly includes Tier
 2**, but only as a conditional extension. It already defines:
 
 - Tier 2 as full candidate-region GWAS/QTL statistics, matching fine-mapping
@@ -21,14 +21,14 @@ validated Tier 1 bundle contains no classical H0-H4 posterior results.
 
 This document is the separate implementation, acquisition, execution, output,
 and completion contract for the quoted Tier 2 data increment. Where this
-document is silent, the master plan remains authoritative.
+document is silent, the Tier 1 plan remains authoritative.
 
 ## Execution status
 
 As of 2026-08-21, the original controlled-source pilot and the approved
 open-data alternative below are complete. The local run published the
 validated 23-file bundle to
-`results/minerva_production/19_genetic_support_tier2/`. It retained 9,363
+`results/minerva_production/19_genetic_support_tier2_regional/`. It retained 9,363
 candidate QTL fine-mapping rows and 311,180 dense candidate-region GWAS rows;
 all source and artifact checks passed. The
 FunGen-xQTL Synapse entities remain unreadable by the current account even
@@ -60,7 +60,7 @@ validated counts, source hashes, terminal route states, and limitations.
 The validated Tier 1 bundle is:
 
 ```text
-results/minerva_production/19_genetic_support/
+results/minerva_production/19_genetic_support_tier1/
 ```
 
 Its status records:
@@ -151,7 +151,7 @@ unresolved and passes every input gate.
 - all 27 nuclear candidate-context units;
 - separate eQTL and sQTL decision routes, producing exactly 54 base route
   units before expansion by phenotype, cohort, or fallback context;
-- primary clinically anchored late-onset AD GWAS, with the master plan's
+- primary clinically anchored late-onset AD GWAS, with the Tier 1 plan's
   secondary and sensitivity phenotypes kept separate;
 - exact cell-context QTLs followed by the frozen fallback hierarchy;
 - full, unfiltered candidate-region GWAS and QTL summary statistics when a
@@ -545,7 +545,7 @@ Do not change:
 config/phase19_genetic_support.yml
 config/phase19_local_production_execution.yml
 scripts/19_run_genetic_support.py
-results/minerva_production/19_genetic_support/
+results/minerva_production/19_genetic_support_tier1/
 ```
 
 If a shared helper must be extracted from the Tier 1 script, Tier 1 tests and
@@ -659,7 +659,7 @@ conflicting_evidence
 
 An exact-context robust colocalization can contribute `strong`; a robust
 prespecified fallback can contribute `moderate`. Suggestive, single-signal,
-or incomplete evidence cannot be upgraded beyond the master plan's rules.
+or incomplete evidence cannot be upgraded beyond the Tier 1 plan's rules.
 Negative Tier 2 evidence does not erase a valid Tier 1 coding/fine-mapping
 result; discordance remains explicit.
 
@@ -678,7 +678,7 @@ result; discordance remains explicit.
 
 ```text
 results/local_pilot/19_genetic_support_tier2/
-results/minerva_production/19_genetic_support_tier2/
+results/minerva_production/19_genetic_support_tier2_regional/
 ```
 
 Pilot output is nonfinal and is never copied into the production directory.
@@ -765,7 +765,7 @@ gates must pass:
 - completed model objects are written to scratch and unloaded before the next
   locus;
 - estimated peak memory, including multiple dense LD-matrix copies, remains
-  below the master plan's 16-GiB analysis cap; and
+  below the Tier 1 plan's 16-GiB analysis cap; and
 - access terms permit local processing.
 
 Minerva is not required and is not an automatic fallback. If a necessary comparison still cannot

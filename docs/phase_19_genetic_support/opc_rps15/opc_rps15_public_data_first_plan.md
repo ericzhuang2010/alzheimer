@@ -79,8 +79,8 @@ positive H4.
 The following result bundles are immutable inputs:
 
 ```text
-results/minerva_production/19_genetic_support/
-results/minerva_production/19_genetic_support_tier2/
+results/minerva_production/19_genetic_support_tier1/
+results/minerva_production/19_genetic_support_tier2_regional/
 results/minerva_production/19_genetic_support_tier2_recovery/
 results/minerva_production/19_genetic_support_endophenotype_gwas_qtl_extension/
 ```

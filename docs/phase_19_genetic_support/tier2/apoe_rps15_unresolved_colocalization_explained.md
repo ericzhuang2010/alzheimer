@@ -125,9 +125,9 @@ variant?"
 
 The detailed values are recorded in:
 
-- [`recovery_regional_gwas_summary.tsv`](../../results/minerva_production/19_genetic_support_tier2_recovery/recovery_regional_gwas_summary.tsv)
-- [`recovery_regional_qtl_summary.tsv`](../../results/minerva_production/19_genetic_support_tier2_recovery/recovery_regional_qtl_summary.tsv)
-- [`recovery_route_decisions.tsv`](../../results/minerva_production/19_genetic_support_tier2_recovery/recovery_route_decisions.tsv)
+- [`recovery_regional_gwas_summary.tsv`](../../../results/minerva_production/19_genetic_support_tier2_recovery/recovery_regional_gwas_summary.tsv)
+- [`recovery_regional_qtl_summary.tsv`](../../../results/minerva_production/19_genetic_support_tier2_recovery/recovery_regional_qtl_summary.tsv)
+- [`recovery_route_decisions.tsv`](../../../results/minerva_production/19_genetic_support_tier2_recovery/recovery_route_decisions.tsv)
 
 ## Why two signals in the same region are not enough
 

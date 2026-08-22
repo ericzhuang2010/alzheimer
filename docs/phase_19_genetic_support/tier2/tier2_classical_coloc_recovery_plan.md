@@ -13,8 +13,8 @@ local-first analysis increment. It does not replace or rewrite either of the
 validated result bundles:
 
 ```text
-results/minerva_production/19_genetic_support/
-results/minerva_production/19_genetic_support_tier2/
+results/minerva_production/19_genetic_support_tier1/
+results/minerva_production/19_genetic_support_tier2_regional/
 ```
 
 The completed Tier 2 analysis found useful AD GWAS and QTL fine-mapping data,
@@ -33,7 +33,7 @@ valid, and replace generic `not_assessable` labels with either a resolved result
 or a precise, source-specific terminal limitation.
 
 Where this plan is silent, the
-[Phase 19 master plan](human_genetic_support_plan.md) and the
+[Phase 19 Tier 1 plan](../tier1/human_genetic_support_plan.md) and the
 [Tier 2 regional plan](tier2_regional_gwas_qtl_plan.md) remain authoritative.
 
 ## Frozen starting point

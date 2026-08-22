@@ -1,0 +1,18 @@
+schema_version	check_id	status	observed	expected	blocking	detail
+phase19_opc_rps15_public_recovery_v1	pre_target_freeze_hash	pass	b5b790dab6b8520b53070664d0d11d5b1530600a3067049b5b1d14fa92f9f4ee	4daa9c328e3db429ccc51cd08b26e04dc6a9d9bbf35ac3530224e5ca3dc036c1	TRUE	freeze marker verified before target scan
+phase19_opc_rps15_public_recovery_v1	registered_route_only	pass	74	74	TRUE	no post-result route added
+phase19_opc_rps15_public_recovery_v1	targeted_download_bytes	pass	0	0	TRUE	initial audit used existing files only
+phase19_opc_rps15_public_recovery_v1	full_archive_download_count	pass	0	0	TRUE	all full archives prohibited
+phase19_opc_rps15_public_recovery_v1	working_directory_cap	pass	3200	<=10737418240	TRUE	work root
+phase19_opc_rps15_public_recovery_v1	staging_result_cap	pass	493075	<=1073741824	TRUE	staging root
+phase19_opc_rps15_public_recovery_v1	total_new_disk_cap	pass	30155	<=21474836480	TRUE	targeted regional and work roots
+phase19_opc_rps15_public_recovery_v1	minimum_free_disk	pass	413813411840	>=53687091200	TRUE	free disk after analysis
+phase19_opc_rps15_public_recovery_v1	all_routes_terminal	pass	74	74	TRUE	route terminal states
+phase19_opc_rps15_public_recovery_v1	no_primary_coloc_without_model_ld	pass	0 runs	0 runs	TRUE	complete model and LD gate
+phase19_opc_rps15_public_recovery_v1	generic_reference_ld_not_promoted	pass	0 primary reference-LD routes	0	TRUE	reference LD sensitivity only
+phase19_opc_rps15_public_recovery_v1	pip_not_promoted_to_h4	pass	all NA	all NA	TRUE	released PIP is descriptive
+phase19_opc_rps15_public_recovery_v1	gene_context_separation	pass	2	2	TRUE	GS044 and GS045 remain separate
+phase19_opc_rps15_public_recovery_v1	execution_backend	pass	direct	direct	TRUE	local execution
+phase19_opc_rps15_public_recovery_v1	use_minerva	pass	false	false	TRUE	minerva_production is a local namespace
+phase19_opc_rps15_public_recovery_v1	author_dependency	pass	false	false	TRUE	no author wait
+phase19_opc_rps15_public_recovery_v1	credential_scan_prepublication	pass	0	0	TRUE	performed again by validator
