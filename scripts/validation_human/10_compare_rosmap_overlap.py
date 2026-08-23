@@ -240,8 +240,8 @@ def main() -> int:
     overlap_dir = phase_root / "10d_overlap"
     vh09_dir = output_root / config["vh09"]["output_directory"]
 
-    require_validated(input_dir, project_root)
-    require_validated(kda_dir, project_root)
+    input_status = require_validated(input_dir, project_root)
+    kda_status = require_validated(kda_dir, project_root)
     selection_status = require_validated(selection_dir, project_root)
     freeze = pd.read_csv(
         selection_dir / "seaad_selection_freeze.tsv",
@@ -613,7 +613,7 @@ def main() -> int:
         config_path,
         started,
         active_result_tier=analysis["result_tier_id"],
-        active_kda_calls=analysis["expected"]["active_kda_calls"],
+        active_kda_calls=int(kda_status.loc[0, "active_kda_calls"]),
         seaad_passing_candidate_units=int(
             selection_status.loc[0, "passing_candidate_units"]
         ),

@@ -1,59 +1,48 @@
 # SEA-AD Fine-Supertype Pseudobulk DEG Processing Plan
 
-**Status:** implemented and executed locally; VH00–VH08 validated complete on 2026-08-20  
-**Workload:** Advanced  
-**Date:** 2026-08-20  
-**Primary endpoint:** 129 SEA-AD `Supertype`s × 6 sex/APOE groups = 774 signed DEG contrasts and 1,548 structural downstream direction slots  
-**Implementation root:** `scripts/validation_human/`  
+**Status:** amended VH07–VH08 rerun executed locally; `validated_complete` on
+2026-08-22 (America/New_York; UTC completion 2026-08-23)
+**Workload:** Advanced
+**Original protocol date:** 2026-08-20
+**Amendment date:** 2026-08-22
+**Primary endpoint:** 129 SEA-AD `Supertype`s × 6 sex/APOE groups = 774 DEG
+contrasts and 1,548 structural downstream direction slots
+**Implementation root:** `scripts/validation_human/`
 **Result root:** `results/validation_human/`
 
-**Amendment status:** a dated post-hoc exploratory SEA-AD rerun was authorized
-on 2026-08-22 and is pending. The 2026-08-20 execution remains a historical
-record but is superseded for amended SEA-AD and cross-cohort conclusions.
-
-This is the canonical replacement for the retired broad-cell protocol. It assumes that no prior `scripts/validation_human/` implementation or `results/validation_human/` output can be reused. VH00–VH08 will be implemented and executed again from the raw inputs and frozen references.
-
-## 2026-08-22 post-hoc exploratory protocol amendment — pending rerun
+## 2026-08-22 post-hoc exploratory protocol amendment — executed
 
 This amendment was made after review of the completed 2026-08-20 results and
-must therefore be labeled **post-hoc exploratory**, not prespecified or
-confirmatory. It changes only the SEA-AD analysis. The complete SEA-AD phase
-chain will be rerun, with new manifests, checksums, statuses, and result counts.
+is labeled **post-hoc exploratory**, not prespecified or confirmatory. The
+unchanged donor cohort, gene mapping, supertype mapping, and pseudobulk counts
+were reused only after predecessor status and artifact checksums passed. Donor
+eligibility, DEG fitting, release finalization, KDA, candidate selection, and
+overlap were recomputed.
 
-| Component | Amended SEA-AD rule |
+| Component | Executed SEA-AD rule |
 |---|---|
-| DEG support | Require at least **3 donors in each disease arm** for a fine or stratified contrast, replacing the original five-per-arm gate; the 20-nucleus profile gate is unchanged |
-| DEG-to-query membership | Use signed core-MitoCarta genes with within-contrast **`FDR < 0.05` only**; remove the active `abs(logFC) > log2(1.3)` gate |
-| KDA query size | Retain the existing minimum of **3 effective genes** after network intersection |
-| SEA-AD candidate selection | Require coverage **at least 0.50** and aggregate ACAT BH **q at most 0.10**, replacing 0.80 and 0.05; all other candidate gates and ranking rules remain unchanged |
+| DEG support | At least **3 donors in each disease arm**; the 20-nucleus profile gate is unchanged |
+| DEG-to-query membership | Signed core-MitoCarta genes with within-contrast **`FDR < 0.05` only** |
+| KDA query size | At least **3 effective genes** after network intersection, unchanged |
+| SEA-AD candidate selection | Coverage **at least 0.50** and aggregate ACAT BH **q at most 0.10** |
 
-The inherited 1.3-fold Phase 18 predicate remains available only as a clearly
-labeled auxiliary/reference summary; it does not determine membership in the
-amended active SEA-AD query. The structural design remains 129 supertypes × six
-groups × two directions = 1,548 slots.
+The inherited 1.3-fold Phase 18 predicate remains only as an
+auxiliary/reference summary and did not determine amended query membership.
+The structural design remained 129 supertypes × six groups × two directions =
+1,548 slots.
 
-The ROSMAP Phase 18 reference is unchanged and remains read-only: its frozen
-candidate identities, minimum-ten run rule, coverage threshold, aggregate-q
-threshold, ranks, and provenance are not recalculated or relaxed. Any later
-overlap must compare the amended SEA-AD result with that unchanged VH09-frozen
-ROSMAP reference and report the cohort-specific rules explicitly.
+VH07 reproduced 382 donor-supported contrasts. Of these, 381 were
+model-feasible; `L6b_5 × F_e33` remained rank-deficient. VH08 completed all
+381 feasible contrasts and published 762 query-ready signed directions. The
+seven broad pooled anchors and 28 eligible broad stratified supports also
+completed.
 
-All 2026-08-20 SEA-AD eligibility, completed-contrast, query, KDA, candidate,
-and overlap counts elsewhere in this document are **historical and superseded
-for the amended analysis**. They are intentionally retained for provenance and
-must not be presented as expected amended results. Replacement values remain
-pending until the full rerun validates successfully. ROSMAP-only frozen counts
-are not superseded.
+The ROSMAP Phase 18 reference remained read-only and unchanged. Its candidate
+identities, minimum-ten run rule, coverage and aggregate-q thresholds, ranks,
+and provenance were not recalculated or relaxed.
 
-### Historical local execution outcome (superseded; 2026-08-20)
-
-- All phase statuses from VH00 through VH08 are `validated_complete`; Minerva was not required.
-- VH05 streamed all 1,395,601 source nuclei and completed in 13.1 minutes, producing 129 fine-supertype and seven independently aggregated broad-network pseudobulk shards.
-- VH06 independently reloaded the shards and reproduced the exact selected total of 31,867,743,351 UMIs and exact fine-to-direct-broad reconciliation.
-- VH07 froze 774 fine contrast slots (260 eligible), seven eligible pooled broad contrasts, and 42 stratified broad slots (20 eligible).
-- VH08 completed 260 fine, seven pooled broad, and 20 stratified broad DEG results. It released all 1,548 structural fine direction slots, of which 520 are query-ready because they derive from completed fine contrasts.
-- The final release contains 287 full DEG result files and remains isolated under `results/validation_human/`; implementation and contract tests remain isolated under `scripts/validation_human/` and `tests/validation_human/`.
-- During execution, two implementation-only issues were corrected without changing the frozen analysis contract: R YAML parsing now handles 64-bit identity totals, and sparse non-estimable contexts use explicit grouped indicator columns so one-level factors remain auditable.
+The 2026-08-20 execution below is retained only as a historical, superseded
+record.
 
 The Advanced design is structurally closest to ROSMAP Phase 18: both cross fine cell labels with the same six sex/APOE groups and derive two signed query directions from each DEG contrast. It is not a one-to-one cell-taxonomy replication. ROSMAP has 54 fine types; SEA-AD has 129 included supertypes, and their labels are not directly interchangeable.
 

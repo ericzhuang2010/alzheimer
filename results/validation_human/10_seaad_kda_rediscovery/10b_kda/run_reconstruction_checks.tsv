@@ -3,10 +3,10 @@ r_worker_complete	True	worker_complete	worker_complete
 active_call_count	True	42	42	
 all_r_calls_completed	True	42	42	
 r_python_significant_parity	True	42	42	
-explicit_run_gene_keys_unique	True	9596	9596	
+explicit_run_gene_keys_unique	True	10912	10912	
 candidate_unit_keys_unique	True	38788	38788	
 driver_classes_exact	True	mt_driver|non_mt_driver	mt_driver|non_mt_driver	
-top5_rank_cap	True	4.0	5	
+top5_rank_cap	True	5.0	5	
 list_status_rows	True	14	14	
-no_optional_sensitivity_tier	True	phase18_parity_query__min3_all	phase18_parity_query__min3_all	
+no_optional_sensitivity_tier	True	posthoc_exploratory__fdr_only__donor3__query3__coverage50__q10	posthoc_exploratory__fdr_only__donor3__query3__coverage50__q10	
 acat_regression	True	3.043421070714203e-11	<=1e-9	

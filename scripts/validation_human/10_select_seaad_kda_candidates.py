@@ -30,6 +30,34 @@ from seaad_common import (
 def truth(value) -> bool:
     return str(value).strip().lower() in {"true", "t", "1", "yes"}
 
+def apply_seaad_candidate_threshold(
+    rows, minimum_coverage, aggregate_q_threshold, minimum_support, phase18
+):
+    """Apply SEA-AD-specific aggregate gates without changing frozen ROSMAP."""
+    for row in rows:
+        q_value = row["aggregate_acat_q"]
+        p_value = row["aggregate_acat_p"]
+        q_valid = q_value is not None and not pd.isna(q_value)
+        p_valid = p_value is not None and not pd.isna(p_value)
+        q_pass = q_valid and q_value <= aggregate_q_threshold
+        row["coverage_pass"] = row["coverage_fraction"] >= minimum_coverage
+        row["aggregate_q_pass"] = q_pass
+        if not row["coverage_pass"]:
+            status = "insufficient_coverage"
+        elif not p_valid or not q_valid:
+            status = "not_testable"
+        elif q_pass and row["conservative_support_count"] >= minimum_support:
+            status = "driver_candidate"
+        elif q_pass:
+            status = "aggregate_only"
+        elif p_value <= 0.05:
+            status = "exploratory"
+        else:
+            status = "not_supported"
+        row["terminal_candidate_status"] = status
+    phase18.assign_candidate_ranks(rows)
+
+
 
 def load_phase18_module(path: Path):
     spec = importlib.util.spec_from_file_location("phase18_key_driver_selection", path)
@@ -63,13 +91,13 @@ def main() -> int:
     cfg = config["vh10"]
     analysis = cfg["analysis"]
     selection = cfg["selection"]
-    expected = analysis["expected"]
     phase_root = output_root / cfg["output_directory"]
     input_dir = phase_root / "10a_inputs"
     kda_dir = phase_root / "10b_kda"
     selection_dir = phase_root / "10c_seaad_selection"
 
-    require_validated(input_dir, project_root)
+    input_status = require_validated(input_dir, project_root)
+    expected_active_calls = int(input_status.loc[0, "active_kda_calls"])
     worker_path = kda_dir / "r_worker_status.tsv"
     r_qc_path = kda_dir / "r_run_qc.tsv"
     significant_path = kda_dir / "seaad_kda_significant_returns.tsv"
@@ -83,8 +111,8 @@ def main() -> int:
         or int(worker.loc[0, "failed_calls"]) != 0
     ):
         raise ValueError("VH10B R worker did not complete cleanly")
-    if int(worker.loc[0, "active_kda_calls"]) != expected["active_kda_calls"]:
-        raise ValueError("VH10B R call count differs from the frozen plan")
+    if int(worker.loc[0, "active_kda_calls"]) != expected_active_calls:
+        raise ValueError("VH10B R call count differs from the validated VH10A manifest")
 
     phase18_code_item = cfg["input_authority"]["phase18_code"]
     phase18_code = repo_path(project_root, phase18_code_item["path"])
@@ -99,7 +127,7 @@ def main() -> int:
     )
     active_states = {"eligible_small_query", "eligible_phase18_sized"}
     runs_frame = manifest.loc[manifest["terminal_status"].isin(active_states)].copy()
-    if len(runs_frame) != expected["active_kda_calls"]:
+    if len(runs_frame) != expected_active_calls:
         raise ValueError("Active manifest run count mismatch")
     included_runs = runs_frame.to_dict("records")
     included_ids = set(runs_frame["kda_run_id"])
@@ -208,6 +236,8 @@ def main() -> int:
         )
 
     minimum_coverage = float(selection["minimum_coverage"])
+    aggregate_q_threshold = float(selection["aggregate_q_threshold"])
+    minimum_support = int(selection["minimum_conservative_supporting_runs"])
     aggregate_rows = []
     aggregates_by_network = {}
     for network in cfg["network_order"]:
@@ -223,6 +253,13 @@ def main() -> int:
             explicit_by_run,
             annotation,
             minimum_coverage,
+        )
+        apply_seaad_candidate_threshold(
+            rows,
+            minimum_coverage,
+            aggregate_q_threshold,
+            minimum_support,
+            phase18,
         )
         for row in rows:
             row["missing_as_one_acat_p"] = None
@@ -409,7 +446,7 @@ def main() -> int:
     reconstruction_checks = checks_frame(
         [
             ("r_worker_complete", True, worker.loc[0, "task_status"], "worker_complete", ""),
-            ("active_call_count", len(included_runs) == expected["active_kda_calls"], len(included_runs), expected["active_kda_calls"], ""),
+            ("active_call_count", len(included_runs) == expected_active_calls, len(included_runs), expected_active_calls, ""),
             ("all_r_calls_completed", r_qc["terminal_status"].str.startswith("completed_").all(), int(r_qc["terminal_status"].str.startswith("completed_").sum()), len(r_qc), ""),
             ("r_python_significant_parity", reconstruction["r_python_significant_parity"].all(), int(reconstruction["r_python_significant_parity"].sum()), len(reconstruction), ""),
             ("explicit_run_gene_keys_unique", not call_returns.duplicated(["kda_run_id", "key_driver"]).any(), len(call_returns.drop_duplicates(["kda_run_id", "key_driver"])), len(call_returns), ""),
@@ -491,6 +528,9 @@ def main() -> int:
                 "schema_version": "seaad_kda_selection_freeze_v1",
                 "query_rule_id": analysis["query_rule_id"],
                 "result_tier_id": analysis["result_tier_id"],
+                "minimum_coverage": minimum_coverage,
+                "aggregate_q_threshold": aggregate_q_threshold,
+                "minimum_conservative_supporting_runs": minimum_support,
                 "candidate_units": len(candidate_summary),
                 "passing_candidate_units": int(
                     candidate_summary["terminal_candidate_status"]
@@ -502,7 +542,9 @@ def main() -> int:
                 "selected_keys_sha256": sha256_strings(selected_key_values),
                 "candidate_summary_sha256": sha256_file(candidate_path),
                 "top5_sha256": sha256_file(top5_path),
-                "selection_code_path": str(Path(__file__).resolve().relative_to(project_root)),
+                "selection_code_path": str(
+                    Path(__file__).resolve().relative_to(project_root)
+                ),
                 "selection_code_sha256": sha256_file(__file__),
                 "phase18_authority_code_sha256": sha256_file(phase18_code),
                 "config_sha256": sha256_file(config_path),
@@ -513,11 +555,17 @@ def main() -> int:
             }
         ]
     )
+    driver_candidates = candidate_summary["terminal_candidate_status"].eq(
+        "driver_candidate"
+    )
     selection_checks = checks_frame(
         [
             ("candidate_units_unique", not candidate_summary.duplicated(["broad_network", "current_symbol", "case_id"]).any(), len(candidate_summary), len(candidate_summary), ""),
             ("selected_keys_unique", not selected_rows.duplicated(["broad_network", "current_symbol", "case_id"]).any(), len(selected_rows.drop_duplicates(["broad_network", "current_symbol", "case_id"])), len(selected_rows), ""),
-            ("selected_are_driver_candidates", set(zip(selected_rows["broad_network"], selected_rows["current_symbol"], selected_rows["case_id"])).issubset(set(zip(candidate_summary.loc[candidate_summary["terminal_candidate_status"].eq("driver_candidate"), "broad_network"], candidate_summary.loc[candidate_summary["terminal_candidate_status"].eq("driver_candidate"), "current_symbol"], candidate_summary.loc[candidate_summary["terminal_candidate_status"].eq("driver_candidate"), "case_id"]))), True, True, ""),
+            ("selected_are_driver_candidates", set(zip(selected_rows["broad_network"], selected_rows["current_symbol"], selected_rows["case_id"])).issubset(set(zip(candidate_summary.loc[driver_candidates, "broad_network"], candidate_summary.loc[driver_candidates, "current_symbol"], candidate_summary.loc[driver_candidates, "case_id"]))), True, True, ""),
+            ("driver_candidates_meet_coverage", pd.to_numeric(candidate_summary.loc[driver_candidates, "coverage_fraction"], errors="coerce").ge(minimum_coverage).all(), True, True, ""),
+            ("driver_candidates_meet_aggregate_q", pd.to_numeric(candidate_summary.loc[driver_candidates, "aggregate_acat_q"], errors="coerce").le(aggregate_q_threshold).all(), True, True, ""),
+            ("driver_candidates_meet_conservative_support", pd.to_numeric(candidate_summary.loc[driver_candidates, "conservative_support_count"], errors="coerce").ge(minimum_support).all(), True, True, ""),
             ("top5_cap", selected_rows.groupby(["broad_network", "case_id"]).size().le(selection["display_limit"]).all(), int(selected_rows.groupby(["broad_network", "case_id"]).size().max()) if not selected_rows.empty else 0, selection["display_limit"], ""),
             ("rosmap_blinded_during_freeze", not truth(freeze.loc[0, "rosmap_candidate_files_read"]), freeze.loc[0, "rosmap_candidate_files_read"], False, ""),
             ("one_active_result_tier", candidate_summary["result_tier_id"].nunique() == 1, candidate_summary["result_tier_id"].nunique(), 1, ""),
@@ -547,10 +595,11 @@ def main() -> int:
         project_root,
         config_path,
         started,
+        minimum_coverage=minimum_coverage,
+        aggregate_q_threshold=aggregate_q_threshold,
+        minimum_conservative_supporting_runs=minimum_support,
         candidate_units=len(candidate_summary),
-        passing_candidate_units=int(
-            candidate_summary["terminal_candidate_status"].eq("driver_candidate").sum()
-        ),
+        passing_candidate_units=int(driver_candidates.sum()),
         selected_top5_units=len(selected_rows),
         selected_unique_genes=selected_rows["current_symbol"].nunique(),
         testable_networks=int(

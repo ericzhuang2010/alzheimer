@@ -1,15 +1,15 @@
 result_tier_id	broad_network	case_id	common_assessable_universe	rosmap_selected_in_universe	seaad_selected_in_universe	shared_selected_units	seaad_precision	rosmap_recall_among_testable	jaccard_index	hypergeometric_overlap_p	shared_genes	rosmap_only_genes	seaad_only_genes	list_status
-phase18_parity_query__min3_all	Astrocytes	mt_driver	433	5	0	0	NA	0.0	0.0	NA		COX4I1|COX7C|MT-ATP6|MT-CO2|MT-CO3		assessable
-phase18_parity_query__min3_all	Astrocytes	non_mt_driver	5096	5	0	0	NA	0.0	0.0	NA		APOE|LAPTM4A|RPL11|RPL15|RPLP1		assessable
-phase18_parity_query__min3_all	Excitatory_neurons	mt_driver	716	5	4	2	0.5	0.4	0.2857142857142857	0.0002330906712655181	MT-CO2|MT-CYB	COX4I1|COX6B1|UQCR10	MT-ATP6|MT-ND4	assessable
-phase18_parity_query__min3_all	Excitatory_neurons	non_mt_driver	7368	5	1	0	0.0	0.0	0.0	1.0		DYNLT1|LAMTOR5|RPL11|RPS13|SELENOW	HGSNAT	assessable
-phase18_parity_query__min3_all	Inhibitory_neurons	mt_driver	561	5	4	4	1.0	0.8	0.8	1.2245720731665745e-09	MT-CO2|MT-CO3|MT-CYB|MT-ND5	COX7C		assessable
-phase18_parity_query__min3_all	Inhibitory_neurons	non_mt_driver	6216	5	3	0	0.0	0.0	0.0	1.0		ATP6V1F|LAMTOR5|RPL38|RPLP1|RPS15	BEX3|RPL30|RPS27A	assessable
-phase18_parity_query__min3_all	Microglia	mt_driver	241	2	0	0	NA	0.0	0.0	NA		MT-CO2|MT-ND4		assessable
-phase18_parity_query__min3_all	Microglia	non_mt_driver	3625	1	0	0	NA	0.0	0.0	NA		RPL11		assessable
-phase18_parity_query__min3_all	OPCs	mt_driver	0	0	0	0	NA	NA	NA	NA				not_testable_no_common_universe
-phase18_parity_query__min3_all	OPCs	non_mt_driver	0	0	0	0	NA	NA	NA	NA				not_testable_no_common_universe
-phase18_parity_query__min3_all	Oligodendrocytes	mt_driver	309	2	0	0	NA	0.0	0.0	NA		MT-CO2|MT-ND4		assessable
-phase18_parity_query__min3_all	Oligodendrocytes	non_mt_driver	4160	1	1	0	0.0	0.0	0.0	1.0		RPL11	KANSL1L	assessable
-phase18_parity_query__min3_all	Vasculature_cells	mt_driver	0	0	0	0	NA	NA	NA	NA				not_testable_no_common_universe
-phase18_parity_query__min3_all	Vasculature_cells	non_mt_driver	0	0	0	0	NA	NA	NA	NA				not_testable_no_common_universe
+posthoc_exploratory__fdr_only__donor3__query3__coverage50__q10	Astrocytes	mt_driver	433	5	0	0	NA	0.0	0.0	NA		COX4I1|COX7C|MT-ATP6|MT-CO2|MT-CO3		assessable
+posthoc_exploratory__fdr_only__donor3__query3__coverage50__q10	Astrocytes	non_mt_driver	5096	5	0	0	NA	0.0	0.0	NA		APOE|LAPTM4A|RPL11|RPL15|RPLP1		assessable
+posthoc_exploratory__fdr_only__donor3__query3__coverage50__q10	Excitatory_neurons	mt_driver	716	5	4	2	0.5	0.4	0.2857142857142857	0.0002330906712655181	MT-CO2|MT-CYB	COX4I1|COX6B1|UQCR10	MT-ATP6|MT-ND4	assessable
+posthoc_exploratory__fdr_only__donor3__query3__coverage50__q10	Excitatory_neurons	non_mt_driver	7368	5	1	0	0.0	0.0	0.0	1.0		DYNLT1|LAMTOR5|RPL11|RPS13|SELENOW	HGSNAT	assessable
+posthoc_exploratory__fdr_only__donor3__query3__coverage50__q10	Inhibitory_neurons	mt_driver	561	5	5	4	0.8	0.8	0.6666666666666666	6.114066311447476e-09	MT-CO2|MT-CO3|MT-CYB|MT-ND5	COX7C	MT-ND1	assessable
+posthoc_exploratory__fdr_only__donor3__query3__coverage50__q10	Inhibitory_neurons	non_mt_driver	6216	5	3	0	0.0	0.0	0.0	1.0		ATP6V1F|LAMTOR5|RPL38|RPLP1|RPS15	BEX3|RPL30|RPS27A	assessable
+posthoc_exploratory__fdr_only__donor3__query3__coverage50__q10	Microglia	mt_driver	241	2	0	0	NA	0.0	0.0	NA		MT-CO2|MT-ND4		assessable
+posthoc_exploratory__fdr_only__donor3__query3__coverage50__q10	Microglia	non_mt_driver	3625	1	0	0	NA	0.0	0.0	NA		RPL11		assessable
+posthoc_exploratory__fdr_only__donor3__query3__coverage50__q10	OPCs	mt_driver	0	0	0	0	NA	NA	NA	NA				not_testable_no_common_universe
+posthoc_exploratory__fdr_only__donor3__query3__coverage50__q10	OPCs	non_mt_driver	0	0	0	0	NA	NA	NA	NA				not_testable_no_common_universe
+posthoc_exploratory__fdr_only__donor3__query3__coverage50__q10	Oligodendrocytes	mt_driver	309	2	0	0	NA	0.0	0.0	NA		MT-CO2|MT-ND4		assessable
+posthoc_exploratory__fdr_only__donor3__query3__coverage50__q10	Oligodendrocytes	non_mt_driver	4160	1	1	0	0.0	0.0	0.0	1.0		RPL11	KANSL1L	assessable
+posthoc_exploratory__fdr_only__donor3__query3__coverage50__q10	Vasculature_cells	mt_driver	0	0	0	0	NA	NA	NA	NA				not_testable_no_common_universe
+posthoc_exploratory__fdr_only__donor3__query3__coverage50__q10	Vasculature_cells	non_mt_driver	0	0	0	0	NA	NA	NA	NA				not_testable_no_common_universe

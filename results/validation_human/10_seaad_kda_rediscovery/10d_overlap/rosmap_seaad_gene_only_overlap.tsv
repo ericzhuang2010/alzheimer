@@ -16,6 +16,7 @@ MT-ATP6	True	True	True	Astrocytes:mt_driver|Vasculature_cells:mt_driver	Excitato
 MT-CO2	True	True	True	Astrocytes:mt_driver|Excitatory_neurons:mt_driver|Inhibitory_neurons:mt_driver|Microglia:mt_driver|OPCs:mt_driver|Oligodendrocytes:mt_driver|Vasculature_cells:mt_driver	Excitatory_neurons:mt_driver|Inhibitory_neurons:mt_driver
 MT-CO3	True	True	True	Astrocytes:mt_driver|Inhibitory_neurons:mt_driver|OPCs:mt_driver|Vasculature_cells:mt_driver	Inhibitory_neurons:mt_driver
 MT-CYB	True	True	True	Excitatory_neurons:mt_driver|Inhibitory_neurons:mt_driver	Excitatory_neurons:mt_driver|Inhibitory_neurons:mt_driver
+MT-ND1	False	True	False		Inhibitory_neurons:mt_driver
 MT-ND4	True	True	True	Microglia:mt_driver|OPCs:mt_driver|Oligodendrocytes:mt_driver|Vasculature_cells:mt_driver	Excitatory_neurons:mt_driver
 MT-ND5	True	True	True	Inhibitory_neurons:mt_driver	Inhibitory_neurons:mt_driver
 NCOA1	True	False	False	OPCs:non_mt_driver	

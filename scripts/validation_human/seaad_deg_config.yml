@@ -1,4 +1,4 @@
-schema_version: seaad_fine_deg_config_v2
+schema_version: seaad_fine_deg_config_v3
 project_root: "."
 output_root: results/validation_human
 
@@ -35,11 +35,11 @@ expected_identity:
   fine_profiles: 10062
   fine_contrasts: 774
   fine_directions: 1548
-  fine_support_passing: 260
+  fine_support_passing: 382
   broad_pooled_contrasts: 7
   broad_stratified_contrasts: 42
-  broad_stratified_eligible: 20
-  broad_stratified_not_estimable: 22
+  broad_stratified_eligible: 28
+  broad_stratified_not_estimable: 14
 
 expected_reference_sha256:
   gencode_gtf: 3e52f82c63f8fd860bf632ccde10441c05751f4c342ad08c0a98e9e2700171a5
@@ -99,7 +99,7 @@ taxonomy:
 thresholds:
   primary_min_nuclei: 20
   sensitivity_min_nuclei: 50
-  min_donors_per_disease_arm: 5
+  min_donors_per_disease_arm: 3
   fdr: 0.05
   absolute_fold_change: 1.3
 

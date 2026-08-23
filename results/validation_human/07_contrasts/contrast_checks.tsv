@@ -3,12 +3,12 @@ fine_contrast_rows	TRUE	774	774
 fine_direction_rows	TRUE	1548	1548	
 fine_contrast_ids_unique	TRUE	1	1	
 fine_direction_ids_unique	TRUE	1	1	
-fine_support_reproduced	TRUE	260	260	
+fine_support_reproduced	TRUE	382	382	
 all_rows_have_eligibility	TRUE	1	1	
 eligible_designs_full_rank_positive_df	TRUE	1	1	
 broad_pooled_rows	TRUE	7	7	
 broad_pooled_eligible	TRUE	7	7	
 broad_stratified_rows	TRUE	42	42	
-broad_stratified_eligible	TRUE	20	20	
-broad_stratified_not_estimable	TRUE	22	22	
+broad_stratified_eligible	TRUE	28	28	
+broad_stratified_not_estimable	TRUE	14	14	
 direction_mapping_exact	TRUE	1	1	

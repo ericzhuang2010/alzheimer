@@ -51,12 +51,12 @@ class ExecutedBundleTests(unittest.TestCase):
         self.assertEqual(int(status.loc[0, "passing_units"]), 78)
         self.assertEqual(int(status.loc[0, "selected_unique_genes"]), 25)
 
-    def test_vh10_primary_tier_only(self):
+    def test_vh10_amended_tier_only(self):
         status = pd.read_csv(VH10 / "status.tsv", sep="\t", keep_default_na=False)
         self.assertEqual(status.loc[0, "validation_status"], "validated_complete")
         self.assertEqual(
             status.loc[0, "active_result_tier"],
-            "phase18_parity_query__min3_all",
+            "posthoc_exploratory__fdr_only__donor3__query3__coverage50__q10",
         )
         self.assertEqual(int(status.loc[0, "active_kda_calls"]), 42)
 
@@ -68,7 +68,7 @@ class ExecutedBundleTests(unittest.TestCase):
         )
         self.assertEqual(
             set(candidates["result_tier_id"]),
-            {"phase18_parity_query__min3_all"},
+            {"posthoc_exploratory__fdr_only__donor3__query3__coverage50__q10"},
         )
         self.assertNotIn("missing_as_one_acat_p", candidates.columns)
         self.assertNotIn("missing_as_one_acat_q", candidates.columns)
@@ -81,13 +81,19 @@ class ExecutedBundleTests(unittest.TestCase):
         self.assertTrue(run_qc["terminal_status"].str.startswith("completed_").all())
         self.assertTrue(run_qc["r_python_significant_parity"].astype(bool).all())
 
+        selection_status = pd.read_csv(
+            VH10 / "10c_seaad_selection/status.tsv", sep="\t", keep_default_na=False
+        )
+        self.assertEqual(float(selection_status.loc[0, "minimum_coverage"]), 0.50)
+        self.assertEqual(float(selection_status.loc[0, "aggregate_q_threshold"]), 0.10)
+        self.assertEqual(int(selection_status.loc[0, "passing_candidate_units"]), 14)
         top5 = pd.read_csv(
             VH10 / "10c_seaad_selection/seaad_top5.tsv",
             sep="\t",
             keep_default_na=False,
         )
         selected = top5.loc[top5["list_status"].eq("ranked_candidates")].copy()
-        self.assertEqual(len(selected), 13)
+        self.assertEqual(len(selected), 14)
         self.assertFalse(
             selected.duplicated(["broad_network", "current_symbol", "case_id"]).any()
         )

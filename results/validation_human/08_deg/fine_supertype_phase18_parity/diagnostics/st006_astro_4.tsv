@@ -1,2 +1,2 @@
 deg_tier	context_id	broad_network	samples	input_features	tested_features	filtered_features	design_columns	design_rank	residual_df	common_dispersion	min_norm_factor	max_norm_factor	replay_reproduced
-fine_supertype_phase18_parity	st006_astro_4	Astrocytes	17	36601	4407	32194	NA	NA	NA	NA	NA	NA	NA
+fine_supertype_phase18_parity	st006_astro_4	Astrocytes	17	36601	4407	32194	11	11	6	0.1026661057007	0.856501444897833	1.06156159991582	TRUE

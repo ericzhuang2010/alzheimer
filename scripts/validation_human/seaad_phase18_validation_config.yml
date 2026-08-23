@@ -1,4 +1,4 @@
-schema_version: seaad_phase18_validation_config_v1
+schema_version: seaad_phase18_validation_config_v2
 
 project_root: .
 output_root: results/validation_human
@@ -64,38 +64,31 @@ vh10:
       sha256: b1a7e9b627c983d083df74cbe1173b8cb3e9007e1afc641747e8c30ec17f9203
     vh08_status:
       path: results/validation_human/08_deg/status.tsv
-      sha256: 1d85549f1e242458bd3526edbfd1b6f4a11dc742c97e0646fb2be7ea20a84063
+      sha256: d65ee48c2c96b4f34a08dc963d96d2de44eb819eed12258c942fee1e799609d1
     vh08_artifacts:
       path: results/validation_human/08_deg/artifacts.tsv
-      sha256: a2ec6f1537caa4cf35a57cacbbbcce34489f45de2b8c9bb6d8b87710838b659b
+      sha256: ec8e5435d3a35a721a5bb5cb5745075c62cd1605f4357ab9959e9adc5ceb0cdc
     direction_manifest:
       path: results/validation_human/08_deg/query_handoff/fine_direction_manifest.tsv
-      sha256: 2abbf09674b4bc97c9c72b8da6c9bc54bcbef3b462d0ef668167d2937c46ea30
+      sha256: 19c86571ee75d814e359d5c259b2125c1c7aa5ba6d22a2dc833ad626fafe9601
     query_input_index:
       path: results/validation_human/08_deg/query_handoff/fine_query_input_index.tsv
-      sha256: 8ab868370af3603f0e01593e83ca1542724188d83046317e8bf942e9fa4750c9
+      sha256: 03eaad5c0bdc255ec3900f26c162e3cbead0d9416f1a162754b3fa9a3756f46c
     seaad_annotation:
       path: results/validation_human/03_genes/gene_annotation_master.tsv
       sha256: c2b43261a5620a8648dd93213bf51bfddeef90527893c47053698222305bde6a
   analysis:
-    query_rule_id: phase18_parity_query
-    result_tier_id: phase18_parity_query__min3_all
+    query_rule_id: fdr_only_query_sensitivity
+    result_tier_id: posthoc_exploratory__fdr_only__donor3__query3__coverage50__q10
     fdr_threshold_exclusive: 0.05
-    absolute_fold_change: 1.3
     minimum_effective_query_genes: 3
     small_query_warning_below: 10
     directions: [AD_up_mito, AD_down_mito]
     expected:
       structural_direction_slots: 1548
-      completed_source_directions: 520
-      active_kda_calls: 42
-      small_query_calls: 21
-      phase18_sized_calls: 21
-      ad_up_calls: 20
-      ad_down_calls: 22
   selection:
-    minimum_coverage: 0.80
-    aggregate_q_threshold: 0.05
+    minimum_coverage: 0.50
+    aggregate_q_threshold: 0.10
     minimum_conservative_supporting_runs: 1
     display_limit: 5
     driver_classes: [mt_driver, non_mt_driver]

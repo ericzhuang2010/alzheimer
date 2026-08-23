@@ -206,7 +206,7 @@ for (map_index in seq_len(nrow(mapping))) {
     full_rank <- isTRUE(record$full_rank[[1L]])
     residual_ok <- record$residual_df[[1L]] > 0
     eligible <- support_pass && coefficients_present && full_rank && residual_ok
-    reason <- if (eligible) "" else if (!support_pass) "disease_arm_below_5" else if (!coefficients_present) "missing_required_coefficient" else if (!full_rank) "design_rank_deficient" else "nonpositive_residual_df"
+    reason <- if (eligible) "" else if (!support_pass) "disease_arm_below_minimum" else if (!coefficients_present) "missing_required_coefficient" else if (!full_rank) "design_rank_deficient" else "nonpositive_residual_df"
     contrast_id <- paste(map$supertype_id, spec$signature_group, "Dementia_vs_No_dementia", sep = "__")
     fine_rows[[length(fine_rows) + 1L]] <- data.frame(
       contrast_id = contrast_id,
@@ -264,7 +264,7 @@ for (network in broad_order) {
   coefficient <- "diagnosisDementia"
   coefficient_present <- coefficient %in% colnames(pooled_design)
   eligible <- support_pass && coefficient_present && pooled_record$full_rank[[1L]] && pooled_record$residual_df[[1L]] > 0
-  reason <- if (eligible) "" else if (!support_pass) "disease_arm_below_5" else if (!coefficient_present) "missing_required_coefficient" else if (!pooled_record$full_rank[[1L]]) "design_rank_deficient" else "nonpositive_residual_df"
+  reason <- if (eligible) "" else if (!support_pass) "disease_arm_below_minimum" else if (!coefficient_present) "missing_required_coefficient" else if (!pooled_record$full_rank[[1L]]) "design_rank_deficient" else "nonpositive_residual_df"
   contrast_id <- paste(network, "pooled", "Dementia_vs_No_dementia", sep = "__")
   pooled_rows[[length(pooled_rows) + 1L]] <- data.frame(
     contrast_id = contrast_id, deg_tier = "broad_pooled_anchor",
@@ -312,7 +312,7 @@ for (network in broad_order) {
     reference_column <- paste0("diagnosis_sex_apoe_groupNo_dementia__", spec$signature_group)
     coefficients_present <- all(c(case_column, reference_column) %in% colnames(grouped_design))
     eligible <- support_pass && coefficients_present && grouped_record$full_rank[[1L]] && grouped_record$residual_df[[1L]] > 0
-    reason <- if (eligible) "" else if (!support_pass) "disease_arm_below_5" else if (!coefficients_present) "missing_required_coefficient" else if (!grouped_record$full_rank[[1L]]) "design_rank_deficient" else "nonpositive_residual_df"
+    reason <- if (eligible) "" else if (!support_pass) "disease_arm_below_minimum" else if (!coefficients_present) "missing_required_coefficient" else if (!grouped_record$full_rank[[1L]]) "design_rank_deficient" else "nonpositive_residual_df"
     contrast_id <- paste(network, spec$signature_group, "Dementia_vs_No_dementia", sep = "__")
     broad_grouped_rows[[length(broad_grouped_rows) + 1L]] <- data.frame(
       contrast_id = contrast_id, deg_tier = "broad_stratified_support",

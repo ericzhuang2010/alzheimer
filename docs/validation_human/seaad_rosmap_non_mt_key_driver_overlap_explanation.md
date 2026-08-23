@@ -1,4 +1,8 @@
 # Why there is no shared non-MT top key driver between ROSMAP and SEA-AD
+> **Historical diagnostic note (superseded 2026-08-22):** This diagnostic was
+> written for the overwritten SEA-AD tier. The amended non-MT selection is
+> summarized in [vh09_vh10_execution_summary.md](vh09_vh10_execution_summary.md).
+
 
 ## Purpose and scope
 

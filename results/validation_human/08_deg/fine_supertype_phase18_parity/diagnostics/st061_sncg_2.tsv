@@ -1,2 +1,2 @@
 deg_tier	context_id	broad_network	samples	input_features	tested_features	filtered_features	design_columns	design_rank	residual_df	common_dispersion	min_norm_factor	max_norm_factor	replay_reproduced
-fine_supertype_phase18_parity	st061_sncg_2	Inhibitory_neurons	22	36601	6530	30071	NA	NA	NA	NA	NA	NA	NA
+fine_supertype_phase18_parity	st061_sncg_2	Inhibitory_neurons	22	36601	6530	30071	12	12	10	0.0484308000983159	0.955888306302991	1.11683797179979	TRUE

@@ -1,4 +1,8 @@
 # SEA-AD–ROSMAP human-validation presentation design
+> **Historical presentation design (superseded 2026-08-22):** Counts and tier
+> identifiers in this design refer to the overwritten SEA-AD run. Current
+> results are in [vh09_vh10_execution_summary.md](vh09_vh10_execution_summary.md).
+
 
 **Status:** implemented and validated; PowerPoint assembled on 2026-08-22
 

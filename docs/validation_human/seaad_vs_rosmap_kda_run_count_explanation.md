@@ -1,4 +1,9 @@
 # Why SEA-AD Has Fewer Runnable KDA Calls Than ROSMAP Phase 18
+> **Historical note (superseded 2026-08-22):** This explanation describes the
+> former five-donor/1.3-fold/coverage-0.80/q-0.05 SEA-AD run. For the current
+> amended execution, see [seaad_thresholds.md](seaad_thresholds.md) and
+> [vh09_vh10_execution_summary.md](vh09_vh10_execution_summary.md).
+
 
 Yes, the SEA-AD KDA run count is substantially lower, but `84` is not directly
 comparable to ROSMAP's primary count.

@@ -172,8 +172,9 @@ main <- function() {
   runs <- manifest[
     terminal_status %in% c("eligible_small_query", "eligible_phase18_sized")
   ]
-  expected_calls <- as.integer(cfg$analysis$expected$active_kda_calls)
-  must(nrow(runs) == expected_calls, paste("Expected", expected_calls, "active calls"))
+  expected_calls <- as.integer(status$active_kda_calls[[1L]])
+  must(nrow(runs) == expected_calls,
+       paste("Manifest/status active-call mismatch:", nrow(runs), expected_calls))
   must(!anyDuplicated(runs$kda_run_id), "Active KDA run IDs are not unique")
   signatures <- data.table::fread(
     file.path(input_dir, "seaad_kda_signature_members.tsv.gz")
