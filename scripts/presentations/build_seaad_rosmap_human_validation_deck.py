@@ -4,7 +4,9 @@
 The main deck follows ``seaad_rosmap_human_validation_presentation_design.md``:
 nine presentation-first slides, followed by six concise appendix slides.  All
 visible result counts are derived from validated VH02/VH04/VH08/VH09/VH10
-tables.  Scientific figures are embedded byte-for-byte from their validated
+tables.  The current deck reports the post-hoc exploratory donor-3/FDR-only
+rerun; it must not be described as the completed primary or confirmatory
+analysis.  Scientific figures are embedded byte-for-byte from their validated
 figure packages, while the setup, attrition, and conclusion slides remain
 editable PowerPoint shapes.
 """
@@ -31,7 +33,9 @@ from pptx.util import Inches, Pt
 
 
 REPO = Path(__file__).resolve().parents[2]
-DEFAULT_OUT = REPO / "docs/presentations/seaad_rosmap_human_validation.pptx"
+DEFAULT_OUT = REPO / (
+    "docs/presentations/seaad_rosmap_human_validation_08252026.pptx"
+)
 DEFAULT_REPORT_DIR = (
     REPO / "results/presentations/validation_human/seaad_rosmap_human_validation"
 )
@@ -47,6 +51,7 @@ DATA = {
         "results/validation_human/08_deg/fine_supertype_phase18_parity/"
         "fine_contrast_status.tsv"
     ),
+    "deg_summary": REPO / "results/validation_human/08_deg/deg_summary.tsv",
     "query_attrition": REPO / (
         "results/validation_human/10_seaad_kda_rediscovery/10a_inputs/"
         "query_attrition.tsv"
@@ -76,6 +81,10 @@ DATA = {
     "candidate_overlap": REPO / (
         "results/validation_human/10_seaad_kda_rediscovery/10d_overlap/"
         "rosmap_seaad_candidate_overlap.tsv"
+    ),
+    "non_mt_fate": REPO / (
+        "results/figures/validation_human/seaad_rosmap_non_mt_diagnostic/"
+        "seaad_rosmap_non_mt_diagnostic_fate_summary.tsv"
     ),
     "seaad_config": REPO / "scripts/validation_human/seaad_deg_config.yml",
     "kda_config": REPO / "scripts/validation_human/seaad_phase18_validation_config.yml",
@@ -136,6 +145,20 @@ FIG_STATUS = {
     ),
 }
 
+# One canonical figure per result slide.  Binding the source label to the slide
+# number prevents a deck from passing merely because the right images appear
+# somewhere in the package.
+FIGURE_SLIDES = {
+    4: "mt_circle",
+    5: "non_mt_circle",
+    6: "strict_overlap",
+    7: "gene_overlap",
+    8: "non_mt_diagnostic",
+    10: "setup",
+    11: "deg_landscape",
+    12: "kda_outcomes",
+}
+
 SLIDE_W = Inches(13.333333)
 SLIDE_H = Inches(7.5)
 MAIN_SLIDES = 9
@@ -168,10 +191,10 @@ MIN_NOTE_WORDS = 55
 
 MAIN_TITLES = [
     "SEA-AD independently recovers a focused neuronal mitochondrial signal from ROSMAP",
-    "SEA-AD evidence was independent; the network and KDA rules were shared",
+    "SEA-AD evidence was independent; the network and KDA scaffold were shared",
     "Only 42 directions produced mitochondrial gene sets large enough for KDA",
     "SEA-AD MT drivers concentrate in excitatory and inhibitory neurons",
-    "SEA-AD selected five non-MT drivers across three networks",
+    "SEA-AD selected three non-MT drivers across two neuronal networks",
     "Six ROSMAP units reappear in the same neuronal network and driver class",
     "Ignoring network, all six SEA-AD MT genes occur in ROSMAP; non-MT overlap is zero",
     "Zero non-MT overlap does not mean the biology is absent",
@@ -209,6 +232,21 @@ def display_path(path: Path) -> str:
 def read_tsv(path: Path) -> list[dict[str, str]]:
     with path.open(newline="", encoding="utf-8") as handle:
         return list(csv.DictReader(handle, delimiter="\t"))
+
+
+def read_yaml_scalar(path: Path, key: str) -> str:
+    """Read one unique scalar from these small, human-authored YAML configs."""
+    prefix = f"{key}:"
+    values = [
+        line.split(":", 1)[1].strip().strip("\"'")
+        for line in path.read_text(encoding="utf-8").splitlines()
+        if line.lstrip().startswith(prefix)
+    ]
+    if len(values) != 1:
+        raise AssertionError(
+            f"Expected one {key!r} scalar in {path}, found {len(values)}"
+        )
+    return values[0]
 
 
 def as_bool(value: str) -> bool:
@@ -258,6 +296,49 @@ def derive_metrics() -> dict[str, object]:
     for status in FIG_STATUS.values():
         assert_validated_status(status, figure=True)
 
+    donor_minimum = int(
+        read_yaml_scalar(DATA["seaad_config"], "min_donors_per_disease_arm")
+    )
+    query_rule_id = read_yaml_scalar(DATA["kda_config"], "query_rule_id")
+    result_tier_id = read_yaml_scalar(DATA["kda_config"], "result_tier_id")
+    fdr_threshold = float(
+        read_yaml_scalar(DATA["kda_config"], "fdr_threshold_exclusive")
+    )
+    minimum_query_genes = int(
+        read_yaml_scalar(DATA["kda_config"], "minimum_effective_query_genes")
+    )
+    minimum_coverage = float(
+        read_yaml_scalar(DATA["kda_config"], "minimum_coverage")
+    )
+    aggregate_q_threshold = float(
+        read_yaml_scalar(DATA["kda_config"], "aggregate_q_threshold")
+    )
+    minimum_support = int(
+        read_yaml_scalar(
+            DATA["kda_config"], "minimum_conservative_supporting_runs"
+        )
+    )
+    if (
+        donor_minimum,
+        query_rule_id,
+        result_tier_id,
+        fdr_threshold,
+        minimum_query_genes,
+        minimum_coverage,
+        aggregate_q_threshold,
+        minimum_support,
+    ) != (
+        3,
+        "fdr_only_query_sensitivity",
+        "posthoc_exploratory__fdr_only__donor3__query3__coverage80__q05",
+        0.05,
+        3,
+        0.80,
+        0.05,
+        1,
+    ):
+        raise AssertionError("Active post-hoc exploratory tier contract changed")
+
     donors = read_tsv(DATA["donor_groups"])
     donor_counts: dict[str, dict[str, int]] = defaultdict(dict)
     for row in donors:
@@ -275,17 +356,50 @@ def derive_metrics() -> dict[str, object]:
     completed_groups = Counter(
         row["signature_group"] for row in fine if row["terminal_status"] == "completed"
     )
-    if len(fine) != 774 or fine_status != Counter({"not_estimable": 514, "completed": 260}):
+    if len(fine) != 774 or fine_status != Counter({"not_estimable": 393, "completed": 381}):
         raise AssertionError("Fine-contrast structural/completion contract changed")
-    if completed_groups != Counter({"F_e33": 100, "M_e33": 92, "F_e4": 68}):
+    if completed_groups != Counter({
+        "F_e33": 105,
+        "F_e4": 95,
+        "M_e33": 104,
+        "M_e4": 77,
+    }):
         raise AssertionError("Completed fine-contrast group contract changed")
+
+    fine_by_id = {row["contrast_id"]: row for row in fine}
+    deg_rows = [
+        row for row in read_tsv(DATA["deg_summary"])
+        if row["deg_tier"] == "fine_supertype_phase18_parity"
+    ]
+    if len(deg_rows) != len(fine) or {row["contrast_id"] for row in deg_rows} != set(fine_by_id):
+        raise AssertionError("Fine DEG summary does not match the structural contrast grid")
+    completed_deg = [row for row in deg_rows if row["terminal_status"] == "completed"]
+    fdr_hits = sum(int(row["fdr_significant"]) for row in completed_deg)
+    auxiliary_fold_hits = sum(int(row["phase18_parity"]) for row in completed_deg)
+    fdr_signal_contrasts = sum(int(row["fdr_significant"]) > 0 for row in completed_deg)
+    fdr_hits_by_group = Counter()
+    for row in completed_deg:
+        group = fine_by_id[row["contrast_id"]]["signature_group"]
+        fdr_hits_by_group[group] += int(row["fdr_significant"])
+    if (
+        fdr_hits,
+        auxiliary_fold_hits,
+        fdr_signal_contrasts,
+        fdr_hits_by_group,
+    ) != (
+        24_423,
+        22_211,
+        85,
+        Counter({"M_e33": 24_005, "F_e33": 266, "F_e4": 146, "M_e4": 6}),
+    ):
+        raise AssertionError("Fine-supertype FDR-only signal contract changed")
 
     attrition_rows = read_tsv(DATA["query_attrition"])
     attrition = {row["terminal_status"]: int(row["direction_slots"]) for row in attrition_rows}
     expected_attrition = {
-        "source_contrast_not_estimable": 1028,
-        "query_empty": 462,
-        "query_below_minimum": 16,
+        "source_contrast_not_estimable": 786,
+        "query_empty": 703,
+        "query_below_minimum": 17,
         "eligible_small_query": 21,
         "eligible_phase18_sized": 21,
     }
@@ -294,8 +408,23 @@ def derive_metrics() -> dict[str, object]:
     planned_directions = sum(attrition.values())
     completed_directions = planned_directions - attrition["source_contrast_not_estimable"]
     kda_calls = attrition["eligible_small_query"] + attrition["eligible_phase18_sized"]
-    if (planned_directions, completed_directions, kda_calls) != (1548, 520, 42):
+    if (planned_directions, completed_directions, kda_calls) != (1548, 762, 42):
         raise AssertionError("Direction/call arithmetic changed")
+
+    run_manifest = read_tsv(DATA["run_manifest"])
+    if len(run_manifest) != planned_directions:
+        raise AssertionError("KDA run-manifest direction count changed")
+    if {row["query_rule_id"] for row in run_manifest} != {query_rule_id}:
+        raise AssertionError("Run manifest mixes query-rule identities")
+    if {row["result_tier_id"] for row in run_manifest} != {result_tier_id}:
+        raise AssertionError("Run manifest mixes result-tier identities")
+    eligible_statuses = {"eligible_small_query", "eligible_phase18_sized"}
+    eligible_calls = [
+        row for row in run_manifest if row["terminal_status"] in eligible_statuses
+    ]
+    call_groups = Counter(row["signature_group"] for row in eligible_calls)
+    if call_groups != Counter({"M_e33": 40, "F_e33": 1, "F_e4": 1}):
+        raise AssertionError("KDA call group contract changed")
 
     top5_rows = read_tsv(DATA["seaad_top5"])
     selected = [
@@ -306,18 +435,25 @@ def derive_metrics() -> dict[str, object]:
     selected_units = len(selected)
     selected_genes = len({row["current_symbol"] for row in selected})
     selected_classes = Counter(row["case_id"] for row in selected)
-    if (selected_units, selected_genes) != (13, 11):
+    if (selected_units, selected_genes) != (11, 9):
         raise AssertionError("SEA-AD selected unit/gene count changed")
-    if selected_classes != Counter({"mt_driver": 8, "non_mt_driver": 5}):
+    if selected_classes != Counter({"mt_driver": 8, "non_mt_driver": 3}):
         raise AssertionError("SEA-AD MT/non-MT selected split changed")
+    selected_non_mt_symbols = {
+        row["current_symbol"] for row in selected if row["case_id"] == "non_mt_driver"
+    }
+    if selected_non_mt_symbols != {"HGSNAT", "BEX3", "RPS27A"}:
+        raise AssertionError("SEA-AD selected non-MT gene set changed")
     if int(vh10c["selected_top5_units"]) != selected_units:
         raise AssertionError("VH10C status does not match selected display rows")
+    if int(vh10c["selected_unique_genes"]) != selected_genes:
+        raise AssertionError("VH10C unique-gene count does not match selected display rows")
 
     list_status = read_tsv(DATA["seaad_list_status"])
     list_state_counts = Counter(row["list_status"] for row in list_status)
     if list_state_counts != Counter({
-        "ranked_candidates": 5,
-        "no_passing_candidate": 5,
+        "ranked_candidates": 4,
+        "no_passing_candidate": 6,
         "not_testable_no_included_runs": 4,
     }):
         raise AssertionError("SEA-AD list-state contract changed")
@@ -345,7 +481,47 @@ def derive_metrics() -> dict[str, object]:
     if (len(non_mt_rosmap), len(non_mt_testable)) != (21, 17):
         raise AssertionError("Non-MT testability contract changed")
 
+    non_mt_fate = {
+        row["node_id"]: int(row["unit_count"])
+        for row in read_tsv(DATA["non_mt_fate"])
+    }
+    expected_non_mt_fate = {
+        "rosmap_selected": 21,
+        "not_testable": 4,
+        "assessable": 17,
+        "no_qualifying_return": 14,
+        "one_qualifying_return": 3,
+        "passed_final_selection": 0,
+    }
+    if non_mt_fate != expected_non_mt_fate:
+        raise AssertionError(f"Non-MT diagnostic fate contract changed: {non_mt_fate}")
+
+    kda_return_positive_calls = int(vh10b["completed_significant_calls"])
+    kda_no_return_calls = int(vh10b["completed_no_significant_calls"])
+    significant_return_rows = int(vh10b["significant_return_rows"])
+    candidate_units = int(vh10c["candidate_units"])
+    passing_candidate_units = int(vh10c["passing_candidate_units"])
+    if (
+        kda_return_positive_calls,
+        kda_no_return_calls,
+        significant_return_rows,
+        candidate_units,
+        passing_candidate_units,
+    ) != (27, 15, 201, 38_788, 11):
+        raise AssertionError("KDA return/selection contract changed")
+    if kda_return_positive_calls + kda_no_return_calls != kda_calls:
+        raise AssertionError("KDA with/without-return counts do not sum to completed calls")
+
     metrics: dict[str, object] = {
+        "analysis_role": "post-hoc exploratory",
+        "query_rule_id": query_rule_id,
+        "result_tier_id": result_tier_id,
+        "donor_minimum": donor_minimum,
+        "fdr_threshold": fdr_threshold,
+        "minimum_query_genes": minimum_query_genes,
+        "minimum_coverage": minimum_coverage,
+        "aggregate_q_threshold": aggregate_q_threshold,
+        "minimum_support": minimum_support,
         "donors": int(vh02["analysis_donors"]),
         "dementia_donors": dementia,
         "no_dementia_donors": no_dementia,
@@ -356,9 +532,14 @@ def derive_metrics() -> dict[str, object]:
         "completed_contrasts": fine_status["completed"],
         "not_estimable_contrasts": fine_status["not_estimable"],
         "completed_groups": completed_groups,
+        "fdr_hits": fdr_hits,
+        "auxiliary_fold_hits": auxiliary_fold_hits,
+        "fdr_signal_contrasts": fdr_signal_contrasts,
+        "fdr_hits_by_group": fdr_hits_by_group,
         "planned_directions": planned_directions,
         "completed_directions": completed_directions,
         "kda_calls": kda_calls,
+        "call_groups": call_groups,
         "selected_units": selected_units,
         "selected_genes": selected_genes,
         "selected_mt_units": selected_classes["mt_driver"],
@@ -373,13 +554,15 @@ def derive_metrics() -> dict[str, object]:
         "non_mt_rosmap_units": len(non_mt_rosmap),
         "non_mt_testable": len(non_mt_testable),
         "non_mt_not_testable": len(non_mt_rosmap) - len(non_mt_testable),
-        "non_mt_same_network_support": 4,
-        "non_mt_no_same_network_support": 13,
+        "non_mt_same_network_support": non_mt_fate["one_qualifying_return"],
+        "non_mt_no_same_network_support": non_mt_fate["no_qualifying_return"],
         "selected_rows": selected,
         "list_state_counts": list_state_counts,
-        "kda_return_positive_calls": int(vh10b["completed_significant_calls"]),
-        "kda_no_return_calls": int(vh10b["completed_no_significant_calls"]),
-        "candidate_units": int(vh10c["candidate_units"]),
+        "kda_return_positive_calls": kda_return_positive_calls,
+        "kda_no_return_calls": kda_no_return_calls,
+        "significant_return_rows": significant_return_rows,
+        "candidate_units": candidate_units,
+        "passing_candidate_units": passing_candidate_units,
     }
     if int(vh10d["rosmap_selected_units"]) != metrics["rosmap_units"]:
         raise AssertionError("VH10D ROSMAP selected count mismatch")
@@ -629,81 +812,81 @@ def full_canvas_circle_slide(prs: Presentation, *, page_no: int, figure: Path,
 
 def _notes() -> list[str]:
     return [
-        """What to point at: Start with the two large numbers. SEA-AD produced 13 selected network–gene–class units, and six of those match a frozen ROSMAP unit in the same broad network and driver class.
+        """What to point at: Start with the two large numbers. The post-hoc exploratory SEA-AD rerun produced 11 SEA-AD selected units, and six match a frozen ROSMAP unit in the same broad network and driver class.
 
-Main takeaway: Independent SEA-AD expression evidence recovers a focused neuronal mitochondrial signal rather than the entire ROSMAP list. MT here means the frozen core-MitoCarta driver class.
+Main takeaway: Independent SEA-AD expression evidence recovers a focused neuronal mitochondrial signal rather than the entire ROSMAP list. MT denotes the frozen core-MitoCarta driver class.
 
-Boundary / transition: A unit is a network plus gene plus driver class, so one gene may count in more than one network. Next I will show how the independent evidence and shared analysis scaffold were separated.""",
-        """What to point at: Follow the four boxes from SEA-AD donors to donor-level expression, signed mitochondrial DEG queries, KDA on the matching frozen network, and the post-freeze ROSMAP comparison. The SEA-AD candidate list was fixed before candidate identities were used for comparison.
+Boundary / transition: A unit is a network plus gene plus driver class, so one gene can count in more than one network. These are exploratory rerun results, not a confirmatory primary analysis. Next I will show which evidence was independent and which scaffold was shared.""",
+        """What to point at: Follow the four boxes from SEA-AD donors to donor-level expression, the amended signed mitochondrial DEG queries, KDA on the matching frozen network, and comparison with ROSMAP. The rerun used at least three donors per disease arm and FDR below 0.05 with no fold-change cutoff.
 
-Main takeaway: Donors, expression values, differential-expression results, and queries came independently from SEA-AD. The seven broad networks and the KDA and selection rules were deliberately held fixed for comparability.
+Main takeaway: Donors, expression values, DEG results, and queries came from SEA-AD. The seven broad networks and KDA/aggregation scaffold were shared for comparability; ROSMAP candidate files were not read by the SEA-AD selector.
 
-Boundary / transition: This is not a new SEA-AD network reconstruction. It is independent expression evidence evaluated on a shared frozen scaffold. Next I will explain why only a small fraction of planned comparisons became KDA calls.""",
-        """What to point at: Read the three boxes left to right: 1,548 planned fine-cell-type by group by direction combinations, 520 directions from completed DEG contrasts, and 42 mitochondrial gene sets large enough for KDA.
+Boundary / transition: The threshold amendments were made after the earlier analysis, so this rerun is post-hoc exploratory. It is not an independent network reconstruction. Next I will show how the planned grid narrowed to executed calls.""",
+        """What to point at: Read the three boxes left to right: 1,548 planned supertype-by-group-by-direction combinations, 762 directions from 381 completed DEG contrasts, and 42 mitochondrial gene sets large enough for KDA. Four sex/APOE groups contributed completed contrasts: F_e33, F_e4, M_e33, and M_e4.
 
-Main takeaway: A planned direction is not an executed KDA call. Donor support first limited which contrasts could be fitted; then most completed directions had too few effective mitochondrial query genes.
+Main takeaway: A planned direction is not an executed KDA call. Lowering donor support to three per arm made more contrasts estimable, but most completed directions still had fewer than three effective mitochondrial query genes.
 
-Boundary / transition: Independent donors determine biological replication. More nuclei from the same donors improve measurement but do not add independent samples. The next two slides show the drivers selected from the 42 executed calls.""",
-        """What to point at: Focus on the Excitatory and Inhibitory arcs. Eight selected MT units represent six genes. MT-CO2 and MT-CYB appear in both neuronal networks, which is why two recurrence curves cross the center.
+Boundary / transition: Independent donors determine biological replication; more nuclei do not add independent samples. M_e4 completed 77 contrasts but all 154 signed FDR-only queries were empty, so it produced no KDA call. Next we show the selected drivers.""",
+        """What to point at: Focus on the Excitatory and Inhibitory arcs. Eight selected MT units represent six genes. MT-CO2 and MT-CYB occur in both neuronal networks, which is why two recurrence curves cross the center.
 
-Main takeaway: The SEA-AD MT signal is compact and neuronal rather than broadly distributed across all seven networks.
+Main takeaway: The post-hoc exploratory SEA-AD MT result is compact and neuronal rather than broadly distributed across all seven networks.
 
-Boundary / transition: The curves indicate the same selected gene appearing in two network lists; they are not biological network edges. Gray and hatched slots distinguish testable lists with no passing driver from networks with no included run. Next we show the SEA-AD non-MT selections.""",
-        """What to point at: The selected non-MT genes are HGSNAT in Excitatory neurons, BEX3, RPS27A, and RPL30 in Inhibitory neurons, and KANSL1L in Oligodendrocytes. The other list positions are deliberately not filled.
+Boundary / transition: The curves show recurrence of a selected gene across network lists; they are not biological network edges. Gray and hatched slots distinguish testable lists with no passing driver from networks with no included run. Next we show the three non-MT selections.""",
+        """What to point at: The three selected non-MT genes are HGSNAT in Excitatory neurons and BEX3 plus RPS27A in Inhibitory neurons. The empty slots are deliberate and do not indicate omitted top-ranked genes.
 
-Main takeaway: SEA-AD did select non-MT drivers; the later zero overlap means these five genes differ from the final ROSMAP non-MT list, not that SEA-AD had no non-MT result.
+Main takeaway: SEA-AD did select non-MT drivers. The later zero overlap means these three genes differ from the frozen ROSMAP non-MT selections, not that SEA-AD produced no non-MT result.
 
-Boundary / transition: Non-MT means outside the frozen core-MitoCarta class, not unrelated to mitochondria. OPC and Vasculature lists lacked included KDA runs and should not be treated as negative results. Next we move to the prespecified strict comparison.""",
-        """What to point at: The top bands separate MT and non-MT. Then follow the rank lines in Excitatory and Inhibitory neurons. Six same-network, same-gene, same-class units recur; because MT-CO2 and MT-CYB recur in both networks, these are four unique gene symbols.
+Boundary / transition: Non-MT means outside the frozen core-MitoCarta class; it does not mean unrelated to mitochondrial biology. OPC and Vasculature lists lacked included KDA runs and should not be treated as negative evidence. Next we make the strict cross-cohort comparison.""",
+        """What to point at: Follow the rank lines in Excitatory and Inhibitory neurons. Six same-network, same-gene, same-class units recur. Because MT-CO2 and MT-CYB recur in both networks, these six units represent four unique gene symbols.
 
-Main takeaway: The primary cross-cohort endpoint is six strict neuronal MT matches and zero strict non-MT matches. Thirty-six of the 47 frozen ROSMAP units had a matching testable SEA-AD universe.
+Main takeaway: Within the post-hoc exploratory rerun, the strict comparison yields six neuronal MT matches and zero strict non-MT matches. Thirty-six of 47 frozen ROSMAP units were in a matching testable SEA-AD universe.
 
-Boundary / transition: The printed p-values are nominal per-list overlap tests. Eleven ROSMAP units had no eligible SEA-AD run and are not negative replications. The next slide deliberately collapses network identity for a simpler gene-level view.""",
-        """What to point at: In the MT panel, the SEA-AD circle is fully contained inside the ROSMAP circle: all six SEA-AD MT genes occur somewhere in ROSMAP. In the non-MT panel, the two gene sets are disjoint.
+Boundary / transition: The printed p-values are nominal per-list overlap tests. Eleven ROSMAP units had no eligible SEA-AD run and are not negative replications. The next slide collapses network identity for a simpler descriptive gene-level view.""",
+        """What to point at: In the MT panel, the SEA-AD set is contained inside the ROSMAP set: all six SEA-AD MT genes occur somewhere in ROSMAP. In the non-MT panel, the 15 ROSMAP genes and three SEA-AD genes are disjoint.
 
-Main takeaway: The descriptive gene-level view shows six shared MT genes and no shared non-MT genes after each gene is counted once, regardless of network.
+Main takeaway: Counting each gene once, regardless of network, shows six shared MT genes and no shared non-MT genes in this exploratory rerun.
 
-Boundary / transition: This is secondary to the strict endpoint. MT-ATP6 and MT-ND4 overlap only after networks are ignored, so the six common genes here are not the same as six strict units. No gene-level overlap p-value is claimed. Next we unpack the non-MT mismatch.""",
-        """What to point at: Panel A follows the 21 frozen ROSMAP non-MT units. Four OPC units were not testable, 17 had a matching assessable network, four had one SEA-AD supporting run, and none passed final selection across runs. Panel B looks in the reverse direction at the five SEA-AD non-MT units.
+Boundary / transition: This is secondary to the strict same-network result. MT-ATP6 and MT-ND4 overlap only after networks are ignored, so six common genes here is not the same quantity as six strict units. No gene-level overlap p-value is claimed. Next we unpack the non-MT mismatch.""",
+        """What to point at: Panel A follows 21 frozen ROSMAP non-MT units. Four OPC units were not testable. Of 17 assessable units, 14 had no qualifying same-network SEA-AD return and three had exactly one—DYNLT1, RPS15, and RPL38. None passed final across-run selection. Panel B reverses the comparison for HGSNAT, BEX3, and RPS27A.
 
-Main takeaway: Zero final overlap reflects sparse, differently distributed cross-run evidence; it is not evidence that the genes or biology are absent.
+Main takeaway: Zero final overlap reflects sparse and differently distributed cross-run evidence; it is not evidence that the genes or biology are absent.
 
-Boundary / transition: Several donor strata could not be estimated because one disease arm had fewer than five independent donors. That reduced matching evidence but is not claimed as the sole cause. The zero occurred before the top-five display cap. We finish with the restrained conclusion.""",
-        """What to point at: Read the three cards as supported, not established, and next step. The supported result is the same-network neuronal MT recurrence. Broad non-MT replication and untestable groups remain unresolved.
+Boundary / transition: F_e2 and M_e2 were not estimable because one disease arm had fewer than three independent donors. M_e4 was estimable but its queries were empty. These patterns provide context, not a sole causal explanation. The zero occurred before the five-gene display cap.""",
+        """What to point at: Read the three cards as supported, not established, and next step. The supported result is same-network neuronal MT recurrence. Broad non-MT replication and groups without eligible runs remain unresolved.
 
-Main takeaway: SEA-AD provides focused independent support for a neuronal mitochondrial signal, while the wider ROSMAP driver list is not broadly reproduced under this design.
+Main takeaway: This post-hoc exploratory rerun provides focused independent SEA-AD expression support for a neuronal mitochondrial signal, while the wider ROSMAP driver list is not broadly reproduced.
 
-Boundary / transition: Shared networks and selection machinery limit how independent the full analysis is, and KDA prioritization is not causal proof. The practical next step is better donor-balanced external cohorts and, where possible, independently reconstructed networks. The appendix contains the detailed setup and audit evidence.""",
-        """What to point at: This is the detailed version of the setup. The top lane shows independent SEA-AD evidence from donors through DEG queries and KDA selection. The lower ROSMAP lane enters only after the SEA-AD list is frozen for comparison.
+Boundary / transition: Shared networks and selection machinery limit how independent the full workflow is, and KDA prioritization is not causal proof. Better donor-balanced external cohorts and independently reconstructed networks are the practical next step. The appendix contains the detailed setup and audit evidence.""",
+        """What to point at: This detailed setup records the active post-hoc exploratory rerun: at least three donors per disease arm, FDR below 0.05 without an active fold-change gate, 381 completed contrasts, 762 completed-source directions, 42 KDA calls, and 11 selected units representing nine genes.
 
-Main takeaway: The compact main-deck workflow is backed by a checksum-validated, auditable implementation with explicit separation between cohort-specific evidence and shared technical assets.
+Main takeaway: The main-deck workflow is backed by validated inputs and explicit separation between SEA-AD evidence and the shared technical scaffold. ROSMAP candidate files were not inputs to SEA-AD selection.
 
-Boundary / transition: The 1,548 count is a structural grid, not a run count. The original ROSMAP grid spans 54 fine types and six groups, while the SEA-AD design uses its own 129 supertypes. The next appendix slide shows where the DEG signal was concentrated.""",
-        """What to point at: The heatmap shows completed fine-supertype contrasts and the distribution of Phase-18-parity DEG incidences. The bottom summary makes the dominant male APOE ε3/ε3 contribution visible.
+Boundary / transition: The 1,548 count is a structural grid, not a run count. The threshold amendments make this an exploratory rerun rather than the original confirmatory contract. The next appendix slide shows where the active FDR-only signal was concentrated.""",
+        """What to point at: The heatmap shows all 129 supertypes and six groups. Of 774 structural contrasts, 381 completed and 85 contained at least one active FDR-only hit. The active total is 24,423 feature-by-contrast incidences, with 24,005, or 98.3 percent, in M_e33.
 
-Main takeaway: Only 260 of 774 fine contrasts completed, and the usable DEG signal was strongly concentrated in a subset of neuronal contrasts, especially male APOE ε3/ε3.
+Main takeaway: Removing the active fold-change cutoff increased the query source, but the signal remained highly concentrated in male APOE ε3/ε3 contrasts. Four groups contributed completed contrasts.
 
-Boundary / transition: Counts here are feature-by-contrast incidences, not unique genes, and they are upstream of symbol deduplication, MitoCarta filtering, and network intersection. The next slide shows what happened after runnable queries entered KDA.""",
-        """What to point at: Panel A separates calls with at least one significant return from calls with none. Panel B shows that 42 calls produced run-level evidence, while final across-run selection reduced the result to 13 selected units.
+Boundary / transition: The 22,211 incidences that also meet the old 1.3-fold threshold are shown only as an auxiliary reference. Counts are incidences, not unique genes, and occur before MitoCarta filtering and network intersection.""",
+        """What to point at: Panel A separates the 27 of 42 calls with at least one significant return from the 15 calls with none. Panel B shows 201 significant return rows, 38,788 aggregate candidate units, and 11 units passing all final gates, representing nine genes.
 
-Main takeaway: Within-run evidence was common in the neuronal networks, but final selection across runs was intentionally much stricter.
+Main takeaway: A call-level return is not a selected driver. Across-run coverage, conservative support, ACAT aggregation, and within-network correction substantially reduce the final list.
 
-Boundary / transition: A run-level significant return is not a final selected driver. The 208 return rows are not unique genes, and within-run q-values differ from aggregate ACAT/BH q-values. The next appendix slide summarizes the frozen rules without the implementation detail.""",
-        """What to point at: Read the four cards in order: define a signed core-MitoCarta DEG query, run KDA only when the effective query is large enough, aggregate evidence across runs, and display no more than five genes without backfilling.
+Boundary / transition: The 201 rows are not unique genes, and run-level q-values differ from aggregate ACAT/BH q-values. These outcomes belong to the post-hoc donor-3/FDR-only tier. The next slide summarizes the active rules in plain language.""",
+        """What to point at: Read the four cards in order. The active signed core-MitoCarta query uses FDR below 0.05 with no fold-change cutoff and requires at least three donors per disease arm. KDA runs with at least three effective query genes. Final candidates require coverage of at least 0.80, at least one supporting run, and aggregate q at most 0.05.
 
-Main takeaway: SEA-AD changed only the runnable query floor to three genes; ROSMAP used ten. Coverage, conservative support, aggregate correction, driver classes, and ranking remain aligned with the frozen Phase 18 selection logic.
+Main takeaway: The donor and fold-change rules were amended for this post-hoc exploratory rerun; the coverage, support, aggregate correction, driver classification, ranking, and five-gene display cap stayed unchanged.
 
-Boundary / transition: The query consists of mitochondrial DEG genes, but candidate drivers can be any assessable network gene and are later classified as MT or non-MT. These rules prioritize evidence; they do not establish causality. The next appendix slide lists the selected SEA-AD units and testability summary.""",
-        """What to point at: The left panel lists every SEA-AD selected unit by network and class. The right panel shows the ROSMAP comparison denominator and the three SEA-AD list states.
+Boundary / transition: Mitochondrial genes define the query, but every assessable network gene can be a candidate driver and is later classified as MT or non-MT. Prioritization is not causality.""",
+        """What to point at: The left panel lists all 11 selected SEA-AD units by network and class. The right panel shows the 47-unit frozen ROSMAP denominator and three SEA-AD list states: four ranked lists, six testable lists with no passing candidate, and four lists with no included run.
 
-Main takeaway: All 13 SEA-AD passing units were displayed because no list exceeded the five-gene cap. Of 47 frozen ROSMAP units, 36 were testable and six were strict matches; the 11 untestable units came from networks without an eligible SEA-AD run.
+Main takeaway: All 11 passing units are displayed because no list exceeded the five-gene cap. Thirty-six ROSMAP units were testable and six were strict matches; 11 had no eligible SEA-AD run.
 
-Boundary / transition: Tested but not selected and not testable are different states. The table summarizes the prespecified network–gene–class endpoint, not gene-level overlap. The final appendix slide records provenance and interpretation limits.""",
-        """What to point at: The left column lists the evidence controls: validated source tables, validated figure packages, byte-identical embedded images, and speaker notes. The right column lists the main boundaries.
+Boundary / transition: Tested but not selected and not testable are different outcomes. The table summarizes the same-network, same-gene, same-class comparison in the exploratory rerun, not the network-collapsed gene view.""",
+        """What to point at: The left column lists the reproducibility controls: validated source tables, validated current figure packages, byte-identical embedded images, alt text, notes, checks, and hashes. The right column names the active post-hoc donor-3/FDR-only amendment and the main interpretation limits.
 
-Main takeaway: The deck is a reproducible view of the completed primary analysis. It does not rely on VH05/VH06 QC figures or an unexecuted sensitivity branch.
+Main takeaway: This deck is a reproducible presentation of a post-hoc exploratory rerun. Its conclusions should be framed as exploratory rather than primary or confirmatory.
 
-Boundary / transition: The shared network scaffold is not an independently reconstructed network. Uneven donor coverage limits testability, the compact transfer does not support new gene-level plots for every intermediate, and KDA is a prioritization method rather than causal proof. These points define the appropriate scope of the conclusions.""",
+Boundary / transition: The networks were shared rather than independently reconstructed, donor coverage remained uneven, M_e4 produced no nonempty KDA query, and KDA prioritization is not causal proof. VH05/VH06 figures are not required for the claims shown here.""",
     ]
 
 
@@ -719,14 +902,19 @@ def build_deck(output_path: Path = DEFAULT_OUT, report_dir: Path = DEFAULT_REPOR
     prs = Presentation()
     prs.slide_width = SLIDE_W
     prs.slide_height = SLIDE_H
-    prs.core_properties.title = "Cross-cohort rediscovery of ROSMAP key drivers in SEA-AD"
+    prs.core_properties.title = (
+        "Post-hoc exploratory cross-cohort rediscovery of ROSMAP key drivers in SEA-AD"
+    )
     prs.core_properties.subject = (
-        "Independent SEA-AD expression evidence on a shared frozen network/KDA scaffold"
+        "Donor-3/FDR-only SEA-AD exploratory rerun on a shared frozen network/KDA scaffold"
     )
     prs.core_properties.author = "Alzheimer project analysis team"
-    prs.core_properties.keywords = "SEA-AD, ROSMAP, human validation, KDA, MitoCarta"
+    prs.core_properties.keywords = (
+        "SEA-AD, ROSMAP, human validation, KDA, MitoCarta, post-hoc exploratory"
+    )
     prs.core_properties.comments = (
-        "Generated from validated VH02/VH04/VH08/VH09/VH10 tables and validated figure packages."
+        "Generated from the validated post-hoc donor-3/FDR-only VH02/VH04/VH08/VH09/VH10 "
+        "tables and current validated figure packages; not a confirmatory primary analysis."
     )
 
     # 1 — result-first opening.
@@ -737,7 +925,7 @@ def build_deck(output_path: Path = DEFAULT_OUT, report_dir: Path = DEFAULT_REPOR
              size=32.0, color=NAVY, bold=True, valign=MSO_ANCHOR.MIDDLE)
     add_text(
         slide,
-        "Independent SEA-AD expression evidence analyzed on a shared, frozen network/KDA scaffold",
+        "Post-hoc exploratory rerun: independent SEA-AD expression on a shared network/KDA scaffold",
         0.71, 2.49, 11.65, 0.45, size=17.0, color=GRAY,
     )
     add_metric_card(slide, str(metrics["selected_units"]),
@@ -759,9 +947,9 @@ def build_deck(output_path: Path = DEFAULT_OUT, report_dir: Path = DEFAULT_REPOR
     xs = [0.48, 3.66, 6.84, 10.02]
     workflow = [
         ("SEA-AD donors", f"{metrics['donors']} donors\nDementia vs No dementia", TEAL, PALE_GREEN),
-        ("Donor-level expression", f"{metrics['supertypes']} supertypes × 6 groups\nSigned mitochondrial DEG query", BLUE, PALE_BLUE),
-        ("Frozen KDA scaffold", "Matching broad network\nSame KDA and selection rules", NAVY, PALE_GRAY),
-        ("Freeze, then compare", "SEA-AD list fixed first\nROSMAP opened for comparison", ORANGE, PALE_ORANGE),
+        ("Amended DEG queries", f"{metrics['supertypes']} supertypes × 6 groups\nDonors ≥3/arm • FDR only", BLUE, PALE_BLUE),
+        ("Shared KDA scaffold", "Matching broad network\nSame aggregation and selection math", NAVY, PALE_GRAY),
+        ("Select, then compare", "SEA-AD selector reads no\nROSMAP candidate files", ORANGE, PALE_ORANGE),
     ]
     for index, (title, body, accent, background) in enumerate(workflow, start=1):
         add_native_card(slide, title, body, xs[index - 1], 1.57, 2.74, 3.31,
@@ -773,7 +961,7 @@ def build_deck(output_path: Path = DEFAULT_OUT, report_dir: Path = DEFAULT_REPOR
     add_text(slide, "Shared: 7 broad networks • MitoCarta annotation • fKDA • selection math",
              3.89, 5.39, 5.46, 0.30, size=14.0, color=NAVY, bold=True,
              align=PP_ALIGN.CENTER, valign=MSO_ANCHOR.MIDDLE)
-    add_text(slide, "Independent: donors • expression • DEG results • signed queries • frozen SEA-AD list",
+    add_text(slide, "Post-hoc exploratory amendment: donor minimum 3/arm • no active fold-change cutoff",
              1.20, 6.30, 10.93, 0.36, size=16.0, color=TEAL, bold=True,
              align=PP_ALIGN.CENTER)
     add_source(slide, "Source: validated VH02/VH04/VH08/VH10A–C outputs; frozen network and selector authorities")
@@ -794,10 +982,10 @@ def build_deck(output_path: Path = DEFAULT_OUT, report_dir: Path = DEFAULT_REPOR
     add_connector(slide, 4.04, 2.73, 4.87, 2.73, color=NAVY, width=2.5)
     add_connector(slide, 8.43, 2.73, 9.26, 2.73, color=NAVY, width=2.5)
     add_rect(slide, 1.08, 4.38, 11.17, 1.23, color=OFF_WHITE, outline=LIGHT)
-    add_text(slide, "Only three of six sex/APOE groups contributed completed fine-supertype contrasts",
+    add_text(slide, "Four of six sex/APOE groups contributed completed fine-supertype contrasts",
              1.37, 4.61, 10.59, 0.34, size=17.0, color=NAVY, bold=True,
              align=PP_ALIGN.CENTER)
-    add_text(slide, "Female ε3/ε3  •  Female ε4  •  Male ε3/ε3",
+    add_text(slide, "Female ε3/ε3  •  Female ε4  •  Male ε3/ε3  •  Male ε4",
              1.37, 5.07, 10.59, 0.28, size=16.0, color=TEAL, bold=True,
              align=PP_ALIGN.CENTER)
     add_rect(slide, 1.62, 6.02, 10.10, 0.55, color=NAVY, outline=None, radius=False)
@@ -817,26 +1005,28 @@ def build_deck(output_path: Path = DEFAULT_OUT, report_dir: Path = DEFAULT_REPOR
     )
     full_canvas_circle_slide(
         prs, page_no=5, figure=FIG["non_mt_circle"],
-        alt=("Canonical SEA-AD non-MT driver circular figure showing HGSNAT, BEX3, RPS27A, "
-             "RPL30, and KANSL1L across three broad networks"),
+        alt=("Canonical SEA-AD non-MT driver circular figure showing HGSNAT, BEX3, "
+             "and RPS27A across two neuronal networks in the post-hoc exploratory rerun"),
         source="Source: validated VH10C selection; canonical seaad_two_case_circular figure package",
         note=notes[4],
     )
 
     # 6–8 — validated slide-native figures.
     figure_slide(
-        prs, page_no=6, kicker="Primary cross-cohort endpoint", title=MAIN_TITLES[5],
+        prs, page_no=6, kicker="Post-hoc exploratory • strict comparison", title=MAIN_TITLES[5],
         figure=FIG["strict_overlap"],
         alt=("Strict ROSMAP versus SEA-AD overlap rank figure: six shared network–gene–class units, "
-             "four unique genes, all in neuronal MT lists; 36 of 47 ROSMAP units testable"),
+             "four unique genes, all in neuronal MT lists; 36 of 47 ROSMAP units testable "
+             "in the post-hoc exploratory rerun"),
         source="Source: validated VH09 frozen ROSMAP units and VH10D strict-overlap tables",
         note=notes[5], accent=NAVY,
     )
     figure_slide(
-        prs, page_no=7, kicker="Secondary descriptive view", title=MAIN_TITLES[6],
+        prs, page_no=7, kicker="Post-hoc exploratory • gene-level view", title=MAIN_TITLES[6],
         figure=FIG["gene_overlap"],
         alt=("Gene-level overlap figure with networks collapsed: six common MT genes, four ROSMAP-only "
-             "MT genes, no SEA-AD-only MT genes, and disjoint non-MT gene sets"),
+             "MT genes, no SEA-AD-only MT genes, and disjoint non-MT sets with 15 ROSMAP-only "
+             "and three SEA-AD-only genes"),
         source="Source: validated VH09/VH10C selected lists and VH10D gene-level overlap",
         note=notes[6], accent=PURPLE,
     )
@@ -844,15 +1034,15 @@ def build_deck(output_path: Path = DEFAULT_OUT, report_dir: Path = DEFAULT_REPOR
         prs, page_no=8, kicker="Interpreting the non-MT result", title=MAIN_TITLES[7],
         figure=FIG["non_mt_diagnostic"],
         alt=("Non-MT diagnostic tracing 21 frozen ROSMAP units to four untestable, 17 testable, "
-             "four with one SEA-AD support, and zero passing final selection, with reverse lookup of "
-             "five SEA-AD non-MT units in ROSMAP"),
+             "14 with no qualifying return, three with one SEA-AD return, and zero passing final "
+             "selection, with reverse lookup of three SEA-AD non-MT units in ROSMAP"),
         source="Source: validated VH09, VH10A/B/D outputs and frozen Phase 18 call-return authority",
         note=notes[7], accent=ORANGE,
     )
 
     # 9 — restrained close.
     slide = new_slide(prs, bg=OFF_WHITE)
-    add_header(slide, "Take-home message", MAIN_TITLES[8], 9, accent=TEAL)
+    add_header(slide, "Take-home • post-hoc exploratory", MAIN_TITLES[8], 9, accent=TEAL)
     cards = [
         ("Supported", "Same-network neuronal MT rediscovery", TEAL, PALE_GREEN),
         ("Not established", "Replication of the non-MT list or untestable groups", ORANGE, PALE_ORANGE),
@@ -872,24 +1062,26 @@ def build_deck(output_path: Path = DEFAULT_OUT, report_dir: Path = DEFAULT_REPOR
     figure_slide(
         prs, page_no=10, kicker="Appendix A1", title=APPENDIX_TITLES[0],
         figure=FIG["setup"],
-        alt=("Detailed SEA-AD validation setup showing independent donor-level DEG queries, frozen shared "
-             "networks and KDA rules, SEA-AD selection freeze, and post-freeze ROSMAP comparison"),
+        alt=("Detailed post-hoc exploratory SEA-AD validation setup showing donor minimum three per "
+             "disease arm, FDR-only queries, 381 completed contrasts, 762 completed-source directions, "
+             "42 KDA calls, and 11 selected units"),
         source="Source: validated VH02/VH04/VH08/VH09/VH10 inputs; setup figure package",
         note=notes[9], accent=GRAY,
     )
     figure_slide(
         prs, page_no=11, kicker="Appendix A2", title=APPENDIX_TITLES[1],
         figure=FIG["deg_landscape"],
-        alt=("Fine-supertype differential-expression landscape across six sex/APOE groups, with completed "
-             "contrasts, Phase-18-parity feature incidences, and strong male APOE epsilon3/epsilon3 concentration"),
+        alt=("Fine-supertype differential-expression landscape across six sex/APOE groups, with 381 "
+             "completed contrasts, 24,423 active FDR-only incidences, an auxiliary 1.3-fold reference, "
+             "and strong male APOE epsilon3/epsilon3 concentration"),
         source="Source: validated VH08 fine-supertype DEG summaries",
         note=notes[10], accent=PURPLE,
     )
     figure_slide(
         prs, page_no=12, kicker="Appendix A3", title=APPENDIX_TITLES[2],
         figure=FIG["kda_outcomes"],
-        alt=("KDA outcome figure showing 42 calls, 29 with at least one significant return, 13 with none, "
-             "and the distinct across-run aggregation to 13 selected driver units"),
+        alt=("KDA outcome figure showing 42 calls, 27 with at least one significant return, 15 with none, "
+             "201 significant return rows, and across-run aggregation to 11 selected units and nine genes"),
         source="Source: validated VH10A–C KDA and selection outputs",
         note=notes[11], accent=BLUE,
     )
@@ -898,7 +1090,7 @@ def build_deck(output_path: Path = DEFAULT_OUT, report_dir: Path = DEFAULT_REPOR
     slide = new_slide(prs)
     add_header(slide, "Appendix A4", APPENDIX_TITLES[3], 13, accent=GRAY)
     rules = [
-        ("Define query", "Signed core-MitoCarta DEG set\nFDR < 0.05 and |log₂FC| > log₂(1.3)", TEAL, PALE_GREEN),
+        ("Define query", "Signed core-MitoCarta DEG set\nFDR < 0.05; no fold-change cutoff\n≥3 donors per disease arm", TEAL, PALE_GREEN),
         ("Run KDA", "Intersect with induced-network background\nSEA-AD ≥3 genes; ROSMAP ≥10", BLUE, PALE_BLUE),
         ("Select across runs", "Coverage ≥0.80 • ≥1 support run\naggregate ACAT/BH q ≤0.05", NAVY, PALE_GRAY),
         ("Display", "Rank by q, p, then symbol\nmaximum five; no backfill", ORANGE, PALE_ORANGE),
@@ -922,18 +1114,37 @@ def build_deck(output_path: Path = DEFAULT_OUT, report_dir: Path = DEFAULT_REPOR
     slide = new_slide(prs)
     add_header(slide, "Appendix A5", APPENDIX_TITLES[4], 14, accent=GRAY)
     add_rect(slide, 0.55, 1.42, 7.55, 5.34, color=WHITE, outline=LIGHT)
-    add_text(slide, "All 13 SEA-AD selected units", 0.82, 1.66, 6.99, 0.39,
+    add_text(slide, f"All {metrics['selected_units']} SEA-AD selected units", 0.82, 1.66, 6.99, 0.39,
              size=20.0, color=NAVY, bold=True)
     selected_by_key: dict[tuple[str, str], list[dict[str, str]]] = defaultdict(list)
     for row in metrics["selected_rows"]:  # type: ignore[index]
         selected_by_key[(row["broad_network"], row["case_id"])].append(row)
-    display_rows = [
-        ("Excitatory", "MT", ["MT-CO2", "MT-CYB", "MT-ND4", "MT-ATP6"]),
-        ("Excitatory", "non-MT", ["HGSNAT"]),
-        ("Inhibitory", "MT", ["MT-CO2", "MT-ND5", "MT-CO3", "MT-CYB"]),
-        ("Inhibitory", "non-MT", ["BEX3", "RPS27A", "RPL30"]),
-        ("Oligodendrocytes", "non-MT", ["KANSL1L"]),
+    network_order = [
+        "Astrocytes",
+        "Excitatory_neurons",
+        "Inhibitory_neurons",
+        "Microglia",
+        "OPCs",
+        "Oligodendrocytes",
+        "Vasculature_cells",
     ]
+    network_labels = {
+        "Excitatory_neurons": "Excitatory",
+        "Inhibitory_neurons": "Inhibitory",
+        "Vasculature_cells": "Vasculature",
+    }
+    display_rows: list[tuple[str, str, list[str]]] = []
+    for network in network_order:
+        for case_id, class_label in (("mt_driver", "MT"), ("non_mt_driver", "non-MT")):
+            rows = selected_by_key.get((network, case_id), [])
+            if not rows:
+                continue
+            rows = sorted(rows, key=lambda row: float(row["display_rank"]))
+            display_rows.append((
+                network_labels.get(network, network),
+                class_label,
+                [row["current_symbol"] for row in rows],
+            ))
     y = 2.28
     for index, (network, driver_class, genes) in enumerate(display_rows):
         if index % 2 == 0:
@@ -967,7 +1178,7 @@ def build_deck(output_path: Path = DEFAULT_OUT, report_dir: Path = DEFAULT_REPOR
                  size=14.0, color=DARK, bold=True)
     add_text(slide, "SEA-AD list states", 8.70, 5.79, 3.68, 0.29,
              size=14.0, color=NAVY, bold=True)
-    add_text(slide, "5 ranked  •  5 tested/no passing  •  4 no runs",
+    add_text(slide, "4 ranked  •  6 tested/no passing  •  4 no runs",
              8.70, 6.15, 3.68, 0.30, size=11.6, color=GRAY)
     add_source(slide, "Source: VH10C seaad_top5/list_status; VH10D candidate-overlap status")
     add_note(slide, notes[13])
@@ -989,7 +1200,7 @@ def build_deck(output_path: Path = DEFAULT_OUT, report_dir: Path = DEFAULT_REPOR
         "• Shared broad networks and selector\n"
         "• Uneven independent-donor coverage\n"
         "• SEA-AD query floor 3 vs ROSMAP 10\n"
-        "• No optional sensitivity branch executed\n"
+        "• Post-hoc donor-3/FDR-only amendment\n"
         "• KDA prioritization is not causal proof",
         6.71, 1.50, 5.89, 4.76, accent=ORANGE, background=PALE_ORANGE,
     )
@@ -1079,30 +1290,50 @@ def validate_deck(path: Path) -> None:
     if picture_count != 8:
         raise AssertionError(f"Expected 8 embedded pictures, found {picture_count}")
 
-    slide8_pictures = [
-        shape
-        for shape in prs.slides[7].shapes
-        if shape.shape_type == MSO_SHAPE_TYPE.PICTURE
-    ]
-    if len(slide8_pictures) != 1:
-        raise AssertionError(
-            f"Expected one diagnostic picture on Slide 8, found {len(slide8_pictures)}"
-        )
-    slide8_picture = slide8_pictures[0]
-    slide8_hash = hashlib.sha256(slide8_picture.image.blob).hexdigest()
-    expected_slide8_hash = sha256(FIG["non_mt_diagnostic"])
-    if slide8_hash != expected_slide8_hash:
-        raise AssertionError("Slide 8 does not embed the canonical non-MT diagnostic")
-    if "Non-MT diagnostic" not in _picture_alt(slide8_picture):
-        raise AssertionError("Slide 8 diagnostic alt text changed")
+    for slide_number, figure_label in FIGURE_SLIDES.items():
+        pictures = [
+            shape
+            for shape in prs.slides[slide_number - 1].shapes
+            if shape.shape_type == MSO_SHAPE_TYPE.PICTURE
+        ]
+        if len(pictures) != 1:
+            raise AssertionError(
+                f"Expected one picture on Slide {slide_number}, found {len(pictures)}"
+            )
+        picture = pictures[0]
+        embedded_hash = hashlib.sha256(picture.image.blob).hexdigest()
+        if embedded_hash != sha256(FIG[figure_label]):
+            raise AssertionError(
+                f"Slide {slide_number} does not embed canonical figure {figure_label}"
+            )
+        if any(
+            value != 0.0
+            for value in (
+                picture.crop_left,
+                picture.crop_right,
+                picture.crop_top,
+                picture.crop_bottom,
+            )
+        ):
+            raise AssertionError(f"Slide {slide_number} canonical picture is cropped")
 
     joined = "\n".join(all_text)
     required_text = [
-        "13 SEA-AD selected units",
+        "11 SEA-AD selected units",
+        "Post-hoc exploratory",
         "same-network MT matches",
         "1,548",
-        "520",
+        "762",
         "42",
+        "Four of six sex/APOE groups",
+        "HGSNAT",
+        "BEX3",
+        "RPS27A",
+        "FDR < 0.05; no fold-change cutoff",
+        "≥3 donors per disease arm",
+        "24,423",
+        "27 of 42",
+        "201",
         "Mitochondrial genes define the query",
         "47",
         "36",
@@ -1113,13 +1344,21 @@ def validate_deck(path: Path) -> None:
         if value not in joined:
             raise AssertionError(f"Required deck text missing: {value}")
     forbidden = [
+        "13 SEA-AD selected",
+        "520 directions",
+        "Only three of six sex/APOE groups",
+        "five non-MT drivers",
+        "RPL30",
+        "KANSL1L",
+        "|log₂FC| > log₂(1.3)",
+        "No optional sensitivity branch executed",
+        "completed primary analysis",
         "84 calls",
         "six unique strict genes",
         "failed replication",
         "proved causal",
         "biologically absent",
         "1,548 KDA calls",
-        "FDR-only sensitivity executed",
     ]
     for value in forbidden:
         if value.lower() in joined.lower():
@@ -1131,7 +1370,7 @@ def validate_deck(path: Path) -> None:
         "Strict ROSMAP versus SEA-AD overlap",
         "Gene-level overlap figure",
         "Non-MT diagnostic",
-        "Detailed SEA-AD validation setup",
+        "Detailed post-hoc exploratory SEA-AD validation setup",
         "Fine-supertype differential-expression",
         "KDA outcome figure",
     ]
@@ -1203,16 +1442,27 @@ def write_reports(deck_path: Path, report_dir: Path, metrics: dict[str, object],
     )
 
     prs = Presentation(deck_path)
-    slide8_pictures = [
-        shape
-        for shape in prs.slides[7].shapes
-        if shape.shape_type == MSO_SHAPE_TYPE.PICTURE
-    ]
-    slide8_identity = (
-        len(slide8_pictures) == 1
-        and hashlib.sha256(slide8_pictures[0].image.blob).hexdigest()
-        == sha256(FIG["non_mt_diagnostic"])
-    )
+    slide_figure_identity = True
+    for slide_number, figure_label in FIGURE_SLIDES.items():
+        pictures = [
+            shape
+            for shape in prs.slides[slide_number - 1].shapes
+            if shape.shape_type == MSO_SHAPE_TYPE.PICTURE
+        ]
+        slide_figure_identity = slide_figure_identity and (
+            len(pictures) == 1
+            and hashlib.sha256(pictures[0].image.blob).hexdigest()
+            == sha256(FIG[figure_label])
+            and all(
+                value == 0.0
+                for value in (
+                    pictures[0].crop_left,
+                    pictures[0].crop_right,
+                    pictures[0].crop_top,
+                    pictures[0].crop_bottom,
+                )
+            )
+        )
     inventory_rows: list[dict[str, object]] = []
     for index, slide in enumerate(prs.slides, start=1):
         pictures = [shape for shape in slide.shapes if shape.shape_type == MSO_SHAPE_TYPE.PICTURE]
@@ -1239,19 +1489,39 @@ def write_reports(deck_path: Path, report_dir: Path, metrics: dict[str, object],
          "Every slide has three-section notes"),
         ("validated_figures", True, "All embedded figure-package statuses validated_complete/complete"),
         ("embedded_media_identity", True, "All eight distinct PNG inputs embedded byte-for-byte"),
-        ("slide8_non_mt_diagnostic_identity", slide8_identity,
-         "Slide 8 embeds the canonical non-MT diagnostic byte-for-byte"),
+        ("slide_figure_identity", slide_figure_identity,
+         "Slides 4–8 and 10–12 embed their canonical PNGs without cropping"),
         ("planned_direction_arithmetic", metrics["planned_directions"] == 1548,
-         "1548 = 1028 not estimable + 520 completed-source directions"),
+         "1548 = 786 not estimable + 762 completed-source directions"),
+        ("deg_completion_counts",
+         metrics["completed_contrasts"] == 381 and metrics["not_estimable_contrasts"] == 393,
+         "381 completed + 393 not estimable = 774 structural contrasts"),
+        ("active_fdr_only_signal",
+         metrics["fdr_hits"] == 24_423 and metrics["fdr_signal_contrasts"] == 85,
+         "24,423 FDR-only feature–contrast incidences across 85 contrasts"),
         ("kda_call_arithmetic", metrics["kda_calls"] == 42,
          "42 = 21 size 3–9 + 21 size ≥10"),
-        ("selection_counts", metrics["selected_units"] == 13 and metrics["selected_genes"] == 11,
-         "13 SEA-AD units / 11 genes"),
+        ("kda_return_counts",
+         metrics["kda_return_positive_calls"] == 27
+         and metrics["kda_no_return_calls"] == 15
+         and metrics["significant_return_rows"] == 201,
+         "27 calls with return / 15 without / 201 significant return rows"),
+        ("selection_counts", metrics["selected_units"] == 11 and metrics["selected_genes"] == 9,
+         "11 SEA-AD units / 9 genes"),
         ("strict_overlap_counts", metrics["strict_units"] == 6 and metrics["strict_genes"] == 4,
          "6 network–gene–class units / 4 unique genes"),
         ("testability_denominator", metrics["rosmap_testable"] == 36 and metrics["rosmap_units"] == 47,
          "36 of 47 frozen ROSMAP units testable"),
-        ("no_unexecuted_sensitivity", True, "Deck contains no 84-call or executed FDR-only claim"),
+        ("active_tier_identity",
+         metrics["query_rule_id"] == "fdr_only_query_sensitivity"
+         and metrics["analysis_role"] == "post-hoc exploratory",
+         "Active donor-3/FDR-only tier is labeled post-hoc exploratory"),
+        ("active_thresholds",
+         metrics["donor_minimum"] == 3
+         and metrics["fdr_threshold"] == 0.05
+         and metrics["minimum_coverage"] == 0.80
+         and metrics["aggregate_q_threshold"] == 0.05,
+         "donors ≥3/arm; FDR <0.05; coverage ≥0.80; aggregate q ≤0.05"),
         ("visual_review", visual_review_status == "complete",
          "PowerPoint PDF reviewed slide-by-slide in color and grayscale"
          if visual_review_status == "complete" else "Visual review remains pending"),
@@ -1272,9 +1542,13 @@ def write_reports(deck_path: Path, report_dir: Path, metrics: dict[str, object],
         raise AssertionError("Deck report contains failed checks")
 
     status_rows = [{
-        "schema_version": "seaad_rosmap_human_validation_deck_v1",
+        "schema_version": "seaad_rosmap_human_validation_deck_v2",
         "deck_id": "seaad_rosmap_human_validation",
-        "validation_status": "validated_complete",
+        "validation_status": (
+            "validated_complete"
+            if visual_review_status == "complete"
+            else "awaiting_visual_review"
+        ),
         "visual_review_status": visual_review_status,
         "main_slides": MAIN_SLIDES,
         "appendix_slides": APPENDIX_SLIDES,
