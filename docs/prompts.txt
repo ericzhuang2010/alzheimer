@@ -52,3 +52,11 @@ Please take a look at the results especially the DEG results. We want to do some
 
 For /Users/rzhuang/Documents/VscodeProjects/alzheimer/docs/validation_human/seaad_rosmap_human_validation_presentation_design.md
 Please do not get into too much details. Slides should be easy to understand and explain. Please revise.
+
+
+please do
+Remove the 1.3-fold-change gate, retaining FDR <0.05
+set aggregate threshold as q ≤0.10
+coverage ≥50%
+change donor requirement to ≥3 donors/arm
+with the four changes, redo the human validation using SEA-AD. Please overwrite the previous results (no need to keep the old results).

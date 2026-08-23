@@ -7,9 +7,45 @@
 **Implementation root:** `scripts/validation_human/`  
 **Result root:** `results/validation_human/`
 
+**Amendment status:** a dated post-hoc exploratory SEA-AD rerun was authorized
+on 2026-08-22 and is pending. The 2026-08-20 execution remains a historical
+record but is superseded for amended SEA-AD and cross-cohort conclusions.
+
 This is the canonical replacement for the retired broad-cell protocol. It assumes that no prior `scripts/validation_human/` implementation or `results/validation_human/` output can be reused. VH00–VH08 will be implemented and executed again from the raw inputs and frozen references.
 
-### Local execution outcome (2026-08-20)
+## 2026-08-22 post-hoc exploratory protocol amendment — pending rerun
+
+This amendment was made after review of the completed 2026-08-20 results and
+must therefore be labeled **post-hoc exploratory**, not prespecified or
+confirmatory. It changes only the SEA-AD analysis. The complete SEA-AD phase
+chain will be rerun, with new manifests, checksums, statuses, and result counts.
+
+| Component | Amended SEA-AD rule |
+|---|---|
+| DEG support | Require at least **3 donors in each disease arm** for a fine or stratified contrast, replacing the original five-per-arm gate; the 20-nucleus profile gate is unchanged |
+| DEG-to-query membership | Use signed core-MitoCarta genes with within-contrast **`FDR < 0.05` only**; remove the active `abs(logFC) > log2(1.3)` gate |
+| KDA query size | Retain the existing minimum of **3 effective genes** after network intersection |
+| SEA-AD candidate selection | Require coverage **at least 0.50** and aggregate ACAT BH **q at most 0.10**, replacing 0.80 and 0.05; all other candidate gates and ranking rules remain unchanged |
+
+The inherited 1.3-fold Phase 18 predicate remains available only as a clearly
+labeled auxiliary/reference summary; it does not determine membership in the
+amended active SEA-AD query. The structural design remains 129 supertypes × six
+groups × two directions = 1,548 slots.
+
+The ROSMAP Phase 18 reference is unchanged and remains read-only: its frozen
+candidate identities, minimum-ten run rule, coverage threshold, aggregate-q
+threshold, ranks, and provenance are not recalculated or relaxed. Any later
+overlap must compare the amended SEA-AD result with that unchanged VH09-frozen
+ROSMAP reference and report the cohort-specific rules explicitly.
+
+All 2026-08-20 SEA-AD eligibility, completed-contrast, query, KDA, candidate,
+and overlap counts elsewhere in this document are **historical and superseded
+for the amended analysis**. They are intentionally retained for provenance and
+must not be presented as expected amended results. Replacement values remain
+pending until the full rerun validates successfully. ROSMAP-only frozen counts
+are not superseded.
+
+### Historical local execution outcome (superseded; 2026-08-20)
 
 - All phase statuses from VH00 through VH08 are `validated_complete`; Minerva was not required.
 - VH05 streamed all 1,395,601 source nuclei and completed in 13.1 minutes, producing 129 fine-supertype and seven independently aggregated broad-network pseudobulk shards.

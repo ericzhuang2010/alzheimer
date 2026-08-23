@@ -8,7 +8,44 @@
 **Current scope:** one SEA-AD primary analysis using at least three effective
 query genes; all sensitivity analyses are deferred and optional
 
-## Execution result
+**Amendment status:** a dated post-hoc exploratory SEA-AD rerun was authorized
+on 2026-08-22 and is pending. The 2026-08-20 VH10 execution remains a
+historical record but is superseded for amended SEA-AD and overlap conclusions.
+
+## 2026-08-22 post-hoc exploratory protocol amendment — pending rerun
+
+This amendment was made after inspection of the completed analysis and must be
+reported as **post-hoc exploratory**, not prespecified or confirmatory. The
+amended SEA-AD tier will use the following rules together:
+
+| Component | Amended SEA-AD rule |
+|---|---|
+| Upstream DEG support | At least **3 donors per disease arm**, replacing five |
+| Active query membership | Signed core-MitoCarta genes with within-contrast **`FDR < 0.05` only**; the `abs(logFC) > log2(1.3)` gate is removed |
+| Runnable query | At least **3 effective genes** after network intersection, unchanged |
+| Candidate selection | Coverage **at least 0.50** and aggregate ACAT BH **q at most 0.10**, replacing 0.80 and 0.05; other gates and ranking rules are unchanged |
+
+The 1.3-fold Phase 18 rule is retained only as an auxiliary/reference summary,
+not as active SEA-AD query membership. The complete 1,548-slot structural grid
+is retained, but eligibility, completed directions, runnable queries, KDA
+returns, candidate lists, and overlap must all be recomputed from the amended
+upstream release.
+
+ROSMAP remains the unchanged, read-only VH09-frozen reference. Its Phase 18
+minimum-ten rule, 0.80 coverage threshold, 0.05 aggregate-q threshold,
+candidate identities, and ranks are not changed or recomputed. Thus the
+amended comparison deliberately applies cohort-specific thresholds: the new
+SEA-AD exploratory rules above versus the original frozen ROSMAP rules.
+
+All SEA-AD-derived and cross-cohort counts from the 2026-08-20 execution below
+are **historical and superseded for the amended analysis**, including 520
+completed directions, 42 active queries, 13 selected SEA-AD units, and six
+strict overlaps. They are retained without alteration for provenance and are
+not forecasts or acceptance targets for the rerun. Replacement counts are
+pending validated rerun. ROSMAP-only frozen counts, including the 47 frozen
+top-five units, remain valid.
+
+## Historical execution result (superseded for SEA-AD; 2026-08-20)
 
 VH10 completed locally and passed every query, network, R/Python reconstruction,
 selection-freeze, Phase 18 conformance, and overlap check. The executed primary

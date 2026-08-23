@@ -45,6 +45,7 @@ Thumbs.db
 
 # Large inputs, documentation, local environments, and scratch directories.
 .venv/
+.r-library/
 __pycache__/
 # Ignore local data except the reference assets maintained in Git.
 data/*
