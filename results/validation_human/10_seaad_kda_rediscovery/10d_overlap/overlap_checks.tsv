@@ -1,9 +1,9 @@
 check	passed	observed	expected	details
 seaad_freeze_precedes_unblinding	True	False	False	
-one_active_result_tier	True	posthoc_exploratory__fdr_only__donor3__query3__coverage50__q10	posthoc_exploratory__fdr_only__donor3__query3__coverage50__q10	
+one_active_result_tier	True	posthoc_exploratory__fdr_only__donor3__query3__coverage80__q05	posthoc_exploratory__fdr_only__donor3__query3__coverage80__q05	
 strict_key_unique_rosmap_universe	True	47590	47590	
 strict_key_unique_seaad_universe	True	38788	38788	
 rosmap_selected_count	True	47	47	
-seaad_selected_count_matches_freeze	True	14	14	
+seaad_selected_count_matches_freeze	True	11	11	
 summary_list_rows	True	14	14	
 no_sensitivity_overlap_tier	True	1	1	

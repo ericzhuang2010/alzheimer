@@ -56,7 +56,7 @@ class ExecutedBundleTests(unittest.TestCase):
         self.assertEqual(status.loc[0, "validation_status"], "validated_complete")
         self.assertEqual(
             status.loc[0, "active_result_tier"],
-            "posthoc_exploratory__fdr_only__donor3__query3__coverage50__q10",
+            "posthoc_exploratory__fdr_only__donor3__query3__coverage80__q05",
         )
         self.assertEqual(int(status.loc[0, "active_kda_calls"]), 42)
 
@@ -68,7 +68,7 @@ class ExecutedBundleTests(unittest.TestCase):
         )
         self.assertEqual(
             set(candidates["result_tier_id"]),
-            {"posthoc_exploratory__fdr_only__donor3__query3__coverage50__q10"},
+            {"posthoc_exploratory__fdr_only__donor3__query3__coverage80__q05"},
         )
         self.assertNotIn("missing_as_one_acat_p", candidates.columns)
         self.assertNotIn("missing_as_one_acat_q", candidates.columns)
@@ -84,16 +84,16 @@ class ExecutedBundleTests(unittest.TestCase):
         selection_status = pd.read_csv(
             VH10 / "10c_seaad_selection/status.tsv", sep="\t", keep_default_na=False
         )
-        self.assertEqual(float(selection_status.loc[0, "minimum_coverage"]), 0.50)
-        self.assertEqual(float(selection_status.loc[0, "aggregate_q_threshold"]), 0.10)
-        self.assertEqual(int(selection_status.loc[0, "passing_candidate_units"]), 14)
+        self.assertEqual(float(selection_status.loc[0, "minimum_coverage"]), 0.80)
+        self.assertEqual(float(selection_status.loc[0, "aggregate_q_threshold"]), 0.05)
+        self.assertEqual(int(selection_status.loc[0, "passing_candidate_units"]), 11)
         top5 = pd.read_csv(
             VH10 / "10c_seaad_selection/seaad_top5.tsv",
             sep="\t",
             keep_default_na=False,
         )
         selected = top5.loc[top5["list_status"].eq("ranked_candidates")].copy()
-        self.assertEqual(len(selected), 14)
+        self.assertEqual(len(selected), 11)
         self.assertFalse(
             selected.duplicated(["broad_network", "current_symbol", "case_id"]).any()
         )

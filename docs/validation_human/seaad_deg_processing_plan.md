@@ -1,7 +1,7 @@
 # SEA-AD Fine-Supertype Pseudobulk DEG Processing Plan
 
-**Status:** amended VH07–VH08 rerun executed locally; `validated_complete` on
-2026-08-22 (America/New_York; UTC completion 2026-08-23)
+**Status:** amended VH07–VH08 rerun executed locally; downstream selection-only
+partial rerun `validated_complete` on 2026-08-23 (America/New_York)
 **Workload:** Advanced
 **Original protocol date:** 2026-08-20
 **Amendment date:** 2026-08-22
@@ -17,14 +17,15 @@ is labeled **post-hoc exploratory**, not prespecified or confirmatory. The
 unchanged donor cohort, gene mapping, supertype mapping, and pseudobulk counts
 were reused only after predecessor status and artifact checksums passed. Donor
 eligibility, DEG fitting, release finalization, KDA, candidate selection, and
-overlap were recomputed.
+overlap were recomputed on 2026-08-22. On 2026-08-23, candidate selection and
+overlap alone were rerun from the unchanged KDA evidence.
 
 | Component | Executed SEA-AD rule |
 |---|---|
 | DEG support | At least **3 donors in each disease arm**; the 20-nucleus profile gate is unchanged |
 | DEG-to-query membership | Signed core-MitoCarta genes with within-contrast **`FDR < 0.05` only** |
 | KDA query size | At least **3 effective genes** after network intersection, unchanged |
-| SEA-AD candidate selection | Coverage **at least 0.50** and aggregate ACAT BH **q at most 0.10** |
+| SEA-AD candidate selection | Coverage **at least 0.80** and aggregate ACAT BH **q at most 0.05** |
 
 The inherited 1.3-fold Phase 18 predicate remains only as an
 auxiliary/reference summary and did not determine amended query membership.

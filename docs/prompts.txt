@@ -55,8 +55,8 @@ Please do not get into too much details. Slides should be easy to understand and
 
 
 please do
-Remove the 1.3-fold-change gate, retaining FDR <0.05
-set aggregate threshold as q ≤0.10
-coverage ≥50%
-change donor requirement to ≥3 donors/arm
+1. Remove the 1.3-fold-change gate, retaining FDR <0.05
+2. change donor requirement to ≥3 donors/arm
+3. set aggregate threshold as q ≤0.10
+4. coverage ≥50% 
 with the four changes, redo the human validation using SEA-AD. Please overwrite the previous results (no need to keep the old results).

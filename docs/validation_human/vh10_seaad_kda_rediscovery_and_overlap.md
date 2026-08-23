@@ -1,7 +1,7 @@
 # VH10 SEA-AD Fine-Supertype KDA Rediscovery and ROSMAP Overlap
 
-**Status:** amended rerun executed; `validated_complete` on 2026-08-22
-(America/New_York; UTC completion 2026-08-23)
+**Status:** selection-only partial rerun executed; `validated_complete` on
+2026-08-23 (America/New_York)
 **Code root:** `scripts/validation_human/`
 **Result root:** `results/validation_human/10_seaad_kda_rediscovery/`
 **ROSMAP reference:** Phase 18 candidate units frozen by VH09
@@ -10,7 +10,7 @@ no H5AD or pseudobulk matrix was read
 **Current scope:** one post-hoc exploratory SEA-AD tier using at least three
 effective query genes
 
-## 2026-08-22 post-hoc exploratory protocol amendment — executed
+## Current post-hoc exploratory protocol — executed
 
 This amendment was made after inspection of the completed primary analysis and
 is reported as **post-hoc exploratory**, not prespecified or confirmatory. The
@@ -21,7 +21,7 @@ executed SEA-AD tier used the following rules together:
 | Upstream DEG support | At least **3 donors per disease arm**, replacing five |
 | Active query membership | Signed core-MitoCarta genes with within-contrast **`FDR < 0.05` only**; the `abs(logFC) > log2(1.3)` gate was not applied |
 | Runnable query | At least **3 effective genes** after network intersection, unchanged |
-| Candidate selection | Coverage **at least 0.50** and aggregate ACAT BH **q at most 0.10**; other gates and ranking rules were unchanged |
+| Candidate selection | Coverage **at least 0.80** and aggregate ACAT BH **q at most 0.05**; other gates and ranking rules were unchanged |
 
 The complete 1,548-slot structural grid was retained. The amended upstream
 release contains 381 completed fine contrasts and 762 completed signed
@@ -36,11 +36,17 @@ calls and 21 Phase-18-sized calls.
 | Complete explicit gene-by-run rows | 10,912 |
 | Complete candidate/run evidence rows | 366,852 |
 | SEA-AD candidate units | 38,788 |
-| SEA-AD units passing/displayed | 14 |
-| Unique selected SEA-AD genes | 12 |
+| SEA-AD units passing/displayed | 11 |
+| Unique selected SEA-AD genes | 9 |
 | Frozen ROSMAP top-five units | 47 |
 | ROSMAP units testable in SEA-AD | 36 |
 | Strict shared network-gene-class units | 6 |
+
+The 2026-08-23 partial rerun reused the unchanged 42 calls and 201 significant
+R returns; it regenerated query-tier metadata, KDA reconstruction tables,
+SEA-AD selection, and ROSMAP overlap without rerunning DEG models or
+`call_key_drivers()`. The stricter q gate removed `MT-ND1`, `RPL30`, and
+`KANSL1L`; the coverage gate removed none of the formerly selected units.
 
 ROSMAP remained the unchanged, read-only VH09-frozen reference. Its Phase 18
 minimum-ten rule, 0.80 coverage threshold, 0.05 aggregate-q threshold,

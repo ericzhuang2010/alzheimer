@@ -38,8 +38,8 @@ class SeaadContractTest(unittest.TestCase):
         self.assertEqual(analysis["query_rule_id"], "fdr_only_query_sensitivity")
         self.assertNotIn("absolute_fold_change", analysis)
         self.assertEqual(analysis["fdr_threshold_exclusive"], 0.05)
-        self.assertEqual(selection["minimum_coverage"], 0.50)
-        self.assertEqual(selection["aggregate_q_threshold"], 0.10)
+        self.assertEqual(selection["minimum_coverage"], 0.80)
+        self.assertEqual(selection["aggregate_q_threshold"], 0.05)
 
     def test_output_namespace(self):
         with tempfile.TemporaryDirectory() as tmp:

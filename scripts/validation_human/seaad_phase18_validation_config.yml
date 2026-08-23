@@ -79,7 +79,7 @@ vh10:
       sha256: c2b43261a5620a8648dd93213bf51bfddeef90527893c47053698222305bde6a
   analysis:
     query_rule_id: fdr_only_query_sensitivity
-    result_tier_id: posthoc_exploratory__fdr_only__donor3__query3__coverage50__q10
+    result_tier_id: posthoc_exploratory__fdr_only__donor3__query3__coverage80__q05
     fdr_threshold_exclusive: 0.05
     minimum_effective_query_genes: 3
     small_query_warning_below: 10
@@ -87,8 +87,8 @@ vh10:
     expected:
       structural_direction_slots: 1548
   selection:
-    minimum_coverage: 0.50
-    aggregate_q_threshold: 0.10
+    minimum_coverage: 0.80
+    aggregate_q_threshold: 0.05
     minimum_conservative_supporting_runs: 1
     display_limit: 5
     driver_classes: [mt_driver, non_mt_driver]

@@ -1,10 +1,10 @@
 check	passed	observed	expected	details
 candidate_units_unique	True	38788	38788	
-selected_keys_unique	True	14	14	
+selected_keys_unique	True	11	11	
 selected_are_driver_candidates	True	True	True	
 driver_candidates_meet_coverage	True	True	True	
 driver_candidates_meet_aggregate_q	True	True	True	
 driver_candidates_meet_conservative_support	True	True	True	
-top5_cap	True	5	5	
+top5_cap	True	4	5	
 rosmap_blinded_during_freeze	True	False	False	
 one_active_result_tier	True	1	1	

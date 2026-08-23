@@ -1,5 +1,11 @@
 # SEA-AD–ROSMAP Human-Validation Setup Figure Plan
 
+> **Historical figure specification (superseded 2026-08-23):** The generated
+> assets were not rebuilt for the coverage-0.80/q-0.05 selection-only rerun.
+> Current analytical results are in
+> [vh09_vh10_execution_summary.md](../../validation_human/vh09_vh10_execution_summary.md).
+
+
 ## Status
 
 **Implemented and validated on 2026-08-20.**

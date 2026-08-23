@@ -1,8 +1,9 @@
 # SEA-AD post-hoc exploratory threshold amendment
 
-**Status:** executed; `validated_complete`
-**Authorization date:** 2026-08-22
-**Execution date:** 2026-08-22 (America/New_York; UTC completion 2026-08-23)
+**Status:** selection-only amendment executed; `validated_complete`
+**Initial amendment date:** 2026-08-22
+**Selection update date:** 2026-08-23
+**Latest execution date:** 2026-08-23 (America/New_York)
 **Scope:** SEA-AD only
 
 ## Purpose and interpretation
@@ -15,16 +16,18 @@ identifier. Per the execution request, they replace the former SEA-AD files in
 the canonical validation output directory; no parallel copy of the former
 SEA-AD result was retained.
 
-## Executed SEA-AD changes
+## Current executed SEA-AD gates
 
-Exactly four decision gates changed:
+The 2026-08-23 partial rerun restored the original aggregate coverage and
+aggregate-q cutoffs while retaining the 2026-08-22 donor and DEG-query
+amendments:
 
-| Stage | Previous SEA-AD gate | Executed exploratory gate |
-|---|---:|---:|
-| Contrast eligibility | At least 5 independent donors in each disease arm | **At least 3 independent donors in each disease arm** |
-| DEG query membership | Within-contrast BH FDR `< 0.05` and `abs(log2FC) > log2(1.3)` | **Within-contrast BH FDR `< 0.05` only**, retaining the observed sign for the up/down query |
-| Aggregate coverage | Coverage `>= 0.80` | **Coverage `>= 0.50`** |
-| Aggregate significance | Network-wide BH-adjusted aggregate `q <= 0.05` | **Network-wide BH-adjusted aggregate `q <= 0.10`** |
+| Stage | Original SEA-AD gate | 2026-08-22 tier | Current 2026-08-23 tier |
+|---|---:|---:|---:|
+| Contrast eligibility | At least 5 donors/arm | At least 3 donors/arm | **At least 3 donors/arm** |
+| DEG query membership | FDR `< 0.05` and `abs(log2FC) > log2(1.3)` | FDR `< 0.05` only | **FDR `< 0.05` only** |
+| Aggregate coverage | Coverage `>= 0.80` | Coverage `>= 0.50` | **Coverage `>= 0.80`** |
+| Aggregate significance | Aggregate `q <= 0.05` | Aggregate `q <= 0.10` | **Aggregate `q <= 0.05`** |
 
 The FDR-only rule is the active DEG-query rule for this exploratory tier. The
 1.3-fold-change requirement is retained only as an auxiliary historical
@@ -52,13 +55,13 @@ summary and was not applied to active query membership.
 ## Validated execution
 
 - Result tier:
-  `posthoc_exploratory__fdr_only__donor3__query3__coverage50__q10`
+  `posthoc_exploratory__fdr_only__donor3__query3__coverage80__q05`
 - Canonical output:
   `results/validation_human/10_seaad_kda_rediscovery/`
 - Code revision recorded by the outputs:
-  `f377c0554918d7920f0bf69fb5293543f46d1bc0`
+  `fc80751b41cb7028cb55d4bd25773e31675bff13`
 - VH10 configuration SHA-256:
-  `621e7ce7f7ec09bde2c112c19ac55b156b0440e0fd21da08f008e65947ea3b81`
+  `e98c2e70727e1dc748307b7f818f57f375360355655e589191a04b651a4b46ee`
 
 | Stage | Validated amended result |
 |---|---:|
@@ -68,8 +71,8 @@ summary and was not applied to active query membership.
 | Active KDA calls (effective query size >=3) | 42 |
 | Calls with significant KDA returns | 27 |
 | Calls without significant KDA returns | 15 |
-| Passing/displayed SEA-AD candidate units | 14 |
-| Unique selected SEA-AD genes | 12 |
+| Passing/displayed SEA-AD candidate units | 11 |
+| Unique selected SEA-AD genes | 9 |
 | Frozen ROSMAP units testable in SEA-AD | 36 of 47 |
 | Strict shared network-gene-class units | 6 |
 | Unique shared genes | 6 |
@@ -78,20 +81,22 @@ The active-call distribution is 20 AD-up and 22 AD-down calls: Astrocytes
 1/0, Excitatory neurons 10/10, Inhibitory neurons 6/10, Microglia 1/0,
 Oligodendrocytes 2/2, and no active calls in OPCs or Vasculature.
 
-Three selected units have aggregate q values between 0.05 and 0.10:
-`MT-ND1` in Inhibitory neurons (q=0.0971), `RPL30` in Inhibitory neurons
-(q=0.0953), and `KANSL1L` in Oligodendrocytes (q=0.0902). All 14 selected
-units have coverage 1.0; therefore the coverage relaxation did not itself admit
-a selected unit in this execution.
+The selection-only rerun reused the unchanged 42 KDA calls and their 201
+significant R return rows. It removed three formerly selected units because
+their recomputed aggregate q remained above 0.05: `MT-ND1` in Inhibitory
+neurons (q=0.0867), `RPL30` in Inhibitory neurons (q=0.0850), and `KANSL1L`
+in Oligodendrocytes (q=0.0902). All 11 retained units have coverage 1.0, so
+the restored 0.80 coverage gate removed no formerly selected unit.
 
 ## ROSMAP remained frozen
 
 ROSMAP candidate construction, KDA run scope, minimum effective query size,
 coverage threshold, support rule, aggregate-q threshold, selected units, and
-ranks remained exactly as frozen in Phase 18. The overlap phase replayed the
+ranks remained exactly as frozen in Phase 18. The current SEA-AD coverage and
+aggregate-q gates now match the frozen ROSMAP values, although other cohort and
+query-construction rules remain distinct. The overlap phase replayed the
 161 frozen ROSMAP runs and reproduced 78 passing and 47 selected ROSMAP units
-before comparison. Thus the cross-cohort comparison deliberately uses the
-amended SEA-AD thresholds above versus the original frozen ROSMAP thresholds.
+before comparison.
 
 The governing source records are:
 
