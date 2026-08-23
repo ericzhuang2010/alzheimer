@@ -24,7 +24,7 @@ def digest(path: Path) -> str:
     return value.hexdigest()
 
 
-def test_frozen_kda_outcome_and_sequence_contract() -> None:
+def test_active_posthoc_kda_outcome_and_sequence_contract() -> None:
     bundle = FIGURE.load_bundle(ROOT)
     plot = FIGURE.build_plot_data(bundle)
     calls = plot.loc[plot["record_type"].eq("call")]
@@ -34,10 +34,10 @@ def test_frozen_kda_outcome_and_sequence_contract() -> None:
     assert len(calls) == 42
     assert calls["kda_run_id"].is_unique
     assert calls["call_status"].value_counts().to_dict() == {
-        "with_significant_return": 29,
-        "without_significant_return": 13,
+        "with_significant_return": 27,
+        "without_significant_return": 15,
     }
-    assert calls["significant_return_rows"].astype(int).sum() == 208
+    assert calls["significant_return_rows"].astype(int).sum() == 201
     assert len(cells) == 14
     assert not cells[["broad_network", "direction"]].duplicated().any()
     observed_outcomes = {
@@ -46,16 +46,51 @@ def test_frozen_kda_outcome_and_sequence_contract() -> None:
         )
         for row in cells.itertuples(index=False)
     }
-    assert observed_outcomes == FIGURE.EXPECTED_OUTCOMES
+    assert observed_outcomes == {
+        ("Astrocytes", "up"): (0, 1),
+        ("Astrocytes", "down"): (0, 0),
+        ("Excitatory_neurons", "up"): (4, 6),
+        ("Excitatory_neurons", "down"): (10, 0),
+        ("Inhibitory_neurons", "up"): (3, 3),
+        ("Inhibitory_neurons", "down"): (8, 2),
+        ("Microglia", "up"): (0, 1),
+        ("Microglia", "down"): (0, 0),
+        ("OPCs", "up"): (0, 0),
+        ("OPCs", "down"): (0, 0),
+        ("Oligodendrocytes", "up"): (1, 1),
+        ("Oligodendrocytes", "down"): (1, 1),
+        ("Vasculature_cells", "up"): (0, 0),
+        ("Vasculature_cells", "down"): (0, 0),
+    }
     observed_stages = [
         (row.stage_id, int(row.stage_value), row.stage_label)
         for row in stages.sort_values("display_order").itertuples(index=False)
     ]
-    assert observed_stages == FIGURE.SELECTION_STAGES
+    assert observed_stages == [
+        ("completed_calls", 42, "completed KDA calls"),
+        ("calls_with_return", 27, "calls with ≥1 significant return"),
+        ("significant_rows", 201, "significant return rows"),
+        ("aggregate_candidates", 38_788, "aggregate candidate units"),
+        ("passing_units", 11, "units passed all gates"),
+    ]
+    assert bundle["analysis_role"] == "posthoc_exploratory"
+    assert bundle["query_rule_id"] == "fdr_only_query_sensitivity"
+    assert bundle["active_query_rule"] == "FDR < 0.05"
+    assert bundle["donor_minimum"] == 3
+    assert bundle["minimum_coverage"] == 0.80
+    assert bundle["aggregate_q_threshold"] == 0.05
+    assert bundle["group_calls"] == {"M_e33": 40, "F_e4": 1, "F_e33": 1}
     assert bundle["candidate_units"] == 38_788
-    assert bundle["selected_units"] == 13
+    assert bundle["passing_units"] == 11
+    assert bundle["selected_units"] == 11
+    assert bundle["selected_unique_genes"] == 9
     assert len(plot) == 67
     assert plot["record_id"].is_unique
+    assert set(plot["analysis_role"]) == {"posthoc_exploratory"}
+    assert set(plot["query_rule_id"]) == {"fdr_only_query_sensitivity"}
+    assert set(plot["minimum_coverage"].astype(float)) == {0.80}
+    assert set(plot["aggregate_q_threshold"].astype(float)) == {0.05}
+    assert not plot["rosmap_candidate_files_read"].astype(bool).any()
 
 
 def test_full_atomic_kda_outcomes_package(tmp_path: Path) -> None:
@@ -72,7 +107,7 @@ def test_full_atomic_kda_outcomes_package(tmp_path: Path) -> None:
             "--output-root",
             str(output),
             "--visual-review-status",
-            "complete",
+            "pending",
         ],
         cwd=ROOT,
         env=env,
@@ -81,17 +116,29 @@ def test_full_atomic_kda_outcomes_package(tmp_path: Path) -> None:
 
     assert sorted(path.name for path in output.iterdir()) == sorted(FIGURE.OUTPUT_FILES)
     status = pd.read_csv(output / f"{FIGURE.FIGURE_ID}_status.tsv", sep="\t")
-    assert status.loc[0, "validation_status"] == "validated_complete"
-    assert status.loc[0, "visual_review_status"] == "complete"
+    assert status.loc[0, "validation_status"] == "awaiting_visual_review"
+    assert status.loc[0, "visual_review_status"] == "pending"
     assert int(status.loc[0, "failed_blocking_checks"]) == 0
+    assert int(status.loc[0, "pending_nonblocking_checks"]) == 1
+    assert status.loc[0, "analysis_role"] == "posthoc_exploratory"
+    assert status.loc[0, "query_rule_id"] == "fdr_only_query_sensitivity"
+    assert int(status.loc[0, "donor_minimum_per_arm"]) == 3
+    assert float(status.loc[0, "minimum_coverage"]) == 0.80
+    assert float(status.loc[0, "aggregate_q_threshold"]) == 0.05
     assert int(status.loc[0, "completed_calls"]) == 42
-    assert int(status.loc[0, "calls_with_returns"]) == 29
-    assert int(status.loc[0, "significant_return_rows"]) == 208
+    assert int(status.loc[0, "calls_with_returns"]) == 27
+    assert int(status.loc[0, "calls_without_returns"]) == 15
+    assert int(status.loc[0, "significant_return_rows"]) == 201
     assert int(status.loc[0, "candidate_units"]) == 38_788
-    assert int(status.loc[0, "selected_units"]) == 13
+    assert int(status.loc[0, "passing_units"]) == 11
+    assert int(status.loc[0, "selected_units"]) == 11
+    assert int(status.loc[0, "selected_unique_genes"]) == 9
 
     checks = pd.read_csv(output / f"{FIGURE.FIGURE_ID}_checks.tsv", sep="\t")
-    assert checks["status"].eq("pass").all()
+    assert not (
+        checks["severity"].eq("blocking") & ~checks["status"].eq("pass")
+    ).any()
+    assert checks.set_index("check_id").loc["visual_review", "status"] == "pending"
     artifacts = pd.read_csv(
         output / f"{FIGURE.FIGURE_ID}_artifacts.tsv", sep="\t", dtype=str
     )
@@ -116,7 +163,9 @@ def test_full_atomic_kda_outcomes_package(tmp_path: Path) -> None:
     assert "Dementia-up" in svg
     assert "Dementia-down" in svg
     assert "38,788" in svg
+    assert "POST-HOC EXPLORATORY" in svg
     assert "coverage ≥0.80" in svg
+    assert "network BH q≤0.05" in svg
 
     subprocess.run(
         [

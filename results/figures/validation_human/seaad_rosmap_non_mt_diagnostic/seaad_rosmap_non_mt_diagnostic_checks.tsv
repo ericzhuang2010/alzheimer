@@ -1,23 +1,25 @@
 schema_version	figure_id	check_id	severity	status	observed	expected	details
-seaad_rosmap_non_mt_diagnostic_v1	seaad_rosmap_non_mt_diagnostic	upstream_statuses	blocking	pass	Phase12|Phase18|VH09|VH10A|VH10B|VH10D validated_complete	all validated_complete	Validated during loading.
-seaad_rosmap_non_mt_diagnostic_v1	seaad_rosmap_non_mt_diagnostic	frozen_input_hashes	blocking	pass	27	27	Every input matches frozen SHA-256.
+seaad_rosmap_non_mt_diagnostic_v1	seaad_rosmap_non_mt_diagnostic	upstream_statuses	blocking	pass	Phase18|VH09|VH10A|VH10B|VH10D validated_complete	all validated_complete	Validated during loading.
+seaad_rosmap_non_mt_diagnostic_v1	seaad_rosmap_non_mt_diagnostic	frozen_input_hashes	blocking	pass	22	22	Every input matches frozen SHA-256.
 seaad_rosmap_non_mt_diagnostic_v1	seaad_rosmap_non_mt_diagnostic	plot_unit_count	blocking	pass	21	21	Frozen ROSMAP non-MT selected units.
 seaad_rosmap_non_mt_diagnostic_v1	seaad_rosmap_non_mt_diagnostic	plot_keys_unique	blocking	pass	unique	unique	One trace row per network-gene unit.
 seaad_rosmap_non_mt_diagnostic_v1	seaad_rosmap_non_mt_diagnostic	assessability_split	blocking	pass	17|4	17|4	Assessable versus not-testable split.
 seaad_rosmap_non_mt_diagnostic_v1	seaad_rosmap_non_mt_diagnostic	not_testable_all_opc	blocking	pass	OPCs	OPCs	All four not-testable units are OPC.
-seaad_rosmap_non_mt_diagnostic_v1	seaad_rosmap_non_mt_diagnostic	support_split	blocking	pass	13|4	13|4	Qualifying SEA-AD support among assessable units.
-seaad_rosmap_non_mt_diagnostic_v1	seaad_rosmap_non_mt_diagnostic	one_return_identities	blocking	pass	exact	exact	Four named one-return units.
+seaad_rosmap_non_mt_diagnostic_v1	seaad_rosmap_non_mt_diagnostic	support_split	blocking	pass	14|3	14|3	Qualifying SEA-AD support among assessable units.
+seaad_rosmap_non_mt_diagnostic_v1	seaad_rosmap_non_mt_diagnostic	one_return_identities	blocking	pass	exact	exact	Three named one-return units.
 seaad_rosmap_non_mt_diagnostic_v1	seaad_rosmap_non_mt_diagnostic	final_selection_zero	blocking	pass	0	0	No ROSMAP non-MT unit passed SEA-AD aggregate selection.
-seaad_rosmap_non_mt_diagnostic_v1	seaad_rosmap_non_mt_diagnostic	fate_counts	blocking	pass	[21, 4, 17, 13, 4, 0]	[21,4,17,13,4,0]	Fate tree arithmetic.
-seaad_rosmap_non_mt_diagnostic_v1	seaad_rosmap_non_mt_diagnostic	reverse_rows	blocking	pass	['HGSNAT', 'BEX3', 'RPS27A', 'RPL30', 'KANSL1L']	['HGSNAT', 'BEX3', 'RPS27A', 'RPL30', 'KANSL1L']	Five SEA-AD reverse lookups.
+seaad_rosmap_non_mt_diagnostic_v1	seaad_rosmap_non_mt_diagnostic	fate_counts	blocking	pass	[21, 4, 17, 14, 3, 0]	[21,4,17,14,3,0]	Fate tree arithmetic.
+seaad_rosmap_non_mt_diagnostic_v1	seaad_rosmap_non_mt_diagnostic	reverse_rows	blocking	pass	['HGSNAT', 'BEX3', 'RPS27A']	['HGSNAT', 'BEX3', 'RPS27A']	Three SEA-AD reverse lookups.
 seaad_rosmap_non_mt_diagnostic_v1	seaad_rosmap_non_mt_diagnostic	reverse_none_selected	blocking	pass	none	none	No reverse lookup passed ROSMAP final gates.
-seaad_rosmap_non_mt_diagnostic_v1	seaad_rosmap_non_mt_diagnostic	rpl30_excluded_returns	blocking	pass	2	2	RPL30 has only two primary size-3 returns excluded by the Phase 18 minimum-10 rule.
-seaad_rosmap_non_mt_diagnostic_v1	seaad_rosmap_non_mt_diagnostic	kansl1l_no_primary_return	blocking	pass	no_explicit_primary_return	no_explicit_primary_return	KANSL1L has no explicit primary ROSMAP return.
 seaad_rosmap_non_mt_diagnostic_v1	seaad_rosmap_non_mt_diagnostic	run_context	blocking	pass	161|42|40	161|42|40	Frozen run counts.
 seaad_rosmap_non_mt_diagnostic_v1	seaad_rosmap_non_mt_diagnostic	query_size_floors	blocking	pass	10|3	10|3	Observed minimum effective query sizes among included ROSMAP and eligible SEA-AD runs.
-seaad_rosmap_non_mt_diagnostic_v1	seaad_rosmap_non_mt_diagnostic	donor_limited_groups	blocking	pass	F_e2|M_e2|M_e4	F_e2|M_e2|M_e4	SEA-AD donor-limited strata.
-seaad_rosmap_non_mt_diagnostic_v1	seaad_rosmap_non_mt_diagnostic	unavailable_support_units	blocking	pass	20	20	ROSMAP support includes at least one unavailable SEA-AD stratum for 20 units.
+seaad_rosmap_non_mt_diagnostic_v1	seaad_rosmap_non_mt_diagnostic	fully_donor_unavailable_groups	blocking	pass	F_e2|M_e2	F_e2|M_e2	Only F_e2 and M_e2 are wholly donor-unavailable under the donor-3 rule.
+seaad_rosmap_non_mt_diagnostic_v1	seaad_rosmap_non_mt_diagnostic	m_e4_partial_estimability	blocking	pass	77|154|154|0	77|154|154|0	M_e4 was partially estimable but every completed signed query was empty.
+seaad_rosmap_non_mt_diagnostic_v1	seaad_rosmap_non_mt_diagnostic	donor_unavailable_support_units	blocking	pass	19	19	ROSMAP support includes F_e2 or M_e2 for 19 units.
+seaad_rosmap_non_mt_diagnostic_v1	seaad_rosmap_non_mt_diagnostic	donor_unavailable_support_exclusive	blocking	pass	3	3	Only three units were supported exclusively in F_e2/M_e2.
+seaad_rosmap_non_mt_diagnostic_v1	seaad_rosmap_non_mt_diagnostic	combined_context_support_units	blocking	pass	20	20	The broader F_e2/M_e2/M_e4 context count is retained without treating M_e4 as wholly donor-unavailable.
 seaad_rosmap_non_mt_diagnostic_v1	seaad_rosmap_non_mt_diagnostic	causal_guardrail_visible	blocking	pass	present	present	Coverage context is not presented as exclusive or causal.
+seaad_rosmap_non_mt_diagnostic_v1	seaad_rosmap_non_mt_diagnostic	exploratory_tier_visible	blocking	pass	present	present	The revised SEA-AD tier is visible.
 seaad_rosmap_non_mt_diagnostic_v1	seaad_rosmap_non_mt_diagnostic	all_named_units_visible	blocking	pass	present	present	All diagnostic and reverse-lookup genes are searchable.
 seaad_rosmap_non_mt_diagnostic_v1	seaad_rosmap_non_mt_diagnostic	minimum_font_size	blocking	pass	16.0	>=16	Projection-scale typography.
 seaad_rosmap_non_mt_diagnostic_v1	seaad_rosmap_non_mt_diagnostic	canvas_text_clipping	blocking	pass	0	0	No text leaves canvas.
@@ -35,6 +37,7 @@ seaad_rosmap_non_mt_diagnostic_v1	seaad_rosmap_non_mt_diagnostic	image_export_se
 seaad_rosmap_non_mt_diagnostic_v1	seaad_rosmap_non_mt_diagnostic	image_exports_nonempty	blocking	pass	all >1000	all >1000	Image exports are nontrivial.
 seaad_rosmap_non_mt_diagnostic_v1	seaad_rosmap_non_mt_diagnostic	svg_searchable_text	blocking	pass	present	present	SVG text remains searchable.
 seaad_rosmap_non_mt_diagnostic_v1	seaad_rosmap_non_mt_diagnostic	svg_vector_paths	blocking	pass	present	present	SVG contains vector geometry.
+seaad_rosmap_non_mt_diagnostic_v1	seaad_rosmap_non_mt_diagnostic	svg_no_trailing_whitespace	blocking	pass	none	none	SVG lines have no trailing whitespace.
 seaad_rosmap_non_mt_diagnostic_v1	seaad_rosmap_non_mt_diagnostic	pdf_signature	blocking	pass	%PDF-	%PDF-	PDF signature.
 seaad_rosmap_non_mt_diagnostic_v1	seaad_rosmap_non_mt_diagnostic	png_dimensions	blocking	pass	5400x2385	5400x2385	12 × 5.3 inch canvas.
 seaad_rosmap_non_mt_diagnostic_v1	seaad_rosmap_non_mt_diagnostic	png_resolution	blocking	pass	450.01|450.01	450|450	Embedded PNG resolution.

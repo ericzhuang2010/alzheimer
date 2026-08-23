@@ -1,51 +1,53 @@
 schema_version	figure_id	check_id	severity	status	expected	observed	details
-seaad_rosmap_validation_setup_figure_v1	seaad_rosmap_validation_setup	seaad_donors	blocking	pass	78	78	SEA-AD analysis donor total.
-seaad_rosmap_validation_setup_figure_v1	seaad_rosmap_validation_setup	seaad_donor_phenotypes	blocking	pass	37|41	37|41	Dementia and No-dementia donor counts.
-seaad_rosmap_validation_setup_figure_v1	seaad_rosmap_validation_setup	seaad_selected_nuclei	blocking	pass	1189172	1189172	Selected SEA-AD nuclei.
-seaad_rosmap_validation_setup_figure_v1	seaad_rosmap_validation_setup	seaad_supertypes	blocking	pass	129	129	Distinct SEA-AD fine supertypes.
-seaad_rosmap_validation_setup_figure_v1	seaad_rosmap_validation_setup	shared_network_count	blocking	pass	7	7	Exact matched broad-network IDs.
-seaad_rosmap_validation_setup_figure_v1	seaad_rosmap_validation_setup	fine_contrast_count	blocking	pass	774	774	129 supertypes × six fixed groups.
-seaad_rosmap_validation_setup_figure_v1	seaad_rosmap_validation_setup	fine_contrast_status_partition	blocking	pass	260+514	260+514	Completed and not-estimable contrast partition.
-seaad_rosmap_validation_setup_figure_v1	seaad_rosmap_validation_setup	completed_contrasts_by_group	blocking	pass	F_e2:0|F_e33:100|F_e4:68|M_e2:0|M_e33:92|M_e4:0	F_e2:0|F_e33:100|F_e4:68|M_e2:0|M_e33:92|M_e4:0	Completed fine contrasts across all six fixed groups.
-seaad_rosmap_validation_setup_figure_v1	seaad_rosmap_validation_setup	structural_directions	blocking	pass	1548	1548	Two signed directions per structural fine contrast.
-seaad_rosmap_validation_setup_figure_v1	seaad_rosmap_validation_setup	direction_status_partition	blocking	pass	520+1028	520+1028	Completed-source and source-not-estimable direction partition.
-seaad_rosmap_validation_setup_figure_v1	seaad_rosmap_validation_setup	completed_direction_attrition	blocking	pass	462+16+21+21	462+16+21+21	Completed-source directions partition by effective-query outcome.
-seaad_rosmap_validation_setup_figure_v1	seaad_rosmap_validation_setup	active_kda_calls	blocking	pass	42	42	SEA-AD active KDA calls.
-seaad_rosmap_validation_setup_figure_v1	seaad_rosmap_validation_setup	active_direction_calls	blocking	pass	20+22	20+22	Active up/down KDA calls.
-seaad_rosmap_validation_setup_figure_v1	seaad_rosmap_validation_setup	active_query_size_tiers	blocking	pass	21+21	21+21	Small and Phase18-sized active queries.
-seaad_rosmap_validation_setup_figure_v1	seaad_rosmap_validation_setup	kda_call_outcomes	blocking	pass	29+13	29+13	Calls with at least one significant return and calls with none.
-seaad_rosmap_validation_setup_figure_v1	seaad_rosmap_validation_setup	seaad_selected_units	blocking	pass	13	13	Ranked SEA-AD network-gene-class units after sentinel filtering.
-seaad_rosmap_validation_setup_figure_v1	seaad_rosmap_validation_setup	seaad_selected_classes	blocking	pass	8+5	8+5	SEA-AD MT and non-MT selected units.
-seaad_rosmap_validation_setup_figure_v1	seaad_rosmap_validation_setup	seaad_selected_symbols	blocking	pass	11	11	Unique selected SEA-AD current symbols.
-seaad_rosmap_validation_setup_figure_v1	seaad_rosmap_validation_setup	seaad_minimum_query	blocking	pass	3	3	SEA-AD downstream KDA run-inclusion minimum.
-seaad_rosmap_validation_setup_figure_v1	seaad_rosmap_validation_setup	rosmap_global_donors	blocking	pass	276	276	Global ROSMAP analytic donor universe.
-seaad_rosmap_validation_setup_figure_v1	seaad_rosmap_validation_setup	rosmap_fine_types	blocking	pass	54	54	ROSMAP Phase 18 fine-cell-type scope.
-seaad_rosmap_validation_setup_figure_v1	seaad_rosmap_validation_setup	rosmap_source_networks	blocking	pass	9	9	Original ROSMAP source-network scope, including CAMs and T cells.
-seaad_rosmap_validation_setup_figure_v1	seaad_rosmap_validation_setup	rosmap_structural_slots	blocking	pass	648	648	54 fine types × six groups × two directions.
-seaad_rosmap_validation_setup_figure_v1	seaad_rosmap_validation_setup	rosmap_minimum_query	blocking	pass	10	10	ROSMAP Phase 18 run-inclusion minimum.
-seaad_rosmap_validation_setup_figure_v1	seaad_rosmap_validation_setup	rosmap_included_runs	blocking	pass	161	161	Phase 18 included KDA runs in the seven matched networks.
-seaad_rosmap_validation_setup_figure_v1	seaad_rosmap_validation_setup	rosmap_selected_units	blocking	pass	47	47	Frozen ROSMAP top-five network-gene-class units.
-seaad_rosmap_validation_setup_figure_v1	seaad_rosmap_validation_setup	rosmap_selected_symbols	blocking	pass	25	25	Unique frozen ROSMAP selected symbols.
-seaad_rosmap_validation_setup_figure_v1	seaad_rosmap_validation_setup	threshold_difference_visible	blocking	pass	SEA 3|ROSMAP 10 labels	SEA 3|ROSMAP 10 labels	The intentional query-size difference is visible.
-seaad_rosmap_validation_setup_figure_v1	seaad_rosmap_validation_setup	structural_vs_runnable_units_visible	blocking	pass	1,548 slots|42 calls	1,548 slots|42 calls	Structural slots and runnable calls are visibly distinguished.
-seaad_rosmap_validation_setup_figure_v1	seaad_rosmap_validation_setup	no_taxonomy_pooling_text	blocking	pass	fine labels stay separate	fine labels stay separate	Fine supertypes are not visually represented as pooled before DEG/KDA.
-seaad_rosmap_validation_setup_figure_v1	seaad_rosmap_validation_setup	holdout_boundary_visible	blocking	pass	holdout label present	holdout label present	ROSMAP candidate tables are shown as held out from SEA-AD selection code.
-seaad_rosmap_validation_setup_figure_v1	seaad_rosmap_validation_setup	canonical_setup_no_result_badge	blocking	pass	overlap outcome absent	overlap outcome absent	The canonical setup does not reveal the later overlap result.
-seaad_rosmap_validation_setup_figure_v1	seaad_rosmap_validation_setup	plot_element_ids_unique	blocking	pass	82	82	Every plotted datum/label/connector has a unique audit ID.
-seaad_rosmap_validation_setup_figure_v1	seaad_rosmap_validation_setup	plot_sources_hashed	blocking	pass	all sourced rows hashed	all sourced rows hashed	Every sourced visible element records input SHA-256 provenance.
-seaad_rosmap_validation_setup_figure_v1	seaad_rosmap_validation_setup	minimum_font_size	blocking	pass	>=7.0 pt	7.00	Minimum visible text size on the slide-native asset.
-seaad_rosmap_validation_setup_figure_v1	seaad_rosmap_validation_setup	canvas_text_clipping	blocking	pass	0	0	No text bounding box leaves the figure canvas.
-seaad_rosmap_validation_setup_figure_v1	seaad_rosmap_validation_setup	colorblind_redundancy	blocking	pass	color + redundant non-color encoding	Okabe-Ito blue/teal/orange + labels/line styles/lock/status text	Cohorts, directions, scaffold, holdout, and statuses are not encoded by color alone.
-seaad_rosmap_validation_setup_figure_v1	seaad_rosmap_validation_setup	deterministic_counts_no_uncertainty	blocking	pass	uncertainty not applicable	uncertainty not applicable	The figure displays deterministic workflow counts, not statistical estimates.
-seaad_rosmap_validation_setup_figure_v1	seaad_rosmap_validation_setup	image_format_set	blocking	pass	.pdf|.png|.svg	.pdf|.png|.svg	The package contains the required raster and vector exports.
-seaad_rosmap_validation_setup_figure_v1	seaad_rosmap_validation_setup	image_files_nonempty	blocking	pass	>1000 bytes each	832849|58526|37775	Rendered files must be nonempty and larger than trivial headers.
-seaad_rosmap_validation_setup_figure_v1	seaad_rosmap_validation_setup	svg_signature	blocking	pass	<svg present	<svg present	SVG signature is present.
-seaad_rosmap_validation_setup_figure_v1	seaad_rosmap_validation_setup	svg_searchable_text	blocking	pass	<text present	<text present	SVG preserves text instead of converting every label to paths.
-seaad_rosmap_validation_setup_figure_v1	seaad_rosmap_validation_setup	svg_vector_shapes	blocking	pass	<path present	<path present	SVG contains vector paths/shapes.
-seaad_rosmap_validation_setup_figure_v1	seaad_rosmap_validation_setup	canonical_setup_omits_overlap_result	blocking	pass	overlap result absent	overlap result absent	The setup asset stops at the comparison rule.
-seaad_rosmap_validation_setup_figure_v1	seaad_rosmap_validation_setup	pdf_signature	blocking	pass	%PDF-	%PDF-	PDF has the expected file signature.
-seaad_rosmap_validation_setup_figure_v1	seaad_rosmap_validation_setup	png_width	blocking	pass	5594	5594	PNG width is frozen for the slide asset.
-seaad_rosmap_validation_setup_figure_v1	seaad_rosmap_validation_setup	png_height	blocking	pass	2120	2120	PNG height is frozen for the slide asset.
-seaad_rosmap_validation_setup_figure_v1	seaad_rosmap_validation_setup	png_resolution	blocking	pass	450|450	450.01|450.01	PNG embeds approximately 450 DPI in both dimensions.
-seaad_rosmap_validation_setup_figure_v1	seaad_rosmap_validation_setup	png_color_mode	blocking	pass	RGB or RGBA	RGBA	PNG is suitable for the RGB slide deck.
-seaad_rosmap_validation_setup_figure_v1	seaad_rosmap_validation_setup	visual_review	nonblocking	pass	complete	complete	Reviewed at intended slide size in color and grayscale.
+seaad_rosmap_validation_setup_figure_v2	seaad_rosmap_validation_setup	seaad_donors	blocking	pass	78	78	SEA-AD analysis donor total.
+seaad_rosmap_validation_setup_figure_v2	seaad_rosmap_validation_setup	seaad_donor_phenotypes	blocking	pass	37|41	37|41	Dementia and No-dementia donor counts.
+seaad_rosmap_validation_setup_figure_v2	seaad_rosmap_validation_setup	seaad_selected_nuclei	blocking	pass	1189172	1189172	Selected SEA-AD nuclei.
+seaad_rosmap_validation_setup_figure_v2	seaad_rosmap_validation_setup	seaad_supertypes	blocking	pass	129	129	Distinct SEA-AD fine supertypes.
+seaad_rosmap_validation_setup_figure_v2	seaad_rosmap_validation_setup	shared_network_count	blocking	pass	7	7	Exact matched broad-network IDs.
+seaad_rosmap_validation_setup_figure_v2	seaad_rosmap_validation_setup	fine_contrast_count	blocking	pass	774	774	129 supertypes × six fixed groups.
+seaad_rosmap_validation_setup_figure_v2	seaad_rosmap_validation_setup	fine_contrast_status_partition	blocking	pass	381+393	381+393	Completed and not-estimable contrast partition.
+seaad_rosmap_validation_setup_figure_v2	seaad_rosmap_validation_setup	completed_contrasts_by_group	blocking	pass	F_e2:0|F_e33:105|F_e4:95|M_e2:0|M_e33:104|M_e4:77	F_e2:0|F_e33:105|F_e4:95|M_e2:0|M_e33:104|M_e4:77	Completed fine contrasts across all six fixed groups.
+seaad_rosmap_validation_setup_figure_v2	seaad_rosmap_validation_setup	structural_directions	blocking	pass	1548	1548	Two signed directions per structural fine contrast.
+seaad_rosmap_validation_setup_figure_v2	seaad_rosmap_validation_setup	direction_status_partition	blocking	pass	762+786	762+786	Completed-source and source-not-estimable direction partition.
+seaad_rosmap_validation_setup_figure_v2	seaad_rosmap_validation_setup	completed_direction_attrition	blocking	pass	703+17+21+21	703+17+21+21	Completed-source directions partition by effective-query outcome.
+seaad_rosmap_validation_setup_figure_v2	seaad_rosmap_validation_setup	active_kda_calls	blocking	pass	42	42	SEA-AD active KDA calls.
+seaad_rosmap_validation_setup_figure_v2	seaad_rosmap_validation_setup	active_direction_calls	blocking	pass	20+22	20+22	Active up/down KDA calls.
+seaad_rosmap_validation_setup_figure_v2	seaad_rosmap_validation_setup	active_query_size_tiers	blocking	pass	21+21	21+21	Small and Phase18-sized active queries.
+seaad_rosmap_validation_setup_figure_v2	seaad_rosmap_validation_setup	kda_call_outcomes	blocking	pass	27+15	27+15	Calls with at least one significant return and calls with none.
+seaad_rosmap_validation_setup_figure_v2	seaad_rosmap_validation_setup	seaad_selected_units	blocking	pass	11	11	Ranked SEA-AD network-gene-class units after sentinel filtering.
+seaad_rosmap_validation_setup_figure_v2	seaad_rosmap_validation_setup	seaad_selected_classes	blocking	pass	8+3	8+3	SEA-AD MT and non-MT selected units.
+seaad_rosmap_validation_setup_figure_v2	seaad_rosmap_validation_setup	seaad_selected_symbols	blocking	pass	9	9	Unique selected SEA-AD current symbols.
+seaad_rosmap_validation_setup_figure_v2	seaad_rosmap_validation_setup	seaad_donor_minimum	blocking	pass	3	3	Minimum eligible donors in each disease arm.
+seaad_rosmap_validation_setup_figure_v2	seaad_rosmap_validation_setup	seaad_fdr_only_query	blocking	pass	FDR < 0.05	FDR < 0.05	The active query has no fold-change threshold.
+seaad_rosmap_validation_setup_figure_v2	seaad_rosmap_validation_setup	seaad_minimum_query	blocking	pass	3	3	SEA-AD downstream KDA run-inclusion minimum.
+seaad_rosmap_validation_setup_figure_v2	seaad_rosmap_validation_setup	rosmap_global_donors	blocking	pass	276	276	Global ROSMAP analytic donor universe.
+seaad_rosmap_validation_setup_figure_v2	seaad_rosmap_validation_setup	rosmap_fine_types	blocking	pass	54	54	ROSMAP Phase 18 fine-cell-type scope.
+seaad_rosmap_validation_setup_figure_v2	seaad_rosmap_validation_setup	rosmap_source_networks	blocking	pass	9	9	Original ROSMAP source-network scope, including CAMs and T cells.
+seaad_rosmap_validation_setup_figure_v2	seaad_rosmap_validation_setup	rosmap_structural_slots	blocking	pass	648	648	54 fine types × six groups × two directions.
+seaad_rosmap_validation_setup_figure_v2	seaad_rosmap_validation_setup	rosmap_minimum_query	blocking	pass	10	10	ROSMAP Phase 18 run-inclusion minimum.
+seaad_rosmap_validation_setup_figure_v2	seaad_rosmap_validation_setup	rosmap_included_runs	blocking	pass	161	161	Phase 18 included KDA runs in the seven matched networks.
+seaad_rosmap_validation_setup_figure_v2	seaad_rosmap_validation_setup	rosmap_selected_units	blocking	pass	47	47	Frozen ROSMAP top-five network-gene-class units.
+seaad_rosmap_validation_setup_figure_v2	seaad_rosmap_validation_setup	rosmap_selected_symbols	blocking	pass	25	25	Unique frozen ROSMAP selected symbols.
+seaad_rosmap_validation_setup_figure_v2	seaad_rosmap_validation_setup	threshold_difference_visible	blocking	pass	SEA 3|ROSMAP 10 labels	SEA 3|ROSMAP 10 labels	The intentional query-size difference is visible.
+seaad_rosmap_validation_setup_figure_v2	seaad_rosmap_validation_setup	structural_vs_runnable_units_visible	blocking	pass	1,548 slots|42 calls	1,548 slots|42 calls	Structural slots and runnable calls are visibly distinguished.
+seaad_rosmap_validation_setup_figure_v2	seaad_rosmap_validation_setup	no_taxonomy_pooling_text	blocking	pass	fine labels stay separate	fine labels stay separate	Fine supertypes are not visually represented as pooled before DEG/KDA.
+seaad_rosmap_validation_setup_figure_v2	seaad_rosmap_validation_setup	selection_code_read_boundary_visible	blocking	pass	code-read boundary label present	code-read boundary label present	The figure states only the recorded selection-code read boundary.
+seaad_rosmap_validation_setup_figure_v2	seaad_rosmap_validation_setup	canonical_setup_no_result_badge	blocking	pass	overlap outcome absent	overlap outcome absent	The canonical setup does not reveal the later overlap result.
+seaad_rosmap_validation_setup_figure_v2	seaad_rosmap_validation_setup	plot_element_ids_unique	blocking	pass	82	82	Every plotted datum/label/connector has a unique audit ID.
+seaad_rosmap_validation_setup_figure_v2	seaad_rosmap_validation_setup	plot_sources_hashed	blocking	pass	all sourced rows hashed	all sourced rows hashed	Every sourced visible element records input SHA-256 provenance.
+seaad_rosmap_validation_setup_figure_v2	seaad_rosmap_validation_setup	minimum_font_size	blocking	pass	>=7.0 pt	7.00	Minimum visible text size on the slide-native asset.
+seaad_rosmap_validation_setup_figure_v2	seaad_rosmap_validation_setup	canvas_text_clipping	blocking	pass	0	0	No text bounding box leaves the figure canvas.
+seaad_rosmap_validation_setup_figure_v2	seaad_rosmap_validation_setup	colorblind_redundancy	blocking	pass	color + redundant non-color encoding	Okabe-Ito blue/teal/orange + labels/line styles/lock/status text	Cohorts, directions, scaffold, holdout, and statuses are not encoded by color alone.
+seaad_rosmap_validation_setup_figure_v2	seaad_rosmap_validation_setup	deterministic_counts_no_uncertainty	blocking	pass	uncertainty not applicable	uncertainty not applicable	The figure displays deterministic workflow counts, not statistical estimates.
+seaad_rosmap_validation_setup_figure_v2	seaad_rosmap_validation_setup	image_format_set	blocking	pass	.pdf|.png|.svg	.pdf|.png|.svg	The package contains the required raster and vector exports.
+seaad_rosmap_validation_setup_figure_v2	seaad_rosmap_validation_setup	image_files_nonempty	blocking	pass	>1000 bytes each	859515|59233|37428	Rendered files must be nonempty and larger than trivial headers.
+seaad_rosmap_validation_setup_figure_v2	seaad_rosmap_validation_setup	svg_signature	blocking	pass	<svg present	<svg present	SVG signature is present.
+seaad_rosmap_validation_setup_figure_v2	seaad_rosmap_validation_setup	svg_searchable_text	blocking	pass	<text present	<text present	SVG preserves text instead of converting every label to paths.
+seaad_rosmap_validation_setup_figure_v2	seaad_rosmap_validation_setup	svg_vector_shapes	blocking	pass	<path present	<path present	SVG contains vector paths/shapes.
+seaad_rosmap_validation_setup_figure_v2	seaad_rosmap_validation_setup	canonical_setup_omits_overlap_result	blocking	pass	overlap result absent	overlap result absent	The setup asset stops at the comparison rule.
+seaad_rosmap_validation_setup_figure_v2	seaad_rosmap_validation_setup	pdf_signature	blocking	pass	%PDF-	%PDF-	PDF has the expected file signature.
+seaad_rosmap_validation_setup_figure_v2	seaad_rosmap_validation_setup	png_width	blocking	pass	5594	5594	PNG width is frozen for the slide asset.
+seaad_rosmap_validation_setup_figure_v2	seaad_rosmap_validation_setup	png_height	blocking	pass	2120	2120	PNG height is frozen for the slide asset.
+seaad_rosmap_validation_setup_figure_v2	seaad_rosmap_validation_setup	png_resolution	blocking	pass	450|450	450.01|450.01	PNG embeds approximately 450 DPI in both dimensions.
+seaad_rosmap_validation_setup_figure_v2	seaad_rosmap_validation_setup	png_color_mode	blocking	pass	RGB or RGBA	RGBA	PNG is suitable for the RGB slide deck.
+seaad_rosmap_validation_setup_figure_v2	seaad_rosmap_validation_setup	visual_review	nonblocking	pass	complete	complete	Reviewed at intended slide size in color and grayscale.

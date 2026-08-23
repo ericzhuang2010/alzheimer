@@ -32,9 +32,12 @@ def test_plot_data_preserves_setup_scope_and_holdout_boundary() -> None:
     assert bundle["supertypes"] == 129
     assert bundle["fine_contrasts"] == 774
     assert bundle["structural_directions"] == 1_548
-    assert bundle["source_directions"] == 520
+    assert bundle["source_directions"] == 762
     assert bundle["active_calls"] == 42
-    assert bundle["sea_selected"] == 13
+    assert bundle["sea_selected"] == 11
+    assert bundle["sea_symbols"] == 9
+    assert bundle["minimum_donors_per_arm"] == 3
+    assert bundle["query_rule"] == "FDR < 0.05"
 
     # The original ROSMAP scope spans nine source networks; the included and
     # selected comparison scope lies in the seven networks matched to SEA-AD.
@@ -49,8 +52,10 @@ def test_plot_data_preserves_setup_scope_and_holdout_boundary() -> None:
     visible = "\n".join(plot_data["display_text"].astype(str))
     assert "Original scope: 54 fine types  |  9 source networks" in visible
     assert "Matched scope: 7 SEA-AD networks" in visible
-    assert "candidate-bearing tables held out from SEA-AD KDA/selection code" in visible
-    assert "OPEN ONLY AFTER SEA-AD FREEZE" in visible
+    assert "ROSMAP candidate files not read by SEA-AD selection code" in visible
+    assert "COMPARE AFTER NEW SEA-AD LIST FREEZE" in visible
+    assert "no fold-change cutoff" in visible
+    assert "SEA-AD POST-HOC EXPLORATORY RERUN" in visible
     assert "fine labels stay separate" in visible
     assert "1,548 structural slots" in visible
     assert "42 KDA calls" in visible
@@ -115,6 +120,7 @@ def test_full_figure_package(tmp_path: Path) -> None:
     assert pdf.startswith(b"%PDF")
     svg = (output / f"{FIGURE.FIGURE_ID}.svg").read_text(encoding="utf-8")
     assert "<path" in svg.lower()
-    assert "INDEPENDENT SEA-AD EVIDENCE" in svg
-    assert "OPEN ONLY AFTER SEA-AD FREEZE" in svg
+    assert "SEA-AD POST-HOC EXPLORATORY RERUN" in svg
+    assert "COMPARE AFTER NEW SEA-AD LIST FREEZE" in svg
+    assert "no fold-change cutoff" in svg
     assert "6 strict shared" not in svg

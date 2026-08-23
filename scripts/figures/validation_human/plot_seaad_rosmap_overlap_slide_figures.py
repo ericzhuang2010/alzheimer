@@ -61,8 +61,8 @@ FIGURE_HEIGHT_IN = 5.3
 DEFAULT_PNG_DPI = 450
 PNG_WIDTH = 5_400
 PNG_HEIGHT = 2_385
-QUERY_RULE = "phase18_parity_query"
-RESULT_TIER = "phase18_parity_query__min3_all"
+QUERY_RULE = "fdr_only_query_sensitivity"
+RESULT_TIER = "posthoc_exploratory__fdr_only__donor3__query3__coverage80__q05"
 CLASS_ORDER = ("mt_driver", "non_mt_driver")
 
 # Deck-wide, colorblind-safe cohort encoding.  Every meaning also has a
@@ -102,17 +102,17 @@ EXPECTED_INPUT_SHA256 = {
     "vh09_artifacts": "9cb622cb3d1affc93eac21d598d51ada31b5f74a2355f477cce78c6cbe6f6ced",
     "vh09_checks": "74cacf128d42e62d63780a1e7f2658fec4dee0b701d5c8009c59e6df6614b8a8",
     "rosmap_selected": "e758720f7dcd80d1d6ef72fc7f95bfa20e3784931114e59c716a0e85b681d443",
-    "vh10c_status": "c12e21e961c670d69b04789b149fece950c036c68187c75588e19838f91a7023",
-    "vh10c_artifacts": "2fe7d1af68e3e4971e19516706d496118719d3422cf198ef010e1000b83b52c1",
-    "vh10c_checks": "eda96be41bc9af33257ba447ed623c29e0ffcf521ce1fd77df6b5cd0fff5ae97",
-    "seaad_top5": "18b4cdd6cbadbf4ef741cdf54cf2dd992017035786726d701a5d818acc3937ac",
-    "seaad_freeze": "33bef167577c0abd8b0ee26861f33ee8f3a26ed22537f449d35cc3d884e52168",
-    "vh10d_status": "fd9370f145948f10358e90830e18b25fbf36b3c253c5b2ac22528cb7f74f9528",
-    "vh10d_artifacts": "b349a71f5a5735188397a535c054f81af5c024278a6b21ee9c86b8491b2c2a57",
-    "vh10d_checks": "a437d7122e0b83173aa49684127a00bd07da2a9b4df2bc1d0366fe478b3526d1",
-    "unit_overlap": "68b839ef1dae967bc482d16667d94fe8fd2a8bb17290ea43b2a96767c4abbfa6",
-    "overlap_summary": "bde46e5821e0639f29c46f8aa480fb50d7b355fc02a93e128ded862af9ad1ade",
-    "gene_overlap": "8b71aef2aa561ef33e1ad679a96dc2fc48c674a76a89c09a4ac3cfb735341e16",
+    "vh10c_status": "490bd9d785584c471c5acfc2b1834f2b3e670f25833a89c0c280048540cef43e",
+    "vh10c_artifacts": "c154e3013b9ff473cbc66a6e7c2710978b5014c56faff8b8f915452073dcf0dc",
+    "vh10c_checks": "3595944ac839e1b2b91494ecf6e4f0e6a74a01fe30340e1f9bc406b03d977f49",
+    "seaad_top5": "31dd58753e2d205e56028cd71f73323bdde11385c1f1cd041a6157318a63ab97",
+    "seaad_freeze": "2db010c801b1d03907ca8850e1e9b8a064531ce6e4396a688f9c39ff6c331bf6",
+    "vh10d_status": "1e80ad3914e12a63e7bd6f5ee005eebd4889bc32a3dc952e48c2b1575c12ac5e",
+    "vh10d_artifacts": "fc15576f85f1d53670ff2efe211256c6f0f4d27b6f609fbbad5b4fa8b6c90f41",
+    "vh10d_checks": "83e1413b1b9b30b9e11c643bc837070ec6278d1f88ee299c1bb9caf1e95cc5c3",
+    "unit_overlap": "2230ac092af573402df9a6c6041c552648efccdc29176118c0b6dc83d72700f6",
+    "overlap_summary": "83d309d6fdda08c6415150fd8ce1936c29c509357f545a4930f803c1d02f6a2f",
+    "gene_overlap": "729bd92d24125e39b92331cfbc846cc30976c68bffa9d9d48767686871b233fc",
 }
 
 EXPECTED_STRICT = {
@@ -147,7 +147,7 @@ EXPECTED_REGIONS = {
             "RPS13", "RPS15", "SELENOW",
         },
         "common": set(),
-        "seaad_only": {"BEX3", "HGSNAT", "KANSL1L", "RPL30", "RPS27A"},
+        "seaad_only": {"BEX3", "HGSNAT", "RPS27A"},
     },
 }
 
@@ -300,8 +300,8 @@ def load_bundle(project_root: Path) -> dict[str, Any]:
     vh10d = one_row(frames["vh10d_status"], "VH10D status")
     require(as_int(vh09["selected_units"]) == 47, "ROSMAP selected-unit count changed")
     require(as_int(vh09["selected_unique_genes"]) == 25, "ROSMAP unique-gene count changed")
-    require(as_int(vh10c["selected_top5_units"]) == 13, "SEA-AD selected-unit count changed")
-    require(as_int(vh10c["selected_unique_genes"]) == 11, "SEA-AD unique-gene count changed")
+    require(as_int(vh10c["selected_top5_units"]) == 11, "SEA-AD selected-unit count changed")
+    require(as_int(vh10c["selected_unique_genes"]) == 9, "SEA-AD unique-gene count changed")
     require(as_int(vh10d["rosmap_testable_selected_units"]) == 36, "ROSMAP testable count changed")
     require(as_int(vh10d["strict_shared_top5_units"]) == 6, "Strict shared-unit count changed")
 
@@ -318,7 +318,7 @@ def load_bundle(project_root: Path) -> dict[str, Any]:
     require(set(seaad_all["query_rule_id"]) == {QUERY_RULE}, "SEA-AD query rule changed")
     require(set(seaad_all["result_tier_id"]) == {RESULT_TIER}, "SEA-AD result tier changed")
     seaad = seaad_all.loc[seaad_all["list_status"].eq("ranked_candidates")].copy()
-    require(len(seaad) == 13 and ~seaad["current_symbol"].isin({"", "NA"}).any(), "SEA-AD ranked rows changed")
+    require(len(seaad) == 11 and ~seaad["current_symbol"].isin({"", "NA"}).any(), "SEA-AD ranked rows changed")
 
     unit = frames["unit_overlap"].copy()
     require_columns(unit, ["result_tier_id", "broad_network", "gene", "case_id", "in_common_assessable_universe", "rosmap_top5", "rosmap_rank", "seaad_top5", "seaad_rank", "replication_status"], "unit overlap")
@@ -332,7 +332,7 @@ def load_bundle(project_root: Path) -> dict[str, Any]:
     rosmap_sets = {case: set(rosmap.loc[rosmap["case_id"].eq(case), "key_driver"]) for case in CLASS_ORDER}
     seaad_sets = {case: set(seaad.loc[seaad["case_id"].eq(case), "current_symbol"]) for case in CLASS_ORDER}
     require({case: len(rosmap_sets[case]) for case in CLASS_ORDER} == {"mt_driver": 10, "non_mt_driver": 15}, "ROSMAP class-gene counts changed")
-    require({case: len(seaad_sets[case]) for case in CLASS_ORDER} == {"mt_driver": 6, "non_mt_driver": 5}, "SEA-AD class-gene counts changed")
+    require({case: len(seaad_sets[case]) for case in CLASS_ORDER} == {"mt_driver": 6, "non_mt_driver": 3}, "SEA-AD class-gene counts changed")
     regions = {
         case: {
             "rosmap_only": rosmap_sets[case] - seaad_sets[case],
@@ -434,7 +434,7 @@ def build_strict_scorecard(bundle: Mapping[str, Any]) -> pd.DataFrame:
         )
     frame = pd.DataFrame(rows)
     observed = frame.set_index("case_id")[["rosmap_testable_selected_units", "seaad_selected_units", "strict_shared_units"]].astype(int).apply(tuple, axis=1).to_dict()
-    require(observed == {"mt_driver": (19, 8, 6), "non_mt_driver": (17, 5, 0)}, "Strict scorecard changed")
+    require(observed == {"mt_driver": (19, 8, 6), "non_mt_driver": (17, 3, 0)}, "Strict scorecard changed")
     return frame
 
 
@@ -495,7 +495,7 @@ def build_gene_plot_data(bundle: Mapping[str, Any]) -> pd.DataFrame:
                     }
                 )
     frame = pd.DataFrame(rows)
-    require(len(frame) == 30 and not frame.duplicated(["case_id", "gene"]).any(), "Gene-level plot rows changed")
+    require(len(frame) == 28 and not frame.duplicated(["case_id", "gene"]).any(), "Gene-level plot rows changed")
     return frame
 
 
@@ -613,7 +613,7 @@ def draw_strict_figure(bundle: Mapping[str, Any], plot_data: pd.DataFrame, score
     _draw_scorecard(score_ax, scorecard)
     for ax, network in zip((fig.add_subplot(grid[1, 0]), fig.add_subplot(grid[1, 1])), EXPECTED_STRICT):
         _draw_slope_facet(ax, network, plot_data, facet_summary)
-    fig.text(0.5, 0.025, "6 strict units = 4 unique symbols  •  strict unit: network + gene + class  •  selection rank, not effect size", ha="center", va="center", fontsize=16, color=MID)
+    fig.text(0.5, 0.025, "6 strict units = 4 unique symbols  •  strict unit: network + gene + class  •  SEA-AD post-hoc exploratory", ha="center", va="center", fontsize=16, color=MID)
     return fig, _render_meta(fig, minimum_required=16.0)
 
 
@@ -651,13 +651,13 @@ def _draw_non_mt_gene_panel(ax: Any, regions: Mapping[str, set[str]]) -> None:
     ax.add_patch(Circle((-1.55, 0), 1.42, facecolor=ROSMAP_PALE, edgecolor=ROSMAP, linewidth=2.3, hatch="////", zorder=1))
     ax.add_patch(Circle((1.75, 0), 0.82, facecolor=SEAAD_PALE, edgecolor=SEAAD, linewidth=2.6, zorder=2))
     ax.text(-1.55, 1.53, "ROSMAP only • 15", ha="center", va="center", fontsize=17, weight="bold", color=ROSMAP)
-    ax.text(1.75, 0.98, "SEA-AD only • 5", ha="center", va="center", fontsize=17, weight="bold", color=SEAAD)
+    ax.text(1.75, 0.98, "SEA-AD only • 3", ha="center", va="center", fontsize=17, weight="bold", color=SEAAD)
     _gene_grid(
         ax, sorted(regions["rosmap_only"]),
         (-2.15, -0.95), (0.93, 0.67, 0.41, 0.15, -0.11, -0.37, -0.63, -0.89),
         daggers={"ANKRD11", "FTL", "NCOA1"},
     )
-    _gene_grid(ax, sorted(regions["seaad_only"]), (1.75,), (0.37, 0.12, -0.13, -0.38, -0.63))
+    _gene_grid(ax, sorted(regions["seaad_only"]), (1.75,), (0.22, -0.08, -0.38))
     ax.text(0.42, 1.43, "Common:\n0 (∅)", ha="center", va="center", fontsize=17, linespacing=1.0, weight="bold", color=SHARED)
     ax.set_xlim(-3.15, 2.80)
     ax.set_ylim(-1.55, 1.70)
@@ -676,7 +676,7 @@ def draw_gene_figure(bundle: Mapping[str, Any], plot_data: pd.DataFrame, region_
             _draw_mt_gene_panel(ax, bundle["regions"][case])
         else:
             _draw_non_mt_gene_panel(ax, bundle["regions"][case])
-    fig.text(0.5, 0.125, "Descriptive gene-level view; network identity collapsed  •  no gene-level overlap p value", ha="center", va="center", fontsize=16, weight="bold", color=SHARED)
+    fig.text(0.5, 0.125, "Descriptive gene-level view; network identity collapsed  •  SEA-AD post-hoc exploratory", ha="center", va="center", fontsize=16, weight="bold", color=SHARED)
     fig.text(0.5, 0.050, "* MT-ATP6 and MT-ND4 are common only after networks are collapsed  •  † SEA-AD OPC KDA unavailable", ha="center", va="center", fontsize=16, color=MID)
     return fig, _render_meta(fig, minimum_required=16.0)
 
@@ -792,27 +792,29 @@ def build_checks(figure_id: str, bundle: Mapping[str, Any], tables: Mapping[str,
                 check_record(figure_id, "paired_rank_keys_unique", not plot.duplicated(["broad_network", "gene"]).any(), "unique", "unique", "Endpoint keys."),
                 check_record(figure_id, "strict_shared_units", len(shared) == 6, len(shared), 6, "Same-network, same-class shared units."),
                 check_record(figure_id, "strict_unique_symbols", shared["gene"].nunique() == 4, shared["gene"].nunique(), 4, "Six units resolve to four symbols."),
-                check_record(figure_id, "scorecard_counts", score[["rosmap_testable_selected_units", "seaad_selected_units", "strict_shared_units"]].astype(int).values.tolist() == [[19, 8, 6], [17, 5, 0]], str(score[["rosmap_testable_selected_units", "seaad_selected_units", "strict_shared_units"]].astype(int).values.tolist()), "[[19,8,6],[17,5,0]]", "Class-level endpoint scorecard."),
+                check_record(figure_id, "scorecard_counts", score[["rosmap_testable_selected_units", "seaad_selected_units", "strict_shared_units"]].astype(int).values.tolist() == [[19, 8, 6], [17, 3, 0]], str(score[["rosmap_testable_selected_units", "seaad_selected_units", "strict_shared_units"]].astype(int).values.tolist()), "[[19,8,6],[17,3,0]]", "Class-level endpoint scorecard."),
                 check_record(figure_id, "facet_statistics", facets["shared_selected_units"].astype(int).tolist() == [2, 4], str(facets["shared_selected_units"].astype(int).tolist()), "[2,4]", "Excitatory and Inhibitory strict overlaps."),
                 check_record(figure_id, "svg_all_endpoint_genes", all(gene in svg for gene in plot["gene"]), sum(gene in svg for gene in plot["gene"]), len(plot), "All paired-rank endpoint genes remain searchable."),
                 check_record(figure_id, "svg_nominal_p_guardrail", "nominal p = 2.33 × 10⁻⁴" in svg and "nominal p = 1.22 × 10⁻⁹" in svg, "present", "present", "Both per-list p values are explicitly nominal."),
                 check_record(figure_id, "strict_definition_visible", "strict unit: network + gene + class" in svg, "present", "present", "Primary unit definition is visible."),
+                check_record(figure_id, "exploratory_tier_visible", "SEA-AD post-hoc exploratory" in svg, "present", "present", "The revised SEA-AD analysis tier is visible."),
             ]
         )
     else:
         plot = tables["plot_data"]
         summary = tables["region_summary"]
         counts = {(row.case_id, row.region): as_int(row.region_count) for row in summary.itertuples(index=False)}
-        expected = {("mt_driver", "rosmap_only"): 4, ("mt_driver", "common"): 6, ("mt_driver", "seaad_only"): 0, ("non_mt_driver", "rosmap_only"): 15, ("non_mt_driver", "common"): 0, ("non_mt_driver", "seaad_only"): 5}
+        expected = {("mt_driver", "rosmap_only"): 4, ("mt_driver", "common"): 6, ("mt_driver", "seaad_only"): 0, ("non_mt_driver", "rosmap_only"): 15, ("non_mt_driver", "common"): 0, ("non_mt_driver", "seaad_only"): 3}
         checks.extend(
             [
-                check_record(figure_id, "gene_rows", len(plot) == 30, len(plot), 30, "Unique class-gene symbols."),
+                check_record(figure_id, "gene_rows", len(plot) == 28, len(plot), 28, "Unique class-gene symbols."),
                 check_record(figure_id, "gene_keys_unique", not plot.duplicated(["case_id", "gene"]).any(), "unique", "unique", "One row per class and symbol."),
                 check_record(figure_id, "region_counts", counts == expected, str(counts), str(expected), "Frozen MT containment and non-MT disjoint regions."),
                 check_record(figure_id, "region_geometry", (summary["geometry_margin"].astype(float) >= 0).all(), summary["geometry_margin"].astype(float).min(), ">=0", "Nested MT and disjoint non-MT geometry."),
                 check_record(figure_id, "svg_all_gene_labels", all(gene in svg for gene in plot["gene"]), sum(gene in svg for gene in plot["gene"]), len(plot), "All region genes remain searchable."),
                 check_record(figure_id, "svg_empty_regions", "SEA-AD only: 0 (∅)" in svg and "Common:" in svg and "0 (∅)" in svg, "both present", "both present", "Zero regions are explicit."),
                 check_record(figure_id, "network_collapse_guardrail", "network identity collapsed" in svg and "common only after networks are collapsed" in svg, "present", "present", "Secondary endpoint cannot be mistaken for strict overlap."),
+                check_record(figure_id, "exploratory_tier_visible", "SEA-AD post-hoc exploratory" in svg, "present", "present", "The revised SEA-AD analysis tier is visible."),
                 check_record(figure_id, "opcs_guardrail", "SEA-AD OPC KDA unavailable" in svg and plot["opcs_not_testable_guardrail"].map(truth).sum() == 3, f"visible|{plot['opcs_not_testable_guardrail'].map(truth).sum()}", "visible|3", "ROSMAP OPC-only genes are not treated as negative tests."),
                 check_record(figure_id, "no_gene_level_p_value", "nominal p =" not in svg, "absent", "absent", "No gene-level inferential overlap statistic."),
             ]
@@ -842,11 +844,11 @@ def documentation(figure_id: str) -> tuple[str, str]:
     if figure_id == STRICT_ID:
         caption = """# Strict ROSMAP–SEA-AD overlap and paired ranks: caption
 
-**Strict network-aware rediscovery of selected top key drivers.** The scorecard compares ROSMAP selected units that were testable in SEA-AD with independently selected SEA-AD units, using the primary unit `broad network + gene + driver class`. Nineteen ROSMAP MT units were testable, eight SEA-AD MT units were selected, and six strict MT units were shared; the corresponding non-MT counts were 17, five, and zero. The paired-rank facets display the complete ROSMAP and SEA-AD MT top lists in the two networks with strict overlap. Navy connectors mark the six strict units: MT-CO2 and MT-CYB in Excitatory neurons, and MT-CO2, MT-CO3, MT-CYB, and MT-ND5 in Inhibitory neurons. Gray endpoints are unmatched selected units, not omitted data. The per-list hypergeometric p values are nominal and unadjusted. Ranks describe the frozen selection order, not expression effect size, causal direction, or agreement in DEG direction.
+**Strict network-aware rediscovery of selected top key drivers.** The scorecard compares ROSMAP selected units that were testable in SEA-AD with independently selected SEA-AD units, using the primary unit `broad network + gene + driver class`. Nineteen ROSMAP MT units were testable, eight SEA-AD MT units were selected, and six strict MT units were shared; the corresponding non-MT counts were 17, three, and zero. The paired-rank facets display the complete ROSMAP and SEA-AD MT top lists in the two networks with strict overlap. Navy connectors mark the six strict units: MT-CO2 and MT-CYB in Excitatory neurons, and MT-CO2, MT-CO3, MT-CYB, and MT-ND5 in Inhibitory neurons. Gray endpoints are unmatched selected units, not omitted data. The per-list hypergeometric p values are nominal and unadjusted. Ranks describe the frozen selection order, not expression effect size, causal direction, or agreement in DEG direction. The SEA-AD result is a post-hoc exploratory FDR-only analysis with at least three donors in each disease arm, minimum effective query size 3, 80% aggregate coverage, and aggregate BH q ≤ 0.05.
 """
         methods = f"""# Strict ROSMAP–SEA-AD overlap and paired ranks: methods
 
-The renderer reads validated VH09 ROSMAP selected units, the independently frozen VH10C SEA-AD list, and the VH10D strict overlap and summary tables. Upstream statuses, checks, registered full-file SHA-256 values, blind-freeze flag, `{QUERY_RULE}`, and `{RESULT_TIER}` are required before rendering. ROSMAP scorecard denominators include only selected units in the common assessable universe. A strict shared unit must match broad network, current gene symbol, and exact driver class. The slopegraphs retain the complete MT selected-list union for Excitatory and Inhibitory neurons; unmatched cohort endpoints are drawn in gray and strict matches use navy connectors. Jaccard indices and nominal per-list hypergeometric p values are read from VH10D rather than recomputed. The 12 × 5.3 inch asset uses at least 16-point text and is exported as searchable SVG, vector PDF, and 5400 × 2385 PNG at 450 DPI.
+The renderer reads validated VH09 ROSMAP selected units, the independently frozen VH10C SEA-AD list, and the VH10D strict overlap and summary tables. Upstream statuses, checks, registered full-file SHA-256 values, blind-freeze flag, `{QUERY_RULE}`, and `{RESULT_TIER}` are required before rendering. The SEA-AD tier is explicitly post-hoc exploratory: FDR < 0.05 with no fold-change cutoff, at least three donors in each disease arm, effective query size ≥ 3, aggregate coverage ≥ 0.80, aggregate BH q ≤ 0.05, and at least one qualifying supporting run. The frozen ROSMAP Phase 18 selection is not reclassified under SEA-AD thresholds. ROSMAP scorecard denominators include only selected units in the common assessable universe. A strict shared unit must match broad network, current gene symbol, and exact driver class. The slopegraphs retain the complete MT selected-list union for Excitatory and Inhibitory neurons; unmatched cohort endpoints are drawn in gray and strict matches use navy connectors. Jaccard indices and nominal per-list hypergeometric p values are read from VH10D rather than recomputed. The 12 × 5.3 inch asset uses at least 16-point text and is exported as searchable SVG, vector PDF, and 5400 × 2385 PNG at 450 DPI.
 
 ## Reproduction command
 
@@ -860,11 +862,11 @@ python scripts/figures/validation_human/{Path(__file__).name} \\
     else:
         caption = """# ROSMAP–SEA-AD top-driver gene overlap slide: caption
 
-**Descriptive gene-level overlap after broad-network identity is collapsed.** Within the MT driver class, all six unique SEA-AD genes occurred somewhere in the ten-gene ROSMAP set, leaving four ROSMAP-only genes and no SEA-AD-only gene. MT-ATP6 and MT-ND4 become common only after network identity is removed; neither is a strict same-network rediscovery. The non-MT sets were disjoint: 15 ROSMAP-only genes and five SEA-AD-only genes. Daggers identify ANKRD11, FTL, and NCOA1, which were selected only in ROSMAP OPC; SEA-AD had no included OPC KDA run, so they are not tested-negative results. Counts are unique symbols within class, not network–gene units. This secondary descriptive view has no gene-level overlap p value; the primary endpoint remains strict broad-network + gene + driver-class overlap within the common assessable universe.
+**Descriptive gene-level overlap after broad-network identity is collapsed.** Within the MT driver class, all six unique SEA-AD genes occurred somewhere in the ten-gene ROSMAP set, leaving four ROSMAP-only genes and no SEA-AD-only gene. MT-ATP6 and MT-ND4 become common only after network identity is removed; neither is a strict same-network rediscovery. The non-MT sets were disjoint: 15 ROSMAP-only genes and three SEA-AD-only genes. Daggers identify ANKRD11, FTL, and NCOA1, which were selected only in ROSMAP OPC; SEA-AD had no included OPC KDA run, so they are not tested-negative results. Counts are unique symbols within class, not network–gene units. This secondary descriptive view has no gene-level overlap p value; the primary endpoint remains strict broad-network + gene + driver-class overlap within the common assessable universe. The SEA-AD result is a post-hoc exploratory FDR-only analysis with the donor-3/query-3/coverage-80%/aggregate-q-0.05 contract.
 """
         methods = f"""# ROSMAP–SEA-AD top-driver gene overlap slide: methods
 
-The renderer reads validated VH09 ROSMAP selected units and the independently frozen VH10C SEA-AD top lists, using compact VH10D overlap artifacts as cross-checks. Upstream statuses, checks, registered full-file SHA-256 values, blind-freeze flag, `{QUERY_RULE}`, and `{RESULT_TIER}` are required. Symbols are split by exact driver class and deduplicated across broad networks. MT geometry is nested because the SEA-AD set is contained in the ROSMAP set; non-MT geometry is disjoint because the intersection is empty. ROSMAP uses an orange hatched outline, SEA-AD uses a teal solid fill, and every region is directly labeled. The visible footer states that network identity is collapsed and distinguishes the two gene-level-only common symbols. The 12 × 5.3 inch asset uses at least 16-point text and is exported as searchable SVG, vector PDF, and 5400 × 2385 PNG at 450 DPI.
+The renderer reads validated VH09 ROSMAP selected units and the independently frozen VH10C SEA-AD top lists, using compact VH10D overlap artifacts as cross-checks. Upstream statuses, checks, registered full-file SHA-256 values, blind-freeze flag, `{QUERY_RULE}`, and `{RESULT_TIER}` are required. The SEA-AD tier is explicitly post-hoc exploratory: FDR < 0.05 with no fold-change cutoff, at least three donors in each disease arm, effective query size ≥ 3, aggregate coverage ≥ 0.80, aggregate BH q ≤ 0.05, and at least one qualifying supporting run; ROSMAP remains under its frozen Phase 18 selection. Symbols are split by exact driver class and deduplicated across broad networks. MT geometry is nested because the SEA-AD set is contained in the ROSMAP set; non-MT geometry is disjoint because the intersection is empty. ROSMAP uses an orange hatched outline, SEA-AD uses a teal solid fill, and every region is directly labeled. The visible footer states that network identity is collapsed and distinguishes the two gene-level-only common symbols. The 12 × 5.3 inch asset uses at least 16-point text and is exported as searchable SVG, vector PDF, and 5400 × 2385 PNG at 450 DPI.
 
 ## Reproduction command
 
@@ -931,6 +933,24 @@ def validate_output(project_root: Path, output_root: Path, *, expected_visual_st
     print(f"Validated figure package: {output_root}")
 
 
+def replace_output_package(staging: Path, output_root: Path) -> None:
+    """Atomically replace a package and remove its recovery copy on success."""
+    backup: Path | None = None
+    try:
+        if output_root.exists():
+            timestamp = datetime.now().strftime("%Y%m%dT%H%M%S%f")
+            backup = output_root.parent / f".{output_root.name}.backup.{timestamp}.{os.getpid()}"
+            output_root.replace(backup)
+        staging.replace(output_root)
+    except Exception:
+        if backup is not None and backup.exists() and not output_root.exists():
+            backup.replace(output_root)
+        raise
+    else:
+        if backup is not None and backup.exists():
+            shutil.rmtree(backup)
+
+
 def publish_one(project_root: Path, output_root: Path, figure_id: str, *, dpi: int, visual_review_status: str, force: bool, bundle: Mapping[str, Any]) -> None:
     output_root = Path(output_root).resolve()
     if output_root.exists() and not force:
@@ -991,10 +1011,7 @@ def publish_one(project_root: Path, output_root: Path, figure_id: str, *, dpi: i
         )
         write_tsv(status, staging / f"{figure_id}_status.tsv")
         validate_output(project_root, staging, expected_visual_status=visual_review_status, figure_id=figure_id)
-        if output_root.exists():
-            timestamp = datetime.now().strftime("%Y%m%dT%H%M%S%f")
-            output_root.replace(output_root.parent / f".{output_root.name}.backup.{timestamp}.{os.getpid()}")
-        staging.replace(output_root)
+        replace_output_package(staging, output_root)
     except Exception:
         if staging.exists():
             shutil.rmtree(staging)

@@ -36,7 +36,7 @@ from PIL import Image  # noqa: E402
 import yaml  # noqa: E402
 
 
-SCHEMA = "seaad_rosmap_validation_setup_figure_v1"
+SCHEMA = "seaad_rosmap_validation_setup_figure_v2"
 FIGURE_ID = "seaad_rosmap_validation_setup"
 DEFAULT_PNG_DPI = 450
 PNG_WIDTH = 5_594
@@ -129,11 +129,11 @@ EXPECTED_SUPERTYPES = {
 }
 EXPECTED_COMPLETED_GROUPS = {
     "F_e2": 0,
-    "F_e33": 100,
-    "F_e4": 68,
+    "F_e33": 105,
+    "F_e4": 95,
     "M_e2": 0,
-    "M_e33": 92,
-    "M_e4": 0,
+    "M_e33": 104,
+    "M_e4": 77,
 }
 EXPECTED_ROSMAP_SOURCE_NETWORKS = {
     "Astrocytes": 3,
@@ -356,7 +356,7 @@ def load_bundle(project_root: Path) -> dict[str, Any]:
     require(deg_config["cohort"]["included_diagnoses"] == ["Dementia", "No dementia"], "SEA-AD phenotype labels changed")
     require(deg_config["cohort"]["excluded_apoe"] == ["2/4"], "SEA-AD APOE exclusion changed")
     require(as_int(deg_config["thresholds"]["primary_min_nuclei"]) == 20, "Fine-profile nucleus threshold changed")
-    require(as_int(deg_config["thresholds"]["min_donors_per_disease_arm"]) == 5, "Disease-arm donor threshold changed")
+    require(as_int(deg_config["thresholds"]["min_donors_per_disease_arm"]) == 3, "Disease-arm donor threshold changed")
     expected_formula = "~ 0 + diagnosis_sex_apoe_group + age_death_scaled + pmi_scaled + study"
     require(deg_config["models"]["fine_grouped_formula"] == expected_formula, "Fine DEG model formula changed")
     require(deg_config["models"]["normalization"] == "TMM", "Fine DEG normalization changed")
@@ -385,7 +385,7 @@ def load_bundle(project_root: Path) -> dict[str, Any]:
     require(set(contrasts["reference_phenotype"]) == {"No dementia"}, "Fine contrast reference phenotype changed")
     require(set(contrasts["coefficient_direction"]) == {"Dementia_minus_No_dementia"}, "Fine contrast direction changed")
     contrast_status_counts = contrasts["terminal_status"].value_counts().to_dict()
-    require(contrast_status_counts == {"not_estimable": 514, "completed": 260}, "Fine contrast terminal counts changed")
+    require(contrast_status_counts == {"not_estimable": 393, "completed": 381}, "Fine contrast terminal counts changed")
     completed_group_counts = {
         group: int(
             contrasts.loc[
@@ -407,17 +407,21 @@ def load_bundle(project_root: Path) -> dict[str, Any]:
     require(directions["phase18_signature_direction"].value_counts().to_dict() == {"AD_up_mito": 774, "AD_down_mito": 774}, "Fine direction signs changed")
     require(
         directions["query_handoff_status"].value_counts().to_dict()
-        == {"source_contrast_not_estimable": 1_028, "ready_for_query_construction": 520},
+        == {"source_contrast_not_estimable": 786, "ready_for_query_construction": 762},
         "Fine direction handoff counts changed",
     )
 
     # SEA-AD query construction and KDA scope.
     vh10_config = validation_config["vh10"]
     analysis_config = vh10_config["analysis"]
-    require(analysis_config["query_rule_id"] == "phase18_parity_query", "Active SEA-AD query rule changed")
-    require(analysis_config["result_tier_id"] == "phase18_parity_query__min3_all", "Active SEA-AD result tier changed")
+    require(analysis_config["query_rule_id"] == "fdr_only_query_sensitivity", "Active SEA-AD query rule changed")
+    require(
+        analysis_config["result_tier_id"]
+        == "posthoc_exploratory__fdr_only__donor3__query3__coverage80__q05",
+        "Active SEA-AD result tier changed",
+    )
     require(abs(float(analysis_config["fdr_threshold_exclusive"]) - 0.05) <= 1e-15, "SEA-AD FDR threshold changed")
-    require(abs(float(analysis_config["absolute_fold_change"]) - 1.3) <= 1e-15, "SEA-AD fold-change threshold changed")
+    require("absolute_fold_change" not in analysis_config, "Active SEA-AD query unexpectedly retains a fold-change gate")
     require(as_int(analysis_config["minimum_effective_query_genes"]) == 3, "SEA-AD minimum query size changed")
     require(as_int(analysis_config["small_query_warning_below"]) == 10, "SEA-AD small-query boundary changed")
     require(analysis_config["directions"] == ["AD_up_mito", "AD_down_mito"], "SEA-AD direction order changed")
@@ -447,9 +451,9 @@ def load_bundle(project_root: Path) -> dict[str, Any]:
     require(
         terminal_partition
         == {
-            "source_contrast_not_estimable": 1_028,
-            "query_empty": 462,
-            "query_below_minimum": 16,
+            "source_contrast_not_estimable": 786,
+            "query_empty": 703,
+            "query_below_minimum": 17,
             "eligible_small_query": 21,
             "eligible_phase18_sized": 21,
         },
@@ -476,7 +480,7 @@ def load_bundle(project_root: Path) -> dict[str, Any]:
     run_qc = frames["vh10b_run_qc"]
     require(len(run_qc) == 42 and run_qc["kda_run_id"].nunique() == 42, "VH10B run-QC scope changed")
     kda_outcomes = run_qc["terminal_status"].value_counts().to_dict()
-    require(kda_outcomes == {"completed_significant": 29, "completed_no_significant": 13}, "SEA-AD KDA call outcomes changed")
+    require(kda_outcomes == {"completed_significant": 27, "completed_no_significant": 15}, "SEA-AD KDA call outcomes changed")
     vh10b = one_row(frames["vh10b_status"], "vh10b_status")
     require(as_int(vh10b["active_kda_calls"]) == 42, "VH10B status call count changed")
 
@@ -490,24 +494,24 @@ def load_bundle(project_root: Path) -> dict[str, Any]:
 
     seaad_top5 = frames["seaad_top5"]
     selected_sea = seaad_top5.loc[
-        seaad_top5["query_rule_id"].eq("phase18_parity_query")
-        & seaad_top5["result_tier_id"].eq("phase18_parity_query__min3_all")
+        seaad_top5["query_rule_id"].eq(analysis_config["query_rule_id"])
+        & seaad_top5["result_tier_id"].eq(analysis_config["result_tier_id"])
         & seaad_top5["list_status"].eq("ranked_candidates")
         & ~seaad_top5["current_symbol"].isin(["", "NA"])
         & ~seaad_top5["display_rank"].isin(["", "NA"])
     ].copy()
-    require(len(selected_sea) == 13, "SEA-AD selected-unit count changed")
-    require(selected_sea[["broad_network", "current_symbol", "case_id"]].drop_duplicates().shape[0] == 13, "SEA-AD selected keys are not unique")
-    require(selected_sea["case_id"].value_counts().to_dict() == {"mt_driver": 8, "non_mt_driver": 5}, "SEA-AD selected class counts changed")
-    require(selected_sea["current_symbol"].nunique() == 11, "SEA-AD selected unique-symbol count changed")
+    require(len(selected_sea) == 11, "SEA-AD selected-unit count changed")
+    require(selected_sea[["broad_network", "current_symbol", "case_id"]].drop_duplicates().shape[0] == 11, "SEA-AD selected keys are not unique")
+    require(selected_sea["case_id"].value_counts().to_dict() == {"mt_driver": 8, "non_mt_driver": 3}, "SEA-AD selected class counts changed")
+    require(selected_sea["current_symbol"].nunique() == 9, "SEA-AD selected unique-symbol count changed")
     require(max(as_int(value) for value in selected_sea["display_rank"]) <= 5, "SEA-AD display rank exceeds five")
-    require(len(seaad_top5) == 22, "SEA-AD top-list sentinel contract changed")
+    require(len(seaad_top5) == 21, "SEA-AD top-list sentinel contract changed")
 
     freeze = one_row(frames["seaad_freeze"], "SEA-AD selection freeze")
     require(freeze["freeze_status"] == "independent_seaad_selection_frozen", "SEA-AD freeze status changed")
     require(not truth(freeze["rosmap_candidate_files_read"]), "ROSMAP candidate files were read before SEA-AD freeze")
-    require(as_int(freeze["selected_top5_units"]) == 13, "SEA-AD freeze selected count changed")
-    require(as_int(freeze["selected_unique_genes"]) == 11, "SEA-AD freeze unique-symbol count changed")
+    require(as_int(freeze["selected_top5_units"]) == 11, "SEA-AD freeze selected count changed")
+    require(as_int(freeze["selected_unique_genes"]) == 9, "SEA-AD freeze unique-symbol count changed")
 
     # Validate frozen input authority and the seven matched networks.
     authority = frames["vh10a_authority"]
@@ -658,7 +662,12 @@ def load_bundle(project_root: Path) -> dict[str, Any]:
         "rosmap_symbols": rosmap_selected["key_driver"].nunique(),
         "fine_formula": expected_formula,
         "background_policy": phase12_config["background"]["primary_policy"],
-        "query_rule": deg_config["query_rules"]["phase18_parity_query"],
+        "query_rule_id": analysis_config["query_rule_id"],
+        "result_tier_id": analysis_config["result_tier_id"],
+        "query_rule": deg_config["query_rules"][analysis_config["query_rule_id"]],
+        "minimum_donors_per_arm": as_int(deg_config["thresholds"]["min_donors_per_disease_arm"]),
+        "minimum_coverage": as_float(selection["minimum_coverage"]),
+        "aggregate_q_threshold": as_float(selection["aggregate_q_threshold"]),
         "selected_sea_keys": set(zip(selected_sea["broad_network"], selected_sea["current_symbol"], selected_sea["case_id"])),
         "selected_ros_keys": set(zip(rosmap_selected["broad_network"], rosmap_selected["key_driver"], rosmap_selected["case_id"])),
     }
@@ -756,9 +765,9 @@ def build_plot_data(bundle: Mapping[str, Any]) -> pd.DataFrame:
             }
         )
 
-    add("A", "header_a", "panel_a_heading", "panel_heading", "SEA-AD", "panel_a_heading", "A  INDEPENDENT SEA-AD EVIDENCE", style_key="sea_heading", x=0.16, y=4.57, width=7.0, height=0.12)
+    add("A", "header_a", "panel_a_heading", "panel_heading", "SEA-AD", "panel_a_heading", "A  SEA-AD POST-HOC EXPLORATORY RERUN", style_key="sea_heading", x=0.16, y=4.57, width=7.0, height=0.12)
 
-    add("A", "a1", "a1_heading", "box_heading", "SEA-AD", "a1_heading", "Independent cohort", style_key="sea_box")
+    add("A", "a1", "a1_heading", "box_heading", "SEA-AD", "a1_heading", "SEA-AD cohort", style_key="sea_box")
     add("A", "a1", "sea_donors_total", "metric", "SEA-AD", "sea_donors", f"{bundle['sea_donors']} donors", value=bundle["sea_donors"], value_type="count", unit="donors", source_keys=["vh02_status"], source_columns="analysis_donors", value_origin="read", style_key="sea_anchor")
     add("A", "a1", "sea_dementia_donors", "metric", "SEA-AD", "sea_dementia", f"{bundle['dementia_donors']} Dementia", value=bundle["dementia_donors"], value_type="count", unit="donors", source_keys=["vh02_status", "donor_groups"], source_columns="dementia_donors|diagnosis+donors", value_origin="read", style_key="sea_text")
     add("A", "a1", "sea_no_dementia_donors", "metric", "SEA-AD", "sea_no_dementia", f"{bundle['no_dementia_donors']} No dementia", value=bundle["no_dementia_donors"], value_type="count", unit="donors", source_keys=["vh02_status", "donor_groups"], source_columns="no_dementia_donors|diagnosis+donors", value_origin="read", style_key="sea_text")
@@ -777,12 +786,12 @@ def build_plot_data(bundle: Mapping[str, Any]) -> pd.DataFrame:
     add("A", "a3", "sea_contrasts", "metric", "SEA-AD", "sea_contrasts", f"129 × 6 = {bundle['fine_contrasts']} contrasts", value=bundle["fine_contrasts"], value_type="count", unit="contrasts", source_keys=["fine_contrast_status"], source_columns="contrast_id", derivation="129 supertypes × 6 groups", value_origin="derived", style_key="sea_anchor")
     add("A", "a3", "sea_direction_split", "annotation", "SEA-AD", "sea_direction_split", "split into up ▲ and down ▼", value=2, value_type="count", unit="directions per contrast", source_keys=["fine_direction_manifest"], source_columns="phase18_signature_direction", value_origin="derived", style_key="direction_text")
     add("A", "a3", "sea_structural_directions", "metric", "SEA-AD", "sea_structural", f"{bundle['structural_directions']:,} structural slots", value=bundle["structural_directions"], value_type="count", unit="direction slots", source_keys=["fine_direction_manifest"], source_columns="direction_slot_id", value_origin="read", style_key="sea_anchor")
-    add("A", "a3", "sea_model_adjustment", "annotation", "SEA-AD", "sea_adjustment", "age at death + PMI + study", source_keys=["deg_config"], source_columns="models.fine_grouped_formula", value_origin="read", style_key="sea_footer")
+    add("A", "a3", "sea_model_adjustment", "annotation", "SEA-AD", "sea_adjustment", f"≥{bundle['minimum_donors_per_arm']} donors/arm  •  age + PMI + study", value=bundle["minimum_donors_per_arm"], value_type="inclusive threshold", unit="donors per disease arm", source_keys=["deg_config"], source_columns="thresholds.min_donors_per_disease_arm|models.fine_grouped_formula", value_origin="read", style_key="sea_footer")
 
     add("A", "a4", "a4_heading", "box_heading", "SEA-AD", "a4_heading", "Signed core-Mito query", style_key="sea_box_emphasis")
     add("A", "a4", "sea_query_universe", "annotation", "SEA-AD", "sea_query_universe", "core MitoCarta genes only", source_keys=["vh03_status", "validation_config"], source_columns="core_mito_features|vh10.analysis.query_rule_id", value_origin="method_constant", style_key="sea_text")
     add("A", "a4", "sea_fdr_threshold", "threshold", "SEA-AD", "sea_fdr", "FDR < 0.05", value=0.05, value_type="exclusive threshold", unit="BH FDR", source_keys=["validation_config"], source_columns="vh10.analysis.fdr_threshold_exclusive", value_origin="read", style_key="sea_text")
-    add("A", "a4", "sea_effect_threshold", "threshold", "SEA-AD", "sea_effect", "|log₂FC| > log₂(1.3)", value=1.3, value_type="exclusive fold-change threshold", unit="absolute fold change", source_keys=["validation_config", "deg_config"], source_columns="vh10.analysis.absolute_fold_change|query_rules.phase18_parity_query", value_origin="read", style_key="sea_text")
+    add("A", "a4", "sea_no_effect_threshold", "threshold", "SEA-AD", "sea_effect", "no fold-change cutoff", value="none", value_type="threshold state", unit="fold-change gate", source_keys=["validation_config", "deg_config"], source_columns="vh10.analysis.query_rule_id|query_rules.fdr_only_query_sensitivity", value_origin="read", style_key="sea_text")
     add("A", "a4", "sea_query_directions", "annotation", "SEA-AD", "sea_query_directions", "Dementia-up ▲  |  -down ▼", value=2, value_type="count", unit="signed directions", source_keys=["validation_config"], source_columns="vh10.analysis.directions", value_origin="read", style_key="direction_text")
     add("A", "a4", "sea_effective_query", "formula", "SEA-AD", "sea_qeff", "Qeff = Q0 ∩ induced background", source_keys=["phase12_config", "vh10a_checks"], source_columns="background.primary_policy|effective_queries_subset_background", value_origin="method_constant", style_key="sea_text")
     add("A", "a4", "sea_minimum_query", "threshold", "SEA-AD", "sea_min_query", f"run if |Qeff| ≥ {bundle['sea_min_query']}", value=bundle["sea_min_query"], value_type="inclusive threshold", unit="effective query genes", source_keys=["validation_config"], source_columns="vh10.analysis.minimum_effective_query_genes", value_origin="read", style_key="sea_anchor")
@@ -790,7 +799,7 @@ def build_plot_data(bundle: Mapping[str, Any]) -> pd.DataFrame:
     add("A", "a5", "a5_heading", "box_heading", "SEA-AD", "a5_heading", "Directed KDA + selection", style_key="sea_box")
     add("A", "a5", "sea_matching_network", "annotation", "SEA-AD", "sea_matching_network", "matching broad network", value=bundle["shared_networks"], value_type="count", unit="matched network choices", source_keys=["network_identity", "seaad_run_manifest"], source_columns="broad_network", value_origin="method_constant", style_key="sea_text")
     add("A", "a5", "sea_fkda_layers", "method", "shared", "sea_fkda_layers", "fKDA downstream layers 1–3", value=3, value_type="maximum layer", unit="layers", source_keys=["phase12_config"], source_columns="kda.nLayerToTest", value_origin="read", style_key="sea_text")
-    add("A", "a5", "sea_selector", "method", "shared", "sea_selector", "Phase 18 gates + ranking", source_keys=["validation_config", "phase18_config"], source_columns="vh10.selection|filters+aggregation+ranking", value_origin="method_constant", style_key="sea_text")
+    add("A", "a5", "sea_selector", "method", "shared", "sea_selector", "ACAT/BH gates + ranking", source_keys=["validation_config", "phase18_config"], source_columns="vh10.selection|filters+aggregation+ranking", value_origin="method_constant", style_key="sea_text")
     add("A", "a5", "sea_active_calls", "metric", "SEA-AD", "sea_active_calls", f"{bundle['active_calls']} KDA calls", value=bundle["active_calls"], value_type="count", unit="KDA calls", source_keys=["seaad_run_manifest", "vh10a_status"], source_columns="eligibility_status+terminal_status|active_kda_calls", source_filter="eligible_small_query or eligible_phase18_sized", value_origin="derived", style_key="sea_anchor")
     add("A", "a5", "sea_call_directions", "metric", "SEA-AD", "sea_call_directions", f"{bundle['up_calls']} up  |  {bundle['down_calls']} down", value=f"{bundle['up_calls']}|{bundle['down_calls']}", value_type="count pair", unit="KDA calls", source_keys=["seaad_run_manifest"], source_columns="signature_direction", source_filter="active KDA calls", value_origin="derived", style_key="direction_text")
 
@@ -815,7 +824,7 @@ def build_plot_data(bundle: Mapping[str, Any]) -> pd.DataFrame:
     add("B", "shared_band", "shared_annotation", "method", "shared", "shared_annotation", "current symbols + core MitoCarta", source_keys=["vh03_status", "vh10a_authority"], source_columns="phase18_exact+core_mito_features|phase18_annotation", value_origin="method_constant", style_key="shared_item")
     add("B", "shared_band", "shared_fkda", "method", "shared", "shared_fkda", "fKDA + MT self-exclusion", source_keys=["phase12_config", "vh10a_authority"], source_columns="kda|fkda_source+phase18_code", value_origin="method_constant", style_key="shared_item")
     add("B", "shared_band", "shared_selection", "method", "shared", "shared_selection", "BH + ACAT + gates + class ranking", source_keys=["validation_config", "phase18_config"], source_columns="selection|filters+aggregation+ranking", value_origin="method_constant", style_key="shared_item")
-    add("B", "shared_band", "shared_boundary", "boundary", "shared", "shared_boundary", "not cohorts, DEG models, queries, or candidate identities", source_keys=["seaad_freeze"], source_columns="rosmap_candidate_files_read", value=False, value_type="boolean", unit="ROSMAP candidate files read before freeze", value_origin="read", style_key="shared_boundary")
+    add("B", "shared_band", "shared_boundary", "boundary", "shared", "shared_boundary", "shared engine; SEA-AD donor and DEG-query thresholds changed", source_keys=["deg_config", "validation_config"], source_columns="thresholds.min_donors_per_disease_arm|vh10.analysis.query_rule_id", value_origin="read", style_key="shared_boundary")
 
     add("C", "rosmap", "panel_c_heading", "panel_heading", "ROSMAP", "panel_c_heading", "C  FROZEN ROSMAP PHASE 18 REFERENCE", style_key="ros_heading")
     add("C", "rosmap", "rosmap_donors", "metric", "ROSMAP", "ros_donors", f"{bundle['rosmap_donors']} global analytic donors", value=bundle["rosmap_donors"], value_type="count", unit="donors", source_keys=["rosmap_cohort_status"], source_columns="global_donors", value_origin="read", style_key="ros_text")
@@ -826,10 +835,10 @@ def build_plot_data(bundle: Mapping[str, Any]) -> pd.DataFrame:
     add("C", "rosmap", "rosmap_included", "metric", "ROSMAP", "ros_included", f"{bundle['rosmap_included']} included KDA runs", value=bundle["rosmap_included"], value_type="count", unit="KDA runs", source_keys=["phase12_manifest", "phase18_config"], source_columns="eligibility_status+terminal_status+effective_query_genes|expected_included_runs", source_filter="eligible; completed; effective query ≥10", value_origin="derived", style_key="ros_anchor")
     add("C", "rosmap", "rosmap_selected", "metric", "ROSMAP", "ros_selected", f"{bundle['rosmap_selected']} frozen units  |  {bundle['rosmap_symbols']} symbols", value=bundle["rosmap_selected"], value_type="count", unit="top-five network-gene-class units", source_keys=["rosmap_selected", "vh09_status"], source_columns="unique strict keys|selected_units", value_origin="read", style_key="ros_anchor")
     add("C", "rosmap", "rosmap_matched_scope", "annotation", "ROSMAP", "ros_matched_scope", "Matched scope: 7 SEA-AD networks", value=bundle["shared_networks"], value_type="count", unit="matched networks", source_keys=["phase12_manifest", "rosmap_selected", "shared_network_scope"], source_columns="broad_network", source_filter="included runs or selected units", value_origin="derived", style_key="ros_scope")
-    add("C", "rosmap", "rosmap_holdout", "boundary", "ROSMAP", "ros_holdout", "candidate-bearing tables held out from SEA-AD KDA/selection code", value=False, value_type="boolean", unit="ROSMAP candidate files read before SEA-AD freeze", source_keys=["seaad_freeze"], source_columns="rosmap_candidate_files_read", value_origin="read", style_key="holdout")
+    add("C", "rosmap", "rosmap_holdout", "boundary", "ROSMAP", "ros_holdout", "ROSMAP candidate files not read by SEA-AD selection code", value=False, value_type="boolean", unit="ROSMAP candidate files read before SEA-AD freeze", source_keys=["seaad_freeze"], source_columns="rosmap_candidate_files_read", value_origin="read", style_key="holdout")
 
-    add("D", "gate", "comparison_gate", "protocol_gate", "shared", "comparison_gate", "OPEN ONLY AFTER SEA-AD FREEZE", source_keys=["seaad_freeze", "vh10d_status"], source_columns="freeze_status+rosmap_candidate_files_read|validation_status", source_filter="valid freeze before comparison", value_origin="method_constant", style_key="gate", x=8.64, y=0.18, width=0.14, height=1.50)
-    add("D", "comparison", "panel_d_heading", "panel_heading", "comparison", "panel_d_heading", "D  STRICT POST-FREEZE COMPARISON", style_key="comparison_heading")
+    add("D", "gate", "comparison_gate", "protocol_gate", "shared", "comparison_gate", "COMPARE AFTER NEW SEA-AD LIST FREEZE", source_keys=["seaad_freeze", "vh10d_status"], source_columns="freeze_status+rosmap_candidate_files_read|validation_status", source_filter="valid freeze before comparison", value_origin="method_constant", style_key="gate", x=8.64, y=0.18, width=0.14, height=1.50)
+    add("D", "comparison", "panel_d_heading", "panel_heading", "comparison", "panel_d_heading", "D  POST-HOC COMPARISON", style_key="comparison_heading")
     add("D", "comparison", "comparison_unit", "formula", "comparison", "comparison_unit", "unit = broad network + gene + driver class", source_keys=["vh10d_status"], source_columns="strict comparison contract", value_origin="method_constant", style_key="comparison_anchor")
     add("D", "comparison", "comparison_universe", "annotation", "comparison", "comparison_universe", "within the common assessable universe", source_keys=["vh10d_status"], source_columns="common_assessable_units", value_origin="method_constant", style_key="comparison_text")
     add("D", "comparison", "comparison_shared", "status_chip", "comparison", "comparison_shared", "shared", value_origin="method_constant", style_key="status_shared")
@@ -1020,7 +1029,7 @@ def render_figure(plot_data: pd.DataFrame) -> tuple[plt.Figure, dict[str, Any]]:
     x, y, w, h = LAYOUT["a2"]
     cx = x + w / 2
     ax.text(cx, y + 1.16, label["a2_heading"], fontsize=10.0, fontweight="bold", color=NAVY, ha="center", va="center")
-    ax.text(cx, y + 0.91, label["sea_supertypes"], fontsize=13.7, fontweight="bold", color=SEA_BLUE, ha="center", va="center")
+    ax.text(cx, y + 0.91, label["sea_supertypes"], fontsize=12.7, fontweight="bold", color=SEA_BLUE, ha="center", va="center")
     ax.text(cx, y + 0.69, label["sea_fine_separate"], fontsize=8.8, fontweight="bold", color=TEXT, ha="center", va="center")
     ax.text(cx, y + 0.49, label["sea_groups"], fontsize=8.7, color=TEXT, ha="center", va="center")
     ax.text(cx, y + 0.30, label["sea_networks"], fontsize=8.1, color=MID, ha="center", va="center")
@@ -1031,7 +1040,7 @@ def render_figure(plot_data: pd.DataFrame) -> tuple[plt.Figure, dict[str, Any]]:
     cx = x + w / 2
     ax.text(cx, y + 1.16, label["a3_heading"], fontsize=10.0, fontweight="bold", color=NAVY, ha="center", va="center")
     ax.text(cx, y + 0.96, label["sea_phenotype"], fontsize=8.8, color=TEXT, ha="center", va="center")
-    ax.text(cx, y + 0.73, label["sea_contrasts"], fontsize=10.6, fontweight="bold", color=SEA_BLUE, ha="center", va="center")
+    ax.text(cx, y + 0.73, label["sea_contrasts"], fontsize=10.0, fontweight="bold", color=SEA_BLUE, ha="center", va="center")
     ax.text(cx, y + 0.51, label["sea_direction_split"], fontsize=8.4, color=TEXT, ha="center", va="center")
     ax.text(cx, y + 0.30, label["sea_structural"], fontsize=10.6, fontweight="bold", color=SEA_BLUE, ha="center", va="center")
     ax.text(cx, y + 0.10, label["sea_adjustment"], fontsize=7.6, color=MID, ha="center", va="center")
@@ -1042,8 +1051,8 @@ def render_figure(plot_data: pd.DataFrame) -> tuple[plt.Figure, dict[str, Any]]:
     ax.text(cx, y + 1.16, label["a4_heading"], fontsize=10.1, fontweight="bold", color=NAVY, ha="center", va="center")
     ax.text(cx, y + 0.96, label["sea_query_universe"], fontsize=8.8, color=TEXT, ha="center", va="center")
     ax.text(cx, y + 0.76, f"{label['sea_fdr']}   •   {label['sea_effect']}", fontsize=8.6, color=TEXT, ha="center", va="center")
-    ax.text(cx - 0.08, y + 0.56, "Dementia-up ▲", fontsize=8.5, fontweight="bold", color=UP, ha="right", va="center")
-    ax.text(cx + 0.08, y + 0.56, "Dementia-down ▼", fontsize=8.5, fontweight="bold", color=DOWN, ha="left", va="center")
+    ax.text(cx - 0.035, y + 0.56, "Dementia-up ▲", fontsize=8.2, fontweight="bold", color=UP, ha="right", va="center")
+    ax.text(cx + 0.035, y + 0.56, "−down ▼", fontsize=8.2, fontweight="bold", color=DOWN, ha="left", va="center")
     ax.text(cx, y + 0.35, label["sea_qeff"], fontsize=8.1, color=MID, ha="center", va="center")
     ax.text(cx, y + 0.13, label["sea_min_query"], fontsize=11.0, fontweight="bold", color=SEA_TEAL, ha="center", va="center")
 
@@ -1057,17 +1066,17 @@ def render_figure(plot_data: pd.DataFrame) -> tuple[plt.Figure, dict[str, Any]]:
     ax.text(cx, y + 0.34, label["sea_active_calls"], fontsize=13.5, fontweight="bold", color=SEA_BLUE, ha="center", va="center")
     ax.text(cx, y + 0.12, label["sea_call_directions"], fontsize=8.6, fontweight="bold", color=NAVY, ha="center", va="center")
 
-    # A6 frozen independent selection.
+    # A6 frozen exploratory selection.
     x, y, w, h = LAYOUT["a6"]
     cx = x + w / 2
-    draw_lock(ax, x + 0.18, y + 1.13, 0.22, SEA_TEAL)
+    draw_lock(ax, x + 0.15, y + 1.13, 0.18, SEA_TEAL)
     ax.text(cx + 0.07, y + 1.16, label["a6_heading"], fontsize=10.0, fontweight="bold", color=NAVY, ha="center", va="center")
     ax.text(cx, y + 0.91, label["sea_checksum"], fontsize=8.1, color=SEA_TEAL, ha="center", va="center")
     ax.text(cx, y + 0.66, label["sea_selected"], fontsize=13.0, fontweight="bold", color=SEA_TEAL, ha="center", va="center")
     ax.text(cx, y + 0.43, label["sea_classes"], fontsize=8.8, fontweight="bold", color=TEXT, ha="center", va="center")
     ax.text(cx, y + 0.24, label["sea_symbols"], fontsize=8.7, color=TEXT, ha="center", va="center")
     rounded_box(ax, x + 0.23, y + 0.055, w - 0.46, 0.12, facecolor=SEA_TEAL, edgecolor=SEA_TEAL, radius=0.035, zorder=3)
-    ax.text(cx, y + 0.115, "FREEZE VALID", fontsize=7.2, fontweight="bold", color=WHITE, ha="center", va="center", zorder=4)
+    ax.text(cx, y + 0.115, "NEW LIST FROZEN", fontsize=7.2, fontweight="bold", color=WHITE, ha="center", va="center", zorder=4)
 
     # SEA-AD support and attrition ribbons.
     x, y, w, h = LAYOUT["ribbon_groups"]
@@ -1203,6 +1212,12 @@ def render_images(fig: plt.Figure, staging: Path, dpi: int) -> list[Path]:
         )
         require(temporary.is_file() and temporary.stat().st_size > 1_000, f"Missing or small rendered image: {temporary}")
         os.replace(temporary, final)
+        if extension == "svg":
+            # Matplotlib emits trailing spaces in multiline path data. Normalize
+            # them so the tracked vector artifact passes repository whitespace QA.
+            svg_text = final.read_text(encoding="utf-8")
+            normalized = "\n".join(line.rstrip() for line in svg_text.splitlines()) + "\n"
+            final.write_text(normalized, encoding="utf-8")
         paths.append(final)
     plt.close(fig)
     return paths
@@ -1298,18 +1313,20 @@ def build_checks(
         check_record("seaad_supertypes", bundle["supertypes"] == 129, bundle["supertypes"], 129, "Distinct SEA-AD fine supertypes."),
         check_record("shared_network_count", bundle["shared_networks"] == 7, bundle["shared_networks"], 7, "Exact matched broad-network IDs."),
         check_record("fine_contrast_count", bundle["fine_contrasts"] == 774, bundle["fine_contrasts"], 774, "129 supertypes × six fixed groups."),
-        check_record("fine_contrast_status_partition", bundle["completed_contrasts"] + bundle["not_estimable_contrasts"] == 774, f"{bundle['completed_contrasts']}+{bundle['not_estimable_contrasts']}", "260+514", "Completed and not-estimable contrast partition."),
+        check_record("fine_contrast_status_partition", bundle["completed_contrasts"] + bundle["not_estimable_contrasts"] == 774, f"{bundle['completed_contrasts']}+{bundle['not_estimable_contrasts']}", "381+393", "Completed and not-estimable contrast partition."),
         check_record("completed_contrasts_by_group", observed_group_text == expected_group_text, observed_group_text, expected_group_text, "Completed fine contrasts across all six fixed groups."),
         check_record("structural_directions", bundle["structural_directions"] == 1_548, bundle["structural_directions"], 1_548, "Two signed directions per structural fine contrast."),
-        check_record("direction_status_partition", bundle["source_directions"] + bundle["source_not_estimable_directions"] == 1_548, f"{bundle['source_directions']}+{bundle['source_not_estimable_directions']}", "520+1028", "Completed-source and source-not-estimable direction partition."),
-        check_record("completed_direction_attrition", bundle["query_empty"] + bundle["query_below_minimum"] + bundle["small_calls"] + bundle["large_calls"] == 520, f"{bundle['query_empty']}+{bundle['query_below_minimum']}+{bundle['small_calls']}+{bundle['large_calls']}", "462+16+21+21", "Completed-source directions partition by effective-query outcome."),
+        check_record("direction_status_partition", bundle["source_directions"] + bundle["source_not_estimable_directions"] == 1_548, f"{bundle['source_directions']}+{bundle['source_not_estimable_directions']}", "762+786", "Completed-source and source-not-estimable direction partition."),
+        check_record("completed_direction_attrition", bundle["query_empty"] + bundle["query_below_minimum"] + bundle["small_calls"] + bundle["large_calls"] == 762, f"{bundle['query_empty']}+{bundle['query_below_minimum']}+{bundle['small_calls']}+{bundle['large_calls']}", "703+17+21+21", "Completed-source directions partition by effective-query outcome."),
         check_record("active_kda_calls", bundle["active_calls"] == 42, bundle["active_calls"], 42, "SEA-AD active KDA calls."),
         check_record("active_direction_calls", bundle["up_calls"] + bundle["down_calls"] == 42, f"{bundle['up_calls']}+{bundle['down_calls']}", "20+22", "Active up/down KDA calls."),
         check_record("active_query_size_tiers", bundle["small_calls"] + bundle["large_calls"] == 42, f"{bundle['small_calls']}+{bundle['large_calls']}", "21+21", "Small and Phase18-sized active queries."),
-        check_record("kda_call_outcomes", bundle["calls_with_return"] + bundle["calls_without_return"] == 42, f"{bundle['calls_with_return']}+{bundle['calls_without_return']}", "29+13", "Calls with at least one significant return and calls with none."),
-        check_record("seaad_selected_units", bundle["sea_selected"] == 13, bundle["sea_selected"], 13, "Ranked SEA-AD network-gene-class units after sentinel filtering."),
-        check_record("seaad_selected_classes", bundle["sea_selected_mt"] + bundle["sea_selected_nonmt"] == 13, f"{bundle['sea_selected_mt']}+{bundle['sea_selected_nonmt']}", "8+5", "SEA-AD MT and non-MT selected units."),
-        check_record("seaad_selected_symbols", bundle["sea_symbols"] == 11, bundle["sea_symbols"], 11, "Unique selected SEA-AD current symbols."),
+        check_record("kda_call_outcomes", bundle["calls_with_return"] + bundle["calls_without_return"] == 42, f"{bundle['calls_with_return']}+{bundle['calls_without_return']}", "27+15", "Calls with at least one significant return and calls with none."),
+        check_record("seaad_selected_units", bundle["sea_selected"] == 11, bundle["sea_selected"], 11, "Ranked SEA-AD network-gene-class units after sentinel filtering."),
+        check_record("seaad_selected_classes", bundle["sea_selected_mt"] + bundle["sea_selected_nonmt"] == 11, f"{bundle['sea_selected_mt']}+{bundle['sea_selected_nonmt']}", "8+3", "SEA-AD MT and non-MT selected units."),
+        check_record("seaad_selected_symbols", bundle["sea_symbols"] == 9, bundle["sea_symbols"], 9, "Unique selected SEA-AD current symbols."),
+        check_record("seaad_donor_minimum", bundle["minimum_donors_per_arm"] == 3, bundle["minimum_donors_per_arm"], 3, "Minimum eligible donors in each disease arm."),
+        check_record("seaad_fdr_only_query", bundle["query_rule"] == "FDR < 0.05", bundle["query_rule"], "FDR < 0.05", "The active query has no fold-change threshold."),
         check_record("seaad_minimum_query", bundle["sea_min_query"] == 3, bundle["sea_min_query"], 3, "SEA-AD downstream KDA run-inclusion minimum."),
         check_record("rosmap_global_donors", bundle["rosmap_donors"] == 276, bundle["rosmap_donors"], 276, "Global ROSMAP analytic donor universe."),
         check_record("rosmap_fine_types", bundle["rosmap_fine_types"] == 54, bundle["rosmap_fine_types"], 54, "ROSMAP Phase 18 fine-cell-type scope."),
@@ -1322,7 +1339,7 @@ def build_checks(
         check_record("threshold_difference_visible", {"sea_min_query", "ros_min_query"} <= set(plot_data["label_key"]), "SEA 3|ROSMAP 10 labels", "SEA 3|ROSMAP 10 labels", "The intentional query-size difference is visible."),
         check_record("structural_vs_runnable_units_visible", {"sea_structural", "sea_active_calls"} <= set(plot_data["label_key"]), "1,548 slots|42 calls", "1,548 slots|42 calls", "Structural slots and runnable calls are visibly distinguished."),
         check_record("no_taxonomy_pooling_text", "fine labels stay separate" in set(plot_data["display_text"]), "fine labels stay separate", "fine labels stay separate", "Fine supertypes are not visually represented as pooled before DEG/KDA."),
-        check_record("holdout_boundary_visible", "ros_holdout" in set(plot_data["label_key"]), "holdout label present", "holdout label present", "ROSMAP candidate tables are shown as held out from SEA-AD selection code."),
+        check_record("selection_code_read_boundary_visible", "ros_holdout" in set(plot_data["label_key"]), "code-read boundary label present", "code-read boundary label present", "The figure states only the recorded selection-code read boundary."),
         check_record("canonical_setup_no_result_badge", not plot_data["display_text"].str.contains("6 strict shared|36 of 47", case=False, regex=True).any(), "overlap outcome absent", "overlap outcome absent", "The canonical setup does not reveal the later overlap result."),
         check_record("plot_element_ids_unique", plot_data["element_id"].is_unique, plot_data["element_id"].nunique(), len(plot_data), "Every plotted datum/label/connector has a unique audit ID."),
         check_record("plot_sources_hashed", plot_data.loc[plot_data["source_path"].ne("NA"), "source_sha256"].ne("NA").all(), "all sourced rows hashed", "all sourced rows hashed", "Every sourced visible element records input SHA-256 provenance."),
@@ -1345,15 +1362,15 @@ def build_checks(
 def documentation(bundle: Mapping[str, Any]) -> tuple[str, str]:
     caption = f"""# SEA-AD–ROSMAP validation setup figure caption
 
-**Independent SEA-AD validation of ROSMAP Phase 18 key drivers.** **A,** SEA-AD expression evidence was generated with donor-level pseudobulk profiles for {bundle['supertypes']} distinct fine supertypes and six fixed sex/APOE groups. The {bundle['fine_contrasts']} direct Dementia-versus-No-dementia contrasts yielded {bundle['structural_directions']:,} prespecified signed structural slots; {bundle['completed_contrasts']} contrasts completed and produced {bundle['source_directions']} signed directions ready for query construction. Core-MitoCarta genes meeting within-contrast FDR and effect-size criteria were intersected with the tested-gene-induced background of the matching frozen broad network. {bundle['active_calls']} effective queries contained at least {bundle['sea_min_query']} genes and entered directed KDA, producing {bundle['sea_selected']} selected network–gene–class units ({bundle['sea_symbols']} symbols) before checksum freeze. **B,** The seven matched broad networks, current-symbol/core-MitoCarta annotation, fKDA engine, and Phase 18 selection machinery were shared and frozen; cohorts, phenotype labels, fine taxonomies, DEG models, signed queries, and candidate identities were not shared. **C,** The ROSMAP Phase 18 reference began with {bundle['rosmap_fine_types']} fine cell types across {bundle['rosmap_source_networks']} source networks and {bundle['rosmap_structural']} structural slots. Its minimum effective query size was {bundle['ros_min_query']}; {bundle['rosmap_included']} included runs and all {bundle['rosmap_selected']} frozen selected units occurred in the seven networks matched to SEA-AD. Candidate-bearing ROSMAP tables were not read by the SEA-AD KDA/selection code before the SEA-AD freeze. **D,** Post-freeze comparison uses the strict broad-network, gene, and driver-class key within the common assessable universe. The setup asset intentionally omits the overlap outcome.
+**Post-hoc exploratory SEA-AD rerun compared with the frozen ROSMAP Phase 18 reference.** **A,** SEA-AD expression evidence used donor-level pseudobulk profiles for {bundle['supertypes']} distinct fine supertypes and six fixed sex/APOE groups. The rerun required at least {bundle['minimum_donors_per_arm']} eligible donors per phenotype arm and removed the earlier 1.3-fold-change query cutoff, retaining within-contrast FDR <0.05. The {bundle['fine_contrasts']} direct Dementia-versus-No-dementia contrasts yielded {bundle['structural_directions']:,} signed structural slots; {bundle['completed_contrasts']} contrasts completed and produced {bundle['source_directions']} signed directions ready for query construction. Signed core-MitoCarta genes meeting FDR <0.05 were intersected with the tested-gene-induced background of the matching frozen broad network. {bundle['active_calls']} effective queries contained at least {bundle['sea_min_query']} genes and entered directed KDA, producing {bundle['sea_selected']} selected network–gene–class units ({bundle['sea_symbols']} symbols) before the new list was checksum-frozen. **B,** The seven matched broad networks, current-symbol/core-MitoCarta annotation, fKDA engine, and aggregation/ranking machinery were shared and frozen; the SEA-AD donor-support and DEG-query thresholds differ from the frozen ROSMAP analysis. **C,** The ROSMAP Phase 18 reference began with {bundle['rosmap_fine_types']} fine cell types across {bundle['rosmap_source_networks']} source networks and {bundle['rosmap_structural']} structural slots. Its minimum effective query size was {bundle['ros_min_query']}; {bundle['rosmap_included']} included runs and all {bundle['rosmap_selected']} frozen selected units occurred in the seven networks matched to SEA-AD. The recorded selection freeze confirms that the SEA-AD selection code did not read ROSMAP candidate files. **D,** Comparison after the new SEA-AD list freeze uses the strict broad-network, gene, and driver-class key within the common assessable universe. Because the SEA-AD thresholds were revised after the earlier analysis, this result is exploratory rather than a prespecified confirmatory validation. The setup asset intentionally omits the overlap outcome.
 """
     methods = f"""# SEA-AD–ROSMAP validation setup figure methods
 
 The renderer reads only compact validated status, manifest, configuration, selection, and provenance artifacts. It verifies `validated_complete` status for VH02–VH04, VH07–VH10, validates the frozen input-authority and seven matched network hashes, and derives every displayed count from the stored tables. It does not recompute DEG statistics, query/background membership, KDA enrichment, ACAT, BH correction, candidate selection, or overlap.
 
-SEA-AD DEG used one grouped edgeR quasi-likelihood model per supertype with the frozen formula `{bundle['fine_formula']}`, TMM normalization, robust dispersion/QL fitting, and within-contrast BH FDR. A donor–supertype profile required at least 20 nuclei, and a direct disease contrast required at least five eligible donors per phenotype arm. The displayed signed query rule is `{bundle['query_rule']}` with core-MitoCarta membership and sign. The recorded Phase 12 background policy is `{bundle['background_policy']}`; the compact bundle confirms `Qeff` is a subset of its stored background but cannot independently reconstruct membership because the large VH08 tested/filter shards and VH10A member tables are not present locally.
+SEA-AD DEG used one grouped edgeR quasi-likelihood model per supertype with the frozen formula `{bundle['fine_formula']}`, TMM normalization, robust dispersion/QL fitting, and within-contrast BH FDR. A donor–supertype profile required at least 20 nuclei, and a direct disease contrast required at least {bundle['minimum_donors_per_arm']} eligible donors per phenotype arm. The active signed query rule is `{bundle['query_rule']}` (`{bundle['query_rule_id']}`), with core-MitoCarta membership and sign; no fold-change cutoff is applied. The result tier is `{bundle['result_tier_id']}`. The recorded Phase 12 background policy is `{bundle['background_policy']}`; the compact bundle confirms `Qeff` is a subset of its stored background but cannot independently reconstruct membership because the large VH08 tested/filter shards and VH10A member tables are not present locally.
 
-SEA-AD runs require at least three effective query genes; ROSMAP Phase 18 requires at least ten. The same seven matched broad-network files, current-symbol/core-MitoCarta authority, directed fKDA layer test, conditional MT self-exclusion, within-run BH, ACAT aggregation, aggregate BH, two driver classes, candidate gates, ranking order, and up-to-five/no-backfill rule are represented as the shared scaffold. The original ROSMAP taxonomy contains 54 fine cell types across nine source networks; CAMs and T cells contribute no included Phase 18 run or selected unit, so the 161 included runs and 47 selected units lie in the seven SEA-AD-matched networks.
+SEA-AD runs require at least three effective query genes; ROSMAP Phase 18 requires at least ten. SEA-AD final selection retains coverage ≥{bundle['minimum_coverage']:.0%} and aggregate ACAT BH q ≤{bundle['aggregate_q_threshold']:.2f}. The same seven matched broad-network files, current-symbol/core-MitoCarta authority, directed fKDA layer test, conditional MT self-exclusion, within-run BH, ACAT aggregation, aggregate BH, two driver classes, candidate gates, ranking order, and up-to-five/no-backfill rule are represented as the shared scaffold. The original ROSMAP taxonomy contains 54 fine cell types across nine source networks; CAMs and T cells contribute no included Phase 18 run or selected unit, so the 161 included runs and 47 selected units lie in the seven SEA-AD-matched networks.
 
 The figure uses vector-native Matplotlib shapes with Okabe–Ito-derived blue, teal, vermilion, and orange plus explicit labels, solid/dashed lines, direction triangles, and a vector lock for redundant encoding. PNG is exported at 450 DPI; PDF and SVG preserve vector shapes, and SVG preserves searchable text. Counts are deterministic workflow properties, so error bars and significance marks are not applicable. Phase 05 and Phase 06 pseudobulk-QC artifacts are not required for this setup schematic.
 """

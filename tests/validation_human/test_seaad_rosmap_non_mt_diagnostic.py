@@ -25,6 +25,20 @@ def digest(path: Path) -> str:
     return value.hexdigest()
 
 
+def test_successful_force_replacement_removes_backup(tmp_path: Path) -> None:
+    output = tmp_path / FIGURE.FIGURE_ID
+    output.mkdir()
+    (output / "old.txt").write_text("old", encoding="utf-8")
+    staging = tmp_path / f".{FIGURE.FIGURE_ID}.staging.test"
+    staging.mkdir()
+    (staging / "new.txt").write_text("new", encoding="utf-8")
+
+    FIGURE.replace_output_package(staging, output)
+
+    assert (output / "new.txt").read_text(encoding="utf-8") == "new"
+    assert not list(tmp_path.glob(f".{FIGURE.FIGURE_ID}.backup.*"))
+
+
 def test_frozen_non_mt_fate_and_context() -> None:
     bundle = FIGURE.load_bundle(ROOT)
     plot = FIGURE.build_plot_data(bundle)
@@ -42,8 +56,8 @@ def test_frozen_non_mt_fate_and_context() -> None:
             plot.loc[~assessable, "gene"],
         )
     ) == FIGURE.EXPECTED_NOT_TESTABLE
-    assert int((assessable & plot["seaad_qualifying_return_count"].eq(0)).sum()) == 13
-    assert int((assessable & plot["seaad_qualifying_return_count"].eq(1)).sum()) == 4
+    assert int((assessable & plot["seaad_qualifying_return_count"].eq(0)).sum()) == 14
+    assert int((assessable & plot["seaad_qualifying_return_count"].eq(1)).sum()) == 3
     assert set(
         zip(
             plot.loc[plot["seaad_qualifying_return_count"].eq(1), "broad_network"],
@@ -51,9 +65,11 @@ def test_frozen_non_mt_fate_and_context() -> None:
         )
     ) == FIGURE.EXPECTED_ONE_RETURN
     assert not plot["seaad_final_driver_candidate"].map(FIGURE.truth).any()
-    assert int(plot["rosmap_has_unavailable_stratum_support"].sum()) == 20
+    assert int(plot["rosmap_has_donor_unavailable_stratum_support"].sum()) == 19
+    assert int(plot["donor_unavailable_support_is_exclusive"].sum()) == 3
+    assert int(plot["rosmap_has_f_e2_m_e2_m_e4_support"].sum()) == 20
 
-    assert fate["unit_count"].astype(int).tolist() == [21, 4, 17, 13, 4, 0]
+    assert fate["unit_count"].astype(int).tolist() == [21, 4, 17, 14, 3, 0]
     row = context.iloc[0]
     assert (
         int(row["rosmap_included_runs"]),
@@ -64,8 +80,16 @@ def test_frozen_non_mt_fate_and_context() -> None:
         int(row["rosmap_effective_query_floor"]),
         int(row["seaad_effective_query_floor"]),
     ) == (10, 3)
-    assert set(row["seaad_donor_limited_groups"].split("|")) == FIGURE.UNAVAILABLE_GROUPS
-    assert int(row["units_with_rosmap_support_in_donor_limited_group"]) == 20
+    assert set(row["seaad_fully_donor_unavailable_groups"].split("|")) == FIGURE.DONOR_UNAVAILABLE_GROUPS
+    assert (
+        int(row["seaad_m_e4_completed_contrasts"]),
+        int(row["seaad_m_e4_completed_directions"]),
+        int(row["seaad_m_e4_query_empty_directions"]),
+        int(row["seaad_m_e4_kda_calls"]),
+    ) == (77, 154, 154, 0)
+    assert int(row["units_with_rosmap_support_in_fully_donor_unavailable_group"]) == 19
+    assert int(row["units_supported_exclusively_in_fully_donor_unavailable_groups"]) == 3
+    assert int(row["units_with_rosmap_support_in_f_e2_m_e2_m_e4"]) == 20
 
 
 def test_frozen_reverse_lookup() -> None:
@@ -77,24 +101,14 @@ def test_frozen_reverse_lookup() -> None:
         "HGSNAT": 1,
         "BEX3": 4,
         "RPS27A": 2,
-        "RPL30": 0,
-        "KANSL1L": 0,
     }
     expected_q = {
         "HGSNAT": 0.6413643985648223,
         "BEX3": 0.1574575602307228,
         "RPS27A": 1.0,
-        "RPL30": 1.0,
-        "KANSL1L": 1.0,
     }
     observed_q = reverse.set_index("gene")["rosmap_aggregate_q"].astype(float).to_dict()
     assert all(math.isclose(observed_q[gene], value) for gene, value in expected_q.items())
-    assert int(
-        reverse.loc[
-            reverse["gene"].eq("RPL30"), "excluded_size3_primary_return_count"
-        ].iloc[0]
-    ) == 2
-    assert reverse.loc[reverse["gene"].eq("KANSL1L"), "outcome_id"].iloc[0] == "no_explicit_primary_return"
     assert not reverse["rosmap_terminal_candidate_status"].eq("driver_candidate").any()
 
 
@@ -128,7 +142,7 @@ def test_full_atomic_package(tmp_path: Path) -> None:
     assert int(status.loc[0, "input_files"]) == len(FIGURE.INPUT_PATHS)
     assert int(status.loc[0, "output_files"]) == len(FIGURE.OUTPUT_FILES)
     assert int(status.loc[0, "plot_data_rows"]) == 21
-    assert int(status.loc[0, "reverse_lookup_rows"]) == 5
+    assert int(status.loc[0, "reverse_lookup_rows"]) == 3
     assert float(status.loc[0, "figure_width_inches"]) == 12.0
     assert float(status.loc[0, "figure_height_inches"]) == 5.3
 
@@ -172,6 +186,7 @@ def test_full_atomic_package(tmp_path: Path) -> None:
     assert dpi and min(dpi) >= FIGURE.DEFAULT_PNG_DPI - 1
     assert (output / f"{FIGURE.FIGURE_ID}.pdf").read_bytes().startswith(b"%PDF")
     svg = (output / f"{FIGURE.FIGURE_ID}.svg").read_text(encoding="utf-8")
+    assert not any(line != line.rstrip() for line in svg.splitlines())
     assert "<text" in svg.lower()
     assert "<path" in svg.lower()
     assert all(
@@ -179,7 +194,6 @@ def test_full_atomic_package(tmp_path: Path) -> None:
         for gene in [
             "DYNLT1",
             "RPS15",
-            "RPLP1",
             "RPL38",
             "ANKRD11",
             "FTL",
@@ -187,14 +201,14 @@ def test_full_atomic_package(tmp_path: Path) -> None:
             "HGSNAT",
             "BEX3",
             "RPS27A",
-            "RPL30",
-            "KANSL1L",
         ]
     )
     assert "q=.641" in svg
     assert "q=.157" in svg
-    assert "≥1 arm had &lt;5 donors" in svg
-    assert "Support need not be exclusive; not a sole cause" in svg
+    assert "F_e2/M_e2: too few donors (≥3/arm)" in svg
+    assert "M_e4: 77 contrasts; 154 empty queries" in svg
+    assert "19/21 support; nonexclusive—not sole cause" in svg
+    assert "SEA-AD" in svg and "post-hoc exploratory" in svg
 
     subprocess.run(
         [

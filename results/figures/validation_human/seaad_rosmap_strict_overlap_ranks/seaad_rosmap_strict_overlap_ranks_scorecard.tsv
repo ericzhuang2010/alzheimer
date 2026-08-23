@@ -1,3 +1,3 @@
 schema_version	figure_id	case_id	case_label	rosmap_testable_selected_units	seaad_selected_units	strict_shared_units
 seaad_rosmap_strict_overlap_ranks_scorecard_v1	seaad_rosmap_strict_overlap_ranks	mt_driver	MT driver class	19	8	6
-seaad_rosmap_strict_overlap_ranks_scorecard_v1	seaad_rosmap_strict_overlap_ranks	non_mt_driver	Non-MT driver class	17	5	0
+seaad_rosmap_strict_overlap_ranks_scorecard_v1	seaad_rosmap_strict_overlap_ranks	non_mt_driver	Non-MT driver class	17	3	0

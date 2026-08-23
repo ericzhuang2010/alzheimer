@@ -24,6 +24,20 @@ def digest(path: Path) -> str:
     return value.hexdigest()
 
 
+def test_successful_force_replacement_removes_backup(tmp_path: Path) -> None:
+    output = tmp_path / FIGURE.STRICT_ID
+    output.mkdir()
+    (output / "old.txt").write_text("old", encoding="utf-8")
+    staging = tmp_path / f".{FIGURE.STRICT_ID}.staging.test"
+    staging.mkdir()
+    (staging / "new.txt").write_text("new", encoding="utf-8")
+
+    FIGURE.replace_output_package(staging, output)
+
+    assert (output / "new.txt").read_text(encoding="utf-8") == "new"
+    assert not list(tmp_path.glob(f".{FIGURE.STRICT_ID}.backup.*"))
+
+
 def test_frozen_strict_overlap_data() -> None:
     bundle = FIGURE.load_bundle(ROOT)
     plot = FIGURE.build_strict_plot_data(bundle)
@@ -42,7 +56,7 @@ def test_frozen_strict_overlap_data() -> None:
         ["rosmap_testable_selected_units", "seaad_selected_units", "strict_shared_units"]
     ].astype(int).apply(tuple, axis=1).to_dict() == {
         "mt_driver": (19, 8, 6),
-        "non_mt_driver": (17, 5, 0),
+        "non_mt_driver": (17, 3, 0),
     }
     assert facets.set_index("broad_network")["shared_selected_units"].astype(int).to_dict() == {
         "Excitatory_neurons": 2,
@@ -59,13 +73,13 @@ def test_frozen_gene_level_regions_and_geometry() -> None:
     plot = FIGURE.build_gene_plot_data(bundle)
     summary = FIGURE.build_gene_region_summary(bundle)
 
-    assert len(plot) == 30
+    assert len(plot) == 28
     assert not plot.duplicated(["case_id", "gene"]).any()
     assert plot.groupby(["case_id", "region"]).size().to_dict() == {
         ("mt_driver", "common"): 6,
         ("mt_driver", "rosmap_only"): 4,
         ("non_mt_driver", "rosmap_only"): 15,
-        ("non_mt_driver", "seaad_only"): 5,
+        ("non_mt_driver", "seaad_only"): 3,
     }
     counts = summary.set_index(["case_id", "region"])["region_count"].astype(int).to_dict()
     assert counts == {
@@ -74,7 +88,7 @@ def test_frozen_gene_level_regions_and_geometry() -> None:
         ("mt_driver", "seaad_only"): 0,
         ("non_mt_driver", "rosmap_only"): 15,
         ("non_mt_driver", "common"): 0,
-        ("non_mt_driver", "seaad_only"): 5,
+        ("non_mt_driver", "seaad_only"): 3,
     }
     assert (summary["geometry_margin"].astype(float) >= 0).all()
     assert int(plot["opcs_not_testable_guardrail"].map(FIGURE.truth).sum()) == 3
@@ -105,7 +119,7 @@ def test_full_atomic_packages(tmp_path: Path) -> None:
     )
 
     bundle = FIGURE.load_bundle(ROOT)
-    expected_rows = {FIGURE.STRICT_ID: 12, FIGURE.GENE_ID: 30}
+    expected_rows = {FIGURE.STRICT_ID: 12, FIGURE.GENE_ID: 28}
     for figure_id in FIGURE.FIGURE_IDS:
         output = output_base / figure_id
         assert sorted(path.name for path in output.iterdir()) == sorted(FIGURE._output_files(figure_id))
@@ -162,10 +176,12 @@ def test_full_atomic_packages(tmp_path: Path) -> None:
     assert "nominal p = 2.33 × 10⁻⁴" in strict_svg
     assert "nominal p = 1.22 × 10⁻⁹" in strict_svg
     assert "6 strict units = 4 unique symbols" in strict_svg
+    assert "SEA-AD post-hoc exploratory" in strict_svg
 
     gene_svg = (output_base / FIGURE.GENE_ID / f"{FIGURE.GENE_ID}.svg").read_text(encoding="utf-8")
     gene_plot = FIGURE.build_gene_plot_data(bundle)
     assert all(gene in gene_svg for gene in gene_plot["gene"])
     assert "network identity collapsed" in gene_svg
     assert "SEA-AD OPC KDA unavailable" in gene_svg
+    assert "SEA-AD post-hoc exploratory" in gene_svg
     assert "nominal p =" not in gene_svg

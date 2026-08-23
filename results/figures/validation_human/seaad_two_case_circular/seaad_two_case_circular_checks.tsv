@@ -1,32 +1,34 @@
 schema_version	figure_id	check_id	severity	status	expected	observed	details
 seaad_two_case_circular_figure_v1	seaad_two_case_circular	vh10c_validated	blocking	pass	validated_complete	validated_complete	VH10C completion was validated during input loading.
-seaad_two_case_circular_figure_v1	seaad_two_case_circular	compact_input_hashes	blocking	pass	9	9	All compact inputs and the annotation reference are SHA-256 bound.
-seaad_two_case_circular_figure_v1	seaad_two_case_circular	rosmap_blinded_freeze	blocking	pass	False	False	SEA-AD selection was frozen without ROSMAP candidates.
+seaad_two_case_circular_figure_v1	seaad_two_case_circular	compact_input_hashes	blocking	pass	9	9	All required compact inputs and the annotation reference are SHA-256 bound.
+seaad_two_case_circular_figure_v1	seaad_two_case_circular	selection_source_flag	blocking	pass	False	False	VH10C records that ROSMAP candidate files were not read during selection; this post-hoc tier is not presented as confirmatory or as a blinded study.
+seaad_two_case_circular_figure_v1	seaad_two_case_circular	posthoc_exploratory_tier	blocking	pass	posthoc_exploratory__*	posthoc_exploratory__fdr_only__donor3__query3__coverage80__q05	The figure is explicitly scoped to the exploratory tier.
+seaad_two_case_circular_figure_v1	seaad_two_case_circular	query_rule_consistency	blocking	pass	fdr_only_query_sensitivity	fdr_only_query_sensitivity	Plot rows inherit the validated active query rule.
+seaad_two_case_circular_figure_v1	seaad_two_case_circular	result_tier_consistency	blocking	pass	posthoc_exploratory__fdr_only__donor3__query3__coverage80__q05	posthoc_exploratory__fdr_only__donor3__query3__coverage80__q05	Plot rows inherit the validated result tier.
 seaad_two_case_circular_figure_v1	seaad_two_case_circular	network_class_lists	blocking	pass	14	14	Seven networks × two driver classes.
-seaad_two_case_circular_figure_v1	seaad_two_case_circular	top_list_rows	blocking	pass	22	22	Thirteen ranked rows and nine sentinels.
-seaad_two_case_circular_figure_v1	seaad_two_case_circular	ranked_units	blocking	pass	13	13	All frozen SEA-AD selected units are displayed.
-seaad_two_case_circular_figure_v1	seaad_two_case_circular	ranked_class_units	blocking	pass	mt_driver:8|non_mt_driver:5	{'mt_driver': 8, 'non_mt_driver': 5}	Frozen class partition.
-seaad_two_case_circular_figure_v1	seaad_two_case_circular	ranked_unique_symbols	blocking	pass	11	11	Unique displayed symbols.
+seaad_two_case_circular_figure_v1	seaad_two_case_circular	top_list_rows	blocking	pass	21	21	Ranked rows plus one sentinel for each empty list.
+seaad_two_case_circular_figure_v1	seaad_two_case_circular	ranked_units	blocking	pass	11	11	All validated SEA-AD selected units are displayed.
+seaad_two_case_circular_figure_v1	seaad_two_case_circular	ranked_class_units	blocking	pass	{'mt_driver': 8, 'non_mt_driver': 3}	{'mt_driver': 8, 'non_mt_driver': 3}	Selected-unit class partition is derived from VH10C.
+seaad_two_case_circular_figure_v1	seaad_two_case_circular	ranked_unique_symbols	blocking	pass	9	9	Unique displayed symbols agree with VH10C.
 seaad_two_case_circular_figure_v1	seaad_two_case_circular	fixed_plot_rows	blocking	pass	70	70	Two classes × seven networks × five slots.
-seaad_two_case_circular_figure_v1	seaad_two_case_circular	ranked_slot_count	blocking	pass	13	13	Ranked circular slots.
-seaad_two_case_circular_figure_v1	seaad_two_case_circular	unused_slot_count	blocking	pass	12	12	Unused ranks after short passing lists.
-seaad_two_case_circular_figure_v1	seaad_two_case_circular	no_passing_slot_count	blocking	pass	25	25	Testable empty lists.
-seaad_two_case_circular_figure_v1	seaad_two_case_circular	not_testable_slot_count	blocking	pass	20	20	Unavailable network/class lists.
-seaad_two_case_circular_figure_v1	seaad_two_case_circular	included_runs	blocking	pass	42	42	Included SEA-AD KDA runs.
-seaad_two_case_circular_figure_v1	seaad_two_case_circular	recurrence_links	blocking	pass	2	2	MT-CO2 and MT-CYB recurrence links.
-seaad_two_case_circular_figure_v1	seaad_two_case_circular	non_mt_recurrence_links	blocking	pass	0	0	The five non-MT symbols are unique.
-seaad_two_case_circular_figure_v1	seaad_two_case_circular	mt_core_and_mtdna	blocking	pass	all true	all true	All displayed MT units are core MitoCarta and mtDNA encoded.
+seaad_two_case_circular_figure_v1	seaad_two_case_circular	derived_slot_partition	blocking	pass	{'no_passing_candidate_slot': 30, 'ranked_candidate': 11, 'unused_display_slot': 9, 'not_testable_no_included_runs_slot': 20}	{'no_passing_candidate_slot': 30, 'not_testable_no_included_runs_slot': 20, 'ranked_candidate': 11, 'unused_display_slot': 9}	Fixed-slot states are derived from the 14 validated list statuses.
+seaad_two_case_circular_figure_v1	seaad_two_case_circular	included_runs	blocking	pass	42	42	Included SEA-AD KDA runs are derived from the run manifest.
+seaad_two_case_circular_figure_v1	seaad_two_case_circular	recurrence_links	blocking	pass	2	2	Each repeated selected gene contributes n−1 within-class links.
+seaad_two_case_circular_figure_v1	seaad_two_case_circular	mt_core_classification	blocking	pass	all true	all true	All displayed MT units are core MitoCarta genes.
 seaad_two_case_circular_figure_v1	seaad_two_case_circular	non_mt_outside_core	blocking	pass	all false	all false	All displayed non-MT units are outside core MitoCarta.
-seaad_two_case_circular_figure_v1	seaad_two_case_circular	extended_non_mt_marker	blocking	pass	RPS27A	RPS27A	Only RPS27A carries the non-MT extended-reference diamond.
+seaad_two_case_circular_figure_v1	seaad_two_case_circular	coverage_gate	blocking	pass	>=0.8	1.0	Displayed units meet the configured coverage gate.
+seaad_two_case_circular_figure_v1	seaad_two_case_circular	aggregate_q_gate	blocking	pass	<=0.05	0.03085788468855486	Displayed units meet the configured aggregate-q gate.
+seaad_two_case_circular_figure_v1	seaad_two_case_circular	support_gate	blocking	pass	>=1	1	Displayed units meet the configured conservative-support gate.
+seaad_two_case_circular_figure_v1	seaad_two_case_circular	extended_non_mt_markers	blocking	pass	RPS27A	RPS27A	Extended-reference diamonds are derived from annotation.
 seaad_two_case_circular_figure_v1	seaad_two_case_circular	evidence_cap	blocking	pass	15	15.0	Both figures share the Phase 18 display cap.
-seaad_two_case_circular_figure_v1	seaad_two_case_circular	single_capped_unit	blocking	pass	1	1	Only excitatory MT-CO2 is capped.
+seaad_two_case_circular_figure_v1	seaad_two_case_circular	display_scores_bounded	blocking	pass	[0,1]	0.1007|1	Evidence bars are capped without changing uncapped q values.
 seaad_two_case_circular_figure_v1	seaad_two_case_circular	no_candidate_summary_read	blocking	pass	not read	not read	The missing full candidate table is outside the compact display contract.
 seaad_two_case_circular_figure_v1	seaad_two_case_circular	no_overlap_inputs	blocking	pass	none	none	No ROSMAP candidate or overlap result enters the figures.
-seaad_two_case_circular_figure_v1	seaad_two_case_circular	empty_state_redundancy	blocking	pass	solid|dashed + distinct fill/hatch + labels	solid|dashed + distinct fill/hatch + labels	No-passing and unavailable states differ by more than color.
+seaad_two_case_circular_figure_v1	seaad_two_case_circular	empty_state_redundancy	blocking	pass	redundant non-color encoding	solid vs dashed + distinct fill/hatch + labels	No-passing and unavailable states differ by more than color.
 seaad_two_case_circular_figure_v1	seaad_two_case_circular	minimum_font_size	blocking	pass	>=7.0 pt	7.00	Minimum visible text size.
 seaad_two_case_circular_figure_v1	seaad_two_case_circular	canvas_text_clipping	blocking	pass	0	0	No text leaves either canvas.
 seaad_two_case_circular_figure_v1	seaad_two_case_circular	image_file_set	blocking	pass	seaad_mt_driver_circular.pdf|seaad_mt_driver_circular.png|seaad_mt_driver_circular.svg|seaad_non_mt_driver_circular.pdf|seaad_non_mt_driver_circular.png|seaad_non_mt_driver_circular.svg	seaad_mt_driver_circular.pdf|seaad_mt_driver_circular.png|seaad_mt_driver_circular.svg|seaad_non_mt_driver_circular.pdf|seaad_non_mt_driver_circular.png|seaad_non_mt_driver_circular.svg	Both driver classes have PNG, PDF, and SVG exports.
-seaad_two_case_circular_figure_v1	seaad_two_case_circular	image_files_nonempty	blocking	pass	>1000 bytes each	948133|52619|56112|873866|52086|50903	Rendered files are nontrivial.
+seaad_two_case_circular_figure_v1	seaad_two_case_circular	image_files_nonempty	blocking	pass	>1000 bytes each	957720|54359|55536|906892|52685|49338	Rendered files are nontrivial.
 seaad_two_case_circular_figure_v1	seaad_two_case_circular	mt_driver_svg_signature	blocking	pass	present	present	SVG signature is present.
 seaad_two_case_circular_figure_v1	seaad_two_case_circular	mt_driver_svg_searchable_text	blocking	pass	present	present	SVG preserves searchable text.
 seaad_two_case_circular_figure_v1	seaad_two_case_circular	mt_driver_svg_vector_shapes	blocking	pass	present	present	SVG preserves vector paths.

@@ -24,25 +24,39 @@ def digest(path: Path) -> str:
     return value.hexdigest()
 
 
+def test_successful_force_replacement_removes_backup(tmp_path: Path) -> None:
+    output = tmp_path / FIGURE.FIGURE_ID
+    output.mkdir()
+    (output / "old.txt").write_text("old", encoding="utf-8")
+    staging = tmp_path / f".{FIGURE.FIGURE_ID}.staging.test"
+    staging.mkdir()
+    (staging / "new.txt").write_text("new", encoding="utf-8")
+
+    FIGURE.replace_output_package(staging, output)
+
+    assert (output / "new.txt").read_text(encoding="utf-8") == "new"
+    assert not list(tmp_path.glob(f".{FIGURE.FIGURE_ID}.backup.*"))
+
+
 def test_frozen_gene_regions_and_geometry() -> None:
     bundle = FIGURE.load_bundle(ROOT)
     plot_data = FIGURE.build_plot_data(bundle)
     summary = FIGURE.build_region_summary(bundle)
 
     assert len(bundle["rosmap"]) == 47
-    assert len(bundle["seaad"]) == 13
+    assert len(bundle["seaad"]) == 11
     assert bundle["rosmap"]["key_driver"].nunique() == 25
-    assert bundle["seaad"]["current_symbol"].nunique() == 11
+    assert bundle["seaad"]["current_symbol"].nunique() == 9
     assert bundle["regions"] == FIGURE.EXPECTED_REGIONS
 
-    assert len(plot_data) == 30
+    assert len(plot_data) == 28
     assert not plot_data.duplicated(["case_id", "gene"]).any()
     counts = plot_data.groupby(["case_id", "region"]).size().to_dict()
     assert counts == {
         ("mt_driver", "common"): 6,
         ("mt_driver", "rosmap_only"): 4,
         ("non_mt_driver", "rosmap_only"): 15,
-        ("non_mt_driver", "seaad_only"): 5,
+        ("non_mt_driver", "seaad_only"): 3,
     }
 
     assert len(summary) == 6
@@ -54,7 +68,7 @@ def test_frozen_gene_regions_and_geometry() -> None:
         ("mt_driver", "seaad_only"): 0,
         ("non_mt_driver", "rosmap_only"): 15,
         ("non_mt_driver", "common"): 0,
-        ("non_mt_driver", "seaad_only"): 5,
+        ("non_mt_driver", "seaad_only"): 3,
     }
     mt = summary.loc[summary["case_id"].eq("mt_driver")].iloc[0]
     non_mt = summary.loc[summary["case_id"].eq("non_mt_driver")].iloc[0]
@@ -92,11 +106,11 @@ def test_full_atomic_figure_package(tmp_path: Path) -> None:
     assert status.loc[0, "validation_status"] == "validated_complete"
     assert status.loc[0, "visual_review_status"] == "complete"
     assert int(status.loc[0, "failed_blocking_checks"]) == 0
-    assert int(status.loc[0, "plot_data_rows"]) == 30
+    assert int(status.loc[0, "plot_data_rows"]) == 28
     assert int(status.loc[0, "rosmap_selected_units"]) == 47
-    assert int(status.loc[0, "seaad_selected_units"]) == 13
+    assert int(status.loc[0, "seaad_selected_units"]) == 11
     assert int(status.loc[0, "rosmap_unique_genes"]) == 25
-    assert int(status.loc[0, "seaad_unique_genes"]) == 11
+    assert int(status.loc[0, "seaad_unique_genes"]) == 9
 
     checks = pd.read_csv(output / f"{FIGURE.FIGURE_ID}_checks.tsv", sep="\t")
     assert checks["status"].eq("pass").all()
@@ -117,12 +131,14 @@ def test_full_atomic_figure_package(tmp_path: Path) -> None:
     assert dpi and min(dpi) >= FIGURE.DEFAULT_PNG_DPI - 1
     assert (output / f"{FIGURE.FIGURE_ID}.pdf").read_bytes().startswith(b"%PDF")
     svg = (output / f"{FIGURE.FIGURE_ID}.svg").read_text(encoding="utf-8")
+    assert not any(line != line.rstrip() for line in svg.splitlines())
     assert "<text" in svg.lower()
     assert "<path" in svg.lower()
     assert "Phase 18 core MitoCarta; not mtDNA-only" in svg
     assert "SEA-AD only: 0 (∅)" in svg
     assert "Common: 0 (∅)" in svg
     assert "SEA-AD OPC KDA unavailable" in svg
+    assert "SEA-AD post-hoc exploratory" in svg
     for gene in FIGURE.build_plot_data(FIGURE.load_bundle(ROOT))["gene"]:
         assert gene in svg
 

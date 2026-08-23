@@ -9,11 +9,12 @@ seaad_rosmap_overlap_slide_figure_v1	seaad_rosmap_strict_overlap_ranks	paired_ra
 seaad_rosmap_overlap_slide_figure_v1	seaad_rosmap_strict_overlap_ranks	paired_rank_keys_unique	blocking	pass	unique	unique	Endpoint keys.
 seaad_rosmap_overlap_slide_figure_v1	seaad_rosmap_strict_overlap_ranks	strict_shared_units	blocking	pass	6	6	Same-network, same-class shared units.
 seaad_rosmap_overlap_slide_figure_v1	seaad_rosmap_strict_overlap_ranks	strict_unique_symbols	blocking	pass	4	4	Six units resolve to four symbols.
-seaad_rosmap_overlap_slide_figure_v1	seaad_rosmap_strict_overlap_ranks	scorecard_counts	blocking	pass	[[19, 8, 6], [17, 5, 0]]	[[19,8,6],[17,5,0]]	Class-level endpoint scorecard.
+seaad_rosmap_overlap_slide_figure_v1	seaad_rosmap_strict_overlap_ranks	scorecard_counts	blocking	pass	[[19, 8, 6], [17, 3, 0]]	[[19,8,6],[17,3,0]]	Class-level endpoint scorecard.
 seaad_rosmap_overlap_slide_figure_v1	seaad_rosmap_strict_overlap_ranks	facet_statistics	blocking	pass	[2, 4]	[2,4]	Excitatory and Inhibitory strict overlaps.
 seaad_rosmap_overlap_slide_figure_v1	seaad_rosmap_strict_overlap_ranks	svg_all_endpoint_genes	blocking	pass	12	12	All paired-rank endpoint genes remain searchable.
 seaad_rosmap_overlap_slide_figure_v1	seaad_rosmap_strict_overlap_ranks	svg_nominal_p_guardrail	blocking	pass	present	present	Both per-list p values are explicitly nominal.
 seaad_rosmap_overlap_slide_figure_v1	seaad_rosmap_strict_overlap_ranks	strict_definition_visible	blocking	pass	present	present	Primary unit definition is visible.
+seaad_rosmap_overlap_slide_figure_v1	seaad_rosmap_strict_overlap_ranks	exploratory_tier_visible	blocking	pass	present	present	The revised SEA-AD analysis tier is visible.
 seaad_rosmap_overlap_slide_figure_v1	seaad_rosmap_strict_overlap_ranks	image_export_set	blocking	pass	.pdf|.png|.svg	.pdf|.png|.svg	Three slide and vector formats.
 seaad_rosmap_overlap_slide_figure_v1	seaad_rosmap_strict_overlap_ranks	image_exports_nonempty	blocking	pass	all >1000	all >1000	Exports are nontrivial.
 seaad_rosmap_overlap_slide_figure_v1	seaad_rosmap_strict_overlap_ranks	svg_searchable_text	blocking	pass	present	present	SVG text remains searchable.

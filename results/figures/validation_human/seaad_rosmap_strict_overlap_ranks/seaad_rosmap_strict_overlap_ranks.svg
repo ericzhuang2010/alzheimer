@@ -198,7 +198,7 @@ L 769.02048 52.423699
     <text style="font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #5e6670" x="458.676" y="65.848875" transform="rotate(-0 458.676 65.848875)">SEA-AD selected</text>
    </g>
    <g id="text_12">
-    <text style="font-weight: 700; font-size: 21px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #009e73" x="561.276" y="67.147078" transform="rotate(-0 561.276 67.147078)">5</text>
+    <text style="font-weight: 700; font-size: 21px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #009e73" x="561.276" y="67.147078" transform="rotate(-0 561.276 67.147078)">3</text>
    </g>
    <g id="text_13">
     <text style="font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #5e6670" x="682.59024" y="65.848875" transform="rotate(-0 682.59024 65.848875)">Strict shared</text>
@@ -473,7 +473,7 @@ L 759.174194 184.8216
    </g>
   </g>
   <g id="text_41">
-   <text style="font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #5e6670" x="432" y="376.216875" transform="rotate(-0 432 376.216875)">6 strict units = 4 unique symbols  •  strict unit: network + gene + class  •  selection rank, not effect size</text>
+   <text style="font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #5e6670" x="432" y="376.216875" transform="rotate(-0 432 376.216875)">6 strict units = 4 unique symbols  •  strict unit: network + gene + class  •  SEA-AD post-hoc exploratory</text>
   </g>
  </g>
  <defs>

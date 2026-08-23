@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
-"""Render frozen SEA-AD MT and non-MT key-driver circular figures.
+"""Render validated SEA-AD MT and non-MT key-driver circular figures.
 
-The renderer consumes the compact, independently frozen VH10C display
-contract.  It does not read ROSMAP candidate identities, VH10D overlap
-results, or the unavailable full SEA-AD candidate-summary table, and it does
-not recompute KDA, ACAT, BH correction, candidate gates, or ranks.
+The renderer consumes the compact VH10C display contract. It derives the
+active query/tier, selection gates, selected identities, list states, counts,
+and recurrence links from validated inputs. It does not read ROSMAP candidate
+identities, VH10D overlap results, or the unavailable full SEA-AD
+candidate-summary table, and it does not recompute KDA, ACAT, BH correction,
+candidate gates, or ranks.
 """
 
 from __future__ import annotations
@@ -123,39 +125,20 @@ OUTPUT_FILES = [
 ]
 PAYLOAD_FILES = OUTPUT_FILES[:-2]
 
-INPUT_PATHS = {
-    "vh10c_status": (
-        "results/validation_human/10_seaad_kda_rediscovery/"
-        "10c_seaad_selection/status.tsv"
-    ),
-    "seaad_top5": (
-        "results/validation_human/10_seaad_kda_rediscovery/"
-        "10c_seaad_selection/seaad_top5.tsv"
-    ),
-    "seaad_list_status": (
-        "results/validation_human/10_seaad_kda_rediscovery/"
-        "10c_seaad_selection/seaad_list_status.tsv"
-    ),
-    "selection_checks": (
-        "results/validation_human/10_seaad_kda_rediscovery/"
-        "10c_seaad_selection/selection_checks.tsv"
-    ),
-    "selection_freeze": (
-        "results/validation_human/10_seaad_kda_rediscovery/"
-        "10c_seaad_selection/seaad_selection_freeze.tsv"
-    ),
-    "selection_artifacts": (
-        "results/validation_human/10_seaad_kda_rediscovery/"
-        "10c_seaad_selection/artifacts.tsv"
-    ),
-    "run_manifest": (
-        "results/validation_human/10_seaad_kda_rediscovery/"
-        "10a_inputs/seaad_kda_run_manifest.tsv"
-    ),
-    "validation_config": "scripts/validation_human/seaad_phase18_validation_config.yml",
-    "phase18_annotation": (
-        "results/minerva_production/09_annotate_genes/"
-        "gene_annotation_master.tsv.gz"
+VALIDATION_CONFIG_PATH = Path(
+    "scripts/validation_human/seaad_phase18_validation_config.yml"
+)
+SUPPORTED_LIST_STATUSES = {
+    "ranked_candidates",
+    "no_passing_candidate",
+    "not_testable_no_included_runs",
+    "not_testable_no_eligible_case_runs",
+}
+SLOT_STATUS_BY_EMPTY_LIST = {
+    "no_passing_candidate": "no_passing_candidate_slot",
+    "not_testable_no_included_runs": "not_testable_no_included_runs_slot",
+    "not_testable_no_eligible_case_runs": (
+        "not_testable_no_eligible_case_runs_slot"
     ),
 }
 
@@ -258,8 +241,11 @@ def require_columns(frame: pd.DataFrame, columns: Iterable[str], label: str) -> 
     require(not missing, f"{label} missing columns: {', '.join(missing)}")
 
 
-def write_tsv(frame: pd.DataFrame, path: Path) -> None:
-    require(not frame.empty, f"Refusing to write empty TSV: {path}")
+def write_tsv(
+    frame: pd.DataFrame, path: Path, *, allow_empty: bool = False
+) -> None:
+    require(allow_empty or not frame.empty, f"Refusing to write empty TSV: {path}")
+    require(len(frame.columns) > 0, f"Refusing to write a TSV without columns: {path}")
     temporary = path.with_name(f".{path.name}.tmp.{os.getpid()}")
     frame.to_csv(
         temporary,
@@ -277,8 +263,42 @@ def write_text(path: Path, text: str) -> None:
     os.replace(temporary, path)
 
 
+def normalize_text_trailing_whitespace(path: Path) -> None:
+    """Normalize generated text assets without changing substantive content."""
+
+    text = path.read_text(encoding="utf-8")
+    normalized = "\n".join(line.rstrip() for line in text.splitlines()) + "\n"
+    path.write_text(normalized, encoding="utf-8")
+
+
 def resolve_inputs(project_root: Path) -> dict[str, Path]:
-    paths = {key: project_root / value for key, value in INPUT_PATHS.items()}
+    validation_config = project_root / VALIDATION_CONFIG_PATH
+    config = read_yaml(validation_config)
+    vh10 = config.get("vh10", {})
+    output_relative = str(vh10.get("output_directory", "")).strip()
+    require(output_relative != "", "VH10 output_directory is missing from config")
+    output_directory = project_root / "results/validation_human" / output_relative
+    selection_directory = output_directory / "10c_seaad_selection"
+    annotation_relative = str(
+        vh10.get("input_authority", {})
+        .get("phase18_annotation", {})
+        .get("path", "")
+    ).strip()
+    require(annotation_relative != "", "Phase 18 annotation path is missing from config")
+    annotation_path = Path(annotation_relative)
+    if not annotation_path.is_absolute():
+        annotation_path = project_root / annotation_path
+    paths = {
+        "vh10c_status": selection_directory / "status.tsv",
+        "seaad_top5": selection_directory / "seaad_top5.tsv",
+        "seaad_list_status": selection_directory / "seaad_list_status.tsv",
+        "selection_checks": selection_directory / "selection_checks.tsv",
+        "selection_freeze": selection_directory / "seaad_selection_freeze.tsv",
+        "selection_artifacts": selection_directory / "artifacts.tsv",
+        "run_manifest": output_directory / "10a_inputs/seaad_kda_run_manifest.tsv",
+        "validation_config": validation_config,
+        "phase18_annotation": annotation_path,
+    }
     missing = [key for key, path in paths.items() if not path.is_file()]
     require(not missing, "Missing required figure inputs: " + ", ".join(missing))
     return paths
@@ -341,7 +361,7 @@ def _selected_annotation(
 
 
 def load_bundle(project_root: Path) -> dict[str, Any]:
-    """Load and validate the compact frozen SEA-AD display contract."""
+    """Load and validate the compact SEA-AD VH10C display contract."""
 
     project_root = Path(project_root).resolve()
     paths = resolve_inputs(project_root)
@@ -362,6 +382,9 @@ def load_bundle(project_root: Path) -> dict[str, Any]:
             "validation_status",
             "failed_checks",
             "config_sha256",
+            "minimum_coverage",
+            "aggregate_q_threshold",
+            "minimum_conservative_supporting_runs",
             "candidate_units",
             "passing_candidate_units",
             "selected_top5_units",
@@ -386,6 +409,9 @@ def load_bundle(project_root: Path) -> dict[str, Any]:
             "schema_version",
             "query_rule_id",
             "result_tier_id",
+            "minimum_coverage",
+            "aggregate_q_threshold",
+            "minimum_conservative_supporting_runs",
             "candidate_units",
             "passing_candidate_units",
             "selected_top5_units",
@@ -400,7 +426,10 @@ def load_bundle(project_root: Path) -> dict[str, Any]:
     )
     require(freeze_row["schema_version"] == "seaad_kda_selection_freeze_v1", "Unexpected SEA-AD freeze schema")
     require(not truth(freeze_row["rosmap_candidate_files_read"]), "ROSMAP candidates were read before SEA-AD freeze")
-    require(freeze_row["freeze_status"] == "independent_seaad_selection_frozen", "SEA-AD selection is not independently frozen")
+    require(
+        freeze_row["freeze_status"] == "independent_seaad_selection_frozen",
+        "Unexpected SEA-AD selection-freeze status",
+    )
     require(sha256_file(paths["selection_freeze"]) == status_row["freeze_sha256"], "VH10C freeze hash disagrees with status")
     require(sha256_file(paths["seaad_top5"]) == freeze_row["top5_sha256"], "SEA-AD top-five hash disagrees with freeze")
     require(sha256_file(paths["validation_config"]) == freeze_row["config_sha256"], "Validation-config hash disagrees with freeze")
@@ -415,16 +444,69 @@ def load_bundle(project_root: Path) -> dict[str, Any]:
     result_tier_id = str(analysis.get("result_tier_id", ""))
     driver_classes = list(selection.get("driver_classes", []))
     display_limit = as_int(selection.get("display_limit"), "display limit")
+    minimum_coverage = as_float(selection.get("minimum_coverage"), "minimum coverage")
+    aggregate_q_threshold = as_float(
+        selection.get("aggregate_q_threshold"), "aggregate q threshold"
+    )
+    minimum_support = as_int(
+        selection.get("minimum_conservative_supporting_runs"),
+        "minimum conservative support",
+    )
+    minimum_effective_query_genes = as_int(
+        analysis.get("minimum_effective_query_genes"),
+        "minimum effective query genes",
+    )
+    fdr_threshold_exclusive = as_float(
+        analysis.get("fdr_threshold_exclusive"), "exclusive FDR threshold"
+    )
     require(network_order == NETWORK_ORDER, "SEA-AD network order changed")
     require(driver_classes == CLASS_ORDER, "SEA-AD driver-class order changed")
     require(display_limit == TOP_PER_NETWORK, "SEA-AD display limit changed")
-    require(as_float(selection.get("minimum_coverage")) == 0.80, "SEA-AD coverage gate changed")
-    require(as_float(selection.get("aggregate_q_threshold")) == 0.05, "SEA-AD aggregate-q gate changed")
-    require(as_int(selection.get("minimum_conservative_supporting_runs")) == 1, "SEA-AD conservative-support gate changed")
-    require(query_rule_id == "phase18_parity_query", "SEA-AD query rule changed")
-    require(result_tier_id == "phase18_parity_query__min3_all", "SEA-AD result tier changed")
+    require(query_rule_id != "", "SEA-AD query rule is missing")
+    require(result_tier_id != "", "SEA-AD result tier is missing")
+    require(
+        result_tier_id.startswith("posthoc_exploratory__"),
+        "The circular figures are scoped to the post-hoc exploratory SEA-AD tier",
+    )
+    require(0 < minimum_coverage <= 1, "SEA-AD coverage gate is outside (0, 1]")
+    require(0 < aggregate_q_threshold <= 1, "SEA-AD aggregate-q gate is outside (0, 1]")
+    require(minimum_support >= 1, "SEA-AD conservative-support gate must be positive")
+    require(minimum_effective_query_genes >= 1, "SEA-AD query minimum must be positive")
+    require(0 < fdr_threshold_exclusive < 1, "SEA-AD FDR gate is outside (0, 1)")
     require(freeze_row["query_rule_id"] == query_rule_id, "Freeze query rule differs from config")
     require(freeze_row["result_tier_id"] == result_tier_id, "Freeze result tier differs from config")
+    require(
+        math.isclose(as_float(freeze_row["minimum_coverage"]), minimum_coverage),
+        "Freeze coverage gate differs from config",
+    )
+    require(
+        math.isclose(
+            as_float(freeze_row["aggregate_q_threshold"]),
+            aggregate_q_threshold,
+        ),
+        "Freeze aggregate-q gate differs from config",
+    )
+    require(
+        as_int(freeze_row["minimum_conservative_supporting_runs"])
+        == minimum_support,
+        "Freeze support gate differs from config",
+    )
+    require(
+        math.isclose(as_float(status_row["minimum_coverage"]), minimum_coverage),
+        "VH10C status coverage gate differs from config",
+    )
+    require(
+        math.isclose(
+            as_float(status_row["aggregate_q_threshold"]),
+            aggregate_q_threshold,
+        ),
+        "VH10C status aggregate-q gate differs from config",
+    )
+    require(
+        as_int(status_row["minimum_conservative_supporting_runs"])
+        == minimum_support,
+        "VH10C status support gate differs from config",
+    )
 
     top_columns = [
         "query_rule_id",
@@ -447,7 +529,6 @@ def load_bundle(project_root: Path) -> dict[str, Any]:
         "empty_result_reason",
     ]
     require_columns(top5, top_columns, "SEA-AD top five")
-    require(len(top5) == 22, f"Expected 22 SEA-AD top-list rows, found {len(top5)}")
     require(set(top5["query_rule_id"]) == {query_rule_id}, "Top-list query rule changed")
     require(set(top5["result_tier_id"]) == {result_tier_id}, "Top-list result tier changed")
     require(set(top5["broad_network"]) == set(NETWORK_ORDER), "Top-list network scope changed")
@@ -457,14 +538,26 @@ def load_bundle(project_root: Path) -> dict[str, Any]:
         "Top-list case order changed",
     )
 
+    require(
+        set(top5["list_status"]).issubset(SUPPORTED_LIST_STATUSES),
+        "Top-list contains an unsupported list status",
+    )
     ranked = top5.loc[top5["list_status"].eq("ranked_candidates")].copy()
     sentinels = top5.loc[~top5["list_status"].eq("ranked_candidates")].copy()
-    require(len(ranked) == 13 and len(sentinels) == 9, "SEA-AD ranked/sentinel row partition changed")
     require((~ranked["current_symbol"].map(is_missing)).all(), "A ranked SEA-AD row lacks a symbol")
     require(sentinels["current_symbol"].map(is_missing).all(), "An empty-list sentinel contains a symbol")
-    require((ranked["coverage_fraction"].map(as_float) >= 0.80).all(), "A ranked row fails coverage")
-    require((ranked["conservative_support_count"].map(as_int) >= 1).all(), "A ranked row lacks conservative support")
-    require((ranked["aggregate_acat_q"].map(as_float) <= 0.05).all(), "A ranked row fails aggregate q")
+    require(
+        (ranked["coverage_fraction"].map(as_float) >= minimum_coverage).all(),
+        "A ranked row fails the configured coverage gate",
+    )
+    require(
+        (ranked["conservative_support_count"].map(as_int) >= minimum_support).all(),
+        "A ranked row lacks configured conservative support",
+    )
+    require(
+        (ranked["aggregate_acat_q"].map(as_float) <= aggregate_q_threshold).all(),
+        "A ranked row fails the configured aggregate-q gate",
+    )
     require((ranked["aggregate_acat_q"].map(as_float) > 0).all(), "A ranked row has nonpositive aggregate q")
     require(not ranked.duplicated(["broad_network", "current_symbol", "case_id"]).any(), "Selected SEA-AD keys are duplicated")
 
@@ -472,9 +565,22 @@ def load_bundle(project_root: Path) -> dict[str, Any]:
         group = group.copy()
         ranks = sorted(group["display_rank"].map(as_int).tolist())
         require(ranks == list(range(1, len(group) + 1)), f"Noncontinuous ranks for {network}/{case_id}")
-        total = {as_int(value) for value in group["total_passing_candidate_count"]}
-        displayed = {as_int(value) for value in group["displayed_candidate_count"]}
-        require(total == {len(group)} == displayed, f"SEA-AD list is backfilled or truncated: {network}/{case_id}")
+        total_values = {
+            as_int(value) for value in group["total_passing_candidate_count"]
+        }
+        displayed_values = {
+            as_int(value) for value in group["displayed_candidate_count"]
+        }
+        require(
+            len(total_values) == 1 and len(displayed_values) == 1,
+            f"SEA-AD list counts disagree within {network}/{case_id}",
+        )
+        total = next(iter(total_values))
+        displayed = next(iter(displayed_values))
+        require(
+            len(group) == displayed == min(total, display_limit),
+            f"SEA-AD display cap or no-backfill rule changed: {network}/{case_id}",
+        )
         ordered = group.assign(
             _q=group["aggregate_acat_q"].map(as_float),
             _p=group["aggregate_acat_p"].map(as_float),
@@ -507,18 +613,16 @@ def load_bundle(project_root: Path) -> dict[str, Any]:
         "output_rows",
     ]
     require_columns(list_status, list_columns, "SEA-AD list status")
-    require(len(list_status) == 14, f"Expected 14 SEA-AD lists, found {len(list_status)}")
+    require(
+        len(list_status) == len(NETWORK_ORDER) * len(CLASS_ORDER),
+        "SEA-AD list grid size changed",
+    )
     require(not list_status.duplicated(["broad_network", "case_id"]).any(), "SEA-AD list statuses are duplicated")
     expected_keys = {(network, case_id) for network in NETWORK_ORDER for case_id in CLASS_ORDER}
     require(set(zip(list_status["broad_network"], list_status["case_id"])) == expected_keys, "SEA-AD list grid changed")
-    status_counts = list_status["list_status"].value_counts().to_dict()
     require(
-        status_counts == {
-            "ranked_candidates": 5,
-            "no_passing_candidate": 5,
-            "not_testable_no_included_runs": 4,
-        },
-        f"SEA-AD list-status partition changed: {status_counts}",
+        set(list_status["list_status"]).issubset(SUPPORTED_LIST_STATUSES),
+        "SEA-AD list grid contains an unsupported state",
     )
     for row in list_status.itertuples(index=False):
         group = top5.loc[
@@ -531,49 +635,124 @@ def load_bundle(project_root: Path) -> dict[str, Any]:
             max(group["displayed_candidate_count"].map(as_int)) == as_int(row.displayed_candidate_count),
             f"Displayed count mismatch for {row.broad_network}/{row.case_id}",
         )
+        total = as_int(row.total_passing_candidate_count)
+        displayed = as_int(row.displayed_candidate_count)
+        output_rows = as_int(row.output_rows)
+        if row.list_status == "ranked_candidates":
+            require(total > 0, f"Ranked list has zero passing candidates: {row.broad_network}/{row.case_id}")
+            require(
+                output_rows == displayed == min(total, display_limit),
+                f"Ranked-list display counts changed: {row.broad_network}/{row.case_id}",
+            )
+        else:
+            require(
+                total == displayed == 0 and output_rows == 1,
+                f"Empty-list sentinel counts changed: {row.broad_network}/{row.case_id}",
+            )
+    require(
+        len(top5) == sum(list_status["output_rows"].map(as_int)),
+        "Top-list row count differs from the list-status contract",
+    )
+    require(
+        len(sentinels)
+        == int((list_status["list_status"] != "ranked_candidates").sum()),
+        "Top-list sentinel count differs from the list-status contract",
+    )
 
-    require_columns(run_manifest, ["broad_network", "terminal_status"], "SEA-AD run manifest")
-    require(len(run_manifest) == 1_548, "SEA-AD structural run-manifest size changed")
+    require_columns(
+        run_manifest,
+        [
+            "query_rule_id",
+            "result_tier_id",
+            "broad_network",
+            "terminal_status",
+            "kda_run_id",
+            "effective_query_genes",
+        ],
+        "SEA-AD run manifest",
+    )
+    expected_structural_slots = as_int(
+        analysis.get("expected", {}).get("structural_direction_slots"),
+        "configured structural direction slots",
+    )
+    require(
+        len(run_manifest) == expected_structural_slots,
+        "SEA-AD structural run-manifest size differs from config",
+    )
+    require(
+        set(run_manifest["query_rule_id"]) == {query_rule_id},
+        "Run-manifest query rule differs from config",
+    )
+    require(
+        set(run_manifest["result_tier_id"]) == {result_tier_id},
+        "Run-manifest result tier differs from config",
+    )
     active_states = {"eligible_small_query", "eligible_phase18_sized"}
     active_runs = run_manifest.loc[run_manifest["terminal_status"].isin(active_states)].copy()
-    require(len(active_runs) == 42, "SEA-AD included KDA-run count changed")
+    require(
+        active_runs["kda_run_id"].ne("").all()
+        and active_runs["kda_run_id"].is_unique,
+        "Active SEA-AD KDA run IDs are missing or duplicated",
+    )
+    require(
+        (
+            active_runs["effective_query_genes"].map(as_int)
+            >= minimum_effective_query_genes
+        ).all(),
+        "An active KDA run is below the configured query minimum",
+    )
     active_by_network = {
         network: int((active_runs["broad_network"] == network).sum())
         for network in NETWORK_ORDER
     }
-    require(
-        active_by_network
-        == {
-            "Astrocytes": 1,
-            "Excitatory_neurons": 20,
-            "Inhibitory_neurons": 16,
-            "Microglia": 1,
-            "OPCs": 0,
-            "Oligodendrocytes": 4,
-            "Vasculature_cells": 0,
-        },
-        f"SEA-AD included-run counts by network changed: {active_by_network}",
-    )
     for row in list_status.itertuples(index=False):
-        unavailable = row.list_status == "not_testable_no_included_runs"
-        require(unavailable == (active_by_network[row.broad_network] == 0), f"List testability disagrees with run manifest: {row.broad_network}/{row.case_id}")
+        no_included = row.list_status == "not_testable_no_included_runs"
+        require(
+            no_included == (active_by_network[row.broad_network] == 0),
+            f"List testability disagrees with run manifest: {row.broad_network}/{row.case_id}",
+        )
 
-    require(as_int(status_row["candidate_units"]) == 38_788, "VH10C candidate-unit count changed")
-    require(as_int(status_row["passing_candidate_units"]) == 13, "VH10C passing count changed")
-    require(as_int(status_row["selected_top5_units"]) == 13, "VH10C selected count changed")
-    require(as_int(status_row["selected_unique_genes"]) == 11, "VH10C selected-symbol count changed")
-    require(as_int(status_row["testable_networks"]) == 5, "VH10C testable-network count changed")
+    candidate_units = as_int(status_row["candidate_units"])
+    passing_candidate_units = sum(
+        list_status["total_passing_candidate_count"].map(as_int)
+    )
+    selected_top5_units = len(ranked)
+    selected_unique_genes = ranked["current_symbol"].nunique()
+    testable_networks = sum(value > 0 for value in active_by_network.values())
+    require(
+        as_int(status_row["passing_candidate_units"]) == passing_candidate_units,
+        "VH10C status passing count differs from list statuses",
+    )
+    require(
+        as_int(status_row["selected_top5_units"]) == selected_top5_units,
+        "VH10C status selected count differs from top lists",
+    )
+    require(
+        as_int(status_row["selected_unique_genes"]) == selected_unique_genes,
+        "VH10C status selected-symbol count differs from top lists",
+    )
+    require(
+        as_int(status_row["testable_networks"]) == testable_networks,
+        "VH10C status testable-network count differs from run manifest",
+    )
     for field, expected in (
-        ("candidate_units", 38_788),
-        ("passing_candidate_units", 13),
-        ("selected_top5_units", 13),
-        ("selected_unique_genes", 11),
+        ("candidate_units", candidate_units),
+        ("passing_candidate_units", passing_candidate_units),
+        ("selected_top5_units", selected_top5_units),
+        ("selected_unique_genes", selected_unique_genes),
     ):
-        require(as_int(freeze_row[field]) == expected, f"Freeze {field} changed")
+        require(
+            as_int(freeze_row[field]) == expected,
+            f"Freeze {field} differs from validated compact inputs",
+        )
 
     annotation_item = vh10.get("input_authority", {}).get("phase18_annotation", {})
     annotation_relative = str(annotation_item.get("path", ""))
-    require(annotation_relative == INPUT_PATHS["phase18_annotation"], "Phase 18 annotation path changed")
+    require(
+        paths["phase18_annotation"].resolve()
+        == (project_root / annotation_relative).resolve(),
+        "Resolved Phase 18 annotation path differs from config",
+    )
     require(sha256_file(paths["phase18_annotation"]) == annotation_item.get("sha256"), "Phase 18 annotation hash changed")
     selected_symbols = set(ranked["current_symbol"])
     annotation = _selected_annotation(paths["phase18_annotation"], selected_symbols)
@@ -582,20 +761,21 @@ def load_bundle(project_root: Path) -> dict[str, Any]:
         ann = annotation_map.loc[row.current_symbol]
         is_core = truth(ann["is_mitocarta3"])
         require(is_core == (row.case_id == "mt_driver"), f"Driver class disagrees with annotation: {row.current_symbol}")
-    mt_symbols = ranked.loc[ranked["case_id"].eq("mt_driver"), "current_symbol"]
-    require(all(truth(annotation_map.loc[symbol, "is_mtDNA_gene"]) for symbol in mt_symbols), "Not every selected MT unit is mtDNA encoded")
-    non_mt_symbols = ranked.loc[ranked["case_id"].eq("non_mt_driver"), "current_symbol"]
+    non_mt_symbols = ranked.loc[
+        ranked["case_id"].eq("non_mt_driver"), "current_symbol"
+    ]
     extended_non_mt = {
         symbol
         for symbol in non_mt_symbols
         if truth(annotation_map.loc[symbol, "extended_reference_member"])
     }
-    require(extended_non_mt == {"RPS27A"}, f"Extended non-MT marker set changed: {extended_non_mt}")
 
-    mt_count = int((ranked["case_id"] == "mt_driver").sum())
-    non_mt_count = int((ranked["case_id"] == "non_mt_driver").sum())
-    require((mt_count, non_mt_count) == (8, 5), "SEA-AD selected class counts changed")
-    require(ranked["current_symbol"].nunique() == 11, "SEA-AD unique selected-symbol count changed")
+    selected_class_counts = {
+        case_id: int((ranked["case_id"] == case_id).sum())
+        for case_id in CLASS_ORDER
+    }
+    mt_count = selected_class_counts["mt_driver"]
+    non_mt_count = selected_class_counts["non_mt_driver"]
 
     input_digests = {
         str(path.relative_to(project_root)): sha256_file(path)
@@ -624,19 +804,29 @@ def load_bundle(project_root: Path) -> dict[str, Any]:
         "network_order": network_order,
         "driver_classes": driver_classes,
         "display_limit": display_limit,
+        "minimum_coverage": minimum_coverage,
+        "aggregate_q_threshold": aggregate_q_threshold,
+        "minimum_conservative_supporting_runs": minimum_support,
+        "minimum_effective_query_genes": minimum_effective_query_genes,
+        "fdr_threshold_exclusive": fdr_threshold_exclusive,
+        "is_posthoc_exploratory": result_tier_id.startswith(
+            "posthoc_exploratory__"
+        ),
         "active_runs_by_network": active_by_network,
-        "selected_units": len(ranked),
+        "active_runs": len(active_runs),
+        "active_query_members": sum(
+            active_runs["effective_query_genes"].map(as_int)
+        ),
+        "candidate_units": candidate_units,
+        "passing_candidate_units": passing_candidate_units,
+        "selected_units": selected_top5_units,
         "selected_mt_units": mt_count,
         "selected_non_mt_units": non_mt_count,
-        "selected_class_counts": {
-            "mt_driver": mt_count,
-            "non_mt_driver": non_mt_count,
-        },
-        "selected_symbols": ranked["current_symbol"].nunique(),
+        "selected_class_counts": selected_class_counts,
+        "selected_symbols": selected_unique_genes,
+        "extended_non_mt_symbols": extended_non_mt,
         "candidate_summary_present": (
-            project_root
-            / "results/validation_human/10_seaad_kda_rediscovery/"
-            "10c_seaad_selection/seaad_candidate_summary.tsv.gz"
+            paths["seaad_top5"].parent / "seaad_candidate_summary.tsv.gz"
         ).is_file(),
     }
 
@@ -668,6 +858,32 @@ def _geometry() -> pd.DataFrame:
     require(len(geometry) == 35, "Circular geometry must contain 35 slots")
     require(abs(slot_width - 8.285714285714286) < 1e-12, "Circular slot width changed")
     return geometry
+
+
+def expected_slot_state_counts(bundle: Mapping[str, Any]) -> dict[str, int]:
+    """Derive fixed-slot state counts from the validated 14-list contract."""
+
+    counts: dict[str, int] = {}
+    display_limit = as_int(bundle["display_limit"], "bundle display limit")
+    for row in bundle["list_status"].itertuples(index=False):
+        displayed = as_int(row.displayed_candidate_count)
+        if row.list_status == "ranked_candidates":
+            counts["ranked_candidate"] = (
+                counts.get("ranked_candidate", 0) + displayed
+            )
+            unused = display_limit - displayed
+            if unused:
+                counts["unused_display_slot"] = (
+                    counts.get("unused_display_slot", 0) + unused
+                )
+        else:
+            slot_status = SLOT_STATUS_BY_EMPTY_LIST.get(row.list_status)
+            require(
+                slot_status is not None,
+                f"Unsupported SEA-AD list status: {row.list_status}",
+            )
+            counts[slot_status] = counts.get(slot_status, 0) + display_limit
+    return counts
 
 
 def build_plot_data(bundle: Mapping[str, Any]) -> pd.DataFrame:
@@ -712,12 +928,14 @@ def build_plot_data(bundle: Mapping[str, Any]) -> pd.DataFrame:
                 capped_score = None
                 if list_row["list_status"] == "ranked_candidates":
                     slot_status = "unused_display_slot"
-                elif list_row["list_status"] == "no_passing_candidate":
-                    slot_status = "no_passing_candidate_slot"
-                elif list_row["list_status"] == "not_testable_no_included_runs":
-                    slot_status = "not_testable_no_included_runs_slot"
                 else:
-                    raise RuntimeError(f"Unsupported SEA-AD list status: {list_row['list_status']}")
+                    slot_status = SLOT_STATUS_BY_EMPTY_LIST.get(
+                        str(list_row["list_status"])
+                    )
+                    require(
+                        slot_status is not None,
+                        f"Unsupported SEA-AD list status: {list_row['list_status']}",
+                    )
 
             style = {
                 "ranked_candidate": (RANKED_TRACK, "#FFFFFF", "solid", ""),
@@ -729,6 +947,12 @@ def build_plot_data(bundle: Mapping[str, Any]) -> pd.DataFrame:
                     "dashed",
                     "xx",
                 ),
+                "not_testable_no_eligible_case_runs_slot": (
+                    NOT_TESTABLE_TRACK,
+                    NOT_TESTABLE_EDGE,
+                    "dashed",
+                    "//",
+                ),
             }[slot_status]
             rows.append(
                 {
@@ -739,6 +963,12 @@ def build_plot_data(bundle: Mapping[str, Any]) -> pd.DataFrame:
                     "case_label": CLASS_LABELS[case_id],
                     "query_rule_id": bundle["query_rule_id"],
                     "result_tier_id": bundle["result_tier_id"],
+                    "posthoc_exploratory": bundle["is_posthoc_exploratory"],
+                    "minimum_coverage": bundle["minimum_coverage"],
+                    "aggregate_q_threshold": bundle["aggregate_q_threshold"],
+                    "minimum_conservative_supporting_runs": bundle[
+                        "minimum_conservative_supporting_runs"
+                    ],
                     "broad_network": geometry_row.broad_network,
                     "network_display_order": geometry_row.network_display_order,
                     "display_network": NETWORK_LABELS[geometry_row.broad_network],
@@ -794,12 +1024,7 @@ def build_plot_data(bundle: Mapping[str, Any]) -> pd.DataFrame:
     ]
     require(len(plot_data) == 70, "Fixed circular plot data must contain 70 slots")
     require(plot_data.groupby("case_id").size().to_dict() == {"mt_driver": 35, "non_mt_driver": 35}, "Each driver class must contain 35 slots")
-    expected_states = {
-        "ranked_candidate": 13,
-        "unused_display_slot": 12,
-        "no_passing_candidate_slot": 25,
-        "not_testable_no_included_runs_slot": 20,
-    }
+    expected_states = expected_slot_state_counts(bundle)
     require(plot_data["slot_status"].value_counts().to_dict() == expected_states, "Fixed-slot state counts changed")
     return plot_data
 
@@ -852,9 +1077,6 @@ def build_links(plot_data: pd.DataFrame) -> pd.DataFrame:
             "link_rule",
         ],
     )
-    require(len(links) == 2, f"Expected two SEA-AD recurrence links, found {len(links)}")
-    require(set(links["case_id"]) == {"mt_driver"}, "Non-MT recurrence link unexpectedly present")
-    require(set(links["current_symbol"]) == {"MT-CO2", "MT-CYB"}, "SEA-AD recurrence genes changed")
     return links
 
 
@@ -918,6 +1140,18 @@ def _polar_xy(radius: float, degrees: float) -> tuple[float, float]:
     return radius * math.cos(radians), radius * math.sin(radians)
 
 
+def _query_rule_label(query_rule_id: str) -> str:
+    labels = {
+        "fdr_only_query_sensitivity": "FDR-only DEG query",
+        "phase18_parity_query": "FDR + effect-size DEG query",
+    }
+    return labels.get(query_rule_id, query_rule_id.replace("_", " "))
+
+
+def _format_threshold(value: float) -> str:
+    return f"{value:.3g}"
+
+
 def _draw_link(ax: plt.Axes, angle1: float, angle2: float) -> None:
     start = _polar_xy(0.61, angle1)
     end = _polar_xy(0.61, angle2)
@@ -974,7 +1208,7 @@ def _draw_legend(fig: plt.Figure, case_id: str) -> None:
             hatch="xx",
         )
     )
-    ax.text(text_x, 0.337, "No included KDA run", fontsize=8.6, color=TEXT, ha="left", va="center")
+    ax.text(text_x, 0.337, "KDA list not testable", fontsize=8.6, color=TEXT, ha="left", va="center")
     ax.add_patch(mpatches.Rectangle((key_x, 0.225), 0.11, 0.045, facecolor=UNUSED_TRACK, edgecolor="#FFFFFF", linewidth=0.8))
     ax.text(text_x, 0.247, "Unused rank; no backfill", fontsize=8.6, color=TEXT, ha="left", va="center")
 
@@ -1105,8 +1339,13 @@ def _draw_circle_figure(
             zorder=6,
         )
         list_state = str(group.iloc[0]["list_status"])
-        if list_state in {"no_passing_candidate", "not_testable_no_included_runs"}:
-            label = "No passing\ncandidate" if list_state == "no_passing_candidate" else "No included\nKDA run"
+        state_labels = {
+            "no_passing_candidate": "No passing\ncandidate",
+            "not_testable_no_included_runs": "No included\nKDA run",
+            "not_testable_no_eligible_case_runs": "No eligible\nclass runs",
+        }
+        if list_state in state_labels:
+            label = state_labels[list_state]
             x, y = _polar_xy(1.22, block_mid)
             ax.text(
                 x,
@@ -1136,7 +1375,13 @@ def _draw_circle_figure(
     fig.text(
         0.30,
         0.915,
-        "Up to five passing candidates per network, ranked by aggregate ACAT q",
+        (
+            "Post-hoc exploratory • "
+            f"{_query_rule_label(str(class_slots.iloc[0]['query_rule_id']))} • "
+            f"coverage ≥ {100 * as_float(class_slots.iloc[0]['minimum_coverage']):.0f}% • "
+            "aggregate q ≤ "
+            f"{_format_threshold(as_float(class_slots.iloc[0]['aggregate_q_threshold']))}"
+        ),
         fontsize=8.2,
         color=MID,
         ha="center",
@@ -1212,6 +1457,8 @@ def _render_class_images(
             pad_inches=0,
             metadata=metadata,
         )
+        if extension == "svg":
+            normalize_text_trailing_whitespace(temporary)
         require(temporary.is_file() and temporary.stat().st_size > 1_000, f"Missing or small rendered image: {temporary}")
         os.replace(temporary, final)
         paths.append(final)
@@ -1311,32 +1558,67 @@ def build_checks(
     visual_review_status: str,
 ) -> pd.DataFrame:
     state_counts = plot_data["slot_status"].value_counts().to_dict()
+    expected_states = expected_slot_state_counts(bundle)
     occupied = plot_data.loc[plot_data["slot_status"].eq("ranked_candidate")]
+    class_counts = {
+        case_id: int((occupied["case_id"] == case_id).sum())
+        for case_id in CLASS_ORDER
+    }
+    recurrence_sizes = (
+        occupied.groupby(["case_id", "current_symbol"], sort=False)
+        .size()
+        .tolist()
+    )
+    expected_link_count = sum(max(int(size) - 1, 0) for size in recurrence_sizes)
+    expected_top_rows = sum(bundle["list_status"]["output_rows"].map(as_int))
+    freeze_flag = bundle["freeze"].iloc[0]["rosmap_candidate_files_read"]
+    empty_rows = plot_data.loc[
+        plot_data["slot_status"].str.contains("no_passing|not_testable")
+    ]
+    no_pass_styles = set(
+        empty_rows.loc[
+            empty_rows["slot_status"].eq("no_passing_candidate_slot"),
+            "slot_linestyle",
+        ]
+    )
+    unavailable_styles = set(
+        empty_rows.loc[
+            empty_rows["slot_status"].str.startswith("not_testable"),
+            "slot_linestyle",
+        ]
+    )
+    empty_state_redundant = (
+        not no_pass_styles
+        or not unavailable_styles
+        or no_pass_styles.isdisjoint(unavailable_styles)
+    )
     checks = [
         check_record("vh10c_validated", True, "validated_complete", "validated_complete", "VH10C completion was validated during input loading."),
-        check_record("compact_input_hashes", True, len(bundle["input_digests"]), len(INPUT_PATHS), "All compact inputs and the annotation reference are SHA-256 bound."),
-        check_record("rosmap_blinded_freeze", not truth(bundle["freeze"].iloc[0]["rosmap_candidate_files_read"]), bundle["freeze"].iloc[0]["rosmap_candidate_files_read"], False, "SEA-AD selection was frozen without ROSMAP candidates."),
+        check_record("compact_input_hashes", len(bundle["input_digests"]) == len(bundle["paths"]), len(bundle["input_digests"]), len(bundle["paths"]), "All required compact inputs and the annotation reference are SHA-256 bound."),
+        check_record("selection_source_flag", not truth(freeze_flag), freeze_flag, False, "VH10C records that ROSMAP candidate files were not read during selection; this post-hoc tier is not presented as confirmatory or as a blinded study."),
+        check_record("posthoc_exploratory_tier", bundle["is_posthoc_exploratory"], bundle["result_tier_id"], "posthoc_exploratory__*", "The figure is explicitly scoped to the exploratory tier."),
+        check_record("query_rule_consistency", set(plot_data["query_rule_id"]) == {bundle["query_rule_id"]}, "|".join(sorted(set(plot_data["query_rule_id"]))), bundle["query_rule_id"], "Plot rows inherit the validated active query rule."),
+        check_record("result_tier_consistency", set(plot_data["result_tier_id"]) == {bundle["result_tier_id"]}, "|".join(sorted(set(plot_data["result_tier_id"]))), bundle["result_tier_id"], "Plot rows inherit the validated result tier."),
         check_record("network_class_lists", len(bundle["list_status"]) == 14, len(bundle["list_status"]), 14, "Seven networks × two driver classes."),
-        check_record("top_list_rows", len(bundle["top5"]) == 22, len(bundle["top5"]), 22, "Thirteen ranked rows and nine sentinels."),
-        check_record("ranked_units", len(occupied) == 13, len(occupied), 13, "All frozen SEA-AD selected units are displayed."),
-        check_record("ranked_class_units", occupied.groupby("case_id").size().to_dict() == {"mt_driver": 8, "non_mt_driver": 5}, str(occupied.groupby("case_id").size().to_dict()), "mt_driver:8|non_mt_driver:5", "Frozen class partition."),
-        check_record("ranked_unique_symbols", occupied["current_symbol"].nunique() == 11, occupied["current_symbol"].nunique(), 11, "Unique displayed symbols."),
+        check_record("top_list_rows", len(bundle["top5"]) == expected_top_rows, len(bundle["top5"]), expected_top_rows, "Ranked rows plus one sentinel for each empty list."),
+        check_record("ranked_units", len(occupied) == bundle["selected_units"], len(occupied), bundle["selected_units"], "All validated SEA-AD selected units are displayed."),
+        check_record("ranked_class_units", class_counts == bundle["selected_class_counts"], str(class_counts), str(bundle["selected_class_counts"]), "Selected-unit class partition is derived from VH10C."),
+        check_record("ranked_unique_symbols", occupied["current_symbol"].nunique() == bundle["selected_symbols"], occupied["current_symbol"].nunique(), bundle["selected_symbols"], "Unique displayed symbols agree with VH10C."),
         check_record("fixed_plot_rows", len(plot_data) == 70, len(plot_data), 70, "Two classes × seven networks × five slots."),
-        check_record("ranked_slot_count", state_counts.get("ranked_candidate") == 13, state_counts.get("ranked_candidate"), 13, "Ranked circular slots."),
-        check_record("unused_slot_count", state_counts.get("unused_display_slot") == 12, state_counts.get("unused_display_slot"), 12, "Unused ranks after short passing lists."),
-        check_record("no_passing_slot_count", state_counts.get("no_passing_candidate_slot") == 25, state_counts.get("no_passing_candidate_slot"), 25, "Testable empty lists."),
-        check_record("not_testable_slot_count", state_counts.get("not_testable_no_included_runs_slot") == 20, state_counts.get("not_testable_no_included_runs_slot"), 20, "Unavailable network/class lists."),
-        check_record("included_runs", sum(bundle["active_runs_by_network"].values()) == 42, sum(bundle["active_runs_by_network"].values()), 42, "Included SEA-AD KDA runs."),
-        check_record("recurrence_links", len(links) == 2, len(links), 2, "MT-CO2 and MT-CYB recurrence links."),
-        check_record("non_mt_recurrence_links", int((links["case_id"] == "non_mt_driver").sum()) == 0, int((links["case_id"] == "non_mt_driver").sum()), 0, "The five non-MT symbols are unique."),
-        check_record("mt_core_and_mtdna", occupied.loc[occupied["case_id"].eq("mt_driver"), ["is_core_mito", "is_mtdna_gene"]].map(truth).all().all(), "all true", "all true", "All displayed MT units are core MitoCarta and mtDNA encoded."),
+        check_record("derived_slot_partition", state_counts == expected_states, str(state_counts), str(expected_states), "Fixed-slot states are derived from the 14 validated list statuses."),
+        check_record("included_runs", sum(bundle["active_runs_by_network"].values()) == bundle["active_runs"], sum(bundle["active_runs_by_network"].values()), bundle["active_runs"], "Included SEA-AD KDA runs are derived from the run manifest."),
+        check_record("recurrence_links", len(links) == expected_link_count, len(links), expected_link_count, "Each repeated selected gene contributes n−1 within-class links."),
+        check_record("mt_core_classification", occupied.loc[occupied["case_id"].eq("mt_driver"), "is_core_mito"].map(truth).all(), "all true", "all true", "All displayed MT units are core MitoCarta genes."),
         check_record("non_mt_outside_core", (~occupied.loc[occupied["case_id"].eq("non_mt_driver"), "is_core_mito"].map(truth)).all(), "all false", "all false", "All displayed non-MT units are outside core MitoCarta."),
-        check_record("extended_non_mt_marker", set(occupied.loc[occupied["case_id"].eq("non_mt_driver") & occupied["extended_reference_member"].map(truth), "current_symbol"]) == {"RPS27A"}, "|".join(sorted(set(occupied.loc[occupied["case_id"].eq("non_mt_driver") & occupied["extended_reference_member"].map(truth), "current_symbol"]))), "RPS27A", "Only RPS27A carries the non-MT extended-reference diamond."),
+        check_record("coverage_gate", occupied["coverage_fraction"].map(as_float).ge(bundle["minimum_coverage"]).all(), occupied["coverage_fraction"].map(as_float).min(), f">={bundle['minimum_coverage']}", "Displayed units meet the configured coverage gate."),
+        check_record("aggregate_q_gate", occupied["aggregate_acat_q"].map(as_float).le(bundle["aggregate_q_threshold"]).all(), occupied["aggregate_acat_q"].map(as_float).max(), f"<={bundle['aggregate_q_threshold']}", "Displayed units meet the configured aggregate-q gate."),
+        check_record("support_gate", occupied["conservative_support_count"].map(as_int).ge(bundle["minimum_conservative_supporting_runs"]).all(), occupied["conservative_support_count"].map(as_int).min(), f">={bundle['minimum_conservative_supporting_runs']}", "Displayed units meet the configured conservative-support gate."),
+        check_record("extended_non_mt_markers", set(occupied.loc[occupied["case_id"].eq("non_mt_driver") & occupied["extended_reference_member"].map(truth), "current_symbol"]) == bundle["extended_non_mt_symbols"], "|".join(sorted(set(occupied.loc[occupied["case_id"].eq("non_mt_driver") & occupied["extended_reference_member"].map(truth), "current_symbol"]))), "|".join(sorted(bundle["extended_non_mt_symbols"])), "Extended-reference diamonds are derived from annotation."),
         check_record("evidence_cap", EVIDENCE_CAP == 15, EVIDENCE_CAP, 15, "Both figures share the Phase 18 display cap."),
-        check_record("single_capped_unit", int((occupied["negative_log10_acat_q"] > EVIDENCE_CAP).sum()) == 1, int((occupied["negative_log10_acat_q"] > EVIDENCE_CAP).sum()), 1, "Only excitatory MT-CO2 is capped."),
+        check_record("display_scores_bounded", occupied["display_score"].map(as_float).between(0, 1, inclusive="both").all(), f"{occupied['display_score'].map(as_float).min():.4g}|{occupied['display_score'].map(as_float).max():.4g}", "[0,1]", "Evidence bars are capped without changing uncapped q values."),
         check_record("no_candidate_summary_read", "seaad_candidate_summary.tsv.gz" not in bundle["input_digests"], "not read", "not read", "The missing full candidate table is outside the compact display contract."),
         check_record("no_overlap_inputs", not any("09_rosmap_kda_candidates" in path or "10d_overlap" in path for path in bundle["input_digests"]), "none", "none", "No ROSMAP candidate or overlap result enters the figures."),
-        check_record("empty_state_redundancy", set(plot_data.loc[plot_data["slot_status"].str.contains("no_passing|not_testable"), ["slot_facecolor", "slot_edgecolor", "slot_linestyle", "slot_hatch"]].drop_duplicates()["slot_linestyle"]) == {"solid", "dashed"}, "solid|dashed + distinct fill/hatch + labels", "solid|dashed + distinct fill/hatch + labels", "No-passing and unavailable states differ by more than color."),
+        check_record("empty_state_redundancy", empty_state_redundant, "solid vs dashed + distinct fill/hatch + labels", "redundant non-color encoding", "No-passing and unavailable states differ by more than color."),
         check_record("minimum_font_size", min(meta["minimum_font_points"] for meta in render_meta.values()) >= 7.0, f"{min(meta['minimum_font_points'] for meta in render_meta.values()):.2f}", ">=7.0 pt", "Minimum visible text size."),
         check_record("canvas_text_clipping", sum(len(meta["canvas_clipped_text"]) for meta in render_meta.values()) == 0, sum(len(meta["canvas_clipped_text"]) for meta in render_meta.values()), 0, "No text leaves either canvas."),
     ]
@@ -1352,17 +1634,35 @@ def build_checks(
 
 
 def documentation(bundle: Mapping[str, Any]) -> tuple[str, str]:
-    caption = """# SEA-AD two-class circular figures: caption
+    ranked = bundle["ranked"]
+    recurrence = (
+        ranked.groupby(["case_id", "current_symbol"], sort=False)
+        .size()
+        .loc[lambda values: values > 1]
+    )
+    if recurrence.empty:
+        recurrence_text = "No selected gene recurs across broad networks."
+    else:
+        recurrence_items = [
+            f"{symbol} ({CLASS_LABELS[case_id]}, {as_int(count)} networks)"
+            for (case_id, symbol), count in recurrence.items()
+        ]
+        recurrence_text = "Repeated selected genes are " + ", ".join(
+            recurrence_items
+        ) + "."
+    coverage_percent = 100 * bundle["minimum_coverage"]
+    query_label = _query_rule_label(bundle["query_rule_id"])
+    caption = f"""# SEA-AD two-class circular figures: caption
 
-**SEA-AD MT and non-MT key-driver candidates across broad brain-cell networks.** Each circle shows one independently frozen SEA-AD driver class. Within each broad network, up to five genes passing the 80% coverage, conservative-support, and aggregate ACAT q ≤ 0.05 gates are displayed in rank order. Navy bar height is −log10(aggregate ACAT q) on a common scale capped at 15. Outer colors denote broad networks. Center curves connect repeated displayed genes across networks and are not network edges. Dots mark mtDNA-encoded MT genes; diamonds mark non-MT genes in the extended mitochondrial reference. Solid gray slots mark testable lists with no passing candidate, whereas dashed/crossed slots mark networks with no included KDA run. Failing genes were not used as backfills.
+**Post-hoc exploratory SEA-AD MT and non-MT key-driver candidates across broad brain-cell networks.** Each circle shows one driver class from the validated VH10C exploratory tier. Within each broad network, up to {bundle['display_limit']} genes passing the {coverage_percent:.0f}% coverage, conservative-support (at least {bundle['minimum_conservative_supporting_runs']} run), and aggregate ACAT q ≤ {_format_threshold(bundle['aggregate_q_threshold'])} gates are displayed in rank order. The active DEG input is the {query_label.lower()} (FDR < {_format_threshold(bundle['fdr_threshold_exclusive'])}). Navy bar height is −log10(aggregate ACAT q) on a common scale capped at {EVIDENCE_CAP:g}. Outer colors denote broad networks. Center curves connect repeated displayed genes across networks and are not network edges. Dots mark mtDNA-encoded MT genes; diamonds mark non-MT genes in the extended mitochondrial reference. Solid gray slots mark testable lists with no passing candidate, whereas dashed/crossed slots mark KDA lists that were not testable. Failing genes were not used as backfills. The display contains {bundle['selected_units']} network–gene units ({bundle['selected_mt_units']} MT, {bundle['selected_non_mt_units']} non-MT; {bundle['selected_symbols']} unique genes). This exploratory figure is not presented as confirmatory evidence.
 """
     methods = f"""# SEA-AD two-class circular figures: methods
 
-The renderer reads the compact validated VH10C selection contract: `status.tsv`, `seaad_top5.tsv`, `seaad_list_status.tsv`, `selection_checks.tsv`, `seaad_selection_freeze.tsv`, and their artifact registry. It verifies the registered SHA-256 values, `validated_complete` status, zero failed selection checks, `rosmap_candidate_files_read = False`, the frozen query/result tier, all candidate gates and stored ranks, and the 14-list testability grid against the 1,548-row SEA-AD KDA run manifest. The registered full `seaad_candidate_summary.tsv.gz` is not present and is not read; the renderer displays the already-frozen top lists and does not claim to rerank all 38,788 candidate units.
+The renderer reads the compact validated VH10C selection contract: `status.tsv`, `seaad_top5.tsv`, `seaad_list_status.tsv`, `selection_checks.tsv`, `seaad_selection_freeze.tsv`, and their artifact registry. It verifies the registered SHA-256 values, `validated_complete` status, zero failed selection checks, consistency of the configured query/result tier and selection gates, stored ranks, and the 14-list testability grid against the {len(bundle['run_manifest']):,}-row SEA-AD KDA run manifest. The active result is explicitly labeled `{bundle['result_tier_id']}` and is a post-hoc exploratory tier, not a confirmatory analysis. VH10C records `rosmap_candidate_files_read = False`; this provenance flag is reported without characterizing the post-hoc analysis as a blinded study. The registered full `seaad_candidate_summary.tsv.gz` is not present and is not read; the renderer displays the validated top lists and does not claim to rerank all {bundle['candidate_units']:,} candidate units.
 
-Candidate annotations are joined from the checksum-frozen Phase 18 annotation authority only to encode core-MitoCarta class, mtDNA dots, and extended-reference diamonds. No VH09 ROSMAP candidate table or VH10D overlap result is read. The selected set contains {bundle['selected_mt_units']} MT and {bundle['selected_non_mt_units']} non-MT network–gene units ({bundle['selected_symbols']} unique symbols). MT-CO2 and MT-CYB recur across excitatory and inhibitory networks; recurrence curves connect the highest-uncapped-evidence occurrence to the other occurrence and are not Bayesian-network edges.
+The query rule is `{bundle['query_rule_id']}` ({query_label}); effective queries require at least {bundle['minimum_effective_query_genes']} genes. Candidate selection requires coverage ≥ {_format_threshold(bundle['minimum_coverage'])}, aggregate ACAT BH q ≤ {_format_threshold(bundle['aggregate_q_threshold'])}, and at least {bundle['minimum_conservative_supporting_runs']} conservative supporting run. Candidate annotations are joined from the checksum-frozen Phase 18 annotation authority only to encode core-MitoCarta class, mtDNA dots, and extended-reference diamonds. No VH09 ROSMAP candidate table or VH10D overlap result is read by the renderer. The selected set contains {bundle['selected_mt_units']} MT and {bundle['selected_non_mt_units']} non-MT network–gene units ({bundle['selected_symbols']} unique symbols). {recurrence_text} Recurrence curves connect the highest-uncapped-evidence occurrence to each other within-class occurrence and are not Bayesian-network edges.
 
-Both figures use the Phase 18 seven-network order, colorblind-aware palette, 35 fixed slots, clockwise geometry, 6° network gaps, 1° slot gaps, and common evidence cap of 15. Testable/no-passing lists use a solid medium-light gray track and direct label. Lists with no included KDA run use a darker dashed, cross-hatched track and direct label. Thus unavailable evidence is not represented as a negative biological result. SVG and PDF are vector exports; SVG preserves searchable text. PNG review copies are 5400 × 3240 at 450 DPI.
+Both figures use the Phase 18 seven-network order, colorblind-aware palette, 35 fixed slots, clockwise geometry, 6° network gaps, 1° slot gaps, and common evidence cap of {EVIDENCE_CAP:g}. Testable/no-passing lists use a solid medium-light gray track and direct label. Lists with no included KDA run or no eligible class runs use a darker dashed, hatched track and direct label. Thus unavailable evidence is not represented as a negative biological result. SVG and PDF are vector exports; SVG preserves searchable text. PNG review copies are {PNG_WIDTH} × {PNG_HEIGHT} at {DEFAULT_PNG_DPI} DPI.
 
 ## Reproduction command
 
@@ -1445,6 +1745,7 @@ def validate_output(
 ) -> None:
     project_root = Path(project_root).resolve()
     output_root = Path(output_root).resolve()
+    bundle = load_bundle(project_root)
     require(output_root.is_dir(), f"Missing figure output directory: {output_root}")
     observed = sorted(path.name for path in output_root.iterdir() if path.is_file())
     require(observed == sorted(OUTPUT_FILES), f"Figure output contract mismatch: {observed}")
@@ -1457,6 +1758,22 @@ def validate_output(
         require(visual_status == expected_visual_status, "Visual-review status changed")
     expected_validation = "validated_complete" if visual_status == "complete" else "awaiting_visual_review"
     require(status["validation_status"] == expected_validation, "Unexpected validation status")
+    require(
+        as_int(status["selected_units"]) == bundle["selected_units"],
+        "Published selected-unit count differs from VH10C",
+    )
+    require(
+        as_int(status["selected_unique_symbols"]) == bundle["selected_symbols"],
+        "Published selected-symbol count differs from VH10C",
+    )
+    require(
+        {
+            "mt_driver": as_int(status["selected_mt_units"]),
+            "non_mt_driver": as_int(status["selected_non_mt_units"]),
+        }
+        == bundle["selected_class_counts"],
+        "Published class counts differ from VH10C",
+    )
 
     checks = read_tsv(output_root / f"{FIGURE_ID}_checks.tsv")
     require_columns(checks, ["check_id", "severity", "status"], "figure checks")
@@ -1482,14 +1799,54 @@ def validate_output(
 
     plot_data = read_tsv(output_root / f"{FIGURE_ID}_plot_data.tsv")
     require(len(plot_data) == 70, "Published plot table does not contain 70 slots")
-    require(plot_data["slot_status"].value_counts().to_dict() == {
-        "ranked_candidate": 13,
-        "unused_display_slot": 12,
-        "no_passing_candidate_slot": 25,
-        "not_testable_no_included_runs_slot": 20,
-    }, "Published slot-state partition changed")
+    require(
+        plot_data["slot_status"].value_counts().to_dict()
+        == expected_slot_state_counts(bundle),
+        "Published slot-state partition differs from VH10C list statuses",
+    )
+    published_selected = {
+        (
+            row.broad_network,
+            row.current_symbol,
+            row.case_id,
+            as_int(row.display_rank),
+        )
+        for row in plot_data.loc[
+            plot_data["slot_status"].eq("ranked_candidate")
+        ].itertuples(index=False)
+    }
+    expected_selected = {
+        (
+            row.broad_network,
+            row.current_symbol,
+            row.case_id,
+            as_int(row.display_rank),
+        )
+        for row in bundle["ranked"].itertuples(index=False)
+    }
+    require(
+        published_selected == expected_selected,
+        "Published selected identities/ranks differ from VH10C",
+    )
     links = read_tsv(output_root / f"{FIGURE_ID}_links.tsv")
-    require(len(links) == 2 and set(links["current_symbol"]) == {"MT-CO2", "MT-CYB"}, "Published recurrence table changed")
+    expected_links = build_links(build_plot_data(bundle))
+    link_columns = [
+        "case_id",
+        "current_symbol",
+        "anchor_broad_network",
+        "target_broad_network",
+    ]
+    require_columns(links, link_columns, "published recurrence links")
+    require(
+        set(map(tuple, links[link_columns].itertuples(index=False, name=None)))
+        == set(
+            map(
+                tuple,
+                expected_links[link_columns].itertuples(index=False, name=None),
+            )
+        ),
+        "Published recurrence links differ from selected-unit recurrence",
+    )
     image_paths = [output_root / name for name in OUTPUT_FILES[:6]]
     image_checks = _image_checks(image_paths, as_int(status["png_dpi"]))
     require(all(row["status"] == "pass" for row in image_checks), "Published image validation failed")
@@ -1522,7 +1879,11 @@ def publish(
             image_paths.extend(paths)
             render_meta[case_id] = meta
         write_tsv(plot_data, staging / f"{FIGURE_ID}_plot_data.tsv")
-        write_tsv(links, staging / f"{FIGURE_ID}_links.tsv")
+        write_tsv(
+            links,
+            staging / f"{FIGURE_ID}_links.tsv",
+            allow_empty=True,
+        )
         caption, methods = documentation(bundle)
         write_text(staging / f"{FIGURE_ID}_caption.md", caption)
         write_text(staging / f"{FIGURE_ID}_methods.md", methods)
@@ -1577,7 +1938,14 @@ def publish(
                     "selected_unique_symbols": bundle["selected_symbols"],
                     "candidate_summary_read": False,
                     "rosmap_candidate_files_read": False,
-                    "contract_scope": "compact_frozen_display_only",
+                    "query_rule_id": bundle["query_rule_id"],
+                    "result_tier_id": bundle["result_tier_id"],
+                    "minimum_coverage": bundle["minimum_coverage"],
+                    "aggregate_q_threshold": bundle["aggregate_q_threshold"],
+                    "minimum_conservative_supporting_runs": bundle[
+                        "minimum_conservative_supporting_runs"
+                    ],
+                    "contract_scope": "posthoc_exploratory_compact_display_only",
                     "completed_utc": datetime.now(timezone.utc).isoformat(),
                 }
             ]
@@ -1589,11 +1957,14 @@ def publish(
             expected_visual_status=visual_review_status,
         )
 
+        backup: Path | None = None
         if output_root.exists():
             timestamp = datetime.now().strftime("%Y%m%dT%H%M%S%f")
             backup = output_root.parent / f".{output_root.name}.backup.{timestamp}.{os.getpid()}"
             output_root.replace(backup)
         staging.replace(output_root)
+        if backup is not None and backup.exists():
+            shutil.rmtree(backup)
     except Exception:
         if staging.exists():
             shutil.rmtree(staging)

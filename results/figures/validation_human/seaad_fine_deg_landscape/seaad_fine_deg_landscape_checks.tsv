@@ -1,27 +1,32 @@
 schema_version	figure_id	check_id	severity	status	observed	expected	details
-seaad_fine_deg_landscape_figure_v1	seaad_fine_deg_landscape	vh08_validated	blocking	pass	validated_complete	validated_complete	Validated during input loading.
-seaad_fine_deg_landscape_figure_v1	seaad_fine_deg_landscape	frozen_input_hashes	blocking	pass	6	6	Every source matches its frozen SHA-256.
-seaad_fine_deg_landscape_figure_v1	seaad_fine_deg_landscape	heatmap_cell_count	blocking	pass	774	774	One cell per fine-supertype contrast.
-seaad_fine_deg_landscape_figure_v1	seaad_fine_deg_landscape	heatmap_keys_unique	blocking	pass	unique	unique	Each supertype–group cell is unique.
-seaad_fine_deg_landscape_figure_v1	seaad_fine_deg_landscape	heatmap_supertype_count	blocking	pass	129	129	All retained supertypes are represented.
-seaad_fine_deg_landscape_figure_v1	seaad_fine_deg_landscape	completed_contrast_count	blocking	pass	260	260	Completed contrast cells.
-seaad_fine_deg_landscape_figure_v1	seaad_fine_deg_landscape	not_estimable_count	blocking	pass	514	514	Not-estimable contrast cells.
-seaad_fine_deg_landscape_figure_v1	seaad_fine_deg_landscape	signed_totals	blocking	pass	{('F_e33', 'Dementia_down'): 6, ('F_e33', 'Dementia_up'): 249, ('F_e4', 'Dementia_down'): 31, ('F_e4', 'Dementia_up'): 111, ('M_e33', 'Dementia_down'): 14098, ('M_e33', 'Dementia_up'): 7697}	{('F_e33', 'Dementia_up'): 249, ('F_e33', 'Dementia_down'): 6, ('F_e4', 'Dementia_up'): 111, ('F_e4', 'Dementia_down'): 31, ('M_e33', 'Dementia_up'): 7697, ('M_e33', 'Dementia_down'): 14098}	Exact Dementia-up/down parity-hit totals.
-seaad_fine_deg_landscape_figure_v1	seaad_fine_deg_landscape	fdr_total	blocking	pass	24404	24404	FDR-significant feature–contrast hits.
-seaad_fine_deg_landscape_figure_v1	seaad_fine_deg_landscape	parity_total	blocking	pass	22192	22192	Parity-qualified feature–contrast hits.
-seaad_fine_deg_landscape_figure_v1	seaad_fine_deg_landscape	signal_contrasts	blocking	pass	74	74	Completed contrasts with at least one parity hit.
-seaad_fine_deg_landscape_figure_v1	seaad_fine_deg_landscape	m_e33_share	blocking	pass	98.2%	98.2%	Share of parity hits in M_e33.
-seaad_fine_deg_landscape_figure_v1	seaad_fine_deg_landscape	result_chip_count	blocking	pass	5	5	Five exact result chips.
-seaad_fine_deg_landscape_figure_v1	seaad_fine_deg_landscape	plot_record_count	blocking	pass	785	785	Heatmap, signed totals, and chips.
-seaad_fine_deg_landscape_figure_v1	seaad_fine_deg_landscape	plot_record_ids_unique	blocking	pass	unique	unique	Plot records are uniquely keyed.
-seaad_fine_deg_landscape_figure_v1	seaad_fine_deg_landscape	minimum_font_size	blocking	pass	16.0	>=16.0	All visible text is projection scale.
-seaad_fine_deg_landscape_figure_v1	seaad_fine_deg_landscape	canvas_text_clipping	blocking	pass	0	0	No visible text leaves the canvas.
-seaad_fine_deg_landscape_figure_v1	seaad_fine_deg_landscape	image_export_set	blocking	pass	.pdf|.png|.svg	.pdf|.png|.svg	PNG, PDF, and SVG exports are present.
-seaad_fine_deg_landscape_figure_v1	seaad_fine_deg_landscape	image_exports_nonempty	blocking	pass	all >1000	all >1000	Image exports are nontrivial.
-seaad_fine_deg_landscape_figure_v1	seaad_fine_deg_landscape	svg_searchable_text	blocking	pass	present	present	SVG text remains searchable.
-seaad_fine_deg_landscape_figure_v1	seaad_fine_deg_landscape	svg_vector_paths	blocking	pass	present	present	SVG contains vector geometry.
-seaad_fine_deg_landscape_figure_v1	seaad_fine_deg_landscape	pdf_signature	blocking	pass	%PDF-	%PDF-	PDF signature is valid.
-seaad_fine_deg_landscape_figure_v1	seaad_fine_deg_landscape	png_dimensions	blocking	pass	5400x2385	5400x2385	PNG dimensions match the frozen slide canvas.
-seaad_fine_deg_landscape_figure_v1	seaad_fine_deg_landscape	png_resolution	blocking	pass	450.01|450.01	450|450	Embedded PNG resolution is 450 DPI.
-seaad_fine_deg_landscape_figure_v1	seaad_fine_deg_landscape	png_color_mode	blocking	pass	RGBA	RGB or RGBA	PNG uses a slide-compatible color mode.
-seaad_fine_deg_landscape_figure_v1	seaad_fine_deg_landscape	visual_review	nonblocking	pass	complete	complete	Reviewed at slide size in color and grayscale.
+seaad_fine_deg_landscape_figure_v2	seaad_fine_deg_landscape	vh08_validated	blocking	pass	validated_complete	validated_complete	Validated during input loading.
+seaad_fine_deg_landscape_figure_v2	seaad_fine_deg_landscape	compact_input_hashes	blocking	pass	9	9	Every consumed compact source and config has a full-file SHA-256; bulky unconsumed shards are not required.
+seaad_fine_deg_landscape_figure_v2	seaad_fine_deg_landscape	posthoc_exploratory_label	blocking	pass	posthoc_exploratory	posthoc_exploratory	The amended SEA-AD analysis is labeled post-hoc exploratory.
+seaad_fine_deg_landscape_figure_v2	seaad_fine_deg_landscape	donor_three_protocol	blocking	pass	3	3	Minimum donors per disease arm.
+seaad_fine_deg_landscape_figure_v2	seaad_fine_deg_landscape	active_query_is_fdr_only	blocking	pass	FDR < 0.05	FDR < 0.05	The active heatmap measure has no fold-change gate.
+seaad_fine_deg_landscape_figure_v2	seaad_fine_deg_landscape	phase18_rule_is_reference	blocking	pass	FDR < 0.05 AND abs(logFC) > log2(1.3)	auxiliary 1.3-fold reference	The inherited fold gate is reported only as reference context.
+seaad_fine_deg_landscape_figure_v2	seaad_fine_deg_landscape	m_e4_included	blocking	pass	F_e33|F_e4|M_e33|M_e4	contains M_e4	The donor-3 rerun contributes completed M_e4 contrasts.
+seaad_fine_deg_landscape_figure_v2	seaad_fine_deg_landscape	heatmap_cell_count	blocking	pass	774	774	One cell per configured fine-supertype contrast.
+seaad_fine_deg_landscape_figure_v2	seaad_fine_deg_landscape	heatmap_keys_unique	blocking	pass	unique	unique	Each supertype–group cell is unique.
+seaad_fine_deg_landscape_figure_v2	seaad_fine_deg_landscape	heatmap_supertype_count	blocking	pass	129	129	All configured supertypes are represented.
+seaad_fine_deg_landscape_figure_v2	seaad_fine_deg_landscape	completed_contrast_count	blocking	pass	381	381	Completed contrast cells agree with VH08 status.
+seaad_fine_deg_landscape_figure_v2	seaad_fine_deg_landscape	not_estimable_count	blocking	pass	393	393	Not-estimable contrast cells agree with VH08 status.
+seaad_fine_deg_landscape_figure_v2	seaad_fine_deg_landscape	signed_totals	blocking	pass	{('F_e33', 'Dementia_down'): 8, ('F_e33', 'Dementia_up'): 258, ('F_e4', 'Dementia_down'): 34, ('F_e4', 'Dementia_up'): 112, ('M_e33', 'Dementia_down'): 14472, ('M_e33', 'Dementia_up'): 9533, ('M_e4', 'Dementia_down'): 0, ('M_e4', 'Dementia_up'): 6}	{('F_e33', 'Dementia_down'): 8, ('F_e33', 'Dementia_up'): 258, ('F_e4', 'Dementia_down'): 34, ('F_e4', 'Dementia_up'): 112, ('M_e33', 'Dementia_down'): 14472, ('M_e33', 'Dementia_up'): 9533, ('M_e4', 'Dementia_down'): 0, ('M_e4', 'Dementia_up'): 6}	Exact Dementia-up/down FDR-only totals.
+seaad_fine_deg_landscape_figure_v2	seaad_fine_deg_landscape	active_total	blocking	pass	24423	24423	FDR-only feature–contrast incidences.
+seaad_fine_deg_landscape_figure_v2	seaad_fine_deg_landscape	reference_total	blocking	pass	22211	22211	Phase 18 reference incidences.
+seaad_fine_deg_landscape_figure_v2	seaad_fine_deg_landscape	reference_subset	blocking	pass	22211	<= 24423	Reference hits are a subset of active FDR-only hits.
+seaad_fine_deg_landscape_figure_v2	seaad_fine_deg_landscape	signal_contrasts	blocking	pass	85	85	Completed contrasts with active signal.
+seaad_fine_deg_landscape_figure_v2	seaad_fine_deg_landscape	result_chip_count	blocking	pass	5	5	Five exact result chips.
+seaad_fine_deg_landscape_figure_v2	seaad_fine_deg_landscape	plot_record_count	blocking	pass	787	787	Heatmap, signed totals, and chips.
+seaad_fine_deg_landscape_figure_v2	seaad_fine_deg_landscape	plot_record_ids_unique	blocking	pass	unique	unique	Plot records are uniquely keyed.
+seaad_fine_deg_landscape_figure_v2	seaad_fine_deg_landscape	minimum_font_size	blocking	pass	16.0	>=16.0	All visible text is projection scale.
+seaad_fine_deg_landscape_figure_v2	seaad_fine_deg_landscape	canvas_text_clipping	blocking	pass	0	0	No visible text leaves the canvas.
+seaad_fine_deg_landscape_figure_v2	seaad_fine_deg_landscape	image_export_set	blocking	pass	.pdf|.png|.svg	.pdf|.png|.svg	PNG, PDF, and SVG exports are present.
+seaad_fine_deg_landscape_figure_v2	seaad_fine_deg_landscape	image_exports_nonempty	blocking	pass	all >1000	all >1000	Image exports are nontrivial.
+seaad_fine_deg_landscape_figure_v2	seaad_fine_deg_landscape	svg_searchable_text	blocking	pass	present	present	SVG text remains searchable.
+seaad_fine_deg_landscape_figure_v2	seaad_fine_deg_landscape	svg_vector_paths	blocking	pass	present	present	SVG contains vector geometry.
+seaad_fine_deg_landscape_figure_v2	seaad_fine_deg_landscape	pdf_signature	blocking	pass	%PDF-	%PDF-	PDF signature is valid.
+seaad_fine_deg_landscape_figure_v2	seaad_fine_deg_landscape	png_dimensions	blocking	pass	5400x2385	5400x2385	PNG dimensions match the frozen slide canvas.
+seaad_fine_deg_landscape_figure_v2	seaad_fine_deg_landscape	png_resolution	blocking	pass	450.01|450.01	450|450	Embedded PNG resolution is 450 DPI.
+seaad_fine_deg_landscape_figure_v2	seaad_fine_deg_landscape	png_color_mode	blocking	pass	RGBA	RGB or RGBA	PNG uses a slide-compatible color mode.
+seaad_fine_deg_landscape_figure_v2	seaad_fine_deg_landscape	visual_review	nonblocking	pass	complete	complete	Reviewed at slide size in color and grayscale.

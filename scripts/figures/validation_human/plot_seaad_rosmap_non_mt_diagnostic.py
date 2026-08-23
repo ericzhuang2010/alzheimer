@@ -47,6 +47,8 @@ FIGURE_HEIGHT_IN = 5.3
 DEFAULT_PNG_DPI = 450
 PNG_WIDTH = 5_400
 PNG_HEIGHT = 2_385
+QUERY_RULE = "fdr_only_query_sensitivity"
+RESULT_TIER = "posthoc_exploratory__fdr_only__donor3__query3__coverage80__q05"
 
 ROSMAP = "#E69F00"
 ROSMAP_PALE = "#F9E5B8"
@@ -60,16 +62,11 @@ TEXT = "#20252B"
 WHITE = "#FFFFFF"
 
 INPUT_PATHS = {
-    "phase12_status": "results/minerva_production/12_kda/kda_status.tsv",
-    "phase12_artifacts": "results/minerva_production/12_kda/kda_artifacts.tsv",
-    "phase12_checks": "results/minerva_production/12_kda/kda_checks.tsv",
-    "phase12_results": "results/minerva_production/12_kda/kda_results.tsv.gz",
     "phase18_status": "results/minerva_production/18_key_driver_selection/archive/key_driver_status.tsv",
     "phase18_artifacts": "results/minerva_production/18_key_driver_selection/archive/key_driver_artifacts.tsv",
     "phase18_checks": "results/minerva_production/18_key_driver_selection/archive/key_driver_checks.tsv",
     "phase18_run_manifest": "results/minerva_production/18_key_driver_selection/archive/key_driver_run_manifest.tsv",
     "phase18_support": "results/minerva_production/18_key_driver_selection/archive/key_driver_conservative_support.tsv.gz",
-    "phase18_gene_summary": "results/minerva_production/18_key_driver_selection/archive/key_driver_gene_case_summary.tsv.gz",
     "phase18_call_returns": "results/minerva_production/18_key_driver_selection/call_key_driver_returns.tsv",
     "vh09_status": "results/validation_human/09_rosmap_kda_candidates/status.tsv",
     "vh09_artifacts": "results/validation_human/09_rosmap_kda_candidates/artifacts.tsv",
@@ -90,33 +87,28 @@ INPUT_PATHS = {
 }
 
 EXPECTED_INPUT_SHA256 = {
-    "phase12_status": "ed1efb037d2d9e4c033e16d9b61f676b8ff530b9393c0bc3f1282d39efbd7c63",
-    "phase12_artifacts": "0ed17d3929e3bbb6216cf0451049b44a329cfe8ac36223ca8c77f5c853d445d9",
-    "phase12_checks": "e83f53eb341c0c7bd499a2d6ba66336707f20dfe88303c63225a8e63f26f4d53",
-    "phase12_results": "079c5ec46435740d6a676c5676f637d49e4787c17f8490fbc398996a9b58ade1",
     "phase18_status": "91b2d997e9b15be1c06ceccff32a65b46f5f499e5ba607fe7990a99b826c9672",
     "phase18_artifacts": "4eda4b904e7476333b5f9a45562e8829fa2d24f730c632907ab15f07d941fb16",
     "phase18_checks": "463ed53c814a1c45a0981544cffaf56ddcb48d40848be8392bb2583acc86a34b",
     "phase18_run_manifest": "95a596d5e7a98dcfc7fe09f57f11156fa1a78534a36549a5e854d2ce79e43fc1",
     "phase18_support": "bce46031b589a353c98b4bd255fe8d6a4b71aa4dbe25336bedfb42025bf44f1a",
-    "phase18_gene_summary": "a173e1338c8b48b2c524fec83778ba5057674fe486b6b04b33c44df2eaadfcae",
     "phase18_call_returns": "b917f70e6edcdf030f63e88ba8fbc5b22b80714599c12c80ea449e8c38bd51d8",
     "vh09_status": "e5504ef3edb8264064d40b8307ded3f2277e9230e39f1029162aba4b11f52568",
     "vh09_artifacts": "9cb622cb3d1affc93eac21d598d51ada31b5f74a2355f477cce78c6cbe6f6ced",
     "vh09_checks": "74cacf128d42e62d63780a1e7f2658fec4dee0b701d5c8009c59e6df6614b8a8",
     "rosmap_selected": "e758720f7dcd80d1d6ef72fc7f95bfa20e3784931114e59c716a0e85b681d443",
-    "vh10a_status": "d137ec39191340b2b956e1e91693ef694e45858064be4308f8bd5cde20283c81",
-    "vh10a_artifacts": "e0d86a664eda5ea0f33fbb81800857bfafffa0ddc88970fce6f81416227202d5",
-    "vh10a_checks": "db1a89653096468fb3520d5b33477f87a9e910321cd79d2e01526f252f514cfe",
-    "seaad_run_manifest": "03197e2fb701d5d1c17c59339e3d16818222d946e795bdb70ce845e77896441d",
-    "vh10b_status": "db308f382993c033b6126e996e860f8bcdb3a5d826e2aeea2daf54511e1d4e92",
-    "vh10b_artifacts": "d3b012e7b9cf383bf489d259a2f3bcfbbd26f5682a2362efd9422f5d0e3d58c1",
-    "vh10b_checks": "2e854d16fafd752ad9081c365f5690dcf5f626f67bde1b5a5bad1a06c0ba2a5d",
-    "seaad_returns": "82ef26e9a2e7f22f81720b4c1a5076a40a7c924b8f5ee997bcde502b4585483b",
-    "vh10d_status": "fd9370f145948f10358e90830e18b25fbf36b3c253c5b2ac22528cb7f74f9528",
-    "vh10d_artifacts": "b349a71f5a5735188397a535c054f81af5c024278a6b21ee9c86b8491b2c2a57",
-    "vh10d_checks": "a437d7122e0b83173aa49684127a00bd07da2a9b4df2bc1d0366fe478b3526d1",
-    "unit_overlap": "68b839ef1dae967bc482d16667d94fe8fd2a8bb17290ea43b2a96767c4abbfa6",
+    "vh10a_status": "582c6dd10605b9f2145b40c1bacaffa0c11f4da699d44c9e965ce0f3158ccb02",
+    "vh10a_artifacts": "8cf0a45efc1c5c43edf57ea465589f2a3ec64e989af476a0612ffd376652d266",
+    "vh10a_checks": "d7af845d5aa5dcd0cd64c0c7ad0f690b7279e98f27ec163425234f4da5f7a8ab",
+    "seaad_run_manifest": "9ce1b5c1d129e7f13316539b86554027cab6cc94fd817992d9d9665fa063704e",
+    "vh10b_status": "acc98130300d6d28fc8a60487821f39e695639d6fea2efbb0cd3322e8fe62bdc",
+    "vh10b_artifacts": "08ba018c8c4114303894c3cbfcea4dcc00864e0b3a9d56c3fc4006400ca0cfb7",
+    "vh10b_checks": "9c71056a9ad278cfea4204a07dd2fe44f8cd27d7fc88852e9c8d7cbdc0c339e3",
+    "seaad_returns": "ac64befaa111343dfe41c28c3419d7431b256694132d239b3b825d51cee3d183",
+    "vh10d_status": "1e80ad3914e12a63e7bd6f5ee005eebd4889bc32a3dc952e48c2b1575c12ac5e",
+    "vh10d_artifacts": "fc15576f85f1d53670ff2efe211256c6f0f4d27b6f609fbbad5b4fa8b6c90f41",
+    "vh10d_checks": "83e1413b1b9b30b9e11c643bc837070ec6278d1f88ee299c1bb9caf1e95cc5c3",
+    "unit_overlap": "2230ac092af573402df9a6c6041c552648efccdc29176118c0b6dc83d72700f6",
 }
 
 OUTPUT_FILES = [
@@ -135,7 +127,8 @@ OUTPUT_FILES = [
 ]
 PAYLOAD_FILES = OUTPUT_FILES[:-2]
 
-UNAVAILABLE_GROUPS = {"F_e2", "M_e2", "M_e4"}
+DONOR_UNAVAILABLE_GROUPS = {"F_e2", "M_e2"}
+CONTEXT_SUPPORT_GROUPS = {"F_e2", "M_e2", "M_e4"}
 EXPECTED_NOT_TESTABLE = {
     ("OPCs", "RPS15"), ("OPCs", "FTL"),
     ("OPCs", "ANKRD11"), ("OPCs", "NCOA1"),
@@ -143,15 +136,12 @@ EXPECTED_NOT_TESTABLE = {
 EXPECTED_ONE_RETURN = {
     ("Excitatory_neurons", "DYNLT1"),
     ("Inhibitory_neurons", "RPS15"),
-    ("Inhibitory_neurons", "RPLP1"),
     ("Inhibitory_neurons", "RPL38"),
 }
 REVERSE_ORDER = [
     ("Excitatory_neurons", "HGSNAT"),
     ("Inhibitory_neurons", "BEX3"),
     ("Inhibitory_neurons", "RPS27A"),
-    ("Inhibitory_neurons", "RPL30"),
-    ("Oligodendrocytes", "KANSL1L"),
 ]
 
 
@@ -271,13 +261,13 @@ def load_reverse_aggregate(path: Path) -> pd.DataFrame:
         "terminal_candidate_status", "top5_display",
     ]
     frame = pd.read_csv(path, sep="\t", usecols=columns, low_memory=False)
-    keys = set(REVERSE_ORDER[:-1])
+    keys = set(REVERSE_ORDER)
     mask = pd.Series(
         [(network, gene) in keys for network, gene in zip(frame["broad_network"], frame["key_driver"])],
         index=frame.index,
     ) & frame["case_id"].eq("non_mt_driver")
     frame = frame.loc[mask].drop_duplicates().copy()
-    require(len(frame) == 4, f"Expected four explicit reverse aggregate rows, observed {len(frame)}")
+    require(len(frame) == 3, f"Expected three explicit reverse aggregate rows, observed {len(frame)}")
     return frame
 
 
@@ -294,17 +284,14 @@ def load_bundle(project_root: Path) -> dict[str, Any]:
 
     compact_keys = [
         key for key in INPUT_PATHS
-        if key not in {"phase18_support", "phase18_gene_summary", "phase18_call_returns"}
+        if key not in {"phase18_support", "phase18_call_returns"}
     ]
     frames = {key: read_tsv(paths[key], dtype=str, keep_default_na=False) for key in compact_keys}
 
-    phase12_status = one_row(frames["phase12_status"], "Phase 12 status")
     phase18_status = one_row(frames["phase18_status"], "Phase 18 status")
-    require(phase12_status["validation_status"] == "validated_complete", "Phase 12 is not validated_complete")
     require(phase18_status["validation_status"] == "validated_complete", "Phase 18 is not validated_complete")
-    require(as_int(phase12_status["failed_checks"]) == 0, "Phase 12 reports failed checks")
     require(as_int(phase18_status["failed_checks"]) == 0, "Phase 18 reports failed checks")
-    for label in ("phase12_checks", "phase18_checks", "vh09_checks", "vh10a_checks", "vh10b_checks", "vh10d_checks"):
+    for label in ("phase18_checks", "vh09_checks", "vh10a_checks", "vh10b_checks", "vh10d_checks"):
         require_columns(frames[label], ["passed"], label)
         require(frames[label]["passed"].map(truth).all(), f"Failed upstream check in {label}")
     for label in ("vh09_status", "vh10a_status", "vh10b_status", "vh10d_status"):
@@ -313,12 +300,9 @@ def load_bundle(project_root: Path) -> dict[str, Any]:
         require(str(row.get("failed_checks", "")).strip() == "", f"{label} reports failed checks")
 
     registrations = [
-        ("phase12_artifacts", "results/minerva_production/12_kda/kda_checks.tsv", "phase12_checks"),
-        ("phase12_artifacts", "results/minerva_production/12_kda/kda_results.tsv.gz", "phase12_results"),
         ("phase18_artifacts", "key_driver_checks.tsv", "phase18_checks"),
         ("phase18_artifacts", "key_driver_run_manifest.tsv", "phase18_run_manifest"),
         ("phase18_artifacts", "key_driver_conservative_support.tsv.gz", "phase18_support"),
-        ("phase18_artifacts", "key_driver_gene_case_summary.tsv.gz", "phase18_gene_summary"),
         ("vh09_artifacts", INPUT_PATHS["vh09_checks"], "vh09_checks"),
         ("vh09_artifacts", INPUT_PATHS["rosmap_selected"], "rosmap_selected"),
         ("vh10a_artifacts", INPUT_PATHS["vh10a_checks"], "vh10a_checks"),
@@ -338,20 +322,19 @@ def load_bundle(project_root: Path) -> dict[str, Any]:
     selected_keys = set(zip(selected["broad_network"], selected["key_driver"]))
 
     overlap = frames["unit_overlap"].copy()
-    require_columns(overlap, ["broad_network", "gene", "case_id", "in_common_assessable_universe", "rosmap_top5", "seaad_top5", "seaad_driver_candidate", "replication_status"], "unit overlap")
+    require_columns(overlap, ["result_tier_id", "broad_network", "gene", "case_id", "in_common_assessable_universe", "rosmap_top5", "seaad_top5", "seaad_driver_candidate", "replication_status"], "unit overlap")
+    require(set(overlap["result_tier_id"]) == {RESULT_TIER}, "SEA-AD overlap result tier changed")
     overlap = overlap.loc[overlap["case_id"].eq("non_mt_driver") & overlap["rosmap_top5"].map(truth)].copy()
     require(len(overlap) == 21, "ROSMAP non-MT overlap rows changed")
     require(set(zip(overlap["broad_network"], overlap["gene"])) == selected_keys, "Selected/overlap unit keys disagree")
 
     support = load_selected_support(paths["phase18_support"], selected_keys)
     reverse_aggregate = load_reverse_aggregate(paths["phase18_call_returns"])
-    gene_summary = pd.read_csv(
-        paths["phase18_gene_summary"], sep="\t",
-        usecols=["broad_network", "current_symbol", "case_id", "aggregate_acat_p", "aggregate_acat_q", "conservative_support_count", "terminal_candidate_status", "top5_display"],
-    )
-    phase12_results = frames["phase12_results"].copy()
     seaad_returns = frames["seaad_returns"].copy()
     seaad_manifest = frames["seaad_run_manifest"].copy()
+    require_columns(seaad_manifest, ["query_rule_id", "result_tier_id"], "SEA-AD run manifest")
+    require(set(seaad_manifest["query_rule_id"]) == {QUERY_RULE}, "SEA-AD query rule changed")
+    require(set(seaad_manifest["result_tier_id"]) == {RESULT_TIER}, "SEA-AD result tier changed")
     phase18_manifest = frames["phase18_run_manifest"].copy()
 
     input_bundle_sha256 = sha256_strings(
@@ -368,8 +351,6 @@ def load_bundle(project_root: Path) -> dict[str, Any]:
         "overlap": overlap,
         "support": support,
         "reverse_aggregate": reverse_aggregate,
-        "gene_summary": gene_summary,
-        "phase12_results": phase12_results,
         "seaad_returns": seaad_returns,
         "seaad_manifest": seaad_manifest,
         "phase18_manifest": phase18_manifest,
@@ -399,7 +380,8 @@ def build_plot_data(bundle: Mapping[str, Any]) -> pd.DataFrame:
             & support["current_symbol"].eq(row.key_driver)
         ]
         groups = sorted(set(ros_support["signature_group"]))
-        unavailable_groups = sorted(set(groups) & UNAVAILABLE_GROUPS)
+        donor_unavailable_groups = sorted(set(groups) & DONOR_UNAVAILABLE_GROUPS)
+        context_groups = sorted(set(groups) & CONTEXT_SUPPORT_GROUPS)
         matched = qualifying.loc[
             qualifying["broad_network"].eq(row.broad_network)
             & qualifying["key_driver"].eq(row.key_driver)
@@ -420,9 +402,11 @@ def build_plot_data(bundle: Mapping[str, Any]) -> pd.DataFrame:
                 "seaad_top5": truth(trace["seaad_top5"]),
                 "replication_status": trace["replication_status"],
                 "rosmap_support_groups": "|".join(groups),
-                "rosmap_unavailable_in_seaad_support_groups": "|".join(unavailable_groups),
-                "rosmap_has_unavailable_stratum_support": bool(unavailable_groups),
-                "unavailable_support_is_exclusive": set(groups).issubset(UNAVAILABLE_GROUPS),
+                "rosmap_support_in_seaad_donor_unavailable_groups": "|".join(donor_unavailable_groups),
+                "rosmap_has_donor_unavailable_stratum_support": bool(donor_unavailable_groups),
+                "donor_unavailable_support_is_exclusive": bool(groups) and set(groups).issubset(DONOR_UNAVAILABLE_GROUPS),
+                "rosmap_support_in_f_e2_m_e2_m_e4_groups": "|".join(context_groups),
+                "rosmap_has_f_e2_m_e2_m_e4_support": bool(context_groups),
             }
         )
     frame = pd.DataFrame(rows)
@@ -432,7 +416,9 @@ def build_plot_data(bundle: Mapping[str, Any]) -> pd.DataFrame:
     require(not_testable == EXPECTED_NOT_TESTABLE, "Not-testable OPC identities changed")
     require(one_return == EXPECTED_ONE_RETURN, "One-return identities changed")
     require(frame["seaad_qualifying_return_count"].isin([0, 1]).all(), "Unexpected repeated SEA-AD matching support")
-    require(frame["rosmap_has_unavailable_stratum_support"].sum() == 20, "Unavailable-stratum support count changed")
+    require(frame["rosmap_has_donor_unavailable_stratum_support"].sum() == 19, "Donor-unavailable-stratum support count changed")
+    require(frame["donor_unavailable_support_is_exclusive"].sum() == 3, "Exclusive donor-unavailable support count changed")
+    require(frame["rosmap_has_f_e2_m_e2_m_e4_support"].sum() == 20, "Combined context-support count changed")
     require(not frame["seaad_final_driver_candidate"].any(), "A ROSMAP non-MT unit passed SEA-AD final selection")
     return frame
 
@@ -453,66 +439,31 @@ def build_fate_summary(plot_data: pd.DataFrame) -> pd.DataFrame:
             for node, parent, count, definition in rows
         ]
     )
-    require(frame["unit_count"].astype(int).tolist() == [21, 4, 17, 13, 4, 0], "Fate counts changed")
+    require(frame["unit_count"].astype(int).tolist() == [21, 4, 17, 14, 3, 0], "Fate counts changed")
     return frame
 
 
 def build_reverse_lookup(bundle: Mapping[str, Any]) -> pd.DataFrame:
     aggregate = bundle["reverse_aggregate"].set_index(["broad_network", "key_driver"])
-    gene_summary = bundle["gene_summary"]
-    phase12 = bundle["phase12_results"].copy()
-    phase12["signature_size"] = pd.to_numeric(phase12["signature_size"], errors="coerce")
-    phase12["adjusted_p_value"] = pd.to_numeric(phase12["adjusted_p_value"], errors="coerce")
-    rpl30_excluded = phase12.loc[
-        phase12["analysis_tier"].eq("primary")
-        & phase12["broad_network"].eq("Inhibitory_neurons")
-        & phase12["key_driver"].eq("RPL30")
-        & phase12["signature_size"].lt(10)
-        & phase12["adjusted_p_value"].le(0.05)
-    ]
-    require(len(rpl30_excluded) == 2 and set(rpl30_excluded["signature_size"].astype(int)) == {3}, "RPL30 excluded size-3 return count changed")
-    kansl_raw = phase12.loc[
-        phase12["analysis_tier"].eq("primary")
-        & phase12["broad_network"].eq("Oligodendrocytes")
-        & phase12["key_driver"].eq("KANSL1L")
-    ]
-    require(kansl_raw.empty, "KANSL1L unexpectedly has a primary ROSMAP return")
 
     rows = []
     for order, (network, gene) in enumerate(REVERSE_ORDER, start=1):
-        if (network, gene) in aggregate.index:
-            row = aggregate.loc[(network, gene)]
-            q_value = float(row["aggregate_acat_q"])
-            p_value = float(row["aggregate_acat_p"])
-            support_count = as_int(row["conservative_support_count"])
-            terminal = row["terminal_candidate_status"]
-        else:
-            fallback = gene_summary.loc[
-                gene_summary["broad_network"].eq(network)
-                & gene_summary["current_symbol"].eq(gene)
-                & gene_summary["case_id"].eq("case3_not_core_mito")
-            ]
-            fallback_row = one_row(fallback, f"ROSMAP fallback {network}/{gene}")
-            q_value = float(fallback_row["aggregate_acat_q"])
-            p_value = float(fallback_row["aggregate_acat_p"])
-            support_count = as_int(fallback_row["conservative_support_count"])
-            terminal = fallback_row["terminal_candidate_status"]
+        require((network, gene) in aggregate.index, f"Missing ROSMAP reverse lookup for {network}/{gene}")
+        row = aggregate.loc[(network, gene)]
+        q_value = float(row["aggregate_acat_q"])
+        p_value = float(row["aggregate_acat_p"])
+        support_count = as_int(row["conservative_support_count"])
+        terminal = row["terminal_candidate_status"]
 
         if gene == "HGSNAT":
             outcome_id = "some_support_gate_not_passed"
-            outcome = "Some run support; aggregate gate not passed"
+            outcome = "1 supporting run; aggregate gate not passed"
         elif gene == "BEX3":
             outcome_id = "multiple_supports_gate_not_passed"
-            outcome = "Multiple run supports; aggregate gate not passed"
-        elif gene == "RPS27A":
-            outcome_id = "support_present_gate_not_passed"
-            outcome = "Run support present; aggregate gate not passed"
-        elif gene == "RPL30":
-            outcome_id = "excluded_size3_only"
-            outcome = "Only 2 excluded size-3 returns; no included conservative support"
+            outcome = "4 supporting runs; aggregate gate not passed"
         else:
-            outcome_id = "no_explicit_primary_return"
-            outcome = "No explicit primary ROSMAP return; not selected"
+            outcome_id = "support_present_gate_not_passed"
+            outcome = "2 supporting runs; aggregate gate not passed"
         rows.append(
             {
                 "schema_version": f"{SCHEMA}_reverse_lookup",
@@ -524,14 +475,12 @@ def build_reverse_lookup(bundle: Mapping[str, Any]) -> pd.DataFrame:
                 "rosmap_aggregate_q": q_value,
                 "rosmap_conservative_support_count": support_count,
                 "rosmap_terminal_candidate_status": terminal,
-                "excluded_size3_primary_return_count": len(rpl30_excluded) if gene == "RPL30" else 0,
-                "explicit_primary_return_count": 0 if gene == "KANSL1L" else "NA",
                 "outcome_id": outcome_id,
                 "plain_language_outcome": outcome,
             }
         )
     frame = pd.DataFrame(rows)
-    expected_q = {"HGSNAT": 0.6413643985648223, "BEX3": 0.1574575602307228, "RPS27A": 1.0, "RPL30": 1.0, "KANSL1L": 1.0}
+    expected_q = {"HGSNAT": 0.6413643985648223, "BEX3": 0.1574575602307228, "RPS27A": 1.0}
     observed_q = frame.set_index("gene")["rosmap_aggregate_q"].astype(float).to_dict()
     require(all(math.isclose(observed_q[gene], value) for gene, value in expected_q.items()), "Reverse-lookup q values changed")
     require(not frame["rosmap_terminal_candidate_status"].isin({"driver_candidate"}).any(), "A reverse-lookup unit became a ROSMAP driver candidate")
@@ -556,20 +505,43 @@ def build_coverage_context(bundle: Mapping[str, Any], plot_data: pd.DataFrame) -
             errors="raise",
         ).min()
     )
-    donor_limited_groups = set(
-        seaad.loc[seaad["source_terminal_reason"].eq("disease_arm_below_5"), "signature_group"]
+    group_directions = seaad.groupby("signature_group").size().astype(int)
+    donor_unestimable = seaad.loc[
+        seaad["source_terminal_reason"].eq("disease_arm_below_minimum")
+    ].groupby("signature_group").size().astype(int)
+    fully_donor_unavailable = {
+        group for group, count in group_directions.items()
+        if int(donor_unestimable.get(group, 0)) == int(count)
+    }
+    m_e4 = seaad.loc[seaad["signature_group"].eq("M_e4")].copy()
+    m_e4_completed = m_e4["source_terminal_status"].eq("completed")
+    m_e4_completed_contrasts = int(m_e4.loc[m_e4_completed, "contrast_id"].nunique())
+    m_e4_completed_directions = int(m_e4_completed.sum())
+    m_e4_query_empty_directions = int(
+        (m_e4_completed & m_e4["terminal_status"].eq("query_empty")).sum()
     )
-    groups_with_eligible_calls = set(
-        seaad.loc[seaad["eligibility_status"].eq("eligible"), "signature_group"]
+    m_e4_calls = int(m_e4["eligibility_status"].eq("eligible").sum())
+    donor_unavailable_support = int(
+        plot_data["rosmap_has_donor_unavailable_stratum_support"].sum()
     )
-    unavailable = donor_limited_groups - groups_with_eligible_calls
-    unavailable_support = int(plot_data["rosmap_has_unavailable_stratum_support"].sum())
-    exclusive_support = int(plot_data["unavailable_support_is_exclusive"].sum())
+    donor_unavailable_exclusive = int(
+        plot_data["donor_unavailable_support_is_exclusive"].sum()
+    )
+    combined_context_support = int(
+        plot_data["rosmap_has_f_e2_m_e2_m_e4_support"].sum()
+    )
     require(rosmap_runs == 161, "ROSMAP included-run count changed")
     require(seaad_calls == 42 and seaad_m_e33 == 40, "SEA-AD call/group counts changed")
     require(rosmap_query_floor == 10 and seaad_query_floor == 3, "KDA query-size floors changed")
-    require(unavailable == UNAVAILABLE_GROUPS, "SEA-AD donor-limited strata changed")
-    require(unavailable_support == 20, "Unavailable-stratum support count changed")
+    require(fully_donor_unavailable == DONOR_UNAVAILABLE_GROUPS, "Fully donor-unavailable SEA-AD strata changed")
+    require(
+        (m_e4_completed_contrasts, m_e4_completed_directions, m_e4_query_empty_directions, m_e4_calls)
+        == (77, 154, 154, 0),
+        "M_e4 partial-estimability context changed",
+    )
+    require(donor_unavailable_support == 19, "Donor-unavailable-stratum support count changed")
+    require(donor_unavailable_exclusive == 3, "Exclusive donor-unavailable support count changed")
+    require(combined_context_support == 20, "Combined context-support count changed")
     frame = pd.DataFrame(
         [
             {
@@ -581,11 +553,16 @@ def build_coverage_context(bundle: Mapping[str, Any], plot_data: pd.DataFrame) -
                 "seaad_m_e33_calls": seaad_m_e33,
                 "seaad_effective_query_floor": seaad_query_floor,
                 "seaad_other_group_calls": seaad_calls - seaad_m_e33,
-                "seaad_donor_limited_groups": "|".join(sorted(unavailable)),
+                "seaad_fully_donor_unavailable_groups": "|".join(sorted(fully_donor_unavailable)),
+                "seaad_m_e4_completed_contrasts": m_e4_completed_contrasts,
+                "seaad_m_e4_completed_directions": m_e4_completed_directions,
+                "seaad_m_e4_query_empty_directions": m_e4_query_empty_directions,
+                "seaad_m_e4_kda_calls": m_e4_calls,
                 "rosmap_selected_units": len(plot_data),
-                "units_with_rosmap_support_in_donor_limited_group": unavailable_support,
-                "units_supported_exclusively_in_donor_limited_groups": exclusive_support,
-                "causal_guardrail": "unavailable-stratum support is not necessarily exclusive and does not make assessable units untestable",
+                "units_with_rosmap_support_in_fully_donor_unavailable_group": donor_unavailable_support,
+                "units_supported_exclusively_in_fully_donor_unavailable_groups": donor_unavailable_exclusive,
+                "units_with_rosmap_support_in_f_e2_m_e2_m_e4": combined_context_support,
+                "causal_guardrail": "support is nonexclusive; missing donor strata and empty M_e4 queries are context, not a sole cause",
             }
         ]
     )
@@ -683,7 +660,7 @@ def draw_figure(plot_data: pd.DataFrame, fate: pd.DataFrame, reverse: pd.DataFra
     one_return_text = [
         _node_text(ax_a, right_stack_center, 0.495, f"{counts['one_qualifying_return']} • one each", size=17, color=NAVY, weight="bold"),
         _node_text(ax_a, right_stack_center, 0.42, "Exc: DYNLT1", size=16),
-        _node_text(ax_a, right_stack_center, 0.315, "Inh: RPS15 • RPLP1\nRPL38", size=16, linespacing=1.0),
+        _node_text(ax_a, right_stack_center, 0.335, "Inh: RPS15 • RPL38", size=16),
     ]
     register(one_return, one_return_text, "one_return")
 
@@ -701,32 +678,30 @@ def draw_figure(plot_data: pd.DataFrame, fate: pd.DataFrame, reverse: pd.DataFra
 
     b_letter = ax_b.text(0.00, 0.99, "B", transform=ax_b.transAxes, ha="left", va="top", fontsize=20, weight="bold", color=TEXT)
     b_title = ax_b.text(0.10, 0.99, "SEA-AD → ROSMAP lookup", transform=ax_b.transAxes, ha="left", va="top", fontsize=20, weight="bold", color=TEXT)
-    ax_b.text(0.10, 0.895, "five selected non-MT units", transform=ax_b.transAxes, ha="left", va="top", fontsize=16, color=MID)
-    row_height = 0.145
+    ax_b.text(0.10, 0.895, "three selected non-MT units", transform=ax_b.transAxes, ha="left", va="top", fontsize=16, color=MID)
+    row_height = 0.19
     top = 0.80
     for index, row in enumerate(reverse.sort_values("display_order").itertuples(index=False)):
-        y = top - index * 0.15 - row_height
+        y = top - index * 0.205 - row_height
         row_patch = _box(ax_b, 0.016, y, 0.955, row_height, face=WHITE if index % 2 == 0 else GRAY_PALE, edge="#D9DDE2", linewidth=1.2)
         divider_x = 0.30
         ax_b.plot([divider_x, divider_x], [y + 0.015, y + row_height - 0.015], transform=ax_b.transAxes, color="#D9DDE2", linewidth=1.2)
         network = row.broad_network.replace("Excitatory_neurons", "Excitatory").replace("Inhibitory_neurons", "Inhibitory").replace("Oligodendrocytes", "Oligo")
         left_artists = [
-            _node_text(ax_b, 0.15, y + 0.105, network, size=16, color=MID),
-            _node_text(ax_b, 0.15, y + 0.035, row.gene, size=16, color=TEXT, weight="bold"),
+            _node_text(ax_b, 0.15, y + 0.135, network, size=16, color=MID),
+            _node_text(ax_b, 0.15, y + 0.055, row.gene, size=16, color=TEXT, weight="bold"),
         ]
         if row.gene == "HGSNAT":
             line1, line2 = "Some run support • q=.641", "Aggregate gate not passed"
         elif row.gene == "BEX3":
             line1, line2 = "4 run supports • q=.157", "Aggregate gate not passed"
         elif row.gene == "RPS27A":
-            line1, line2 = "Run support present • q=1", "Aggregate gate not passed"
-        elif row.gene == "RPL30":
-            line1, line2 = "2 size-3 returns • q=1", "Excluded; no support"
+            line1, line2 = "2 run supports • q=1", "Aggregate gate not passed"
         else:
             line1, line2 = "No primary ROSMAP return", "Not selected"
         right_artists = [
-            ax_b.text(0.315, y + 0.105, line1, transform=ax_b.transAxes, ha="left", va="center", fontsize=16, color=TEXT),
-            ax_b.text(0.315, y + 0.035, line2, transform=ax_b.transAxes, ha="left", va="center", fontsize=16, color=MID),
+            ax_b.text(0.315, y + 0.135, line1, transform=ax_b.transAxes, ha="left", va="center", fontsize=16, color=TEXT),
+            ax_b.text(0.315, y + 0.055, line2, transform=ax_b.transAxes, ha="left", va="center", fontsize=16, color=MID),
         ]
         register(row_patch, left_artists + right_artists, f"table_{row.gene}")
         panel_b_rows.append((row.gene, row_patch))
@@ -734,14 +709,15 @@ def draw_figure(plot_data: pd.DataFrame, fate: pd.DataFrame, reverse: pd.DataFra
         table_right.extend(right_artists)
 
     ribbon_specs = [
-        (0.00, 0.24, ROSMAP_PALE, ROSMAP, "////", "ROSMAP", f"{as_int(ctx['rosmap_included_runs'])} included runs\nquery floor ≥{as_int(ctx['rosmap_effective_query_floor'])}"),
-        (0.25, 0.29, SEAAD_PALE, SEAAD, None, "SEA-AD", f"{as_int(ctx['seaad_kda_calls'])} KDA calls • {as_int(ctx['seaad_m_e33_calls'])} M_e33\nquery floor ≥{as_int(ctx['seaad_effective_query_floor'])}"),
-        (0.55, 0.45, GRAY_PALE, NAVY, None, "SEA-AD coverage context", f"{as_int(ctx['units_with_rosmap_support_in_donor_limited_group'])}/{as_int(ctx['rosmap_selected_units'])} ROSMAP units: support in ≥1 group\nF_e2 / M_e2 / M_e4: ≥1 arm had <5 donors\nSupport need not be exclusive; not a sole cause"),
+        (0.00, 0.18, ROSMAP_PALE, ROSMAP, "////", "ROSMAP", f"{as_int(ctx['rosmap_included_runs'])} included runs\nquery floor ≥{as_int(ctx['rosmap_effective_query_floor'])}"),
+        (0.19, 0.30, SEAAD_PALE, SEAAD, None, "SEA-AD post-hoc exploratory", f"{as_int(ctx['seaad_kda_calls'])} calls • {as_int(ctx['seaad_m_e33_calls'])} M_e33\nquery floor ≥{as_int(ctx['seaad_effective_query_floor'])}"),
+        (0.50, 0.50, GRAY_PALE, NAVY, None, "SEA-AD coverage context", f"F_e2/M_e2: too few donors (≥3/arm)\nM_e4: {as_int(ctx['seaad_m_e4_completed_contrasts'])} contrasts; {as_int(ctx['seaad_m_e4_query_empty_directions'])} empty queries\n{as_int(ctx['units_with_rosmap_support_in_fully_donor_unavailable_group'])}/{as_int(ctx['rosmap_selected_units'])} support; nonexclusive—not sole cause"),
     ]
     for x, width, face, edge, hatch, heading, body in ribbon_specs:
         patch = _box(ribbon, x, 0.00, width, 1.00, face=face, edge=edge, hatch=hatch, linewidth=1.6)
         is_context = heading == "SEA-AD coverage context"
-        heading_artist = _node_text(ribbon, x + width / 2, 0.86 if is_context else 0.80, heading, size=16 if is_context else 18, color=edge, weight="bold")
+        compact_heading = heading.startswith("SEA-AD")
+        heading_artist = _node_text(ribbon, x + width / 2, 0.86 if compact_heading else 0.80, heading, size=16 if compact_heading else 18, color=edge, weight="bold")
         body_artist = _node_text(ribbon, x + width / 2, 0.44 if is_context else 0.40, body, size=16, color=MID if is_context else TEXT, weight="normal" if is_context else "bold", linespacing=0.86 if is_context else 1.0)
         artists = [heading_artist, body_artist]
         register(patch, artists, f"ribbon_{heading}")
@@ -932,11 +908,25 @@ def render_images(fig: Any, staging: Path, dpi: int) -> list[Path]:
         else:
             metadata = {"Software": "Validation-human figure renderer"}
         fig.savefig(temporary, format=extension, dpi=dpi if extension == "png" else None, facecolor=WHITE, bbox_inches=None, pad_inches=0, metadata=metadata)
+        if extension == "svg":
+            normalize_svg_whitespace(temporary)
         require(temporary.stat().st_size > 1000, f"Rendered file is too small: {temporary}")
         os.replace(temporary, final)
         paths.append(final)
     plt.close(fig)
     return paths
+
+
+def normalize_svg_whitespace(path: Path) -> None:
+    """Strip line-end whitespace while preserving one final newline."""
+    raw = path.read_text(encoding="utf-8")
+    normalized = "\n".join(line.rstrip() for line in raw.splitlines()) + "\n"
+    if normalized != raw:
+        path.write_text(normalized, encoding="utf-8")
+    require(
+        not any(line != line.rstrip() for line in normalized.splitlines()),
+        f"SVG retains trailing whitespace: {path}",
+    )
 
 
 def check_record(check_id: str, passed: bool, observed: Any, expected: Any, details: str, *, severity: str = "blocking", status: str | None = None) -> dict[str, Any]:
@@ -960,6 +950,7 @@ def image_checks(image_paths: Sequence[Path], dpi: int) -> list[dict[str, Any]]:
         check_record("image_exports_nonempty", all(path.stat().st_size > 1000 for path in image_paths), "all >1000", "all >1000", "Image exports are nontrivial."),
         check_record("svg_searchable_text", "<text" in svg.lower(), "present", "present", "SVG text remains searchable."),
         check_record("svg_vector_paths", "<path" in svg.lower(), "present", "present", "SVG contains vector geometry."),
+        check_record("svg_no_trailing_whitespace", not any(line != line.rstrip() for line in svg.splitlines()), "none", "none", "SVG lines have no trailing whitespace."),
         check_record("pdf_signature", lookup[".pdf"].read_bytes()[:5] == b"%PDF-", lookup[".pdf"].read_bytes()[:5].decode("latin1"), "%PDF-", "PDF signature."),
         check_record("png_dimensions", (width, height) == (PNG_WIDTH, PNG_HEIGHT), f"{width}x{height}", f"{PNG_WIDTH}x{PNG_HEIGHT}", "12 × 5.3 inch canvas."),
         check_record("png_resolution", all(math.isfinite(v) and abs(v - dpi) <= 1 for v in embedded), f"{embedded[0]:.2f}|{embedded[1]:.2f}", f"{dpi}|{dpi}", "Embedded PNG resolution."),
@@ -972,26 +963,28 @@ def build_checks(bundle: Mapping[str, Any], plot_data: pd.DataFrame, fate: pd.Da
     assessable = plot_data["seaad_assessability"].eq("assessable")
     ctx = one_row(context, "coverage context")
     checks = [
-        check_record("upstream_statuses", True, "Phase12|Phase18|VH09|VH10A|VH10B|VH10D validated_complete", "all validated_complete", "Validated during loading."),
+        check_record("upstream_statuses", True, "Phase18|VH09|VH10A|VH10B|VH10D validated_complete", "all validated_complete", "Validated during loading."),
         check_record("frozen_input_hashes", len(bundle["input_digests"]) == len(INPUT_PATHS), len(bundle["input_digests"]), len(INPUT_PATHS), "Every input matches frozen SHA-256."),
         check_record("plot_unit_count", len(plot_data) == 21, len(plot_data), 21, "Frozen ROSMAP non-MT selected units."),
         check_record("plot_keys_unique", not plot_data.duplicated(["broad_network", "gene"]).any(), "unique", "unique", "One trace row per network-gene unit."),
         check_record("assessability_split", int(assessable.sum()) == 17 and int((~assessable).sum()) == 4, f"{assessable.sum()}|{(~assessable).sum()}", "17|4", "Assessable versus not-testable split."),
         check_record("not_testable_all_opc", set(plot_data.loc[~assessable, "broad_network"]) == {"OPCs"}, "OPCs", "OPCs", "All four not-testable units are OPC."),
-        check_record("support_split", int((assessable & plot_data["seaad_qualifying_return_count"].eq(0)).sum()) == 13 and int((assessable & plot_data["seaad_qualifying_return_count"].eq(1)).sum()) == 4, f"{(assessable & plot_data['seaad_qualifying_return_count'].eq(0)).sum()}|{(assessable & plot_data['seaad_qualifying_return_count'].eq(1)).sum()}", "13|4", "Qualifying SEA-AD support among assessable units."),
-        check_record("one_return_identities", set(zip(plot_data.loc[plot_data["seaad_qualifying_return_count"].eq(1), "broad_network"], plot_data.loc[plot_data["seaad_qualifying_return_count"].eq(1), "gene"])) == EXPECTED_ONE_RETURN, "exact", "exact", "Four named one-return units."),
+        check_record("support_split", int((assessable & plot_data["seaad_qualifying_return_count"].eq(0)).sum()) == 14 and int((assessable & plot_data["seaad_qualifying_return_count"].eq(1)).sum()) == 3, f"{(assessable & plot_data['seaad_qualifying_return_count'].eq(0)).sum()}|{(assessable & plot_data['seaad_qualifying_return_count'].eq(1)).sum()}", "14|3", "Qualifying SEA-AD support among assessable units."),
+        check_record("one_return_identities", set(zip(plot_data.loc[plot_data["seaad_qualifying_return_count"].eq(1), "broad_network"], plot_data.loc[plot_data["seaad_qualifying_return_count"].eq(1), "gene"])) == EXPECTED_ONE_RETURN, "exact", "exact", "Three named one-return units."),
         check_record("final_selection_zero", not plot_data["seaad_final_driver_candidate"].map(truth).any(), 0, 0, "No ROSMAP non-MT unit passed SEA-AD aggregate selection."),
-        check_record("fate_counts", fate["unit_count"].astype(int).tolist() == [21, 4, 17, 13, 4, 0], str(fate["unit_count"].astype(int).tolist()), "[21,4,17,13,4,0]", "Fate tree arithmetic."),
-        check_record("reverse_rows", len(reverse) == 5 and reverse["gene"].tolist() == [gene for _, gene in REVERSE_ORDER], str(reverse["gene"].tolist()), str([gene for _, gene in REVERSE_ORDER]), "Five SEA-AD reverse lookups."),
+        check_record("fate_counts", fate["unit_count"].astype(int).tolist() == [21, 4, 17, 14, 3, 0], str(fate["unit_count"].astype(int).tolist()), "[21,4,17,14,3,0]", "Fate tree arithmetic."),
+        check_record("reverse_rows", len(reverse) == 3 and reverse["gene"].tolist() == [gene for _, gene in REVERSE_ORDER], str(reverse["gene"].tolist()), str([gene for _, gene in REVERSE_ORDER]), "Three SEA-AD reverse lookups."),
         check_record("reverse_none_selected", not reverse["rosmap_terminal_candidate_status"].eq("driver_candidate").any(), "none", "none", "No reverse lookup passed ROSMAP final gates."),
-        check_record("rpl30_excluded_returns", as_int(reverse.loc[reverse["gene"].eq("RPL30"), "excluded_size3_primary_return_count"].iloc[0]) == 2, reverse.loc[reverse["gene"].eq("RPL30"), "excluded_size3_primary_return_count"].iloc[0], 2, "RPL30 has only two primary size-3 returns excluded by the Phase 18 minimum-10 rule."),
-        check_record("kansl1l_no_primary_return", reverse.loc[reverse["gene"].eq("KANSL1L"), "outcome_id"].iloc[0] == "no_explicit_primary_return", reverse.loc[reverse["gene"].eq("KANSL1L"), "outcome_id"].iloc[0], "no_explicit_primary_return", "KANSL1L has no explicit primary ROSMAP return."),
         check_record("run_context", as_int(ctx["rosmap_included_runs"]) == 161 and as_int(ctx["seaad_kda_calls"]) == 42 and as_int(ctx["seaad_m_e33_calls"]) == 40, f"{ctx['rosmap_included_runs']}|{ctx['seaad_kda_calls']}|{ctx['seaad_m_e33_calls']}", "161|42|40", "Frozen run counts."),
         check_record("query_size_floors", as_int(ctx["rosmap_effective_query_floor"]) == 10 and as_int(ctx["seaad_effective_query_floor"]) == 3, f"{ctx['rosmap_effective_query_floor']}|{ctx['seaad_effective_query_floor']}", "10|3", "Observed minimum effective query sizes among included ROSMAP and eligible SEA-AD runs."),
-        check_record("donor_limited_groups", set(str(ctx["seaad_donor_limited_groups"]).split("|")) == UNAVAILABLE_GROUPS, ctx["seaad_donor_limited_groups"], "F_e2|M_e2|M_e4", "SEA-AD donor-limited strata."),
-        check_record("unavailable_support_units", as_int(ctx["units_with_rosmap_support_in_donor_limited_group"]) == 20, ctx["units_with_rosmap_support_in_donor_limited_group"], 20, "ROSMAP support includes at least one unavailable SEA-AD stratum for 20 units."),
-        check_record("causal_guardrail_visible", "Support need not be exclusive" in svg and "not a sole cause" in svg and "assessable" in svg, "present", "present", "Coverage context is not presented as exclusive or causal."),
-        check_record("all_named_units_visible", all(gene in svg for gene in ["DYNLT1", "RPS15", "RPLP1", "RPL38", "ANKRD11", "FTL", "NCOA1"] + [gene for _, gene in REVERSE_ORDER]), "present", "present", "All diagnostic and reverse-lookup genes are searchable."),
+        check_record("fully_donor_unavailable_groups", set(str(ctx["seaad_fully_donor_unavailable_groups"]).split("|")) == DONOR_UNAVAILABLE_GROUPS, ctx["seaad_fully_donor_unavailable_groups"], "F_e2|M_e2", "Only F_e2 and M_e2 are wholly donor-unavailable under the donor-3 rule."),
+        check_record("m_e4_partial_estimability", (as_int(ctx["seaad_m_e4_completed_contrasts"]), as_int(ctx["seaad_m_e4_completed_directions"]), as_int(ctx["seaad_m_e4_query_empty_directions"]), as_int(ctx["seaad_m_e4_kda_calls"])) == (77, 154, 154, 0), f"{ctx['seaad_m_e4_completed_contrasts']}|{ctx['seaad_m_e4_completed_directions']}|{ctx['seaad_m_e4_query_empty_directions']}|{ctx['seaad_m_e4_kda_calls']}", "77|154|154|0", "M_e4 was partially estimable but every completed signed query was empty."),
+        check_record("donor_unavailable_support_units", as_int(ctx["units_with_rosmap_support_in_fully_donor_unavailable_group"]) == 19, ctx["units_with_rosmap_support_in_fully_donor_unavailable_group"], 19, "ROSMAP support includes F_e2 or M_e2 for 19 units."),
+        check_record("donor_unavailable_support_exclusive", as_int(ctx["units_supported_exclusively_in_fully_donor_unavailable_groups"]) == 3, ctx["units_supported_exclusively_in_fully_donor_unavailable_groups"], 3, "Only three units were supported exclusively in F_e2/M_e2."),
+        check_record("combined_context_support_units", as_int(ctx["units_with_rosmap_support_in_f_e2_m_e2_m_e4"]) == 20, ctx["units_with_rosmap_support_in_f_e2_m_e2_m_e4"], 20, "The broader F_e2/M_e2/M_e4 context count is retained without treating M_e4 as wholly donor-unavailable."),
+        check_record("causal_guardrail_visible", "nonexclusive" in svg and "sole cause" in svg and "assessable" in svg, "present", "present", "Coverage context is not presented as exclusive or causal."),
+        check_record("exploratory_tier_visible", "SEA-AD" in svg and "post-hoc exploratory" in svg, "present", "present", "The revised SEA-AD tier is visible."),
+        check_record("all_named_units_visible", all(gene in svg for gene in ["DYNLT1", "RPS15", "RPL38", "ANKRD11", "FTL", "NCOA1"] + [gene for _, gene in REVERSE_ORDER]), "present", "present", "All diagnostic and reverse-lookup genes are searchable."),
         check_record("minimum_font_size", meta["minimum_font_points"] >= 16.0, meta["minimum_font_points"], ">=16", "Projection-scale typography."),
         check_record("canvas_text_clipping", not meta["canvas_clipped_text"], len(meta["canvas_clipped_text"]), 0, "No text leaves canvas."),
         check_record("box_owned_text_containment", not meta["box_owned_text_violations"], len(meta["box_owned_text_violations"]), 0, "Every node, table-row, and ribbon label remains inside its owning box."),
@@ -1025,15 +1018,15 @@ def build_checks(bundle: Mapping[str, Any], plot_data: pd.DataFrame, fate: pd.Da
 def documentation() -> tuple[str, str]:
     caption = """# ROSMAP–SEA-AD non-MT diagnostic: caption
 
-**Why the frozen non-MT selected lists were disjoint.** Panel A traces the 21 frozen ROSMAP non-MT network–gene units into SEA-AD. Four OPC units were not testable because SEA-AD had no included OPC KDA run. Seventeen units were assessable in the matching broad network; 13 had no qualifying same-network SEA-AD run-level return and four had exactly one such return (Excitatory DYNLT1; Inhibitory RPS15, RPLP1, and RPL38). None passed final SEA-AD cross-run aggregate selection. Panel B reverses the comparison for the five SEA-AD non-MT selected units. HGSNAT, BEX3, and RPS27A had ROSMAP run evidence but did not pass the aggregate gate; RPL30 had only two primary size-3 returns excluded by the frozen ROSMAP minimum-query-size-10 rule and no included conservative support; KANSL1L had no explicit primary ROSMAP return. The coverage ribbon supplies context: ROSMAP had 161 included runs versus 42 SEA-AD calls, 40 of which were M_e33. Twenty of 21 ROSMAP units had support in at least one F_e2, M_e2, or M_e4 stratum that SEA-AD could not estimate because a disease arm had fewer than five independent donors. That support was not necessarily exclusive, the 17 units remain assessable, and the missing strata are not asserted to be the sole cause of zero final overlap. Not selected does not mean absent from the network or biologically disproved.
+**Why the frozen non-MT selected lists were disjoint.** Panel A traces the 21 frozen ROSMAP non-MT network–gene units into the post-hoc exploratory SEA-AD analysis. Four OPC units were not testable because SEA-AD had no included OPC KDA run. Seventeen units were assessable in the matching broad network; 14 had no qualifying same-network SEA-AD run-level return and three had exactly one such return (Excitatory DYNLT1; Inhibitory RPS15 and RPL38). None passed final SEA-AD cross-run aggregate selection. Panel B reverses the comparison for the three SEA-AD non-MT selected units: HGSNAT, BEX3, and RPS27A each had ROSMAP run support but failed the ROSMAP aggregate gate (aggregate q values .641, .157, and 1, respectively). The coverage ribbon supplies context: ROSMAP had 161 included runs versus 42 SEA-AD calls, 40 of which were M_e33. Nineteen of 21 ROSMAP units had support in F_e2 or M_e2, the two groups that SEA-AD could not estimate at all because at least one disease arm had fewer than three independent donors; only three units were supported exclusively in those groups. M_e4 is different: SEA-AD estimated 77 contrasts (154 signed directions), but every completed FDR-only query was empty, so M_e4 produced no KDA call. The broader F_e2/M_e2/M_e4 support count is 20/21, but M_e4 must not be described as wholly donor-unavailable. These patterns are nonexclusive context, not a sole causal explanation for zero final overlap. Not selected does not mean absent from the network or biologically disproved.
 """
     methods = f"""# ROSMAP–SEA-AD non-MT diagnostic: methods
 
-The renderer reads validated Phase 12 KDA, archived Phase 18 selection, VH09 frozen ROSMAP units, and VH10A/VH10B/VH10D SEA-AD artifacts. It requires current `validated_complete` statuses, zero failed checks, registered artifact hashes where manifests are available, and frozen full-file SHA-256 values for every input. The diagnostic does not read VH05 or VH06.
+The renderer reads archived Phase 18 selection, VH09 frozen ROSMAP units, and VH10A/VH10B/VH10D SEA-AD artifacts. It requires current `validated_complete` statuses, zero failed checks, registered artifact hashes where manifests are available, and frozen full-file SHA-256 values for every input. It also requires the `{QUERY_RULE}` / `{RESULT_TIER}` SEA-AD contract. The diagnostic does not read VH05 or VH06.
 
-ROSMAP non-MT units are exact `broad_network + gene` rows from the VH09 selected table. SEA-AD assessability and final-selection status come from the VH10D unit trace. A qualifying SEA-AD run-level return follows the frozen Phase 18 conservative-support gate: adjusted within-run q ≤ 0.05, overlap ≥ 2 query genes, and fold enrichment > 1 in the matching broad network. Phase 18 conservative-support rows provide ROSMAP support strata. The 20/21 context count means at least one conservative ROSMAP supporting run occurred in F_e2, M_e2, or M_e4; it does not require exclusive support in those strata. SEA-AD marks those three strata structurally unestimable because one disease arm contains fewer than five independent donors.
+ROSMAP non-MT units are exact `broad_network + gene` rows from the VH09 selected table. SEA-AD assessability and final-selection status come from the VH10D unit trace. A qualifying SEA-AD run-level return follows the frozen Phase 18 conservative-support gate: adjusted within-run q ≤ 0.05, overlap ≥ 2 query genes, and fold enrichment > 1 in the matching broad network. Phase 18 conservative-support rows provide ROSMAP support strata. The SEA-AD result is explicitly post-hoc exploratory: FDR < 0.05 with no fold-change cutoff, at least three donors in each disease arm, effective query size ≥ 3, aggregate coverage ≥ 0.80, aggregate BH q ≤ 0.05, and at least one qualifying supporting run. ROSMAP retains its frozen Phase 18 selection rules.
 
-The reverse lookup uses the reclassified Phase 18 call-return audit for two-class aggregate q values. KANSL1L, absent from that explicit audit, is recovered from the registered Phase 18 gene-case summary. Phase 12 primary results verify the two Inhibitory RPL30 size-3 returns and the absence of an Oligodendrocyte KANSL1L primary return. The figure is titleless for slide composition, uses a 12 × 5.3 inch canvas with at least 16-point text, and exports searchable SVG, vector PDF, and a 5400 × 2385 PNG at 450 DPI.
+The donor context is derived from the current SEA-AD run manifest. F_e2 and M_e2 are wholly source-not-estimable under the donor-3 rule. M_e4 is kept separate: 77 completed contrasts contribute 154 signed directions, all 154 terminate as query-empty, and no M_e4 KDA call is included. Nineteen of 21 units have ROSMAP support in F_e2 or M_e2, three exclusively; 20/21 have support in the broader F_e2/M_e2/M_e4 set. The reverse lookup uses the reclassified Phase 18 call-return audit for two-class aggregate q values and support counts. The figure is titleless for slide composition, uses a 12 × 5.3 inch canvas with at least 16-point text, and exports searchable SVG, vector PDF, and a 5400 × 2385 PNG at 450 DPI.
 
 ## Reproduction command
 
@@ -1097,6 +1090,24 @@ def validate_output(project_root: Path, output_root: Path, *, expected_visual_st
     print(f"Validated figure package: {output_root}")
 
 
+def replace_output_package(staging: Path, output_root: Path) -> None:
+    """Atomically replace a package and remove its recovery copy on success."""
+    backup: Path | None = None
+    try:
+        if output_root.exists():
+            timestamp = datetime.now().strftime("%Y%m%dT%H%M%S%f")
+            backup = output_root.parent / f".{output_root.name}.backup.{timestamp}.{os.getpid()}"
+            output_root.replace(backup)
+        staging.replace(output_root)
+    except Exception:
+        if backup is not None and backup.exists() and not output_root.exists():
+            backup.replace(output_root)
+        raise
+    else:
+        if backup is not None and backup.exists():
+            shutil.rmtree(backup)
+
+
 def publish(project_root: Path, output_root: Path, *, dpi: int, visual_review_status: str, force: bool) -> None:
     project_root = Path(project_root).resolve()
     output_root = Path(output_root).resolve()
@@ -1144,10 +1155,7 @@ def publish(project_root: Path, output_root: Path, *, dpi: int, visual_review_st
         }])
         write_tsv(status, staging / f"{FIGURE_ID}_status.tsv")
         validate_output(project_root, staging, expected_visual_status=visual_review_status)
-        if output_root.exists():
-            timestamp = datetime.now().strftime("%Y%m%dT%H%M%S%f")
-            output_root.replace(output_root.parent / f".{output_root.name}.backup.{timestamp}.{os.getpid()}")
-        staging.replace(output_root)
+        replace_output_package(staging, output_root)
     except Exception:
         if staging.exists():
             shutil.rmtree(staging)

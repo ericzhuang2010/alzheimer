@@ -29,11 +29,19 @@ def test_plot_data_preserves_selection_and_testability() -> None:
     plot_data = FIGURE.build_plot_data(bundle)
     links = FIGURE.build_links(plot_data)
 
-    assert bundle["selected_units"] == 13
-    assert bundle["selected_symbols"] == 11
+    assert bundle["query_rule_id"] == "fdr_only_query_sensitivity"
+    assert (
+        bundle["result_tier_id"]
+        == "posthoc_exploratory__fdr_only__donor3__query3__coverage80__q05"
+    )
+    assert bundle["minimum_coverage"] == 0.80
+    assert bundle["aggregate_q_threshold"] == 0.05
+    assert bundle["minimum_conservative_supporting_runs"] == 1
+    assert bundle["selected_units"] == 11
+    assert bundle["selected_symbols"] == 9
     assert bundle["selected_class_counts"] == {
         "mt_driver": 8,
-        "non_mt_driver": 5,
+        "non_mt_driver": 3,
     }
     assert len(plot_data) == 70
     assert plot_data.groupby("case_id").size().to_dict() == {
@@ -41,10 +49,10 @@ def test_plot_data_preserves_selection_and_testability() -> None:
         "non_mt_driver": 35,
     }
     assert plot_data["slot_status"].value_counts().to_dict() == {
-        "no_passing_candidate_slot": 25,
+        "no_passing_candidate_slot": 30,
         "not_testable_no_included_runs_slot": 20,
-        "ranked_candidate": 13,
-        "unused_display_slot": 12,
+        "ranked_candidate": 11,
+        "unused_display_slot": 9,
     }
 
     occupied = plot_data.loc[plot_data["slot_status"].eq("ranked_candidate")]
@@ -58,7 +66,7 @@ def test_plot_data_preserves_selection_and_testability() -> None:
     }
     assert set(
         occupied.loc[occupied["case_id"].eq("non_mt_driver"), "current_symbol"]
-    ) == {"HGSNAT", "BEX3", "RPS27A", "RPL30", "KANSL1L"}
+    ) == {"HGSNAT", "BEX3", "RPS27A"}
     assert occupied.loc[occupied["case_id"].eq("mt_driver"), "is_mtdna_gene"].all()
     assert set(
         occupied.loc[
@@ -74,7 +82,45 @@ def test_plot_data_preserves_selection_and_testability() -> None:
     assert len(links) == 2
     assert set(links["case_id"]) == {"mt_driver"}
     assert set(links["current_symbol"]) == {"MT-CO2", "MT-CYB"}
+    assert set(
+        links[
+            ["anchor_broad_network", "target_broad_network"]
+        ].itertuples(index=False, name=None)
+    ) == {("Excitatory_neurons", "Inhibitory_neurons")}
     assert not links["link_rule"].str.contains("network_edge", case=False).any()
+
+
+def test_recurrence_links_can_be_empty(tmp_path: Path) -> None:
+    bundle = FIGURE.load_bundle(ROOT)
+    plot_data = FIGURE.build_plot_data(bundle)
+    occupied_indices = plot_data.index[
+        plot_data["slot_status"].eq("ranked_candidate")
+    ]
+    plot_data.loc[occupied_indices, "current_symbol"] = [
+        f"synthetic_unique_{index}" for index in range(len(occupied_indices))
+    ]
+    links = FIGURE.build_links(plot_data)
+
+    assert links.empty
+    assert list(links.columns) == [
+        "schema_version",
+        "figure_id",
+        "case_id",
+        "current_symbol",
+        "selected_network_count_within_class",
+        "anchor_broad_network",
+        "target_broad_network",
+        "anchor_sector_mid_degrees",
+        "target_sector_mid_degrees",
+        "anchor_negative_log10_acat_q",
+        "target_negative_log10_acat_q",
+        "link_rule",
+    ]
+    path = tmp_path / "empty_links.tsv"
+    FIGURE.write_tsv(links, path, allow_empty=True)
+    observed = pd.read_csv(path, sep="\t")
+    assert observed.empty
+    assert observed.columns.tolist() == links.columns.tolist()
 
 
 def test_full_figure_package(tmp_path: Path) -> None:
@@ -91,7 +137,7 @@ def test_full_figure_package(tmp_path: Path) -> None:
             "--output-root",
             str(output),
             "--visual-review-status",
-            "complete",
+            "pending",
         ],
         cwd=ROOT,
         env=env,
@@ -101,14 +147,21 @@ def test_full_figure_package(tmp_path: Path) -> None:
     assert sorted(path.name for path in output.iterdir()) == sorted(FIGURE.OUTPUT_FILES)
 
     status = pd.read_csv(output / f"{FIGURE.FIGURE_ID}_status.tsv", sep="\t")
-    assert status.loc[0, "validation_status"] == "validated_complete"
-    assert status.loc[0, "visual_review_status"] == "complete"
-    assert int(status.loc[0, "selected_units"]) == 13
+    assert status.loc[0, "validation_status"] == "awaiting_visual_review"
+    assert status.loc[0, "visual_review_status"] == "pending"
+    assert int(status.loc[0, "selected_units"]) == 11
     assert int(status.loc[0, "mt_units"]) == 8
-    assert int(status.loc[0, "non_mt_units"]) == 5
+    assert int(status.loc[0, "non_mt_units"]) == 3
+    assert int(status.loc[0, "selected_unique_symbols"]) == 9
+    assert status.loc[0, "query_rule_id"] == "fdr_only_query_sensitivity"
+    assert status.loc[0, "contract_scope"] == "posthoc_exploratory_compact_display_only"
 
     checks = pd.read_csv(output / f"{FIGURE.FIGURE_ID}_checks.tsv", sep="\t")
-    assert checks["status"].eq("pass").all()
+    blocking = checks.loc[checks["severity"].eq("blocking")]
+    assert blocking["status"].eq("pass").all()
+    assert checks.loc[checks["check_id"].eq("visual_review"), "status"].tolist() == [
+        "pending"
+    ]
 
     artifacts = pd.read_csv(
         output / f"{FIGURE.FIGURE_ID}_artifacts.tsv", sep="\t", dtype=str
@@ -134,5 +187,5 @@ def test_full_figure_package(tmp_path: Path) -> None:
         assert "<path" in svg.lower()
         assert "<text" in svg.lower()
         assert "SEA-AD" in svg
+        assert "Post-hoc exploratory" in svg
         assert "rediscover" not in svg.lower()
-

@@ -56,8 +56,8 @@ PNG_WIDTH = 5_400
 PNG_HEIGHT = 3_240
 RADIUS_FACTOR = 0.43
 
-QUERY_RULE = "phase18_parity_query"
-RESULT_TIER = "phase18_parity_query__min3_all"
+QUERY_RULE = "fdr_only_query_sensitivity"
+RESULT_TIER = "posthoc_exploratory__fdr_only__donor3__query3__coverage80__q05"
 CLASS_ORDER = ["mt_driver", "non_mt_driver"]
 CLASS_LABELS = {"mt_driver": "MT driver class", "non_mt_driver": "Non-MT driver class"}
 
@@ -106,16 +106,16 @@ EXPECTED_INPUT_SHA256 = {
     "vh09_artifacts": "9cb622cb3d1affc93eac21d598d51ada31b5f74a2355f477cce78c6cbe6f6ced",
     "vh09_checks": "74cacf128d42e62d63780a1e7f2658fec4dee0b701d5c8009c59e6df6614b8a8",
     "rosmap_selected": "e758720f7dcd80d1d6ef72fc7f95bfa20e3784931114e59c716a0e85b681d443",
-    "vh10c_status": "c12e21e961c670d69b04789b149fece950c036c68187c75588e19838f91a7023",
-    "vh10c_artifacts": "2fe7d1af68e3e4971e19516706d496118719d3422cf198ef010e1000b83b52c1",
-    "vh10c_checks": "eda96be41bc9af33257ba447ed623c29e0ffcf521ce1fd77df6b5cd0fff5ae97",
-    "seaad_top5": "18b4cdd6cbadbf4ef741cdf54cf2dd992017035786726d701a5d818acc3937ac",
-    "seaad_freeze": "33bef167577c0abd8b0ee26861f33ee8f3a26ed22537f449d35cc3d884e52168",
-    "vh10d_status": "fd9370f145948f10358e90830e18b25fbf36b3c253c5b2ac22528cb7f74f9528",
-    "vh10d_artifacts": "b349a71f5a5735188397a535c054f81af5c024278a6b21ee9c86b8491b2c2a57",
-    "vh10d_checks": "a437d7122e0b83173aa49684127a00bd07da2a9b4df2bc1d0366fe478b3526d1",
-    "unit_overlap": "68b839ef1dae967bc482d16667d94fe8fd2a8bb17290ea43b2a96767c4abbfa6",
-    "gene_overlap": "8b71aef2aa561ef33e1ad679a96dc2fc48c674a76a89c09a4ac3cfb735341e16",
+    "vh10c_status": "490bd9d785584c471c5acfc2b1834f2b3e670f25833a89c0c280048540cef43e",
+    "vh10c_artifacts": "c154e3013b9ff473cbc66a6e7c2710978b5014c56faff8b8f915452073dcf0dc",
+    "vh10c_checks": "3595944ac839e1b2b91494ecf6e4f0e6a74a01fe30340e1f9bc406b03d977f49",
+    "seaad_top5": "31dd58753e2d205e56028cd71f73323bdde11385c1f1cd041a6157318a63ab97",
+    "seaad_freeze": "2db010c801b1d03907ca8850e1e9b8a064531ce6e4396a688f9c39ff6c331bf6",
+    "vh10d_status": "1e80ad3914e12a63e7bd6f5ee005eebd4889bc32a3dc952e48c2b1575c12ac5e",
+    "vh10d_artifacts": "fc15576f85f1d53670ff2efe211256c6f0f4d27b6f609fbbad5b4fa8b6c90f41",
+    "vh10d_checks": "83e1413b1b9b30b9e11c643bc837070ec6278d1f88ee299c1bb9caf1e95cc5c3",
+    "unit_overlap": "2230ac092af573402df9a6c6041c552648efccdc29176118c0b6dc83d72700f6",
+    "gene_overlap": "729bd92d24125e39b92331cfbc846cc30976c68bffa9d9d48767686871b233fc",
 }
 
 EXPECTED_REGIONS = {
@@ -131,7 +131,7 @@ EXPECTED_REGIONS = {
             "RPS13", "RPS15", "SELENOW",
         },
         "common": set(),
-        "seaad_only": {"BEX3", "HGSNAT", "KANSL1L", "RPL30", "RPS27A"},
+        "seaad_only": {"BEX3", "HGSNAT", "RPS27A"},
     },
 }
 
@@ -259,10 +259,10 @@ def load_bundle(project_root: Path) -> dict[str, Any]:
     require(as_int(vh09["selected_units"]) == 47, "ROSMAP selected-unit count changed")
     require(as_int(vh09["selected_unique_genes"]) == 25, "ROSMAP unique-gene count changed")
     require(vh09["selected_sha256"] == EXPECTED_INPUT_SHA256["rosmap_selected"], "ROSMAP status digest changed")
-    require(as_int(vh10c["selected_top5_units"]) == 13, "SEA-AD selected-unit count changed")
-    require(as_int(vh10c["selected_unique_genes"]) == 11, "SEA-AD unique-gene count changed")
+    require(as_int(vh10c["selected_top5_units"]) == 11, "SEA-AD selected-unit count changed")
+    require(as_int(vh10c["selected_unique_genes"]) == 9, "SEA-AD unique-gene count changed")
     require(as_int(vh10d["rosmap_selected_units"]) == 47, "VH10D ROSMAP count changed")
-    require(as_int(vh10d["seaad_selected_units"]) == 13, "VH10D SEA-AD count changed")
+    require(as_int(vh10d["seaad_selected_units"]) == 11, "VH10D SEA-AD count changed")
     require(as_int(vh10d["shared_unique_genes"]) == 6, "VH10D shared-gene count changed")
 
     registrations = {
@@ -282,7 +282,7 @@ def load_bundle(project_root: Path) -> dict[str, Any]:
     require(not truth(freeze["rosmap_candidate_files_read"]), "SEA-AD freeze was not ROSMAP blind")
     require(freeze["query_rule_id"] == QUERY_RULE, "SEA-AD query rule changed")
     require(freeze["result_tier_id"] == RESULT_TIER, "SEA-AD result tier changed")
-    require(as_int(freeze["selected_top5_units"]) == 13, "SEA-AD freeze count changed")
+    require(as_int(freeze["selected_top5_units"]) == 11, "SEA-AD freeze count changed")
     require(freeze["top5_sha256"] == EXPECTED_INPUT_SHA256["seaad_top5"], "SEA-AD freeze digest changed")
 
     rosmap = frames["rosmap_selected"].copy()
@@ -296,7 +296,7 @@ def load_bundle(project_root: Path) -> dict[str, Any]:
     require(set(seaad_all["query_rule_id"]) == {QUERY_RULE}, "SEA-AD query rule changed")
     require(set(seaad_all["result_tier_id"]) == {RESULT_TIER}, "SEA-AD result tier changed")
     seaad = seaad_all.loc[seaad_all["list_status"].eq("ranked_candidates")].copy()
-    require(len(seaad) == 13, "SEA-AD ranked table does not contain 13 units")
+    require(len(seaad) == 11, "SEA-AD ranked table does not contain 11 units")
     require(~seaad["current_symbol"].isin({"", "NA"}).any(), "SEA-AD ranked row has a sentinel symbol")
     require(set(seaad["case_id"]) == set(CLASS_ORDER), "SEA-AD driver classes changed")
 
@@ -305,7 +305,7 @@ def load_bundle(project_root: Path) -> dict[str, Any]:
     require(not (rosmap_sets["mt_driver"] & rosmap_sets["non_mt_driver"]), "ROSMAP gene assigned to both classes")
     require(not (seaad_sets["mt_driver"] & seaad_sets["non_mt_driver"]), "SEA-AD gene assigned to both classes")
     require({case: len(rosmap_sets[case]) for case in CLASS_ORDER} == {"mt_driver": 10, "non_mt_driver": 15}, "ROSMAP class gene counts changed")
-    require({case: len(seaad_sets[case]) for case in CLASS_ORDER} == {"mt_driver": 6, "non_mt_driver": 5}, "SEA-AD class gene counts changed")
+    require({case: len(seaad_sets[case]) for case in CLASS_ORDER} == {"mt_driver": 6, "non_mt_driver": 3}, "SEA-AD class gene counts changed")
 
     regions: dict[str, dict[str, set[str]]] = {}
     for case in CLASS_ORDER:
@@ -365,7 +365,7 @@ def build_plot_data(bundle: Mapping[str, Any]) -> pd.DataFrame:
                     }
                 )
     frame = pd.DataFrame(rows)
-    require(len(frame) == 30, f"Expected 30 class-gene rows, observed {len(frame)}")
+    require(len(frame) == 28, f"Expected 28 class-gene rows, observed {len(frame)}")
     require(not frame.duplicated(["case_id", "gene"]).any(), "Plot keys are duplicated")
     return frame
 
@@ -448,18 +448,18 @@ def _draw_mt(ax: Any, regions: Mapping[str, set[str]]) -> None:
 
 def _draw_non_mt(ax: Any, regions: Mapping[str, set[str]]) -> None:
     r_ros = radius(15)
-    r_sea = radius(5)
+    r_sea = radius(3)
     ros_center = (-1.55, 0.0)
     sea_center = (1.25, 0.0)
     ax.add_patch(Circle(ros_center, r_ros, facecolor=ROSMAP_FILL, edgecolor=ROSMAP_EDGE, linewidth=1.5, zorder=1))
     ax.add_patch(Circle(sea_center, r_sea, facecolor=SEAAD_FILL, edgecolor=SEAAD_EDGE, linewidth=1.5, linestyle=(0, (5, 3)), hatch="///", zorder=2))
     ax.text(-1.55, 1.38, "ROSMAP Phase 18 • 15", ha="center", va="center", fontsize=9.3, weight="bold", color=ROSMAP_EDGE)
-    ax.text(1.25, 0.70, "SEA-AD • 5", ha="center", va="center", fontsize=9.3, weight="bold", color=SEAAD_EDGE)
+    ax.text(1.25, 0.58, "SEA-AD • 3", ha="center", va="center", fontsize=9.3, weight="bold", color=SEAAD_EDGE)
     ax.text(-1.55, 1.07, "ROSMAP only • 15", ha="center", va="center", fontsize=8.7, weight="bold", color=TEXT)
     display_genes = [f"{gene}†" if gene in {"ANKRD11", "FTL", "NCOA1"} else gene for gene in sorted(regions["rosmap_only"])]
     _label_grid(ax, display_genes, (-2.37, -1.55, -0.73), (0.68, 0.34, 0.0, -0.34, -0.68), size=7.7)
-    ax.text(1.25, 0.43, "SEA-AD only • 5", ha="center", va="center", fontsize=8.7, weight="bold", color=TEXT)
-    _label_grid(ax, sorted(regions["seaad_only"]), (1.25,), (0.17, -0.04, -0.25, -0.46, -0.67), size=8.2)
+    ax.text(1.25, 0.30, "SEA-AD only • 3", ha="center", va="center", fontsize=8.7, weight="bold", color=TEXT)
+    _label_grid(ax, sorted(regions["seaad_only"]), (1.25,), (0.02, -0.23, -0.48), size=8.2)
     ax.text(0.45, 1.52, "Common: 0 (∅)", ha="center", va="center", fontsize=8.7, weight="bold", color=TEXT)
     ax.text(0.45, 1.29, "No shared top-list gene", ha="center", va="center", fontsize=7.7, color=MID)
     ax.text(-1.55, -1.48, "† SEA-AD OPC KDA unavailable", ha="center", va="center", fontsize=7.2, color=MID)
@@ -471,7 +471,7 @@ def draw_figure(bundle: Mapping[str, Any]) -> tuple[Any, dict[str, Any]]:
     fig, axes = plt.subplots(1, 2, figsize=(FIGURE_WIDTH_IN, FIGURE_HEIGHT_IN), facecolor=WHITE)
     fig.subplots_adjust(left=0.035, right=0.985, bottom=0.135, top=0.82, wspace=0.06)
     fig.text(0.5, 0.94, "Gene-level overlap of selected top key drivers", ha="center", va="center", fontsize=18, weight="bold", color=TEXT)
-    fig.text(0.5, 0.895, "Unique symbols; broad-network membership collapsed", ha="center", va="center", fontsize=10.5, color=MID)
+    fig.text(0.5, 0.895, "Unique symbols; networks collapsed • SEA-AD post-hoc exploratory", ha="center", va="center", fontsize=10.5, color=MID)
     for index, (ax, case) in enumerate(zip(axes, CLASS_ORDER)):
         ax.set_aspect("equal", adjustable="box")
         ax.axis("off")
@@ -514,11 +514,25 @@ def render_images(bundle: Mapping[str, Any], staging: Path, dpi: int) -> tuple[l
         else:
             metadata = {"Software": "Validation-human figure renderer"}
         fig.savefig(temporary, format=extension, dpi=dpi if extension == "png" else None, facecolor=WHITE, bbox_inches=None, pad_inches=0, metadata=metadata)
+        if extension == "svg":
+            normalize_svg_whitespace(temporary)
         require(temporary.stat().st_size > 1000, f"Rendered file is too small: {temporary}")
         os.replace(temporary, final)
         paths.append(final)
     plt.close(fig)
     return paths, meta
+
+
+def normalize_svg_whitespace(path: Path) -> None:
+    """Strip line-end whitespace while preserving one final newline."""
+    raw = path.read_text(encoding="utf-8")
+    normalized = "\n".join(line.rstrip() for line in raw.splitlines()) + "\n"
+    if normalized != raw:
+        path.write_text(normalized, encoding="utf-8")
+    require(
+        not any(line != line.rstrip() for line in normalized.splitlines()),
+        f"SVG retains trailing whitespace: {path}",
+    )
 
 
 def check_record(check_id: str, passed: bool, observed: Any, expected: Any, details: str, *, severity: str = "blocking", status: str | None = None) -> dict[str, Any]:
@@ -539,6 +553,7 @@ def image_checks(image_paths: Sequence[Path], dpi: int) -> list[dict[str, Any]]:
     checks.extend([
         check_record("svg_searchable_text", "<text" in svg, "present" if "<text" in svg else "missing", "present", "SVG text remains searchable."),
         check_record("svg_vector_paths", "<path" in svg, "present" if "<path" in svg else "missing", "present", "SVG includes vector paths."),
+        check_record("svg_no_trailing_whitespace", not any(line != line.rstrip() for line in svg.splitlines()), "none", "none", "SVG lines have no trailing whitespace."),
         check_record("pdf_signature", lookup[".pdf"].read_bytes()[:5] == b"%PDF-", lookup[".pdf"].read_bytes()[:5].decode("latin1"), "%PDF-", "PDF signature is valid."),
     ])
     with Image.open(lookup[".png"]) as image:
@@ -555,7 +570,7 @@ def image_checks(image_paths: Sequence[Path], dpi: int) -> list[dict[str, Any]]:
 
 def build_checks(bundle: Mapping[str, Any], plot_data: pd.DataFrame, summary: pd.DataFrame, image_paths: Sequence[Path], render_meta: Mapping[str, Any], dpi: int, visual_review_status: str) -> pd.DataFrame:
     observed_counts = {(row.case_id, row.region): as_int(row.region_count) for row in summary.itertuples(index=False)}
-    expected_counts = {("mt_driver", "rosmap_only"): 4, ("mt_driver", "common"): 6, ("mt_driver", "seaad_only"): 0, ("non_mt_driver", "rosmap_only"): 15, ("non_mt_driver", "common"): 0, ("non_mt_driver", "seaad_only"): 5}
+    expected_counts = {("mt_driver", "rosmap_only"): 4, ("mt_driver", "common"): 6, ("mt_driver", "seaad_only"): 0, ("non_mt_driver", "rosmap_only"): 15, ("non_mt_driver", "common"): 0, ("non_mt_driver", "seaad_only"): 3}
     mt_geometry = summary.loc[summary["case_id"].eq("mt_driver")].iloc[0]
     non_mt_geometry = summary.loc[summary["case_id"].eq("non_mt_driver")].iloc[0]
     svg_text = next(path for path in image_paths if path.suffix == ".svg").read_text(encoding="utf-8")
@@ -573,9 +588,9 @@ def build_checks(bundle: Mapping[str, Any], plot_data: pd.DataFrame, summary: pd
         check_record("upstream_phases_complete", True, "VH09|VH10C|VH10D validated_complete", "VH09|VH10C|VH10D validated_complete", "Validated during loading."),
         check_record("frozen_input_hashes", len(bundle["input_digests"]) == len(INPUT_PATHS), len(bundle["input_digests"]), len(INPUT_PATHS), "Every compact input matches its frozen SHA-256."),
         check_record("seaad_rosmap_blinded_freeze", True, "False", "False", "SEA-AD was frozen before ROSMAP unblinding."),
-        check_record("selected_unit_counts", len(bundle["rosmap"]) == 47 and len(bundle["seaad"]) == 13, f"{len(bundle['rosmap'])}|{len(bundle['seaad'])}", "47|13", "Selected network-gene units."),
-        check_record("unique_gene_counts", bundle["rosmap"]["key_driver"].nunique() == 25 and bundle["seaad"]["current_symbol"].nunique() == 11, f"{bundle['rosmap']['key_driver'].nunique()}|{bundle['seaad']['current_symbol'].nunique()}", "25|11", "Unique symbols after network collapse."),
-        check_record("plot_row_count", len(plot_data) == 30, len(plot_data), 30, "Unique class-gene rows."),
+        check_record("selected_unit_counts", len(bundle["rosmap"]) == 47 and len(bundle["seaad"]) == 11, f"{len(bundle['rosmap'])}|{len(bundle['seaad'])}", "47|11", "Selected network-gene units."),
+        check_record("unique_gene_counts", bundle["rosmap"]["key_driver"].nunique() == 25 and bundle["seaad"]["current_symbol"].nunique() == 9, f"{bundle['rosmap']['key_driver'].nunique()}|{bundle['seaad']['current_symbol'].nunique()}", "25|9", "Unique symbols after network collapse."),
+        check_record("plot_row_count", len(plot_data) == 28, len(plot_data), 28, "Unique class-gene rows."),
         check_record("plot_keys_unique", not plot_data.duplicated(["case_id", "gene"]).any(), "unique", "unique", "No gene is duplicated within a class."),
         check_record("region_summary_rows", len(summary) == 6, len(summary), 6, "All three regions are explicit in both classes, including zero-count regions."),
         check_record("region_counts", observed_counts == expected_counts, str(observed_counts), str(expected_counts), "Frozen MT and non-MT regions."),
@@ -585,7 +600,8 @@ def build_checks(bundle: Mapping[str, Any], plot_data: pd.DataFrame, summary: pd
         check_record("frozen_geometry_fields", observed_geometry_fields == geometry_fields, str(observed_geometry_fields), str(geometry_fields), "Circle centers and panel limits match the designed layout."),
         check_record("mt_containment_inequality", float(mt_geometry["center_distance"]) + float(mt_geometry["seaad_radius"]) <= float(mt_geometry["rosmap_radius"]), mt_geometry["geometry_margin"], ">=0", "SEA-AD MT circle is fully contained."),
         check_record("non_mt_disjoint_inequality", float(non_mt_geometry["center_distance"]) >= float(non_mt_geometry["rosmap_radius"]) + float(non_mt_geometry["seaad_radius"]), non_mt_geometry["geometry_margin"], ">=0", "Non-MT circles are separated."),
-        check_record("svg_all_gene_labels", all_gene_labels, int(sum(gene in svg_text for gene in plot_data["gene"])), 30, "Every frozen region gene is searchable SVG text."),
+        check_record("svg_all_gene_labels", all_gene_labels, int(sum(gene in svg_text for gene in plot_data["gene"])), 28, "Every frozen region gene is searchable SVG text."),
+        check_record("exploratory_tier_visible", "SEA-AD post-hoc exploratory" in svg_text, "present" if "SEA-AD post-hoc exploratory" in svg_text else "missing", "present", "The revised SEA-AD analysis tier is visible."),
         check_record("svg_empty_set_labels", both_empty_labels, "both present" if both_empty_labels else "missing", "both present", "Both zero regions are stated with the empty-set symbol."),
         check_record("minimum_font_size", render_meta["minimum_font_points"] >= 7.0, render_meta["minimum_font_points"], ">=7.0", "Minimum visible font."),
         check_record("canvas_text_clipping", not render_meta["canvas_clipped_text"], len(render_meta["canvas_clipped_text"]), 0, "No text leaves the canvas."),
@@ -604,11 +620,11 @@ def build_checks(bundle: Mapping[str, Any], plot_data: pd.DataFrame, summary: pd
 def documentation() -> tuple[str, str]:
     caption = """# ROSMAP–SEA-AD top-driver gene Venn figure: caption
 
-**Gene-level overlap of selected ROSMAP Phase 18 and SEA-AD top key drivers.** Selected symbols were deduplicated across broad-network top-five lists within each driver class. The MT diagram shows exact containment: all six SEA-AD MT genes occurred somewhere in the ten-gene ROSMAP MT set, while four MT genes were ROSMAP only. MT-ATP6 and MT-ND4 are common at gene level but were selected in different broad networks, so they are not strict same-network rediscoveries. The non-MT sets were disjoint: 15 ROSMAP genes and five SEA-AD genes with no shared symbol. Daggers mark ANKRD11, FTL, and NCOA1, which were ROSMAP OPC-only selections; SEA-AD had no included OPC KDA run, so their absence is not a tested negative. Circle area is proportional to unique-gene count. This descriptive comparison ignores network identity and has no overlap P value; strict replication is defined separately by broad network, gene, and driver class within the common assessable universe.
+**Gene-level overlap of selected ROSMAP Phase 18 and SEA-AD top key drivers.** Selected symbols were deduplicated across broad-network top-five lists within each driver class. The MT diagram shows exact containment: all six SEA-AD MT genes occurred somewhere in the ten-gene ROSMAP MT set, while four MT genes were ROSMAP only. MT-ATP6 and MT-ND4 are common at gene level but were selected in different broad networks, so they are not strict same-network rediscoveries. The non-MT sets were disjoint: 15 ROSMAP genes and three SEA-AD genes with no shared symbol. Daggers mark ANKRD11, FTL, and NCOA1, which were ROSMAP OPC-only selections; SEA-AD had no included OPC KDA run, so their absence is not a tested negative. Circle area is proportional to unique-gene count. This descriptive comparison ignores network identity and has no overlap P value; strict replication is defined separately by broad network, gene, and driver class within the common assessable universe. SEA-AD is the post-hoc exploratory FDR-only donor-3/query-3/coverage-80%/aggregate-q-0.05 result.
 """
     methods = f"""# ROSMAP–SEA-AD top-driver gene Venn figure: methods
 
-The renderer reads the validated VH09 ROSMAP Phase 18 selected units and independently frozen VH10C SEA-AD top lists, then uses compact VH10D overlap tables only as cross-checks. It requires `validated_complete` upstream statuses, zero failed upstream checks, registered full-file SHA-256 values, `rosmap_candidate_files_read = False`, and the exact `{QUERY_RULE}` / `{RESULT_TIER}` SEA-AD selection contract. It does not read the full candidate universes or recompute selection.
+The renderer reads the validated VH09 ROSMAP Phase 18 selected units and independently frozen VH10C SEA-AD top lists, then uses compact VH10D overlap tables only as cross-checks. It requires `validated_complete` upstream statuses, zero failed upstream checks, registered full-file SHA-256 values, `rosmap_candidate_files_read = False`, and the exact `{QUERY_RULE}` / `{RESULT_TIER}` SEA-AD selection contract. That SEA-AD contract is explicitly post-hoc exploratory: FDR < 0.05 with no fold-change cutoff, at least three donors in each disease arm, effective query size ≥ 3, aggregate coverage ≥ 0.80, aggregate BH q ≤ 0.05, and at least one qualifying supporting run. The frozen ROSMAP Phase 18 list retains its original selection rules. The renderer does not read the full candidate universes or recompute selection.
 
 Top-display rows are split by exact `case_id` and gene symbols are deduplicated across broad networks. Circle area follows `radius = 0.43 × sqrt(unique genes)` with the same scale in both panels. Because SEA-AD MT is a strict subset of ROSMAP MT, those circles are nested. Because the non-MT intersection is empty, those circles are disjoint. Every gene is printed alphabetically within its region; no P value is calculated for this descriptive view. Fill, outline style, hatch, direct labels, and counts provide redundant encoding. SVG and PDF are vector exports, and SVG text remains searchable. The PNG is 5400 × 3240 at 450 DPI.
 
@@ -675,11 +691,29 @@ def validate_output(project_root: Path, output_root: Path, *, expected_visual_st
         require(path.stat().st_size == as_int(row.bytes), f"Artifact byte count changed: {row.path}")
         require(sha256_file(path) == row.sha256, f"Artifact digest changed: {row.path}")
     plot = read_tsv(output_root / f"{FIGURE_ID}_plot_data.tsv")
-    require(len(plot) == 30 and not plot.duplicated(["case_id", "gene"]).any(), "Published plot data changed")
+    require(len(plot) == 28 and not plot.duplicated(["case_id", "gene"]).any(), "Published plot data changed")
     summary = read_tsv(output_root / f"{FIGURE_ID}_region_summary.tsv")
     require(len(summary) == 6 and not summary.duplicated(["case_id", "region"]).any() and set(summary["geometry"]) == {"nested_containment", "disjoint"}, "Published region summary changed")
     require(all(row["status"] == "pass" for row in image_checks([output_root / f"{FIGURE_ID}.{extension}" for extension in ("png", "pdf", "svg")], as_int(status["png_dpi"]))), "Published image checks failed")
     print(f"ROSMAP/SEA-AD gene Venn package validation passed: {output_root}")
+
+
+def replace_output_package(staging: Path, output_root: Path) -> None:
+    """Atomically replace a package and remove its recovery copy on success."""
+    backup: Path | None = None
+    try:
+        if output_root.exists():
+            timestamp = datetime.now().strftime("%Y%m%dT%H%M%S%f")
+            backup = output_root.parent / f".{output_root.name}.backup.{timestamp}.{os.getpid()}"
+            output_root.replace(backup)
+        staging.replace(output_root)
+    except Exception:
+        if backup is not None and backup.exists() and not output_root.exists():
+            backup.replace(output_root)
+        raise
+    else:
+        if backup is not None and backup.exists():
+            shutil.rmtree(backup)
 
 
 def publish(project_root: Path, output_root: Path, *, dpi: int, visual_review_status: str, force: bool) -> None:
@@ -724,10 +758,7 @@ def publish(project_root: Path, output_root: Path, *, dpi: int, visual_review_st
         }])
         write_tsv(status, staging / f"{FIGURE_ID}_status.tsv")
         validate_output(project_root, staging, expected_visual_status=visual_review_status)
-        if output_root.exists():
-            timestamp = datetime.now().strftime("%Y%m%dT%H%M%S%f")
-            output_root.replace(output_root.parent / f".{output_root.name}.backup.{timestamp}.{os.getpid()}")
-        staging.replace(output_root)
+        replace_output_package(staging, output_root)
     except Exception:
         if staging.exists():
             shutil.rmtree(staging)

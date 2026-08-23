@@ -24,7 +24,7 @@ def digest(path: Path) -> str:
     return value.hexdigest()
 
 
-def test_frozen_deg_landscape_contract() -> None:
+def test_active_fdr_only_deg_landscape_contract() -> None:
     bundle = FIGURE.load_bundle(ROOT)
     plot = FIGURE.build_plot_data(bundle)
     cells = plot.loc[plot["record_type"].eq("heatmap_cell")]
@@ -35,20 +35,38 @@ def test_frozen_deg_landscape_contract() -> None:
     assert cells["signature_group"].nunique() == 6
     assert not cells[["supertype_id", "signature_group"]].duplicated().any()
     assert cells["terminal_status"].value_counts().to_dict() == {
-        "not_estimable": 514,
-        "completed": 260,
+        "not_estimable": 393,
+        "completed": 381,
     }
-    assert bundle["total_fdr"] == 24_404
-    assert bundle["total_parity"] == 22_192
-    assert bundle["signal_contrasts"] == 74
-    assert bundle["m_e33_parity"] == 21_795
+    assert bundle["analysis_role"] == "posthoc_exploratory"
+    assert bundle["query_rule_id"] == "fdr_only_query_sensitivity"
+    assert bundle["active_query_rule"] == "FDR < 0.05"
+    assert bundle["donor_minimum"] == 3
+    assert bundle["total_active"] == 24_423
+    assert bundle["total_reference"] == 22_211
+    assert bundle["signal_contrasts"] == 85
+    assert bundle["dominant_group"] == "M_e33"
+    assert bundle["dominant_group_hits"] == 24_005
+    assert bundle["plotted_groups"] == ["F_e33", "F_e4", "M_e33", "M_e4"]
     observed = {
         (row.signature_group, row.deg_direction): int(row.raw_count)
         for row in signed.itertuples(index=False)
     }
-    assert observed == FIGURE.EXPECTED_SIGNED_TOTALS
-    assert len(plot) == 785
+    assert observed == {
+        ("F_e33", "Dementia_down"): 8,
+        ("F_e33", "Dementia_up"): 258,
+        ("F_e4", "Dementia_down"): 34,
+        ("F_e4", "Dementia_up"): 112,
+        ("M_e33", "Dementia_down"): 14_472,
+        ("M_e33", "Dementia_up"): 9_533,
+        ("M_e4", "Dementia_down"): 0,
+        ("M_e4", "Dementia_up"): 6,
+    }
+    assert len(plot) == 787
     assert plot["record_id"].is_unique
+    assert set(plot["analysis_role"]) == {"posthoc_exploratory"}
+    assert set(plot["query_rule_id"]) == {"fdr_only_query_sensitivity"}
+    assert set(plot["donor_minimum_per_arm"].astype(int)) == {3}
 
 
 def test_full_atomic_deg_landscape_package(tmp_path: Path) -> None:
@@ -65,7 +83,7 @@ def test_full_atomic_deg_landscape_package(tmp_path: Path) -> None:
             "--output-root",
             str(output),
             "--visual-review-status",
-            "complete",
+            "pending",
         ],
         cwd=ROOT,
         env=env,
@@ -74,15 +92,26 @@ def test_full_atomic_deg_landscape_package(tmp_path: Path) -> None:
 
     assert sorted(path.name for path in output.iterdir()) == sorted(FIGURE.OUTPUT_FILES)
     status = pd.read_csv(output / f"{FIGURE.FIGURE_ID}_status.tsv", sep="\t")
-    assert status.loc[0, "validation_status"] == "validated_complete"
-    assert status.loc[0, "visual_review_status"] == "complete"
+    assert status.loc[0, "validation_status"] == "awaiting_visual_review"
+    assert status.loc[0, "visual_review_status"] == "pending"
     assert int(status.loc[0, "failed_blocking_checks"]) == 0
+    assert int(status.loc[0, "pending_nonblocking_checks"]) == 1
+    assert status.loc[0, "analysis_role"] == "posthoc_exploratory"
+    assert status.loc[0, "query_rule_id"] == "fdr_only_query_sensitivity"
+    assert int(status.loc[0, "donor_minimum_per_arm"]) == 3
     assert int(status.loc[0, "fine_contrasts"]) == 774
-    assert int(status.loc[0, "completed_contrasts"]) == 260
-    assert int(status.loc[0, "parity_hits"]) == 22_192
+    assert int(status.loc[0, "completed_contrasts"]) == 381
+    assert int(status.loc[0, "not_estimable_contrasts"]) == 393
+    assert int(status.loc[0, "active_fdr_only_hits"]) == 24_423
+    assert int(status.loc[0, "phase18_reference_hits"]) == 22_211
+    assert int(status.loc[0, "active_signal_contrasts"]) == 85
+    assert status.loc[0, "plotted_groups"] == "F_e33|F_e4|M_e33|M_e4"
 
     checks = pd.read_csv(output / f"{FIGURE.FIGURE_ID}_checks.tsv", sep="\t")
-    assert checks["status"].eq("pass").all()
+    assert not (
+        checks["severity"].eq("blocking") & ~checks["status"].eq("pass")
+    ).any()
+    assert checks.set_index("check_id").loc["visual_review", "status"] == "pending"
     artifacts = pd.read_csv(
         output / f"{FIGURE.FIGURE_ID}_artifacts.tsv", sep="\t", dtype=str
     )
@@ -105,7 +134,10 @@ def test_full_atomic_deg_landscape_package(tmp_path: Path) -> None:
     assert "<text" in svg.lower()
     assert "Fine-supertype DEG landscape" in svg
     assert "Dementia-down" in svg
-    assert "98.2%" in svg
+    assert "M_e4" in svg
+    assert "POST-HOC EXPLORATORY" in svg
+    assert "FDR-only active" in svg
+    assert "98.3%" in svg
 
     subprocess.run(
         [

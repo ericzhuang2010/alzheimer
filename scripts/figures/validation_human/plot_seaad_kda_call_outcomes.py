@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import math
 from datetime import datetime, timezone
 import os
 from pathlib import Path
@@ -35,7 +36,7 @@ matplotlib.rcParams.update(
         "xtick.labelsize": 16,
         "ytick.labelsize": 16,
         "svg.fonttype": "none",
-        "svg.hashsalt": "seaad_kda_call_outcomes_v1",
+        "svg.hashsalt": "seaad_kda_call_outcomes_v2",
         "pdf.fonttype": 42,
         "ps.fonttype": 42,
     }
@@ -44,6 +45,7 @@ import matplotlib.pyplot as plt  # noqa: E402
 from matplotlib import patches as mpatches  # noqa: E402
 import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
+import yaml  # noqa: E402
 
 from _slide_figure_common import (  # noqa: E402
     as_int,
@@ -66,8 +68,8 @@ from _slide_figure_common import (  # noqa: E402
 )
 
 
-SCHEMA = "seaad_kda_call_outcomes_figure_v1"
-PLOT_SCHEMA = "seaad_kda_call_outcomes_plot_data_v1"
+SCHEMA = "seaad_kda_call_outcomes_figure_v2"
+PLOT_SCHEMA = "seaad_kda_call_outcomes_plot_data_v2"
 FIGURE_ID = "seaad_kda_call_outcomes"
 FIGURE_WIDTH_IN = 12.0
 FIGURE_HEIGHT_IN = 5.3
@@ -76,15 +78,6 @@ PNG_WIDTH = 5_400
 PNG_HEIGHT = 2_385
 MINIMUM_FONT_PT = 16.0
 
-NETWORK_ORDER = [
-    "Astrocytes",
-    "Excitatory_neurons",
-    "Inhibitory_neurons",
-    "Microglia",
-    "OPCs",
-    "Oligodendrocytes",
-    "Vasculature_cells",
-]
 NETWORK_LABELS = {
     "Astrocytes": "Astrocytes",
     "Excitatory_neurons": "Excitatory neurons",
@@ -98,39 +91,8 @@ DIRECTION_ORDER = ["up", "down"]
 DIRECTION_LABELS = {"up": "Dementia-up", "down": "Dementia-down"}
 DIRECTION_MARKERS = {"up": "^", "down": "v"}
 
-EXPECTED_OUTCOMES = {
-    ("Astrocytes", "up"): (0, 1),
-    ("Astrocytes", "down"): (0, 0),
-    ("Excitatory_neurons", "up"): (4, 6),
-    ("Excitatory_neurons", "down"): (10, 0),
-    ("Inhibitory_neurons", "up"): (4, 2),
-    ("Inhibitory_neurons", "down"): (8, 2),
-    ("Microglia", "up"): (0, 1),
-    ("Microglia", "down"): (0, 0),
-    ("OPCs", "up"): (0, 0),
-    ("OPCs", "down"): (0, 0),
-    ("Oligodendrocytes", "up"): (1, 1),
-    ("Oligodendrocytes", "down"): (2, 0),
-    ("Vasculature_cells", "up"): (0, 0),
-    ("Vasculature_cells", "down"): (0, 0),
-}
-EXPECTED_GROUP_CALLS = {"M_e33": 40, "F_e33": 1, "F_e4": 1}
-SELECTION_STAGES = [
-    ("completed_calls", 42, "completed KDA calls"),
-    ("calls_with_return", 29, "calls with ≥1 significant return"),
-    ("significant_rows", 208, "significant return rows"),
-    ("aggregate_candidates", 38_788, "aggregate candidate units"),
-    ("selected_units", 13, "units passed all gates"),
-]
-METHOD_STEPS = [
-    "run BH",
-    "conservative support",
-    "coverage ≥0.80",
-    "ACAT",
-    "network BH",
-    "class rank",
-]
-
+DEG_CONFIG_PATH = "scripts/validation_human/seaad_deg_config.yml"
+VALIDATION_CONFIG_PATH = "scripts/validation_human/seaad_phase18_validation_config.yml"
 INPUT_PATHS = {
     "vh10b_status": "results/validation_human/10_seaad_kda_rediscovery/10b_kda/status.tsv",
     "vh10b_artifacts": "results/validation_human/10_seaad_kda_rediscovery/10b_kda/artifacts.tsv",
@@ -138,14 +100,7 @@ INPUT_PATHS = {
     "vh10c_status": "results/validation_human/10_seaad_kda_rediscovery/10c_seaad_selection/status.tsv",
     "vh10c_artifacts": "results/validation_human/10_seaad_kda_rediscovery/10c_seaad_selection/artifacts.tsv",
     "selection_checks": "results/validation_human/10_seaad_kda_rediscovery/10c_seaad_selection/selection_checks.tsv",
-}
-EXPECTED_INPUT_SHA256 = {
-    "vh10b_status": "db308f382993c033b6126e996e860f8bcdb3a5d826e2aeea2daf54511e1d4e92",
-    "vh10b_artifacts": "d3b012e7b9cf383bf489d259a2f3bcfbbd26f5682a2362efd9422f5d0e3d58c1",
-    "run_qc": "a9f16f073075fb4cd0e2ef259fa73a489eb4aa3b2c10504ca2b9fb98dbb570e0",
-    "vh10c_status": "c12e21e961c670d69b04789b149fece950c036c68187c75588e19838f91a7023",
-    "vh10c_artifacts": "2fe7d1af68e3e4971e19516706d496118719d3422cf198ef010e1000b83b52c1",
-    "selection_checks": "eda96be41bc9af33257ba447ed623c29e0ffcf521ce1fd77df6b5cd0fff5ae97",
+    "selection_freeze": "results/validation_human/10_seaad_kda_rediscovery/10c_seaad_selection/seaad_selection_freeze.tsv",
 }
 
 OUTPUT_FILES = [
@@ -192,27 +147,92 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
 
 def load_bundle(project_root: Path) -> dict[str, Any]:
     project_root = Path(project_root).resolve()
-    frames: dict[str, pd.DataFrame] = {}
+    config_paths = {
+        "deg_config": DEG_CONFIG_PATH,
+        "validation_config": VALIDATION_CONFIG_PATH,
+    }
+    configs: dict[str, dict[str, Any]] = {}
     digests: dict[str, str] = {}
+    for key, relative in config_paths.items():
+        path = project_root / relative
+        require(path.is_file(), f"Missing configuration: {path}")
+        with path.open(encoding="utf-8") as handle:
+            config = yaml.safe_load(handle)
+        require(isinstance(config, dict), f"Configuration is not a mapping: {path}")
+        configs[key] = config
+        digests[relative] = sha256_file(path)
+
+    frames: dict[str, pd.DataFrame] = {}
     for key, relative in INPUT_PATHS.items():
         path = project_root / relative
         digest = sha256_file(path)
-        require(digest == EXPECTED_INPUT_SHA256[key], f"Frozen SHA-256 changed for {relative}")
         frames[key] = read_tsv(path)
         digests[relative] = digest
+
+    deg_config = configs["deg_config"]
+    vh10 = configs["validation_config"]["vh10"]
+    analysis = vh10["analysis"]
+    selection = vh10["selection"]
+    query_rule_id = str(analysis["query_rule_id"])
+    result_tier_id = str(analysis["result_tier_id"])
+    fdr_threshold = float(analysis["fdr_threshold_exclusive"])
+    query_gene_minimum = int(analysis["minimum_effective_query_genes"])
+    donor_minimum = int(deg_config["thresholds"]["min_donors_per_disease_arm"])
+    reference_fold_change = float(deg_config["thresholds"]["absolute_fold_change"])
+    query_rules = deg_config["query_rules"]
+    require(query_rule_id in query_rules, "VH10 query rule is absent from DEG config")
+    active_query_rule = str(query_rules[query_rule_id])
+    require(
+        "posthoc_exploratory" in result_tier_id,
+        "Active SEA-AD tier is not labeled post-hoc exploratory",
+    )
+    require(
+        donor_minimum == 3,
+        "Active SEA-AD donor threshold is not three per disease arm",
+    )
+    require(
+        "abs(logFC)" not in active_query_rule and "AND" not in active_query_rule,
+        "Active SEA-AD KDA query is not FDR-only",
+    )
+    require(
+        math.isclose(float(deg_config["thresholds"]["fdr"]), fdr_threshold),
+        "DEG and VH10 FDR thresholds disagree",
+    )
+    minimum_coverage = float(selection["minimum_coverage"])
+    aggregate_q_threshold = float(selection["aggregate_q_threshold"])
+    minimum_support = int(selection["minimum_conservative_supporting_runs"])
+    display_limit = int(selection["display_limit"])
+    require(
+        math.isclose(minimum_coverage, 0.80),
+        "Authoritative VH10 coverage threshold is not the retained 0.80",
+    )
+    require(
+        math.isclose(aggregate_q_threshold, 0.05),
+        "Authoritative VH10 aggregate-q threshold is not the retained 0.05",
+    )
+    require(query_gene_minimum == 3, "Active KDA minimum is not three query genes")
+    network_order = [str(value) for value in vh10["network_order"]]
+    require(
+        len(network_order) == len(NETWORK_LABELS)
+        and set(network_order) == set(NETWORK_LABELS),
+        "Configured VH10 network order changed",
+    )
+    configured_directions = [str(value) for value in analysis["directions"]]
+    direction_map = {"AD_up_mito": "up", "AD_down_mito": "down"}
+    require(
+        set(configured_directions) == set(direction_map),
+        "Configured signed query directions changed",
+    )
 
     status_b = one_row(frames["vh10b_status"], "VH10B status")
     status_c = one_row(frames["vh10c_status"], "VH10C status")
     for label, status in (("VH10B", status_b), ("VH10C", status_c)):
         require(status["validation_status"] == "validated_complete", f"{label} is not validated_complete")
         require(str(status["failed_checks"]).strip() == "", f"{label} reports failed checks")
-    require(as_int(status_b["active_kda_calls"]) == 42, "Active KDA call count changed")
-    require(as_int(status_b["completed_significant_calls"]) == 29, "Calls with return changed")
-    require(as_int(status_b["completed_no_significant_calls"]) == 13, "Calls without return changed")
-    require(as_int(status_b["significant_return_rows"]) == 208, "Significant return-row count changed")
-    require(as_int(status_c["candidate_units"]) == 38_788, "Aggregate candidate-unit count changed")
-    require(as_int(status_c["passing_candidate_units"]) == 13, "Passing candidate-unit count changed")
-    require(as_int(status_c["selected_top5_units"]) == 13, "Selected display-unit count changed")
+        require(
+            status["config_sha256"] == digests[VALIDATION_CONFIG_PATH],
+            f"{label} status does not match the active VH10 config",
+        )
 
     selection_checks = frames["selection_checks"]
     require_columns(selection_checks, ["check", "passed"], "VH10C selection checks")
@@ -225,6 +245,56 @@ def load_bundle(project_root: Path) -> dict[str, Any]:
         INPUT_PATHS["selection_checks"],
         digests[INPUT_PATHS["selection_checks"]],
     )
+    validate_source_artifact(
+        frames["vh10c_artifacts"],
+        INPUT_PATHS["selection_freeze"],
+        digests[INPUT_PATHS["selection_freeze"]],
+    )
+
+    freeze = one_row(frames["selection_freeze"], "VH10C selection freeze")
+    require_columns(
+        frames["selection_freeze"],
+        [
+            "query_rule_id",
+            "result_tier_id",
+            "minimum_coverage",
+            "aggregate_q_threshold",
+            "minimum_conservative_supporting_runs",
+            "candidate_units",
+            "passing_candidate_units",
+            "selected_top5_units",
+            "selected_unique_genes",
+            "config_sha256",
+            "rosmap_candidate_files_read",
+            "freeze_status",
+        ],
+        "VH10C selection freeze",
+    )
+    require(
+        freeze["query_rule_id"] == query_rule_id
+        and freeze["result_tier_id"] == result_tier_id,
+        "VH10C freeze query/tier identity disagrees with config",
+    )
+    require(
+        math.isclose(float(freeze["minimum_coverage"]), minimum_coverage)
+        and math.isclose(float(freeze["aggregate_q_threshold"]), aggregate_q_threshold)
+        and as_int(freeze["minimum_conservative_supporting_runs"])
+        == minimum_support,
+        "VH10C freeze thresholds disagree with config",
+    )
+    require(
+        freeze["config_sha256"] == digests[VALIDATION_CONFIG_PATH],
+        "VH10C freeze does not match the active config",
+    )
+    require(
+        status_c["freeze_sha256"] == digests[INPUT_PATHS["selection_freeze"]],
+        "VH10C status does not identify the consumed freeze",
+    )
+    require(
+        not truth(freeze["rosmap_candidate_files_read"])
+        and freeze["freeze_status"] == "independent_seaad_selection_frozen",
+        "SEA-AD selection was not frozen before ROSMAP candidate unblinding",
+    )
 
     runs = frames["run_qc"].copy()
     require_columns(
@@ -234,16 +304,27 @@ def load_bundle(project_root: Path) -> dict[str, Any]:
             "broad_network",
             "signature_group",
             "signature_direction",
+            "effective_query_genes",
             "significant_key_drivers",
             "terminal_status",
         ],
         "KDA run QC",
     )
-    require(len(runs) == 42 and not runs["kda_run_id"].duplicated().any(), "KDA run keys changed")
-    require(set(runs["broad_network"]).issubset(set(NETWORK_ORDER)), "Unknown KDA broad network")
-    direction_map = {"AD_up_mito": "up", "AD_down_mito": "down"}
+    require(
+        len(runs) == as_int(status_b["active_kda_calls"])
+        and not runs["kda_run_id"].duplicated().any(),
+        "KDA run keys disagree with VH10B status",
+    )
+    require(set(runs["broad_network"]).issubset(set(network_order)), "Unknown KDA broad network")
     require(set(runs["signature_direction"]) == set(direction_map), "KDA signature directions changed")
     runs["direction"] = runs["signature_direction"].map(direction_map)
+    runs["effective_query_genes"] = pd.to_numeric(
+        runs["effective_query_genes"], errors="raise"
+    ).astype(int)
+    require(
+        runs["effective_query_genes"].ge(query_gene_minimum).all(),
+        "A completed KDA call falls below the configured query minimum",
+    )
     runs["significant_return_rows"] = pd.to_numeric(
         runs["significant_key_drivers"], errors="raise"
     ).astype(int)
@@ -252,14 +333,21 @@ def load_bundle(project_root: Path) -> dict[str, Any]:
         runs["has_significant_return"], "completed_significant", "completed_no_significant"
     )
     require(np.array_equal(runs["terminal_status"].to_numpy(), expected_terminal), "KDA terminal status disagrees with return count")
-    require(int(runs["has_significant_return"].sum()) == 29, "Run table no longer contains 29 calls with returns")
-    require(int((~runs["has_significant_return"]).sum()) == 13, "Run table no longer contains 13 calls without returns")
-    require(int(runs["significant_return_rows"].sum()) == 208, "Run table no longer sums to 208 return rows")
+    active_calls = len(runs)
+    calls_with_return = int(runs["has_significant_return"].sum())
+    calls_without_return = int((~runs["has_significant_return"]).sum())
+    significant_return_rows = int(runs["significant_return_rows"].sum())
+    require(
+        calls_with_return == as_int(status_b["completed_significant_calls"])
+        and calls_without_return
+        == as_int(status_b["completed_no_significant_calls"])
+        and significant_return_rows == as_int(status_b["significant_return_rows"]),
+        "Run-QC outcome counts disagree with VH10B status",
+    )
     group_calls = runs["signature_group"].value_counts().astype(int).to_dict()
-    require(group_calls == EXPECTED_GROUP_CALLS, "KDA group distribution changed")
 
     observed_outcomes: dict[tuple[str, str], tuple[int, int]] = {}
-    for network in NETWORK_ORDER:
+    for network in network_order:
         for direction in DIRECTION_ORDER:
             cell = runs.loc[
                 runs["broad_network"].eq(network) & runs["direction"].eq(direction)
@@ -268,7 +356,50 @@ def load_bundle(project_root: Path) -> dict[str, Any]:
                 int(cell["has_significant_return"].sum()),
                 int((~cell["has_significant_return"]).sum()),
             )
-    require(observed_outcomes == EXPECTED_OUTCOMES, "Network-by-direction KDA outcomes changed")
+
+    candidate_units = as_int(status_c["candidate_units"])
+    passing_units = as_int(status_c["passing_candidate_units"])
+    selected_units = as_int(status_c["selected_top5_units"])
+    selected_unique_genes = as_int(status_c["selected_unique_genes"])
+    require(
+        candidate_units == as_int(freeze["candidate_units"])
+        and passing_units == as_int(freeze["passing_candidate_units"])
+        and selected_units == as_int(freeze["selected_top5_units"])
+        and selected_unique_genes == as_int(freeze["selected_unique_genes"]),
+        "VH10C status and frozen selection counts disagree",
+    )
+    require(
+        math.isclose(float(status_c["minimum_coverage"]), minimum_coverage)
+        and math.isclose(
+            float(status_c["aggregate_q_threshold"]), aggregate_q_threshold
+        )
+        and as_int(status_c["minimum_conservative_supporting_runs"])
+        == minimum_support,
+        "VH10C status thresholds disagree with config",
+    )
+    require(
+        as_int(status_c["testable_networks"]) == runs["broad_network"].nunique(),
+        "VH10C testable-network count disagrees with completed calls",
+    )
+    selection_stages = [
+        ("completed_calls", active_calls, "completed KDA calls"),
+        (
+            "calls_with_return",
+            calls_with_return,
+            "calls with ≥1 significant return",
+        ),
+        ("significant_rows", significant_return_rows, "significant return rows"),
+        ("aggregate_candidates", candidate_units, "aggregate candidate units"),
+        ("passing_units", passing_units, "units passed all gates"),
+    ]
+    method_steps = [
+        "run BH",
+        f"support ≥{minimum_support}",
+        f"coverage ≥{minimum_coverage:.2f}",
+        "ACAT",
+        f"network BH q≤{aggregate_q_threshold:.2f}",
+        "class rank",
+    ]
 
     input_bundle_sha256 = sha256_strings(
         f"{path}\t{digest}" for path, digest in sorted(digests.items())
@@ -278,10 +409,33 @@ def load_bundle(project_root: Path) -> dict[str, Any]:
         "frames": frames,
         "input_digests": digests,
         "input_bundle_sha256": input_bundle_sha256,
+        "analysis_role": "posthoc_exploratory",
+        "query_rule_id": query_rule_id,
+        "active_query_rule": active_query_rule,
+        "result_tier_id": result_tier_id,
+        "donor_minimum": donor_minimum,
+        "fdr_threshold": fdr_threshold,
+        "reference_fold_change": reference_fold_change,
+        "query_gene_minimum": query_gene_minimum,
+        "minimum_coverage": minimum_coverage,
+        "aggregate_q_threshold": aggregate_q_threshold,
+        "minimum_support": minimum_support,
+        "display_limit": display_limit,
+        "network_order": network_order,
         "runs": runs,
         "outcomes": observed_outcomes,
-        "candidate_units": as_int(status_c["candidate_units"]),
-        "selected_units": as_int(status_c["selected_top5_units"]),
+        "group_calls": group_calls,
+        "active_calls": active_calls,
+        "calls_with_return": calls_with_return,
+        "calls_without_return": calls_without_return,
+        "significant_return_rows": significant_return_rows,
+        "candidate_units": candidate_units,
+        "passing_units": passing_units,
+        "selected_units": selected_units,
+        "selected_unique_genes": selected_unique_genes,
+        "selection_stages": selection_stages,
+        "method_steps": method_steps,
+        "rosmap_blinded": True,
     }
 
 
@@ -308,12 +462,24 @@ def _empty_record(record_type: str, record_id: str) -> dict[str, Any]:
         "stage_value": "",
         "stage_label": "",
         "method_step": "",
+        "analysis_role": "",
+        "query_rule_id": "",
+        "result_tier_id": "",
+        "donor_minimum_per_arm": "",
+        "fdr_threshold_exclusive": "",
+        "minimum_effective_query_genes": "",
+        "minimum_coverage": "",
+        "aggregate_q_threshold": "",
+        "minimum_conservative_supporting_runs": "",
+        "display_limit_per_network_class": "",
+        "rosmap_candidate_files_read": "",
     }
 
 
 def build_plot_data(bundle: Mapping[str, Any]) -> pd.DataFrame:
     rows: list[dict[str, Any]] = []
-    network_rank = {network: index for index, network in enumerate(NETWORK_ORDER)}
+    network_order = bundle["network_order"]
+    network_rank = {network: index for index, network in enumerate(network_order)}
     direction_rank = {direction: index for index, direction in enumerate(DIRECTION_ORDER)}
     runs = bundle["runs"].sort_values(
         ["broad_network", "direction", "has_significant_return", "kda_run_id"],
@@ -350,7 +516,7 @@ def build_plot_data(bundle: Mapping[str, Any]) -> pd.DataFrame:
         )
         rows.append(record)
 
-    for network_index, network in enumerate(NETWORK_ORDER):
+    for network_index, network in enumerate(network_order):
         for direction_index, direction in enumerate(DIRECTION_ORDER):
             with_return, without_return = bundle["outcomes"][(network, direction)]
             record = _empty_record("outcome_cell", f"cell::{network}::{direction}")
@@ -369,7 +535,7 @@ def build_plot_data(bundle: Mapping[str, Any]) -> pd.DataFrame:
             )
             rows.append(record)
 
-    for index, (stage_id, value, label) in enumerate(SELECTION_STAGES):
+    for index, (stage_id, value, label) in enumerate(bundle["selection_stages"]):
         record = _empty_record("selection_stage", f"stage::{stage_id}")
         record.update(
             {
@@ -380,12 +546,32 @@ def build_plot_data(bundle: Mapping[str, Any]) -> pd.DataFrame:
             }
         )
         rows.append(record)
-    for index, step in enumerate(METHOD_STEPS):
+    for index, step in enumerate(bundle["method_steps"]):
         record = _empty_record("method_step", f"method::{index + 1}")
         record.update({"display_order": index, "method_step": step})
         rows.append(record)
     frame = pd.DataFrame(rows)
-    require(len(frame) == 67, f"Expected 67 plot records, observed {len(frame)}")
+    frame["analysis_role"] = bundle["analysis_role"]
+    frame["query_rule_id"] = bundle["query_rule_id"]
+    frame["result_tier_id"] = bundle["result_tier_id"]
+    frame["donor_minimum_per_arm"] = bundle["donor_minimum"]
+    frame["fdr_threshold_exclusive"] = bundle["fdr_threshold"]
+    frame["minimum_effective_query_genes"] = bundle["query_gene_minimum"]
+    frame["minimum_coverage"] = bundle["minimum_coverage"]
+    frame["aggregate_q_threshold"] = bundle["aggregate_q_threshold"]
+    frame["minimum_conservative_supporting_runs"] = bundle["minimum_support"]
+    frame["display_limit_per_network_class"] = bundle["display_limit"]
+    frame["rosmap_candidate_files_read"] = False
+    expected_records = (
+        bundle["active_calls"]
+        + len(network_order) * len(DIRECTION_ORDER)
+        + len(bundle["selection_stages"])
+        + len(bundle["method_steps"])
+    )
+    require(
+        len(frame) == expected_records,
+        f"Expected {expected_records} plot records, observed {len(frame)}",
+    )
     require(frame["record_id"].is_unique, "Plot record IDs are duplicated")
     return frame
 
@@ -404,23 +590,28 @@ def draw_figure(bundle: Mapping[str, Any], plot_data: pd.DataFrame) -> tuple[Any
     fig = plt.figure(figsize=(FIGURE_WIDTH_IN, FIGURE_HEIGHT_IN), facecolor=WHITE)
     fig.text(0.018, 0.958, "A  KDA call outcomes", ha="left", va="top", fontsize=20, weight="bold", color=TEXT)
     fig.text(0.650, 0.958, "B  Evidence → selection", ha="left", va="top", fontsize=20, weight="bold", color=TEXT)
+    fig.text(0.475, 0.955, "POST-HOC EXPLORATORY", ha="center", va="top", fontsize=16, weight="bold", color=ORANGE)
     fig.text(0.195, 0.877, "● ≥1 return     ○ none     counts: with | none", ha="left", va="center", fontsize=16, color=MID)
-    fig.text(0.815, 0.878, "MT queries → assessable network genes", ha="center", va="center", fontsize=16, color=MID)
-    fig.text(0.815, 0.831, "drivers classified MT or non-MT", ha="center", va="center", fontsize=16, color=MID)
+    fig.text(0.815, 0.878, "MitoCarta DEG query", ha="center", va="center", fontsize=16, color=MID)
+    fig.text(0.815, 0.831, "→ MT or non-MT network drivers", ha="center", va="center", fontsize=16, color=MID)
 
     matrix_ax = fig.add_axes([0.195, 0.145, 0.435, 0.675])
     matrix_ax.set_xlim(-0.6, 11.4)
     matrix_ax.set_ylim(-0.65, 6.75)
     matrix_ax.set_xticks([])
-    y_positions = {network: 6 - index for index, network in enumerate(NETWORK_ORDER)}
+    network_order = bundle["network_order"]
+    y_positions = {
+        network: len(network_order) - 1 - index
+        for index, network in enumerate(network_order)
+    }
     matrix_ax.set_yticks(
-        [y_positions[network] for network in NETWORK_ORDER],
-        [NETWORK_LABELS[network] for network in NETWORK_ORDER],
+        [y_positions[network] for network in network_order],
+        [NETWORK_LABELS[network] for network in network_order],
     )
     matrix_ax.tick_params(axis="y", length=0, pad=8, labelsize=16)
     for spine in matrix_ax.spines.values():
         spine.set_visible(False)
-    for index, network in enumerate(NETWORK_ORDER):
+    for index, network in enumerate(network_order):
         if index % 2 == 1:
             matrix_ax.axhspan(y_positions[network] - 0.42, y_positions[network] + 0.42, color="#F5F7F8", zorder=0)
     starts = {"up": 0.0, "down": 7.0}
@@ -429,7 +620,7 @@ def draw_figure(bundle: Mapping[str, Any], plot_data: pd.DataFrame) -> tuple[Any
 
     calls = plot_data.loc[plot_data["record_type"].eq("call")]
     cells = plot_data.loc[plot_data["record_type"].eq("outcome_cell")]
-    for network in NETWORK_ORDER:
+    for network in network_order:
         y = y_positions[network]
         for direction in DIRECTION_ORDER:
             start_x = starts[direction]
@@ -468,7 +659,7 @@ def draw_figure(bundle: Mapping[str, Any], plot_data: pd.DataFrame) -> tuple[Any
     box_fills = ["#DDF3EB", "#DCEAF3", "#E7EEF5", "#F0F2F4", "#FBE8C7"]
     box_edges = [SEAAD, "#0072B2", "#537A9D", "#737C85", ORANGE]
     for index, ((stage_id, value, label), y, fill, edge) in enumerate(
-        zip(SELECTION_STAGES, box_y, box_fills, box_edges)
+        zip(bundle["selection_stages"], box_y, box_fills, box_edges)
     ):
         sequence_ax.add_patch(
             mpatches.FancyBboxPatch(
@@ -481,11 +672,11 @@ def draw_figure(bundle: Mapping[str, Any], plot_data: pd.DataFrame) -> tuple[Any
             "calls_with_return": "calls with ≥1\nsignificant return",
             "significant_rows": "significant return\nrows",
             "aggregate_candidates": "aggregate candidate\nunits",
-            "selected_units": "units passed\nall gates",
+            "passing_units": "units passed\nall gates",
         }.get(stage_id, label)
         sequence_ax.text(0.17, y + 0.070, f"{value:,}", ha="center", va="center", fontsize=20, weight="bold", color=NAVY)
         sequence_ax.text(0.36, y + 0.070, display_label, ha="left", va="center", fontsize=16, linespacing=0.92, color=TEXT)
-        if index < len(SELECTION_STAGES) - 1:
+        if index < len(bundle["selection_stages"]) - 1:
             sequence_ax.annotate(
                 "", xy=(0.50, box_y[index + 1] + 0.145), xytext=(0.50, y - 0.004),
                 arrowprops={"arrowstyle": "-|>", "color": MID, "linewidth": 1.2},
@@ -499,7 +690,7 @@ def draw_figure(bundle: Mapping[str, Any], plot_data: pd.DataFrame) -> tuple[Any
     )
     fig.text(
         0.50, 0.055,
-        "run BH  →  conservative support  →  coverage ≥0.80  →  ACAT  →  network BH  →  class rank",
+        "  →  ".join(bundle["method_steps"]),
         ha="center", va="center", fontsize=16, weight="bold", color=TEXT,
     )
 
@@ -518,6 +709,14 @@ def render_images(
         title="SEA-AD KDA call outcomes and selection sequence",
     )
     plt.close(fig)
+    svg_path = next(path for path in paths if path.suffix == ".svg")
+    write_text(
+        svg_path,
+        "\n".join(
+            line.rstrip()
+            for line in svg_path.read_text(encoding="utf-8").splitlines()
+        ),
+    )
     return paths, metadata
 
 
@@ -544,21 +743,40 @@ def build_checks(
         (row.stage_id, as_int(row.stage_value), row.stage_label)
         for row in stages.sort_values("display_order").itertuples(index=False)
     ]
+    observed_methods = (
+        plot_data.loc[plot_data["record_type"].eq("method_step")]
+        .sort_values("display_order")["method_step"]
+        .tolist()
+    )
+    expected_records = (
+        bundle["active_calls"]
+        + len(bundle["network_order"]) * len(DIRECTION_ORDER)
+        + len(bundle["selection_stages"])
+        + len(bundle["method_steps"])
+    )
     checks = [
         record("upstream_phases_complete", True, "VH10B|VH10C validated_complete", "VH10B|VH10C validated_complete", "Validated during input loading."),
-        record("frozen_input_hashes", len(bundle["input_digests"]) == len(INPUT_PATHS), len(bundle["input_digests"]), len(INPUT_PATHS), "Every compact source matches its frozen SHA-256."),
-        record("call_count", len(calls) == 42, len(calls), 42, "One plot record per completed KDA call."),
+        record("compact_input_hashes", len(bundle["input_digests"]) == len(INPUT_PATHS) + 2, len(bundle["input_digests"]), len(INPUT_PATHS) + 2, "Every consumed compact source and config has a full-file SHA-256; bulky unconsumed KDA tables are not required."),
+        record("posthoc_exploratory_label", bundle["analysis_role"] == "posthoc_exploratory", bundle["analysis_role"], "posthoc_exploratory", "The amended SEA-AD analysis is labeled post-hoc exploratory."),
+        record("donor_three_protocol", bundle["donor_minimum"] == 3, bundle["donor_minimum"], 3, "Minimum donors per disease arm inherited from VH08."),
+        record("active_query_is_fdr_only", "abs(logFC)" not in bundle["active_query_rule"], bundle["active_query_rule"], f"FDR < {bundle['fdr_threshold']:g}", "The KDA query has no fold-change gate."),
+        record("query_minimum", bundle["query_gene_minimum"] == 3, bundle["query_gene_minimum"], 3, "Minimum effective query genes per KDA call."),
+        record("coverage_retained", math.isclose(bundle["minimum_coverage"], 0.80), bundle["minimum_coverage"], 0.80, "The planned 0.80 coverage gate is retained."),
+        record("aggregate_q_retained", math.isclose(bundle["aggregate_q_threshold"], 0.05), bundle["aggregate_q_threshold"], 0.05, "The planned aggregate network-BH q threshold is retained."),
+        record("rosmap_blinded_selection", bundle["rosmap_blinded"], False, False, "ROSMAP candidate files were not read while freezing SEA-AD selection."),
+        record("call_count", len(calls) == bundle["active_calls"], len(calls), bundle["active_calls"], "One plot record per completed KDA call."),
         record("call_ids_unique", calls["kda_run_id"].is_unique, "unique", "unique", "KDA call IDs are unique."),
-        record("calls_with_returns", calls["call_status"].eq("with_significant_return").sum() == 29, calls["call_status"].eq("with_significant_return").sum(), 29, "Calls with at least one significant return."),
-        record("calls_without_returns", calls["call_status"].eq("without_significant_return").sum() == 13, calls["call_status"].eq("without_significant_return").sum(), 13, "Calls without a significant return."),
-        record("significant_return_rows", calls["significant_return_rows"].map(as_int).sum() == 208, calls["significant_return_rows"].map(as_int).sum(), 208, "Significant KDA return rows."),
-        record("outcome_cell_count", len(cells) == 14, len(cells), 14, "Seven networks by two signed directions."),
-        record("outcome_matrix", observed_outcomes == EXPECTED_OUTCOMES, str(observed_outcomes), str(EXPECTED_OUTCOMES), "Exact with-return/without-return counts, including zero-call cells."),
-        record("selection_sequence", observed_stages == SELECTION_STAGES, str(observed_stages), str(SELECTION_STAGES), "Exact evidence-to-selection stage values."),
-        record("candidate_units", bundle["candidate_units"] == 38_788, bundle["candidate_units"], 38_788, "Aggregate candidate units."),
-        record("selected_units", bundle["selected_units"] == 13, bundle["selected_units"], 13, "Units passing all gates and displayed."),
-        record("method_steps", plot_data["record_type"].eq("method_step").sum() == 6, plot_data["record_type"].eq("method_step").sum(), 6, "Six frozen aggregation steps."),
-        record("plot_record_count", len(plot_data) == 67, len(plot_data), 67, "Calls, outcome cells, stages, and method steps."),
+        record("calls_with_returns", calls["call_status"].eq("with_significant_return").sum() == bundle["calls_with_return"], calls["call_status"].eq("with_significant_return").sum(), bundle["calls_with_return"], "Calls with at least one significant return."),
+        record("calls_without_returns", calls["call_status"].eq("without_significant_return").sum() == bundle["calls_without_return"], calls["call_status"].eq("without_significant_return").sum(), bundle["calls_without_return"], "Calls without a significant return."),
+        record("significant_return_rows", calls["significant_return_rows"].map(as_int).sum() == bundle["significant_return_rows"], calls["significant_return_rows"].map(as_int).sum(), bundle["significant_return_rows"], "Significant KDA return rows."),
+        record("outcome_cell_count", len(cells) == len(bundle["network_order"]) * 2, len(cells), len(bundle["network_order"]) * 2, "Configured networks by two signed directions."),
+        record("outcome_matrix", observed_outcomes == bundle["outcomes"], str(observed_outcomes), str(bundle["outcomes"]), "Exact with-return/without-return counts, including zero-call cells."),
+        record("selection_sequence", observed_stages == bundle["selection_stages"], str(observed_stages), str(bundle["selection_stages"]), "Exact evidence-to-selection stage values."),
+        record("candidate_units", as_int(stages.loc[stages["stage_id"].eq("aggregate_candidates"), "stage_value"].iloc[0]) == bundle["candidate_units"], as_int(stages.loc[stages["stage_id"].eq("aggregate_candidates"), "stage_value"].iloc[0]), bundle["candidate_units"], "Aggregate candidate units."),
+        record("passing_units", as_int(stages.loc[stages["stage_id"].eq("passing_units"), "stage_value"].iloc[0]) == bundle["passing_units"], as_int(stages.loc[stages["stage_id"].eq("passing_units"), "stage_value"].iloc[0]), bundle["passing_units"], "Candidate units passing all gates."),
+        record("selected_units", bundle["selected_units"] <= bundle["passing_units"], bundle["selected_units"], f"<= {bundle['passing_units']}", "Selected class-ranked units are a subset of passing units."),
+        record("method_steps", observed_methods == bundle["method_steps"], str(observed_methods), str(bundle["method_steps"]), "Aggregation steps and active thresholds."),
+        record("plot_record_count", len(plot_data) == expected_records, len(plot_data), expected_records, "Calls, outcome cells, stages, and method steps."),
         record("plot_record_ids_unique", plot_data["record_id"].is_unique, "unique", "unique", "Plot records are uniquely keyed."),
         record("minimum_font_size", render_meta["minimum_font_points"] >= MINIMUM_FONT_PT, render_meta["minimum_font_points"], f">={MINIMUM_FONT_PT}", "All visible text is projection scale."),
         record("canvas_text_clipping", not render_meta["canvas_clipped_text"], len(render_meta["canvas_clipped_text"]), 0, "No visible text leaves the canvas."),
@@ -578,14 +796,16 @@ def build_checks(
     return frame
 
 
-def documentation() -> tuple[str, str]:
-    caption = """# SEA-AD KDA call outcomes: caption
+def documentation(bundle: Mapping[str, Any]) -> tuple[str, str]:
+    caption = f"""# SEA-AD KDA call outcomes: caption
 
-**Twenty-nine of 42 SEA-AD KDA calls produced at least one significant return, chiefly in neuronal networks.** Each triangle in the outcome matrix is one completed call. Filled navy triangles denote a call with at least one significant return; light triangles denote none. Upward and downward triangle orientation preserves signed-query direction independently of color. Direct cell labels report `with return | none`, and zero-call cells remain explicit. The sequence at right changes units deliberately: 42 calls yielded 29 calls with returns and 208 significant return rows; cross-run aggregation evaluated 38,788 broad-network gene/class candidate units, of which 13 passed all support, coverage, ACAT, network-BH, and class-rank gates. The signed core-MitoCarta DEG set is the KDA query, while candidate drivers are all assessable genes in the induced network; a mitochondrial query can therefore identify a non-MT driver.
+**In the post-hoc exploratory SEA-AD rerun, {bundle['calls_with_return']:,} of {bundle['active_calls']:,} completed KDA calls produced at least one significant return.** Each triangle in the outcome matrix is one completed call. Filled navy triangles denote a call with at least one significant return; light triangles denote none. Upward and downward orientation preserves signed-query direction independently of color. Direct cell labels report `with return | none`, and zero-call cells remain explicit. The sequence at right changes units deliberately: {bundle['active_calls']:,} calls yielded {bundle['calls_with_return']:,} calls with returns and {bundle['significant_return_rows']:,} significant return rows; cross-run aggregation evaluated {bundle['candidate_units']:,} broad-network gene/class candidate units, of which {bundle['passing_units']:,} passed all gates and {bundle['selected_units']:,} were retained after class ranking ({bundle['selected_unique_genes']:,} unique genes). The signed core-MitoCarta DEG set is the KDA query, while candidate drivers are all assessable genes in the induced network; a mitochondrial query can therefore identify a non-MT driver. SEA-AD selection was frozen without reading ROSMAP candidate files.
 """
     methods = f"""# SEA-AD KDA call outcomes: methods
 
-The renderer reads the validated VH10B run-QC table and status plus the validated VH10C status and selection checks. It requires exact registered full-file SHA-256 values, 42 unique completed KDA calls, 29 calls with at least one significant return, 13 calls with none, and 208 significant return rows. Each `significant_key_drivers > 0` flag must agree with its terminal status. Network-by-direction counts are reconstructed from individual calls and checked against all 14 cells, including OPC and Vasculature combinations with no included call. The five equal-size sequence boxes are not area-scaled because units change from calls to return rows to aggregate candidate units. The aggregation ribbon preserves the executed order: `{' → '.join(METHOD_STEPS)}`.
+The renderer reads the active DEG and VH10 configurations plus the validated VH10B status and compact registered run-QC table and the validated VH10C status, selection checks, and selection freeze. It validates full-file SHA-256 values for consumed compact inputs only; bulky call-return and candidate-test tables are not required because they are not plotted. Status and freeze config hashes must match the active VH10 configuration, and the freeze digest must match VH10C status. The active post-hoc exploratory tier is `{bundle['result_tier_id']}`. Queries use `{bundle['query_rule_id']}` (`{bundle['active_query_rule']}`), at least {bundle['donor_minimum']} donors per disease arm upstream, and at least {bundle['query_gene_minimum']} effective query genes per KDA call. The inherited {bundle['reference_fold_change']:g}-fold rule is not an active KDA query gate. The retained selection gates are conservative support ≥{bundle['minimum_support']}, coverage ≥{bundle['minimum_coverage']:.2f}, and network-BH aggregate q ≤{bundle['aggregate_q_threshold']:.2f}; the per-network/class display limit is {bundle['display_limit']}.
+
+Each `significant_key_drivers > 0` flag must agree with its terminal status. Network-by-direction counts are reconstructed from individual calls and checked across all {len(bundle['network_order']) * 2} configured cells, including network/direction combinations with no call. The five equal-size sequence boxes are not area-scaled because units change from calls to return rows to aggregate candidate units. The aggregation ribbon preserves the executed order: `{' → '.join(bundle['method_steps'])}`. The SEA-AD selection freeze must state `rosmap_candidate_files_read=False`; ROSMAP remains a frozen external comparison and its candidate identities or thresholds are not used to select SEA-AD units.
 
 The asset is titleless at slide level, uses a 12.0 × 5.3 inch canvas, and keeps all visible text at 16 pt or larger. SVG/PDF retain vector geometry and searchable text; PNG is 5,400 × 2,385 pixels at 450 DPI. Direction is encoded by triangle orientation, and call status is encoded by fill plus direct labels, so the figure remains interpretable in grayscale.
 
@@ -631,7 +851,42 @@ def validate_output(
     require(not artifacts["path"].isin(OUTPUT_FILES[-2:]).any(), "Manifest/status entered hash scope")
     validate_artifacts(project_root=project_root, output_root=output_root, artifacts=artifacts, payload_files=PAYLOAD_FILES)
     plot_data = read_tsv(output_root / f"{FIGURE_ID}_plot_data.tsv")
-    require(len(plot_data) == 67 and plot_data["record_id"].is_unique, "Published plot data changed")
+    require(
+        len(plot_data) == as_int(status["plot_data_rows"])
+        and plot_data["record_id"].is_unique,
+        "Published plot data changed",
+    )
+    for column in (
+        "analysis_role",
+        "query_rule_id",
+        "result_tier_id",
+        "donor_minimum_per_arm",
+        "fdr_threshold_exclusive",
+        "minimum_effective_query_genes",
+        "minimum_coverage",
+        "aggregate_q_threshold",
+        "minimum_conservative_supporting_runs",
+        "display_limit_per_network_class",
+        "rosmap_candidate_files_read",
+    ):
+        require(column in plot_data.columns, f"Published plot data lacks {column}")
+        require(
+            plot_data[column].astype(str).nunique() == 1,
+            f"Published plot-data protocol field is not unique: {column}",
+        )
+    require(
+        set(plot_data["analysis_role"].astype(str)) == {"posthoc_exploratory"},
+        "Published plot data is not labeled post-hoc exploratory",
+    )
+    require(
+        set(pd.to_numeric(plot_data["donor_minimum_per_arm"], errors="raise"))
+        == {3},
+        "Published plot data does not retain the donor-three amendment",
+    )
+    require(
+        all(not truth(value) for value in plot_data["rosmap_candidate_files_read"]),
+        "Published plot data does not preserve the ROSMAP-blinded boundary",
+    )
     image_results = image_checks(
         SCHEMA,
         FIGURE_ID,
@@ -664,7 +919,7 @@ def publish(
         plot_data = build_plot_data(bundle)
         image_paths, render_meta = render_images(bundle, plot_data, staging, dpi)
         write_tsv(plot_data, staging / f"{FIGURE_ID}_plot_data.tsv")
-        caption, methods = documentation()
+        caption, methods = documentation(bundle)
         write_text(staging / f"{FIGURE_ID}_caption.md", caption)
         write_text(staging / f"{FIGURE_ID}_methods.md", methods)
         checks = build_checks(
@@ -708,11 +963,29 @@ def publish(
                     "input_files": len(bundle["input_digests"]),
                     "output_files": len(OUTPUT_FILES),
                     "plot_data_rows": len(plot_data),
-                    "completed_calls": 42,
-                    "calls_with_returns": 29,
-                    "significant_return_rows": 208,
+                    "analysis_role": bundle["analysis_role"],
+                    "query_rule_id": bundle["query_rule_id"],
+                    "result_tier_id": bundle["result_tier_id"],
+                    "donor_minimum_per_arm": bundle["donor_minimum"],
+                    "fdr_threshold_exclusive": bundle["fdr_threshold"],
+                    "minimum_effective_query_genes": bundle["query_gene_minimum"],
+                    "minimum_coverage": bundle["minimum_coverage"],
+                    "aggregate_q_threshold": bundle["aggregate_q_threshold"],
+                    "minimum_conservative_supporting_runs": bundle["minimum_support"],
+                    "display_limit_per_network_class": bundle["display_limit"],
+                    "rosmap_candidate_files_read": False,
+                    "completed_calls": bundle["active_calls"],
+                    "calls_with_returns": bundle["calls_with_return"],
+                    "calls_without_returns": bundle["calls_without_return"],
+                    "significant_return_rows": bundle["significant_return_rows"],
                     "candidate_units": bundle["candidate_units"],
+                    "passing_units": bundle["passing_units"],
                     "selected_units": bundle["selected_units"],
+                    "selected_unique_genes": bundle["selected_unique_genes"],
+                    "group_call_counts": "|".join(
+                        f"{group}:{count}"
+                        for group, count in sorted(bundle["group_calls"].items())
+                    ),
                     "completed_utc": datetime.now(timezone.utc).isoformat(),
                 }
             ]

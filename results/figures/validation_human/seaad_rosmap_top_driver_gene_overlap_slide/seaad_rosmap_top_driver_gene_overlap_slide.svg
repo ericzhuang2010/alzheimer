@@ -150,7 +150,7 @@ z
     <text style="font-weight: 700; font-size: 17px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #e69f00" x="552.23822" y="76.192636" transform="rotate(-0 552.23822 76.192636)">ROSMAP only • 15</text>
    </g>
    <g id="text_16">
-    <text style="font-weight: 700; font-size: 17px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #009e73" x="778.915433" y="113.972172" transform="rotate(-0 778.915433 113.972172)">SEA-AD only • 5</text>
+    <text style="font-weight: 700; font-size: 17px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #009e73" x="778.915433" y="113.972172" transform="rotate(-0 778.915433 113.972172)">SEA-AD only • 3</text>
    </g>
    <g id="text_17">
     <text style="font-weight: 700; font-size: 17px; font-family: 'DejaVu Sans'; fill: #0f233d" transform="translate(642.475772 76.332697)">Common:</text>
@@ -205,25 +205,19 @@ z
     <text style="font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #20252b" x="511.024182" y="242.162162" transform="rotate(-0 511.024182 242.162162)">SELENOW</text>
    </g>
    <g id="text_34">
-    <text style="font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #20252b" x="778.915433" y="155.612681" transform="rotate(-0 778.915433 155.612681)">BEX3</text>
+    <text style="font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #20252b" x="778.915433" y="165.916191" transform="rotate(-0 778.915433 165.916191)">BEX3</text>
    </g>
    <g id="text_35">
-    <text style="font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #20252b" x="778.915433" y="172.785197" transform="rotate(-0 778.915433 172.785197)">HGSNAT</text>
+    <text style="font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #20252b" x="778.915433" y="186.52321" transform="rotate(-0 778.915433 186.52321)">HGSNAT</text>
    </g>
    <g id="text_36">
-    <text style="font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #20252b" x="778.915433" y="189.957713" transform="rotate(-0 778.915433 189.957713)">KANSL1L</text>
-   </g>
-   <g id="text_37">
-    <text style="font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #20252b" x="778.915433" y="207.130229" transform="rotate(-0 778.915433 207.130229)">RPL30</text>
-   </g>
-   <g id="text_38">
-    <text style="font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #20252b" x="778.915433" y="224.302745" transform="rotate(-0 778.915433 224.302745)">RPS27A</text>
+    <text style="font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #20252b" x="778.915433" y="207.130229" transform="rotate(-0 778.915433 207.130229)">RPS27A</text>
    </g>
   </g>
-  <g id="text_39">
-   <text style="font-weight: 700; font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #0f233d" x="432" y="338.056875" transform="rotate(-0 432 338.056875)">Descriptive gene-level view; network identity collapsed  •  no gene-level overlap p value</text>
+  <g id="text_37">
+   <text style="font-weight: 700; font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #0f233d" x="432" y="338.056875" transform="rotate(-0 432 338.056875)">Descriptive gene-level view; network identity collapsed  •  SEA-AD post-hoc exploratory</text>
   </g>
-  <g id="text_40">
+  <g id="text_38">
    <text style="font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #5e6670" x="432" y="366.676875" transform="rotate(-0 432 366.676875)">* MT-ATP6 and MT-ND4 are common only after networks are collapsed  •  † SEA-AD OPC KDA unavailable</text>
   </g>
  </g>
