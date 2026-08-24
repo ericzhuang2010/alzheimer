@@ -65,6 +65,14 @@ def test_published_recommendation_slide_and_reports_are_current() -> None:
 
     prs = Presentation(deck)
     assert len(prs.slides) == 15
+    all_visible = "\n".join(_visible_text(slide) for slide in prs.slides)
+    assert "Modality" not in all_visible
+    assert sum(
+        shape.text == "Data type"
+        for slide in prs.slides
+        for shape in slide.shapes
+        if getattr(shape, "has_text_frame", False)
+    ) == 13
     slide = prs.slides[-1]
     visible = _visible_text(slide)
     assert appender.TITLE in visible
