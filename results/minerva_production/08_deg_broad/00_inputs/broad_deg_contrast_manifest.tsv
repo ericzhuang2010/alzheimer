@@ -1,0 +1,43 @@
+schema_version	manifest_row	contrast_id	broad_cell_type	group_id	sex	apoe_group	numerator	denominator	donors_ad	donors_nci	nuclei_ad	nuclei_nci	minimum_donors_per_arm	confirmatory_donors_per_arm	confirmatory_support	modeling_status	modeling_reason
+broad_deg_contrast_manifest_v1	1	Astrocytes::AD_vs_NCI__Female__e2	Astrocytes	F_e2	Female	e2	AD	NCI	7	17	1609	4760	5	10	FALSE	estimable	
+broad_deg_contrast_manifest_v1	2	Astrocytes::AD_vs_NCI__Female__e33	Astrocytes	F_e33	Female	e33	AD	NCI	37	45	14418	17732	5	10	TRUE	estimable	
+broad_deg_contrast_manifest_v1	3	Astrocytes::AD_vs_NCI__Female__e4	Astrocytes	F_e4	Female	e4	AD	NCI	26	11	8221	4011	5	10	TRUE	estimable	
+broad_deg_contrast_manifest_v1	4	Astrocytes::AD_vs_NCI__Male__e2	Astrocytes	M_e2	Male	e2	AD	NCI	7	6	2332	1957	5	10	FALSE	estimable	
+broad_deg_contrast_manifest_v1	5	Astrocytes::AD_vs_NCI__Male__e33	Astrocytes	M_e33	Male	e33	AD	NCI	28	53	8264	24041	5	10	TRUE	estimable	
+broad_deg_contrast_manifest_v1	6	Astrocytes::AD_vs_NCI__Male__e4	Astrocytes	M_e4	Male	e4	AD	NCI	25	10	8109	3535	5	10	TRUE	estimable	
+broad_deg_contrast_manifest_v1	7	Excitatory_neurons::AD_vs_NCI__Female__e2	Excitatory_neurons	F_e2	Female	e2	AD	NCI	8	17	11203	43298	5	10	FALSE	estimable	
+broad_deg_contrast_manifest_v1	8	Excitatory_neurons::AD_vs_NCI__Female__e33	Excitatory_neurons	F_e33	Female	e33	AD	NCI	37	45	94077	112596	5	10	TRUE	estimable	
+broad_deg_contrast_manifest_v1	9	Excitatory_neurons::AD_vs_NCI__Female__e4	Excitatory_neurons	F_e4	Female	e4	AD	NCI	26	11	52366	34061	5	10	TRUE	estimable	
+broad_deg_contrast_manifest_v1	10	Excitatory_neurons::AD_vs_NCI__Male__e2	Excitatory_neurons	M_e2	Male	e2	AD	NCI	7	6	13579	15477	5	10	FALSE	estimable	
+broad_deg_contrast_manifest_v1	11	Excitatory_neurons::AD_vs_NCI__Male__e33	Excitatory_neurons	M_e33	Male	e33	AD	NCI	28	53	86387	154635	5	10	TRUE	estimable	
+broad_deg_contrast_manifest_v1	12	Excitatory_neurons::AD_vs_NCI__Male__e4	Excitatory_neurons	M_e4	Male	e4	AD	NCI	27	10	60873	21899	5	10	TRUE	estimable	
+broad_deg_contrast_manifest_v1	13	Inhibitory_neurons::AD_vs_NCI__Female__e2	Inhibitory_neurons	F_e2	Female	e2	AD	NCI	8	16	3590	12733	5	10	FALSE	estimable	
+broad_deg_contrast_manifest_v1	14	Inhibitory_neurons::AD_vs_NCI__Female__e33	Inhibitory_neurons	F_e33	Female	e33	AD	NCI	37	45	29875	41837	5	10	TRUE	estimable	
+broad_deg_contrast_manifest_v1	15	Inhibitory_neurons::AD_vs_NCI__Female__e4	Inhibitory_neurons	F_e4	Female	e4	AD	NCI	26	11	17215	11232	5	10	TRUE	estimable	
+broad_deg_contrast_manifest_v1	16	Inhibitory_neurons::AD_vs_NCI__Male__e2	Inhibitory_neurons	M_e2	Male	e2	AD	NCI	7	6	4928	4294	5	10	FALSE	estimable	
+broad_deg_contrast_manifest_v1	17	Inhibitory_neurons::AD_vs_NCI__Male__e33	Inhibitory_neurons	M_e33	Male	e33	AD	NCI	27	53	19935	54893	5	10	TRUE	estimable	
+broad_deg_contrast_manifest_v1	18	Inhibitory_neurons::AD_vs_NCI__Male__e4	Inhibitory_neurons	M_e4	Male	e4	AD	NCI	27	10	19160	7275	5	10	TRUE	estimable	
+broad_deg_contrast_manifest_v1	19	Microglia::AD_vs_NCI__Female__e2	Microglia	F_e2	Female	e2	AD	NCI	7	14	1080	2524	5	10	FALSE	estimable	
+broad_deg_contrast_manifest_v1	20	Microglia::AD_vs_NCI__Female__e33	Microglia	F_e33	Female	e33	AD	NCI	37	45	7068	9687	5	10	TRUE	estimable	
+broad_deg_contrast_manifest_v1	21	Microglia::AD_vs_NCI__Female__e4	Microglia	F_e4	Female	e4	AD	NCI	26	11	5654	2837	5	10	TRUE	estimable	
+broad_deg_contrast_manifest_v1	22	Microglia::AD_vs_NCI__Male__e2	Microglia	M_e2	Male	e2	AD	NCI	7	5	1211	408	5	10	FALSE	estimable	
+broad_deg_contrast_manifest_v1	23	Microglia::AD_vs_NCI__Male__e33	Microglia	M_e33	Male	e33	AD	NCI	25	51	4254	11674	5	10	TRUE	estimable	
+broad_deg_contrast_manifest_v1	24	Microglia::AD_vs_NCI__Male__e4	Microglia	M_e4	Male	e4	AD	NCI	26	9	4400	1712	5	10	FALSE	estimable	
+broad_deg_contrast_manifest_v1	25	OPCs::AD_vs_NCI__Female__e2	OPCs	F_e2	Female	e2	AD	NCI	8	15	1325	3716	5	10	FALSE	estimable	
+broad_deg_contrast_manifest_v1	26	OPCs::AD_vs_NCI__Female__e33	OPCs	F_e33	Female	e33	AD	NCI	37	45	8923	10650	5	10	TRUE	estimable	
+broad_deg_contrast_manifest_v1	27	OPCs::AD_vs_NCI__Female__e4	OPCs	F_e4	Female	e4	AD	NCI	24	11	5225	2760	5	10	TRUE	estimable	
+broad_deg_contrast_manifest_v1	28	OPCs::AD_vs_NCI__Male__e2	OPCs	M_e2	Male	e2	AD	NCI	7	5	1320	1391	5	10	FALSE	estimable	
+broad_deg_contrast_manifest_v1	29	OPCs::AD_vs_NCI__Male__e33	OPCs	M_e33	Male	e33	AD	NCI	28	53	4871	14431	5	10	TRUE	estimable	
+broad_deg_contrast_manifest_v1	30	OPCs::AD_vs_NCI__Male__e4	OPCs	M_e4	Male	e4	AD	NCI	25	10	5095	2083	5	10	TRUE	estimable	
+broad_deg_contrast_manifest_v1	31	Oligodendrocytes::AD_vs_NCI__Female__e2	Oligodendrocytes	F_e2	Female	e2	AD	NCI	8	17	11733	21373	5	10	FALSE	estimable	
+broad_deg_contrast_manifest_v1	32	Oligodendrocytes::AD_vs_NCI__Female__e33	Oligodendrocytes	F_e33	Female	e33	AD	NCI	37	45	67094	75904	5	10	TRUE	estimable	
+broad_deg_contrast_manifest_v1	33	Oligodendrocytes::AD_vs_NCI__Female__e4	Oligodendrocytes	F_e4	Female	e4	AD	NCI	26	11	45666	27181	5	10	TRUE	estimable	
+broad_deg_contrast_manifest_v1	34	Oligodendrocytes::AD_vs_NCI__Male__e2	Oligodendrocytes	M_e2	Male	e2	AD	NCI	7	6	9717	5807	5	10	FALSE	estimable	
+broad_deg_contrast_manifest_v1	35	Oligodendrocytes::AD_vs_NCI__Male__e33	Oligodendrocytes	M_e33	Male	e33	AD	NCI	28	53	35863	94184	5	10	TRUE	estimable	
+broad_deg_contrast_manifest_v1	36	Oligodendrocytes::AD_vs_NCI__Male__e4	Oligodendrocytes	M_e4	Male	e4	AD	NCI	27	10	37526	15559	5	10	TRUE	estimable	
+broad_deg_contrast_manifest_v1	37	Vasculature_cells::AD_vs_NCI__Female__e2	Vasculature_cells	F_e2	Female	e2	AD	NCI	3	10	206	519	5	10	FALSE	not_estimable	fewer_than_5_eligible_donors_per_arm:AD=3,NCI=10
+broad_deg_contrast_manifest_v1	38	Vasculature_cells::AD_vs_NCI__Female__e33	Vasculature_cells	F_e33	Female	e33	AD	NCI	29	35	1969	1875	5	10	TRUE	estimable	
+broad_deg_contrast_manifest_v1	39	Vasculature_cells::AD_vs_NCI__Female__e4	Vasculature_cells	F_e4	Female	e4	AD	NCI	19	9	940	600	5	10	FALSE	estimable	
+broad_deg_contrast_manifest_v1	40	Vasculature_cells::AD_vs_NCI__Male__e2	Vasculature_cells	M_e2	Male	e2	AD	NCI	4	3	229	252	5	10	FALSE	not_estimable	fewer_than_5_eligible_donors_per_arm:AD=4,NCI=3
+broad_deg_contrast_manifest_v1	41	Vasculature_cells::AD_vs_NCI__Male__e33	Vasculature_cells	M_e33	Male	e33	AD	NCI	20	39	977	3141	5	10	TRUE	estimable	
+broad_deg_contrast_manifest_v1	42	Vasculature_cells::AD_vs_NCI__Male__e4	Vasculature_cells	M_e4	Male	e4	AD	NCI	21	6	1034	434	5	10	FALSE	estimable	

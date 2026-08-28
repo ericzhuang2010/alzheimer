@@ -1,0 +1,9 @@
+schema_version	check	passed	observed	expected
+broad_pseudobulk_stage_checks_v1	source_bundle_count	TRUE	9	9
+broad_pseudobulk_stage_checks_v1	frozen_fine_type_count	TRUE	54	54
+broad_pseudobulk_stage_checks_v1	included_broad_types	TRUE	7	7
+broad_pseudobulk_stage_checks_v1	sample_ids_unique	TRUE	0	0
+broad_pseudobulk_stage_checks_v1	one_sample_per_donor_broad	TRUE	0	0
+broad_pseudobulk_stage_checks_v1	all_conservation_passed	TRUE	0	0
+broad_pseudobulk_stage_checks_v1	primary_eligibility_recomputed	TRUE	1824	1824
+broad_pseudobulk_stage_checks_v1	fine_composition_conserves_broad_nuclei	TRUE	0	0

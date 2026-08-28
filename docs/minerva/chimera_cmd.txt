@@ -1,0 +1,2 @@
+module load proxies
+module load firefox
