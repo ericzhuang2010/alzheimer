@@ -1,0 +1,55 @@
+schema_version	expected_rds_id	fine_cell_type	broad_cell_type	include	exclusion_reason
+phase08_broad_cell_mapping_v1	astrocytes	Ast CHI3L1	Astrocytes	TRUE	
+phase08_broad_cell_mapping_v1	astrocytes	Ast DPP10	Astrocytes	TRUE	
+phase08_broad_cell_mapping_v1	astrocytes	Ast GRM3	Astrocytes	TRUE	
+phase08_broad_cell_mapping_v1	excitatory_set1	Exc L2-3 CBLN2 LINC02306	Excitatory_neurons	TRUE	
+phase08_broad_cell_mapping_v1	excitatory_set2	Exc L3-4 RORB CUX2	Excitatory_neurons	TRUE	
+phase08_broad_cell_mapping_v1	excitatory_set2	Exc L3-5 RORB PLCH1	Excitatory_neurons	TRUE	
+phase08_broad_cell_mapping_v1	excitatory_set2	Exc L4-5 RORB GABRG1	Excitatory_neurons	TRUE	
+phase08_broad_cell_mapping_v1	excitatory_set2	Exc L4-5 RORB IL1RAPL2	Excitatory_neurons	TRUE	
+phase08_broad_cell_mapping_v1	excitatory_set3	Exc L5 ET	Excitatory_neurons	TRUE	
+phase08_broad_cell_mapping_v1	excitatory_set3	Exc L5-6 RORB LINC02196	Excitatory_neurons	TRUE	
+phase08_broad_cell_mapping_v1	excitatory_set3	Exc L5/6 IT Car3	Excitatory_neurons	TRUE	
+phase08_broad_cell_mapping_v1	excitatory_set3	Exc L5/6 NP	Excitatory_neurons	TRUE	
+phase08_broad_cell_mapping_v1	excitatory_set3	Exc L6 CT	Excitatory_neurons	TRUE	
+phase08_broad_cell_mapping_v1	excitatory_set3	Exc L6 THEMIS NFIA	Excitatory_neurons	TRUE	
+phase08_broad_cell_mapping_v1	excitatory_set3	Exc L6b	Excitatory_neurons	TRUE	
+phase08_broad_cell_mapping_v1	excitatory_set3	Exc NRGN	Excitatory_neurons	TRUE	
+phase08_broad_cell_mapping_v1	excitatory_set3	Exc RELN CHD7	Excitatory_neurons	TRUE	
+phase08_broad_cell_mapping_v1	immune	CAMs	CAMs	FALSE	not_in_requested_seven_broad_cell_types
+phase08_broad_cell_mapping_v1	immune	Mic MKI67	Microglia	TRUE	
+phase08_broad_cell_mapping_v1	immune	Mic P2RY12	Microglia	TRUE	
+phase08_broad_cell_mapping_v1	immune	Mic TPT1	Microglia	TRUE	
+phase08_broad_cell_mapping_v1	immune	T cells	T_cells	FALSE	not_in_requested_seven_broad_cell_types
+phase08_broad_cell_mapping_v1	inhibitory	Inh ALCAM TRPM3	Inhibitory_neurons	TRUE	
+phase08_broad_cell_mapping_v1	inhibitory	Inh CUX2 MSR1	Inhibitory_neurons	TRUE	
+phase08_broad_cell_mapping_v1	inhibitory	Inh ENOX2 SPHKAP	Inhibitory_neurons	TRUE	
+phase08_broad_cell_mapping_v1	inhibitory	Inh FBN2 EPB41L4A	Inhibitory_neurons	TRUE	
+phase08_broad_cell_mapping_v1	inhibitory	Inh GPC5 RIT2	Inhibitory_neurons	TRUE	
+phase08_broad_cell_mapping_v1	inhibitory	Inh L1 PAX6 CA4	Inhibitory_neurons	TRUE	
+phase08_broad_cell_mapping_v1	inhibitory	Inh L1-2 PAX6 SCGN	Inhibitory_neurons	TRUE	
+phase08_broad_cell_mapping_v1	inhibitory	Inh L1-6 LAMP5 CA13	Inhibitory_neurons	TRUE	
+phase08_broad_cell_mapping_v1	inhibitory	Inh L3-5 SST MAFB	Inhibitory_neurons	TRUE	
+phase08_broad_cell_mapping_v1	inhibitory	Inh L5-6 PVALB STON2	Inhibitory_neurons	TRUE	
+phase08_broad_cell_mapping_v1	inhibitory	Inh L5-6 SST TH	Inhibitory_neurons	TRUE	
+phase08_broad_cell_mapping_v1	inhibitory	Inh L6 SST NPY	Inhibitory_neurons	TRUE	
+phase08_broad_cell_mapping_v1	inhibitory	Inh LAMP5 NRG1 (Rosehip)	Inhibitory_neurons	TRUE	
+phase08_broad_cell_mapping_v1	inhibitory	Inh LAMP5 RELN	Inhibitory_neurons	TRUE	
+phase08_broad_cell_mapping_v1	inhibitory	Inh PTPRK FAM19A1	Inhibitory_neurons	TRUE	
+phase08_broad_cell_mapping_v1	inhibitory	Inh PVALB CA8 (Chandelier)	Inhibitory_neurons	TRUE	
+phase08_broad_cell_mapping_v1	inhibitory	Inh PVALB HTR4	Inhibitory_neurons	TRUE	
+phase08_broad_cell_mapping_v1	inhibitory	Inh PVALB SULF1	Inhibitory_neurons	TRUE	
+phase08_broad_cell_mapping_v1	inhibitory	Inh RYR3 TSHZ2	Inhibitory_neurons	TRUE	
+phase08_broad_cell_mapping_v1	inhibitory	Inh SGCD PDE3A	Inhibitory_neurons	TRUE	
+phase08_broad_cell_mapping_v1	inhibitory	Inh SORCS1 TTN	Inhibitory_neurons	TRUE	
+phase08_broad_cell_mapping_v1	inhibitory	Inh VIP ABI3BP	Inhibitory_neurons	TRUE	
+phase08_broad_cell_mapping_v1	inhibitory	Inh VIP CLSTN2	Inhibitory_neurons	TRUE	
+phase08_broad_cell_mapping_v1	inhibitory	Inh VIP THSD7B	Inhibitory_neurons	TRUE	
+phase08_broad_cell_mapping_v1	inhibitory	Inh VIP TSHZ2	Inhibitory_neurons	TRUE	
+phase08_broad_cell_mapping_v1	opcs	OPC	OPCs	TRUE	
+phase08_broad_cell_mapping_v1	oligodendrocytes	Oli	Oligodendrocytes	TRUE	
+phase08_broad_cell_mapping_v1	vasculature	End	Vasculature_cells	TRUE	
+phase08_broad_cell_mapping_v1	vasculature	Fib FLRT2	Vasculature_cells	TRUE	
+phase08_broad_cell_mapping_v1	vasculature	Fib SLC4A4	Vasculature_cells	TRUE	
+phase08_broad_cell_mapping_v1	vasculature	Per	Vasculature_cells	TRUE	
+phase08_broad_cell_mapping_v1	vasculature	SMC	Vasculature_cells	TRUE	

@@ -1,0 +1,52 @@
+#!/bin/bash
+#BSUB -J phase08_broad_deg
+#BSUB -P acc_zhangb03a
+#BSUB -q express
+#BSUB -n 1
+#BSUB -W 08:00
+#BSUB -R "rusage[mem=32000]"
+#BSUB -R "span[hosts=1]"
+#BSUB -L /bin/bash
+#BSUB -oo results/minerva_production/08_deg_broad/logs/%J.out
+#BSUB -eo results/minerva_production/08_deg_broad/logs/%J.err
+
+set -euo pipefail
+
+cd /sc/arion/work/zhuane01/alzheimer
+source docs/minerva/cmd_to_run_after_logging_in.txt
+
+export RENV_PATHS_CACHE=/sc/arion/work/zhuane01/.cache/renv
+export MKLROOT=/hpc/packages/minerva-centos7/intel/parallel_studio_xe_2019/compilers_and_libraries/linux/mkl
+export MKL_LIB="$MKLROOT/lib/intel64_lin"
+export MKL_PRELOAD="$MKL_LIB/libmkl_gf_lp64.so:$MKL_LIB/libmkl_gnu_thread.so:$MKL_LIB/libmkl_core.so"
+export LD_LIBRARY_PATH="$MKL_LIB:$LD_LIBRARY_PATH"
+export LD_RUN_PATH="$LD_LIBRARY_PATH"
+export MKL_ENABLE_INSTRUCTIONS=AVX2
+export MKL_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+export OPENBLAS_NUM_THREADS=1
+unset LD_DEBUG LD_DEBUG_OUTPUT
+
+LD_PRELOAD="$MKL_PRELOAD" Rscript scripts/08_build_broad_pseudobulk.R \
+  --config config/phase08_broad_deg.yml \
+  --profile minerva_production \
+  --resume
+
+LD_PRELOAD="$MKL_PRELOAD" Rscript scripts/08_run_broad_pseudobulk_de.R \
+  --config config/phase08_broad_deg.yml \
+  --profile minerva_production \
+  --resume
+
+LD_PRELOAD="$MKL_PRELOAD" Rscript scripts/08_run_broad_deg_composition_sensitivity.R \
+  --config config/phase08_broad_deg.yml \
+  --profile minerva_production \
+  --resume
+
+LD_PRELOAD="$MKL_PRELOAD" Rscript scripts/08_finalize_broad_deg.R \
+  --config config/phase08_broad_deg.yml \
+  --profile minerva_production
+
+LD_PRELOAD="$MKL_PRELOAD" Rscript scripts/08_validate_broad_deg.R \
+  --config config/phase08_broad_deg.yml \
+  --profile minerva_production \
+  --require-status validated_complete
