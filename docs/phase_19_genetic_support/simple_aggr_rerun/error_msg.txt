@@ -1,14 +1,5 @@
-(.venv) ericzhuang2010@homedesktop:~/VscodeProjects/alzheimer$ python3 scrip
-ts/19b_genetic_support_simple_aggr.py 
-=== stage freeze ===
-freeze: genes=433 mapped=425 unmapped=['AC008438.1', 'AC010542.3', 'AC068888.1', 'AC087500.1', 'AC091180.5', 'AL035071.1', 'AL139260.1', 'AP000311.1']
-=== stage tier1 ===
-Traceback (most recent call last):
-  File "/home/ericzhuang2010/VscodeProjects/alzheimer/scripts/19b_genetic_support_simple_aggr.py", line 715, in <module>
-    raise SystemExit(main())
-                     ^^^^^^
-  File "/home/ericzhuang2010/VscodeProjects/alzheimer/scripts/19b_genetic_support_simple_aggr.py", line 709, in main
-    known[stage]()
-  File "/home/ericzhuang2010/VscodeProjects/alzheimer/scripts/19b_genetic_support_simple_aggr.py", line 426, in stage_tier1
-    raise FileNotFoundError(f"FunGen snapshot file missing: {path}")
-FileNotFoundError: FunGen snapshot file missing: /home/ericzhuang2010/VscodeProjects/alzheimer/data/reference/phase19_genetic_support/source_downloads/AD_loci_unified_cs95orColocs_Pval1e5_variant_level.csv.gz
+  File "/home/ericzhuang2010/VscodeProjects/alzheimer/scripts/19b_genetic_support_simple_aggr.py", line 551, in stage_tier1
+    finalize_stage(
+  File "/home/ericzhuang2010/VscodeProjects/alzheimer/scripts/19b_genetic_support_simple_aggr.py", line 187, in finalize_stage
+    raise RuntimeError(f"{stage} failed checks: {', '.join(bad)}")
+RuntimeError: tier1 failed checks: workbook_available, apoe_positive_control
