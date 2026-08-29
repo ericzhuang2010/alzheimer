@@ -312,8 +312,11 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--run-manifest",
+        # The former default under 20_sex_apoe_kda/00_inputs/ (now
+        # "20_sex_apoe_kda (deprecated)") is a byte-identical registered copy
+        # of this source-stage manifest.
         default=(
-            "results/minerva_production/20_sex_apoe_kda/00_inputs/"
+            "results/minerva_production/20_sex_apoe_kda_source/"
             "phase20_source_run_manifest.tsv"
         ),
     )

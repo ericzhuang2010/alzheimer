@@ -1,5 +1,12 @@
 # Phase 20 ROSMAP Sex/APOE × Broad-Cell Non-MT KDA Results
 
+> **DEPRECATED (2026-08-29).** The candidate lists described here come from the
+> coverage/support/ACAT selection whose release was renamed to
+> `results/minerva_production/20_sex_apoe_kda (deprecated)`. The authoritative
+> Phase 20 result is the returned-only simple aggregation in
+> `results/minerva_production/20_sex_apoe_kda_simple_aggr` (689 non-MT gene ×
+> category units, 433 genes).
+
 ## Release status and analysis scope
 
 The canonical fine-cell Phase 20 v2 release completed locally with

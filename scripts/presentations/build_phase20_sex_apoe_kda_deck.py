@@ -1,6 +1,17 @@
 #!/usr/bin/env python3
 """Build a teaching deck for fine-cell and broad-cell Phase 20 KDA.
 
+DEPRECATED (2026-08-29): this builder reads the deprecated fine-cell and
+broad-cell releases (now ``results/minerva_production/20_sex_apoe_kda
+(deprecated)`` and ``20_sex_apoe_kda_broad (deprecated)``) and rebuilds the
+original 22-slide deck. The current deck at
+``docs/presentations/phase20_sex_apoe_kda_fine_broad.pptx`` has been rewritten
+around the returned-only simple aggregation (ROSMAP Part I, SEA-AD Part II,
+overlap Part 3) and is maintained by ``update_phase20_simple_aggr_slides.py``,
+``update_phase11_seaad_simple_aggr_part2.py``, and
+``append_rosmap_seaad_overlap_slides.py``. Do not rerun this builder; it would
+overwrite the current deck. Retained for provenance only.
+
 The deck is generated from validated project-local production tables and the
 four canonical Phase 20 result figures.  It explains each change of counting
 unit and each filter before presenting recurrence and top-five results.

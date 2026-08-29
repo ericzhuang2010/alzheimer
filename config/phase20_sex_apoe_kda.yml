@@ -1,3 +1,9 @@
+# NOTE (2026-08-29): this config remains in use by the authoritative
+# returned-only simple aggregation (scripts/20_sex_apoe_kda_simple_aggr.py),
+# which reads only the `scope` section (groups, broad_networks, group_labels).
+# The `analysis.output_directory` and `analysis.figure_directory` entries below
+# refer to the deprecated coverage/support candidate-selection release, now at
+# "results/minerva_production/20_sex_apoe_kda (deprecated)".
 schema_version: phase20_sex_apoe_kda_config_v2
 
 analysis:

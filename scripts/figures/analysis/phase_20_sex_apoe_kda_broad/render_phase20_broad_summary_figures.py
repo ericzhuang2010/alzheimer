@@ -1,6 +1,15 @@
 #!/usr/bin/env python3
 """Render the two requested Phase 20 broad-cell KDA summary figures.
 
+DEPRECATED (2026-08-29): these figures visualize the deprecated direct
+broad-cell analysis
+(``results/minerva_production/20_sex_apoe_kda_broad (deprecated)``); the
+figure bundles were renamed to
+``results/figures/analysis/phase_20_sex_apoe_kda_broad (deprecated)``. The
+authoritative figures come from the returned-only simple aggregation renderer
+under ``scripts/figures/analysis/phase_20_sex_apoe_simple_aggr/``. Retained
+for provenance only.
+
 The broad-cell branch is a direct, direction-specific KDA analysis.  It does
 not use ACAT or any other cross-run aggregation.  The first output keeps the
 horizontal-bar visual role of the fine-cell recurrence figure, but plots

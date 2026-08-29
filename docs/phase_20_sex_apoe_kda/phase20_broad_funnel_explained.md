@@ -1,5 +1,10 @@
 # Phase 20 Broad-Cell KDA Gene and Candidate Filtering Explained
 
+> **DEPRECATED (2026-08-29).** The direct broad-cell analysis explained here
+> was renamed to `results/minerva_production/20_sex_apoe_kda_broad
+> (deprecated)`. The authoritative Phase 20 result is the returned-only simple
+> aggregation in `results/minerva_production/20_sex_apoe_kda_simple_aggr`.
+
 The broad-cell analysis has three main layers, with three essential
 clarifications:
 

@@ -1,5 +1,16 @@
 #!/usr/bin/env python3
-"""Render validated Phase 20 fine-cell summary figures with matplotlib."""
+"""Render validated Phase 20 fine-cell summary figures with matplotlib.
+
+DEPRECATED (2026-08-29): these figures visualize the deprecated
+coverage/support candidate selection
+(``results/minerva_production/20_sex_apoe_kda (deprecated)``); the figure
+bundles were renamed to
+``results/figures/analysis/phase_20_sex_apoe_kda (deprecated)``. The
+authoritative figures are rendered by
+``scripts/figures/analysis/phase_20_sex_apoe_simple_aggr/
+render_phase20_simple_aggr_figures.py`` from the returned-only simple
+aggregation. Retained for provenance only.
+"""
 
 from __future__ import annotations
 

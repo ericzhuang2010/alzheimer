@@ -1,6 +1,14 @@
 #!/usr/bin/env python3
 """Execute direct broad-cell sex/APOE KDA without cross-run aggregation.
 
+DEPRECATED (2026-08-29): the direct broad-cell branch is superseded by the
+returned-only simple aggregation
+(``scripts/20_sex_apoe_kda_simple_aggr.py`` writing
+``results/minerva_production/20_sex_apoe_kda_simple_aggr``). The release this
+script produced was renamed to
+``results/minerva_production/20_sex_apoe_kda_broad (deprecated)``. The script
+is retained for provenance only.
+
 The analysis consumes the validated Phase 08 donor-level broad-cell DEG
 release. Each broad-cell x sex/APOE contrast is split into AD-up and AD-down
 core-MitoCarta queries. Eligible directional queries are tested directly in

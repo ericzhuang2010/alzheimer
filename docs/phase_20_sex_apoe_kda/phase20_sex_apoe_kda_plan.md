@@ -1,6 +1,15 @@
 # Phase 20: ROSMAP Sex/APOE × Broad Cell-Type Non-MT Key-Driver Aggregation Plan
 
-**Status:** Executed locally; validated complete
+> **DEPRECATED (2026-08-29).** This plan describes the coverage/support/ACAT
+> candidate-selection analysis whose release was renamed to
+> `results/minerva_production/20_sex_apoe_kda (deprecated)`. The authoritative
+> Phase 20 result is the returned-only simple aggregation in
+> `results/minerva_production/20_sex_apoe_kda_simple_aggr`
+> (`scripts/20_sex_apoe_kda_simple_aggr.py`): keep only genes returned by
+> `call_key_drivers()` and ACAT-combine within-call q values when a gene has
+> two or more returns.
+
+**Status:** Executed locally; validated complete (release later deprecated)
 
 **Date:** 2026-08-28
 

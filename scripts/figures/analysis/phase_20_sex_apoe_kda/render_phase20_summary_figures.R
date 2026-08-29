@@ -1,5 +1,12 @@
 #!/usr/bin/env Rscript
 
+# DEPRECATED (2026-08-29): renders figures for the deprecated fine-cell
+# candidate selection (results/minerva_production/20_sex_apoe_kda
+# (deprecated)). Authoritative figures come from the returned-only simple
+# aggregation renderer under
+# scripts/figures/analysis/phase_20_sex_apoe_simple_aggr/. Retained for
+# provenance only.
+
 suppressPackageStartupMessages(library(ggplot2))
 
 args <- commandArgs(trailingOnly = TRUE)

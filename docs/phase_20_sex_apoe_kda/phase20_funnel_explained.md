@@ -1,5 +1,12 @@
 # Phase 20 Gene and Candidate Filtering Explained
 
+> **DEPRECATED (2026-08-29).** The coverage/support/ACAT candidate funnel
+> explained here belongs to the deprecated release
+> `results/minerva_production/20_sex_apoe_kda (deprecated)`. The authoritative
+> Phase 20 result is the returned-only simple aggregation in
+> `results/minerva_production/20_sex_apoe_kda_simple_aggr`, which applies no
+> coverage, support, or category-BH gates.
+
 ## The full picture
 
 The fine-cell analysis starts with 324 DEG comparisons, creates 648 potential

@@ -1,5 +1,11 @@
 #!/usr/bin/env Rscript
 
+# DEPRECATED (2026-08-29): parity helper for the deprecated direct broad-cell
+# analysis (results/minerva_production/20_sex_apoe_kda_broad (deprecated)).
+# The authoritative Phase 20 result is the returned-only simple aggregation in
+# results/minerva_production/20_sex_apoe_kda_simple_aggr. Retained for
+# provenance only.
+
 options(stringsAsFactors = FALSE, warn = 1)
 
 args <- commandArgs(trailingOnly = TRUE)

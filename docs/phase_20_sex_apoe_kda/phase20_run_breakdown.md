@@ -1,5 +1,12 @@
 # Phase 20 Canonical Run and Candidate Breakdown
 
+> **PARTIALLY DEPRECATED (2026-08-29).** The 295-run universe described here is
+> still the frozen input of the authoritative returned-only simple aggregation
+> (`results/minerva_production/20_sex_apoe_kda_simple_aggr`). The candidate
+> counts below, however, come from the deprecated coverage/support selection
+> (`results/minerva_production/20_sex_apoe_kda (deprecated)`) and no longer
+> describe the authoritative output.
+
 The canonical fine-cell Phase 20 v2 release uses 295 validated Phase 12
 primary runs with at least three effective query genes. They map uniquely to
 42 structural sex/APOE × broad-cell categories. Thirty-eight categories
