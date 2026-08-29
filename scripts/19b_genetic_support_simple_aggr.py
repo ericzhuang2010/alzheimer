@@ -70,11 +70,28 @@ SEAAD_SHA256 = "e9593861292cbbdc327b22fc34096dcb5189fa9f3d5de0f135ffaad8426fdda4
 
 GENCODE_GTF = ROOT / "data/reference/gencode/gencode.v44.basic.annotation.gtf.gz"
 HGNC_SET = ROOT / "data/reference/hgnc/hgnc_complete_set_2026-06-05.txt"
-FUNGEN_DIR = ROOT / "data/reference/phase19_genetic_support/source_downloads"
-FUNGEN_WORKBOOK = FUNGEN_DIR / "unified_AD_loci_xQTL_summary.xlsx"
-FUNGEN_VARIANTS = FUNGEN_DIR / "AD_loci_unified_cs95orColocs_Pval1e5_variant_level.csv.gz"
-FUNGEN_GVC = FUNGEN_DIR / "AD_genes_FunGen_AD_GVC_xQTL_20250325.tsv"
-FUNGEN_TWAS = FUNGEN_DIR / "AD_genes_FunGen_AD_twas_GVC_xQTL_20250325.tsv"
+# The FunGen snapshot lives under source_downloads/ on the Mac (Tier 1 layout)
+# and under tier2/source_downloads/ on the Linux execution host (Tier 2 layout).
+# The two small gene-list tables also ship as frozen copies with the plan so
+# the screen works on hosts that only hold the Tier 2 subset.
+FUNGEN_DIRS = [
+    ROOT / "data/reference/phase19_genetic_support/source_downloads",
+    ROOT / "data/reference/phase19_genetic_support/tier2/source_downloads",
+    PLAN_DIR / "frozen_inputs",
+]
+FUNGEN_WORKBOOK_NAME = "unified_AD_loci_xQTL_summary.xlsx"
+FUNGEN_VARIANTS_NAME = "AD_loci_unified_cs95orColocs_Pval1e5_variant_level.csv.gz"
+FUNGEN_GVC_NAME = "AD_genes_FunGen_AD_GVC_xQTL_20250325.tsv"
+FUNGEN_TWAS_NAME = "AD_genes_FunGen_AD_twas_GVC_xQTL_20250325.tsv"
+
+
+def find_fungen(name: str) -> Path:
+    for directory in FUNGEN_DIRS:
+        candidate = directory / name
+        if candidate.is_file():
+            return candidate
+    searched = ", ".join(str(directory / name) for directory in FUNGEN_DIRS)
+    raise FileNotFoundError(f"FunGen snapshot file missing; searched: {searched}")
 
 GWAS_SOURCES = {
     "clinical_ad_bellenguez2022": ROOT
@@ -395,10 +412,12 @@ def stage_freeze() -> None:
 
 
 def load_workbook_gene_table() -> pd.DataFrame | None:
-    if not FUNGEN_WORKBOOK.is_file():
+    try:
+        workbook_path = find_fungen(FUNGEN_WORKBOOK_NAME)
+    except FileNotFoundError:
         return None
     try:
-        table = pd.read_excel(FUNGEN_WORKBOOK, sheet_name="Gene Locus table", header=2)
+        table = pd.read_excel(workbook_path, sheet_name="Gene Locus table", header=2)
     except ImportError:
         return None
     needed = [
@@ -421,16 +440,16 @@ def stage_tier1() -> None:
     candidates = pd.read_csv(CANDIDATE_DIR / "candidates.tsv", sep="\t", dtype={"gene": str})
     loci = pd.read_csv(CANDIDATE_DIR / "candidate_loci.tsv", sep="\t", dtype={"gene": str, "chromosome": str})
 
-    for path in (FUNGEN_VARIANTS, FUNGEN_GVC, FUNGEN_TWAS):
-        if not path.is_file():
-            raise FileNotFoundError(f"FunGen snapshot file missing: {path}")
-    gvc_genes = set(pd.read_csv(FUNGEN_GVC, sep="\t", dtype=str)["gene_name"])
-    twas_genes = set(pd.read_csv(FUNGEN_TWAS, sep="\t", dtype=str)["gene_name"])
+    variants_path = find_fungen(FUNGEN_VARIANTS_NAME)
+    gvc_path = find_fungen(FUNGEN_GVC_NAME)
+    twas_path = find_fungen(FUNGEN_TWAS_NAME)
+    gvc_genes = set(pd.read_csv(gvc_path, sep="\t", dtype=str)["gene_name"])
+    twas_genes = set(pd.read_csv(twas_path, sep="\t", dtype=str)["gene_name"])
     workbook = load_workbook_gene_table()
     workbook_available = workbook is not None
 
     variants = pd.read_csv(
-        FUNGEN_VARIANTS,
+        variants_path,
         usecols=["chr", "pos", "variant_ID", "SNP", "min_pval", "max_variant_inclusion_probability", "is.cs95"],
     )
     variants["chr"] = variants["chr"].astype(str)
@@ -538,6 +557,7 @@ def stage_tier1() -> None:
             "graded_moderate": graded.get("moderate", 0),
             "graded_weak": graded.get("weak", 0),
             "graded_none_found": graded.get("none_found", 0),
+            "fungen_variants_path": str(variants_path.relative_to(ROOT)),
         },
         [evidence_path],
     )
