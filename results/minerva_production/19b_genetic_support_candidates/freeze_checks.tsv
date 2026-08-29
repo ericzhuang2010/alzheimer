@@ -1,0 +1,10 @@
+schema_version	check_id	observed	expected	passed
+phase19b_simple_aggr_v1_checks	candidate_gene_count	433	433	True
+phase19b_simple_aggr_v1_checks	context_row_count	689	689	True
+phase19b_simple_aggr_v1_checks	p1_tier_count	35	35	True
+phase19b_simple_aggr_v1_checks	tier_partition	433	433	True
+phase19b_simple_aggr_v1_checks	genes_unique	433	433	True
+phase19b_simple_aggr_v1_checks	mapped_gene_count	425	>=420	True
+phase19b_simple_aggr_v1_checks	loci_rows_match_mapped	425	425	True
+phase19b_simple_aggr_v1_checks	loci_have_valid_windows	425	425	True
+phase19b_simple_aggr_v1_checks	no_mitochondrial_loci	0	0	True

@@ -1,0 +1,5 @@
+schema_version	check_id	observed	expected	passed
+phase19b_simple_aggr_v1_checks	evidence_rows	433	433	True
+phase19b_simple_aggr_v1_checks	workbook_available	loaded: data/reference/phase19_genetic_support/tier2/source_downloads/unified_AD_loci_xQTL_summary.xlsx	loaded	True
+phase19b_simple_aggr_v1_checks	apoe_positive_control	strong	strong	True
+phase19b_simple_aggr_v1_checks	grades_assigned	433	433	True

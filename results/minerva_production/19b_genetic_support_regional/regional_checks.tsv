@@ -1,0 +1,4 @@
+schema_version	check_id	observed	expected	passed
+phase19b_simple_aggr_v1_checks	sources_scanned	4	>=1	True
+phase19b_simple_aggr_v1_checks	loci_scanned_per_source	425	425	True
+phase19b_simple_aggr_v1_checks	window_coverage_above_95pct	True	True	True

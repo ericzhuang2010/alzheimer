@@ -1,0 +1,2 @@
+schema_version	stage	generated_at_utc	failed_checks	validation_status	graded_strong	graded_moderate	graded_weak	graded_none_found	fungen_variants_path
+phase19b_simple_aggr_v1_status	tier1	2026-08-29T23:39:46+00:00	0	validated_complete	8	3	17	405	data/reference/phase19_genetic_support/tier2/source_downloads/AD_loci_unified_cs95orColocs_Pval1e5_variant_level.csv.gz
