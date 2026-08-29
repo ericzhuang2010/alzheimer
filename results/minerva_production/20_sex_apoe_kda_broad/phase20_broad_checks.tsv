@@ -1,0 +1,32 @@
+schema_version	check_id	severity	observed	expected	passed	detail
+phase20_broad_checks_v1	phase08_status_validated	error	validated_complete	validated_complete	TRUE	
+phase20_broad_checks_v1	phase08_checks_pass	error	0	0	TRUE	
+phase20_broad_checks_v1	category_count	error	42	42	TRUE	
+phase20_broad_checks_v1	category_keys_unique	error	42	42	TRUE	
+phase20_broad_checks_v1	source_complete_contrasts	error	40	40	TRUE	
+phase20_broad_checks_v1	source_not_estimable_contrasts	error	2	2	TRUE	
+phase20_broad_checks_v1	primary_direction_slot_count	error	84	84	TRUE	
+phase20_broad_checks_v1	primary_direction_ids_unique	error	84	84	TRUE	
+phase20_broad_checks_v1	network_count	error	7	7	TRUE	
+phase20_broad_checks_v1	networks_are_dags	error	7	7	TRUE	
+phase20_broad_checks_v1	networkx_induction_agreement	error	0	0	TRUE	
+phase20_broad_checks_v1	relaxed_query_memberships	error	65	65	TRUE	
+phase20_broad_checks_v1	relaxed_up_memberships	error	20	20	TRUE	
+phase20_broad_checks_v1	relaxed_down_memberships	error	45	45	TRUE	
+phase20_broad_checks_v1	mapped_symbol_collision_keys	error	862	862	TRUE	
+phase20_broad_checks_v1	mapped_symbol_collapsed_rows	error	904	904	TRUE	
+phase20_broad_checks_v1	primary_slot_outcome_source_contrast_not_estimable	error	4	4	TRUE	
+phase20_broad_checks_v1	primary_slot_outcome_no_provisional_query	error	61	61	TRUE	
+phase20_broad_checks_v1	primary_slot_outcome_effective_query_empty_after_background	error	4	4	TRUE	
+phase20_broad_checks_v1	primary_slot_outcome_effective_query_below_minimum	error	12	12	TRUE	
+phase20_broad_checks_v1	primary_slot_outcome_eligible	error	3	3	TRUE	
+phase20_broad_checks_v1	primary_eligible_runs_exact	error	Astrocytes|F_e4|AD_down_mito|13;Astrocytes|M_e33|AD_down_mito|3;OPCs|F_e4|AD_down_mito|4	Astrocytes|F_e4|AD_down_mito|13;Astrocytes|M_e33|AD_down_mito|3;OPCs|F_e4|AD_down_mito|4	TRUE	
+phase20_broad_checks_v1	effective_queries_subset_background	error	0	0	TRUE	
+phase20_broad_checks_v1	primary_candidate_test_keys_unique	error	377	377	TRUE	
+phase20_broad_checks_v1	stock_fkda_return_parity	error	0	0	TRUE	
+phase20_broad_checks_v1	non_mt_run_q_values_valid	error	0	0	TRUE	
+phase20_broad_checks_v1	no_core_mt_candidate_leakage	error	0	0	TRUE	
+phase20_broad_checks_v1	all_candidate_gates_pass	error	0	0	TRUE	
+phase20_broad_checks_v1	zero_kda_failures	error	0	0	TRUE	
+phase20_broad_checks_v1	stock_fkda_full_numeric_parity	error	12 calls; 71 returned rows	12 calls; fail-closed numeric comparison	TRUE	All returned rows were compared on key, best layer, counts, log P, BH q, fold enrichment, and overlap membership during execution.
+phase20_broad_checks_v1	no_cross_run_aggregation_fields	error			TRUE	

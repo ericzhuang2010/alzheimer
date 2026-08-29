@@ -624,22 +624,20 @@ All Phase 20 documentation will remain under the user-created directory:
 docs/phase_20_sex_apoe_kda/
 ```
 
-Starting with:
+The final documentation set is:
 
 ```text
 docs/phase_20_sex_apoe_kda/
   phase20_sex_apoe_kda_plan.md
-  phase20_relaxed_non_mt_thresholds_explained.md
-```
-
-After execution, add:
-
-```text
-docs/phase_20_sex_apoe_kda/
+  phase20_methods.md
+  phase20_funnel_explained.md
   phase20_results_explained.md
   phase20_run_breakdown.md
-  phase20_methods.md
 ```
+
+The relaxed-threshold explanation and final methods are consolidated in
+`phase20_methods.md` so that the analysis definitions, threshold rationale,
+validated yields, and interpretation boundaries have one authority.
 
 ## 9. Validation and acceptance criteria
 
