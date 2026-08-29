@@ -60,3 +60,11 @@ please do
 3. set aggregate threshold as q ≤0.10
 4. coverage ≥50% 
 with the four changes, redo the human validation using SEA-AD. Please overwrite the previous results (no need to keep the old results).
+
+Please take the analysis in /Users/rzhuang/Documents/VscodeProjects/alzheimer/docs/validation_human/rosmap_seaad_simple_aggr_driver_analysis.md
+and create slides and add slides to the end of /Users/rzhuang/Documents/VscodeProjects/alzheimer/docs/presentations/phase20_sex_apoe_kda_fine_broad.pptx
+The general rules for those slides:
+1. do not put too much on a single slide, would rather split into more slides, or ignore some of the smaller details.
+2. do not put internal file names, internal terminologies on the slide.
+3. each slide should be clear about which message it aims to convey
+4. for complex concepts, use multiple slides, from simple to more complicated to help reader absorb.
