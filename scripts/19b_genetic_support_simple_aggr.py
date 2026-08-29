@@ -411,15 +411,15 @@ def stage_freeze() -> None:
 # --------------------------------------------------------------------------
 
 
-def load_workbook_gene_table() -> pd.DataFrame | None:
+def load_workbook_gene_table() -> tuple[pd.DataFrame | None, str]:
     try:
         workbook_path = find_fungen(FUNGEN_WORKBOOK_NAME)
-    except FileNotFoundError:
-        return None
+    except FileNotFoundError as error:
+        return None, f"workbook_file_missing: {error}"
     try:
         table = pd.read_excel(workbook_path, sheet_name="Gene Locus table", header=2)
-    except ImportError:
-        return None
+    except ImportError as error:
+        return None, f"openpyxl_missing: {error} (fix: pip install openpyxl)"
     needed = [
         "Variant ID", "Rsid", "Chr", "Pos", "maximum inclusion score",
         "Min p-value", "xQTL target gene", "gene ID",
@@ -430,7 +430,7 @@ def load_workbook_gene_table() -> pd.DataFrame | None:
         raise RuntimeError(f"Unified workbook is missing columns: {missing}")
     table = table.dropna(subset=["xQTL target gene"]).copy()
     table["ensembl_base"] = table["gene ID"].astype(str).str.split(".").str[0]
-    return table
+    return table, f"loaded: {workbook_path.relative_to(ROOT)}"
 
 
 def stage_tier1() -> None:
@@ -445,8 +445,9 @@ def stage_tier1() -> None:
     twas_path = find_fungen(FUNGEN_TWAS_NAME)
     gvc_genes = set(pd.read_csv(gvc_path, sep="\t", dtype=str)["gene_name"])
     twas_genes = set(pd.read_csv(twas_path, sep="\t", dtype=str)["gene_name"])
-    workbook = load_workbook_gene_table()
+    workbook, workbook_state = load_workbook_gene_table()
     workbook_available = workbook is not None
+    print(f"tier1: workbook {workbook_state}")
 
     variants = pd.read_csv(
         variants_path,
@@ -538,7 +539,7 @@ def stage_tier1() -> None:
     checks.extend(
         [
             check("evidence_rows", len(evidence), EXPECTED_GENES, len(evidence) == EXPECTED_GENES),
-            check("workbook_available", workbook_available, True, workbook_available),
+            check("workbook_available", workbook_state, "loaded", workbook_available),
             check(
                 "apoe_positive_control",
                 apoe.iloc[0]["grade"] if len(apoe) else "absent",

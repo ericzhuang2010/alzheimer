@@ -3,3 +3,18 @@
   File "/home/ericzhuang2010/VscodeProjects/alzheimer/scripts/19b_genetic_support_simple_aggr.py", line 187, in finalize_stage
     raise RuntimeError(f"{stage} failed checks: {', '.join(bad)}")
 RuntimeError: tier1 failed checks: workbook_available, apoe_positive_control
+
+cd ~/VscodeProjects/alzheimer
+python3 - <<'EOF'
+from pathlib import Path
+for p in [
+    "data/reference/phase19_genetic_support/source_downloads/unified_AD_loci_xQTL_summary.xlsx",
+    "data/reference/phase19_genetic_support/tier2/source_downloads/unified_AD_loci_xQTL_summary.xlsx",
+]:
+    print("EXISTS" if Path(p).is_file() else "ABSENT ", p)
+try:
+    import openpyxl
+    print("openpyxl OK", openpyxl.__version__)
+except ImportError as e:
+    print("openpyxl MISSING:", e)
+EOF
