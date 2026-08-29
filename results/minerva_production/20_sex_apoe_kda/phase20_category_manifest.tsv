@@ -1,43 +1,43 @@
 schema_version	signature_group	sex	apoe_group	broad_network	included_run_count	fine_cell_type_count	fine_cell_types	direction_count	directions	category_status	strict_candidate_count	relaxed_candidate_count	exploratory_lead_count	exploratory_inclusive_count
-phase20_sex_apoe_non_mt_kda_v1_category_manifest_v1	F_e2	Female	e2	Astrocytes	2	1	Ast GRM3	2	AD_down_mito|AD_up_mito	localized_single_fine_type	4	5	1	6
-phase20_sex_apoe_non_mt_kda_v1_category_manifest_v1	F_e2	Female	e2	Excitatory_neurons	14	12	Exc L2-3 CBLN2 LINC02306|Exc L3-4 RORB CUX2|Exc L3-5 RORB PLCH1|Exc L4-5 RORB GABRG1|Exc L4-5 RORB IL1RAPL2|Exc L5-6 RORB LINC02196|Exc L5/6 IT Car3|Exc L5/6 NP|Exc L6 CT|Exc L6 THEMIS NFIA|Exc L6b|Exc RELN CHD7	2	AD_down_mito|AD_up_mito	analyzable_multi_fine_type	8	13	2	15
-phase20_sex_apoe_non_mt_kda_v1_category_manifest_v1	F_e2	Female	e2	Inhibitory_neurons	3	2	Inh PVALB HTR4|Inh PVALB SULF1	2	AD_down_mito|AD_up_mito	analyzable_multi_fine_type	0	0	0	0
-phase20_sex_apoe_non_mt_kda_v1_category_manifest_v1	F_e2	Female	e2	Microglia	1	1	Mic P2RY12	1	AD_down_mito	single_run_evidence	0	0	0	0
-phase20_sex_apoe_non_mt_kda_v1_category_manifest_v1	F_e2	Female	e2	OPCs	1	1	OPC	1	AD_up_mito	single_run_evidence	0	0	0	0
-phase20_sex_apoe_non_mt_kda_v1_category_manifest_v1	F_e2	Female	e2	Oligodendrocytes	0	0		0		not_estimable_no_included_runs	0	0	0	0
-phase20_sex_apoe_non_mt_kda_v1_category_manifest_v1	F_e2	Female	e2	Vasculature_cells	0	0		0		not_estimable_no_included_runs	0	0	0	0
-phase20_sex_apoe_non_mt_kda_v1_category_manifest_v1	F_e33	Female	e33	Astrocytes	2	1	Ast CHI3L1	2	AD_down_mito|AD_up_mito	localized_single_fine_type	0	0	1	1
-phase20_sex_apoe_non_mt_kda_v1_category_manifest_v1	F_e33	Female	e33	Excitatory_neurons	15	13	Exc L2-3 CBLN2 LINC02306|Exc L3-4 RORB CUX2|Exc L3-5 RORB PLCH1|Exc L4-5 RORB GABRG1|Exc L4-5 RORB IL1RAPL2|Exc L5 ET|Exc L5-6 RORB LINC02196|Exc L5/6 IT Car3|Exc L5/6 NP|Exc L6 CT|Exc L6 THEMIS NFIA|Exc L6b|Exc RELN CHD7	2	AD_down_mito|AD_up_mito	analyzable_multi_fine_type	6	6	2	8
-phase20_sex_apoe_non_mt_kda_v1_category_manifest_v1	F_e33	Female	e33	Inhibitory_neurons	2	2	Inh L1-6 LAMP5 CA13|Inh SORCS1 TTN	1	AD_up_mito	analyzable_multi_fine_type	0	0	0	0
-phase20_sex_apoe_non_mt_kda_v1_category_manifest_v1	F_e33	Female	e33	Microglia	0	0		0		not_estimable_no_included_runs	0	0	0	0
-phase20_sex_apoe_non_mt_kda_v1_category_manifest_v1	F_e33	Female	e33	OPCs	1	1	OPC	1	AD_up_mito	single_run_evidence	3	3	0	3
-phase20_sex_apoe_non_mt_kda_v1_category_manifest_v1	F_e33	Female	e33	Oligodendrocytes	0	0		0		not_estimable_no_included_runs	0	0	0	0
-phase20_sex_apoe_non_mt_kda_v1_category_manifest_v1	F_e33	Female	e33	Vasculature_cells	0	0		0		not_estimable_no_included_runs	0	0	0	0
-phase20_sex_apoe_non_mt_kda_v1_category_manifest_v1	F_e4	Female	e4	Astrocytes	5	3	Ast CHI3L1|Ast DPP10|Ast GRM3	2	AD_down_mito|AD_up_mito	analyzable_multi_fine_type	1	1	0	1
-phase20_sex_apoe_non_mt_kda_v1_category_manifest_v1	F_e4	Female	e4	Excitatory_neurons	13	11	Exc L2-3 CBLN2 LINC02306|Exc L3-4 RORB CUX2|Exc L3-5 RORB PLCH1|Exc L4-5 RORB GABRG1|Exc L4-5 RORB IL1RAPL2|Exc L5-6 RORB LINC02196|Exc L5/6 IT Car3|Exc L6 CT|Exc L6 THEMIS NFIA|Exc L6b|Exc RELN CHD7	2	AD_down_mito|AD_up_mito	analyzable_multi_fine_type	7	9	2	11
-phase20_sex_apoe_non_mt_kda_v1_category_manifest_v1	F_e4	Female	e4	Inhibitory_neurons	5	5	Inh L3-5 SST MAFB|Inh LAMP5 NRG1 (Rosehip)|Inh PVALB CA8 (Chandelier)|Inh PVALB HTR4|Inh PVALB SULF1	1	AD_down_mito	analyzable_multi_fine_type	3	3	0	3
-phase20_sex_apoe_non_mt_kda_v1_category_manifest_v1	F_e4	Female	e4	Microglia	0	0		0		not_estimable_no_included_runs	0	0	0	0
-phase20_sex_apoe_non_mt_kda_v1_category_manifest_v1	F_e4	Female	e4	OPCs	2	1	OPC	2	AD_down_mito|AD_up_mito	localized_single_fine_type	0	0	2	2
-phase20_sex_apoe_non_mt_kda_v1_category_manifest_v1	F_e4	Female	e4	Oligodendrocytes	0	0		0		not_estimable_no_included_runs	0	0	0	0
-phase20_sex_apoe_non_mt_kda_v1_category_manifest_v1	F_e4	Female	e4	Vasculature_cells	0	0		0		not_estimable_no_included_runs	0	0	0	0
-phase20_sex_apoe_non_mt_kda_v1_category_manifest_v1	M_e2	Male	e2	Astrocytes	5	3	Ast CHI3L1|Ast DPP10|Ast GRM3	2	AD_down_mito|AD_up_mito	analyzable_multi_fine_type	5	5	1	6
-phase20_sex_apoe_non_mt_kda_v1_category_manifest_v1	M_e2	Male	e2	Excitatory_neurons	25	13	Exc L2-3 CBLN2 LINC02306|Exc L3-4 RORB CUX2|Exc L3-5 RORB PLCH1|Exc L4-5 RORB GABRG1|Exc L4-5 RORB IL1RAPL2|Exc L5-6 RORB LINC02196|Exc L5/6 IT Car3|Exc L5/6 NP|Exc L6 CT|Exc L6 THEMIS NFIA|Exc L6b|Exc NRGN|Exc RELN CHD7	2	AD_down_mito|AD_up_mito	analyzable_multi_fine_type	18	20	3	23
-phase20_sex_apoe_non_mt_kda_v1_category_manifest_v1	M_e2	Male	e2	Inhibitory_neurons	14	8	Inh CUX2 MSR1|Inh ENOX2 SPHKAP|Inh L3-5 SST MAFB|Inh LAMP5 NRG1 (Rosehip)|Inh PVALB HTR4|Inh PVALB SULF1|Inh RYR3 TSHZ2|Inh VIP CLSTN2	2	AD_down_mito|AD_up_mito	analyzable_multi_fine_type	3	4	0	4
-phase20_sex_apoe_non_mt_kda_v1_category_manifest_v1	M_e2	Male	e2	Microglia	2	1	Mic P2RY12	2	AD_down_mito|AD_up_mito	localized_single_fine_type	0	0	0	0
-phase20_sex_apoe_non_mt_kda_v1_category_manifest_v1	M_e2	Male	e2	OPCs	2	1	OPC	2	AD_down_mito|AD_up_mito	localized_single_fine_type	3	5	2	7
-phase20_sex_apoe_non_mt_kda_v1_category_manifest_v1	M_e2	Male	e2	Oligodendrocytes	2	1	Oli	2	AD_down_mito|AD_up_mito	localized_single_fine_type	0	1	0	1
-phase20_sex_apoe_non_mt_kda_v1_category_manifest_v1	M_e2	Male	e2	Vasculature_cells	1	1	End	1	AD_down_mito	single_run_evidence	0	0	0	0
-phase20_sex_apoe_non_mt_kda_v1_category_manifest_v1	M_e33	Male	e33	Astrocytes	2	1	Ast CHI3L1	2	AD_down_mito|AD_up_mito	localized_single_fine_type	0	0	0	0
-phase20_sex_apoe_non_mt_kda_v1_category_manifest_v1	M_e33	Male	e33	Excitatory_neurons	13	8	Exc L5 ET|Exc L5-6 RORB LINC02196|Exc L5/6 IT Car3|Exc L5/6 NP|Exc L6 CT|Exc L6b|Exc NRGN|Exc RELN CHD7	2	AD_down_mito|AD_up_mito	analyzable_multi_fine_type	1	1	0	1
-phase20_sex_apoe_non_mt_kda_v1_category_manifest_v1	M_e33	Male	e33	Inhibitory_neurons	2	2	Inh FBN2 EPB41L4A|Inh LAMP5 NRG1 (Rosehip)	2	AD_down_mito|AD_up_mito	analyzable_multi_fine_type	0	0	0	0
-phase20_sex_apoe_non_mt_kda_v1_category_manifest_v1	M_e33	Male	e33	Microglia	0	0		0		not_estimable_no_included_runs	0	0	0	0
-phase20_sex_apoe_non_mt_kda_v1_category_manifest_v1	M_e33	Male	e33	OPCs	0	0		0		not_estimable_no_included_runs	0	0	0	0
-phase20_sex_apoe_non_mt_kda_v1_category_manifest_v1	M_e33	Male	e33	Oligodendrocytes	0	0		0		not_estimable_no_included_runs	0	0	0	0
-phase20_sex_apoe_non_mt_kda_v1_category_manifest_v1	M_e33	Male	e33	Vasculature_cells	0	0		0		not_estimable_no_included_runs	0	0	0	0
-phase20_sex_apoe_non_mt_kda_v1_category_manifest_v1	M_e4	Male	e4	Astrocytes	5	3	Ast CHI3L1|Ast DPP10|Ast GRM3	2	AD_down_mito|AD_up_mito	analyzable_multi_fine_type	0	0	0	0
-phase20_sex_apoe_non_mt_kda_v1_category_manifest_v1	M_e4	Male	e4	Excitatory_neurons	17	12	Exc L2-3 CBLN2 LINC02306|Exc L3-4 RORB CUX2|Exc L3-5 RORB PLCH1|Exc L4-5 RORB GABRG1|Exc L4-5 RORB IL1RAPL2|Exc L5-6 RORB LINC02196|Exc L5/6 IT Car3|Exc L6 CT|Exc L6 THEMIS NFIA|Exc L6b|Exc NRGN|Exc RELN CHD7	2	AD_down_mito|AD_up_mito	analyzable_multi_fine_type	0	0	0	0
-phase20_sex_apoe_non_mt_kda_v1_category_manifest_v1	M_e4	Male	e4	Inhibitory_neurons	2	2	Inh LAMP5 NRG1 (Rosehip)|Inh PVALB HTR4	1	AD_down_mito	analyzable_multi_fine_type	1	1	0	1
-phase20_sex_apoe_non_mt_kda_v1_category_manifest_v1	M_e4	Male	e4	Microglia	3	2	Mic P2RY12|Mic TPT1	2	AD_down_mito|AD_up_mito	analyzable_multi_fine_type	1	1	0	1
-phase20_sex_apoe_non_mt_kda_v1_category_manifest_v1	M_e4	Male	e4	OPCs	0	0		0		not_estimable_no_included_runs	0	0	0	0
-phase20_sex_apoe_non_mt_kda_v1_category_manifest_v1	M_e4	Male	e4	Oligodendrocytes	0	0		0		not_estimable_no_included_runs	0	0	0	0
-phase20_sex_apoe_non_mt_kda_v1_category_manifest_v1	M_e4	Male	e4	Vasculature_cells	0	0		0		not_estimable_no_included_runs	0	0	0	0
+phase20_sex_apoe_non_mt_kda_v2_category_manifest_v1	F_e2	Female	e2	Astrocytes	6	3	Ast CHI3L1|Ast DPP10|Ast GRM3	2	AD_down_mito|AD_up_mito	analyzable_multi_fine_type	3	4	2	6
+phase20_sex_apoe_non_mt_kda_v2_category_manifest_v1	F_e2	Female	e2	Excitatory_neurons	20	12	Exc L2-3 CBLN2 LINC02306|Exc L3-4 RORB CUX2|Exc L3-5 RORB PLCH1|Exc L4-5 RORB GABRG1|Exc L4-5 RORB IL1RAPL2|Exc L5-6 RORB LINC02196|Exc L5/6 IT Car3|Exc L5/6 NP|Exc L6 CT|Exc L6 THEMIS NFIA|Exc L6b|Exc RELN CHD7	2	AD_down_mito|AD_up_mito	analyzable_multi_fine_type	7	11	3	14
+phase20_sex_apoe_non_mt_kda_v2_category_manifest_v1	F_e2	Female	e2	Inhibitory_neurons	13	10	Inh ALCAM TRPM3|Inh CUX2 MSR1|Inh L1-6 LAMP5 CA13|Inh L3-5 SST MAFB|Inh LAMP5 NRG1 (Rosehip)|Inh PVALB CA8 (Chandelier)|Inh PVALB HTR4|Inh PVALB SULF1|Inh RYR3 TSHZ2|Inh VIP TSHZ2	2	AD_down_mito|AD_up_mito	analyzable_multi_fine_type	0	0	0	0
+phase20_sex_apoe_non_mt_kda_v2_category_manifest_v1	F_e2	Female	e2	Microglia	2	1	Mic P2RY12	2	AD_down_mito|AD_up_mito	localized_single_fine_type	0	0	0	0
+phase20_sex_apoe_non_mt_kda_v2_category_manifest_v1	F_e2	Female	e2	OPCs	1	1	OPC	1	AD_up_mito	single_run_evidence	0	0	0	0
+phase20_sex_apoe_non_mt_kda_v2_category_manifest_v1	F_e2	Female	e2	Oligodendrocytes	1	1	Oli	1	AD_up_mito	single_run_evidence	0	0	0	0
+phase20_sex_apoe_non_mt_kda_v2_category_manifest_v1	F_e2	Female	e2	Vasculature_cells	0	0		0		not_estimable_no_included_runs	0	0	0	0
+phase20_sex_apoe_non_mt_kda_v2_category_manifest_v1	F_e33	Female	e33	Astrocytes	5	3	Ast CHI3L1|Ast DPP10|Ast GRM3	2	AD_down_mito|AD_up_mito	analyzable_multi_fine_type	0	0	0	0
+phase20_sex_apoe_non_mt_kda_v2_category_manifest_v1	F_e33	Female	e33	Excitatory_neurons	23	14	Exc L2-3 CBLN2 LINC02306|Exc L3-4 RORB CUX2|Exc L3-5 RORB PLCH1|Exc L4-5 RORB GABRG1|Exc L4-5 RORB IL1RAPL2|Exc L5 ET|Exc L5-6 RORB LINC02196|Exc L5/6 IT Car3|Exc L5/6 NP|Exc L6 CT|Exc L6 THEMIS NFIA|Exc L6b|Exc NRGN|Exc RELN CHD7	2	AD_down_mito|AD_up_mito	analyzable_multi_fine_type	5	6	0	6
+phase20_sex_apoe_non_mt_kda_v2_category_manifest_v1	F_e33	Female	e33	Inhibitory_neurons	21	14	Inh ALCAM TRPM3|Inh FBN2 EPB41L4A|Inh L1-6 LAMP5 CA13|Inh L3-5 SST MAFB|Inh LAMP5 NRG1 (Rosehip)|Inh PVALB CA8 (Chandelier)|Inh PVALB HTR4|Inh PVALB SULF1|Inh RYR3 TSHZ2|Inh SORCS1 TTN|Inh VIP ABI3BP|Inh VIP CLSTN2|Inh VIP THSD7B|Inh VIP TSHZ2	2	AD_down_mito|AD_up_mito	analyzable_multi_fine_type	0	0	0	0
+phase20_sex_apoe_non_mt_kda_v2_category_manifest_v1	F_e33	Female	e33	Microglia	0	0		0		not_estimable_no_included_runs	0	0	0	0
+phase20_sex_apoe_non_mt_kda_v2_category_manifest_v1	F_e33	Female	e33	OPCs	1	1	OPC	1	AD_up_mito	single_run_evidence	3	3	0	3
+phase20_sex_apoe_non_mt_kda_v2_category_manifest_v1	F_e33	Female	e33	Oligodendrocytes	1	1	Oli	1	AD_up_mito	single_run_evidence	0	0	0	0
+phase20_sex_apoe_non_mt_kda_v2_category_manifest_v1	F_e33	Female	e33	Vasculature_cells	0	0		0		not_estimable_no_included_runs	0	0	0	0
+phase20_sex_apoe_non_mt_kda_v2_category_manifest_v1	F_e4	Female	e4	Astrocytes	6	3	Ast CHI3L1|Ast DPP10|Ast GRM3	2	AD_down_mito|AD_up_mito	analyzable_multi_fine_type	1	1	0	1
+phase20_sex_apoe_non_mt_kda_v2_category_manifest_v1	F_e4	Female	e4	Excitatory_neurons	17	13	Exc L2-3 CBLN2 LINC02306|Exc L3-4 RORB CUX2|Exc L3-5 RORB PLCH1|Exc L4-5 RORB GABRG1|Exc L4-5 RORB IL1RAPL2|Exc L5-6 RORB LINC02196|Exc L5/6 IT Car3|Exc L5/6 NP|Exc L6 CT|Exc L6 THEMIS NFIA|Exc L6b|Exc NRGN|Exc RELN CHD7	2	AD_down_mito|AD_up_mito	analyzable_multi_fine_type	6	9	0	9
+phase20_sex_apoe_non_mt_kda_v2_category_manifest_v1	F_e4	Female	e4	Inhibitory_neurons	15	12	Inh ALCAM TRPM3|Inh CUX2 MSR1|Inh L1-6 LAMP5 CA13|Inh L3-5 SST MAFB|Inh LAMP5 NRG1 (Rosehip)|Inh LAMP5 RELN|Inh PVALB CA8 (Chandelier)|Inh PVALB HTR4|Inh PVALB SULF1|Inh RYR3 TSHZ2|Inh VIP ABI3BP|Inh VIP CLSTN2	2	AD_down_mito|AD_up_mito	analyzable_multi_fine_type	1	1	2	3
+phase20_sex_apoe_non_mt_kda_v2_category_manifest_v1	F_e4	Female	e4	Microglia	3	2	Mic P2RY12|Mic TPT1	2	AD_down_mito|AD_up_mito	analyzable_multi_fine_type	0	0	0	0
+phase20_sex_apoe_non_mt_kda_v2_category_manifest_v1	F_e4	Female	e4	OPCs	2	1	OPC	2	AD_down_mito|AD_up_mito	localized_single_fine_type	0	0	2	2
+phase20_sex_apoe_non_mt_kda_v2_category_manifest_v1	F_e4	Female	e4	Oligodendrocytes	1	1	Oli	1	AD_down_mito	single_run_evidence	0	0	0	0
+phase20_sex_apoe_non_mt_kda_v2_category_manifest_v1	F_e4	Female	e4	Vasculature_cells	3	2	End|Per	2	AD_down_mito|AD_up_mito	analyzable_multi_fine_type	0	0	0	0
+phase20_sex_apoe_non_mt_kda_v2_category_manifest_v1	M_e2	Male	e2	Astrocytes	6	3	Ast CHI3L1|Ast DPP10|Ast GRM3	2	AD_down_mito|AD_up_mito	analyzable_multi_fine_type	4	5	0	5
+phase20_sex_apoe_non_mt_kda_v2_category_manifest_v1	M_e2	Male	e2	Excitatory_neurons	27	14	Exc L2-3 CBLN2 LINC02306|Exc L3-4 RORB CUX2|Exc L3-5 RORB PLCH1|Exc L4-5 RORB GABRG1|Exc L4-5 RORB IL1RAPL2|Exc L5 ET|Exc L5-6 RORB LINC02196|Exc L5/6 IT Car3|Exc L5/6 NP|Exc L6 CT|Exc L6 THEMIS NFIA|Exc L6b|Exc NRGN|Exc RELN CHD7	2	AD_down_mito|AD_up_mito	analyzable_multi_fine_type	17	20	3	23
+phase20_sex_apoe_non_mt_kda_v2_category_manifest_v1	M_e2	Male	e2	Inhibitory_neurons	19	10	Inh CUX2 MSR1|Inh ENOX2 SPHKAP|Inh L1-6 LAMP5 CA13|Inh L3-5 SST MAFB|Inh LAMP5 NRG1 (Rosehip)|Inh PVALB CA8 (Chandelier)|Inh PVALB HTR4|Inh PVALB SULF1|Inh RYR3 TSHZ2|Inh VIP CLSTN2	2	AD_down_mito|AD_up_mito	analyzable_multi_fine_type	3	3	1	4
+phase20_sex_apoe_non_mt_kda_v2_category_manifest_v1	M_e2	Male	e2	Microglia	2	1	Mic P2RY12	2	AD_down_mito|AD_up_mito	localized_single_fine_type	0	0	0	0
+phase20_sex_apoe_non_mt_kda_v2_category_manifest_v1	M_e2	Male	e2	OPCs	2	1	OPC	2	AD_down_mito|AD_up_mito	localized_single_fine_type	3	5	2	7
+phase20_sex_apoe_non_mt_kda_v2_category_manifest_v1	M_e2	Male	e2	Oligodendrocytes	2	1	Oli	2	AD_down_mito|AD_up_mito	localized_single_fine_type	0	1	0	1
+phase20_sex_apoe_non_mt_kda_v2_category_manifest_v1	M_e2	Male	e2	Vasculature_cells	3	2	End|Per	2	AD_down_mito|AD_up_mito	analyzable_multi_fine_type	0	0	0	0
+phase20_sex_apoe_non_mt_kda_v2_category_manifest_v1	M_e33	Male	e33	Astrocytes	5	3	Ast CHI3L1|Ast DPP10|Ast GRM3	2	AD_down_mito|AD_up_mito	analyzable_multi_fine_type	0	0	0	0
+phase20_sex_apoe_non_mt_kda_v2_category_manifest_v1	M_e33	Male	e33	Excitatory_neurons	20	12	Exc L3-4 RORB CUX2|Exc L3-5 RORB PLCH1|Exc L4-5 RORB GABRG1|Exc L4-5 RORB IL1RAPL2|Exc L5 ET|Exc L5-6 RORB LINC02196|Exc L5/6 IT Car3|Exc L5/6 NP|Exc L6 CT|Exc L6b|Exc NRGN|Exc RELN CHD7	2	AD_down_mito|AD_up_mito	analyzable_multi_fine_type	1	1	0	1
+phase20_sex_apoe_non_mt_kda_v2_category_manifest_v1	M_e33	Male	e33	Inhibitory_neurons	13	9	Inh ALCAM TRPM3|Inh ENOX2 SPHKAP|Inh FBN2 EPB41L4A|Inh L1-6 LAMP5 CA13|Inh L6 SST NPY|Inh LAMP5 NRG1 (Rosehip)|Inh PVALB CA8 (Chandelier)|Inh PVALB HTR4|Inh PVALB SULF1	2	AD_down_mito|AD_up_mito	analyzable_multi_fine_type	0	0	0	0
+phase20_sex_apoe_non_mt_kda_v2_category_manifest_v1	M_e33	Male	e33	Microglia	2	1	Mic P2RY12	2	AD_down_mito|AD_up_mito	localized_single_fine_type	2	2	0	2
+phase20_sex_apoe_non_mt_kda_v2_category_manifest_v1	M_e33	Male	e33	OPCs	1	1	OPC	1	AD_down_mito	single_run_evidence	0	0	0	0
+phase20_sex_apoe_non_mt_kda_v2_category_manifest_v1	M_e33	Male	e33	Oligodendrocytes	1	1	Oli	1	AD_down_mito	single_run_evidence	0	0	0	0
+phase20_sex_apoe_non_mt_kda_v2_category_manifest_v1	M_e33	Male	e33	Vasculature_cells	1	1	End	1	AD_up_mito	single_run_evidence	0	0	0	0
+phase20_sex_apoe_non_mt_kda_v2_category_manifest_v1	M_e4	Male	e4	Astrocytes	6	3	Ast CHI3L1|Ast DPP10|Ast GRM3	2	AD_down_mito|AD_up_mito	analyzable_multi_fine_type	0	0	0	0
+phase20_sex_apoe_non_mt_kda_v2_category_manifest_v1	M_e4	Male	e4	Excitatory_neurons	26	13	Exc L2-3 CBLN2 LINC02306|Exc L3-4 RORB CUX2|Exc L3-5 RORB PLCH1|Exc L4-5 RORB GABRG1|Exc L4-5 RORB IL1RAPL2|Exc L5-6 RORB LINC02196|Exc L5/6 IT Car3|Exc L5/6 NP|Exc L6 CT|Exc L6 THEMIS NFIA|Exc L6b|Exc NRGN|Exc RELN CHD7	2	AD_down_mito|AD_up_mito	analyzable_multi_fine_type	0	0	0	0
+phase20_sex_apoe_non_mt_kda_v2_category_manifest_v1	M_e4	Male	e4	Inhibitory_neurons	11	9	Inh CUX2 MSR1|Inh L1-6 LAMP5 CA13|Inh L3-5 SST MAFB|Inh LAMP5 NRG1 (Rosehip)|Inh PVALB CA8 (Chandelier)|Inh PVALB HTR4|Inh PVALB SULF1|Inh RYR3 TSHZ2|Inh VIP ABI3BP	2	AD_down_mito|AD_up_mito	analyzable_multi_fine_type	1	1	0	1
+phase20_sex_apoe_non_mt_kda_v2_category_manifest_v1	M_e4	Male	e4	Microglia	3	2	Mic P2RY12|Mic TPT1	2	AD_down_mito|AD_up_mito	analyzable_multi_fine_type	1	1	0	1
+phase20_sex_apoe_non_mt_kda_v2_category_manifest_v1	M_e4	Male	e4	OPCs	2	1	OPC	2	AD_down_mito|AD_up_mito	localized_single_fine_type	0	0	0	0
+phase20_sex_apoe_non_mt_kda_v2_category_manifest_v1	M_e4	Male	e4	Oligodendrocytes	2	1	Oli	2	AD_down_mito|AD_up_mito	localized_single_fine_type	0	0	0	0
+phase20_sex_apoe_non_mt_kda_v2_category_manifest_v1	M_e4	Male	e4	Vasculature_cells	0	0		0		not_estimable_no_included_runs	0	0	0	0

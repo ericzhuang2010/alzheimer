@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 """Run Phase 20 sex/APOE-by-broad-cell non-MT key-driver aggregation.
 
-The program consumes only the validated, frozen Phase 18 opportunity table.
-It does not regenerate differential-expression results or rerun KDA.  Core
-mitochondrial genes are excluded before category aggregation, BH correction,
-ranking, and every Phase 20 result export.
+The program consumes a validated complete-evidence source reconstructed from
+the already completed Phase 12 KDA calls at the configured effective-query
+floor.  It does not regenerate differential-expression results or rerun KDA.
+Core mitochondrial genes are excluded before category aggregation, BH
+correction, ranking, and every Phase 20 result export.
 """
 
 from __future__ import annotations
@@ -30,7 +31,7 @@ from scipy.stats import cauchy
 
 TRUE_VALUES = {"TRUE", "T", "1", "YES"}
 NA_TEXT = "NA"
-SCHEMA_ROOT = "phase20_sex_apoe_non_mt_kda_v1"
+SCHEMA_ROOT = "phase20_sex_apoe_non_mt_kda_v2"
 
 
 def fail(message: str) -> None:
@@ -321,33 +322,30 @@ def add_check(
 
 
 def validate_sources(
-    archive: Path,
-    phase18_dir: Path,
+    source_dir: Path,
     config: dict[str, Any],
     checks: list[dict[str, Any]],
 ) -> dict[str, Path]:
     inputs = config["inputs"]
     sources = {
-        "candidate_tests": archive / inputs["candidate_tests"],
-        "run_manifest": archive / inputs["run_manifest"],
-        "source_checks": archive / inputs["source_checks"],
-        "source_status": archive / inputs["source_status"],
-        "source_artifacts": archive / inputs["source_artifacts"],
-        "published_returns": phase18_dir / inputs["published_returns"],
-        "gene_case_summary": archive / "key_driver_gene_case_summary.tsv.gz",
+        "candidate_tests": source_dir / inputs["candidate_tests"],
+        "run_manifest": source_dir / inputs["run_manifest"],
+        "source_checks": source_dir / inputs["source_checks"],
+        "source_status": source_dir / inputs["source_status"],
+        "source_artifacts": source_dir / inputs["source_artifacts"],
     }
     missing = [str(path) for path in sources.values() if not path.is_file()]
     if missing:
-        fail("Missing Phase 18 inputs: " + ", ".join(missing))
+        fail("Missing Phase 20 source inputs: " + ", ".join(missing))
     status = read_tsv(sources["source_status"])
     source_status = status[0].get("validation_status") if len(status) == 1 else "invalid"
     required = inputs["required_source_status"]
-    add_check(checks, "phase18_source_status", source_status, required, source_status == required)
+    add_check(checks, "source_validation_status", source_status, required, source_status == required)
     source_checks = read_tsv(sources["source_checks"])
     passed = bool(source_checks) and all(is_true(row.get("passed")) for row in source_checks)
     add_check(
         checks,
-        "phase18_blocking_checks",
+        "source_blocking_checks",
         sum(not is_true(row.get("passed")) for row in source_checks),
         0,
         passed,
@@ -363,9 +361,9 @@ def validate_sources(
         observed = sha256_file(path)
         add_check(
             checks,
-            f"phase18_recorded_hash_{name}",
+            f"source_recorded_hash_{name}",
             observed,
-            recorded or "recorded Phase 18 hash",
+            recorded or "recorded source hash",
             recorded == observed,
         )
     return sources
@@ -378,9 +376,9 @@ def snapshot_inputs(
 ) -> tuple[dict[str, Path], list[dict[str, Any]]]:
     input_dir = output_dir / "00_inputs"
     snapshots = {
-        "candidate_tests": input_dir / "phase18_candidate_tests.tsv.gz",
-        "run_manifest": input_dir / "phase18_run_manifest.tsv",
-        "source_checks": input_dir / "phase18_source_checks.tsv",
+        "candidate_tests": input_dir / "phase20_source_candidate_tests.tsv.gz",
+        "run_manifest": input_dir / "phase20_source_run_manifest.tsv",
+        "source_checks": input_dir / "phase20_source_checks.tsv",
     }
     authority: list[dict[str, Any]] = []
     for role, destination in snapshots.items():
@@ -403,8 +401,10 @@ def snapshot_inputs(
     return snapshots, authority
 
 
-def included_runs(run_manifest: Path) -> list[dict[str, str]]:
-    return [row for row in iter_tsv(run_manifest) if is_true(row.get("phase18_included"))]
+def included_runs(
+    run_manifest: Path, inclusion_flag: str
+) -> list[dict[str, str]]:
+    return [row for row in iter_tsv(run_manifest) if is_true(row.get(inclusion_flag))]
 
 
 def category_manifest(
@@ -456,19 +456,31 @@ def scan_candidate_tests(
     eligible_case: str,
 ) -> tuple[
     dict[tuple[str, str, str], GeneUnit],
-    dict[tuple[str, str, str], EvidenceAccumulator],
     int,
     set[str],
+    int,
+    int,
 ]:
     units: dict[tuple[str, str, str], GeneUnit] = {}
-    parity: dict[tuple[str, str, str], EvidenceAccumulator] = {}
     row_count = 0
     run_ids: set[str] = set()
+    duplicate_keys = 0
+    repeated_run_blocks = 0
+    current_run: str | None = None
+    closed_runs: set[str] = set()
+    previous_key: tuple[str, str] | None = None
     for row in iter_tsv(path):
         row_count += 1
-        run_ids.add(row["kda_run_id"])
-        parity_key = (row["broad_network"], row["current_symbol"], row["case_id"])
-        parity.setdefault(parity_key, EvidenceAccumulator()).add(row)
+        run_id = row["kda_run_id"]
+        key = (run_id, row["current_symbol"])
+        duplicate_keys += int(key == previous_key)
+        previous_key = key
+        if run_id != current_run:
+            if current_run is not None:
+                closed_runs.add(current_run)
+            repeated_run_blocks += int(run_id in closed_runs)
+            current_run = run_id
+        run_ids.add(run_id)
         if row["case_id"] != eligible_case:
             continue
         if is_true(row.get("is_core_mito")):
@@ -477,7 +489,7 @@ def scan_candidate_tests(
         units.setdefault(key, GeneUnit()).add(row)
         if row_count % 250000 == 0:
             print(f"candidate_test_rows_scanned={row_count}", flush=True)
-    return units, parity, row_count, run_ids
+    return units, row_count, run_ids, duplicate_keys, repeated_run_blocks
 
 
 def phase18_status(p_value: float | None, q_value: float | None, coverage: float, support: int) -> str:
@@ -1116,6 +1128,7 @@ def display_rows(
     categories: list[dict[str, Any]],
     by_category: dict[tuple[str, str], list[dict[str, Any]]],
     limit: int,
+    eligible_case: str,
 ) -> list[dict[str, Any]]:
     output: list[dict[str, Any]] = []
     for category in categories:
@@ -1144,7 +1157,7 @@ def display_rows(
                     "apoe_group": category["apoe_group"],
                     "broad_network": key[1],
                     "current_symbol": None,
-                    "case_id": "case3_not_core_mito",
+                    "case_id": eligible_case,
                     "is_core_mito": False,
                     "relaxed_rank": None,
                     "relaxed_category_acat_q": None,
@@ -1160,10 +1173,11 @@ def display_rows(
 def supporting_rows(
     candidate_tests: Path,
     candidate_keys: set[tuple[str, str, str]],
+    eligible_case: str,
 ) -> Iterator[dict[str, Any]]:
     for row in iter_tsv(candidate_tests):
         key = (row["signature_group"], row["broad_network"], row["current_symbol"])
-        if key not in candidate_keys or row["case_id"] != "case3_not_core_mito":
+        if key not in candidate_keys or row["case_id"] != eligible_case:
             continue
         overlap = as_float(row.get("other_query_overlap"))
         fold_value = as_float(row.get("final_fold_enrichment"))
@@ -1330,7 +1344,7 @@ artifact_order path rows bytes sha256 hash_status
 """.split()
 
 STATUS_FIELDS = """
-analysis_id execution_stage task_mode source_phase18_status included_runs
+analysis_id execution_stage task_mode source_validation_status included_runs
 structural_categories analyzable_categories aggregate_rows strict_candidates
 relaxed_candidates exploratory_leads relaxed_categories failed_checks
 validation_status git_revision
@@ -1369,16 +1383,15 @@ def run_phase20() -> int:
     checks: list[dict[str, Any]] = []
     output_counts: dict[str, int | str] = {}
 
-    phase18_dir = project_path(root, config["paths"]["phase18_directory"])
-    archive = project_path(root, config["paths"]["phase18_archive"])
-    sources = validate_sources(archive, phase18_dir, config, checks)
+    source_dir = project_path(root, config["paths"]["source_directory"])
+    sources = validate_sources(source_dir, config, checks)
     if any(
         row["severity"] == "error" and not row["passed"] for row in checks
     ):
-        fail("Phase 18 input authority validation failed")
+        fail("Phase 20 source authority validation failed")
     snapshots, authority = snapshot_inputs(sources, output_dir, root)
     atomic_copy(config_path, output_dir / "phase20_config_snapshot.yml")
-    authority_path = output_dir / "00_inputs/phase18_input_authority.tsv"
+    authority_path = output_dir / "00_inputs/phase20_source_input_authority.tsv"
     output_counts[relative_or_absolute(authority_path, output_dir)] = write_tsv(
         authority_path,
         authority,
@@ -1394,15 +1407,26 @@ def run_phase20() -> int:
             bool(row["copy_identity_pass"]),
         )
 
-    runs = included_runs(snapshots["run_manifest"])
-    categories = category_manifest(runs, config)
     expected = config["inputs"]
+    runs = included_runs(
+        snapshots["run_manifest"], expected["inclusion_flag"]
+    )
+    categories = category_manifest(runs, config)
     add_check(
         checks,
         "included_run_count",
         len(runs),
         int(expected["expected_included_runs"]),
         len(runs) == int(expected["expected_included_runs"]),
+    )
+    observed_query_floor = min(int(row["effective_query_genes"]) for row in runs)
+    expected_query_floor = int(expected["minimum_effective_query_genes"])
+    add_check(
+        checks,
+        "minimum_effective_query_genes",
+        observed_query_floor,
+        expected_query_floor,
+        observed_query_floor == expected_query_floor,
     )
     add_check(
         checks,
@@ -1435,7 +1459,13 @@ def run_phase20() -> int:
         sum(int(row["included_run_count"]) for row in categories) == len(runs),
     )
 
-    units, parity, test_row_count, test_run_ids = scan_candidate_tests(
+    (
+        units,
+        test_row_count,
+        test_run_ids,
+        duplicate_test_keys,
+        repeated_run_blocks,
+    ) = scan_candidate_tests(
         snapshots["candidate_tests"], config["scope"]["eligible_case_id"]
     )
     add_check(
@@ -1453,10 +1483,22 @@ def run_phase20() -> int:
         len(included_ids),
         test_run_ids == included_ids,
     )
-    validate_phase18_parity(parity, sources["gene_case_summary"], checks)
-    del parity
+    add_check(
+        checks,
+        "candidate_test_duplicate_run_gene_keys",
+        duplicate_test_keys,
+        0,
+        duplicate_test_keys == 0,
+    )
+    add_check(
+        checks,
+        "candidate_test_repeated_run_blocks",
+        repeated_run_blocks,
+        0,
+        repeated_run_blocks == 0,
+    )
     gc.collect()
-    print(f"phase18_parity_complete=TRUE", flush=True)
+    print("source_evidence_scan_complete=TRUE", flush=True)
 
     aggregates, by_category = aggregate_phase20_units(units, config)
     stability_replicates, stability_summaries = build_stability(
@@ -1492,10 +1534,12 @@ def run_phase20() -> int:
             row["current_symbol"],
         )
     )
-    top10 = display_rows(categories, by_category, 10)
-    top5 = display_rows(categories, by_category, 5)
+    eligible_case = config["scope"]["eligible_case_id"]
+    top10 = display_rows(categories, by_category, 10, eligible_case)
+    top5 = display_rows(categories, by_category, 5, eligible_case)
     expected_results = config["expected_results"]
     metrics = {
+        "aggregate_rows": len(aggregates),
         "strict_candidates": len(strict),
         "strict_top5": sum(row["strict_rank"] is not None and row["strict_rank"] <= 5 for row in strict),
         "strict_top10": sum(row["strict_rank"] is not None and row["strict_rank"] <= 10 for row in strict),
@@ -1505,6 +1549,7 @@ def run_phase20() -> int:
         "relaxed_top10": sum(row["top10_display"] for row in relaxed),
         "relaxed_categories": len({(row["signature_group"], row["broad_network"]) for row in relaxed}),
         "exploratory_inclusive_candidates": len(inclusive),
+        "exploratory_only_candidates": len(exploratory),
         "exploratory_inclusive_top5": sum(
             row["exploratory_inclusive_rank"] <= 5 for row in inclusive
         ),
@@ -1516,7 +1561,10 @@ def run_phase20() -> int:
         ),
     }
     for name, observed in metrics.items():
-        target = int(expected_results[name])
+        if name == "aggregate_rows":
+            target = int(expected["expected_aggregate_rows"])
+        else:
+            target = int(expected_results[name])
         add_check(checks, name, observed, target, observed == target)
 
     non_mt_pass = all(
@@ -1618,9 +1666,19 @@ def run_phase20() -> int:
     }
     output_counts[support_path.name] = write_tsv(
         support_path,
-        supporting_rows(snapshots["candidate_tests"], candidate_keys),
+        supporting_rows(
+            snapshots["candidate_tests"], candidate_keys, eligible_case
+        ),
         SUPPORT_FIELDS,
         f"{SCHEMA_ROOT}_support_v1",
+    )
+    expected_support_rows = sum(int(row["relaxed_support_count"]) for row in relaxed)
+    add_check(
+        checks,
+        "support_export_row_count",
+        output_counts[support_path.name],
+        expected_support_rows,
+        output_counts[support_path.name] == expected_support_rows,
     )
     stability_rep_path = output_dir / "phase20_stability_replicates.tsv.gz"
     output_counts[stability_rep_path.name] = write_tsv(
@@ -1664,19 +1722,19 @@ def run_phase20() -> int:
         checks_path, checks, CHECK_FIELDS, f"{SCHEMA_ROOT}_checks_v1"
     )
     snapshot_counts = {
-        "00_inputs/phase18_candidate_tests.tsv.gz": test_row_count,
-        "00_inputs/phase18_run_manifest.tsv": sum(1 for _ in iter_tsv(snapshots["run_manifest"])),
-        "00_inputs/phase18_source_checks.tsv": sum(1 for _ in iter_tsv(snapshots["source_checks"])),
-        "00_inputs/phase18_input_authority.tsv": len(authority),
+        "00_inputs/phase20_source_candidate_tests.tsv.gz": test_row_count,
+        "00_inputs/phase20_source_run_manifest.tsv": sum(1 for _ in iter_tsv(snapshots["run_manifest"])),
+        "00_inputs/phase20_source_checks.tsv": sum(1 for _ in iter_tsv(snapshots["source_checks"])),
+        "00_inputs/phase20_source_input_authority.tsv": len(authority),
         "phase20_config_snapshot.yml": "NA",
     }
     all_counts = {**snapshot_counts, **output_counts}
     artifact_rows: list[dict[str, Any]] = []
     artifact_names = [
-        "00_inputs/phase18_candidate_tests.tsv.gz",
-        "00_inputs/phase18_run_manifest.tsv",
-        "00_inputs/phase18_input_authority.tsv",
-        "00_inputs/phase18_source_checks.tsv",
+        "00_inputs/phase20_source_candidate_tests.tsv.gz",
+        "00_inputs/phase20_source_run_manifest.tsv",
+        "00_inputs/phase20_source_input_authority.tsv",
+        "00_inputs/phase20_source_checks.tsv",
         "phase20_category_manifest.tsv",
         "phase20_driver_aggregates.tsv.gz",
         "phase20_relaxed_candidates.tsv",
@@ -1722,7 +1780,7 @@ def run_phase20() -> int:
         "analysis_id": config["analysis"]["analysis_id"],
         "execution_stage": config["analysis"]["execution_stage"],
         "task_mode": config["analysis"]["task_mode"],
-        "source_phase18_status": "validated_complete",
+        "source_validation_status": "validated_complete",
         "included_runs": len(runs),
         "structural_categories": len(categories),
         "analyzable_categories": analyzable_count,

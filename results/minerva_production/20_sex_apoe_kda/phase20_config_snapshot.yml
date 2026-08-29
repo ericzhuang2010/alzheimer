@@ -1,28 +1,44 @@
-schema_version: phase20_sex_apoe_kda_config_v1
+schema_version: phase20_sex_apoe_kda_config_v2
 
 analysis:
-  analysis_id: phase20_sex_apoe_kda_v1
+  analysis_id: phase20_sex_apoe_kda_v2
   title: ROSMAP sex/APOE by broad-cell non-MT key-driver aggregation
-  task_mode: frozen_phase18_reaggregation
+  task_mode: validated_phase12_min3_reaggregation
   stable_task_id: global:sex_apoe_non_mt_key_driver_aggregation
-  output_schema: phase20_sex_apoe_non_mt_kda_v1
+  output_schema: phase20_sex_apoe_non_mt_kda_v2
   execution_stage: local_production
 
 paths:
-  phase18_directory: results/minerva_production/18_key_driver_selection
-  phase18_archive: results/minerva_production/18_key_driver_selection/archive
+  phase12_directory: results/minerva_production/12_kda
+  phase18_config: config/phase18_key_driver_selection.yml
+  historical_phase18_archive: results/minerva_production/18_key_driver_selection/archive
+  source_directory: results/minerva_production/20_sex_apoe_kda_source
   output_directory: results/minerva_production/20_sex_apoe_kda
   figure_directory: results/figures/analysis/phase_20_sex_apoe_kda
 
+source:
+  analysis_tier: primary
+  minimum_effective_query_genes: 3
+  expected_structural_slots: 648
+  expected_phase12_eligible: 295
+  expected_included_runs: 295
+  candidate_tests: phase20_source_candidate_tests.tsv.gz
+  run_manifest: phase20_source_run_manifest.tsv
+  source_checks: phase20_source_checks.tsv
+  source_status: phase20_source_status.tsv
+  source_artifacts: phase20_source_artifacts.tsv
+
 inputs:
-  candidate_tests: key_driver_candidate_tests.tsv.gz
-  run_manifest: key_driver_run_manifest.tsv
-  source_checks: key_driver_checks.tsv
-  source_status: key_driver_status.tsv
-  source_artifacts: key_driver_artifacts.tsv
-  published_returns: call_key_driver_returns.tsv
-  expected_candidate_test_rows: 1463150
-  expected_included_runs: 161
+  candidate_tests: phase20_source_candidate_tests.tsv.gz
+  run_manifest: phase20_source_run_manifest.tsv
+  source_checks: phase20_source_checks.tsv
+  source_status: phase20_source_status.tsv
+  source_artifacts: phase20_source_artifacts.tsv
+  inclusion_flag: phase20_included
+  minimum_effective_query_genes: 3
+  expected_candidate_test_rows: 2623910
+  expected_aggregate_rows: 259548
+  expected_included_runs: 295
   required_source_status: validated_complete
 
 scope:
@@ -43,13 +59,12 @@ scope:
     - Oligodendrocytes
     - Vasculature_cells
   directions: [AD_up_mito, AD_down_mito]
-  eligible_case_id: case3_not_core_mito
+  eligible_case_id: non_mt_driver
   excluded_case_ids:
-    - case1_core_mito_in_query
-    - case2_core_mito_not_in_query
+    - mt_driver
   expected_structural_categories: 42
-  expected_analyzable_categories: 27
-  expected_empty_categories: 15
+  expected_analyzable_categories: 38
+  expected_empty_categories: 4
 
 filters:
   relaxed:
@@ -72,7 +87,7 @@ aggregation:
   primary_missing_action: omit
   sensitivity_missing_action: replace_with_one
   boundary_tolerance: 1.0e-300
-  run_multiple_testing: frozen_Phase18_BH
+  run_multiple_testing: reconstructed_Phase12_call_specific_BH
   relaxed_multiple_testing: BH_among_coverage_eligible_non_MT_genes_within_category
   strict_multiple_testing: BH_among_strict_coverage_eligible_non_MT_genes_within_category
   secondary_multiple_testing: BH_across_all_relaxed_assessable_non_MT_category_gene_units
@@ -94,26 +109,27 @@ sensitivity:
   category_q_thresholds: [0.05, 0.10, 0.20]
 
 expected_results:
-  strict_candidates: 64
-  strict_top5: 45
-  strict_top10: 56
-  strict_categories: 14
-  relaxed_candidates: 78
-  relaxed_top5: 50
-  relaxed_top10: 65
-  relaxed_categories: 15
-  exploratory_inclusive_candidates: 94
-  exploratory_inclusive_top5: 53
-  exploratory_inclusive_top10: 75
+  strict_candidates: 58
+  strict_top5: 43
+  strict_top10: 51
+  strict_categories: 15
+  relaxed_candidates: 74
+  relaxed_top5: 48
+  relaxed_top10: 63
+  relaxed_categories: 16
+  exploratory_inclusive_candidates: 89
+  exploratory_only_candidates: 15
+  exploratory_inclusive_top5: 54
+  exploratory_inclusive_top10: 72
   exploratory_inclusive_categories: 17
 
 outputs:
   validation_status: validated_complete
   declared_files:
-    - 00_inputs/phase18_candidate_tests.tsv.gz
-    - 00_inputs/phase18_run_manifest.tsv
-    - 00_inputs/phase18_input_authority.tsv
-    - 00_inputs/phase18_source_checks.tsv
+    - 00_inputs/phase20_source_candidate_tests.tsv.gz
+    - 00_inputs/phase20_source_run_manifest.tsv
+    - 00_inputs/phase20_source_input_authority.tsv
+    - 00_inputs/phase20_source_checks.tsv
     - phase20_category_manifest.tsv
     - phase20_driver_aggregates.tsv.gz
     - phase20_relaxed_candidates.tsv

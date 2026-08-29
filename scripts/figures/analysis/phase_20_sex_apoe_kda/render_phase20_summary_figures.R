@@ -4,8 +4,10 @@ suppressPackageStartupMessages(library(ggplot2))
 
 args <- commandArgs(trailingOnly = TRUE)
 root <- if (length(args)) normalizePath(args[[1]], mustWork = TRUE) else normalizePath(".")
-result_dir <- file.path(root, "results", "minerva_production", "20_sex_apoe_kda")
-figure_root <- file.path(root, "results", "figures", "analysis", "phase_20_sex_apoe_kda")
+result_dir <- if (length(args) >= 2) normalizePath(args[[2]], mustWork = TRUE) else
+  file.path(root, "results", "minerva_production", "20_sex_apoe_kda")
+figure_root <- if (length(args) >= 3) args[[3]] else
+  file.path(root, "results", "figures", "analysis", "phase_20_sex_apoe_kda")
 dir.create(figure_root, recursive = TRUE, showWarnings = FALSE)
 
 read_result <- function(name) {
@@ -43,17 +45,17 @@ save_bundle <- function(id, plot, data, caption, methods, width, height) {
   checks_path <- file.path(bundle, paste0(stem, "_checks.tsv"))
   status_path <- file.path(bundle, paste0(stem, "_status.tsv"))
   checks <- data.frame(
-    schema_version = "phase20_sex_apoe_non_mt_figure_checks_v1",
+    schema_version = "phase20_sex_apoe_non_mt_figure_checks_v2",
     check_id = c("plot_data_nonempty", "all_declared_files_exist", "non_mt_scope"),
     severity = "error",
-    observed = c(nrow(data), sum(file.exists(paths)), "case3_not_core_mito"),
-    expected = c(">0", length(paths), "case3_not_core_mito"),
+    observed = c(nrow(data), sum(file.exists(paths)), "non_mt_driver"),
+    expected = c(">0", length(paths), "non_mt_driver"),
     passed = c(nrow(data) > 0, all(file.exists(paths)), TRUE)
   )
   write_tsv(checks, checks_path)
   state <- if (all(checks$passed)) "validated_complete" else "validation_failed"
   write_tsv(data.frame(
-    schema_version = "phase20_sex_apoe_non_mt_figure_status_v1",
+    schema_version = "phase20_sex_apoe_non_mt_figure_status_v2",
     figure_id = id, plot_data_rows = nrow(data),
     failed_checks = sum(!checks$passed), validation_status = state
   ), status_path)
@@ -61,7 +63,7 @@ save_bundle <- function(id, plot, data, caption, methods, width, height) {
   files <- c(paths, checks = checks_path, status = status_path)
   info <- file.info(files)
   write_tsv(data.frame(
-    schema_version = "phase20_sex_apoe_non_mt_figure_artifacts_v1",
+    schema_version = "phase20_sex_apoe_non_mt_figure_artifacts_v2",
     artifact_order = seq_along(files), path = basename(files),
     bytes = info$size, sha256 = vapply(files, sha256, character(1)),
     hash_status = "recorded"
@@ -101,8 +103,8 @@ p_coverage <- ggplot(coverage, aes(broad_network, signature_group,
   geom_text(aes(label = paste0(included_run_count, "\n", fine_cell_type_count,
                                " fine")), size = 3) +
   scale_fill_gradient(low = "#f2f2f2", high = "#2166ac", name = "Runs") +
-  labs(title = "Frozen run coverage for the 42 Phase 20 categories",
-       subtitle = "Cell text gives included runs and distinct fine cell types",
+  labs(title = "KDA run coverage for the 42 Phase 20 categories",
+       subtitle = "Effective query >=3; cell text gives runs and distinct fine cell types",
        x = NULL, y = "Sex/APOE group") + theme_p20
 
 evidence <- candidates
@@ -196,8 +198,8 @@ figure_manifest <- rbind(
   save_bundle(
     "category_coverage", p_coverage, coverage,
     c("# Phase 20 category coverage", "",
-      "Included frozen Phase 18 runs and distinct fine cell types for all 42 categories."),
-    c("# Methods", "", "Counts come from phase20_category_manifest.tsv."),
+      "Phase 20-included KDA runs and distinct fine cell types for all 42 categories."),
+    c("# Methods", "", "Counts come from phase20_category_manifest.tsv after requiring at least three effective query genes."),
     12, 5.5
   ),
   save_bundle(
@@ -230,7 +232,7 @@ figure_manifest <- rbind(
     10, 10
   )
 )
-figure_manifest$schema_version <- "phase20_sex_apoe_non_mt_figure_manifest_v1"
+figure_manifest$schema_version <- "phase20_sex_apoe_non_mt_figure_manifest_v2"
 figure_manifest <- figure_manifest[
   , c("schema_version", "figure_id", "directory",
       "plot_data_rows", "validation_status")

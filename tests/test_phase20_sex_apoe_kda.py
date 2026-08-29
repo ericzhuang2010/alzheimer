@@ -9,6 +9,8 @@ import math
 import sys
 from pathlib import Path
 
+import yaml
+
 
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location(
@@ -100,11 +102,30 @@ def unit_tests() -> None:
 
 
 def validate_output(output: Path) -> None:
+    config_path = ROOT / "config" / "phase20_sex_apoe_kda.yml"
+    with config_path.open() as handle:
+        config = yaml.safe_load(handle)
     status = PHASE20.read_tsv(output / "phase20_status.tsv")
     assert_true(len(status) == 1, "Phase 20 status must contain one row")
+    status_row = status[0]
     assert_true(
-        status[0]["validation_status"] == "validated_complete",
-        f"Phase 20 status is {status[0]['validation_status']}",
+        status_row["validation_status"] == "validated_complete",
+        f"Phase 20 status is {status_row['validation_status']}",
+    )
+    assert_true(
+        status_row["schema_version"].startswith(
+            "phase20_sex_apoe_non_mt_kda_v2_"
+        ),
+        "Phase 20 output is not the v2 minimum-query-3 release",
+    )
+    assert_true(
+        status_row["analysis_id"] == config["analysis"]["analysis_id"],
+        "Status analysis ID differs from the active config",
+    )
+    assert_true(
+        status_row["task_mode"] == config["analysis"]["task_mode"]
+        and status_row["source_validation_status"] == "validated_complete",
+        "Status does not identify the validated Phase 12 minimum-query-3 source",
     )
     checks = PHASE20.read_tsv(output / "phase20_checks.tsv")
     failed = [
@@ -113,6 +134,35 @@ def validate_output(output: Path) -> None:
         if row["severity"] == "error" and not PHASE20.is_true(row["passed"])
     ]
     assert_true(not failed, f"Phase 20 has failed checks: {failed}")
+    with (output / "phase20_config_snapshot.yml").open() as handle:
+        snapshot = yaml.safe_load(handle)
+    assert_true(snapshot == config, "Config snapshot differs from the active config")
+    source_manifest = PHASE20.read_tsv(
+        output / "00_inputs" / "phase20_source_run_manifest.tsv"
+    )
+    inclusion_flag = config["inputs"]["inclusion_flag"]
+    included_source = [
+        row for row in source_manifest if PHASE20.is_true(row[inclusion_flag])
+    ]
+    assert_true(
+        len(included_source) == int(config["inputs"]["expected_included_runs"]),
+        "Source manifest included-run count changed",
+    )
+    assert_true(
+        min(int(row["effective_query_genes"]) for row in included_source)
+        == int(config["inputs"]["minimum_effective_query_genes"]),
+        "Source manifest minimum effective query size changed",
+    )
+    assert_true(
+        all(
+            row["eligibility_status"] == "eligible"
+            and row["terminal_status"].startswith("completed")
+            and int(row["effective_query_genes"])
+            >= int(config["inputs"]["minimum_effective_query_genes"])
+            for row in included_source
+        ),
+        "An included source run violates the Phase 20 eligibility contract",
+    )
     categories = PHASE20.read_tsv(output / "phase20_category_manifest.tsv")
     assert_true(len(categories) == 42, "Category manifest must contain 42 rows")
     assert_true(
@@ -126,8 +176,14 @@ def validate_output(output: Path) -> None:
         "Category manifest keys are duplicated",
     )
     assert_true(
-        sum(int(row["included_run_count"]) for row in categories) == 161,
-        "Category run counts do not sum to 161",
+        sum(int(row["included_run_count"]) for row in categories)
+        == int(config["inputs"]["expected_included_runs"]),
+        "Category run counts do not sum to the configured included-run total",
+    )
+    assert_true(
+        sum(int(row["included_run_count"]) > 0 for row in categories)
+        == int(config["scope"]["expected_analyzable_categories"]),
+        "Analyzable-category count changed",
     )
     aggregates = PHASE20.iter_tsv(output / "phase20_driver_aggregates.tsv.gz")
     aggregate_count = 0
@@ -135,7 +191,7 @@ def validate_output(output: Path) -> None:
     for row in aggregates:
         aggregate_count += 1
         assert_true(
-            row["case_id"] == "case3_not_core_mito"
+            row["case_id"] == config["scope"]["eligible_case_id"]
             and not PHASE20.is_true(row["is_core_mito"]),
             "An MT driver entered the aggregate output",
         )
@@ -143,23 +199,74 @@ def validate_output(output: Path) -> None:
             (row["signature_group"], row["broad_network"], row["current_symbol"])
         )
     assert_true(len(keys) == aggregate_count, "Aggregate keys are duplicated")
+    assert_true(
+        aggregate_count == int(config["inputs"]["expected_aggregate_rows"]),
+        "Aggregate-row count changed",
+    )
     relaxed = PHASE20.read_tsv(output / "phase20_relaxed_candidates.tsv")
     strict = PHASE20.read_tsv(
         output / "phase20_strict_non_mt_reference_candidates.tsv"
     )
     exploratory = PHASE20.read_tsv(output / "phase20_exploratory_leads.tsv")
-    assert_true(len(relaxed) == 78, "Relaxed candidate count changed")
-    assert_true(len(strict) == 64, "Strict-reference candidate count changed")
-    assert_true(len(exploratory) == 16, "Exploratory-only lead count changed")
+    expected_results = config["expected_results"]
+    assert_true(
+        len(relaxed) == int(expected_results["relaxed_candidates"]),
+        "Relaxed candidate count changed",
+    )
+    assert_true(
+        len(strict) == int(expected_results["strict_candidates"]),
+        "Strict-reference candidate count changed",
+    )
+    assert_true(
+        len(exploratory) == int(expected_results["exploratory_only_candidates"]),
+        "Exploratory-only lead count changed",
+    )
     assert_true(
         all(
-            row["case_id"] == "case3_not_core_mito"
+            row["case_id"] == config["scope"]["eligible_case_id"]
             and not PHASE20.is_true(row["is_core_mito"])
             for row in relaxed + strict + exploratory
         ),
         "An MT driver entered a candidate output",
     )
+    support_rows = list(
+        PHASE20.iter_tsv(output / "phase20_conservative_support.tsv.gz")
+    )
+    assert_true(
+        len(support_rows)
+        == sum(int(row["relaxed_support_count"]) for row in relaxed),
+        "Supporting-run export does not reconcile to relaxed candidate support counts",
+    )
+    assert_true(
+        all(
+            row["case_id"] == config["scope"]["eligible_case_id"]
+            and not PHASE20.is_true(row["is_core_mito"])
+            and PHASE20.is_true(row["relaxed_support"])
+            for row in support_rows
+        ),
+        "Supporting-run export contains an invalid row",
+    )
     artifacts = PHASE20.read_tsv(output / "phase20_artifacts.tsv")
+    artifact_by_path = {row["path"]: row for row in artifacts}
+    required_source_artifacts = {
+        "00_inputs/phase20_source_candidate_tests.tsv.gz",
+        "00_inputs/phase20_source_run_manifest.tsv",
+        "00_inputs/phase20_source_input_authority.tsv",
+        "00_inputs/phase20_source_checks.tsv",
+    }
+    assert_true(
+        required_source_artifacts.issubset(artifact_by_path),
+        "The v2 source snapshots are not all registered",
+    )
+    assert_true(
+        int(
+            artifact_by_path[
+                "00_inputs/phase20_source_candidate_tests.tsv.gz"
+            ]["rows"]
+        )
+        == int(config["inputs"]["expected_candidate_test_rows"]),
+        "Registered candidate-test row count changed",
+    )
     for row in artifacts:
         path = output / row["path"]
         assert_true(path.is_file(), f"Missing declared artifact: {path}")

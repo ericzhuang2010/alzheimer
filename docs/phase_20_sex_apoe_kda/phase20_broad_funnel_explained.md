@@ -213,9 +213,10 @@ Their effective query genes are:
 
 All three executable relaxed-primary queries are AD-down queries. A query of
 three or four genes is allowed in this direct broad branch because the
-prespecified minimum is three. The fine-cell Phase 18/20 threshold of at least
-ten genes was an inclusion rule for cross-run aggregation and does not apply
-here. The small-query label remains visible as an evidence-strength warning.
+prespecified minimum is three. Canonical fine-cell Phase 20 v2 now uses the
+same ≥3 KDA execution floor. The ≥10 boundary belongs only to the frozen
+historical Phase 18 release; it is retained here as an evidence-strength label,
+not as a current fine-cell or direct-broad Phase 20 inclusion rule.
 
 ### What each ineligible status means
 

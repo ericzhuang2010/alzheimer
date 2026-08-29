@@ -1,48 +1,59 @@
 # Phase 20 Gene and Candidate Filtering Explained
 
-The analysis has three main layers, but two corrections are essential:
+## The full picture
 
-1. There are **324 DEG comparisons**, not 648. Splitting each comparison into
-   up- and downregulated mitochondrial signatures creates 648 planned KDA
-   slots.
-2. Phase 20 does **not** aggregate only genes returned as significant by
-   `call_key_drivers()`. It uses reconstructed evidence for every assessable
-   network gene.
+The fine-cell analysis starts with 324 DEG comparisons, creates 648 potential
+directional KDA slots, and includes all 295 KDA calls that Phase 12 actually
+completed at its minimum effective query size of three.
+
+Two distinctions prevent common counting mistakes:
+
+1. There are **324 DEG comparisons**, not 648. Up and down are two query
+   directions derived from each comparison.
+2. Phase 20 does **not** aggregate only the 2,494 significant rows returned by
+   the stock KDA calls. It reconstructs complete gene × run evidence.
+
+The current validated funnel is:
 
 ```text
-324 DEG comparisons
-    ↓ split into up/down mitochondrial queries
+324 fine-cell × sex/APOE DEG comparisons
+    ↓ split each contrast into up/down mitochondrial queries
 648 planned directional KDA slots
-    ↓ query-size and source-validity filters
-295 actual call_key_drivers() calls
-    ↓ require effective query ≥10 for Phase 18/20
-161 included KDA runs
-    ↓ reconstruct complete gene × run evidence
-1,463,150 gene × run opportunities
-    ↓ remove core-MT candidate drivers
-1,343,593 non-MT gene × run rows
+    ↓ 6 source-unavailable slots; 347 effective queries below 3
+295 completed Phase 12 KDA calls
+    = 147 AD-up + 148 AD-down
+    ↓ reconstruct every relevant network gene in every run
+2,623,910 all-driver gene × run rows
+    ↓ exclude 212,654 core-MT candidate-driver rows
+2,411,256 non-MT gene × run rows
     ↓ group by gene + sex/APOE + broad network
-196,174 gene × category units
-    ↓ coverage ≥50%
-182,538 units
-    ↓ at least one supporting run
-431 units
-    ↓ category BH q≤0.10
-78 candidate units = 37 distinct genes
+259,548 non-MT gene × category units
+    ↓ coverage ≥0.50
+233,368 units
+    ↓ at least one relaxed supporting run
+500 units
+    ↓ within-category ACAT P followed by BH q≤0.10
+74 relaxed candidate units
+    = 37 distinct genes in 16 categories
 ```
 
-The counting unit changes several times, so this is not one continuously
-shrinking "number of genes."
+The counting unit changes from comparisons, to run slots, to gene × run rows,
+to gene × category units. This is not one continuously shrinking count of
+unique genes.
 
-## Step 1: DEG comparisons and mitochondrial queries
+## Step 1: From DEG contrasts to 295 KDA runs
 
-The DEG analysis performs:
+### 1.1 The 648 structural slots
+
+The upstream primary DEG design is:
 
 ```text
-54 fine cell types × 6 sex/APOE groups = 324 AD-versus-NCI comparisons
+54 fine cell types × 6 sex/APOE groups
+=324 AD-versus-NCI comparisons
 ```
 
-One comparison produces one set of signed DEGs. It is then split into:
+Each fitted comparison produces signed DEG results. Core-mitochondrial DEGs
+are separated into:
 
 ```text
 AD_up_mito
@@ -55,58 +66,19 @@ Therefore:
 324 comparisons × 2 directions = 648 planned KDA slots
 ```
 
-Up and down are not separate DEG model fits; they are the positive and
-negative genes from the same comparison.
+Up and down are not separate DEG model fits.
 
-The full Phase 12 bundle also contains pooled groups and an `AD_both_mito`
-direction, giving 1,782 planned analyses. Those additional analyses are
-outside the Phase 18/20 funnel discussed here.
+### 1.2 Filters that form an effective KDA query
 
-### DEG filters
-
-A gene becomes a Phase 08 paper DEG only when:
+The Phase 08 paper-DEG gates are applied upstream:
 
 ```text
-detected in ≥10% of AD or NCI nuclei
+detected in at least 10% of AD or NCI nuclei
 within-contrast BH FDR < 0.05
-absolute log2 fold change > log2(1.3) ≈ 0.379
+absolute log2 fold change > log2(1.3)
 ```
 
-These are strict `<` and `>` thresholds.
-
-Across all genes and contrasts:
-
-```text
-2,864,117 tested gene × comparison rows
-118,297 paper-DEG memberships
-    58,112 up
-    60,185 down
-```
-
-KDA does not use all 118,297 DEG memberships. Its query is restricted to
-`core_mito_protein`.
-
-The fixed core-MT audit gives this mutually exclusive breakdown:
-
-| Core-MT feature × comparison outcome | Count |
-|---|---:|
-| Contrast not estimable | 3,588 |
-| Feature absent from expression matrix | 642 |
-| Present but fails the 10% detection filter | 165,872 |
-| Tested but fails both FDR and effect-size thresholds | 118,125 |
-| Passes effect-size threshold but fails FDR | 49,423 |
-| Passes FDR but fails effect-size threshold | 40,592 |
-| Passes both: core-MT paper DEG | 9,262 |
-| **Total** | **387,504** |
-
-The 9,262 query memberships comprise:
-
-```text
-4,258 AD-up core-MT DEG memberships
-5,004 AD-down core-MT DEG memberships
-```
-
-The provisional KDA query is therefore:
+For one directional slot, the provisional KDA query is:
 
 ```text
 paper DEG
@@ -114,214 +86,199 @@ paper DEG
 ∩ requested up/down direction
 ```
 
-The run-specific broad network is then restricted to genes tested in that DEG
-contrast. Query genes absent from this induced network background are removed:
+The run-specific broad-cell network is then restricted to genes tested in the
+source DEG contrast. Any provisional query gene absent from that induced
+background is removed. The number remaining is
+`effective_query_genes`.
+
+The current source manifest records the final effective-query count. It does
+not split an effective count of zero into “no directional core-MT DEG” versus
+“provisional query removed by background restriction.” Both mechanisms can
+produce zero.
+
+### 1.3 Exact slot outcomes
+
+| Source/run outcome | Slots | Phase 12 KDA called? | Current Phase 20? | Frozen Phase 18? |
+|---|---:|---|---|---|
+| Source contrast not validated | 6 | No | No | No |
+| Source valid; effective query = 0 | 246 | No | No | No |
+| Effective query = 1–2 | 101 | No | No | No |
+| Effective query = 3–9 | 134 | Yes | Yes | No |
+| Effective query ≥10 | 161 | Yes | Yes | Yes |
+| **Total** | **648** | **295 calls** | **295 runs** | **161 runs** |
+
+The 295 included runs contain 7,787 effective query-gene memberships. The 101
+one- or two-gene slots contain the remaining 146 nonzero memberships below the
+execution floor.
+
+### What “source DEG contrast not validated” means
+
+This status means that no validated upstream AD-versus-NCI DEG result exists
+for that fine-cell × sex/APOE contrast. It does **not** mean that a model ran
+successfully and found zero DEGs. Without a validated contrast, Phase 12 has
+no tested-gene universe and cannot construct either directional query.
+
+The six affected directional slots are the up and down slots for three
+`M_e2` source contrasts:
 
 ```text
-9,262 provisional query memberships
-−1,329 absent from effective network background
-=7,933 effective-query memberships
+CAMs
+Fib SLC4A4
+Mic MKI67
 ```
 
-Importantly, the manifest field `candidate_query_genes` means provisional
-mitochondrial **query genes**. It does not mean candidate key-driver genes.
+The Phase 20 source manifest records this source-level status but not the
+finer model-fitting reason. That distinction matters: a source-unavailable
+slot is different from a source-valid slot whose effective query is zero.
 
-### How the 648 planned slots are filtered
+### 1.4 Why Phase 20 uses ≥3 instead of the historical ≥10 gate
 
-| Slot outcome | Slots | Was KDA called? | Used by Phase 20? |
-|---|---:|---|---|
-| Source DEG contrast not estimable | 6 | No | No |
-| No directional core-MT DEG | 229 | No | No |
-| Provisional query nonempty, but effective query becomes zero | 17 | No | No |
-| Effective query contains 1–2 genes | 101 | No; Phase 12 requires ≥3 | No |
-| Effective query contains 3–9 genes | 134 | Yes | No; Phase 18/20 require ≥10 |
-| Effective query contains ≥10 genes | 161 | Yes | Yes |
-| **Total** | **648** | **295 calls** | **161 runs** |
-
-#### What "source DEG contrast not estimable" means
-
-A **source DEG contrast** is the upstream Phase 08 AD-versus-NCI comparison
-for one fine cell type and one sex/APOE group. "Not estimable" means the
-statistical model could not be fitted because a required input condition was
-not met. It does **not** mean that the model ran successfully and found no
-DEGs.
-
-Seurat requires at least three cells in both the AD and NCI arms before the
-MAST comparison can run. Three of the 324 planned source contrasts failed this
-requirement:
-
-| Fine cell type | Sex/APOE | AD cells (donors) | NCI cells (donors) | Reason |
-|---|---|---:|---:|---|
-| `Fib SLC4A4` | `M_e2` | 0 (0) | 11 (2) | The AD arm had no cells. |
-| `CAMs` | `M_e2` | 45 (5) | 1 (1) | The NCI arm had fewer than three cells. |
-| `Mic MKI67` | `M_e2` | 2 (2) | 9 (3) | The AD arm had fewer than three cells. |
-
-Because no DEG model was fitted, these contrasts have no tested-gene results,
-no qualifying `paper_deg` genes, and no up- or downregulated mitochondrial
-query. Each unavailable contrast would otherwise create two directional KDA
-slots (`AD_up_mito` and `AD_down_mito`), so:
+Three is the KDA execution contract used by Phase 12. It is the lowest query
+size for which completed KDA evidence exists. The current Phase 20 source
+therefore includes every validated completed call:
 
 ```text
-3 non-estimable DEG contrasts × 2 directions
-= 6 source-not-estimable KDA slots
+134 calls with query size 3–9
++161 calls with query size ≥10
+=295 calls
 ```
 
-This also explains the 3,588 `Contrast not estimable` entries in the earlier
-core-MT table:
+The historical Phase 18 release applied a later ≥10 inclusion rule and remains
+frozen at 161 runs. It is preserved as an audit reference; it is not rewritten
+and it is no longer the Phase 20 run gate.
+
+In the Phase 12 configuration, 10 was the `small_query_warning_below`
+boundary, whereas three was the executable eligibility minimum. Phase 18 used
+the warning boundary as a conservative filter. Smaller queries warrant extra
+caution because one gene has greater leverage and the enrichment test carries
+less information, but there is no `call_key_drivers()` requirement—and no
+documented project calibration—showing that 10 is the uniquely correct cutoff.
+Phase 20 therefore retains the warning label for 3–9-gene runs instead of
+discarding their completed evidence.
+
+The added 134 calls are not hypothetical reruns. They were already completed
+in Phase 12. Of them, 99 returned at least one stock significant driver and 35
+returned none.
+
+### 1.5 Outcomes of the 295 completed calls
+
+| Query-size stratum | Calls | Calls with ≥1 stock return | Calls returning none | Stock significant rows |
+|---|---:|---:|---:|---:|
+| 3–9 | 134 | 99 | 35 | 853 |
+| ≥10 | 161 | 122 | 39 | 1,641 |
+| **All included calls** | **295** | **221** | **74** | **2,494** |
+
+A call that returned no stock-significant driver is still included in Phase
+20. Its reconstructed nonsignificant, implicit-P=1, and missing evidence
+remains part of the category denominator and aggregation.
+
+There are 147 included `AD_up_mito` calls and 148 included
+`AD_down_mito` calls. They arise from 41 fine cell types and map to 38 of the
+42 structural sex/APOE × broad-cell categories.
+
+Four categories have no included run:
 
 ```text
-3 non-estimable contrasts × 1,196 core-MT feature records
-= 3,588 unavailable feature × contrast opportunities
+F_e2  × Vasculature_cells
+F_e33 × Microglia
+F_e33 × Vasculature_cells
+M_e4  × Vasculature_cells
 ```
 
-In general, a source contrast could also be non-estimable because required
-covariates are unavailable or nonfinite, or because the model design is rank
-deficient. Neither occurred among these three contrasts. This outcome is
-different from `No directional core-MT DEG`: in that case the DEG comparison
-did run, but no core-MT gene passed the FDR, effect-size, and direction filters
-for that KDA slot.
+These categories are **not estimable**. They are not categories in which a
+tested analysis found no driver.
 
-Other coded possibilities—an empty induced network or a KDA computation
-failure—had observed counts of zero.
+## Step 2: What KDA tests and why the stock return is not the funnel input
 
-This distinction is important:
+The mitochondrial DEGs are the query. Candidate key drivers are network genes
+whose downstream neighborhoods are tested for enrichment of that query.
 
-```text
-Phase 12 execution threshold: effective query ≥3
-Phase 18/20 inclusion threshold: effective query ≥10
-```
+A candidate driver:
 
-## Step 2: What `call_key_drivers()` actually tests
-
-The mitochondrial DEGs are the **query**. Candidate key drivers are network
-genes whose downstream neighborhoods are tested for enrichment of that query.
-
-A candidate driver therefore:
-
+- is a gene;
 - need not be a DEG;
 - need not be mitochondrial;
-- need not belong to the query; and
+- need not be a query member; and
 - is a network node, not a gene set.
 
-Within one KDA call, the procedure:
+Within a KDA call, the procedure identifies potential drivers near the query,
+constructs directed downstream neighborhoods through layers 1–3, evaluates
+upper-tail hypergeometric enrichment, retains the best layer, and applies BH
+within the explicit candidate family.
 
-1. Finds potential driver genes within three undirected network hops of the
-   mitochondrial query.
-2. Builds each candidate's directed downstream neighborhoods through layers
-   1–3.
-3. Calculates an upper-tail hypergeometric enrichment P value at each layer.
-4. Retains the best layer for each candidate gene.
-5. Applies BH correction across the explicitly tested candidate genes in that
-   run.
-6. Returns only genes with within-run BH q≤0.05.
+The stock Phase 12 output returns only genes significant under the original
+within-run rule. That is why the stock table has 2,494 rows. Phase 20 instead
+uses a deterministic reconstruction of the complete test family:
 
-The `global_key_driver` and related topology fields are annotations; they are
-not Phase 20 selection gates.
+- stock returns validate the reconstruction;
+- all explicit tests are retained, including nonsignificant tests;
+- network genes outside the explicit family are represented as implicit
+  zero-overlap evidence; and
+- genes absent from a run's induced background are represented as missing.
 
-### Actual call outcomes
+The reconstruction also applies the Phase 18-compatible self-exclusion rule
+and rebuilds the final within-run BH values. Downstream support uses
+`final_raw_p`, `final_run_q`, and `other_query_overlap`, not merely whether
+the gene appeared in the 2,494-row stock return table.
 
-| Scope | Calls | Calls with ≥1 returned driver | Calls returning none | Significant result rows |
-|---|---:|---:|---:|---:|
-| All executed slots | 295 | 221 | 74 | 2,494 |
-| Query size 3–9, later excluded | 134 | 99 | 35 | 853 |
-| Query size ≥10, used by Phase 20 | 161 | 122 | 39 | 1,641 |
+The reconstructed source was checked against the frozen Phase 18 non-MT
+universe: 1,343,593 historical rows across 161 historical runs matched with
+zero mismatches. The frozen Phase 18 archive itself was not changed.
 
-Thus, 99 of the 134 small-query calls had significant results, but Phase 20
-still excludes them because the query contained fewer than 10 genes.
+## Step 3: Complete gene × run evidence
 
-Across the 161 included calls:
+The reconstruction contains:
 
-```text
-95,557 explicit candidate-gene × run tests
-    1,641 significant returned rows
-   93,916 nonsignificant tested rows
-```
-
-The 95,557 explicit tests represent 6,149 distinct tested genes. The 1,641
-significant rows represent 295 distinct returned gene symbols—coincidentally
-the same number as the 295 executed calls.
-
-## Step 3: Complete evidence, grouping, ACAT, and final filtering
-
-This is the largest correction to the simple three-step model:
-
-> Phase 20 does not begin with only the 1,641 returned rows.
-
-Phase 18 reconstructs the complete pre-significance test family and then
-evaluates every network gene across the relevant runs.
-
-For each gene in each run, there are three broad possibilities:
-
-| Gene state in one run | Statistical treatment |
-|---|---|
-| Explicitly tested | Use its frozen `final_raw_p` |
-| In the run background but outside the explicit candidate family | Implicit zero overlap; use `P = 1` |
-| Absent from the run background | Missing; omit from ACAT and lower coverage |
-
-An explicit test is further labeled:
-
-- `explicit_test`: positive query overlap; its P value may still be
-  nonsignificant.
-- `explicit_zero_overlap`: explicitly evaluated but zero overlap; `P = 1`.
-
-Across all driver classes:
-
-```text
-95,557 explicit tests
-1,204,225 implicit P=1 rows
-163,368 missing rows
-────────────────────────────
-1,463,150 gene × run opportunities
-```
-
-Phase 20 then removes all core-MT candidate-driver rows:
-
-```text
-1,463,150 all-case rows
-−119,557 core-MT rows
-=1,343,593 non-MT gene × run rows
-```
-
-The retained non-MT evidence consists of:
-
-| Non-MT run-level state | Rows | ACAT treatment |
+| Candidate-driver class | Gene × run rows | Action |
 |---|---:|---|
-| Explicit positive-overlap test | 17,723 | Use raw P |
-| Explicit zero-overlap test | 65,731 | Use `P = 1` |
-| Implicit zero-overlap | 1,110,465 | Use `P = 1` |
-| Absent from background | 149,674 | Missing/omit |
-| **Total** | **1,343,593** | |
-| **Usable explicit + implicit** | **1,193,919** | |
+| Non-core-mitochondrial | 2,411,256 | Retain |
+| Core-mitochondrial | 212,654 | Remove before aggregation and BH |
+| **Total** | **2,623,910** | |
 
-### Grouping is not by gene alone
+The retained rows are encoded as `case_id = non_mt_driver` and
+`is_core_mito = FALSE`.
 
-The Phase 20 unit is:
+The retained non-MT rows have four states:
+
+| Non-MT state in one run | Rows | Usable? | ACAT value |
+|---|---:|---|---|
+| Explicit positive-overlap test | 19,740 | Yes | Reconstructed raw P |
+| Explicit zero-overlap test | 74,787 | Yes | 1 |
+| Implicit zero-overlap, in background | 2,029,764 | Yes | 1 |
+| Absent from run background | 286,965 | No | Missing/omit |
+| **Total** | **2,411,256** | | |
+| **Usable total** | **2,124,291** | | |
+
+“Implicit” does not mean unknown. It means the gene was in the run background
+but outside the explicit candidate neighborhood family, so its query overlap
+is zero and its P value is one. “Absent” means the gene was not assessable in
+that run and is the only primary missing state.
+
+## Step 4: Grouping into gene × category units
+
+The Phase 20 analysis unit is:
 
 ```text
 current_symbol + signature_group + broad_network
 gene           + sex/APOE group  + broad cell type
 ```
 
-Within this unit, Phase 20 combines:
+Within a unit, Phase 20 combines every included fine-cell run and both query
+directions that belong to that category. It never combines different
+sex/APOE groups or different broad networks.
 
-- all included fine-cell-type runs belonging to the broad network; and
-- both `AD_up_mito` and `AD_down_mito` runs.
-
-It never combines different sex/APOE groups or different broad networks.
-
-Therefore, one gene can produce multiple candidate units. The 1,343,593
-run-level rows collapse to:
+The 2,411,256 non-MT run rows collapse to:
 
 ```text
-196,174 non-MT gene × category units
-11,319 distinct gene symbols
-27 categories with at least one run
+259,548 non-MT gene × category units
+11,474 distinct gene symbols
+38 categories with at least one run
 ```
 
-The remaining 15 of the 42 structural categories have no included runs and
-are not estimable.
+One gene can form several candidate units by appearing in several categories.
+Thus, 74 final units does not mean 74 unique genes.
 
-### Coverage
+## Step 5: Coverage
 
 For one gene × category unit:
 
@@ -329,69 +286,38 @@ For one gene × category unit:
 coverage = usable runs / eligible runs
 ```
 
-Usable means explicit evidence or implicit `P = 1`. Missing background rows
-are not usable.
+The denominator is every included run in that category. The numerator counts
+explicit and implicit evidence; background-absent rows are not usable.
 
-Coverage does not mean:
+Coverage does **not** mean:
 
 - percentage of significant runs;
-- percentage of runs returning the gene; or
+- percentage of runs that returned the gene; or
 - recurrence across fine cell types.
 
-Of the 196,174 units:
+The relaxed coverage funnel is:
+
+| Coverage state | Gene × category units |
+|---|---:|
+| Zero usable runs | 14,266 |
+| Some usable evidence but coverage <0.50 | 11,914 |
+| Coverage ≥0.50 | 233,368 |
+| **Total** | **259,548** |
+
+Thus, 26,180 units fail relaxed coverage. The 233,368 passing units represent
+11,232 distinct genes across all 38 analyzable categories.
+
+The strict reference requires coverage ≥0.80:
 
 ```text
-8,352 have zero usable runs
-5,284 have some evidence but coverage <0.50
-13,636 total fail the relaxed coverage threshold
-182,538 pass coverage ≥0.50
+259,548 total units
+→216,218 strict-coverage units
 ```
 
-### What ACAT combines
+## Step 6: Supporting-run evidence
 
-ACAT combines the usable **raw run-level P values**, not run-level q values.
-
-For example, suppose a gene-category unit has five eligible runs:
-
-```text
-explicit P=.001
-explicit P=.40
-implicit P=1
-implicit P=1
-absent=NA
-```
-
-Then:
-
-```text
-coverage = 4/5 = 0.80
-ACAT combines [.001, .40, 1, 1]
-NA is omitted
-```
-
-This produces `category_acat_p`.
-
-Next, within each sex/APOE × broad-cell category, BH correction is applied to
-the ACAT P values of every coverage-qualified non-MT gene. This produces:
-
-```text
-relaxed_category_acat_q
-```
-
-Therefore, "ACAT q value" is shorthand for two operations:
-
-```text
-run-level raw P values
-    → ACAT
-category-level raw P
-    → BH across genes in the category
-category-level q
-```
-
-### Supporting-run filter
-
-ACAT significance alone is not enough. At least one individual run must
-satisfy:
+Category-wide evidence is not sufficient by itself. A relaxed candidate must
+have at least one individual run satisfying:
 
 ```text
 other_query_overlap >= 2
@@ -399,65 +325,161 @@ final_fold_enrichment > 1
 final_run_q <= 0.10
 ```
 
-The non-MT support sub-funnel is:
+The progressive non-MT run-event funnel is:
+
+| Run-level gate | Remaining gene × run events |
+|---|---:|
+| Explicit candidate-family members | 94,527 |
+| Positive query overlap | 19,740 |
+| Other-query overlap ≥2 | 3,613 |
+| Also fold enrichment >1 | 3,579 |
+| Also final run q≤0.10 | 864 |
+
+The 864 relaxed support events collapse to 501 gene × category units. One of
+those units fails 50% coverage, leaving:
 
 ```text
-83,454 explicit tests
-17,723 have positive query overlap
- 3,502 have overlap ≥2
- 3,468 also have fold enrichment >1
-   775 also have run q≤0.10
+500 coverage-qualified supported units
+265 distinct genes
+30 categories
 ```
 
-Those 775 supporting gene × run events collapse to 432 gene × category
-units. One unit fails 50% overall coverage, leaving 431 coverage-qualified
-supported units.
-
-The strict support definition uses run q≤0.05 and has 532 supporting gene ×
-run events.
-
-### Final relaxed candidate funnel
-
-| Stage | Gene × category units | Distinct genes | Categories | Why units are lost |
-|---|---:|---:|---:|---|
-| Non-MT aggregate universe | 196,174 | 11,319 | 27 | Starting category-specific universe |
-| Coverage ≥0.50 | 182,538 | 11,176 | 27 | 13,636 lack sufficient run availability |
-| At least one relaxed supporting run | 431 | 227 | 24 | 182,107 lack an individually supported run |
-| Category BH q≤0.10 | 78 | 37 | 15 | 353 supported units fail category FDR |
-
-One subtle but important point: the table is displayed sequentially, but BH
-is computed over **all 182,538 coverage-qualified units**, separately by
-category. The BH denominator is not the 431 support-positive units. In this
-dataset, all 78 units with category q≤0.10 also happen to have supporting-run
-evidence.
-
-The strict parallel funnel is:
+Displayed as a sequential aggregate funnel:
 
 ```text
-196,174 units
-→166,086 with coverage ≥0.80
-→279 with at least one strict supporting run
-→64 strict candidates = 32 distinct genes
+233,368 coverage-qualified units
+−232,868 with no relaxed supporting run
+=500 supported units
 ```
 
-All 64 strict candidates are among the 78 relaxed candidates. The relaxed
-thresholds add 14 candidate units.
+The strict support rule changes the run q threshold to ≤0.05. It yields 593
+supporting gene × run events, which collapse to 345 units; 332 of those units
+also pass strict 80% coverage.
 
-An additional 16 units satisfy the relaxed coverage/support gates with:
+## Step 7: ACAT and category-level BH
+
+For each gene × category unit, ACAT combines the usable **raw**
+`final_raw_p` values:
+
+- explicit raw P values are retained;
+- explicit and implicit zero-overlap rows contribute `P = 1`; and
+- background-absent rows are omitted.
+
+For example:
 
 ```text
-0.10 < category q <= 0.20
+five eligible runs:
+    explicit P=.001
+    explicit P=.40
+    implicit P=1
+    implicit P=1
+    absent=NA
+
+coverage = 4/5 = 0.80
+ACAT combines [.001, .40, 1, 1]
+NA is omitted
 ```
 
-These are exploratory-only leads, not main candidates.
+ACAT produces a category-level raw P. BH then corrects those P values across
+genes **separately within each sex/APOE × broad-cell category**.
 
-Finally, top-five/top-ten display limits and stability labels do not remove
-candidates. They affect presentation and evidence labeling only.
+The relaxed BH family contains all 233,368 units with coverage ≥0.50. The
+strict BH family contains all 216,218 units with coverage ≥0.80. Support is
+not used to shrink either BH family.
 
-## Implementation and audit authorities
+Therefore, “ACAT q” means:
 
-- [Phase 08 DEG filtering](../../scripts/08_run_mast.R#L725)
-- [Phase 12 query construction and KDA execution](../../scripts/12_run_kda.R#L285)
-- [All-tested KDA guide](../phase_18_key_driver_selection/call_key_driver_returns_columns_explained.md)
+```text
+run-level raw P values
+    → ACAT category P
+category P values
+    → BH across all coverage-qualified genes in that category
+category q
+```
+
+The funnel is often displayed as coverage → support → q for readability, but
+the q values are calculated using the complete coverage-qualified families,
+not only the 500 relaxed or 332 strict support-positive units.
+
+## Step 8: Final candidate gates and current yields
+
+### Relaxed Phase 20 main funnel
+
+| Stage | Gene × category units | Distinct genes | Categories | Removed at this stage |
+|---|---:|---:|---:|---:|
+| Non-MT aggregate universe | 259,548 | 11,474 | 38 | — |
+| Coverage ≥0.50 | 233,368 | 11,232 | 38 | 26,180 |
+| Also ≥1 relaxed supporting run | 500 | 265 | 30 | 232,868 |
+| Also category q≤0.10 | 74 | 37 | 16 | 426 |
+
+The final 74 are **candidate units**, meaning gene × sex/APOE × broad-cell
+combinations. They represent 37 unique gene symbols.
+
+### Strict non-MT reference funnel
+
+```text
+259,548 aggregate units
+→216,218 with coverage ≥0.80
+→332 with at least one strict supporting run
+→58 with strict category q≤0.05
+```
+
+The 58 strict units represent 30 distinct genes in 15 categories. All 58 are
+also among the 74 relaxed main candidates.
+
+The strict reference uses the same current 295-run source. It is not the same
+thing as rerunning or changing the historical Phase 18 ≥10 release.
+
+### Exploratory leads and display subsets
+
+Fifteen additional units pass relaxed coverage and support but have:
+
+```text
+0.10 < relaxed category q <= 0.20
+```
+
+They represent 14 distinct genes in seven categories and are labeled
+exploratory-only. Combining them with the 74 main candidates gives:
+
+```text
+89 exploratory-inclusive units
+47 distinct genes
+17 categories
+```
+
+Top-five and top-ten limits are display rules, not statistical filters:
+
+| Tier | All units | Top-five units | Top-ten units |
+|---|---:|---:|---:|
+| Strict reference | 58 | 43 | 51 |
+| Relaxed main | 74 | 48 | 63 |
+| Exploratory inclusive | 89 | 54 | 72 |
+
+Stability labels also do not remove main candidates. They describe how the
+result behaves when one fine cell type is omitted and the full aggregation
+and BH calculation is repeated.
+
+## Interpretation cautions
+
+- A KDA candidate is a gene, but a Phase 20 candidate count is a gene ×
+  category count.
+- A significant stock return is not required in every run; complete evidence,
+  including P=1 and missing states, enters aggregation.
+- Coverage measures assessability, not recurrence or significance.
+- The primary analysis combines up and down directions within a category;
+  direction-separated results are a sensitivity analysis.
+- A candidate supports within-category network enrichment. It does not test a
+  difference between sex/APOE groups and does not establish causality.
+- The 3–9-query calls are completed validated Phase 12 calls, but their smaller
+  queries should be considered when interpreting localized evidence.
+- “Not estimable” means no included run, not evidence of no biological driver.
+
+## Machine-readable authorities
+
+- [Source run manifest](../../results/minerva_production/20_sex_apoe_kda/00_inputs/phase20_source_run_manifest.tsv)
+- [Source validation checks](../../results/minerva_production/20_sex_apoe_kda/00_inputs/phase20_source_checks.tsv)
+- [Phase 20 status](../../results/minerva_production/20_sex_apoe_kda/phase20_status.tsv)
+- [Phase 20 category manifest](../../results/minerva_production/20_sex_apoe_kda/phase20_category_manifest.tsv)
+- [Phase 20 filter funnel](../../results/minerva_production/20_sex_apoe_kda/phase20_filter_funnel.tsv)
+- [Phase 20 checks](../../results/minerva_production/20_sex_apoe_kda/phase20_checks.tsv)
 - [Phase 20 methods](phase20_methods.md)
-- [Phase 20 machine-readable filter funnel](../../results/minerva_production/20_sex_apoe_kda/phase20_filter_funnel.tsv)

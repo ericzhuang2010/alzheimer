@@ -333,11 +333,11 @@ The minimum executable effective query size is retained at three genes. This
 was prespecified in the Phase 08 broad-DEG plan and must not be lowered to
 manufacture a result.
 
-The existing fine-cell Phase 18/20 branch later required at least ten query
-genes before cross-run aggregation. That downstream inclusion gate is not
-inherited by this new direct-broad branch: Phase 08 prespecified three as the
-broad-KDA estimability minimum. The ten-gene boundary is retained below as an
-evidence-strength label and sensitivity, so the difference remains visible.
+Canonical fine-cell Phase 20 v2 and this direct-broad branch both use the KDA
+execution minimum of at least three effective query genes. The ten-gene
+boundary applies only to the frozen historical Phase 18 release. It is
+retained below as a historical evidence-strength label and sensitivity, not as
+an inclusion rule for either current Phase 20 branch.
 
 Each primary directional slot receives exactly one eligibility status:
 
@@ -395,7 +395,7 @@ must still distinguish:
 
 ```text
 small_query_3_9: 3-9 effective genes
-phase18_sized_query_ge10: >=10 effective genes
+phase18_sized_query_ge10: >=10 effective genes (historical Phase 18 comparator)
 ```
 
 Two current calls are `small_query_3_9`; only Astrocytes `F_e4` AD-down has at
