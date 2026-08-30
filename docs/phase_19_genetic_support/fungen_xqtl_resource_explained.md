@@ -65,6 +65,63 @@ inclusion score and the method that produced it, credible-set membership
 (`is.cs95`), minimum AD P value across the contributing GWAS, the GWAS
 sources, and a cV2F functional prioritization score.
 
+#### 3.1.1 How the fine-mapping works (SuSiE-family models)
+
+The machinery is visible in the resource's own column names ("Credible set
+coverage (SuSiE)", "Multi-genes targets (mvSuSiE 95% CS)", methods such as
+`single_context_finemapping|multi_context_finemapping`). SuSiE assumes a
+region contains a small number of independent causal signals and, for each
+signal, distributes posterior probability across the candidate variants. Two
+outputs matter:
+
+- **PIP / inclusion score** (per variant): the posterior probability that
+  this specific variant is causal. This is `max_variant_inclusion_probability`
+  in the variant CSV and "maximum inclusion score" in the workbook — the
+  number the `strong ≥ 0.5` grade rule reads.
+- **95% credible set** (per signal): the smallest set of variants whose
+  probabilities sum to ≥ 0.95 — guaranteed, under the model, to contain the
+  causal variant (`is.cs95`, `susie_coverage`).
+
+FunGen fine-maps **both sides of the equation, separately**, before
+integrating them:
+
+1. **The AD GWAS side** — the AD association itself is fine-mapped across
+   multiple AD GWAS (the `gwas_sources` column lists, e.g., Bellenguez 2022
+   and EADB), producing AD-causal PIPs per variant (the `ADxAD` analyses).
+2. **The molecular QTL side** — every eQTL/sQTL/pQTL dataset is fine-mapped
+   too: per single context ("Fine mapping PIP" columns) and jointly across
+   contexts with mvSuSiE ("Multi-context fine mapping PIP"), which also
+   allows multi-gene credible sets.
+3. **The integration** — AD fine-mapping is intersected with QTL
+   fine-mapping via colocalization (`ADxQTL_coloc` → the VCP values), cTWAS,
+   and MR; this is the step that turns "this variant is causal for AD" plus
+   "this variant regulates gene X" into the variant→gene assignments we
+   consume. A functional prioritization score (cV2F) is folded in per
+   variant.
+
+**Reading the numbers, using our own rows:**
+
+- rs429358 (APOE ε4): PIP = 1.0 — under the model, essentially *certain* to
+  be causal. That only happens when a variant's evidence cannot be explained
+  by any LD partner.
+- ZNF251's rs79832570: PIP ≈ 0.999 — the same situation, which is why two
+  variants sufficed for a strong grade.
+- PPP4C/SEPHS2's rs1140239: PIP = 0.23 — the *locus* is confidently causal,
+  but the probability is *split* across several correlated candidates; no
+  single variant is resolved. PIPs are shares of one signal's probability
+  mass, so a low PIP at a strong locus usually means "unresolved among LD
+  partners," not "weak evidence."
+
+**Caveats that carry into our grades:** PIPs are conditional on the model's
+assumptions — the LD reference matching the GWAS cohort, the assumed number
+of causal signals, and all relevant variants being genotyped. And
+fine-mapping alone never names a gene: rs72824905 lives inside PLCG2 yet
+FunGen's integration assigns it to BCO1 — gene assignment is the xQTL
+integration step, not the fine-mapping step. That separation is exactly why
+our contract still demands its own same-variant test with the complete
+fitted models (the SuSiE alpha/LBF matrices), which the public snapshot
+summarizes but does not include.
+
 ### 3.2 Variant→gene assignment (the "Gene Locus table")
 
 The unified workbook's Gene Locus table (4,796 rows; 4,684 with a target
