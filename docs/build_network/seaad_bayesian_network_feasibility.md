@@ -2,6 +2,8 @@
 
 **Assessment date:** August 31, 2026
 
+**Construction-code update:** September 2, 2026
+
 ## Executive conclusion
 
 Yes—in principle, SEA-AD-specific Bayesian networks can be generated. However, a defensible ROSMAP-style causal network cannot be produced from the current checkout alone. This would be a substantial new analysis, not a small extension of the existing KDA workflow.
@@ -26,10 +28,19 @@ That interpretation is documented in the [August 31 meeting summary](../email_no
 | Independent network samples | 78 donors in the current analytic cohort | Usable, but small for genome-wide network inference |
 | Matched genetics | WGS exists for 84 SEA-AD donors; SNP-array data for 80 | Available through controlled NIAGADS access, but not currently local |
 | Regulatory priors | SEA-AD snATAC/Multiome and external TF-target resources exist | Technically available |
-| Original construction procedure | Final ROSMAP edge lists exist | Original RIMBANet code, `prior.txt`, parameter files, and edge-support results are missing |
-| Software | NetworkX/KDA code exists | No local RIMBANet or equivalent Bayesian-network learning stack is installed |
+| Original construction procedure | Final ROSMAP edge lists and the public RIMBANet wrapper/source are available | The previous analyst's run-specific `prior.txt`, parameter files, and edge-support results are still missing |
+| Software | NetworkX/KDA code exists; public RIMBANet source and Linux binary are available upstream | No local RIMBANet runtime is installed; the old Xerces-C++ dependency must be containerized or rebuilt |
 
 SEA-AD now provides processed snRNA-seq, snATAC-seq, and Multiome resources, while its genetics are available under controlled access. See the [SEA-AD data portal](https://brain-map.org/consortia/sea-ad/our-data) and [NIAGADS dataset NG00174](https://dss.niagads.org/datasets/ng00174/).
+
+The construction source is now identified at
+[mw201608/BayesianNetwork](https://github.com/mw201608/BayesianNetwork), pinned
+for this project at commit
+`ebd5f4a6c31da22705622e71b6dc5f1eae195fdd`. It contains the RIMBANet C++
+source, a legacy Linux binary, prior/banned-matrix Perl scripts, 1,000-search
+job wrappers, and consensus/de-loop scripts. This resolves code availability,
+but not exact reproduction of the copied ROSMAP networks because their
+run-specific inputs and parameters remain unavailable.
 
 The important limitation is sample size. The network must treat donors—not nuclei—as independent samples, as already specified in [SEA-AD dataset contents](../validation_human/seaad_dataset_contents.md). Millions of nuclei improve each donor's expression measurement, but they do not turn 78 donors into millions of independent observations.
 
@@ -37,11 +48,12 @@ The existing broad ROSMAP networks contain roughly 5,300–10,400 genes per matc
 
 ## Recommended approach
 
-### 1. Recover the original ROSMAP construction materials
+### 1. Freeze the public construction workflow and recover run-specific ROSMAP materials
 
-Obtain the following from the previous analyst:
+Use the pinned public RIMBANet source for new SEA-AD builds. For exact
+reproduction of the existing ROSMAP networks, obtain the following from the
+previous analyst:
 
-- RIMBANet code and version
 - `prior.txt`
 - `bn.param.txt`
 - Blacklist and whitelist rules
@@ -49,7 +61,11 @@ Obtain the following from the previous analyst:
 - Maximum-parent setting
 - Per-edge recurrence or confidence results
 
-The available description indicates three-state expression discretization, 1,000 RIMBANet reconstructions, recurrence filtering, and cycle removal, but the provenance is incomplete. See [the existing Bayesian-network explanation](../email_notes/email_07252026_explained.md).
+The public wrapper documents three-state expression discretization, 1,000
+stochastic searches, bidirectional adjacency recurrence filtering, and legacy
+cycle removal. The copied networks' provenance is still incomplete. See [the
+existing Bayesian-network explanation](../email_notes/email_07252026_explained.md)
+and the accepted SEA-AD implementation plan in this directory.
 
 ### 2. Obtain and match SEA-AD genetics
 
@@ -101,7 +117,7 @@ Only scale to genome-wide, seven-cell-type networks if that pilot is stable.
 
 ## Bottom line
 
-A SEA-AD Bayesian network is technically possible because the cohort now has expression, chromatin, and matched genetic data. But a trustworthy whole-transcriptome causal network is not currently reproducible from this repository, and the 78-donor sample size makes individual edges exploratory.
+A SEA-AD Bayesian network is technically possible because the cohort now has expression, chromatin, and matched genetic data. The construction code is public, but the required SEA-AD H5AD/pseudobulk, controlled WGS, TF-target snapshot, and runtime are not present in this checkout. The 78-donor sample size also makes individual edges exploratory.
 
 The scientifically strongest near-term plan is:
 
