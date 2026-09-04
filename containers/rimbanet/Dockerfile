@@ -22,12 +22,13 @@ RUN mkdir -p /opt/xerces-src /opt/xerces \
     && cd /opt/xerces-src/src/xercesc \
     && export XERCESCROOT=/opt/xerces-src \
     && ./runConfigure -p linux -c gcc -x g++ -r pthread -P /opt/xerces \
-    && make -j"$(nproc)" \
+    && make \
     && make install
 
 RUN set -eux; \
     cd /opt/rimbanet-src/src; \
     sed -i 's|^XMLROOT = .*|XMLROOT = /opt/xerces|' Makefile; \
+    sed -i 's| -O -DLINUX -c| -O -std=gnu++98 -DLINUX -c|' Makefile; \
     make clean || true; \
     make -j"$(nproc)"; \
     install -m 0755 testBN /usr/local/bin/testBN; \

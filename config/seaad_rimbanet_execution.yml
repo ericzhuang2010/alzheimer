@@ -5,7 +5,7 @@ scientific_config: config/seaad_rimbanet.yml
 runtime:
   container_engine: apptainer_or_docker
   image: /sc/arion/scratch/zhuane01/alzheimer/external_tools/containers/seaad-rimbanet.sif
-  image_sha256: TO_BE_FROZEN
+  image_sha256: 1df82906537e74c73fb331e7652c4057bac92182293d7d3739d0a015a4f25840
   architecture: linux_x86_64
   fail_if_image_unpinned: true
 
