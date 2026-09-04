@@ -68,3 +68,5 @@ The general rules for those slides:
 2. do not put internal file names, internal terminologies on the slide.
 3. each slide should be clear about which message it aims to convey
 4. for complex concepts, use multiple slides, from simple to more complicated to help reader absorb.
+
+https://www.facebook.com/groups/562934644102912/posts/2111805902549104/
