@@ -121,8 +121,12 @@ results/validation_human/**
 !results/validation_human/**/*.patch
 !results/validation_human/**/*.txt
 
-# Keep pseudobulk matrices and their QC outputs local.
-results/validation_human/05_pseudobulk/
+# Keep fine-resolution pseudobulk matrices and QC outputs local. The validated
+# seven-network direct-broad transfer bundle is intentionally visible to Git.
+results/validation_human/05_pseudobulk/*
+!results/validation_human/05_pseudobulk/direct_broad_counts/
+!results/validation_human/05_pseudobulk/direct_broad_counts/*.counts.tsv.gz
+!results/validation_human/05_pseudobulk/direct_broad_counts/*.samples.tsv
 results/validation_human/05_pseudobulk_qc/
 results/validation_human/06_pseudobulk_qc/
 

@@ -1,0 +1,79 @@
+sample_order	direct_broad_group_code	pseudobulk_id	donor_id	broad_network	nuclei	diagnosis	sex	apoe_group	signature_group	age_death	pmi	study	age_death_scaled	pmi_scaled	primary_profile_eligible	sensitivity_profile_eligible
+0	1	Excitatory_neurons__H19.33.004	H19.33.004	Excitatory_neurons	6218	No dementia	Female	e33	F_e33	80.0	8.1333333333333	ACT	-1.1447977975731964	0.5183478131950284	True	True
+1	8	Excitatory_neurons__H20.33.001	H20.33.001	Excitatory_neurons	8508	No dementia	Male	e33	M_e33	82.0	7.7	ACT	-0.8896714312568843	0.3280216679966878	True	True
+2	15	Excitatory_neurons__H20.33.002	H20.33.002	Excitatory_neurons	8464	No dementia	Female	e2	F_e2	97.0	4.333333333333333	ACT	1.0237763161154578	-1.150666075467454	True	True
+3	22	Excitatory_neurons__H20.33.004	H20.33.004	Excitatory_neurons	7417	Dementia	Male	e4	M_e4	86.0	8.833333333333334	ACT	-0.3794186986242597	0.8257977400539239	True	True
+4	29	Excitatory_neurons__H20.33.005	H20.33.005	Excitatory_neurons	8235	No dementia	Female	e2	F_e2	99.0	7.6	ACT	1.27890268243177	0.2841002498739903	True	True
+5	36	Excitatory_neurons__H20.33.008	H20.33.008	Excitatory_neurons	5710	No dementia	Female	e4	F_e4	92.0	7.0	ACT	0.385960400324677	0.0205717411378068	True	True
+6	43	Excitatory_neurons__H20.33.011	H20.33.011	Excitatory_neurons	8377	Dementia	Female	e4	F_e4	93.0	6.0	ACT	0.5135235834828332	-0.4186424400891659	True	True
+7	50	Excitatory_neurons__H20.33.012	H20.33.012	Excitatory_neurons	5747	No dementia	Female	e33	F_e33	91.0	7.716666666666667	ACT	0.2583972171665209	0.3353419043504707	True	True
+8	57	Excitatory_neurons__H20.33.013	H20.33.013	Excitatory_neurons	7662	No dementia	Male	e33	M_e33	94.0	4.5	ACT	0.6410867666409893	-1.077463711929625	True	True
+9	64	Excitatory_neurons__H20.33.014	H20.33.014	Excitatory_neurons	6968	No dementia	Female	e33	F_e33	82.0	7.4	ADRC Clinical Core	-0.8896714312568843	0.1962574136285961	True	True
+10	71	Excitatory_neurons__H20.33.015	H20.33.015	Excitatory_neurons	12759	Dementia	Male	e33	M_e33	88.0	11.416666666667	ACT	-0.1242923323079474	1.9604343748904165	True	True
+11	78	Excitatory_neurons__H20.33.016	H20.33.016	Excitatory_neurons	7446	Dementia	Female	e2	F_e2	93.0	7.7333333333333	ADRC Clinical Core	0.5135235834828332	0.3426621407042388	True	True
+12	85	Excitatory_neurons__H20.33.017	H20.33.017	Excitatory_neurons	5921	Dementia	Male	e33	M_e33	69.0	5.5	ADRC Clinical Core	-2.547992812312914	-0.6382495307026523	True	True
+13	92	Excitatory_neurons__H20.33.018	H20.33.018	Excitatory_neurons	5778	Dementia	Female	e4	F_e4	81.0	4.5	ACT	-1.0172346144150404	-1.077463711929625	True	True
+14	99	Excitatory_neurons__H20.33.019	H20.33.019	Excitatory_neurons	8602	No dementia	Female	e4	F_e4	87.0	11.1	ACT	-0.2518555154661036	1.8213498841683955	True	True
+15	106	Excitatory_neurons__H20.33.020	H20.33.020	Excitatory_neurons	7774	Dementia	Male	e4	M_e4	81.0	6.633333333333334	ADRC Clinical Core	-1.0172346144150404	-0.1404734586454163	True	True
+16	113	Excitatory_neurons__H20.33.024	H20.33.024	Excitatory_neurons	9225	No dementia	Male	e33	M_e33	90.0	3.5	ACT	0.1308340340083648	-1.516677893156598	True	True
+17	120	Excitatory_neurons__H20.33.025	H20.33.025	Excitatory_neurons	9235	No dementia	Male	e33	M_e33	94.0	4.5	ACT	0.6410867666409893	-1.077463711929625	True	True
+18	127	Excitatory_neurons__H20.33.026	H20.33.026	Excitatory_neurons	8245	Dementia	Female	e4	F_e4	75.0	7.0	ADRC Clinical Core	-1.7826137133639772	0.0205717411378068	True	True
+19	134	Excitatory_neurons__H20.33.027	H20.33.027	Excitatory_neurons	8374	No dementia	Female	e33	F_e33	99.0	9.233333333333333	ACT	1.27890268243177	1.0014834125447123	True	True
+20	141	Excitatory_neurons__H20.33.028	H20.33.028	Excitatory_neurons	3204	Dementia	Female	e33	F_e33	94.0	7.4	ACT	0.6410867666409893	0.1962574136285961	True	True
+21	148	Excitatory_neurons__H20.33.029	H20.33.029	Excitatory_neurons	8121	Dementia	Female	e33	F_e33	91.0	6.1	ACT	0.2583972171665209	-0.3747210219664688	True	True
+22	155	Excitatory_neurons__H20.33.030	H20.33.030	Excitatory_neurons	7508	No dementia	Female	e4	F_e4	86.0	6.0	ACT	-0.3794186986242597	-0.4186424400891659	True	True
+23	162	Excitatory_neurons__H20.33.031	H20.33.031	Excitatory_neurons	8346	Dementia	Female	e33	F_e33	87.0	7.916666666666667	ACT	-0.2518555154661036	0.4231847405958653	True	True
+24	169	Excitatory_neurons__H20.33.032	H20.33.032	Excitatory_neurons	7273	No dementia	Male	e33	M_e33	98.0	6.9166666666667	ACT	1.151339499273614	-0.0160294406310929	True	True
+25	176	Excitatory_neurons__H20.33.033	H20.33.033	Excitatory_neurons	5288	Dementia	Male	e33	M_e33	68.0	6.5	ADRC Clinical Core	-2.67555599547107	-0.1990353494756795	True	True
+26	183	Excitatory_neurons__H20.33.034	H20.33.034	Excitatory_neurons	6604	No dementia	Female	e2	F_e2	85.0	10.016666666667	ACT	-0.5069818817824159	1.3455345211726544	True	True
+27	190	Excitatory_neurons__H20.33.035	H20.33.035	Excitatory_neurons	6578	No dementia	Female	e33	F_e33	99.0	4.6	ACT	1.27890268243177	-1.033542293806928	True	True
+28	197	Excitatory_neurons__H20.33.036	H20.33.036	Excitatory_neurons	4207	No dementia	Female	e2	F_e2	100.0	10.6	ADRC Clinical Core	1.406465865589926	1.601742793554909	True	True
+29	204	Excitatory_neurons__H20.33.037	H20.33.037	Excitatory_neurons	8690	Dementia	Female	e33	F_e33	96.0	10.0	ACT	0.8962131329573015	1.3382142848187253	True	True
+30	211	Excitatory_neurons__H20.33.038	H20.33.038	Excitatory_neurons	4084	Dementia	Female	e33	F_e33	90.0	6.2	ACT	0.1308340340083648	-0.3307996038437713	True	True
+31	218	Excitatory_neurons__H20.33.039	H20.33.039	Excitatory_neurons	9221	No dementia	Female	e33	F_e33	96.0	10.3	ACT	0.8962131329573015	1.4699785391868174	True	True
+32	225	Excitatory_neurons__H20.33.040	H20.33.040	Excitatory_neurons	7483	Dementia	Male	e33	M_e33	98.0	5.03	ACT	1.151339499273614	-0.8446801958793294	True	True
+33	232	Excitatory_neurons__H20.33.041	H20.33.041	Excitatory_neurons	8772	Dementia	Female	e33	F_e33	91.0	5.916666666666667	ACT	0.2583972171665209	-0.4552436218580802	True	True
+34	239	Excitatory_neurons__H20.33.044	H20.33.044	Excitatory_neurons	9003	No dementia	Male	e2	M_e2	81.0	4.7	ACT	-1.0172346144150404	-0.9896208756842304	True	True
+35	246	Excitatory_neurons__H20.33.045	H20.33.045	Excitatory_neurons	4537	Dementia	Female	e4	F_e4	77.0	3.3	ADRC Clinical Core	-1.5274873470476649	-1.6045207294019923	True	True
+36	253	Excitatory_neurons__H20.33.046	H20.33.046	Excitatory_neurons	5347	Dementia	Male	e33	M_e33	94.0	8.0	ACT	0.6410867666409893	0.4597859223647796	True	True
+37	260	Excitatory_neurons__H21.33.001	H21.33.001	Excitatory_neurons	3990	Dementia	Male	e2	M_e2	80.0	9.6	ACT	-1.1447977975731964	1.162528612327936	True	True
+38	267	Excitatory_neurons__H21.33.002	H21.33.002	Excitatory_neurons	10249	Dementia	Female	e4	F_e4	70.0	3.2	ADRC Clinical Core	-2.420429629154758	-1.6484421475246898	True	True
+39	274	Excitatory_neurons__H21.33.003	H21.33.003	Excitatory_neurons	11020	No dementia	Male	e33	M_e33	78.0	10.0	ACT	-1.3999241638895088	1.3382142848187253	True	True
+40	281	Excitatory_neurons__H21.33.004	H21.33.004	Excitatory_neurons	6075	No dementia	Male	e2	M_e2	93.0	5.0	ACT	0.5135235834828332	-0.8578566213161387	True	True
+41	288	Excitatory_neurons__H21.33.005	H21.33.005	Excitatory_neurons	8595	Dementia	Male	e33	M_e33	95.0	10.2	ACT	0.7686499497991455	1.4260571210641195	True	True
+42	295	Excitatory_neurons__H21.33.006	H21.33.006	Excitatory_neurons	8750	No dementia	Male	e4	M_e4	97.0	9.8	ACT	1.0237763161154578	1.250371448573331	True	True
+43	302	Excitatory_neurons__H21.33.007	H21.33.007	Excitatory_neurons	5867	Dementia	Female	e33	F_e33	86.0	5.6	ACT	-0.3794186986242597	-0.5943281125799552	True	True
+44	309	Excitatory_neurons__H21.33.008	H21.33.008	Excitatory_neurons	5169	Dementia	Female	e33	F_e33	91.0	5.0	ACT	0.2583972171665209	-0.8578566213161387	True	True
+45	316	Excitatory_neurons__H21.33.011	H21.33.011	Excitatory_neurons	6908	No dementia	Female	e33	F_e33	83.0	3.6	ACT	-0.7621082480987281	-1.4727564750339006	True	True
+46	323	Excitatory_neurons__H21.33.013	H21.33.013	Excitatory_neurons	8790	Dementia	Female	e4	F_e4	94.0	7.3	ACT	0.6410867666409893	0.1523359955058986	True	True
+47	330	Excitatory_neurons__H21.33.014	H21.33.014	Excitatory_neurons	5563	No dementia	Male	e2	M_e2	92.0	9.5	ADRC Clinical Core	0.385960400324677	1.118607194205239	True	True
+48	337	Excitatory_neurons__H21.33.015	H21.33.015	Excitatory_neurons	7170	No dementia	Male	e33	M_e33	98.0	4.1	ACT	1.151339499273614	-1.2531493844204145	True	True
+49	344	Excitatory_neurons__H21.33.016	H21.33.016	Excitatory_neurons	7465	Dementia	Female	e33	F_e33	94.0	5.5	ACT	0.6410867666409893	-0.6382495307026523	True	True
+50	351	Excitatory_neurons__H21.33.017	H21.33.017	Excitatory_neurons	7003	Dementia	Female	e33	F_e33	92.0	3.5	ACT	0.385960400324677	-1.516677893156598	True	True
+51	358	Excitatory_neurons__H21.33.018	H21.33.018	Excitatory_neurons	8686	Dementia	Female	e33	F_e33	89.0	10.233333333333333	ACT	0.0032708508502086	1.4406975937716853	True	True
+52	365	Excitatory_neurons__H21.33.019	H21.33.019	Excitatory_neurons	6457	No dementia	Male	e2	M_e2	75.0	10.016666666666667	ACT	-1.7826137133639772	1.3455345211725085	True	True
+53	372	Excitatory_neurons__H21.33.020	H21.33.020	Excitatory_neurons	1249	Dementia	Male	e33	M_e33	82.0	10.8	ACT	-0.8896714312568843	1.6895856298003038	True	True
+54	379	Excitatory_neurons__H21.33.021	H21.33.021	Excitatory_neurons	6255	Dementia	Male	e33	M_e33	99.0	6.9	ACT	1.27890268243177	-0.0233496769848902	True	True
+55	386	Excitatory_neurons__H21.33.022	H21.33.022	Excitatory_neurons	7352	No dementia	Female	e33	F_e33	82.0	4.833333333333333	ACT	-0.8896714312568843	-0.9310589848539677	True	True
+56	393	Excitatory_neurons__H21.33.023	H21.33.023	Excitatory_neurons	6795	No dementia	Male	e33	M_e33	102.0	7.833333333333333	ACT	1.6615922319062384	0.3865835588269507	True	True
+57	400	Excitatory_neurons__H21.33.025	H21.33.025	Excitatory_neurons	5999	No dementia	Female	e33	F_e33	88.0	8.6	ACT	-0.1242923323079474	0.7233144311009632	True	True
+58	407	Excitatory_neurons__H21.33.026	H21.33.026	Excitatory_neurons	8756	No dementia	Female	e4	F_e4	90.0	4.1	ADRC Clinical Core	0.1308340340083648	-1.2531493844204145	True	True
+59	414	Excitatory_neurons__H21.33.027	H21.33.027	Excitatory_neurons	8059	Dementia	Male	e4	M_e4	92.0	6.3	ACT	0.385960400324677	-0.2868781857210742	True	True
+60	421	Excitatory_neurons__H21.33.028	H21.33.028	Excitatory_neurons	5386	No dementia	Male	e33	M_e33	72.0	8.3	ACT	-2.165303262838445	0.5915501767328718	True	True
+61	428	Excitatory_neurons__H21.33.030	H21.33.030	Excitatory_neurons	7479	No dementia	Male	e4	M_e4	89.0	5.5	ACT	0.0032708508502086	-0.6382495307026523	True	True
+62	435	Excitatory_neurons__H21.33.031	H21.33.031	Excitatory_neurons	6035	Dementia	Male	e4	M_e4	84.0	8.9	ADRC Clinical Core	-0.634545064940572	0.8550786854690553	True	True
+63	442	Excitatory_neurons__H21.33.032	H21.33.032	Excitatory_neurons	14465	No dementia	Female	e33	F_e33	98.0	5.0	ADRC Clinical Core	1.151339499273614	-0.8578566213161387	True	True
+64	449	Excitatory_neurons__H21.33.033	H21.33.033	Excitatory_neurons	5917	No dementia	Female	e4	F_e4	83.0	8.2	ACT	-0.7621082480987281	0.5476287586101739	True	True
+65	456	Excitatory_neurons__H21.33.034	H21.33.034	Excitatory_neurons	1272	Dementia	Female	e4	F_e4	90.0	10.8	ACT	0.1308340340083648	1.6895856298003038	True	True
+66	463	Excitatory_neurons__H21.33.035	H21.33.035	Excitatory_neurons	7382	No dementia	Female	e33	F_e33	97.0	4.8	ACT	1.0237763161154578	-0.9456994575615334	True	True
+67	470	Excitatory_neurons__H21.33.036	H21.33.036	Excitatory_neurons	6446	No dementia	Female	e33	F_e33	93.0	4.0	ACT	0.5135235834828332	-1.2970708025431117	True	True
+68	477	Excitatory_neurons__H21.33.037	H21.33.037	Excitatory_neurons	10303	No dementia	Female	e2	F_e2	88.0	6.5	ACT	-0.1242923323079474	-0.1990353494756795	True	True
+69	484	Excitatory_neurons__H21.33.038	H21.33.038	Excitatory_neurons	6130	No dementia	Female	e33	F_e33	84.0	11.0	ACT	-0.634545064940572	1.777428466045698	True	True
+70	491	Excitatory_neurons__H21.33.040	H21.33.040	Excitatory_neurons	7845	No dementia	Male	e4	M_e4	83.0	5.6	ACT	-0.7621082480987281	-0.5943281125799552	True	True
+71	498	Excitatory_neurons__H21.33.041	H21.33.041	Excitatory_neurons	5000	No dementia	Female	e2	F_e2	98.0	7.5	ACT	1.151339499273614	0.2401788317512932	True	True
+72	505	Excitatory_neurons__H21.33.042	H21.33.042	Excitatory_neurons	8349	Dementia	Female	e4	F_e4	91.0	8.1	ACT	0.2583972171665209	0.5037073404874768	True	True
+73	512	Excitatory_neurons__H21.33.043	H21.33.043	Excitatory_neurons	7608	Dementia	Female	e33	F_e33	95.0	4.4	ACT	0.7686499497991455	-1.1213851300523223	True	True
+74	519	Excitatory_neurons__H21.33.044	H21.33.044	Excitatory_neurons	4454	Dementia	Female	e33	F_e33	88.0	7.0	ACT	-0.1242923323079474	0.0205717411378068	True	True
+75	526	Excitatory_neurons__H21.33.045	H21.33.045	Excitatory_neurons	3422	Dementia	Female	e4	F_e4	94.0	4.0	ADRC Clinical Core	0.6410867666409893	-1.2970708025431117	True	True
+76	533	Excitatory_neurons__H21.33.046	H21.33.046	Excitatory_neurons	6495	Dementia	Male	e33	M_e33	97.0	7.0	ACT	1.0237763161154578	0.0205717411378068	True	True
+77	540	Excitatory_neurons__H21.33.047	H21.33.047	Excitatory_neurons	5058	No dementia	Male	e33	M_e33	90.0	4.4	ACT	0.1308340340083648	-1.1213851300523223	True	True
