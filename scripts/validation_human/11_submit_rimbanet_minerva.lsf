@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+#BSUB -J "seaad_rimbanet[1-1000]%100"
+#BSUB -q premium
+#BSUB -n 1
+#BSUB -R "span[hosts=1]"
+#BSUB -R "rusage[mem=16000]"
+#BSUB -M 16000
+#BSUB -W 24:00
+#BSUB -o /sc/arion/scratch/zhuane01/alzheimer/results/validation_human/11_seaad_rimbanet/logs/%J.%I.out
+#BSUB -e /sc/arion/scratch/zhuane01/alzheimer/results/validation_human/11_seaad_rimbanet/logs/%J.%I.err
+
+set -euo pipefail
+
+: "${PROJECT_ROOT:?Set PROJECT_ROOT to the repository root}"
+: "${NETWORK:?Set NETWORK to one configured broad cell type}"
+CONFIG="${CONFIG:-config/seaad_rimbanet.yml}"
+IMAGE="${RIMBANET_IMAGE:-/sc/arion/scratch/zhuane01/alzheimer/external_tools/containers/seaad-rimbanet.sif}"
+STORAGE_ROOT="${RIMBANET_STORAGE_ROOT:-/sc/arion/scratch/zhuane01/alzheimer}"
+: "${LSB_JOBINDEX:?This file must run as an LSF array job}"
+
+cd "$PROJECT_ROOT"
+[[ -d "$STORAGE_ROOT" ]] || {
+  echo "Minerva scratch storage root is unavailable: $STORAGE_ROOT" >&2
+  exit 3
+}
+
+apptainer exec \
+  --bind "$PROJECT_ROOT:$PROJECT_ROOT" \
+  --bind "$STORAGE_ROOT:$STORAGE_ROOT" \
+  --pwd "$PROJECT_ROOT" \
+  "$IMAGE" \
+  bash scripts/validation_human/11_run_rimbanet_task.sh \
+    --config "$CONFIG" \
+    --network "$NETWORK" \
+    --task-id "$LSB_JOBINDEX" \
+    --binary /usr/local/bin/testBN

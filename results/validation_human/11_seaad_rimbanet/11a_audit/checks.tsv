@@ -1,0 +1,11 @@
+check	passed	observed	expected	details
+analysis_donor_count	True	78	78	
+celltype_mapping_networks	True	Astrocytes,Excitatory_neurons,Inhibitory_neurons,Microglia,OPCs,Oligodendrocytes,Vasculature_cells	Astrocytes,Excitatory_neurons,Inhibitory_neurons,Microglia,OPCs,Oligodendrocytes,Vasculature_cells	
+broad_profile_count	True	546	546	
+all_pseudobulk_shards_present	False	14	0	results/validation_human/05_pseudobulk/direct_broad_counts/Astrocytes.counts.tsv.gz;results/validation_human/05_pseudobulk/direct_broad_counts/Astrocytes.samples.tsv;results/validation_human/05_pseudobulk/direct_broad_counts/Excitatory_neurons.counts.tsv.gz;results/validation_human/05_pseudobulk/direct_broad_counts/Excitatory_neurons.samples.tsv;results/validation_human/05_pseudobulk/direct_broad_counts/Inhibitory_neurons.counts.tsv.gz;results/validation_human/05_pseudobulk/direct_broad_counts/Inhibitory_neurons.samples.tsv;results/validation_human/05_pseudobulk/direct_broad_counts/Microglia.counts.tsv.gz;results/validation_human/05_pseudobulk/direct_broad_counts/Microglia.samples.tsv;results/validation_human/05_pseudobulk/direct_broad_counts/OPCs.counts.tsv.gz;results/validation_human/05_pseudobulk/direct_broad_counts/OPCs.samples.tsv;results/validation_human/05_pseudobulk/direct_broad_counts/Oligodendrocytes.counts.tsv.gz;results/validation_human/05_pseudobulk/direct_broad_counts/Oligodendrocytes.samples.tsv;results/validation_human/05_pseudobulk/direct_broad_counts/Vasculature_cells.counts.tsv.gz;results/validation_human/05_pseudobulk/direct_broad_counts/Vasculature_cells.samples.tsv
+controlled_wgs_plink_present	False	0	3	data/seaad_wgs/NG00174/source/seaad_grch38
+wgs_sex_update_complete	True	0	0	
+wgs_expression_crosswalk_valid	False	0	>=50 unique explicit matches	data/seaad_wgs/NG00174/sample_crosswalk.tsv
+encode_tf_targets_present_and_frozen	False	False	True	data/reference/rimbanet/encode_tf_targets.tsv.gz
+rimbanet_source_commit	True	ebd5f4a6c31da22705622e71b6dc5f1eae195fdd	ebd5f4a6c31da22705622e71b6dc5f1eae195fdd	
+source_manifest_unique	True	6	6	

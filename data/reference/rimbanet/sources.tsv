@@ -1,0 +1,7 @@
+source_id	resource	release_or_commit	url	access	expected_local_path	sha256	status
+rimbanet_public_wrapper	mw201608/BayesianNetwork	ebd5f4a6c31da22705622e71b6dc5f1eae195fdd	https://github.com/mw201608/BayesianNetwork	public	/sc/arion/scratch/zhuane01/alzheimer/external_tools/BayesianNetwork	TO_BE_COMPUTED	pinned_not_downloaded
+wang_proteomics_workflow	wange230/proteomics_networks	c0f51fa7e1195be4469fbad122dd5e96db31a397	https://github.com/wange230/proteomics_networks	public	/sc/arion/scratch/zhuane01/alzheimer/external_tools/proteomics_networks	TO_BE_COMPUTED	reference_only
+seaad_wgs	NIAGADS_NG00174	TO_BE_FROZEN	https://dss.niagads.org/datasets/ng00174/	controlled	/sc/arion/scratch/zhuane01/alzheimer/data/seaad_wgs/NG00174	TO_BE_COMPUTED	not_present
+encode_tf_targets	ENCODE	TO_BE_FROZEN	https://www.encodeproject.org/	public	/sc/arion/scratch/zhuane01/alzheimer/data/reference/rimbanet/encode_tf_targets.tsv.gz	TO_BE_COMPUTED	not_present
+gencode_annotation	GENCODE_v44_basic	v44	https://www.gencodegenes.org/human/release_44.html	public	data/reference/gencode/gencode.v44.basic.annotation.gtf.gz	3e52f82c63f8fd860bf632ccde10441c05751f4c342ad08c0a98e9e2700171a5	present
+hgnc_complete_set	HGNC_complete_set	2026-06-05	https://www.genenames.org/download/archive/	public	data/reference/hgnc/hgnc_complete_set_2026-06-05.txt	f3051e4aa6fac82166e1c26638d0077a95b0f66ab62a03e18bb35eb613e40a90	present

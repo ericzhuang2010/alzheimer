@@ -1,0 +1,15 @@
+check	passed	observed	expected	details
+command_bash	True	GNU bash, version 3.2.57(1)-release (arm64-apple-darwin25)	present	
+command_bc	True	bc 7.0.3	present	
+command_bcftools	False	missing	present	
+command_perl	True	This is perl 5, version 34, subversion 1 (v5.34.1) built for darwin-thread-multi-2level	present	
+command_plink2	False	missing	present	
+command_Rscript	True	Rscript (R) version 4.6.1 (2026-06-24)	present	
+r_package_data.table	False	missing	present	
+r_package_MatrixEQTL	False	missing	present	
+r_package_yaml	False	missing	present	
+r_package_cit	False	missing	present	
+production_architecture	False	Darwin_arm64	Linux_x86_64	macOS may orchestrate, but cannot run the legacy ELF binary
+rimbanet_commit	True	ebd5f4a6c31da22705622e71b6dc5f1eae195fdd	ebd5f4a6c31da22705622e71b6dc5f1eae195fdd	
+rimbanet_binary_present	True	c04cf68e2823750ca7943a238bc4d2e4de1a107422fcedfc21968e0aad5d9183	present with frozen checksum	external_tools/BayesianNetwork/bin/testBN
+container_image_frozen	False	False	True	/Users/rzhuang/Documents/VscodeProjects/alzheimer/external_tools/containers/seaad-rimbanet.sif

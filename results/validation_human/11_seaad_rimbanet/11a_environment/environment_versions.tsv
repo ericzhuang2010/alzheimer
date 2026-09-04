@@ -1,0 +1,11 @@
+component	version
+bash	GNU bash, version 3.2.57(1)-release (arm64-apple-darwin25)
+bc	bc 7.0.3
+bcftools	missing
+perl	This is perl 5, version 34, subversion 1 (v5.34.1) built for darwin-thread-multi-2level
+plink2	missing
+Rscript	Rscript (R) version 4.6.1 (2026-06-24)
+R:data.table	missing
+R:MatrixEQTL	missing
+R:yaml	missing
+R:cit	missing

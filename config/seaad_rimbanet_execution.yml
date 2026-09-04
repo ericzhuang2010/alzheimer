@@ -1,0 +1,48 @@
+schema_version: seaad_rimbanet_execution_v1
+project_root: "."
+scientific_config: config/seaad_rimbanet.yml
+
+runtime:
+  container_engine: apptainer_or_docker
+  image: /sc/arion/scratch/zhuane01/alzheimer/external_tools/containers/seaad-rimbanet.sif
+  image_sha256: TO_BE_FROZEN
+  architecture: linux_x86_64
+  fail_if_image_unpinned: true
+
+paths:
+  storage_root: /sc/arion/scratch/zhuane01/alzheimer
+  generated_output_root: /sc/arion/scratch/zhuane01/alzheimer/results/validation_human
+  scratch_root: /sc/arion/scratch/zhuane01/alzheimer/results/validation_human/11_seaad_rimbanet/scratch
+  log_root: /sc/arion/scratch/zhuane01/alzheimer/results/validation_human/11_seaad_rimbanet/logs
+  external_rimbanet: /sc/arion/scratch/zhuane01/alzheimer/external_tools/BayesianNetwork
+
+local_smoke:
+  enabled: true
+  search_count: 3
+  concurrent_tasks: 1
+  fixture: tests/fixtures/seaad_rimbanet
+
+lsf_production:
+  enabled: true
+  queue: premium
+  project: TO_BE_CONFIGURED
+  walltime: "24:00"
+  cores_per_task: 1
+  memory_mb_per_task: 16000
+  array_concurrency: 100
+  task_start: 1
+  task_end: 1000
+  retry_limit: 2
+
+resume:
+  enabled: true
+  accept_existing_only_when_hashes_match: true
+  overwrite_successful_tasks: false
+  retry_technical_failures_only: true
+
+pilot_gate:
+  network: Microglia
+  required_successful_tasks: 1000
+  require_consensus_qc: true
+  require_runtime_report: true
+  allow_scaleout_before_pass: false

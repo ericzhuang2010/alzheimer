@@ -4,6 +4,8 @@
 
 **Construction-code update:** September 2, 2026
 
+**Minerva storage update:** September 4, 2026
+
 ## Executive conclusion
 
 Yes—in principle, SEA-AD-specific Bayesian networks can be generated. However, a defensible ROSMAP-style causal network cannot be produced from the current checkout alone. This would be a substantial new analysis, not a small extension of the existing KDA workflow.
@@ -29,7 +31,7 @@ That interpretation is documented in the [August 31 meeting summary](../email_no
 | Matched genetics | WGS exists for 84 SEA-AD donors; SNP-array data for 80 | Available through controlled NIAGADS access, but not currently local |
 | Regulatory priors | SEA-AD snATAC/Multiome and external TF-target resources exist | Technically available |
 | Original construction procedure | Final ROSMAP edge lists and the public RIMBANet wrapper/source are available | The previous analyst's run-specific `prior.txt`, parameter files, and edge-support results are still missing |
-| Software | NetworkX/KDA code exists; public RIMBANet source and Linux binary are available upstream | No local RIMBANet runtime is installed; the old Xerces-C++ dependency must be containerized or rebuilt |
+| Software | NetworkX/KDA code and pinned Docker/Apptainer recipes exist; public RIMBANet source and Linux binary are available upstream | The production SIF must be built and checksum-frozen under `/sc/arion/scratch/zhuane01/alzheimer`, with both work and scratch roots bound into each job |
 
 SEA-AD now provides processed snRNA-seq, snATAC-seq, and Multiome resources, while its genetics are available under controlled access. See the [SEA-AD data portal](https://brain-map.org/consortia/sea-ad/our-data) and [NIAGADS dataset NG00174](https://dss.niagads.org/datasets/ng00174/).
 
@@ -69,7 +71,7 @@ and the accepted SEA-AD implementation plan in this directory.
 
 ### 2. Obtain and match SEA-AD genetics
 
-Obtain controlled access to the SEA-AD WGS data and match it to the A9 expression donors. The official WGS release has 84 donors while the local A9 H5AD describes 83, so donor concordance must be checked explicitly.
+Obtain controlled access to the SEA-AD WGS data and match it to the A9 expression donors. The official WGS release has 84 donors while the local A9 H5AD describes 83, so donor concordance must be checked explicitly. Stage the downloadable working copy and derived genotype matrices under `/sc/arion/scratch/zhuane01/alzheimer/data/seaad_wgs/`; retain source identities and checksums persistently because Minerva scratch is disposable.
 
 ### 3. Construct seven broad cell-type networks
 
@@ -117,7 +119,7 @@ Only scale to genome-wide, seven-cell-type networks if that pilot is stable.
 
 ## Bottom line
 
-A SEA-AD Bayesian network is technically possible because the cohort now has expression, chromatin, and matched genetic data. The construction code is public, but the required SEA-AD H5AD/pseudobulk, controlled WGS, TF-target snapshot, and runtime are not present in this checkout. The 78-donor sample size also makes individual edges exploratory.
+A SEA-AD Bayesian network is technically possible because the cohort now has expression, chromatin, and matched genetic data. The construction code is public, but the required SEA-AD H5AD/pseudobulk, controlled WGS, TF-target snapshot, and built runtime are not present in this checkout. Downloadable/reproducible bulk inputs, the SIF, and run products are staged in Minerva scratch; only code, frozen provenance, and compact validated releases remain in the work checkout. The [scratch reproduction runbook](seaad-rimbanet-scratch-reproduction.md) documents how each artifact class is restored or regenerated and identifies the WGS/ENCODE identities that still must be frozen. The 78-donor sample size also makes individual edges exploratory.
 
 The scientifically strongest near-term plan is:
 

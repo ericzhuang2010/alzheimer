@@ -1,0 +1,90 @@
+#!/usr/bin/env bash
+#BSUB -J "seaad_rimbanet_prepare"
+#BSUB -q premium
+#BSUB -n 4
+#BSUB -R "span[hosts=1]"
+#BSUB -R "rusage[mem=64000]"
+#BSUB -M 64000
+#BSUB -W 24:00
+#BSUB -o /sc/arion/scratch/zhuane01/alzheimer/results/validation_human/11_seaad_rimbanet/logs/preparation/%J.%I.out
+#BSUB -e /sc/arion/scratch/zhuane01/alzheimer/results/validation_human/11_seaad_rimbanet/logs/preparation/%J.%I.err
+
+set -euo pipefail
+
+: "${PROJECT_ROOT:?Set PROJECT_ROOT to the repository root}"
+: "${STAGE:?Set STAGE to genotypes or network}"
+CONFIG="${CONFIG:-config/seaad_rimbanet.yml}"
+IMAGE="${RIMBANET_IMAGE:-/sc/arion/scratch/zhuane01/alzheimer/external_tools/containers/seaad-rimbanet.sif}"
+STORAGE_ROOT="${RIMBANET_STORAGE_ROOT:-/sc/arion/scratch/zhuane01/alzheimer}"
+CONTAINER_RUNTIME="${CONTAINER_RUNTIME:-apptainer}"
+
+cd "$PROJECT_ROOT"
+command -v "$CONTAINER_RUNTIME" >/dev/null 2>&1 || {
+  echo "Container runtime is unavailable: $CONTAINER_RUNTIME" >&2
+  exit 3
+}
+[[ -s "$IMAGE" ]] || {
+  echo "Container image is unavailable: $IMAGE" >&2
+  exit 3
+}
+[[ -d "$STORAGE_ROOT" ]] || {
+  echo "Minerva scratch storage root is unavailable: $STORAGE_ROOT" >&2
+  exit 3
+}
+
+RIMBANET_EXEC=(
+  "$CONTAINER_RUNTIME" exec
+  --bind "$PROJECT_ROOT:$PROJECT_ROOT"
+  --bind "$STORAGE_ROOT:$STORAGE_ROOT"
+  --pwd "$PROJECT_ROOT"
+  "$IMAGE"
+)
+
+case "$STAGE" in
+  genotypes)
+    "${RIMBANET_EXEC[@]}" \
+      bash scripts/validation_human/11_prepare_seaad_genotypes.sh \
+      --config "$CONFIG"
+    ;;
+  network)
+    NETWORK="${NETWORK:-}"
+    if [[ -z "$NETWORK" ]]; then
+      : "${LSB_JOBINDEX:?NETWORK or LSB_JOBINDEX is required for network stage}"
+      NETWORK="$(
+        "${RIMBANET_EXEC[@]}" python - "$CONFIG" "$LSB_JOBINDEX" <<'PY'
+import sys
+import yaml
+
+with open(sys.argv[1], encoding="utf-8") as handle:
+    config = yaml.safe_load(handle)
+index = int(sys.argv[2])
+networks = [str(value) for value in config["networks"]]
+if not 1 <= index <= len(networks):
+    raise SystemExit(f"LSB_JOBINDEX {index} is outside 1-{len(networks)}")
+print(networks[index - 1])
+PY
+      )"
+    fi
+
+    "${RIMBANET_EXEC[@]}" \
+      Rscript scripts/validation_human/11_prepare_rimbanet_expression.R \
+      --config "$CONFIG" --network "$NETWORK"
+    "${RIMBANET_EXEC[@]}" \
+      Rscript scripts/validation_human/11_run_celltype_eqtl.R \
+      --config "$CONFIG" --network "$NETWORK" --stage all
+    "${RIMBANET_EXEC[@]}" \
+      Rscript scripts/validation_human/11_discretize_rimbanet_expression.R \
+      --config "$CONFIG" --network "$NETWORK"
+    "${RIMBANET_EXEC[@]}" \
+      python scripts/validation_human/11_prepare_rimbanet_inputs.py \
+      --config "$CONFIG" --network "$NETWORK" \
+      --binary /usr/local/bin/testBN
+    "${RIMBANET_EXEC[@]}" \
+      python scripts/validation_human/11_build_rimbanet_priors.py \
+      --config "$CONFIG" --network "$NETWORK"
+    ;;
+  *)
+    echo "Unknown STAGE=$STAGE; expected genotypes or network" >&2
+    exit 2
+    ;;
+esac

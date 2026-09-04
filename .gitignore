@@ -52,6 +52,8 @@ data/*
 !data/reference
 # Phase 19 external genetics snapshots are checksum-frozen but not committed.
 data/reference/phase19_genetic_support/
+# Large/raw RIMBANet prior sources are checksum-frozen but remain local.
+data/reference/rimbanet/encode_tf_targets.tsv.gz
 !data/processed/
 data/processed/*
 !data/processed/dataset_707_basic_02-08-2022.clean.txt
@@ -123,3 +125,18 @@ results/validation_human/**
 results/validation_human/05_pseudobulk/
 results/validation_human/05_pseudobulk_qc/
 results/validation_human/06_pseudobulk_qc/
+
+# SEA-AD RIMBANet: production bulk lives outside Git in Minerva scratch.
+# These rules also protect local/test fallbacks. Validated compact releases
+# are published under data/bayesian_network/SEAAD_A9_2024/.
+results/validation_human/11_seaad_rimbanet/11b_expression/**/*.tsv.gz
+results/validation_human/11_seaad_rimbanet/11c_genetics/**/*.tsv.gz
+results/validation_human/11_seaad_rimbanet/11d_priors/**/*.tsv.gz
+results/validation_human/11_seaad_rimbanet/11e_inputs/**/data.discretized.txt
+results/validation_human/11_seaad_rimbanet/11e_inputs/**/node.xml
+results/validation_human/11_seaad_rimbanet/11e_inputs/**/prior*.txt
+results/validation_human/11_seaad_rimbanet/11e_inputs/**/banned.txt
+results/validation_human/11_seaad_rimbanet/11f_runs/
+results/validation_human/11_seaad_rimbanet/11g_consensus/
+results/validation_human/11_seaad_rimbanet/scratch/
+results/validation_human/11_seaad_rimbanet/logs/

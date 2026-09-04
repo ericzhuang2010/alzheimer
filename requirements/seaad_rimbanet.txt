@@ -1,0 +1,7 @@
+# Python-side preparation, validation, and topology audit.
+h5py>=3.11,<4
+networkx>=3.3,<4
+numpy>=1.26,<3
+pandas>=2.1,<3
+PyYAML>=6,<7
+scipy>=1.11,<2

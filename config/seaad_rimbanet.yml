@@ -1,0 +1,183 @@
+schema_version: seaad_rimbanet_config_v1
+project_root: "."
+output_root: results/validation_human
+phase_directory: 11_seaad_rimbanet
+release_root: data/bayesian_network/SEAAD_A9_2024
+release_id: SEAAD_A9_2024_RIMBANET_v1
+
+storage:
+  # Minerva scratch is disposable and may be purged. Only reproducible/downloadable
+  # inputs and generated VH11 working products belong below this root.
+  root: /sc/arion/scratch/zhuane01/alzheimer
+  generated_output_root: /sc/arion/scratch/zhuane01/alzheimer/results/validation_human
+  persistent_release_root: data/bayesian_network/SEAAD_A9_2024
+  scratch_is_disposable: true
+
+method:
+  name: RIMBANet
+  mode: full_integrative
+  allow_expression_only_fallback: false
+  source_repository: https://github.com/mw201608/BayesianNetwork
+  source_commit: ebd5f4a6c31da22705622e71b6dc5f1eae195fdd
+  external_checkout: /sc/arion/scratch/zhuane01/alzheimer/external_tools/BayesianNetwork
+  binary: /sc/arion/scratch/zhuane01/alzheimer/external_tools/BayesianNetwork/bin/testBN
+  license_status: unverified
+  redistribute_source_or_binary: false
+
+inputs:
+  seaad_config: scripts/validation_human/seaad_deg_config.yml
+  cohort: results/validation_human/02_cohort/donor_cohort_primary.tsv
+  feature_order: results/validation_human/03_genes/feature_order.tsv
+  celltype_mapping: results/validation_human/04_supertype_manifest/supertype_to_broad_network.tsv
+  broad_profile_manifest: results/validation_human/04_supertype_manifest/donor_direct_broad_nucleus_counts.tsv
+  pseudobulk_directory: /sc/arion/scratch/zhuane01/alzheimer/results/validation_human/05_pseudobulk/direct_broad_counts
+  pseudobulk_status: results/validation_human/05_pseudobulk/status.tsv
+  pseudobulk_qc_status: results/validation_human/06_pseudobulk_qc/status.tsv
+  gencode_gtf: data/reference/gencode/gencode.v44.basic.annotation.gtf.gz
+  hgnc_complete_set: data/reference/hgnc/hgnc_complete_set_2026-06-05.txt
+  wgs_raw_plink_prefix: /sc/arion/scratch/zhuane01/alzheimer/data/seaad_wgs/NG00174/source/seaad_grch38
+  wgs_plink_prefix: /sc/arion/scratch/zhuane01/alzheimer/data/seaad_wgs/NG00174/derived/seaad_grch38_qc
+  # This compact, curated identity map is not a disposable bulk artifact.
+  wgs_sample_crosswalk: data/seaad_wgs/NG00174/sample_crosswalk.tsv
+  encode_tf_targets: /sc/arion/scratch/zhuane01/alzheimer/data/reference/rimbanet/encode_tf_targets.tsv.gz
+
+expected_identity:
+  h5ad_bytes: 37938782321
+  observations: 1395601
+  features: 36601
+  source_donors: 83
+  analysis_donors: 78
+  feature_order_sha256: 7dcafda20108ee578e451c410238e1b659478f02ca7a50bde24bd618b9ba972d
+  metadata_csv_sha256: 9ef1c9e1180d4404ce814283a25e3b2f0da05ab152af305990a1e3f2f682f3fc
+
+networks:
+  - Astrocytes
+  - Excitatory_neurons
+  - Inhibitory_neurons
+  - Microglia
+  - OPCs
+  - Oligodendrocytes
+  - Vasculature_cells
+
+cohort:
+  donor_field: donor_id
+  included_field: included_primary
+  required_included_value: true
+  primary_min_nuclei: 20
+  sensitivity_min_nuclei: 50
+  pilot_network: Microglia
+  require_pilot_before_scaleout: true
+
+expression:
+  counts_suffix: .counts.tsv.gz
+  samples_suffix: .samples.tsv
+  cpm_minimum: 1.0
+  minimum_donor_fraction: 0.20
+  minimum_unique_values: 4
+  pilot_max_genes: 5000
+  production_max_genes: 10000
+  variance_rank_ties: source_order
+  force_include_symbols: []
+  normalization: TMM_log2_CPM
+  prior_count: 0.5
+  residual_formula: "~ study + age_death_scaled + pmi_scaled + log10_nuclei"
+  preserve_biological_variables:
+    - diagnosis
+    - sex
+    - apoe_group
+  write_unadjusted_sensitivity: true
+
+genetics:
+  required: true
+  dataset: NIAGADS_NG00174
+  genome_build: GRCh38
+  minimum_matched_donors: 50
+  plink2_version: "2.0"
+  sample_missingness_maximum: 0.02
+  variant_missingness_maximum: 0.02
+  missing_genotype_imputation: mean_dosage
+  maf_minimum: 0.05
+  mac_minimum: 5
+  hwe_p_minimum: 1.0e-6
+  relatedness_kinship_maximum: 0.0884
+  require_sexcheck_pass: true
+  ancestry_pcs: 5
+  expression_pcs: 5
+  cis_window_bp: 1000000
+  model: additive_linear
+  fdr_method: BH
+  fdr_maximum: 0.05
+  genotype_matrix: /sc/arion/scratch/zhuane01/alzheimer/data/seaad_wgs/NG00174/derived/genotypes.tsv.gz
+  variant_positions: /sc/arion/scratch/zhuane01/alzheimer/data/seaad_wgs/NG00174/derived/variant_positions.tsv.gz
+  ancestry_covariates: /sc/arion/scratch/zhuane01/alzheimer/data/seaad_wgs/NG00174/derived/ancestry_pcs.tsv
+
+cit:
+  required: true
+  package: cit
+  package_version: 2.3.2
+  outcome_type: continuous
+  n_resamples: 50
+  n_permutations: 0
+  random_seed: 20260902
+  fdr_method: BH
+  fdr_maximum: 0.05
+
+encode:
+  required: true
+  source_manifest: data/reference/rimbanet/sources.tsv
+  release: ENCODE_SCREEN_or_TF_target_release_to_be_frozen
+  source_sha256: TO_BE_FROZEN
+
+priors:
+  evidence_weight_transform: fixed_log_sample_fields
+  default_added_weight_multiplier: 2.0
+  conflict_policy: higher_weight_then_lexicographic
+  ban_self_loops: true
+  include_pathway_priors: false
+  include_ppi_priors: false
+
+discretization:
+  states: 3
+  algorithm: one_dimensional_kmeans
+  nstart: 50
+  iter_max: 100
+  random_seed: 20260902
+  relabel_by_center: true
+  reject_empty_clusters: true
+
+rimbanet:
+  number_of_searches: 1000
+  base_seed: 1237
+  output_prefix: result
+  output_directory: networks
+  maximum_parents: 3
+  prior_scaling: 1
+  mutual_information_cutoff: -1
+  eqtl_threshold: 0
+  trylist_maximum: 5000000
+  qratio_offset: 1000
+  alpha_base: 0.65
+  alpha_sample_step: 0.015
+  alpha_sample_divisor: 100
+  require_all_searches: true
+  expected_search_ids: [1, 1000]
+
+consensus:
+  denominator: 1000
+  minimum_direction_support: 0.15
+  minimum_adjacency_support: 0.30
+  direction_rule: forward_greater_than_or_equal_reverse
+  tie_seed: 1000
+  preserve_intermediates: true
+  require_legacy_deloop: true
+
+release_checks:
+  require_dag: true
+  require_no_self_loops: true
+  require_no_duplicates: true
+  require_no_reciprocal_edges: true
+  maximum_indegree: 3
+  require_known_nodes: true
+  require_byte_identical_consensus_rerun: true
+
+random_seed: 20260902
