@@ -51,7 +51,7 @@ git -C "$RIMBANET_SOURCE" checkout \
 cd "$RIMBANET_STORAGE_ROOT"
 apptainer build --fakeroot "$RIMBANET_IMAGE" \
   "$PROJECT_ROOT/containers/rimbanet/Apptainer.def"
-apptainer test "$RIMBANET_IMAGE"
+APPTAINERENV_R_PROFILE_USER=/dev/null apptainer test "$RIMBANET_IMAGE"
 sha256sum "$RIMBANET_IMAGE"
 cd "$PROJECT_ROOT"
 ```
@@ -60,6 +60,11 @@ The definition file copies the pinned, local `external_tools/BayesianNetwork`
 checkout relative to the build working directory. If Minerva does not enable
 fakeroot builds for the allocation, build a private x86-64 OCI image on an
 approved builder and convert that image to SIF in the same scratch location.
+
+Disabling `R_PROFILE_USER` for the built-in test prevents a bound checkout's
+`.Rprofile` from activating its host `renv` library and masking the R packages
+installed in the image. Production R entry points additionally use
+`Rscript --vanilla`.
 
 Minerva scratch is disposable. The checkout and image must be reproducible
 from the pinned commit and this definition, and the SIF checksum must be

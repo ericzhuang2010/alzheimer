@@ -27,6 +27,7 @@ cd "$PROJECT_ROOT"
 apptainer exec \
   --bind "$PROJECT_ROOT:$PROJECT_ROOT" \
   --bind "$STORAGE_ROOT:$STORAGE_ROOT" \
+  --env R_PROFILE_USER=/dev/null \
   --pwd "$PROJECT_ROOT" \
   "$IMAGE" \
   bash scripts/validation_human/11_run_rimbanet_task.sh \

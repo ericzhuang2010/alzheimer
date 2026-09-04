@@ -36,6 +36,7 @@ RIMBANET_EXEC=(
   "$CONTAINER_RUNTIME" exec
   --bind "$PROJECT_ROOT:$PROJECT_ROOT"
   --bind "$STORAGE_ROOT:$STORAGE_ROOT"
+  --env R_PROFILE_USER=/dev/null
   --pwd "$PROJECT_ROOT"
   "$IMAGE"
 )
@@ -67,13 +68,13 @@ PY
     fi
 
     "${RIMBANET_EXEC[@]}" \
-      Rscript scripts/validation_human/11_prepare_rimbanet_expression.R \
+      Rscript --vanilla scripts/validation_human/11_prepare_rimbanet_expression.R \
       --config "$CONFIG" --network "$NETWORK"
     "${RIMBANET_EXEC[@]}" \
-      Rscript scripts/validation_human/11_run_celltype_eqtl.R \
+      Rscript --vanilla scripts/validation_human/11_run_celltype_eqtl.R \
       --config "$CONFIG" --network "$NETWORK" --stage all
     "${RIMBANET_EXEC[@]}" \
-      Rscript scripts/validation_human/11_discretize_rimbanet_expression.R \
+      Rscript --vanilla scripts/validation_human/11_discretize_rimbanet_expression.R \
       --config "$CONFIG" --network "$NETWORK"
     "${RIMBANET_EXEC[@]}" \
       python scripts/validation_human/11_prepare_rimbanet_inputs.py \

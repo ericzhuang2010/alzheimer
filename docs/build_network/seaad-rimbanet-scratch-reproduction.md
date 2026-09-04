@@ -138,7 +138,10 @@ module load apptainer  # omit if already available
 cd "$RIMBANET_STORAGE_ROOT"
 apptainer build --fakeroot "$RIMBANET_IMAGE" \
   "$PROJECT_ROOT/containers/rimbanet/Apptainer.def"
-apptainer test "$RIMBANET_IMAGE"
+apptainer exec "$RIMBANET_IMAGE" Rscript --vanilla -e \
+  'packages <- c("data.table","digest","edgeR","MatrixEQTL","yaml","cit"); stopifnot(all(vapply(packages, requireNamespace, logical(1), quietly=TRUE)))'
+APPTAINERENV_R_PROFILE_USER=/dev/null \
+  apptainer test "$RIMBANET_IMAGE"
 sha256sum "$RIMBANET_IMAGE"
 cd "$PROJECT_ROOT"
 ```
@@ -204,6 +207,7 @@ plan. Its canonical worker command is:
 apptainer exec \
   --bind "$PROJECT_ROOT:$PROJECT_ROOT" \
   --bind "$RIMBANET_STORAGE_ROOT:$RIMBANET_STORAGE_ROOT" \
+  --env R_PROFILE_USER=/dev/null \
   --pwd "$PROJECT_ROOT" "$RIMBANET_IMAGE" \
   bash scripts/validation_human/11_prepare_seaad_genotypes.sh \
     --config config/seaad_rimbanet.yml
@@ -264,7 +268,8 @@ Recovery is valid only when all applicable checks pass:
 ```bash
 test "$(git -C "$RIMBANET_SOURCE" rev-parse HEAD)" = \
   "ebd5f4a6c31da22705622e71b6dc5f1eae195fdd"
-apptainer test "$RIMBANET_IMAGE"
+APPTAINERENV_R_PROFILE_USER=/dev/null \
+  apptainer test "$RIMBANET_IMAGE"
 
 cd "$PROJECT_ROOT"
 .venv/bin/python scripts/validation_human/11_audit_rimbanet_inputs.py \
@@ -273,6 +278,7 @@ cd "$PROJECT_ROOT"
 apptainer exec \
   --bind "$PROJECT_ROOT:$PROJECT_ROOT" \
   --bind "$RIMBANET_STORAGE_ROOT:$RIMBANET_STORAGE_ROOT" \
+  --env R_PROFILE_USER=/dev/null \
   --pwd "$PROJECT_ROOT" "$RIMBANET_IMAGE" \
   python scripts/validation_human/11_check_rimbanet_environment.py \
     --config config/seaad_rimbanet.yml \

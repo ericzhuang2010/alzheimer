@@ -80,7 +80,7 @@ for network in \
   Astrocytes Excitatory_neurons Inhibitory_neurons Microglia \
   OPCs Oligodendrocytes Vasculature_cells
 do
-  Rscript scripts/validation_human/11_prepare_rimbanet_expression.R \
+  Rscript --vanilla scripts/validation_human/11_prepare_rimbanet_expression.R \
     --config "$SEAAD_RIMBANET_CONFIG" --network "$network"
 done
 
@@ -91,9 +91,9 @@ for network in \
   Astrocytes Excitatory_neurons Inhibitory_neurons Microglia \
   OPCs Oligodendrocytes Vasculature_cells
 do
-  Rscript scripts/validation_human/11_run_celltype_eqtl.R \
+  Rscript --vanilla scripts/validation_human/11_run_celltype_eqtl.R \
     --config "$SEAAD_RIMBANET_CONFIG" --network "$network" --stage all
-  Rscript scripts/validation_human/11_discretize_rimbanet_expression.R \
+  Rscript --vanilla scripts/validation_human/11_discretize_rimbanet_expression.R \
     --config "$SEAAD_RIMBANET_CONFIG" --network "$network"
 
   # Run inside the pinned Linux image so testBN is available.

@@ -19,6 +19,48 @@ isProject: false
 
 # SEA-AD Wang-Style RIMBANet Build Plan
 
+## Execution status — September 4, 2026
+
+**Step 3 — Build and validate the pinned Linux runtime is complete.** The
+active work returns to **Steps 1–2 — freeze and audit production input
+contracts** before Step 4 can begin.
+
+- The Minerva work checkout started at commit
+  b4486062ac77b3189e4f80a6b6a689c6b5952c0f.
+- The scratch layout and pinned mw201608/BayesianNetwork checkout were created.
+- Three runtime compatibility defects were diagnosed and corrected in the
+  repository container recipes: Xerces-C++ 2.8 must build serially, and the
+  RIMBANet C++ source must compile in gnu++98 mode. Container R commands must
+  also ignore the bound checkout's `.Rprofile` so its host `renv` library does
+  not mask packages installed in the image.
+- Minerva LSF build job 268173456 completed successfully and produced the
+  SIF SHA-256
+  1df82906537e74c73fb331e7652c4057bac92182293d7d3739d0a015a4f25840.
+- That checksum was independently recomputed on Minerva, matched, and was
+  frozen in config/seaad_rimbanet_execution.yml. The first test from the work
+  checkout activated its `renv` and reported edgeR, MatrixEQTL, and cit as
+  missing; this tests the wrong R library and does not establish that the
+  image packages are missing.
+- The isolated image check then confirmed data.table 1.18.6.1, digest 0.6.39,
+  edgeR 4.0.16, MatrixEQTL 2.4, yaml 2.3.12, and cit 2.3.2. The built-in image
+  test passed, and `11_check_rimbanet_environment.py` reported
+  `validated_complete` with zero failures at 2026-09-04T22:40:05Z.
+- Steps 1–2 remain scientifically blocked because the exact NIAGADS WGS
+  identity/crosswalk and ENCODE release/transformation/checksum are not yet
+  frozen. The VH05/VH06 broad-cell pseudobulk artifacts also still need to be
+  staged and checksum-verified on Minerva.
+- The formal VH11A audit at 2026-09-04T22:47:28Z reported exactly four failed
+  checks: all 14 broad pseudobulk shards are absent from scratch, the raw WGS
+  PLINK trio is absent, zero donors have an explicit WGS crosswalk match, and
+  the ENCODE TF-target input is neither present nor frozen.
+- A validated local VH05/VH06 result is available in the development
+  workspace. VH05 and VH06 both report `validated_complete`; the seven broad
+  count matrices and seven sample tables total about 22 MB and have SHA-256s
+  recorded in `pseudobulk_shard_manifest.tsv`. Stage and verify this compact
+  subset on Minerva instead of recomputing it from the 37.9-GB H5AD.
+- Steps 4–12 have not started in production. No stochastic search array,
+  including the Microglia pilot, has been submitted.
+
 ## Goal and end state
 
 Build seven SEA-AD donor-level Bayesian networks—Astrocytes, Excitatory neurons, Inhibitory neurons, Microglia, OPCs, Oligodendrocytes, and Vasculature cells—using the full integrative Wang method selected for this project:
@@ -52,15 +94,20 @@ All downloadable or reproducible bulk storage is rooted at
 `/sc/arion/scratch/zhuane01/alzheimer/`: the external RIMBANet checkout,
 Apptainer image, staged pseudobulk/WGS/ENCODE inputs, normalized matrices,
 genotype/eQTL intermediates, RIMBANet inputs, 7,000 per-search graphs, consensus
-intermediates, runtime scratch, and logs. These paths remain untracked.
+intermediates, runtime scratch, and logs. These paths remain untracked except
+for the explicitly approved 14-file, approximately 22-MB validated
+`05_pseudobulk/direct_broad_counts/` transfer bundle. That Git copy exists only
+to synchronize the seven count/sample pairs to Minerva; production still
+stages and reads them from scratch.
 Existing ROSMAP networks and current KDA outputs will not be overwritten.
 
 ### Minerva storage contract
 
 - `/sc/arion/work/zhuane01/alzheimer` contains Git-tracked code, frozen
   configuration, documentation, compact manifests/checksums, and validated
-  final network releases only. Do not stage container images, external source
-  trees, WGS, dense matrices, or search outputs there.
+  final network releases. The tracked direct-broad pseudobulk transfer bundle
+  is the sole matrix exception. Do not stage container images, external source
+  trees, WGS, any other dense matrices, or search outputs there.
 - `/sc/arion/scratch/zhuane01/alzheimer` contains material that can be
   downloaded again or regenerated deterministically. Scientific and execution
   configs carry absolute paths to this root, and every Apptainer invocation
@@ -105,11 +152,29 @@ Repo changes: add `scripts/validation_human/11_audit_rimbanet_inputs.py`, `data/
 - Replace hard-coded `$HOME`, GNU `readlink -f`, and LSF-only assumptions through repository wrappers; do not patch the external source in place. Preserve a patch file only if source changes prove unavoidable.
 - Add a synthetic 10–20-node smoke fixture that exercises input preparation, one search, parsing, consensus, and de-looping in the same runtime used on the cluster.
 
+Minerva compatibility requirements established during the first production
+build:
+
+- Build the bundled Xerces-C++ 2.8 source with serial make. Its recursive
+  makefiles are not parallel-safe; parallel header staging caused cascading
+  AbstractDOMParser.cpp compilation errors.
+- Compile the pinned RIMBANet source with -std=gnu++98. Modern compiler
+  defaults expose std::round, which conflicts with the legacy global
+  round(float) declaration.
+- Run image R entry points with `Rscript --vanilla` and pass
+  `R_PROFILE_USER=/dev/null` at the Apptainer boundary. Otherwise, running
+  from the bound work checkout activates its `.Rprofile` and host `renv`
+  library, masking the image's R packages.
+- Keep the compatibility adjustments in the container recipes rather than
+  patching the scratch source checkout in place.
+- Legacy format and string-literal warnings are nonfatal. Any compiler error
+  or nonzero make exit remains a hard failure.
+
 Repo changes: add `containers/rimbanet/Dockerfile`, `containers/rimbanet/Apptainer.def`, `containers/rimbanet/README.md`, `requirements/seaad_rimbanet.txt`, `scripts/validation_human/11_check_rimbanet_environment.py`, and `scripts/validation_human/11_smoke_test_rimbanet_local.sh`; update `renv.lock` after MatrixEQTL/CIT are successfully resolved. Generated images and external source remain untracked.
 
 ## Step 4 — Prepare donor-level broad-cell expression
 
-- Reuse the raw-UMI aggregation from [scripts/validation_human/05_stream_pseudobulk.py](scripts/validation_human/05_stream_pseudobulk.py): stage each reproducible `direct_broad_counts/<cell_type>.counts.tsv.gz` and companion sample file under `/sc/arion/scratch/zhuane01/alzheimer/results/validation_human/05_pseudobulk/direct_broad_counts/`. Each matrix is genes × 78 donors with companion nuclei counts and covariates.
+- Reuse the raw-UMI aggregation from [scripts/validation_human/05_stream_pseudobulk.py](scripts/validation_human/05_stream_pseudobulk.py): synchronize the explicitly tracked 14-file `results/validation_human/05_pseudobulk/direct_broad_counts/` bundle, then stage each reproducible `<cell_type>.counts.tsv.gz` and companion sample file under `/sc/arion/scratch/zhuane01/alzheimer/results/validation_human/05_pseudobulk/direct_broad_counts/`. Each matrix is genes × 78 donors with companion nuclei counts and covariates.
 - Require VH05/VH06 validated-complete status and checksum every count/sample shard. Do not treat nuclei as independent network samples.
 - For each cell type, retain donors meeting the prespecified primary nucleus threshold (initially the existing ≥20); report a ≥50-nucleus sensitivity set. Freeze sample order in `sample_manifest.tsv`.
 - Filter genes using donor-level expression criteria declared in config (CPM threshold and minimum donor fraction), remove duplicated/unresolved symbols and genes with insufficient variability, and preserve a reason for every exclusion.
@@ -227,6 +292,14 @@ Run these commands on an approved x86-64 Minerva build/compute node. Replace
 the study. The repository stays in the work allocation; the source checkout,
 build context, and SIF stay in scratch.
 
+Do not run the resource-intensive apptainer build process directly on a
+Minerva login host. Submit it through LSF or enter an approved interactive
+compute session first. Before submission, confirm that the recipe builds
+Xerces serially and injects -std=gnu++98 into the copied RIMBANet Makefile.
+These compatibility changes belong in the repository recipes; never modify the
+scratch source checkout in place. A successful build is only a candidate
+runtime until its checksum and full environment gate pass independently.
+
 ```bash
 export PROJECT_ROOT=/sc/arion/work/zhuane01/alzheimer
 export RIMBANET_STORAGE_ROOT=/sc/arion/scratch/zhuane01/alzheimer
@@ -262,11 +335,20 @@ git -C "$RIMBANET_SOURCE" checkout \
 test "$(git -C "$RIMBANET_SOURCE" rev-parse HEAD)" = \
   "ebd5f4a6c31da22705622e71b6dc5f1eae195fdd"
 
+grep -n 'make' "$PROJECT_ROOT/containers/rimbanet/Apptainer.def"
+grep -n 'std=gnu++98' \
+  "$PROJECT_ROOT/containers/rimbanet/Apptainer.def"
+
 # Apptainer resolves %files sources from the current working directory.
 cd "$RIMBANET_STORAGE_ROOT"
 apptainer build --fakeroot "$RIMBANET_IMAGE" \
   "$PROJECT_ROOT/containers/rimbanet/Apptainer.def"
-apptainer test "$RIMBANET_IMAGE"
+apptainer exec "$RIMBANET_IMAGE" Rscript --vanilla -e \
+  'packages <- c("data.table","digest","edgeR","MatrixEQTL","yaml","cit"); stopifnot(all(vapply(packages, requireNamespace, logical(1), quietly=TRUE))); cat("OK: isolated R packages present\n")'
+# Prevent a project .Rprofile from changing the library seen by an older
+# image whose embedded test did not yet include Rscript --vanilla.
+APPTAINERENV_R_PROFILE_USER=/dev/null \
+  apptainer test "$RIMBANET_IMAGE"
 IMAGE_SHA256="$(sha256sum "$RIMBANET_IMAGE" | awk '{print $1}')"
 printf '%s\n' "$IMAGE_SHA256"
 
@@ -312,6 +394,7 @@ RIMBANET_EXEC=(
   apptainer exec
   --bind "$PROJECT_ROOT:$PROJECT_ROOT"
   --bind "$RIMBANET_STORAGE_ROOT:$RIMBANET_STORAGE_ROOT"
+  --env R_PROFILE_USER=/dev/null
   --pwd "$PROJECT_ROOT"
   "$RIMBANET_IMAGE"
 )
@@ -525,5 +608,5 @@ Removed:
 - Each of seven cell types has exactly 1,000 validated searches and an explicit denominator of 1,000.
 - Consensus uses the verified forward/reverse adjacency rule, followed by pinned legacy de-looping.
 - Every final network is a valid DAG, has maximum in-degree ≤3, and is fully traceable to samples, genes, priors, run outputs, software commits, and config hashes.
-- Controlled and bulky artifacts remain untracked; release artifacts and compact provenance are reviewable in Git.
+- Controlled and bulky artifacts remain untracked except for the explicitly approved 14-file direct-broad pseudobulk transfer bundle; release artifacts and compact provenance are reviewable in Git.
 - Documentation states that directions are prior-constrained probabilistic hypotheses, not signed activation/repression or experimentally proven causality.

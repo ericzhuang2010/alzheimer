@@ -18,7 +18,7 @@ From: rocker/r-ver:4.3.3
         libgsl-dev perl plink2 python3 python3-pip python3-venv time zlib1g-dev
     rm -rf /var/lib/apt/lists/*
 
-    Rscript -e 'install.packages(c("BiocManager","data.table","digest","jsonlite","MatrixEQTL","yaml","cit"), repos="https://cloud.r-project.org"); BiocManager::install("edgeR", version="3.18", ask=FALSE, update=FALSE)'
+    Rscript --vanilla -e 'install.packages(c("BiocManager","data.table","digest","jsonlite","MatrixEQTL","yaml","cit"), repos="https://cloud.r-project.org"); BiocManager::install("edgeR", version="3.18", ask=FALSE, update=FALSE)'
 
     python3 -m venv /opt/rimbanet-venv
     /opt/rimbanet-venv/bin/pip install --no-cache-dir \
@@ -31,11 +31,15 @@ From: rocker/r-ver:4.3.3
     cd /opt/xerces-src/src/xercesc
     export XERCESCROOT=/opt/xerces-src
     ./runConfigure -p linux -c gcc -x g++ -r pthread -P /opt/xerces
+    # Xerces-C++ 2.8's recursive makefiles are not parallel-safe. Building
+    # serially prevents header-staging races under Minerva's modern toolchain.
     make
     make install
 
     cd /opt/rimbanet-src/src
     sed -i 's|^XMLROOT = .*|XMLROOT = /opt/xerces|' Makefile
+    # Preserve the legacy source's original language mode. Its global
+    # round(float) declaration conflicts with std::round in modern defaults.
     sed -i 's| -O -DLINUX -c| -O -std=gnu++98 -DLINUX -c|' Makefile
     make clean || true
     make -j"$(nproc)"
@@ -53,4 +57,6 @@ From: rocker/r-ver:4.3.3
     test -x /usr/local/bin/testBN
     ldd /usr/local/bin/testBN | grep -q "libxerces-c"
     python -c "import h5py, networkx, numpy, pandas, scipy, yaml"
-    Rscript -e 'stopifnot(all(vapply(c("data.table","digest","edgeR","MatrixEQTL","yaml","cit"), requireNamespace, logical(1), quietly=TRUE)))'
+    # Ignore a bound project's .Rprofile so its renv library cannot mask the
+    # packages installed in this image.
+    Rscript --vanilla -e 'stopifnot(all(vapply(c("data.table","digest","edgeR","MatrixEQTL","yaml","cit"), requireNamespace, logical(1), quietly=TRUE)))'

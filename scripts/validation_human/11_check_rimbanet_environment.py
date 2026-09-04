@@ -47,7 +47,11 @@ def r_package_version(package: str) -> str:
         f'if (!requireNamespace("{package}", quietly=TRUE)) '
         f'quit(status=2); cat(as.character(packageVersion("{package}")))'
     )
-    result = subprocess.run(["Rscript", "-e", code], text=True, capture_output=True)
+    # The repository .Rprofile activates renv. Production runs inside the
+    # pinned image must inspect its R library instead of the bound host one.
+    result = subprocess.run(
+        ["Rscript", "--vanilla", "-e", code], text=True, capture_output=True
+    )
     return result.stdout.strip() if result.returncode == 0 else "missing"
 
 
