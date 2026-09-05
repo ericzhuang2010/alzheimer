@@ -216,12 +216,17 @@ moves to **Step 4 — prepare donor-level broad-cell expression**.
   load its module within the job.
 - Step 4 began with the Microglia expression-preparation job 268232687. It
   exited before creating any stage output because `data.table::fread()` tried
-  to load the optional `R.utils` package for a gzipped count matrix. The
-  repository reader now streams `.gz` input through the image's `gzip`
-  executable and passes the decompressed TSV to `fread`; a compressed
-  input/output smoke test passes without changing or rebuilding the frozen
-  image. The runtime gate now also checks that `gzip` is available. Retry Step
-  4 only after synchronizing this fix to the Minerva checkout.
+  to load the optional `R.utils` package for a gzipped count matrix. Retry
+  268232747 confirmed that external decompression fixed the read, then exited
+  after writing `sample_manifest.tsv` and `gene_manifest.tsv` because the
+  image's `data.table` was compiled without zlib-backed `fwrite()`
+  compression. VH11 compressed readers now stream through `gzip -dc`; writers
+  create an uncompressed same-directory temporary file, compress it with
+  deterministic `gzip -n`, and atomically rename the result. The same fix is
+  applied to the downstream eQTL/CIT and discretization scripts. Compressed
+  input/output smoke tests pass without changing or rebuilding the frozen
+  image, and the runtime gate now checks that `gzip` is available. Both failed
+  jobs are rejected technical attempts; neither produced `status.tsv`.
 - Steps 5–12 have not started in production. No stochastic search array,
   including the Microglia pilot, has been submitted.
 
@@ -395,9 +400,11 @@ Repo changes: add `containers/rimbanet/Dockerfile`, `containers/rimbanet/Apptain
 - TMM-normalize to log-CPM, then residualize declared nuisance variables (study, PMI, age, nuclei count, and configured technical terms) while retaining diagnosis, APOE, and sex biology. Produce an unresidualized sensitivity matrix to quantify dependence on this choice.
 - Rank the robust gene universe by residual variance if a compute cap is required; the cap and any prespecified force-inclusion set must be fixed before network learning and cannot be selected from KDA outcomes.
 - Stream gzipped TSV inputs through the runtime's `gzip -dc` executable before
-  `data.table::fread()` parses them. This avoids an undeclared `R.utils`
-  dependency while retaining the frozen runtime; the environment gate must
-  confirm that `gzip` is present.
+  `data.table::fread()` parses them. Write compressed artifacts to a plain
+  same-directory temporary file, compress it with `gzip -n`, and atomically
+  rename the result. This avoids optional `R.utils` and zlib-backed
+  `data.table` features while retaining the frozen runtime; the environment
+  gate must confirm that `gzip` is present.
 
 Repo changes: add `scripts/validation_human/11_prepare_rimbanet_expression.R` and expression-contract tests. Generated per-cell-type `counts`, `normalized_expression`, `adjusted_expression`, `gene_manifest`, `sample_manifest`, and filter/QC files go to `$RIMBANET_OUTPUT_ROOT/11_seaad_rimbanet/11b_expression/`; the scratch copies are disposable, while permitted compact manifests/checks are retained with the release.
 
@@ -1011,9 +1018,10 @@ awk -F $'\t' 'NR == 1 || $2 == "FALSE" || $2 == "False" {print}' \
 ```
 
 The accepted Step 4 run must be LSF `DONE`, have empty stderr, report
-`validated_complete` in `status.tsv`, and contain no failed check rows. Job
-268232687 is a rejected technical attempt: it created no stage artifacts and
-does not require cleanup before the retry.
+`validated_complete` in `status.tsv`, and contain no failed check rows. Jobs
+268232687 and 268232747 are rejected technical attempts. The latter's two
+uncompressed manifests do not constitute a completed stage and are replaced
+atomically by the retry; manual cleanup is not required.
 
 ### Submit and gate the 1,000-search Microglia pilot
 

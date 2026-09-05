@@ -26,6 +26,25 @@ atomic_fwrite <- function(x, path, col_names = TRUE) {
   )
   if (!file.rename(temporary, path)) stop("Atomic rename failed: ", path)
 }
+gzip_executable <- function() {
+  executable <- unname(Sys.which("gzip"))
+  if (!nzchar(executable)) {
+    stop("gzip executable is required for compressed TSV input")
+  }
+  executable
+}
+
+fread_tsv <- function(path) {
+  if (grepl("[.]gz$", path)) {
+    return(data.table::fread(
+      cmd = paste(shQuote(gzip_executable()), "-dc --", shQuote(path)),
+      sep = "\t",
+      data.table = FALSE
+    ))
+  }
+  data.table::fread(path, sep = "\t", data.table = FALSE)
+}
+
 
 resolve_config_path <- function(value, project_root) {
   if (grepl("^/", value)) value else file.path(project_root, value)
@@ -64,9 +83,9 @@ if (!all(file.exists(c(expression_path, sample_path, gene_path)))) {
   stop("Expression stage is incomplete for ", args$network)
 }
 
-expression <- data.table::fread(expression_path, data.table = FALSE)
-samples <- data.table::fread(sample_path, data.table = FALSE)
-gene_manifest <- data.table::fread(gene_path, data.table = FALSE)
+expression <- fread_tsv(expression_path)
+samples <- fread_tsv(sample_path)
+gene_manifest <- fread_tsv(gene_path)
 if (names(expression)[[1L]] != "source_symbol") {
   stop("Adjusted expression first column must be source_symbol")
 }

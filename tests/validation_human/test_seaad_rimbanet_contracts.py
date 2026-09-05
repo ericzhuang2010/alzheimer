@@ -34,13 +34,27 @@ audit = load_script("11_audit_rimbanet_inputs.py")
 submit = load_script("11_submit_rimbanet_minerva.py")
 
 
-def test_expression_reader_streams_gzip_without_r_utils():
-    script = (SCRIPT_DIR / "11_prepare_rimbanet_expression.R").read_text()
-    assert 'gzip_binary <- Sys.which("gzip")' in script
-    assert 'cmd = paste(shQuote(gzip_binary), "-dc --", shQuote(path))' in script
-    assert "counts_table <- fread_tsv(counts_path)" in script
-    assert "samples <- fread_tsv(samples_path)" in script
-    assert "R.utils" not in script
+def test_r_scripts_stream_gzip_without_optional_data_table_compression():
+    names = [
+        "11_prepare_rimbanet_expression.R",
+        "11_run_celltype_eqtl.R",
+        "11_discretize_rimbanet_expression.R",
+    ]
+    scripts = {name: (SCRIPT_DIR / name).read_text() for name in names}
+    for script in scripts.values():
+        assert 'executable <- unname(Sys.which("gzip"))' in script
+        assert (
+            'cmd = paste(shQuote(gzip_executable()), "-dc --", shQuote(path))'
+            in script
+        )
+        assert "R.utils" not in script
+    for name in names[:2]:
+        script = scripts[name]
+        assert 'c("-n", "-f", "--", shQuote(temporary_plain))' in script
+        assert "compress =" not in script
+    expression = scripts[names[0]]
+    assert "counts_table <- fread_tsv(counts_path)" in expression
+    assert "samples <- fread_tsv(samples_path)" in expression
 
 
 def test_discretized_contract_and_xml():

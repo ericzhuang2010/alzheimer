@@ -22,14 +22,47 @@ parse_cli <- function(args) {
   out
 }
 
+gzip_executable <- function() {
+  executable <- unname(Sys.which("gzip"))
+  if (!nzchar(executable)) {
+    stop("gzip executable is required for compressed TSV input/output")
+  }
+  executable
+}
+
+fread_tsv <- function(path, ...) {
+  if (grepl("[.]gz$", path)) {
+    return(data.table::fread(
+      cmd = paste(shQuote(gzip_executable()), "-dc --", shQuote(path)),
+      sep = "\t",
+      ...
+    ))
+  }
+  data.table::fread(path, sep = "\t", ...)
+}
+
 atomic_fwrite <- function(x, path) {
   dir.create(dirname(path), recursive = TRUE, showWarnings = FALSE)
-  temporary <- paste0(path, ".tmp.", Sys.getpid())
-  data.table::fwrite(
-    x, temporary, sep = "\t", quote = FALSE, na = "NA",
-    compress = if (grepl("[.]gz$", path)) "gzip" else "none"
+  compressed <- grepl("[.]gz$", path)
+  temporary_plain <- file.path(
+    dirname(path), paste0(".", basename(path), ".tmp.", Sys.getpid())
   )
-  if (!file.rename(temporary, path)) stop("Atomic rename failed: ", path)
+  temporary_gzip <- paste0(temporary_plain, ".gz")
+  on.exit(unlink(c(temporary_plain, temporary_gzip)), add = TRUE)
+  data.table::fwrite(
+    x, temporary_plain, sep = "\t", quote = FALSE, na = "NA"
+  )
+  published <- temporary_plain
+  if (compressed) {
+    status <- system2(
+      gzip_executable(), c("-n", "-f", "--", shQuote(temporary_plain))
+    )
+    if (status != 0L || !file.exists(temporary_gzip)) {
+      stop("gzip compression failed: ", path)
+    }
+    published <- temporary_gzip
+  }
+  if (!file.rename(published, path)) stop("Atomic rename failed: ", path)
 }
 
 resolve_config_path <- function(value, project_root) {
@@ -44,7 +77,7 @@ provenance_paths <- function(paths, project_root) {
 
 read_gene_positions <- function(gtf_path, genes) {
   gtf <- data.table::fread(
-    cmd = paste("gzip -cd", shQuote(gtf_path)),
+    cmd = paste(shQuote(gzip_executable()), "-cd --", shQuote(gtf_path)),
     sep = "\t", header = FALSE, quote = "", data.table = FALSE,
     select = c(1L, 3L, 4L, 5L, 9L),
     col.names = c("chr", "feature", "left", "right", "attributes")
@@ -127,7 +160,7 @@ prior_dir <- file.path(
 dir.create(genetics_dir, recursive = TRUE, showWarnings = FALSE)
 dir.create(prior_dir, recursive = TRUE, showWarnings = FALSE)
 
-expression_table <- data.table::fread(
+expression_table <- fread_tsv(
   file.path(expression_dir, "adjusted_expression.tsv.gz"), data.table = FALSE
 )
 samples <- data.table::fread(
@@ -148,8 +181,8 @@ ancestry_path <- resolve_config_path(config$genetics$ancestry_covariates, projec
 if (!all(file.exists(c(genotype_path, position_path, ancestry_path)))) {
   stop("Prepared genotype inputs are missing")
 }
-genotype_table <- data.table::fread(genotype_path, data.table = FALSE)
-variant_positions <- data.table::fread(position_path, data.table = FALSE)
+genotype_table <- fread_tsv(genotype_path, data.table = FALSE)
+variant_positions <- fread_tsv(position_path, data.table = FALSE)
 donors <- intersect(colnames(expression), names(genotype_table)[-1L])
 minimum_matched <- as.integer(config$genetics$minimum_matched_donors)
 if (length(donors) < minimum_matched) {
@@ -256,7 +289,7 @@ if (args$stage %in% c("eqtl", "all")) {
 
 if (args$stage %in% c("cit", "all")) {
   if (!file.exists(eqtl_sig_path)) stop("Run eQTL stage before CIT")
-  significant <- data.table::fread(eqtl_sig_path, data.table = FALSE)
+  significant <- fread_tsv(eqtl_sig_path, data.table = FALSE)
   cit_rows <- list()
   row_index <- 0L
   if (nrow(significant)) {
@@ -345,7 +378,7 @@ if (args$stage %in% c("cit", "all")) {
 
 failed <- FALSE
 if (args$stage %in% c("eqtl", "all")) {
-  significant_check <- data.table::fread(eqtl_sig_path, data.table = FALSE)
+  significant_check <- fread_tsv(eqtl_sig_path, data.table = FALSE)
   eqtl_checks <- data.frame(
     check = c(
       "minimum_matched_donors", "covariates_full_rank",
@@ -403,7 +436,7 @@ if (args$stage %in% c("eqtl", "all")) {
   failed <- failed || !all(eqtl_checks$passed)
 }
 if (args$stage %in% c("cit", "all")) {
-  cit_check <- data.table::fread(
+  cit_check <- fread_tsv(
     file.path(prior_dir, "cit_edges_significant.tsv.gz"), data.table = FALSE
   )
   cit_checks <- data.frame(

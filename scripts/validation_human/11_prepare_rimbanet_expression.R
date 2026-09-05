@@ -24,14 +24,36 @@ parse_cli <- function(args) {
   out
 }
 
+gzip_executable <- function() {
+  executable <- unname(Sys.which("gzip"))
+  if (!nzchar(executable)) {
+    stop("gzip executable is required for compressed TSV input/output")
+  }
+  executable
+}
+
 atomic_fwrite <- function(x, path) {
   dir.create(dirname(path), recursive = TRUE, showWarnings = FALSE)
-  temporary <- paste0(path, ".tmp.", Sys.getpid())
-  data.table::fwrite(
-    x, temporary, sep = "\t", na = "NA", quote = FALSE,
-    compress = if (grepl("[.]gz$", path)) "gzip" else "none"
+  compressed <- grepl("[.]gz$", path)
+  temporary_plain <- file.path(
+    dirname(path), paste0(".", basename(path), ".tmp.", Sys.getpid())
   )
-  if (!file.rename(temporary, path)) stop("Atomic rename failed: ", path)
+  temporary_gzip <- paste0(temporary_plain, ".gz")
+  on.exit(unlink(c(temporary_plain, temporary_gzip)), add = TRUE)
+  data.table::fwrite(
+    x, temporary_plain, sep = "\t", na = "NA", quote = FALSE
+  )
+  published <- temporary_plain
+  if (compressed) {
+    status <- system2(
+      gzip_executable(), c("-n", "-f", "--", shQuote(temporary_plain))
+    )
+    if (status != 0L || !file.exists(temporary_gzip)) {
+      stop("gzip compression failed: ", path)
+    }
+    published <- temporary_gzip
+  }
+  if (!file.rename(published, path)) stop("Atomic rename failed: ", path)
 }
 
 sha256_file <- function(path) {
@@ -49,12 +71,8 @@ provenance_paths <- function(paths, project_root) {
 }
 fread_tsv <- function(path) {
   if (grepl("[.]gz$", path)) {
-    gzip_binary <- Sys.which("gzip")
-    if (!nzchar(gzip_binary)) {
-      stop("gzip executable is required to read compressed TSV input: ", path)
-    }
     return(data.table::fread(
-      cmd = paste(shQuote(gzip_binary), "-dc --", shQuote(path)),
+      cmd = paste(shQuote(gzip_executable()), "-dc --", shQuote(path)),
       sep = "\t",
       data.table = FALSE
     ))
