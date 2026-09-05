@@ -262,9 +262,13 @@ genotypes and run the Microglia cis-eQTL stage**.
   frozen missingness, MAF/MAC, and HWE filters. It then exited because PLINK2
   appends `.sexcheck` to the `--out` prefix while the wrapper tried to read the
   prefix itself. The wrapper now reads the generated `.sexcheck.sexcheck`
-  report. PLINK identified one sex-concordance problem in that report; the
-  strict zero-failure gate remains unchanged, and the protected failure must
-  be reviewed before an accepted retry.
+  report. Protected review showed that PLINK identified one borderline female
+  call (`PEDSEX=2`, `SNPSEX=NA`, chrX F=0.214177), not a male/female reversal.
+  The fixed thresholds remain unchanged. `exclude_sexcheck_failures: true`
+  conservatively excludes that donor, records the reason in the protected QC
+  exclusions, and reruns sex checking, relatedness, PCA, and dosage generation
+  on the expected 75 retained donors. The final retained cohort must still
+  have zero sex-check failures.
 - Step 5 is active but has no accepted run yet. Steps 6–12 and every stochastic
   search array, including the Microglia pilot, remain unsubmitted.
 
@@ -1110,10 +1114,12 @@ the completed VH11A and Microglia VH11B gates, then submits the
 controlled-data transformation and
 PLINK2 QC to LSF. The production importer independently reproduces every
 metric in the frozen final allele audit before it writes a normalized VCF.
-It then retains only the 78 explicitly matched primary donors before any
-missingness, MAF/MAC, HWE, relatedness, or ancestry-PC calculation. The
-read-only controlled-data bind and absolute Apptainer executable are
-mandatory.
+It first retains only the 78 explicitly matched primary donors, applies the
+frozen missingness, MAF/MAC, and HWE thresholds, and performs the initial sex
+check on the resulting 76 donors. The configured exclusion removes the one
+borderline call, after which the final 75-donor cohort is rechecked and used
+for relatedness, heterozygosity, ancestry-PC, and dosage calculations. The
+read-only controlled-data bind and absolute Apptainer executable are mandatory.
 
 ```bash
 (
@@ -1227,7 +1233,10 @@ cat "${RAW_PREFIX}.import_summary.tsv"
 
 echo "=== genotype QC summaries ==="
 cat "$ARRAY_ROOT/sample_genetic_qc_summary.tsv"
-cat "$ARRAY_ROOT/sample_genetic_qc_exclusions.tsv"
+awk -F $'\t' '
+  NR > 1 { count[$2]++ }
+  END { for (reason in count) print reason "\t" count[reason] }
+' "$ARRAY_ROOT/sample_genetic_qc_exclusions.tsv" | sort
 cat "$ARRAY_ROOT/genotype_imputation_summary.tsv"
 
 echo "=== genotype stage status ==="
@@ -1245,10 +1254,11 @@ echo "compressed_artifact_integrity=OK"
 Accept Step 5 genotype preparation only when LSF is `DONE`, stderr is empty,
 the import status is `validated_complete` with 95 source samples and exactly
 825,989 transformed variants, all 30 reproduced audit metrics equal the frozen
-summary, genetic QC reports zero sex-check failures and zero related pairs
-above the configured threshold, at least 50 post-QC donors remain, the exported
-matrix donor count equals the recorded post-QC count with no missing dosages
-after imputation, and `genotype_status.tsv` reports `validated_complete`
+summary, genetic QC reports 76 donors entering sex checking, one recorded
+borderline sex-check exclusion, 75 retained donors, zero final sex-check
+failures, and zero related pairs above the configured threshold. The exported
+matrix must contain the same 75 donors with no missing dosages after imputation,
+and `genotype_status.tsv` must report `validated_complete`
 with the pinned PLINK version and checksum. The subsequent Microglia
 cis-eQTL/CIT job remains part
 of Step 5 and is submitted only after this genotype gate passes.

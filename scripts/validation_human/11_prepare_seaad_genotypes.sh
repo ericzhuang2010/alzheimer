@@ -50,11 +50,17 @@ print(c["genetics"]["sexcheck_max_female_xf"])
 print(c["genetics"]["sexcheck_min_male_xf"])
 print(c["genetics"]["plink2_threads"])
 print(c["genetics"]["plink2_memory_mb"])
+print(str(c["genetics"]["exclude_sexcheck_failures"]).lower())
 PY
 )
 
 RAW_PREFIX="${CFG[0]}"
 QC_PREFIX="${CFG[1]}"
+PRESEX_PREFIX="${QC_PREFIX}.presex"
+PRESEX_LD_PREFIX="${PRESEX_PREFIX}.ld"
+PRESEX_SEXCHECK_PREFIX="${PRESEX_PREFIX}.sexcheck"
+PRESEX_SEXCHECK_REPORT="${PRESEX_SEXCHECK_PREFIX}.sexcheck"
+SEXPASS_KEEP="${QC_PREFIX}.sexpass.keep"
 SEXCHECK_PREFIX="${QC_PREFIX}.sexcheck"
 SEXCHECK_REPORT="${SEXCHECK_PREFIX}.sexcheck"
 KEEP="${CFG[13]}/11_seaad_rimbanet/11a_audit/array_keep.tsv"
@@ -144,6 +150,61 @@ python3 scripts/validation_human/11_import_seaad_array.py --config "$CONFIG"
   --mac "${CFG[5]}" \
   --hwe "${CFG[6]}" midp \
   --make-pgen \
+  --out "$PRESEX_PREFIX"
+
+"${PLINK2_RUN[@]}" --pfile "$PRESEX_PREFIX" \
+  --indep-pairwise 200 50 0.2 \
+  --out "$PRESEX_LD_PREFIX"
+"${PLINK2_RUN[@]}" --pfile "$PRESEX_PREFIX" \
+  --extract "${PRESEX_LD_PREFIX}.prune.in" \
+  --check-sex \
+    "max-female-xf=${CFG[18]}" \
+    "min-male-xf=${CFG[19]}" \
+  --out "$PRESEX_SEXCHECK_PREFIX"
+
+python3 - \
+  "$CONFIG" \
+  "$PRESEX_SEXCHECK_REPORT" \
+  "$SEXPASS_KEEP" <<'PY'
+import sys
+from pathlib import Path
+import pandas as pd
+import yaml
+
+config = yaml.safe_load(open(sys.argv[1]))
+sex_path = Path(sys.argv[2])
+keep_path = Path(sys.argv[3])
+if not sex_path.exists():
+    raise SystemExit(f"Missing initial PLINK sex-check output: {sex_path}")
+sex = pd.read_csv(sex_path, sep=r"\s+", dtype=str)
+iid_column = "#IID" if "#IID" in sex.columns else "IID"
+if iid_column not in sex.columns or "STATUS" not in sex.columns:
+    raise SystemExit("Cannot identify IID/status columns in initial sex-check report")
+if sex[iid_column].isna().any() or sex[iid_column].duplicated().any():
+    raise SystemExit("Initial sex-check report has missing or duplicate sample IDs")
+passed = sex["STATUS"].isin(["OK", "PASS"])
+exclude_failures = bool(config["genetics"]["exclude_sexcheck_failures"])
+retained = sex.loc[passed, iid_column] if exclude_failures else sex[iid_column]
+minimum = int(config["genetics"]["minimum_matched_donors"])
+if len(retained) < minimum:
+    raise SystemExit(
+        f"Only {len(retained)} genotype samples remain after sex QC; "
+        f"minimum is {minimum}"
+    )
+temporary = keep_path.with_name(f"{keep_path.name}.tmp")
+with temporary.open("w", encoding="utf-8") as handle:
+    handle.write("#FID\tIID\n")
+    for sample_id in retained:
+        handle.write(f"0\t{sample_id}\n")
+temporary.replace(keep_path)
+print(f"initial_sexcheck_samples={len(sex)}")
+print(f"initial_sexcheck_failures={int((~passed).sum())}")
+print(f"sexcheck_samples_retained={len(retained)}")
+PY
+
+"${PLINK2_RUN[@]}" --pfile "$PRESEX_PREFIX" \
+  --keep "$SEXPASS_KEEP" \
+  --make-pgen \
   --out "$QC_PREFIX"
 
 "${PLINK2_RUN[@]}" --pfile "$QC_PREFIX" \
@@ -172,9 +233,11 @@ python3 scripts/validation_human/11_import_seaad_array.py --config "$CONFIG"
 
 python3 - \
   "$CONFIG" \
+  "$PRESEX_SEXCHECK_REPORT" \
   "$SEXCHECK_REPORT" \
   "${QC_PREFIX}.kinship.kin0" \
   "${RAW_PREFIX}.psam" \
+  "${PRESEX_PREFIX}.psam" \
   "${QC_PREFIX}.psam" <<'PY'
 import sys
 from pathlib import Path
@@ -186,23 +249,36 @@ project = Path.cwd().resolve()
 def resolve(value):
     path = Path(value)
     return (path if path.is_absolute() else project / path).resolve()
-sex_path = Path(sys.argv[2])
-king_path = Path(sys.argv[3])
-raw_psam_path = Path(sys.argv[4])
-qc_psam_path = Path(sys.argv[5])
-if not sex_path.exists():
-    raise SystemExit(f"Missing PLINK sex-check output: {sex_path}")
+initial_sex_path = Path(sys.argv[2])
+final_sex_path = Path(sys.argv[3])
+king_path = Path(sys.argv[4])
+raw_psam_path = Path(sys.argv[5])
+presex_psam_path = Path(sys.argv[6])
+qc_psam_path = Path(sys.argv[7])
+for sex_path in (initial_sex_path, final_sex_path):
+    if not sex_path.exists():
+        raise SystemExit(f"Missing PLINK sex-check output: {sex_path}")
 if not king_path.exists():
     raise SystemExit(f"Missing PLINK KING output: {king_path}")
-sex = pd.read_csv(sex_path, sep=r"\s+")
-status_column = "STATUS" if "STATUS" in sex.columns else None
-if status_column is None:
-    raise SystemExit("Cannot identify sex-check status column")
-sex_failures = int(
-    (~sex[status_column].astype(str).isin(["OK", "PASS"])).sum()
-)
-if config["genetics"]["require_sexcheck_pass"] and sex_failures:
-    raise SystemExit(f"Sex check failed for {sex_failures} samples")
+
+def read_sexcheck(path):
+    frame = pd.read_csv(path, sep=r"\s+", dtype=str)
+    iid_column = "#IID" if "#IID" in frame.columns else "IID"
+    if iid_column not in frame.columns or "STATUS" not in frame.columns:
+        raise SystemExit(f"Cannot identify IID/status columns in {path}")
+    if frame[iid_column].isna().any() or frame[iid_column].duplicated().any():
+        raise SystemExit(f"Missing or duplicate sample IDs in {path}")
+    failures = ~frame["STATUS"].isin(["OK", "PASS"])
+    return frame, iid_column, failures
+
+initial_sex, initial_iid, initial_failed = read_sexcheck(initial_sex_path)
+final_sex, final_iid, final_failed = read_sexcheck(final_sex_path)
+initial_failure_ids = set(initial_sex.loc[initial_failed, initial_iid])
+final_failure_ids = set(final_sex.loc[final_failed, final_iid])
+if config["genetics"]["require_sexcheck_pass"] and final_failure_ids:
+    raise SystemExit(
+        f"Final sex check failed for {len(final_failure_ids)} samples"
+    )
 
 def read_iids(path):
     frame = pd.read_csv(path, sep=r"\s+", dtype=str)
@@ -215,6 +291,7 @@ def read_iids(path):
     return set(values)
 
 raw_samples = read_iids(raw_psam_path)
+presex_samples = read_iids(presex_psam_path)
 qc_samples = read_iids(qc_psam_path)
 expected_primary = int(config["expected_identity"]["genotype_primary_samples"])
 minimum_matched = int(config["genetics"]["minimum_matched_donors"])
@@ -223,15 +300,25 @@ if len(raw_samples) != expected_primary:
         f"Raw matched genotype cohort has {len(raw_samples)} samples; "
         f"expected {expected_primary}"
     )
-if not qc_samples.issubset(raw_samples):
-    raise SystemExit("Post-QC genotype samples are not a subset of the matched cohort")
+if not presex_samples.issubset(raw_samples):
+    raise SystemExit("Pre-sex-QC samples are not a subset of the matched cohort")
+if not qc_samples.issubset(presex_samples):
+    raise SystemExit("Final genotype samples are not a subset of pre-sex-QC samples")
 if len(qc_samples) < minimum_matched:
     raise SystemExit(
         f"Only {len(qc_samples)} genotype samples survived QC; "
         f"minimum is {minimum_matched}"
     )
-if len(sex) != len(qc_samples):
-    raise SystemExit("Sex-check report does not contain every post-QC sample")
+if len(initial_sex) != len(presex_samples):
+    raise SystemExit("Initial sex-check report does not cover every pre-sex-QC sample")
+if len(final_sex) != len(qc_samples):
+    raise SystemExit("Final sex-check report does not cover every retained sample")
+sex_excluded = presex_samples - qc_samples
+if config["genetics"]["exclude_sexcheck_failures"]:
+    if sex_excluded != initial_failure_ids:
+        raise SystemExit("Sex-QC exclusions do not equal initial sex-check failures")
+elif sex_excluded:
+    raise SystemExit("Samples were excluded by sex QC while exclusion was disabled")
 
 related_pairs = 0
 if king_path.exists() and king_path.stat().st_size:
@@ -250,23 +337,33 @@ if related_pairs:
 summary_root = resolve(config["genetics"]["ancestry_covariates"]).parent
 pd.DataFrame([{
     "matched_samples_before_qc": len(raw_samples),
-    "samples_removed_by_missingness": len(raw_samples - qc_samples),
+    "samples_removed_by_missingness": len(raw_samples - presex_samples),
+    "samples_entering_sexcheck": len(presex_samples),
+    "initial_sexcheck_failures": len(initial_failure_ids),
+    "samples_removed_by_sexcheck": len(sex_excluded),
     "samples_retained_after_qc": len(qc_samples),
-    "sexcheck_samples": len(sex),
-    "sexcheck_failures": sex_failures,
+    "sexcheck_samples": len(final_sex),
+    "sexcheck_failures": len(final_failure_ids),
     "related_pairs_above_threshold": related_pairs,
 }]).to_csv(
     summary_root / "sample_genetic_qc_summary.tsv", sep="\t", index=False
 )
-excluded_samples = sorted(raw_samples - qc_samples)
-pd.DataFrame(
-    [
+missingness_excluded = raw_samples - presex_samples
+exclusions = [
         {
             "genotype_sample_id": sample_id,
             "exclusion_reason": "sample_missingness_above_threshold",
         }
-        for sample_id in excluded_samples
-    ],
+        for sample_id in sorted(missingness_excluded)
+    ] + [
+        {
+            "genotype_sample_id": sample_id,
+            "exclusion_reason": "ambiguous_or_discordant_genetic_sex",
+        }
+        for sample_id in sorted(sex_excluded)
+    ]
+pd.DataFrame(
+    exclusions,
     columns=["genotype_sample_id", "exclusion_reason"],
 ).to_csv(
     summary_root / "sample_genetic_qc_exclusions.tsv", sep="\t", index=False
@@ -390,6 +487,9 @@ files = [
     pathlib.Path(f"{raw_prefix}.vcf.gz"),
     prefix.with_suffix(".pgen"), prefix.with_suffix(".pvar"),
     prefix.with_suffix(".psam"),
+    pathlib.Path(f"{prefix}.presex.sexcheck.sexcheck"),
+    pathlib.Path(f"{prefix}.sexcheck.sexcheck"),
+    pathlib.Path(f"{prefix}.sexpass.keep"),
     resolve(c["genetics"]["genotype_matrix"]),
     resolve(c["genetics"]["variant_positions"]),
     resolve(c["genetics"]["ancestry_covariates"]),

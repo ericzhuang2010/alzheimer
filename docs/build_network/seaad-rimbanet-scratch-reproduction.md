@@ -226,11 +226,14 @@ the accepted production genotype-QC executable. The wrapper independently
 checks the external executable's SHA-256 and exact version.
 
 The stage must recreate the QC PLINK prefix, dosage matrix, variant positions,
-ancestry PCs, missingness exclusions, QC summaries, artifact hashes, and
-`genotype_status.tsv`. Donors above the frozen sample-missingness threshold
-are excluded explicitly; downstream expression/genotype analyses use the
-intersection and require the configured minimum donor count. Do not copy
-derived files from another configuration.
+ancestry PCs, missingness and sex-QC exclusions, initial and final sex-check
+reports, QC summaries, artifact hashes, and `genotype_status.tsv`. Donors above
+the frozen sample-missingness threshold are excluded explicitly. With the
+frozen source and thresholds, 76 donors enter sex checking; the one borderline
+female call is excluded without changing its reported sex or relaxing the
+threshold, and the final 75-donor cohort is rechecked. Downstream
+expression/genotype analyses use the intersection and require the configured
+minimum donor count. Do not copy derived files from another configuration.
 
 ## 6. Restore the ENCODE TF-target input
 

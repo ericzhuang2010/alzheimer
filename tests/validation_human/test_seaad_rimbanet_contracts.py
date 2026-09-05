@@ -61,11 +61,16 @@ def test_r_scripts_stream_gzip_without_optional_data_table_compression():
     assert "samples <- fread_tsv(samples_path)" in expression
 
 
-def test_genotype_wrapper_uses_plink_generated_sexcheck_report():
+def test_genotype_wrapper_excludes_and_rechecks_sexcheck_failures():
     script = (SCRIPT_DIR / "11_prepare_seaad_genotypes.sh").read_text()
+    assert 'PRESEX_PREFIX="${QC_PREFIX}.presex"' in script
+    assert 'PRESEX_SEXCHECK_REPORT="${PRESEX_SEXCHECK_PREFIX}.sexcheck"' in script
     assert 'SEXCHECK_PREFIX="${QC_PREFIX}.sexcheck"' in script
     assert 'SEXCHECK_REPORT="${SEXCHECK_PREFIX}.sexcheck"' in script
-    assert '--out "$SEXCHECK_PREFIX"' in script
+    assert '--out "$PRESEX_SEXCHECK_PREFIX"' in script
+    assert '--keep "$SEXPASS_KEEP"' in script
+    assert '"exclude_sexcheck_failures"' in script
+    assert '"ambiguous_or_discordant_genetic_sex"' in script
     assert '  "$SEXCHECK_REPORT" \\\n' in script
 
 
@@ -431,6 +436,7 @@ def test_production_bulk_paths_are_under_minerva_scratch():
     )
     assert scientific["genetics"]["sexcheck_max_female_xf"] == 0.2
     assert scientific["genetics"]["sexcheck_min_male_xf"] == 0.8
+    assert scientific["genetics"]["exclude_sexcheck_failures"] is True
     assert not Path(scientific["release_root"]).is_absolute()
     assert not Path(
         scientific["inputs"]["genotype_sample_crosswalk"]

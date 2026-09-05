@@ -131,6 +131,7 @@ genetics:
   hwe_p_minimum: 1.0e-6
   relatedness_kinship_maximum: 0.0884
   require_sexcheck_pass: true
+  exclude_sexcheck_failures: true
   sexcheck_max_female_xf: 0.2
   sexcheck_min_male_xf: 0.8
   ancestry_pcs: 5
