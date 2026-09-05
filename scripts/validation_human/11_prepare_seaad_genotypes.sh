@@ -55,6 +55,8 @@ PY
 
 RAW_PREFIX="${CFG[0]}"
 QC_PREFIX="${CFG[1]}"
+SEXCHECK_PREFIX="${QC_PREFIX}.sexcheck"
+SEXCHECK_REPORT="${SEXCHECK_PREFIX}.sexcheck"
 KEEP="${CFG[13]}/11_seaad_rimbanet/11a_audit/array_keep.tsv"
 SEX_UPDATE="${CFG[13]}/11_seaad_rimbanet/11a_audit/array_sex.tsv"
 AUDIT_STATUS="${CFG[13]}/11_seaad_rimbanet/11a_audit/status.tsv"
@@ -152,7 +154,7 @@ python3 scripts/validation_human/11_import_seaad_array.py --config "$CONFIG"
   --check-sex \
     "max-female-xf=${CFG[18]}" \
     "min-male-xf=${CFG[19]}" \
-  --out "${QC_PREFIX}.sexcheck"
+  --out "$SEXCHECK_PREFIX"
 "${PLINK2_RUN[@]}" --pfile "$QC_PREFIX" \
   --extract "${QC_PREFIX}.ld.prune.in" \
   --make-king-table \
@@ -170,7 +172,7 @@ python3 scripts/validation_human/11_import_seaad_array.py --config "$CONFIG"
 
 python3 - \
   "$CONFIG" \
-  "${QC_PREFIX}.sexcheck" \
+  "$SEXCHECK_REPORT" \
   "${QC_PREFIX}.kinship.kin0" \
   "${RAW_PREFIX}.psam" \
   "${QC_PREFIX}.psam" <<'PY'

@@ -61,6 +61,14 @@ def test_r_scripts_stream_gzip_without_optional_data_table_compression():
     assert "samples <- fread_tsv(samples_path)" in expression
 
 
+def test_genotype_wrapper_uses_plink_generated_sexcheck_report():
+    script = (SCRIPT_DIR / "11_prepare_seaad_genotypes.sh").read_text()
+    assert 'SEXCHECK_PREFIX="${QC_PREFIX}.sexcheck"' in script
+    assert 'SEXCHECK_REPORT="${SEXCHECK_PREFIX}.sexcheck"' in script
+    assert '--out "$SEXCHECK_PREFIX"' in script
+    assert '  "$SEXCHECK_REPORT" \\\n' in script
+
+
 def test_discretized_contract_and_xml():
     nodes, matrix, samples = prepare.read_discretized(
         FIXTURE / "data.discretized.txt"

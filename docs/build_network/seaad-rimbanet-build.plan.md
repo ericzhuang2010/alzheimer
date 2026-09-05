@@ -234,7 +234,7 @@ genotypes and run the Microglia cis-eQTL stage**.
   the accepted Microglia VH11B run: LSF state `DONE`, empty stderr,
   `validated_complete`, 78 donors, 5,000 genes, zero failed checks, and
   valid gzip streams for all four compressed expression artifacts.
-- Four rejected technical Step 5 attempts exposed and corrected runtime
+- Five rejected technical Step 5 attempts exposed and corrected runtime
   contracts without producing an accepted genotype stage. Job 268232982 did
   not inherit `PROJECT_ROOT`; all LSF preparation submissions now attach
   required variables directly with `env`. Job 268233045 detected that the
@@ -257,6 +257,14 @@ genotypes and run the Microglia cis-eQTL stage**.
   max-female=0.2 and min-male=0.8. Donors failing the frozen missingness gate
   are explicitly recorded and excluded; downstream eQTL code intersects the
   post-QC genotype donors with expression and still requires at least 50.
+- Job 268247093 completed the deterministic import and every PLINK operation
+  with the pinned runtime, retaining 76 donors and 546,632 variants after the
+  frozen missingness, MAF/MAC, and HWE filters. It then exited because PLINK2
+  appends `.sexcheck` to the `--out` prefix while the wrapper tried to read the
+  prefix itself. The wrapper now reads the generated `.sexcheck.sexcheck`
+  report. PLINK identified one sex-concordance problem in that report; the
+  strict zero-failure gate remains unchanged, and the protected failure must
+  be reviewed before an accepted retry.
 - Step 5 is active but has no accepted run yet. Steps 6–12 and every stochastic
   search array, including the Microglia pilot, remain unsubmitted.
 
