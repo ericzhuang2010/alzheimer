@@ -35,10 +35,16 @@ inputs:
   pseudobulk_qc_status: results/validation_human/06_pseudobulk_qc/status.tsv
   gencode_gtf: data/reference/gencode/gencode.v44.basic.annotation.gtf.gz
   hgnc_complete_set: data/reference/hgnc/hgnc_complete_set_2026-06-05.txt
-  wgs_raw_plink_prefix: /sc/arion/scratch/zhuane01/alzheimer/data/seaad_wgs/NG00174/source/seaad_grch38
-  wgs_plink_prefix: /sc/arion/scratch/zhuane01/alzheimer/data/seaad_wgs/NG00174/derived/seaad_grch38_qc
-  # This compact, curated identity map is not a disposable bulk artifact.
-  wgs_sample_crosswalk: data/seaad_wgs/NG00174/sample_crosswalk.tsv
+  genotype_source_archive: /sc/arion/projects/adineto/sea_ad/Data/SNP_Genomic_Variants/SEA_AD_SNPs_vcf.tar.gz
+  genotype_source_member: SEA_AD_SNPs_vcf/sea_ad.vcf
+  genotype_d1_manifest: /sc/arion/scratch/zhuane01/alzheimer/data/seaad_genotypes/syn49430589/source/infinium-global-diversity-array-8-v1-0-D1-manifest-file-csv.zip
+  genotype_d2_manifest: /sc/arion/scratch/zhuane01/alzheimer/data/seaad_genotypes/syn49430589/source/infinium-global-diversity-array-8-v1-0-D2-manifest-file-csv.zip
+  genotype_reference_fasta: /sc/arion/scratch/zhuane01/alzheimer/data/reference/gencode/v44/GRCh38.primary_assembly.genome.fa
+  genotype_reference_fai: /sc/arion/scratch/zhuane01/alzheimer/data/reference/gencode/v44/GRCh38.primary_assembly.genome.fa.fai
+  genotype_final_audit: /sc/arion/scratch/zhuane01/alzheimer/data/seaad_genotypes/syn49430589/derived/final_allele_audit/summary.tsv
+  genotype_sample_crosswalk: data/seaad_genotypes/syn49430589/sample_crosswalk.tsv
+  genotype_raw_plink_prefix: /sc/arion/scratch/zhuane01/alzheimer/data/seaad_genotypes/syn49430589/derived/seaad_gda8_grch38
+  genotype_plink_prefix: /sc/arion/scratch/zhuane01/alzheimer/data/seaad_genotypes/syn49430589/derived/seaad_gda8_grch38_qc
   encode_tf_targets: /sc/arion/scratch/zhuane01/alzheimer/data/reference/rimbanet/encode_tf_targets.tsv.gz
 
 expected_identity:
@@ -49,6 +55,20 @@ expected_identity:
   analysis_donors: 78
   feature_order_sha256: 7dcafda20108ee578e451c410238e1b659478f02ca7a50bde24bd618b9ba972d
   metadata_csv_sha256: 9ef1c9e1180d4404ce814283a25e3b2f0da05ab152af305990a1e3f2f682f3fc
+  genotype_source_bytes: 41491256
+  genotype_source_sha256: f9d60b00db44e6a4f7c96329b1b8bbc1998dc96b3f4b1c4d3d4d274812dc9459
+  genotype_d1_manifest_sha256: 63286a4c03298188bf9502d66aef2ff8627ee06d4108c5504af09386ca663466
+  genotype_d2_manifest_sha256: bba55d6b646491fc2794e6b56b524200d82db8e4ed0d5ca55b02a57c36073d7a
+  genotype_reference_sha256: e49b92b3e4f321bf254c042f25b726d9931c4d74c7523e8b6bb530e63b0cfd4b
+  genotype_reference_fai_sha256: a2c323ea4cff34d7123ace4578f7e122b2d2f5a22f40dc23eb8b97d17723d169
+  genotype_final_audit_sha256: a790274b1cfc151ebb45a37e6a95ce7d7dcbcf1c548eb1a71551ea2d83182e02
+  genotype_source_variant_rows: 1904599
+  genotype_eligible_markers: 992665
+  genotype_final_unique_variants: 825989
+  genotype_crosswalk_sha256: 410e1ebd0ba6412d65d7c531db1654206fc3927401bdf7b219c6b665f0515956
+  genotype_source_samples: 95
+  genotype_primary_samples: 78
+  genotype_extra_samples: 17
 
 networks:
   - Astrocytes
@@ -89,7 +109,9 @@ expression:
 
 genetics:
   required: true
-  dataset: NIAGADS_NG00174
+  dataset: SEAAD_syn49430589_GDA8
+  platform: Infinium_Global_Diversity_Array_8
+  source_genome_build: GRCh37
   genome_build: GRCh38
   minimum_matched_donors: 50
   plink2_version: "2.0"
@@ -107,9 +129,9 @@ genetics:
   model: additive_linear
   fdr_method: BH
   fdr_maximum: 0.05
-  genotype_matrix: /sc/arion/scratch/zhuane01/alzheimer/data/seaad_wgs/NG00174/derived/genotypes.tsv.gz
-  variant_positions: /sc/arion/scratch/zhuane01/alzheimer/data/seaad_wgs/NG00174/derived/variant_positions.tsv.gz
-  ancestry_covariates: /sc/arion/scratch/zhuane01/alzheimer/data/seaad_wgs/NG00174/derived/ancestry_pcs.tsv
+  genotype_matrix: /sc/arion/scratch/zhuane01/alzheimer/data/seaad_genotypes/syn49430589/derived/genotypes.tsv.gz
+  variant_positions: /sc/arion/scratch/zhuane01/alzheimer/data/seaad_genotypes/syn49430589/derived/variant_positions.tsv.gz
+  ancestry_covariates: /sc/arion/scratch/zhuane01/alzheimer/data/seaad_genotypes/syn49430589/derived/ancestry_pcs.tsv
 
 cit:
   required: true

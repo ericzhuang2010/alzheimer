@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import importlib.util
+import io
+import tarfile
 import shutil
 import subprocess
 import sys
@@ -98,6 +100,26 @@ def test_plink_file_detection(tmp_path):
     ]
 
 
+def test_array_vcf_header_and_final_summary_readers(tmp_path):
+    archive_path = tmp_path / "source.tar.gz"
+    member = "SEA_AD_SNPs_vcf/sea_ad.vcf"
+    payload = (
+        "##fileformat=VCFv4.2\n"
+        "#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\tFORMAT\t1_H1\t2_H2\n"
+        "1\t10\trs1\tA\tG\t.\tPASS\t.\tGT\t0/1\t0/0\n"
+    ).encode()
+    with tarfile.open(archive_path, "w:gz") as archive:
+        info = tarfile.TarInfo(member)
+        info.size = len(payload)
+        archive.addfile(info, io.BytesIO(payload))
+    assert audit.read_vcf_samples(archive_path, member) == ["1_H1", "2_H2"]
+
+    summary_path = tmp_path / "summary.tsv"
+    summary_path.write_text("metric\tvalue\nsource_variant_rows\t3\n")
+    assert audit.summary_metrics(summary_path) == {"source_variant_rows": 3}
+
+
+
 def test_minerva_bsub_command_uses_execution_profile(tmp_path):
     command = submit.build_bsub_command(
         project_root=tmp_path,
@@ -157,13 +179,18 @@ def test_production_bulk_paths_are_under_minerva_scratch():
         (ROOT / "config/seaad_rimbanet_execution.yml").read_text()
     )
     scratch = Path("/sc/arion/scratch/zhuane01/alzheimer")
-    bulk_paths = [
+    scratch_paths = [
         scientific["storage"]["generated_output_root"],
         scientific["method"]["external_checkout"],
         scientific["method"]["binary"],
-        scientific["inputs"]["wgs_raw_plink_prefix"],
         scientific["inputs"]["pseudobulk_directory"],
-        scientific["inputs"]["wgs_plink_prefix"],
+        scientific["inputs"]["genotype_d1_manifest"],
+        scientific["inputs"]["genotype_d2_manifest"],
+        scientific["inputs"]["genotype_reference_fasta"],
+        scientific["inputs"]["genotype_reference_fai"],
+        scientific["inputs"]["genotype_final_audit"],
+        scientific["inputs"]["genotype_raw_plink_prefix"],
+        scientific["inputs"]["genotype_plink_prefix"],
         scientific["inputs"]["encode_tf_targets"],
         scientific["genetics"]["genotype_matrix"],
         scientific["genetics"]["variant_positions"],
@@ -174,11 +201,19 @@ def test_production_bulk_paths_are_under_minerva_scratch():
         execution["paths"]["log_root"],
         execution["paths"]["external_rimbanet"],
     ]
+    controlled_source = Path(
+        "/sc/arion/projects/adineto/sea_ad/Data/SNP_Genomic_Variants/"
+        "SEA_AD_SNPs_vcf.tar.gz"
+    )
     assert Path(scientific["storage"]["root"]) == scratch
     assert Path(execution["paths"]["storage_root"]) == scratch
-    assert all(Path(value).is_relative_to(scratch) for value in bulk_paths)
+    assert all(Path(value).is_relative_to(scratch) for value in scratch_paths)
+    assert Path(scientific["inputs"]["genotype_source_archive"]) == controlled_source
+    assert execution["lsf_production"]["project"] == "acc_adineto"
     assert not Path(scientific["release_root"]).is_absolute()
-    assert not Path(scientific["inputs"]["wgs_sample_crosswalk"]).is_absolute()
+    assert not Path(
+        scientific["inputs"]["genotype_sample_crosswalk"]
+    ).is_absolute()
 
 
 def test_minerva_scaleout_requires_completed_pilot(tmp_path):

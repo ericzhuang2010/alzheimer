@@ -3,12 +3,14 @@
 
 from __future__ import annotations
 
+import re
 import subprocess
+import tarfile
 from pathlib import Path
 
 import pandas as pd
 
-from seaad_common import atomic_write_tsv
+from seaad_common import atomic_write_tsv, sha256_file
 from rimbanet_common import (
     configured_path,
     load_rimbanet_config,
@@ -49,6 +51,26 @@ def git_head(path: Path) -> str:
 
 def read_bool(value) -> bool:
     return str(value).strip().lower() in {"true", "1", "yes"}
+
+def read_vcf_samples(archive_path: Path, member: str) -> list[str]:
+    with tarfile.open(archive_path, "r:gz") as archive:
+        handle = archive.extractfile(member)
+        if handle is None:
+            raise ValueError(f"Missing VCF archive member: {member}")
+        for raw_line in handle:
+            if raw_line.startswith(b"#CHROM\t"):
+                fields = raw_line.decode("utf-8").rstrip("\r\n").split("\t")
+                return [value.strip() for value in fields[9:]]
+    raise ValueError(f"VCF sample header not found in {member}")
+
+
+def summary_metrics(path: Path) -> dict[str, int]:
+    table = pd.read_csv(path, sep="\t", dtype={"metric": str})
+    if list(table.columns) != ["metric", "value"] or not table["metric"].is_unique:
+        raise ValueError(f"Malformed metric summary: {path}")
+    values = pd.to_numeric(table["value"], errors="raise").astype(int)
+    return dict(zip(table["metric"], values, strict=True))
+
 
 
 def main() -> int:
@@ -128,96 +150,263 @@ def main() -> int:
         )
     )
 
-    prefix = configured_path(
-        project_root, config["inputs"]["wgs_raw_plink_prefix"], must_exist=False
+    identity = config["expected_identity"]
+    genotype_specs = [
+        (
+            "genotype_source_archive_frozen",
+            "genotype_source_archive",
+            "genotype_source_sha256",
+            "genotype_source_bytes",
+        ),
+        (
+            "genotype_d1_manifest_frozen",
+            "genotype_d1_manifest",
+            "genotype_d1_manifest_sha256",
+            None,
+        ),
+        (
+            "genotype_d2_manifest_frozen",
+            "genotype_d2_manifest",
+            "genotype_d2_manifest_sha256",
+            None,
+        ),
+        (
+            "genotype_reference_fasta_frozen",
+            "genotype_reference_fasta",
+            "genotype_reference_sha256",
+            None,
+        ),
+        (
+            "genotype_reference_fai_frozen",
+            "genotype_reference_fai",
+            "genotype_reference_fai_sha256",
+            None,
+        ),
+        (
+            "genotype_final_audit_frozen",
+            "genotype_final_audit",
+            "genotype_final_audit_sha256",
+            None,
+        ),
+    ]
+    genotype_paths: dict[str, Path] = {}
+    for check_name, input_key, hash_key, bytes_key in genotype_specs:
+        path = configured_path(
+            project_root, config["inputs"][input_key], must_exist=False
+        )
+        genotype_paths[input_key] = path
+        expected_sha256 = str(identity[hash_key])
+        expected_bytes = int(identity[bytes_key]) if bytes_key else None
+        if path.exists() and path.is_file():
+            observed_bytes = path.stat().st_size
+            observed_sha256 = sha256_file(path)
+            passed = observed_sha256 == expected_sha256 and (
+                expected_bytes is None or observed_bytes == expected_bytes
+            )
+            observed = f"bytes={observed_bytes};sha256={observed_sha256}"
+        else:
+            passed = False
+            observed = "missing"
+        expected_value = f"sha256={expected_sha256}"
+        if expected_bytes is not None:
+            expected_value = f"bytes={expected_bytes};{expected_value}"
+        checks.append(
+            (
+                check_name,
+                passed,
+                observed,
+                expected_value,
+                provenance_path(path, project_root),
+            )
+        )
+
+    final_audit_path = genotype_paths["genotype_final_audit"]
+    audit_values: dict[str, int] = {}
+    if final_audit_path.exists():
+        try:
+            audit_values = summary_metrics(final_audit_path)
+            artifacts.append(final_audit_path)
+        except (OSError, ValueError):
+            audit_values = {}
+    expected_audit_values = {
+        "source_variant_rows": int(identity["genotype_source_variant_rows"]),
+        "source_eligible_ids": int(identity["genotype_eligible_markers"]),
+        "final_unique_reference_aligned": int(
+            identity["genotype_final_unique_variants"]
+        ),
+    }
+    audit_contract_ok = all(
+        audit_values.get(name) == value
+        for name, value in expected_audit_values.items()
     )
-    genotype_files = plink_files(prefix)
-    artifacts.extend(genotype_files)
     checks.append(
         (
-            "controlled_wgs_plink_present",
-            bool(genotype_files),
-            len(genotype_files),
-            3,
-            provenance_path(prefix, project_root),
+            "genotype_final_transformation_contract",
+            audit_contract_ok,
+            ";".join(
+                f"{name}={audit_values.get(name, 'missing')}"
+                for name in expected_audit_values
+            ),
+            ";".join(
+                f"{name}={value}" for name, value in expected_audit_values.items()
+            ),
+            provenance_path(final_audit_path, project_root),
+        )
+    )
+
+    source_archive = genotype_paths["genotype_source_archive"]
+    source_samples: list[str] = []
+    if source_archive.exists():
+        try:
+            source_samples = read_vcf_samples(
+                source_archive, str(config["inputs"]["genotype_source_member"])
+            )
+        except (OSError, tarfile.TarError, UnicodeDecodeError, ValueError):
+            source_samples = []
+    sample_pattern = re.compile(r"^[0-9]+_(.+)$")
+    source_sample_contract = (
+        len(source_samples) == int(identity["genotype_source_samples"])
+        and len(set(source_samples)) == len(source_samples)
+        and all(sample_pattern.fullmatch(value) for value in source_samples)
+    )
+    checks.append(
+        (
+            "genotype_source_sample_header",
+            source_sample_contract,
+            len(source_samples),
+            identity["genotype_source_samples"],
+            provenance_path(source_archive, project_root),
         )
     )
 
     crosswalk_path = configured_path(
-        project_root, config["inputs"]["wgs_sample_crosswalk"], must_exist=False
+        project_root, config["inputs"]["genotype_sample_crosswalk"], must_exist=False
     )
     donor_crosswalk = included[["donor_id", "sex"]].copy()
-    donor_crosswalk["wgs_fid"] = "0"
-    donor_crosswalk["wgs_sample_id"] = pd.NA
-    donor_crosswalk["matched_wgs"] = False
+    donor_crosswalk["genotype_fid"] = "0"
+    donor_crosswalk["genotype_sample_id"] = pd.NA
+    donor_crosswalk["matched_genotype"] = False
     crosswalk_ok = False
-    if crosswalk_path.exists():
+    crosswalk_permissions_ok = False
+    crosswalk_sha256 = "missing"
+    if crosswalk_path.exists() and crosswalk_path.is_file():
+        crosswalk_sha256 = sha256_file(crosswalk_path)
         raw_crosswalk = pd.read_csv(crosswalk_path, sep="\t", dtype=str)
-        required = {"donor_id", "wgs_sample_id"}
-        if required.issubset(raw_crosswalk.columns):
-            selected_columns = ["donor_id", "wgs_sample_id"]
-            if "wgs_fid" in raw_crosswalk.columns:
-                selected_columns.append("wgs_fid")
-            donor_crosswalk = donor_crosswalk.drop(
-                columns=["wgs_fid", "wgs_sample_id", "matched_wgs"]
-            ).merge(
-                raw_crosswalk[selected_columns].drop_duplicates(),
-                on="donor_id",
-                how="left",
-                validate="one_to_one",
+        required = {"donor_id", "genotype_sample_id"}
+        schema_ok = required.issubset(raw_crosswalk.columns)
+        if schema_ok:
+            raw_crosswalk = raw_crosswalk.copy()
+            if "genotype_fid" not in raw_crosswalk.columns:
+                raw_crosswalk["genotype_fid"] = "0"
+            donor_unique = raw_crosswalk["donor_id"].is_unique
+            sample_unique = raw_crosswalk["genotype_sample_id"].is_unique
+            exact_donors = set(raw_crosswalk["donor_id"]) == set(included["donor_id"])
+            sample_set = set(raw_crosswalk["genotype_sample_id"])
+            samples_present = sample_set.issubset(set(source_samples))
+            suffixes_valid = all(
+                (match := sample_pattern.fullmatch(str(row.genotype_sample_id)))
+                and match.group(1) == str(row.donor_id)
+                for row in raw_crosswalk.itertuples(index=False)
             )
-            if "wgs_fid" not in donor_crosswalk.columns:
-                donor_crosswalk["wgs_fid"] = "0"
-            donor_crosswalk["wgs_fid"] = donor_crosswalk["wgs_fid"].fillna("0")
-            donor_crosswalk["matched_wgs"] = donor_crosswalk[
-                "wgs_sample_id"
-            ].notna()
+            extra_samples = len(set(source_samples) - sample_set)
             crosswalk_ok = (
-                raw_crosswalk["donor_id"].is_unique
-                and raw_crosswalk["wgs_sample_id"].is_unique
-                and int(donor_crosswalk["matched_wgs"].sum())
-                >= int(config["genetics"]["minimum_matched_donors"])
+                crosswalk_sha256 == str(identity["genotype_crosswalk_sha256"])
+                and donor_unique
+                and sample_unique
+                and exact_donors
+                and samples_present
+                and suffixes_valid
+                and len(raw_crosswalk) == int(identity["genotype_primary_samples"])
+                and extra_samples == int(identity["genotype_extra_samples"])
             )
-            artifacts.append(crosswalk_path)
+            if donor_unique:
+                donor_crosswalk = donor_crosswalk.drop(
+                    columns=[
+                        "genotype_fid",
+                        "genotype_sample_id",
+                        "matched_genotype",
+                    ]
+                ).merge(
+                    raw_crosswalk[
+                        ["donor_id", "genotype_fid", "genotype_sample_id"]
+                    ],
+                    on="donor_id",
+                    how="left",
+                    validate="one_to_one",
+                )
+                donor_crosswalk["genotype_fid"] = donor_crosswalk[
+                    "genotype_fid"
+                ].fillna("0")
+                donor_crosswalk["matched_genotype"] = donor_crosswalk[
+                    "genotype_sample_id"
+                ].notna()
+        crosswalk_permissions_ok = crosswalk_path.stat().st_mode & 0o077 == 0
+        artifacts.append(crosswalk_path)
+
+    checks.append(
+        (
+            "protected_crosswalk_frozen",
+            crosswalk_sha256 == str(identity["genotype_crosswalk_sha256"]),
+            crosswalk_sha256,
+            identity["genotype_crosswalk_sha256"],
+            provenance_path(crosswalk_path, project_root),
+        )
+    )
+    checks.append(
+        (
+            "genotype_expression_crosswalk_valid",
+            crosswalk_ok,
+            int(donor_crosswalk["matched_genotype"].sum()),
+            f"{identity['genotype_primary_samples']} exact unique matches",
+            provenance_path(crosswalk_path, project_root),
+        )
+    )
+    checks.append(
+        (
+            "protected_crosswalk_permissions",
+            crosswalk_permissions_ok,
+            oct(crosswalk_path.stat().st_mode & 0o777) if crosswalk_path.exists() else "missing",
+            "no group/other permissions",
+            provenance_path(crosswalk_path, project_root),
+        )
+    )
+
     crosswalk_output = output / "donor_crosswalk.tsv"
     atomic_write_tsv(donor_crosswalk, crosswalk_output)
     artifacts.append(crosswalk_output)
+
     keep = donor_crosswalk.loc[
-        donor_crosswalk["matched_wgs"], ["wgs_fid", "wgs_sample_id"]
-    ].copy()
-    keep = keep.rename(columns={"wgs_fid": "#FID", "wgs_sample_id": "IID"})
-    keep_path = output / "wgs_keep.tsv"
+        donor_crosswalk["matched_genotype"],
+        ["genotype_fid", "genotype_sample_id"],
+    ].rename(
+        columns={"genotype_fid": "#FID", "genotype_sample_id": "IID"}
+    )
+    keep_path = output / "array_keep.tsv"
     atomic_write_tsv(keep, keep_path)
     artifacts.append(keep_path)
-    sex_codes = {"Male": "1", "Female": "2"}
+
+    sex_codes = {"male": "1", "female": "2"}
     sex_update = donor_crosswalk.loc[
-        donor_crosswalk["matched_wgs"], ["wgs_fid", "wgs_sample_id", "sex"]
+        donor_crosswalk["matched_genotype"],
+        ["genotype_fid", "genotype_sample_id", "sex"],
     ].copy()
-    sex_update["SEX"] = sex_update["sex"].map(sex_codes)
+    sex_update["SEX"] = sex_update["sex"].astype(str).str.lower().map(sex_codes)
     sex_update = sex_update.rename(
-        columns={"wgs_fid": "#FID", "wgs_sample_id": "IID"}
+        columns={"genotype_fid": "#FID", "genotype_sample_id": "IID"}
     )[["#FID", "IID", "SEX"]]
-    sex_path = output / "wgs_sex.tsv"
+    sex_path = output / "array_sex.tsv"
     atomic_write_tsv(sex_update, sex_path)
     artifacts.append(sex_path)
     checks.append(
         (
-            "wgs_sex_update_complete",
-            not sex_update["SEX"].isna().any(),
+            "genotype_sex_update_complete",
+            len(sex_update) == expected_donors and not sex_update["SEX"].isna().any(),
             int(sex_update["SEX"].notna().sum()),
-            len(sex_update),
+            expected_donors,
             "",
         )
     )
-    checks.append(
-        (
-            "wgs_expression_crosswalk_valid",
-            crosswalk_ok,
-            int(donor_crosswalk["matched_wgs"].sum()),
-            f">={config['genetics']['minimum_matched_donors']} unique explicit matches",
-            provenance_path(crosswalk_path, project_root),
-        )
-    )
+
 
     encode_path = configured_path(
         project_root, config["inputs"]["encode_tf_targets"], must_exist=False
@@ -279,7 +468,7 @@ def main() -> int:
         checks,
         artifacts,
         failed_checks=";".join(failed),
-        matched_wgs_donors=int(donor_crosswalk["matched_wgs"].sum()),
+        matched_genotype_donors=int(donor_crosswalk["matched_genotype"].sum()),
     )
     print(f"VH11A status: {state}; failed={len(failed)}")
     return 0 if not failed else 2

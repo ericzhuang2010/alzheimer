@@ -15,10 +15,13 @@ auditing, or extending network construction.
 
 Exact recovery is possible only after every required production source row in
 `data/reference/rimbanet/sources.tsv` has a frozen release, checksum, and
-non-placeholder status. As of September 4, 2026, the NIAGADS WGS release and
-ENCODE TF-target transformation still contain `TO_BE_FROZEN` values. Those
-are explicit blockers: a portal URL alone is not enough to reproduce the
-scientific input exactly.
+non-placeholder status. As of September 4, 2026, the shared
+`syn49430589` GDA-8 source has been selected and its 78-donor identity rule
+has passed, its archive/supporting-file SHA-256s are frozen, and the matching
+D2 GRCh38 manifest ZIP is frozen. The D1-to-D2 marker-mapping contract and
+ENCODE TF-target transformation are not yet frozen. Those are
+explicit blockers: a shared path or product page alone is not enough to
+reproduce the scientific input exactly.
 
 ## Persistent material that must survive a scratch purge
 
@@ -31,11 +34,12 @@ persistent/controlled location:
   `config/seaad_rimbanet_execution.yml`, with all production placeholders
   frozen;
 - `data/reference/rimbanet/sources.tsv`, with exact releases and SHA-256s;
-- the small controlled identity map at
-  `data/seaad_wgs/NG00174/sample_crosswalk.tsv` (untracked; protect according
-  to its data-use agreement);
+- the small protected identity map at
+  `data/seaad_genotypes/syn49430589/sample_crosswalk.tsv` (untracked; protect
+  according to the source data's access requirements);
 - the final `data/bayesian_network/SEAAD_A9_2024/` release and its checksums;
-- authorization and retrieval instructions for controlled NIAGADS data.
+- authorization and retrieval instructions for the shared GDA-8 source and
+  the checksum-frozen Illumina D2 GRCh38 manifest.
 
 Do not keep the only copy of an irreplaceable or manually curated file in
 scratch.
@@ -50,8 +54,8 @@ scratch.
 | `external_tools/proteomics_networks/` | Optional Wang-workflow reference checkout | GitHub repository plus frozen commit; not a production dependency |
 | `external_tools/containers/seaad-rimbanet.sif` | Linux x86-64 runtime | `containers/rimbanet/Apptainer.def` plus pinned source checkout |
 | `data/reference/rimbanet/encode_tf_targets.tsv.gz` | Frozen TF-target input | Exact ENCODE release and transformation contract; currently not frozen |
-| `data/seaad_wgs/NG00174/source/` | Controlled downloaded WGS/PLINK source | NIAGADS NG00174 approved download plus frozen file manifest; currently not frozen |
-| `data/seaad_wgs/NG00174/derived/` | QC PLINK files, dosage matrix, positions, ancestry PCs | `11_prepare_seaad_genotypes.sh` |
+| `data/seaad_genotypes/syn49430589/source/` | Checksum-verified GDA-8 VCF working copy and frozen D2 GRCh38 marker map | Shared `syn49430589` archive plus frozen Illumina manifest |
+| `data/seaad_genotypes/syn49430589/derived/` | GRCh38-normalized/QC PLINK files, dosage matrix, positions, ancestry PCs | `11_import_seaad_array.py` and `11_prepare_seaad_genotypes.sh` |
 | `results/validation_human/05_pseudobulk/direct_broad_counts/` | Seven broad-cell count/sample shards | Validated VH05 raw-UMI aggregation |
 | `results/validation_human/11_seaad_rimbanet/11a_*` | Input/runtime audits | VH11 audit and environment scripts |
 | `results/validation_human/11_seaad_rimbanet/11b_expression/` | Filtered, normalized, and adjusted expression | `11_prepare_rimbanet_expression.R` |
@@ -82,8 +86,8 @@ mkdir -p \
   "$APPTAINER_TMPDIR" \
   "$RIMBANET_STORAGE_ROOT/external_tools/containers" \
   "$RIMBANET_STORAGE_ROOT/data/reference/rimbanet" \
-  "$RIMBANET_STORAGE_ROOT/data/seaad_wgs/NG00174/source" \
-  "$RIMBANET_STORAGE_ROOT/data/seaad_wgs/NG00174/derived" \
+  "$RIMBANET_STORAGE_ROOT/data/seaad_genotypes/syn49430589/source" \
+  "$RIMBANET_STORAGE_ROOT/data/seaad_genotypes/syn49430589/derived" \
   "$RIMBANET_OUTPUT_ROOT/05_pseudobulk/direct_broad_counts" \
   "$RIMBANET_LOG_ROOT/preparation"
 
@@ -177,33 +181,47 @@ work allocation. Then place only the seven `*.counts.tsv.gz` and companion
 Do not use count shards from a different H5AD, cohort, feature order, or
 configuration even if their filenames match.
 
-## 5. Restore controlled WGS and regenerate derived genetics
+## 5. Restore the GDA-8 source and regenerate derived genetics
 
-The small curated donor/WGS identity crosswalk remains persistently at:
+The small donor/genotype identity crosswalk remains persistently at:
 
 ```text
-/sc/arion/work/zhuane01/alzheimer/data/seaad_wgs/NG00174/sample_crosswalk.tsv
+/sc/arion/work/zhuane01/alzheimer/data/seaad_genotypes/syn49430589/sample_crosswalk.tsv
 ```
 
-Restore the raw WGS files through the approved NIAGADS NG00174 mechanism into
-the prefix declared by `inputs.wgs_raw_plink_prefix`. Do not invent an
-automated URL or rename a different release to match the expected prefix.
+Re-read the access-controlled source from:
+
+```text
+/sc/arion/projects/adineto/sea_ad/Data/SNP_Genomic_Variants/SEA_AD_SNPs_vcf.tar.gz
+```
+
 Before production, freeze in `data/reference/rimbanet/sources.tsv`:
 
-- the exact NG00174 release/version;
-- every retrieved filename, byte count, and SHA-256;
-- the retrieval method and date;
-- genome build and allele conventions.
+- Synapse file identity `syn49430589`, filename, byte count, and SHA-256;
+- archive member path, byte count, VCF version, and hard-call format;
+- source GenomeStudio manifest `GDA-8v1-0_d1` and GRCh37 build;
+- exact matching Illumina D2 GRCh38 manifest identity and SHA-256;
+- the marker-ID join, allele/strand normalization, exclusion, and sort rules;
+- the strict `^[0-9]+_(<donor_id>)$` sample mapping rule and its 78-of-78
+  one-to-one audit result.
 
-There is intentionally no download command in this runbook while the source
-manifest says `TO_BE_FROZEN`. Recovery must stop at this step until approved
-access and exact file identities are available.
+Recovery must stop if the shared archive checksum differs, the D2 marker map is
+unavailable, or any donor mapping becomes missing, duplicated, or ambiguous.
+Never infer sample identity from VCF column order.
 
-Once the raw PLINK set and persistent crosswalk pass the VH11 audit, regenerate
-all derived WGS files with the genotype preparation job in the main build
-plan. Its canonical worker command is:
+Once the deterministic array-import stage and generic genotype schema are
+implemented, re-create the normalized PLINK source and all derived genetics
+with the canonical workers from the main build plan:
 
 ```bash
+apptainer exec \
+  --bind "$PROJECT_ROOT:$PROJECT_ROOT" \
+  --bind "$RIMBANET_STORAGE_ROOT:$RIMBANET_STORAGE_ROOT" \
+  --env R_PROFILE_USER=/dev/null \
+  --pwd "$PROJECT_ROOT" "$RIMBANET_IMAGE" \
+  python scripts/validation_human/11_import_seaad_array.py \
+    --config config/seaad_rimbanet.yml
+
 apptainer exec \
   --bind "$PROJECT_ROOT:$PROJECT_ROOT" \
   --bind "$RIMBANET_STORAGE_ROOT:$RIMBANET_STORAGE_ROOT" \
@@ -212,6 +230,9 @@ apptainer exec \
   bash scripts/validation_human/11_prepare_seaad_genotypes.sh \
     --config config/seaad_rimbanet.yml
 ```
+
+The importer command is a planned interface, not yet runnable in the current
+checkout. Do not bypass it with an undocumented coordinate conversion.
 
 The stage must recreate the QC PLINK prefix, dosage matrix, variant positions,
 ancestry PCs, QC summaries, artifact hashes, and `genotype_status.tsv`. Do not
@@ -241,8 +262,8 @@ After source inputs and the image are restored, run stages in this order:
 1. `11_audit_rimbanet_inputs.py` and
    `11_check_rimbanet_environment.py` recreate `11a_audit` and
    `11a_environment`.
-2. The genotype preparation job recreates shared WGS-derived files and the
-   shared `11c_genetics` status.
+2. The array-import and genotype preparation jobs recreate shared
+   SNP-array-derived files and the shared `11c_genetics` status.
 3. The seven-network preparation array runs expression preparation, cell-type
    eQTL/CIT, discretization, exact input generation, and prior assembly. This
    recreates `11b_expression` through `11e_inputs`.
@@ -299,7 +320,8 @@ input hash, and output hash match. Otherwise rerun them; never lower the
 - [ ] RIMBANet checkout is at the pinned commit.
 - [ ] SIF passes `apptainer test`; image and binary SHA-256s match.
 - [ ] Pseudobulk shards pass frozen identity and cohort checks.
-- [ ] NIAGADS release and every raw WGS file are frozen and verified.
+- [ ] Shared `syn49430589` archive, D2 GRCh38 marker map, mapping rules,
+      and every genotype artifact are frozen and verified.
 - [ ] ENCODE release and deterministic transformation are frozen and verified.
 - [ ] VH11 audit and runtime environment are `validated_complete`.
 - [ ] Each regenerated stage has matching artifact/status records.

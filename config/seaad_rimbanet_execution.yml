@@ -25,7 +25,7 @@ local_smoke:
 lsf_production:
   enabled: true
   queue: premium
-  project: TO_BE_CONFIGURED
+  project: acc_adineto
   walltime: "24:00"
   cores_per_task: 1
   memory_mb_per_task: 16000

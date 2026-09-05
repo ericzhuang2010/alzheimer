@@ -4,7 +4,7 @@
 
 **Construction-code update:** September 2, 2026
 
-**Minerva storage update:** September 4, 2026
+**Minerva storage and genotype-source update:** September 4, 2026
 
 ## Executive conclusion
 
@@ -28,12 +28,18 @@ That interpretation is documented in the [August 31 meeting summary](../email_no
 |---|---|---|
 | SEA-AD expression data | A9 H5AD has 1.4 million nuclei, 83 donors, and raw UMIs | Available upstream, but the large H5AD and pseudobulk matrices are not in this checkout |
 | Independent network samples | 78 donors in the current analytic cohort | Usable, but small for genome-wide network inference |
-| Matched genetics | WGS exists for 84 SEA-AD donors; SNP-array data for 80 | Available through controlled NIAGADS access, but not currently local |
+| Matched genetics | Shared GDA-8 VCF has 95 samples; strict ID audit matches all 78 primary expression donors one-to-one | Locally accessible; GRCh37-to-GRCh38 marker mapping and genotype QC remain required |
 | Regulatory priors | SEA-AD snATAC/Multiome and external TF-target resources exist | Technically available |
 | Original construction procedure | Final ROSMAP edge lists and the public RIMBANet wrapper/source are available | The previous analyst's run-specific `prior.txt`, parameter files, and edge-support results are still missing |
 | Software | NetworkX/KDA code and pinned Docker/Apptainer recipes exist; public RIMBANet source and Linux binary are available upstream | The production SIF must be built and checksum-frozen under `/sc/arion/scratch/zhuane01/alzheimer`, with both work and scratch roots bound into each job |
 
-SEA-AD now provides processed snRNA-seq, snATAC-seq, and Multiome resources, while its genetics are available under controlled access. See the [SEA-AD data portal](https://brain-map.org/consortia/sea-ad/our-data) and [NIAGADS dataset NG00174](https://dss.niagads.org/datasets/ng00174/).
+SEA-AD provides processed snRNA-seq, snATAC-seq, and Multiome resources. For
+this build, the selected matched-genetics source is the locally accessible
+Synapse file `syn49430589`, an Illumina Global Diversity Array-8 VCF under
+`/sc/arion/projects/adineto/sea_ad/Data/SNP_Genomic_Variants/`. NG00174 WGS
+is no longer a production dependency. See the
+[SEA-AD data portal](https://brain-map.org/consortia/sea-ad/our-data) and the
+[genotype-source decision record](seaad-genotype-source-decision.md).
 
 The construction source is now identified at
 [mw201608/BayesianNetwork](https://github.com/mw201608/BayesianNetwork), pinned
@@ -69,9 +75,18 @@ cycle removal. The copied networks' provenance is still incomplete. See [the
 existing Bayesian-network explanation](../email_notes/email_07252026_explained.md)
 and the accepted SEA-AD implementation plan in this directory.
 
-### 2. Obtain and match SEA-AD genetics
+### 2. Harmonize and match SEA-AD SNP-array genetics
 
-Obtain controlled access to the SEA-AD WGS data and match it to the A9 expression donors. The official WGS release has 84 donors while the local A9 H5AD describes 83, so donor concordance must be checked explicitly. Stage the downloadable working copy and derived genotype matrices under `/sc/arion/scratch/zhuane01/alzheimer/data/seaad_wgs/`; retain source identities and checksums persistently because Minerva scratch is disposable.
+Use the shared `syn49430589` GDA-8 VCF. Its 95 sample names contain a numeric
+prefix followed by the SEA-AD donor ID; a strict suffix audit matched all 78
+primary expression donors one-to-one, with 17 extra array samples excluded.
+The source `GDA-8v1-0_d1` coordinates are GRCh37, so freeze the matching
+Illumina D2 GRCh38 manifest, remap only unique marker IDs, normalize
+alleles/strands against the frozen GRCh38 reference, and apply genotype QC
+before eQTL mapping. Stage working and derived genotype matrices under
+`/sc/arion/scratch/zhuane01/alzheimer/data/seaad_genotypes/syn49430589/`;
+retain source identities, checksums, mapping rules, and the protected crosswalk
+persistently because Minerva scratch is disposable.
 
 ### 3. Construct seven broad cell-type networks
 
@@ -95,7 +110,8 @@ Use donor-by-cell-type raw-UMI pseudobulk profiles. The existing pipeline alread
 
 Use:
 
-- SEA-AD cis-eQTL and causal-inference-test analysis using matched WGS and expression
+- SEA-AD cis-eQTL and causal-inference-test analysis using matched GDA-8
+  genotypes and expression
 - SEA-AD ATAC/Multiome regulatory evidence
 - ENCODE or another documented TF-target source
 
@@ -119,13 +135,28 @@ Only scale to genome-wide, seven-cell-type networks if that pilot is stable.
 
 ## Bottom line
 
-A SEA-AD Bayesian network is technically possible because the cohort now has expression, chromatin, and matched genetic data. The construction code is public, but the required SEA-AD H5AD/pseudobulk, controlled WGS, TF-target snapshot, and built runtime are not present in this checkout. Downloadable/reproducible bulk inputs, the SIF, and run products are staged in Minerva scratch; only code, frozen provenance, and compact validated releases remain in the work checkout. The [scratch reproduction runbook](seaad-rimbanet-scratch-reproduction.md) documents how each artifact class is restored or regenerated and identifies the WGS/ENCODE identities that still must be frozen. The 78-donor sample size also makes individual edges exploratory.
+A SEA-AD Bayesian network is technically possible because the cohort has
+expression, chromatin, and matched genetic data. The construction code and
+validated runtime are available, and the shared GDA-8 VCF matches all 78
+primary expression donors. The array and official D2/GRCh38 manifest
+checksums are frozen. Production remains blocked until the D1-to-D2
+marker-mapping contract, generic genotype import/config refactor, genotype QC,
+and TF-target snapshot are complete.
+Downloadable/reproducible bulk inputs, the SIF, and run products are staged in
+Minerva scratch; only code, frozen provenance, and compact validated releases
+remain in the work checkout. The
+[scratch reproduction runbook](seaad-rimbanet-scratch-reproduction.md)
+documents how each artifact class is restored or regenerated. The 78-donor
+sample size and measured-array coverage make individual edges exploratory.
 
 The scientifically strongest near-term plan is:
 
 1. Continue independent DEG replication now.
-2. Recover the original network-construction workflow and SEA-AD genetics.
+2. Complete the frozen GDA-8 GRCh38 import, genotype QC, and ENCODE source.
 3. Pilot one prior-constrained SEA-AD broad-cell network.
 4. Decide whether full SEA-AD KDA replication is sufficiently stable.
 
-Without genetic access, an expression-plus-ATAC directed network could still be built, but it should be described as an exploratory SEA-AD regulatory network—not a method-matched, genetics-anchored Bayesian causal network.
+If the GDA-8 build conversion, identity, or QC gates fail, an
+expression-plus-ATAC directed network could still be built, but it must be
+described as an exploratory SEA-AD regulatory network—not a method-matched,
+genetics-anchored Bayesian causal network.

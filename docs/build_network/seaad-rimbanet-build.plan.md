@@ -1,12 +1,12 @@
 ---
 name: seaad-rimbanet-build
-overview: Create a repository-native, full integrative Wang/RIMBANet workflow for seven SEA-AD broad cell types using donor-level expression, matched WGS-derived eQTL/CIT priors, ENCODE TF-target priors, 1,000 stochastic searches per cell type, the legacy consensus/de-loop procedure, and independent DAG validation. This accepted plan is saved as `docs/build_network/seaad-rimbanet-build.plan.md`; raw controlled data and bulky run products remain untracked.
+overview: Create a repository-native, full integrative Wang/RIMBANet workflow for seven SEA-AD broad cell types using donor-level expression, matched GDA-8 SNP-array-derived eQTL/CIT priors, ENCODE TF-target priors, 1,000 stochastic searches per cell type, the legacy consensus/de-loop procedure, and independent DAG validation. This accepted plan is saved as `docs/build_network/seaad-rimbanet-build.plan.md`; protected genotype data and bulky run products remain untracked.
 todos:
   - id: freeze-contracts
     content: Write the accepted plan and freeze configs, source commits, data identities, and full-integrative method gates
     status: pending
   - id: implement-preparation
-    content: Implement/test expression, WGS/eQTL/CIT, TF-prior, discretization, and RIMBANet input preparation stages
+    content: Implement/test expression, SNP-array/eQTL/CIT, TF-prior, discretization, and RIMBANet input preparation stages
     status: pending
   - id: run-pilot
     content: Build the pinned runtime and complete the gated 1,000-search Microglia pilot
@@ -45,19 +45,143 @@ contracts** before Step 4 can begin.
   edgeR 4.0.16, MatrixEQTL 2.4, yaml 2.3.12, and cit 2.3.2. The built-in image
   test passed, and `11_check_rimbanet_environment.py` reported
   `validated_complete` with zero failures at 2026-09-04T22:40:05Z.
-- Steps 1–2 remain scientifically blocked because the exact NIAGADS WGS
-  identity/crosswalk and ENCODE release/transformation/checksum are not yet
-  frozen. The VH05/VH06 broad-cell pseudobulk artifacts also still need to be
-  staged and checksum-verified on Minerva.
-- The formal VH11A audit at 2026-09-04T22:47:28Z reported exactly four failed
-  checks: all 14 broad pseudobulk shards are absent from scratch, the raw WGS
-  PLINK trio is absent, zero donors have an explicit WGS crosswalk match, and
-  the ENCODE TF-target input is neither present nor frozen.
-- A validated local VH05/VH06 result is available in the development
-  workspace. VH05 and VH06 both report `validated_complete`; the seven broad
-  count matrices and seven sample tables total about 22 MB and have SHA-256s
-  recorded in `pseudobulk_shard_manifest.tsv`. Stage and verify this compact
-  subset on Minerva instead of recomputing it from the 37.9-GB H5AD.
+- The original WGS-specific input contract has been superseded. The primary
+  genotype source is now the locally available GDA-8 SNP-array VCF described
+  below. ENCODE release/transformation/checksum selection and the repository
+  genotype-import refactor remain incomplete.
+- The formal VH11A audit at 2026-09-04T22:47:28Z used the superseded
+  WGS-specific configuration and reported four failed checks: all 14 broad
+  pseudobulk shards absent from scratch, a raw WGS PLINK trio absent, zero WGS
+  crosswalk matches, and an unfrozen ENCODE TF-target input. Retain this as
+  historical evidence; do not interpret its WGS failures as requirements of
+  the revised plan.
+- The validated 14-file broad pseudobulk bundle was synchronized through Git,
+  staged in Minerva scratch, and independently matched all frozen SHA-256s.
+  The rerun VH11A audit cleared the pseudobulk check. Its three remaining
+  failures are stale WGS/crosswalk checks that must be replaced by generic
+  genotype checks, plus the still-valid frozen ENCODE TF-target failure.
+- The selected genotype source is the access-controlled shared archive
+  `/sc/arion/projects/adineto/sea_ad/Data/SNP_Genomic_Variants/SEA_AD_SNPs_vcf.tar.gz`,
+  identified by its Synapse metadata as `syn49430589`, assay `snpArray`,
+  platform `Infinium Global Diversity Array-8`. The archive is 41,491,256
+  bytes and contains `SEA_AD_SNPs_vcf/sea_ad.vcf` (798,973,180 bytes).
+  The archive SHA-256 is
+  `f9d60b00db44e6a4f7c96329b1b8bbc1998dc96b3f4b1c4d3d4d274812dc9459`;
+  the 482-byte Synapse manifest SHA-256 is
+  `c70b8452d0a913013584dd321b9bf97ce85f936108fa6dde4e450717e5b05c5a`;
+  and the 10,169-byte GenomeStudio project SHA-256 is
+  `dc4d3f4d29938cdd79008eceb6fd19cd6db0bdbed0862829dee89938789d68dd`.
+- The official Illumina GDA-8 v1.0 D2 GRCh38 CSV package was downloaded by
+  Minerva LSF job 268174443. The 200,759,541-byte ZIP has SHA-256
+  `bba55d6b646491fc2794e6b56b524200d82db8e4ed0d5ca55b02a57c36073d7a`,
+  contains only `GDA-8v1-0_D2.csv` (853,762,671 uncompressed bytes), and
+  passed ZIP integrity validation.
+- The matching official D1/GRCh37 CSV package is also frozen. Its
+  200,164,599-byte ZIP has SHA-256
+  `63286a4c03298188bf9502d66aef2ff8627ee06d4108c5504af09386ca663466`,
+  contains only `GDA-8v1-0_D1.csv` (853,793,640 uncompressed bytes), and
+  passed ZIP integrity validation. All 1,904,599 assay rows declare build 37,
+  all marker `Name` values are populated and unique, and the D1/D2 manifests
+  therefore provide the authoritative A/B and `RefStrand` bridge.
+- Minerva LSF job 268176167 downloaded the GENCODE release 44 GRCh38 primary-
+  assembly FASTA that matches the frozen v44 annotation. The 844,691,642-byte
+  gzip passed integrity validation and the publisher MD5
+  `9c3fc2ca260a767530dddb0f26721a6b`; its frozen SHA-256 is
+  `e9a2d5a5cd225293646ae298998ad4ea8c11e8f22729bc2d6f5c3dcfefbf8ef8`.
+- The reference was decompressed and indexed with samtools 1.21. The
+  3,151,417,447-byte FASTA has SHA-256
+  `e49b92b3e4f321bf254c042f25b726d9931c4d74c7523e8b6bb530e63b0cfd4b`;
+  its 6,482-byte FAI has SHA-256
+  `a2c323ea4cff34d7123ace4578f7e122b2d2f5a22f40dc23eb8b97d17723d169`.
+  The index contains 194 sequences and matches the canonical chr1, chr22,
+  chrX, chrY, and chrM lengths.
+- Header audit found VCFv4.2, 95 samples, hard-called `GT`, chromosome names
+  without `chr`, and unmapped `0:0:N:.` records. The associated
+  `GDA-8v1-0_d1` manifest establishes GRCh37 source coordinates; the array
+  must be mapped to GRCh38 and reference-normalized before PLINK2 import.
+- A full D1-to-D2 identifier audit read all 1,904,599 source VCF rows and all
+  1,904,599 D2 assay rows. Of 992,665 eligible, unique source marker IDs, all
+  992,665 matched D2 `Name`, none matched `IlmnID`, and neither input had
+  duplicate join identifiers. A total of 991,538 matches had a valid GRCh38
+  target. The 1,127 invalid D2 targets are all unplaced (chromosome 0 and
+  position 0). The 911,934 rejected source rows comprise 107 unplaced records,
+  9,933 additional records lacking a reference allele, and 901,894 additional
+  records lacking an alternate allele. These exclusions are deterministic;
+  retain the 991,538 exact, unique, placed GRCh38 mapping candidates for the
+  subsequent reference-allele and strand checks.
+- The first three-way allele audit intentionally stopped before transformation.
+  A genomic-plus interpretation of the source VCF aligned 527,231 markers but
+  left 423,450 source-to-D1 allele mismatches and 38,798 source-to-D1
+  coordinate mismatches; 32,684 aligned records also shared a normalized
+  GRCh38 variant key. These are diagnostic counts, not an accepted marker set.
+  Test the observed VCF against the D1 design-strand A/B convention and
+  classify the coordinate differences before freezing the transformation.
+- The follow-up convention diagnostic identified the VCF producer as PLINK
+  1.90 and ruled out one global design- or plus-strand interpretation. Among
+  990,375 biallelic SNVs, 331,782 matched both D1 design and plus allele sets,
+  211,897 matched design only, 217,095 matched plus only, and 229,601 matched
+  neither under that incomplete two-way test. All 38,798 coordinate failures
+  were chromosome-code rather than position mismatches, consistent with PLINK
+  numeric sex/mitochondrial chromosome codes requiring an explicit 23/X,
+  24/Y, 25/XY, and 26/MT normalization audit. D1 and D2 retained identical
+  `SNP` and `IlmnStrand` fields for all markers; `RefStrand` changed for 1,516.
+  Resolve each non-palindromic SNV against the D1 A/B allele set or its reverse
+  complement, then map the preserved A/B identity through D2 `RefStrand` and
+  require the GRCh38 FASTA base. Conservatively exclude A/T and C/G SNPs,
+  non-SNVs, unresolved alleles, invalid coordinates, and duplicate target
+  variants rather than inferring ambiguous orientation.
+- Corrected-allele audit job 268176695 exited before transformation because
+  its generic CSV reader interpreted the Illumina manifest metadata preamble
+  as the header and therefore observed zero D1 `Name` matches. All five frozen
+  input checksums passed, and peak memory was only 483 MB. Manifest readers
+  must seek the `[Assay]` section before constructing the CSV `DictReader`;
+  apply the same rule to both D1 and D2 packages.
+- Corrected-allele audit job 268176943 then classified all 992,665 eligible
+  markers with no missing D1/D2 joins or residual D1 coordinate mismatch after
+  PLINK chromosome normalization. It reference-aligned 878,270 provisional
+  markers, comprising 433,685 direct-design and 444,585 reverse-complement
+  mappings; 167,093 require genotype-index swapping and 711,177 do not. The
+  conservative exclusions were 107,821 palindromic SNPs, 2,287 non-SNVs,
+  1,127 invalid D2 locations, and 3,160 records addressed as `XY`, for which
+  the FASTA intentionally has no `chrXY` contig. Removing 54,080 records at
+  26,639 duplicate GRCh38 keys left an interim 824,190 unique markers. The D2
+  scan count of 1,904,623 includes 24 post-assay/footer rows; production
+  readers must stop at the next bracketed section after `[Assay]`.
+- PLINK defines chromosome 25/`XY` as the X pseudoautosomal region and its
+  `--merge-x` operation maps those records back to X without changing their
+  positions. Before freezing the final count, repeat the reference audit with
+  D2 `XY` targets mapped to `chrX`, require their positions to lie within the
+  GRCh38 PAR boundaries (1–2,781,479 or 155,701,383–156,040,895), and apply
+  the same FASTA and duplicate-key gates. Do not invent a `chrXY` contig.
+- Final allele audit job 268176970 applied that rule and stopped the D2 parser
+  at the next manifest section, yielding exactly 1,904,599 assay rows. Of
+  3,160 otherwise eligible `XY` candidates, 2,501 fell within the declared
+  GRCh38 PAR boundaries, mapped to chromosome X, and matched the reference;
+  659 out-of-bound records were excluded. The final provisional aligned set is
+  880,771 markers (434,913 direct-design and 445,858 reverse-complement;
+  167,656 genotype-index swaps and 713,115 unchanged). Excluding every one of
+  the 54,782 records at 26,978 duplicated GRCh38 variant keys leaves the frozen
+  transformation set of 825,989 unique variants. The aggregate summary SHA-256
+  is `a790274b1cfc151ebb45a37e6a95ce7d7dcbcf1c548eb1a71551ea2d83182e02`;
+  no participant IDs or genotypes were written by the audit.
+- A strict suffix-based identity audit established a one-to-one match for all
+  78 primary expression donors: zero unmatched donors, zero ambiguous donors,
+  zero duplicate sample assignments, and 17 VCF samples outside the primary
+  cohort. All 95 VCF IDs have a numeric prefix followed by `_` and the SEA-AD
+  donor ID. The resulting explicit crosswalk was written with mode 600 to the
+  Git-ignored protected path
+  `data/seaad_genotypes/syn49430589/sample_crosswalk.tsv`; its SHA-256 is
+  `410e1ebd0ba6412d65d7c531db1654206fc3927401bdf7b219c6b665f0515956`.
+  The corresponding protected keep and sex-update tables also have mode 600.
+  Never rely on row order.
+- The GDA-8 array is adopted as the primary genetics source. NG00174 WGS is
+  not required for this build. The final methods and provenance must say
+  **SNP-array-derived genetic priors**, never WGS-derived priors.
+- The scientific/execution configs and VH11A input audit have been refactored
+  to the frozen GDA-8 source, final remap summary, protected crosswalk, generic
+  genotype terminology, and LSF project `acc_adineto`. The downstream
+  genotype preparation wrapper still uses WGS-specific keys and must be
+  replaced by the deterministic array importer before production genotype QC.
 - Steps 4–12 have not started in production. No stochastic search array,
   including the Microglia pilot, has been submitted.
 
@@ -68,7 +192,7 @@ Build seven SEA-AD donor-level Bayesian networks—Astrocytes, Excitatory neuron
 ```mermaid
 flowchart LR
   Expr["SEA-AD donor pseudobulk"] --> Adjust["Normalize and adjust"]
-  WGS["Matched SEA-AD WGS"] --> EQTL["cis-eQTL and CIT"]
+  Array["Matched SEA-AD GDA-8 genotypes"] --> EQTL["cis-eQTL and CIT"]
   ENCODE["Pinned ENCODE TF targets"] --> Priors["Structural priors"]
   EQTL --> Priors
   Adjust --> Discrete["Three-state discretization"]
@@ -92,7 +216,7 @@ The compact, validated release will live persistently under
 `/sc/arion/work/zhuane01/alzheimer/data/bayesian_network/SEAAD_A9_2024/<cell_type>/`.
 All downloadable or reproducible bulk storage is rooted at
 `/sc/arion/scratch/zhuane01/alzheimer/`: the external RIMBANet checkout,
-Apptainer image, staged pseudobulk/WGS/ENCODE inputs, normalized matrices,
+Apptainer image, staged pseudobulk/genotype-array/ENCODE inputs, normalized matrices,
 genotype/eQTL intermediates, RIMBANet inputs, 7,000 per-search graphs, consensus
 intermediates, runtime scratch, and logs. These paths remain untracked except
 for the explicitly approved 14-file, approximately 22-MB validated
@@ -107,7 +231,8 @@ Existing ROSMAP networks and current KDA outputs will not be overwritten.
   configuration, documentation, compact manifests/checksums, and validated
   final network releases. The tracked direct-broad pseudobulk transfer bundle
   is the sole matrix exception. Do not stage container images, external source
-  trees, WGS, any other dense matrices, or search outputs there.
+  trees, protected genotype data, any other dense matrices, or search outputs
+  there.
 - `/sc/arion/scratch/zhuane01/alzheimer` contains material that can be
   downloaded again or regenerated deterministically. Scientific and execution
   configs carry absolute paths to this root, and every Apptainer invocation
@@ -131,19 +256,62 @@ and verification commands.
 - Add `config/seaad_rimbanet.yml` with schema version, seven-cell-type order, SEA-AD A9 input identities, cohort and profile thresholds, normalization/residualization formula, gene filters, random seeds, source commits, eQTL/CIT/TF-prior settings, 1,000-search requirement, and exact consensus thresholds.
 - Add `config/seaad_rimbanet_execution.yml` with local-smoke and LSF production profiles, container/image digest, queue/resources, concurrency cap, retry policy, the absolute `/sc/arion/scratch/zhuane01/alzheimer` storage/log roots, and resume rules.
 - Pin `mw201608/BayesianNetwork` commit `ebd5f4a6c31da22705622e71b6dc5f1eae195fdd`; do not vendor or redistribute its source/binary until its licensing is clarified.
-- Declare hard gates: controlled WGS must be available for the full method; expression-only fallback is not silently substituted; Microglia must pass the pilot gate before the remaining six networks run.
+- Declare hard gates: the checksum-frozen GDA-8 source, explicit 78-donor
+  one-to-one crosswalk, validated GRCh37-to-GRCh38 marker mapping, and genotype
+  QC must pass; expression-only fallback is not silently substituted;
+  Microglia must pass the pilot gate before the remaining six networks run.
 
 Repo changes: add the plan and two configs; change the feasibility document. No analysis output is produced yet.
 
-## Step 2 — Audit SEA-AD expression, WGS, TF sources, and donor concordance
+## Step 2 — Audit SEA-AD expression, SNP-array, TF sources, and donor concordance
 
 - Reuse the 78-donor authority in [results/validation_human/02_cohort/donor_cohort_primary.tsv](results/validation_human/02_cohort/donor_cohort_primary.tsv), the seven-type mapping in [results/validation_human/04_supertype_manifest/supertype_to_broad_network.tsv](results/validation_human/04_supertype_manifest/supertype_to_broad_network.tsv), and the frozen H5AD identity in [scripts/validation_human/seaad_deg_config.yml](scripts/validation_human/seaad_deg_config.yml).
-- Obtain controlled SEA-AD WGS from NIAGADS NG00174 outside Git and stage the downloadable copy under `/sc/arion/scratch/zhuane01/alzheimer/data/seaad_wgs/`; record source release, file checksums, genome build, sample IDs, consent/use constraints, and the 84-WGS-versus-83-expression donor reconciliation in the persistent checkout.
-- Verify genotype sample identity and ancestry using documented sex checks, duplicate/relatedness checks, missingness, heterozygosity, ancestry PCs, and variant build/alleles. Preserve the compact, controlled donor crosswalk at `data/seaad_wgs/NG00174/sample_crosswalk.tsv` in the work checkout (untracked); it is not a disposable bulk artifact. Never infer donor matches from row order.
+- Use the shared `syn49430589` GDA-8 archive at
+  `/sc/arion/projects/adineto/sea_ad/Data/SNP_Genomic_Variants/SEA_AD_SNPs_vcf.tar.gz`.
+  Freeze its filename, byte count, SHA-256, Synapse identity, retrieval/source
+  path, assay/platform metadata, access constraints, archive-member identity,
+  and VCF header facts before copying or conversion. Stage generated working
+  files only under
+  `/sc/arion/scratch/zhuane01/alzheimer/data/seaad_genotypes/syn49430589/`;
+  never add the archive, VCF, sample IDs, or derived genotypes to Git.
+- Freeze the observed sample mapping rule: every selected VCF identifier must
+  match exactly `^[0-9]+_(<donor_id>)$`, where `<donor_id>` is an exact
+  `individualID` from the SEA-AD metadata and an exact primary-cohort
+  `donor_id`. Require a one-to-one mapping, all 78 primary donors matched,
+  zero ambiguity/duplication, and explicit exclusion of the 17 extra VCF
+  samples. Materialize a protected crosswalk at
+  `data/seaad_genotypes/syn49430589/sample_crosswalk.tsv` in the work checkout
+  or another approved persistent controlled location; keep it untracked.
+- Treat the source VCF as GRCh37 because the recorded GenomeStudio manifest is
+  `GDA-8v1-0_d1`; do not infer the build from the VCF contig lengths. Freeze
+  the matching Illumina GDA-8 v1.0 D2 GRCh38 manifest and checksum, join source
+  markers to it by an exact unique marker identifier, and reject absent,
+  duplicated, multiply mapped, chromosome-0/position-0, or missing-allele
+  records. Normalize retained variants against the frozen GRCh38 reference,
+  verify REF/ALT and strand orientation, and record every mapping/exclusion
+  count before PLINK2 import. If the D1-to-D2 identity contract cannot be
+  established, block rather than applying an undocumented coordinate change.
+- The primary analysis uses measured hard-called array genotypes only; it does
+  not silently perform reference-panel imputation. Mean-impute sporadic missing
+  dosages only after the declared sample/variant QC. Any future panel
+  imputation requires a separately approved, versioned analysis with a frozen
+  panel, ancestry-aware quality thresholds, and data-governance review.
+- Verify genotype sample identity and ancestry using documented sex checks,
+  duplicate/relatedness checks, missingness, heterozygosity, ancestry PCs, and
+  variant build/alleles. Report per-gene cis-marker coverage and sparse
+  instrument coverage so array ascertainment is visible in the final release.
 - Pin the ENCODE TF-target release and transformation rules. Store the bulk table under `/sc/arion/scratch/zhuane01/alzheimer/data/reference/rimbanet/`; keep only source metadata/checksums and permitted compact derived tables in Git.
 - Require each cell-type sample set to be a subset of the 78 analysis donors with its nucleus threshold met. Record exclusions and final `N` separately for every network.
 
-Repo changes: add `scripts/validation_human/11_audit_rimbanet_inputs.py`, `data/reference/rimbanet/sources.tsv`, and audit contract tests. Generated audit outputs go to `$RIMBANET_OUTPUT_ROOT/11_seaad_rimbanet/11a_audit/` (`donor_crosswalk.tsv`, `input_checks.tsv`, `artifacts.tsv`, `status.tsv`). Raw WGS is never added to Git or the work checkout.
+Repo changes: refactor `config/seaad_rimbanet.yml` and VH11 scripts from
+WGS-specific keys/schema fields to generic genotype terms; add a deterministic
+`scripts/validation_human/11_import_seaad_array.py` stage, source-build,
+crosswalk, marker-remap, and exclusion tests; update
+`scripts/validation_human/11_audit_rimbanet_inputs.py` and
+`data/reference/rimbanet/sources.tsv`. Generated audit outputs go to
+`$RIMBANET_OUTPUT_ROOT/11_seaad_rimbanet/11a_audit/`
+(`donor_crosswalk.tsv`, `input_checks.tsv`, `artifacts.tsv`, `status.tsv`).
+Raw and derived participant-level genotypes are never added to Git.
 
 ## Step 3 — Build and validate the pinned Linux runtime
 
@@ -183,12 +351,21 @@ Repo changes: add `containers/rimbanet/Dockerfile`, `containers/rimbanet/Apptain
 
 Repo changes: add `scripts/validation_human/11_prepare_rimbanet_expression.R` and expression-contract tests. Generated per-cell-type `counts`, `normalized_expression`, `adjusted_expression`, `gene_manifest`, `sample_manifest`, and filter/QC files go to `$RIMBANET_OUTPUT_ROOT/11_seaad_rimbanet/11b_expression/`; the scratch copies are disposable, while permitted compact manifests/checks are retained with the release.
 
-## Step 5 — Harmonize WGS and run cell-type cis-eQTL mapping
+## Step 5 — Harmonize GDA-8 genotypes and run cell-type cis-eQTL mapping
 
-- Normalize variants against the declared GRCh38 reference; apply sample/variant QC, allele normalization, MAF/MAC thresholds, and genotype missingness rules from config.
-- For each broad cell type, use only donors present in both its expression matrix and the WGS crosswalk. Fit MatrixEQTL cis associations within the configured window (default ±1 Mb around the GENCODE v44 gene coordinates).
+- Import only the D2-mapped, GRCh38-reference-normalized, measured GDA-8
+  variants; apply sample/variant QC, allele normalization, MAF/MAC thresholds,
+  and genotype missingness rules from config. Exclude the 17 samples outside
+  the frozen primary cohort before computing QC statistics or PCs.
+- For each broad cell type, use only donors present in both its expression
+  matrix and the explicit genotype crosswalk. Fit MatrixEQTL cis associations
+  within the configured window (default ±1 Mb around the GENCODE v44 gene
+  coordinates).
 - Include ancestry PCs and prespecified technical/expression covariates; generate covariate-rank and sample-size checks to prevent singular models.
-- Apply BH FDR <0.05 as stated in Wang’s paper. Preserve complete tested-pair counts and significant instruments; explicitly report weak/sparse instrument coverage expected at N≈78.
+- Apply BH FDR <0.05 as stated in Wang’s paper. Preserve complete tested-pair
+  counts, measured-array marker coverage, and significant instruments;
+  explicitly report weak/sparse instrument coverage expected at N≈78 and do
+  not imply sequence-level coverage.
 - Gate progression if donor matching, genome build, allele orientation, or model rank fails. Sparse eQTL discovery is reported scientifically, not hidden by relaxing thresholds after results are seen.
 
 Repo changes: add `scripts/validation_human/11_prepare_seaad_genotypes.sh` and `scripts/validation_human/11_run_celltype_eqtl.R`; add unit tests for donor order, variant normalization contracts, cis-window selection, and FDR output. Generated genotype/eQTL files go to `$RIMBANET_OUTPUT_ROOT/11_seaad_rimbanet/11c_genetics/` and remain in scratch except compact summaries, checks, and manifests retained with the release.
@@ -317,8 +494,8 @@ command -v bsub
 test -w "$PROJECT_ROOT"
 mkdir -p \
   "$RIMBANET_STORAGE_ROOT/external_tools/containers" \
-  "$RIMBANET_STORAGE_ROOT/data/seaad_wgs/NG00174/source" \
-  "$RIMBANET_STORAGE_ROOT/data/seaad_wgs/NG00174/derived" \
+  "$RIMBANET_STORAGE_ROOT/data/seaad_genotypes/syn49430589/source" \
+  "$RIMBANET_STORAGE_ROOT/data/seaad_genotypes/syn49430589/derived" \
   "$RIMBANET_STORAGE_ROOT/data/reference/rimbanet" \
   "$RIMBANET_STORAGE_ROOT/results/validation_human/05_pseudobulk/direct_broad_counts" \
   "$APPTAINER_CACHEDIR" \
@@ -374,11 +551,15 @@ new SHA-256 before resuming any job.
 
 ### Audit and prepare production inputs on Minerva
 
-Stage the reproducible H5AD-derived VH05 broad count/sample shards, the
-downloadable controlled NG00174 PLINK/WGS files, and the frozen ENCODE
-TF-target table at the absolute scratch paths in `config/seaad_rimbanet.yml`.
-Keep the small VH05/VH06 status and cohort manifests plus the controlled donor
-crosswalk in the work checkout. Then run:
+Stage the reproducible H5AD-derived VH05 broad count/sample shards, import the
+checksum-verified shared `syn49430589` GDA-8 archive through the frozen
+GRCh37-to-GRCh38 marker map, and stage the frozen ENCODE TF-target table at the
+absolute scratch paths in `config/seaad_rimbanet.yml`. Keep the small VH05/VH06
+status and cohort manifests plus the protected donor/genotype crosswalk in an
+approved persistent location. The command block below must not be run until
+the planned generic genotype config/schema and deterministic array-import
+stage are implemented and tested; the current checkout still enforces the
+superseded NG00174 WGS contract. Then run:
 
 ```bash
 export PROJECT_ROOT=/sc/arion/work/zhuane01/alzheimer
@@ -549,8 +730,9 @@ for the complete path-by-path procedure and current recovery blockers. In
 summary, if scratch is purged:
 
 1. Recreate the scratch directory layout from the build section.
-2. Reclone the pinned RIMBANet commit, restage the checksum-verified WGS and
-   ENCODE inputs, and rebuild the SIF.
+2. Reclone the pinned RIMBANet commit, re-import the checksum-verified shared
+   GDA-8 archive and frozen GRCh38 marker map, restage ENCODE, and rebuild the
+   SIF.
 3. Freeze and verify the rebuilt image checksum. Do not reuse old task status
    records with a different image or input hash.
 4. Rerun the audit/preparation stages, then use the normal submission command;
@@ -574,6 +756,7 @@ Added source/config/documentation:
 - `scripts/validation_human/11_audit_rimbanet_inputs.py`
 - `scripts/validation_human/11_check_rimbanet_environment.py`
 - `scripts/validation_human/11_prepare_rimbanet_expression.R`
+- `scripts/validation_human/11_import_seaad_array.py`
 - `scripts/validation_human/11_prepare_seaad_genotypes.sh`
 - `scripts/validation_human/11_run_celltype_eqtl.R`
 - `scripts/validation_human/11_build_rimbanet_priors.py`
@@ -603,7 +786,9 @@ Removed:
 
 ## Acceptance criteria
 
-- Full integrative inputs are provenance-frozen: donor-level expression, matched WGS, significant cis-eQTL/CIT evidence, and pinned ENCODE TF-targets.
+- Full integrative inputs are provenance-frozen: donor-level expression,
+  matched `syn49430589` GDA-8 genotypes, validated GRCh38 marker mapping,
+  significant cis-eQTL/CIT evidence, and pinned ENCODE TF-targets.
 - Microglia passes the production-scale gate before scale-out.
 - Each of seven cell types has exactly 1,000 validated searches and an explicit denominator of 1,000.
 - Consensus uses the verified forward/reverse adjacency rule, followed by pinned legacy de-looping.
