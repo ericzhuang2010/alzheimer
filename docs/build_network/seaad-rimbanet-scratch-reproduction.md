@@ -73,6 +73,8 @@ Run on Minerva:
 ```bash
 export PROJECT_ROOT=/sc/arion/work/zhuane01/alzheimer
 export RIMBANET_STORAGE_ROOT=/sc/arion/scratch/zhuane01/alzheimer
+export SEAAD_CONTROLLED_ROOT=/sc/arion/projects/adineto/sea_ad
+export APPTAINER_BIN=/hpc/packages/minerva-rocky9/apptainer/1.4.5/bin/apptainer
 export RIMBANET_OUTPUT_ROOT="$RIMBANET_STORAGE_ROOT/results/validation_human"
 export RIMBANET_LOG_ROOT="$RIMBANET_OUTPUT_ROOT/11_seaad_rimbanet/logs"
 export RIMBANET_SOURCE="$RIMBANET_STORAGE_ROOT/external_tools/BayesianNetwork"
@@ -133,28 +135,19 @@ test "$(git -C "$WANG_REFERENCE" rev-parse HEAD)" = \
 
 ## 3. Rebuild and freeze the Apptainer image
 
-The `%files` source in the definition is relative to the build working
-directory, so build from the scratch root:
+Use the authoritative LSF command under “Step 3 rerun” in
+[the main build plan](seaad-rimbanet-build.plan.md). It runs the build on a
+compute node from the scratch root, calls the absolute Apptainer 1.4.5
+executable, preserves the required `%files` build context, and validates the
+image, R packages, `testBN` binary, and VH11 environment gate before the job
+can finish successfully.
 
-```bash
-module load apptainer  # omit if already available
-cd "$RIMBANET_STORAGE_ROOT"
-apptainer build --fakeroot "$RIMBANET_IMAGE" \
-  "$PROJECT_ROOT/containers/rimbanet/Apptainer.def"
-apptainer exec "$RIMBANET_IMAGE" Rscript --vanilla -e \
-  'packages <- c("data.table","digest","edgeR","MatrixEQTL","yaml","cit"); stopifnot(all(vapply(packages, requireNamespace, logical(1), quietly=TRUE)))'
-APPTAINERENV_R_PROFILE_USER=/dev/null \
-  apptainer test "$RIMBANET_IMAGE"
-sha256sum "$RIMBANET_IMAGE"
-cd "$PROJECT_ROOT"
-```
-
-Write the observed digest to `runtime.image_sha256` in
-`config/seaad_rimbanet_execution.yml`. A rebuilt image is not eligible for
-resume merely because it has the same filename; its digest and the contained
-`testBN` checksum must match the frozen provenance. If `--fakeroot` is not
-permitted, use the approved private x86-64 OCI-to-SIF route documented in
-`containers/rimbanet/README.md`.
+Do not invoke a resource-intensive `apptainer build` directly on a login
+node, and do not rely on a login-node module modifying the compute-node
+`PATH`. A rebuilt image is not eligible for resume merely because it has the
+same filename; its image and `testBN` digests must match the frozen
+provenance. If `--fakeroot` is not permitted, use the approved private
+x86-64 OCI-to-SIF route documented in `containers/rimbanet/README.md`.
 
 ## 4. Reproduce or restage broad-cell pseudobulk shards
 
@@ -213,15 +206,16 @@ implemented, re-create the normalized PLINK source and all derived genetics
 with the canonical workers from the main build plan:
 
 ```bash
-apptainer exec \
+"$APPTAINER_BIN" exec \
   --bind "$PROJECT_ROOT:$PROJECT_ROOT" \
   --bind "$RIMBANET_STORAGE_ROOT:$RIMBANET_STORAGE_ROOT" \
+  --bind "$SEAAD_CONTROLLED_ROOT:$SEAAD_CONTROLLED_ROOT:ro" \
   --env R_PROFILE_USER=/dev/null \
   --pwd "$PROJECT_ROOT" "$RIMBANET_IMAGE" \
   python scripts/validation_human/11_import_seaad_array.py \
     --config config/seaad_rimbanet.yml
 
-apptainer exec \
+"$APPTAINER_BIN" exec \
   --bind "$PROJECT_ROOT:$PROJECT_ROOT" \
   --bind "$RIMBANET_STORAGE_ROOT:$RIMBANET_STORAGE_ROOT" \
   --env R_PROFILE_USER=/dev/null \
@@ -301,29 +295,15 @@ invalidate and regenerate every dependent stage.
 
 ## 8. Verify recovery before resume
 
-Recovery is valid only when all applicable checks pass:
+Recovery is valid only after running the exact Step 1 preflight, Step 3
+post-job verification, and Step 2 post-job verification commands in
+[the main build plan](seaad-rimbanet-build.plan.md). This deliberately avoids
+duplicating container invocations here: the authoritative commands use the
+absolute Apptainer path, bind the controlled SEA-AD root read-only for VH11A,
+and inspect the persisted `status.tsv` and `checks.tsv` gates.
 
-```bash
-test "$(git -C "$RIMBANET_SOURCE" rev-parse HEAD)" = \
-  "ebd5f4a6c31da22705622e71b6dc5f1eae195fdd"
-APPTAINERENV_R_PROFILE_USER=/dev/null \
-  apptainer test "$RIMBANET_IMAGE"
-
-cd "$PROJECT_ROOT"
-.venv/bin/python scripts/validation_human/11_audit_rimbanet_inputs.py \
-  --config config/seaad_rimbanet.yml
-
-apptainer exec \
-  --bind "$PROJECT_ROOT:$PROJECT_ROOT" \
-  --bind "$RIMBANET_STORAGE_ROOT:$RIMBANET_STORAGE_ROOT" \
-  --env R_PROFILE_USER=/dev/null \
-  --pwd "$PROJECT_ROOT" "$RIMBANET_IMAGE" \
-  python scripts/validation_human/11_check_rimbanet_environment.py \
-    --config config/seaad_rimbanet.yml \
-    --execution-config config/seaad_rimbanet_execution.yml
-```
-
-Both scripts must report `validated_complete`. For a partial recovery, run
+Both VH11 environment and VH11A input status must report
+`validated_complete`. For a partial recovery, run
 `11_validate_rimbanet_runs.py` for each affected network. Existing search
 tasks may be reused only when their validated status, config hash, combined
 input hash, and output hash match. Otherwise rerun them; never lower the

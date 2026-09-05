@@ -34,6 +34,15 @@ audit = load_script("11_audit_rimbanet_inputs.py")
 submit = load_script("11_submit_rimbanet_minerva.py")
 
 
+def test_expression_reader_streams_gzip_without_r_utils():
+    script = (SCRIPT_DIR / "11_prepare_rimbanet_expression.R").read_text()
+    assert 'gzip_binary <- Sys.which("gzip")' in script
+    assert 'cmd = paste(shQuote(gzip_binary), "-dc --", shQuote(path))' in script
+    assert "counts_table <- fread_tsv(counts_path)" in script
+    assert "samples <- fread_tsv(samples_path)" in script
+    assert "R.utils" not in script
+
+
 def test_discretized_contract_and_xml():
     nodes, matrix, samples = prepare.read_discretized(
         FIXTURE / "data.discretized.txt"

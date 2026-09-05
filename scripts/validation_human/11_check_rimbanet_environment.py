@@ -24,7 +24,16 @@ from rimbanet_common import (
 from seaad_common import atomic_write_tsv, sha256_file
 
 
-COMMANDS = ["bash", "bc", "bcftools", "perl", "plink2", "python", "Rscript"]
+COMMANDS = [
+    "bash",
+    "bc",
+    "bcftools",
+    "gzip",
+    "perl",
+    "plink2",
+    "python",
+    "Rscript",
+]
 R_PACKAGES = ["data.table", "digest", "edgeR", "MatrixEQTL", "yaml", "cit"]
 PYTHON_PACKAGES = ["h5py", "networkx", "numpy", "pandas", "scipy", "yaml"]
 

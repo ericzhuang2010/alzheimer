@@ -47,6 +47,21 @@ provenance_paths <- function(paths, project_root) {
   prefix <- paste0(project_root, "/")
   ifelse(startsWith(resolved, prefix), substring(resolved, nchar(prefix) + 1L), resolved)
 }
+fread_tsv <- function(path) {
+  if (grepl("[.]gz$", path)) {
+    gzip_binary <- Sys.which("gzip")
+    if (!nzchar(gzip_binary)) {
+      stop("gzip executable is required to read compressed TSV input: ", path)
+    }
+    return(data.table::fread(
+      cmd = paste(shQuote(gzip_binary), "-dc --", shQuote(path)),
+      sep = "\t",
+      data.table = FALSE
+    ))
+  }
+  data.table::fread(path, sep = "\t", data.table = FALSE)
+}
+
 
 args <- parse_cli(commandArgs(trailingOnly = TRUE))
 required <- c("yaml", "data.table", "digest", "edgeR")
@@ -78,8 +93,8 @@ if (!file.exists(counts_path) || !file.exists(samples_path)) {
   stop("Missing VH05 broad pseudobulk inputs for ", args$network)
 }
 
-counts_table <- data.table::fread(counts_path, data.table = FALSE)
-samples <- data.table::fread(samples_path, data.table = FALSE)
+counts_table <- fread_tsv(counts_path)
+samples <- fread_tsv(samples_path)
 required_sample_cols <- c(
   "pseudobulk_id", "donor_id", "broad_network", "nuclei", "diagnosis",
   "sex", "apoe_group", "age_death_scaled", "pmi_scaled", "study"

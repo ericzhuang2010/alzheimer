@@ -4,7 +4,7 @@ overview: Create a repository-native, full integrative Wang/RIMBANet workflow fo
 todos:
   - id: freeze-contracts
     content: Write the accepted plan and freeze configs, source commits, data identities, and full-integrative method gates
-    status: pending
+    status: completed
   - id: implement-preparation
     content: Implement/test expression, SNP-array/eQTL/CIT, TF-prior, discretization, and RIMBANet input preparation stages
     status: pending
@@ -21,9 +21,9 @@ isProject: false
 
 ## Execution status — September 5, 2026
 
-**Step 3 — Build and validate the pinned Linux runtime is complete.** The
-active work returns to **Steps 1–2 — freeze and audit production input
-contracts** before Step 4 can begin.
+**Steps 1–3 are complete.** The source and identity contracts, production
+input audit, and pinned Linux runtime have passed their gates. Active work now
+moves to **Step 4 — prepare donor-level broad-cell expression**.
 
 - The Minerva work checkout started at commit
   b4486062ac77b3189e4f80a6b6a689c6b5952c0f.
@@ -201,9 +201,28 @@ contracts** before Step 4 can begin.
   963 source rows are rejected (including 27 self-loops), and two mapped
   duplicates are collapsed. The 1,551,481-byte output SHA-256 is
   `3604241c4f1765046f151f0394e9d74b49467c233ee0963ff9553dab968410fe`.
-  This artifact is frozen in code/config but still must be staged and verified
-  on Minerva before VH11A can become `validated_complete`.
-- Steps 4–12 have not started in production. No stochastic search array,
+  Minerva LSF job 268213013 created and verified this exact artifact in
+  scratch; its gzip integrity check passed and stderr was empty.
+- VH11A attempt 268214790 verified the staged ENCODE prior but could not see
+  the controlled source archive because its Apptainer invocation omitted the
+  shared SEA-AD project bind. Retry 268220366 then stopped before the audit
+  with exit code 127 because the compute-node environment did not resolve the
+  bare `apptainer` command. Final retry 268231984 used the absolute Apptainer
+  1.4.5 executable and mounted `/sc/arion/projects/adineto/sea_ad` read-only.
+  It completed successfully at 2026-09-05T15:19:20Z: VH11A reported
+  `validated_complete`, zero failed checks, and all 78 genotype donors
+  matched. Containerized source audits and imports must retain the read-only
+  controlled-data bind, and LSF jobs must use the absolute runtime path or
+  load its module within the job.
+- Step 4 began with the Microglia expression-preparation job 268232687. It
+  exited before creating any stage output because `data.table::fread()` tried
+  to load the optional `R.utils` package for a gzipped count matrix. The
+  repository reader now streams `.gz` input through the image's `gzip`
+  executable and passes the decompressed TSV to `fread`; a compressed
+  input/output smoke test passes without changing or rebuilding the frozen
+  image. The runtime gate now also checks that `gzip` is available. Retry Step
+  4 only after synchronizing this fix to the Minerva checkout.
+- Steps 5–12 have not started in production. No stochastic search array,
   including the Microglia pilot, has been submitted.
 
 ## Goal and end state
@@ -257,7 +276,9 @@ Existing ROSMAP networks and current KDA outputs will not be overwritten.
 - `/sc/arion/scratch/zhuane01/alzheimer` contains material that can be
   downloaded again or regenerated deterministically. Scientific and execution
   configs carry absolute paths to this root, and every Apptainer invocation
-  binds both the work and scratch roots.
+  binds both the work and scratch roots. Any invocation that reads the shared
+  genotype source must also bind `/sc/arion/projects/adineto/sea_ad` to the
+  same container path read-only.
 - Scratch is disposable and may be purged. It must never contain the only copy
   of controlled source data or final releases. Source identities, checksums,
   parameters, and release artifacts remain in the work checkout so scratch can
@@ -335,7 +356,7 @@ crosswalk, marker-remap, and exclusion tests; update
 `scripts/validation_human/11_audit_rimbanet_inputs.py` and
 `data/reference/rimbanet/sources.tsv`. Generated audit outputs go to
 `$RIMBANET_OUTPUT_ROOT/11_seaad_rimbanet/11a_audit/`
-(`donor_crosswalk.tsv`, `input_checks.tsv`, `artifacts.tsv`, `status.tsv`).
+(`donor_crosswalk.tsv`, `checks.tsv`, `artifacts.tsv`, `status.tsv`).
 Raw and derived participant-level genotypes are never added to Git.
 
 ## Step 3 — Build and validate the pinned Linux runtime
@@ -373,6 +394,10 @@ Repo changes: add `containers/rimbanet/Dockerfile`, `containers/rimbanet/Apptain
 - Filter genes using donor-level expression criteria declared in config (CPM threshold and minimum donor fraction), remove duplicated/unresolved symbols and genes with insufficient variability, and preserve a reason for every exclusion.
 - TMM-normalize to log-CPM, then residualize declared nuisance variables (study, PMI, age, nuclei count, and configured technical terms) while retaining diagnosis, APOE, and sex biology. Produce an unresidualized sensitivity matrix to quantify dependence on this choice.
 - Rank the robust gene universe by residual variance if a compute cap is required; the cap and any prespecified force-inclusion set must be fixed before network learning and cannot be selected from KDA outcomes.
+- Stream gzipped TSV inputs through the runtime's `gzip -dc` executable before
+  `data.table::fread()` parses them. This avoids an undeclared `R.utils`
+  dependency while retaining the frozen runtime; the environment gate must
+  confirm that `gzip` is present.
 
 Repo changes: add `scripts/validation_human/11_prepare_rimbanet_expression.R` and expression-contract tests. Generated per-cell-type `counts`, `normalized_expression`, `adjusted_expression`, `gene_manifest`, `sample_manifest`, and filter/QC files go to `$RIMBANET_OUTPUT_ROOT/11_seaad_rimbanet/11b_expression/`; the scratch copies are disposable, while permitted compact manifests/checks are retained with the release.
 
@@ -487,12 +512,72 @@ contract, scheduler/resume, consensus, DAG, and synthetic end-to-end tests.
 It is suitable for macOS development because it substitutes the fixture
 runtime for the Linux x86-64 legacy binary.
 
-### Build and freeze the Minerva runtime
+### Step 1 rerun — synchronize and verify frozen contracts
 
-Run these commands on an approved x86-64 Minerva build/compute node. Replace
-`YOUR_MINERVA_ALLOCATION` below with the LSF project/allocation returned for
-the study. The repository stays in the work allocation; the source checkout,
-build context, and SIF stay in scratch.
+Run this lightweight preflight on a Minerva login node. The subshell keeps a
+failed check from enabling `set -e` in, or exiting, the interactive shell.
+For a complete scratch loss, use the operational order Step 1, Step 3, then
+Step 2 because the successful Step 2 audit runs inside the Step 3 image.
+
+```bash
+(
+set -euo pipefail
+
+export PROJECT_ROOT=/sc/arion/work/zhuane01/alzheimer
+export RIMBANET_STORAGE_ROOT=/sc/arion/scratch/zhuane01/alzheimer
+export SEAAD_CONTROLLED_ROOT=/sc/arion/projects/adineto/sea_ad
+export APPTAINER_BIN=/hpc/packages/minerva-rocky9/apptainer/1.4.5/bin/apptainer
+export LSF_PROJECT=acc_adineto
+export RIMBANET_IMAGE="$RIMBANET_STORAGE_ROOT/external_tools/containers/seaad-rimbanet.sif"
+
+cd "$PROJECT_ROOT"
+test -d .git
+test -z "$(git status --porcelain --untracked-files=no)"
+git fetch origin main
+git merge --ff-only origin/main
+
+test "$LSF_PROJECT" = acc_adineto
+test -x "$APPTAINER_BIN"
+test -r "$SEAAD_CONTROLLED_ROOT/Data/SNP_Genomic_Variants/SEA_AD_SNPs_vcf.tar.gz"
+
+test "$(git check-ignore data/seaad_genotypes/syn49430589/sample_crosswalk.tsv)" = \
+  data/seaad_genotypes/syn49430589/sample_crosswalk.tsv
+test "$(stat -c '%a' data/seaad_genotypes/syn49430589/sample_crosswalk.tsv)" = 600
+test "$(sha256sum data/seaad_genotypes/syn49430589/sample_crosswalk.tsv | awk '{print $1}')" = \
+  410e1ebd0ba6412d65d7c531db1654206fc3927401bdf7b219c6b665f0515956
+
+PSEUDOBULK_SOURCE="$PROJECT_ROOT/results/validation_human/05_pseudobulk/direct_broad_counts"
+test "$(find "$PSEUDOBULK_SOURCE" -maxdepth 1 -type f | wc -l)" -eq 14
+test "$(git ls-files "$PSEUDOBULK_SOURCE" | wc -l)" -eq 14
+
+if grep -En 'TO_BE_FROZEN|YOUR_MINERVA_ALLOCATION|NG00174' \
+  config/seaad_rimbanet.yml config/seaad_rimbanet_execution.yml
+then
+  echo "ERROR: unresolved or obsolete production configuration" >&2
+  false
+fi
+
+grep -q 'project: acc_adineto' config/seaad_rimbanet_execution.yml
+grep -q 'image_sha256: 1df82906537e74c73fb331e7652c4057bac92182293d7d3739d0a015a4f25840' \
+  config/seaad_rimbanet_execution.yml
+grep -q 'genotype_source_sha256: f9d60b00db44e6a4f7c96329b1b8bbc1998dc96b3f4b1c4d3d4d274812dc9459' \
+  config/seaad_rimbanet.yml
+grep -q 'output_sha256: 3604241c4f1765046f151f0394e9d74b49467c233ee0963ff9553dab968410fe' \
+  config/seaad_rimbanet.yml
+
+echo "Step 1 contract preflight: validated_complete"
+)
+```
+
+Do not continue from a dirty checkout, a missing/changed protected crosswalk,
+an unfrozen configuration, or a controlled archive that is unreadable.
+
+### Step 3 rerun — build and validate the pinned Minerva runtime
+
+Submit the build from a Minerva login node to LSF project `acc_adineto`; the
+resource-intensive work itself runs on the assigned compute node. The
+repository stays in the work allocation, while the source checkout, build
+context, and SIF stay in scratch.
 
 Do not run the resource-intensive apptainer build process directly on a
 Minerva login host. Submit it through LSF or enter an approved interactive
@@ -511,11 +596,13 @@ export RIMBANET_SOURCE="$RIMBANET_STORAGE_ROOT/external_tools/BayesianNetwork"
 export RIMBANET_IMAGE="$RIMBANET_STORAGE_ROOT/external_tools/containers/seaad-rimbanet.sif"
 export APPTAINER_CACHEDIR="$RIMBANET_STORAGE_ROOT/cache/apptainer"
 export APPTAINER_TMPDIR="$RIMBANET_STORAGE_ROOT/tmp/apptainer"
+export APPTAINER_BIN=/hpc/packages/minerva-rocky9/apptainer/1.4.5/bin/apptainer
+export LSF_PROJECT=acc_adineto
+export BUILD_LOG_ROOT="$RIMBANET_LOG_ROOT/build"
 
 cd "$PROJECT_ROOT"
-module load apptainer  # omit if `apptainer` is already on PATH
-command -v apptainer
-command -v bsub
+test -x "$APPTAINER_BIN"
+command -v bsub >/dev/null
 test -w "$PROJECT_ROOT"
 mkdir -p \
   "$RIMBANET_STORAGE_ROOT/external_tools/containers" \
@@ -525,14 +612,15 @@ mkdir -p \
   "$RIMBANET_STORAGE_ROOT/results/validation_human/05_pseudobulk/direct_broad_counts" \
   "$APPTAINER_CACHEDIR" \
   "$APPTAINER_TMPDIR" \
-  "$RIMBANET_LOG_ROOT/preparation"
+  "$BUILD_LOG_ROOT"
 test -w "$RIMBANET_STORAGE_ROOT"
 df -h "$PROJECT_ROOT" "$RIMBANET_STORAGE_ROOT"
+module load proxies/1
 
 if [[ ! -d "$RIMBANET_SOURCE/.git" ]]; then
   git clone https://github.com/mw201608/BayesianNetwork.git "$RIMBANET_SOURCE"
 fi
-git -C "$RIMBANET_SOURCE" checkout \
+git -C "$RIMBANET_SOURCE" checkout --detach \
   ebd5f4a6c31da22705622e71b6dc5f1eae195fdd
 test "$(git -C "$RIMBANET_SOURCE" rev-parse HEAD)" = \
   "ebd5f4a6c31da22705622e71b6dc5f1eae195fdd"
@@ -541,32 +629,141 @@ grep -n 'make' "$PROJECT_ROOT/containers/rimbanet/Apptainer.def"
 grep -n 'std=gnu++98' \
   "$PROJECT_ROOT/containers/rimbanet/Apptainer.def"
 
-# Apptainer resolves %files sources from the current working directory.
-cd "$RIMBANET_STORAGE_ROOT"
-apptainer build --fakeroot "$RIMBANET_IMAGE" \
-  "$PROJECT_ROOT/containers/rimbanet/Apptainer.def"
-apptainer exec "$RIMBANET_IMAGE" Rscript --vanilla -e \
-  'packages <- c("data.table","digest","edgeR","MatrixEQTL","yaml","cit"); stopifnot(all(vapply(packages, requireNamespace, logical(1), quietly=TRUE))); cat("OK: isolated R packages present\n")'
-# Prevent a project .Rprofile from changing the library seen by an older
-# image whose embedded test did not yet include Rscript --vanilla.
-APPTAINERENV_R_PROFILE_USER=/dev/null \
-  apptainer test "$RIMBANET_IMAGE"
-IMAGE_SHA256="$(sha256sum "$RIMBANET_IMAGE" | awk '{print $1}')"
-printf '%s\n' "$IMAGE_SHA256"
-
+# Apptainer resolves %files sources from the build working directory.
+# If the configured image already exists, this job revalidates it without
+# overwriting it. If scratch was purged, it rebuilds the missing image.
 cd "$PROJECT_ROOT"
-.venv/bin/python - "$IMAGE_SHA256" <<'PY'
-from pathlib import Path
-import sys
+BUILD_SUBMISSION="$(
+  bsub \
+    -P "$LSF_PROJECT" \
+    -J seaad_rimbanet_build \
+    -q premium \
+    -n 8 \
+    -W 08:00 \
+    -R 'rusage[mem=8000]' \
+    -R 'span[hosts=1]' \
+    -M 8000 \
+    -o "$BUILD_LOG_ROOT/build.%J.out" \
+    -e "$BUILD_LOG_ROOT/build.%J.err" \
+    -L /bin/bash <<'LSF'
+#!/usr/bin/env bash
+set -euo pipefail
+umask 022
 
-path = Path("config/seaad_rimbanet_execution.yml")
-text = path.read_text()
-old = "image_sha256: TO_BE_FROZEN"
-if old not in text:
-    raise SystemExit("image_sha256 is already frozen; verify it manually")
-path.write_text(text.replace(old, f"image_sha256: {sys.argv[1]}", 1))
-PY
+module load proxies/1
+
+PROJECT_ROOT=/sc/arion/work/zhuane01/alzheimer
+STORAGE_ROOT=/sc/arion/scratch/zhuane01/alzheimer
+IMAGE="$STORAGE_ROOT/external_tools/containers/seaad-rimbanet.sif"
+APPTAINER_BIN=/hpc/packages/minerva-rocky9/apptainer/1.4.5/bin/apptainer
+EXPECTED_IMAGE_SHA256=1df82906537e74c73fb331e7652c4057bac92182293d7d3739d0a015a4f25840
+EXPECTED_BINARY_SHA256=c04cf68e2823750ca7943a238bc4d2e4de1a107422fcedfc21968e0aad5d9183
+
+export APPTAINER_CACHEDIR="$STORAGE_ROOT/cache/apptainer"
+export APPTAINER_TMPDIR="$STORAGE_ROOT/tmp/apptainer"
+mkdir -p "$APPTAINER_CACHEDIR" "$APPTAINER_TMPDIR" "$(dirname "$IMAGE")"
+
+if [[ ! -s "$IMAGE" ]]; then
+  cd "$STORAGE_ROOT"
+  "$APPTAINER_BIN" build --fakeroot "$IMAGE" \
+    "$PROJECT_ROOT/containers/rimbanet/Apptainer.def"
+else
+  echo "Existing image found; rebuilding is skipped."
+fi
+
+IMAGE_SHA256="$(sha256sum "$IMAGE" | awk '{print $1}')"
+if [[ "$IMAGE_SHA256" != "$EXPECTED_IMAGE_SHA256" ]]; then
+  echo "ERROR: image SHA-256 mismatch" >&2
+  echo "expected=$EXPECTED_IMAGE_SHA256" >&2
+  echo "observed=$IMAGE_SHA256" >&2
+  exit 2
+fi
+
+"$APPTAINER_BIN" exec \
+  --env R_PROFILE_USER=/dev/null \
+  "$IMAGE" \
+  Rscript --vanilla -e \
+  'packages <- c("data.table","digest","edgeR","MatrixEQTL","yaml","cit"); stopifnot(all(vapply(packages, requireNamespace, logical(1), quietly=TRUE))); cat("OK: isolated R packages present\n")'
+
+APPTAINERENV_R_PROFILE_USER=/dev/null "$APPTAINER_BIN" test "$IMAGE"
+
+BINARY_SHA256="$(
+  "$APPTAINER_BIN" exec "$IMAGE" sha256sum /usr/local/bin/testBN |
+  awk '{print $1}'
+)"
+if [[ "$BINARY_SHA256" != "$EXPECTED_BINARY_SHA256" ]]; then
+  echo "ERROR: testBN SHA-256 mismatch" >&2
+  echo "expected=$EXPECTED_BINARY_SHA256" >&2
+  echo "observed=$BINARY_SHA256" >&2
+  exit 2
+fi
+
+"$APPTAINER_BIN" exec \
+  --bind "$PROJECT_ROOT:$PROJECT_ROOT" \
+  --bind "$STORAGE_ROOT:$STORAGE_ROOT" \
+  --env R_PROFILE_USER=/dev/null \
+  --pwd "$PROJECT_ROOT" \
+  "$IMAGE" \
+  python scripts/validation_human/11_check_rimbanet_environment.py \
+    --config config/seaad_rimbanet.yml \
+    --execution-config config/seaad_rimbanet_execution.yml
+
+echo "image_sha256=$IMAGE_SHA256"
+echo "binary_sha256=$BINARY_SHA256"
+echo "Step 3 runtime: validated_complete"
+LSF
+)"
+
+printf '%s\n' "$BUILD_SUBMISSION"
+BUILD_JOB_ID="$(
+  printf '%s\n' "$BUILD_SUBMISSION" |
+  awk -F '[<>]' '/Job </ {print $2}'
+)"
+printf '%s\n' "$BUILD_JOB_ID" > "$BUILD_LOG_ROOT/latest_job_id.txt"
+printf 'BUILD_JOB_ID=%s\n' "$BUILD_JOB_ID"
 ```
+
+After the job finishes, verify both the scheduler record and the persisted
+environment gate:
+
+```bash
+export RIMBANET_STORAGE_ROOT=/sc/arion/scratch/zhuane01/alzheimer
+export RIMBANET_OUTPUT_ROOT="$RIMBANET_STORAGE_ROOT/results/validation_human"
+export RIMBANET_IMAGE="$RIMBANET_STORAGE_ROOT/external_tools/containers/seaad-rimbanet.sif"
+export BUILD_LOG_ROOT="$RIMBANET_OUTPUT_ROOT/11_seaad_rimbanet/logs/build"
+export ENV_ROOT="$RIMBANET_OUTPUT_ROOT/11_seaad_rimbanet/11a_environment"
+
+BUILD_JOB_ID="$(cat "$BUILD_LOG_ROOT/latest_job_id.txt")"
+echo "BUILD_JOB_ID=$BUILD_JOB_ID"
+bjobs -a "$BUILD_JOB_ID"
+
+echo "=== job result ==="
+tail -n 50 "$BUILD_LOG_ROOT/build.$BUILD_JOB_ID.out"
+
+echo "=== job errors ==="
+if test -s "$BUILD_LOG_ROOT/build.$BUILD_JOB_ID.err"; then
+  tail -n 100 "$BUILD_LOG_ROOT/build.$BUILD_JOB_ID.err"
+else
+  echo "none"
+fi
+
+echo "=== frozen image ==="
+sha256sum "$RIMBANET_IMAGE"
+
+echo "=== environment status ==="
+cat "$ENV_ROOT/status.tsv"
+
+echo "=== failed environment checks ==="
+awk -F $'\t' 'NR == 1 || $2 == "False" {print}' "$ENV_ROOT/checks.tsv"
+```
+
+The accepted reference build is job 268173456, image SHA-256
+`1df82906537e74c73fb331e7652c4057bac92182293d7d3739d0a015a4f25840`,
+binary SHA-256
+`c04cf68e2823750ca7943a238bc4d2e4de1a107422fcedfc21968e0aad5d9183`,
+and environment state `validated_complete`. A new image with different bytes
+must be reviewed and frozen as a new runtime before downstream outputs can be
+resumed.
 
 If `apptainer build --fakeroot` is disabled, use an approved private x86-64
 OCI builder and convert that private image to the configured scratch SIF path
@@ -574,36 +771,37 @@ on Minerva. Do not publish the image while the upstream RIMBANet license
 remains unresolved. After a scratch purge, repeat this section and verify the
 new SHA-256 before resuming any job.
 
-### Audit and prepare production inputs on Minerva
+### Step 2 rerun — restage and audit production inputs on Minerva
 
-Stage the reproducible H5AD-derived VH05 broad count/sample shards, import the
-checksum-verified shared `syn49430589` GDA-8 archive through the frozen
-GRCh37-to-GRCh38 marker map, and stage the frozen ENCODE TF-target table at the
+Stage the reproducible H5AD-derived VH05 broad count/sample shards, verify the
+checksum-frozen shared `syn49430589` GDA-8 archive and final mapping audit, and
+stage the frozen ENCODE TF-target table at the
 absolute scratch paths in `config/seaad_rimbanet.yml`. Keep the small VH05/VH06
 status and cohort manifests plus the protected donor/genotype crosswalk in an
-approved persistent location. The command block below must not be run until
-the planned generic genotype config/schema and deterministic array-import
-stage are implemented and tested; the current checkout still enforces the
-superseded NG00174 WGS contract. Then run:
+approved persistent location. The generic GDA-8 input audit is active; the
+deterministic array importer and genotype-QC stage remain gated work after the
+input audit.
+This rerun command validates the currently frozen Step 2 artifacts; it does not
+silently regenerate a missing genotype transformation. If a scratch checksum
+target is absent, first follow the matching source-restoration section in the
+[scratch reproduction runbook](seaad-rimbanet-scratch-reproduction.md). A
+complete loss of the final allele-audit artifact remains a hard stop until the
+repository-native array importer is implemented; do not substitute an ad hoc
+coordinate conversion.
+
+Run:
 
 ```bash
 export PROJECT_ROOT=/sc/arion/work/zhuane01/alzheimer
 export RIMBANET_STORAGE_ROOT=/sc/arion/scratch/zhuane01/alzheimer
+export SEAAD_CONTROLLED_ROOT=/sc/arion/projects/adineto/sea_ad
+export APPTAINER_BIN=/hpc/packages/minerva-rocky9/apptainer/1.4.5/bin/apptainer
 export RIMBANET_OUTPUT_ROOT="$RIMBANET_STORAGE_ROOT/results/validation_human"
 export RIMBANET_LOG_ROOT="$RIMBANET_OUTPUT_ROOT/11_seaad_rimbanet/logs"
 export SEAAD_RIMBANET_CONFIG=config/seaad_rimbanet.yml
-export SEAAD_RIMBANET_EXECUTION=config/seaad_rimbanet_execution.yml
 export RIMBANET_IMAGE="$RIMBANET_STORAGE_ROOT/external_tools/containers/seaad-rimbanet.sif"
-export LSF_PROJECT=YOUR_MINERVA_ALLOCATION
+export LSF_PROJECT=acc_adineto
 cd "$PROJECT_ROOT"
-RIMBANET_EXEC=(
-  apptainer exec
-  --bind "$PROJECT_ROOT:$PROJECT_ROOT"
-  --bind "$RIMBANET_STORAGE_ROOT:$RIMBANET_STORAGE_ROOT"
-  --env R_PROFILE_USER=/dev/null
-  --pwd "$PROJECT_ROOT"
-  "$RIMBANET_IMAGE"
-)
 
 # If the validated VH05 shards currently exist in the work checkout, stage
 # them once in scratch and verify them through the VH11 audit below.
@@ -612,56 +810,213 @@ PSEUDOBULK_SCRATCH="$RIMBANET_STORAGE_ROOT/results/validation_human/05_pseudobul
 mkdir -p "$PSEUDOBULK_SCRATCH"
 rsync -a --checksum "$PSEUDOBULK_SOURCE/" "$PSEUDOBULK_SCRATCH/"
 
-.venv/bin/python scripts/validation_human/11_audit_rimbanet_inputs.py \
-  --config "$SEAAD_RIMBANET_CONFIG"
-"${RIMBANET_EXEC[@]}" \
-  python scripts/validation_human/11_check_rimbanet_environment.py \
-  --config "$SEAAD_RIMBANET_CONFIG" \
-  --execution-config "$SEAAD_RIMBANET_EXECUTION"
+AUDIT_LOG_ROOT="$RIMBANET_LOG_ROOT/audit"
+mkdir -p "$AUDIT_LOG_ROOT"
 
-mkdir -p "$RIMBANET_LOG_ROOT/preparation"
-LSF_ENV="all,PROJECT_ROOT=$PROJECT_ROOT,CONFIG=$PROJECT_ROOT/$SEAAD_RIMBANET_CONFIG,RIMBANET_IMAGE=$RIMBANET_IMAGE,RIMBANET_STORAGE_ROOT=$RIMBANET_STORAGE_ROOT"
+if (
+  set -euo pipefail
+  test "$(find "$PSEUDOBULK_SCRATCH" -maxdepth 1 -type f | wc -l)" -eq 14
+  cd "$PROJECT_ROOT"
+  sha256sum -c <<'SHA256'
+f9d60b00db44e6a4f7c96329b1b8bbc1998dc96b3f4b1c4d3d4d274812dc9459  /sc/arion/projects/adineto/sea_ad/Data/SNP_Genomic_Variants/SEA_AD_SNPs_vcf.tar.gz
+63286a4c03298188bf9502d66aef2ff8627ee06d4108c5504af09386ca663466  /sc/arion/scratch/zhuane01/alzheimer/data/seaad_genotypes/syn49430589/source/infinium-global-diversity-array-8-v1-0-D1-manifest-file-csv.zip
+bba55d6b646491fc2794e6b56b524200d82db8e4ed0d5ca55b02a57c36073d7a  /sc/arion/scratch/zhuane01/alzheimer/data/seaad_genotypes/syn49430589/source/infinium-global-diversity-array-8-v1-0-D2-manifest-file-csv.zip
+e49b92b3e4f321bf254c042f25b726d9931c4d74c7523e8b6bb530e63b0cfd4b  /sc/arion/scratch/zhuane01/alzheimer/data/reference/gencode/v44/GRCh38.primary_assembly.genome.fa
+a2c323ea4cff34d7123ace4578f7e122b2d2f5a22f40dc23eb8b97d17723d169  /sc/arion/scratch/zhuane01/alzheimer/data/reference/gencode/v44/GRCh38.primary_assembly.genome.fa.fai
+a790274b1cfc151ebb45a37e6a95ce7d7dcbcf1c548eb1a71551ea2d83182e02  /sc/arion/scratch/zhuane01/alzheimer/data/seaad_genotypes/syn49430589/derived/final_allele_audit/summary.tsv
+410e1ebd0ba6412d65d7c531db1654206fc3927401bdf7b219c6b665f0515956  data/seaad_genotypes/syn49430589/sample_crosswalk.tsv
+3604241c4f1765046f151f0394e9d74b49467c233ee0963ff9553dab968410fe  /sc/arion/scratch/zhuane01/alzheimer/data/reference/rimbanet/encode_tf_targets.tsv.gz
+SHA256
+); then
+  AUDIT_SUBMISSION="$(
+    bsub \
+      -P "$LSF_PROJECT" \
+      -J seaad_vh11a_final \
+      -q premium \
+      -n 1 \
+      -W 02:00 \
+      -R 'rusage[mem=8000]' \
+      -R 'span[hosts=1]' \
+      -o "$AUDIT_LOG_ROOT/vh11a.%J.out" \
+      -e "$AUDIT_LOG_ROOT/vh11a.%J.err" \
+      -L /bin/bash \
+      "$APPTAINER_BIN" exec \
+        --bind "$PROJECT_ROOT:$PROJECT_ROOT" \
+        --bind "$RIMBANET_STORAGE_ROOT:$RIMBANET_STORAGE_ROOT" \
+        --bind "$SEAAD_CONTROLLED_ROOT:$SEAAD_CONTROLLED_ROOT:ro" \
+        --env R_PROFILE_USER=/dev/null \
+        --pwd "$PROJECT_ROOT" \
+        "$RIMBANET_IMAGE" \
+        python scripts/validation_human/11_audit_rimbanet_inputs.py \
+          --config "$SEAAD_RIMBANET_CONFIG"
+  )"
 
-GENOTYPE_SUBMISSION="$(
-  bsub -P "$LSF_PROJECT" -q premium -n 4 \
-    -R "span[hosts=1]" -R "rusage[mem=64000]" -M 64000 -W 24:00 \
-    -J seaad_genotypes \
-    -o "$RIMBANET_LOG_ROOT/preparation/%J.out" \
-    -e "$RIMBANET_LOG_ROOT/preparation/%J.err" \
-    -env "$LSF_ENV,STAGE=genotypes" \
-    < scripts/validation_human/11_prepare_rimbanet_minerva.lsf
-)"
-printf '%s\n' "$GENOTYPE_SUBMISSION"
-GENOTYPE_JOB_ID="$(
-  printf '%s\n' "$GENOTYPE_SUBMISSION" | awk -F '[<>]' '/Job </ {print $2}'
-)"
-test -n "$GENOTYPE_JOB_ID"
+  printf '%s\n' "$AUDIT_SUBMISSION"
+  VH11A_JOB_ID="$(
+    printf '%s\n' "$AUDIT_SUBMISSION" |
+    awk -F '[<>]' '/Job </ {print $2}'
+  )"
+  printf '%s\n' "$VH11A_JOB_ID" > "$AUDIT_LOG_ROOT/latest_job_id.txt"
+  printf 'VH11A_JOB_ID=%s\n' "$VH11A_JOB_ID"
+else
+  echo "Step 2 input checksum preflight failed; audit was not submitted." >&2
+fi
 
-PREP_SUBMISSION="$(
-  bsub -P "$LSF_PROJECT" -q premium -n 4 \
-    -R "span[hosts=1]" -R "rusage[mem=64000]" -M 64000 -W 24:00 \
-    -w "done($GENOTYPE_JOB_ID)" -J "seaad_prepare[1-7]%7" \
-    -o "$RIMBANET_LOG_ROOT/preparation/%J.%I.out" \
-    -e "$RIMBANET_LOG_ROOT/preparation/%J.%I.err" \
-    -env "$LSF_ENV,STAGE=network" \
-    < scripts/validation_human/11_prepare_rimbanet_minerva.lsf
-)"
-printf '%s\n' "$PREP_SUBMISSION"
-PREP_JOB_ID="$(
-  printf '%s\n' "$PREP_SUBMISSION" | awk -F '[<>]' '/Job </ {print $2}'
-)"
-test -n "$PREP_JOB_ID"
-bjobs "$GENOTYPE_JOB_ID" "$PREP_JOB_ID"
 ```
 
-Both initial checks must report `validated_complete`. A blocked audit means
-that production submission must not proceed. The genotype job runs first; the
-seven-network preparation array starts only if it exits successfully. Do not
-submit searches until all preparation array tasks are `DONE`. After scratch
-staging and checksum validation succeed, do not retain a second bulky
-pseudobulk copy in the work allocation.
+After the LSF job finishes, verify the persisted scientific gate rather than
+relying only on the scheduler state:
+
+```bash
+export RIMBANET_STORAGE_ROOT=/sc/arion/scratch/zhuane01/alzheimer
+export RIMBANET_OUTPUT_ROOT="$RIMBANET_STORAGE_ROOT/results/validation_human"
+export AUDIT_ROOT="$RIMBANET_OUTPUT_ROOT/11_seaad_rimbanet/11a_audit"
+export AUDIT_LOG_ROOT="$RIMBANET_OUTPUT_ROOT/11_seaad_rimbanet/logs/audit"
+
+VH11A_JOB_ID="$(cat "$AUDIT_LOG_ROOT/latest_job_id.txt")"
+echo "VH11A_JOB_ID=$VH11A_JOB_ID"
+bjobs -a "$VH11A_JOB_ID"
+
+echo "=== job output ==="
+tail -n 40 "$AUDIT_LOG_ROOT/vh11a.$VH11A_JOB_ID.out"
+
+echo "=== job errors ==="
+if test -s "$AUDIT_LOG_ROOT/vh11a.$VH11A_JOB_ID.err"; then
+  cat "$AUDIT_LOG_ROOT/vh11a.$VH11A_JOB_ID.err"
+else
+  echo "none"
+fi
+
+echo "=== VH11A status ==="
+cat "$AUDIT_ROOT/status.tsv"
+
+echo "=== failed checks ==="
+awk -F $'\t' 'NR == 1 || $2 == "False" {print}' "$AUDIT_ROOT/checks.tsv"
+
+VH11A_STATE="$(
+  awk -F $'\t' 'NR == 2 {print $3}' "$AUDIT_ROOT/status.tsv"
+)"
+if test "$VH11A_STATE" = validated_complete; then
+  echo "Step 2 input audit: validated_complete"
+else
+  echo "Step 2 remains blocked: state=$VH11A_STATE"
+fi
+```
+
+The accepted reference run is job 268231984: LSF `DONE`, VH11A
+`validated_complete`, zero failed checks, and 78 matched genotype donors.
+An LSF `EXIT` with audit exit code 2 denotes a blocked scientific gate; exit
+127 with `apptainer: command not found` means the absolute runtime path was
+omitted. The genotype importer and combined preparation jobs belong to Steps
+5–7 and must not be launched from this Steps 1–3 rerun section.
+
+### Step 4 execution — prepare and gate Microglia expression
+
+Run this from a Minerva login node after Steps 1–3 are
+`validated_complete`. The resource-intensive R job runs through LSF. The
+subshell prevents a failed preflight or submission from exiting the
+interactive terminal, and the job ID is persisted outside the shell.
+
+```bash
+(
+set -euo pipefail
+
+export PROJECT_ROOT=/sc/arion/work/zhuane01/alzheimer
+export RIMBANET_STORAGE_ROOT=/sc/arion/scratch/zhuane01/alzheimer
+export RIMBANET_OUTPUT_ROOT="$RIMBANET_STORAGE_ROOT/results/validation_human"
+export RIMBANET_IMAGE="$RIMBANET_STORAGE_ROOT/external_tools/containers/seaad-rimbanet.sif"
+export APPTAINER_BIN=/hpc/packages/minerva-rocky9/apptainer/1.4.5/bin/apptainer
+export LSF_PROJECT=acc_adineto
+export PREP_LOG_ROOT="$RIMBANET_OUTPUT_ROOT/11_seaad_rimbanet/logs/preparation"
+export AUDIT_ROOT="$RIMBANET_OUTPUT_ROOT/11_seaad_rimbanet/11a_audit"
+
+cd "$PROJECT_ROOT"
+test -z "$(git status --porcelain --untracked-files=no)"
+git pull --ff-only origin main
+test "$(awk -F $'\t' 'NR == 2 {print $3}' "$AUDIT_ROOT/status.tsv")" = \
+  validated_complete
+test -x "$APPTAINER_BIN"
+test "$(sha256sum "$RIMBANET_IMAGE" | awk '{print $1}')" = \
+  1df82906537e74c73fb331e7652c4057bac92182293d7d3739d0a015a4f25840
+"$APPTAINER_BIN" exec "$RIMBANET_IMAGE" sh -c \
+  'command -v gzip >/dev/null && gzip --version | head -n 1'
+
+mkdir -p "$PREP_LOG_ROOT"
+SUBMISSION="$(
+  bsub \
+    -P "$LSF_PROJECT" \
+    -J seaad_vh11b_microglia \
+    -q premium \
+    -n 1 \
+    -W 02:00 \
+    -R 'rusage[mem=16000]' \
+    -R 'span[hosts=1]' \
+    -M 16000 \
+    -o "$PREP_LOG_ROOT/vh11b_microglia.%J.out" \
+    -e "$PREP_LOG_ROOT/vh11b_microglia.%J.err" \
+    -L /bin/bash \
+    "$APPTAINER_BIN" exec \
+      --bind "$PROJECT_ROOT:$PROJECT_ROOT" \
+      --bind "$RIMBANET_STORAGE_ROOT:$RIMBANET_STORAGE_ROOT" \
+      --env R_PROFILE_USER=/dev/null \
+      --pwd "$PROJECT_ROOT" \
+      "$RIMBANET_IMAGE" \
+      Rscript --vanilla \
+        scripts/validation_human/11_prepare_rimbanet_expression.R \
+        --config config/seaad_rimbanet.yml \
+        --network Microglia
+)"
+
+printf '%s\n' "$SUBMISSION"
+VH11B_JOB_ID="$(
+  printf '%s\n' "$SUBMISSION" |
+  awk -F '[<>]' '/Job </ {print $2}'
+)"
+test -n "$VH11B_JOB_ID"
+printf '%s\n' "$VH11B_JOB_ID" > \
+  "$PREP_LOG_ROOT/latest_vh11b_microglia_job_id.txt"
+printf 'VH11B_JOB_ID=%s\n' "$VH11B_JOB_ID"
+)
+```
+
+After the job finishes, verify both LSF and the persisted VH11B scientific
+gate:
+
+```bash
+export RIMBANET_STORAGE_ROOT=/sc/arion/scratch/zhuane01/alzheimer
+export RIMBANET_OUTPUT_ROOT="$RIMBANET_STORAGE_ROOT/results/validation_human"
+export PREP_LOG_ROOT="$RIMBANET_OUTPUT_ROOT/11_seaad_rimbanet/logs/preparation"
+export EXPRESSION_ROOT="$RIMBANET_OUTPUT_ROOT/11_seaad_rimbanet/11b_expression/Microglia"
+
+VH11B_JOB_ID="$(cat "$PREP_LOG_ROOT/latest_vh11b_microglia_job_id.txt")"
+echo "VH11B_JOB_ID=$VH11B_JOB_ID"
+bjobs -a "$VH11B_JOB_ID"
+
+echo "=== job output ==="
+tail -n 50 "$PREP_LOG_ROOT/vh11b_microglia.$VH11B_JOB_ID.out"
+
+echo "=== job errors ==="
+if test -s "$PREP_LOG_ROOT/vh11b_microglia.$VH11B_JOB_ID.err"; then
+  cat "$PREP_LOG_ROOT/vh11b_microglia.$VH11B_JOB_ID.err"
+else
+  echo "none"
+fi
+
+echo "=== expression status ==="
+cat "$EXPRESSION_ROOT/status.tsv"
+
+echo "=== failed expression checks ==="
+awk -F $'\t' 'NR == 1 || $2 == "FALSE" || $2 == "False" {print}' \
+  "$EXPRESSION_ROOT/checks.tsv"
+```
+
+The accepted Step 4 run must be LSF `DONE`, have empty stderr, report
+`validated_complete` in `status.tsv`, and contain no failed check rows. Job
+268232687 is a rejected technical attempt: it created no stage artifacts and
+does not require cleanup before the retry.
 
 ### Submit and gate the 1,000-search Microglia pilot
+
 
 The Python submit wrapper reads queue, memory, wall time, array range, and
 concurrency from `config/seaad_rimbanet_execution.yml`, creates LSF log
