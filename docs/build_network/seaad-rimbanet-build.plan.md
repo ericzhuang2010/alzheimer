@@ -1089,7 +1089,15 @@ SUBMISSION="$(
     -o "$PREP_LOG_ROOT/vh11c_genotypes.%J.out" \
     -e "$PREP_LOG_ROOT/vh11c_genotypes.%J.err" \
     -L /bin/bash \
-    bash scripts/validation_human/11_prepare_rimbanet_minerva.lsf
+    env \
+      PROJECT_ROOT="$PROJECT_ROOT" \
+      RIMBANET_STORAGE_ROOT="$RIMBANET_STORAGE_ROOT" \
+      RIMBANET_IMAGE="$RIMBANET_IMAGE" \
+      SEAAD_CONTROLLED_ROOT="$SEAAD_CONTROLLED_ROOT" \
+      CONTAINER_RUNTIME="$CONTAINER_RUNTIME" \
+      CONFIG="$CONFIG" \
+      STAGE="$STAGE" \
+      bash scripts/validation_human/11_prepare_rimbanet_minerva.lsf
 )"
 
 printf '%s\n' "$SUBMISSION"

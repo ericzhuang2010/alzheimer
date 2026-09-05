@@ -196,6 +196,39 @@ def test_array_importer_manifest_orientation_par_and_gzip(tmp_path):
     assert gzip.open(output, "rt").read() == "a\tb\n1\t2\n"
 
 
+def test_array_importer_preserves_frozen_rejection_precedence():
+    source = {
+        "invalid_palindromic": array_import.SourceMarker(
+            "1", "1", 10, "A", "T"
+        ),
+        "invalid_non_snv": array_import.SourceMarker(
+            "1", "1", 20, "A", "AT"
+        ),
+    }
+    d1 = {
+        marker_id: array_import.ManifestMarker(
+            "1", marker.position, "37", "[A/T]", "TOP", "+"
+        )
+        for marker_id, marker in source.items()
+    }
+    d2 = {
+        marker_id: array_import.ManifestMarker(
+            None, None, "38", "[A/T]", "TOP", "+"
+        )
+        for marker_id in source
+    }
+    metrics = array_import.Counter()
+
+    transforms = array_import.build_transforms(
+        source, d1, d2, fasta=None, metrics=metrics
+    )
+
+    assert transforms == {}
+    assert metrics["classification_invalid_d2_location"] == 2
+    assert metrics["classification_palindromic_snv_excluded"] == 0
+    assert metrics["classification_source_not_biallelic_snv"] == 0
+
+
 def test_minerva_genotype_wrapper_uses_gda8_contract():
     wrapper = (SCRIPT_DIR / "11_prepare_seaad_genotypes.sh").read_text()
     launcher = (SCRIPT_DIR / "11_prepare_rimbanet_minerva.lsf").read_text()

@@ -424,6 +424,15 @@ def build_transforms(
         if d2 is None:
             metrics["classification_missing_d2_marker"] += 1
             continue
+
+        # Preserve the frozen audit's mutually exclusive rejection precedence:
+        # an invalid ordinary D2/GRCh38 location is classified before the
+        # source-allele filters. XY remains a valid D2 chromosome here; its
+        # GRCh38 PAR gate is applied after the allele filters below.
+        chromosome, was_xy = target_chromosome(d2)
+        if not was_xy and chromosome is None:
+            metrics["classification_invalid_d2_location"] += 1
+            continue
         if not is_biallelic_snv(source_marker):
             metrics["classification_source_not_biallelic_snv"] += 1
             continue
@@ -431,15 +440,11 @@ def build_transforms(
             metrics["classification_palindromic_snv_excluded"] += 1
             continue
 
-        chromosome, was_xy = target_chromosome(d2)
         if was_xy:
             if chromosome is None:
                 metrics["classification_xy_outside_grch38_par"] += 1
                 continue
             metrics["xy_candidates_merged_to_x"] += 1
-        elif chromosome is None:
-            metrics["classification_invalid_d2_location"] += 1
-            continue
         if d2.position is None:
             raise AssertionError("A valid target must have a position")
         reference_base = fasta.base(chromosome, d2.position)
