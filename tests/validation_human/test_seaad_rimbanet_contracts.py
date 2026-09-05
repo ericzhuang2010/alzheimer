@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 import importlib.util
+import gzip
 import io
 import tarfile
+import zipfile
 import shutil
 import subprocess
 import sys
@@ -24,6 +26,7 @@ def load_script(name: str):
     spec = importlib.util.spec_from_file_location(name.replace(".", "_"), path)
     module = importlib.util.module_from_spec(spec)
     assert spec.loader is not None
+    sys.modules[spec.name] = module
     spec.loader.exec_module(module)
     return module
 
@@ -32,6 +35,7 @@ prepare = load_script("11_prepare_rimbanet_inputs.py")
 priors = load_script("11_build_rimbanet_priors.py")
 audit = load_script("11_audit_rimbanet_inputs.py")
 submit = load_script("11_submit_rimbanet_minerva.py")
+array_import = load_script("11_import_seaad_array.py")
 
 
 def test_r_scripts_stream_gzip_without_optional_data_table_compression():
@@ -140,6 +144,69 @@ def test_array_vcf_header_and_final_summary_readers(tmp_path):
     summary_path = tmp_path / "summary.tsv"
     summary_path.write_text("metric\tvalue\nsource_variant_rows\t3\n")
     assert audit.summary_metrics(summary_path) == {"source_variant_rows": 3}
+
+
+def test_array_importer_manifest_orientation_par_and_gzip(tmp_path):
+    manifest_path = tmp_path / "manifest.zip"
+    member = "GDA-8v1-0_D2.csv"
+    manifest = (
+        "[Header]\n"
+        "Descriptor File Name,GDA-8\n"
+        "[Assay]\n"
+        "IlmnID,Name,IlmnStrand,SNP,GenomeBuild,Chr,MapInfo,RefStrand\n"
+        "probe1,rs1,TOP,[A/G],38,1,20,+\n"
+        "[Controls]\n"
+        "control,value\n"
+    )
+    with zipfile.ZipFile(manifest_path, "w") as archive:
+        archive.writestr(member, manifest)
+    records, scanned = array_import.read_manifest(
+        manifest_path, member, {"rs1"}
+    )
+    assert scanned == 1
+    assert records["rs1"].position == 20
+
+    source = array_import.SourceMarker("1", "1", 10, "A", "G")
+    d1 = array_import.ManifestMarker("1", 10, "37", "[A/G]", "TOP", "+")
+    d2 = records["rs1"]
+    assert array_import.allele_transform(
+        source, d1, d2, "1", "A"
+    ) == ("A", "G", "direct", False)
+    reverse_source = array_import.SourceMarker("1", "1", 10, "T", "C")
+    assert array_import.allele_transform(
+        reverse_source, d1, d2, "1", "A"
+    ) == ("A", "G", "reverse_complement", False)
+    assert array_import.swap_genotype("0/1:8", "GT:DP") == "1/0:8"
+
+    par = array_import.ManifestMarker(
+        "XY", 100, "38", "[A/G]", "TOP", "+"
+    )
+    nonpar = array_import.ManifestMarker(
+        "XY", 3_000_000, "38", "[A/G]", "TOP", "+"
+    )
+    assert array_import.target_chromosome(par) == ("X", True)
+    assert array_import.target_chromosome(nonpar) == (None, True)
+
+    output = tmp_path / "deterministic.tsv.gz"
+    writer = lambda handle: handle.write("a\tb\n1\t2\n")
+    array_import.publish_gzip(output, writer)
+    first = output.read_bytes()
+    array_import.publish_gzip(output, writer)
+    assert output.read_bytes() == first
+    assert gzip.open(output, "rt").read() == "a\tb\n1\t2\n"
+
+
+def test_minerva_genotype_wrapper_uses_gda8_contract():
+    wrapper = (SCRIPT_DIR / "11_prepare_seaad_genotypes.sh").read_text()
+    launcher = (SCRIPT_DIR / "11_prepare_rimbanet_minerva.lsf").read_text()
+    assert "11_import_seaad_array.py" in wrapper
+    assert "genotype_raw_plink_prefix" in wrapper
+    assert "array_keep.tsv" in wrapper
+    assert "--split-par hg38" in wrapper
+    assert "--sort-vars" in wrapper
+    assert "wgs_" not in wrapper.lower()
+    assert "/hpc/packages/minerva-rocky9/apptainer/1.4.5/bin/apptainer" in launcher
+    assert "$CONTROLLED_ROOT:$CONTROLLED_ROOT:ro" in launcher
 
 
 

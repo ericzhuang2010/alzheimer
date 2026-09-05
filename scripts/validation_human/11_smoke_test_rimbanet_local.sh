@@ -26,6 +26,7 @@ command -v Rscript >/dev/null 2>&1 || {
 PYTHON_SCRIPTS=(
   scripts/validation_human/rimbanet_common.py
   scripts/validation_human/11_audit_rimbanet_inputs.py
+  scripts/validation_human/11_import_seaad_array.py
   scripts/validation_human/11_build_rimbanet_priors.py
   scripts/validation_human/11_check_rimbanet_environment.py
   scripts/validation_human/11_prepare_rimbanet_inputs.py

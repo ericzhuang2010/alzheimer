@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
+umask 077
 
 usage() {
   echo "Usage: $0 --config FILE" >&2
@@ -27,8 +28,8 @@ project = Path.cwd().resolve()
 def resolve(value):
     path = Path(value)
     return (path if path.is_absolute() else project / path).resolve()
-print(resolve(c["inputs"]["wgs_raw_plink_prefix"]))
-print(resolve(c["inputs"]["wgs_plink_prefix"]))
+print(resolve(c["inputs"]["genotype_raw_plink_prefix"]))
+print(resolve(c["inputs"]["genotype_plink_prefix"]))
 print(c["genetics"]["sample_missingness_maximum"])
 print(c["genetics"]["variant_missingness_maximum"])
 print(c["genetics"]["maf_minimum"])
@@ -46,31 +47,42 @@ PY
 
 RAW_PREFIX="${CFG[0]}"
 QC_PREFIX="${CFG[1]}"
-KEEP="${CFG[13]}/11_seaad_rimbanet/11a_audit/wgs_keep.tsv"
-SEX_UPDATE="${CFG[13]}/11_seaad_rimbanet/11a_audit/wgs_sex.tsv"
+KEEP="${CFG[13]}/11_seaad_rimbanet/11a_audit/array_keep.tsv"
+SEX_UPDATE="${CFG[13]}/11_seaad_rimbanet/11a_audit/array_sex.tsv"
+AUDIT_STATUS="${CFG[13]}/11_seaad_rimbanet/11a_audit/status.tsv"
 mkdir -p "$(dirname "$QC_PREFIX")"
 [[ -s "$KEEP" ]] || {
-  echo "Missing explicit WGS keep file from VH11A: $KEEP" >&2
+  echo "Missing explicit genotype keep file from VH11A: $KEEP" >&2
   exit 3
 }
 [[ -s "$SEX_UPDATE" ]] || {
-  echo "Missing explicit WGS sex update from VH11A: $SEX_UPDATE" >&2
+  echo "Missing explicit genotype sex update from VH11A: $SEX_UPDATE" >&2
   exit 3
 }
-command -v plink2 >/dev/null || { echo "plink2 is required" >&2; exit 3; }
-
-if [[ -s "${RAW_PREFIX}.pgen" && ( -s "${RAW_PREFIX}.pvar" || -s "${RAW_PREFIX}.pvar.zst" ) && -s "${RAW_PREFIX}.psam" ]]; then
-  INPUT=(--pfile "$RAW_PREFIX")
-elif [[ -s "${RAW_PREFIX}.bed" && -s "${RAW_PREFIX}.bim" && -s "${RAW_PREFIX}.fam" ]]; then
-  INPUT=(--bfile "$RAW_PREFIX")
-else
-  echo "No PLINK1/PLINK2 source set found at $RAW_PREFIX" >&2
+if ! awk -F '\t' \
+  'NR > 1 && $2 == "VH11A" && $3 == "validated_complete" { found = 1 }
+   END { exit !found }' \
+  "$AUDIT_STATUS"
+then
+  echo "VH11A is not validated_complete: $AUDIT_STATUS" >&2
   exit 3
 fi
+command -v plink2 >/dev/null || { echo "plink2 is required" >&2; exit 3; }
 
-plink2 "${INPUT[@]}" \
+python3 scripts/validation_human/11_import_seaad_array.py --config "$CONFIG"
+
+plink2 \
+  --vcf "${RAW_PREFIX}.vcf.gz" \
+  --vcf-require-gt \
+  --const-fid 0 \
   --keep "$KEEP" \
   --update-sex "$SEX_UPDATE" \
+  --split-par hg38 \
+  --sort-vars \
+  --make-pgen \
+  --out "$RAW_PREFIX"
+
+plink2 --pfile "$RAW_PREFIX" \
   --mind "${CFG[2]}" \
   --geno "${CFG[3]}" \
   --maf "${CFG[4]}" \
@@ -86,6 +98,7 @@ plink2 --pfile "$QC_PREFIX" \
   --check-sex \
   --out "${QC_PREFIX}.sexcheck"
 plink2 --pfile "$QC_PREFIX" \
+  --extract "${QC_PREFIX}.ld.prune.in" \
   --make-king-table \
   --out "${QC_PREFIX}.kinship"
 plink2 --pfile "$QC_PREFIX" \
@@ -93,7 +106,7 @@ plink2 --pfile "$QC_PREFIX" \
   --out "${QC_PREFIX}.heterozygosity"
 plink2 --pfile "$QC_PREFIX" \
   --extract "${QC_PREFIX}.ld.prune.in" \
-  --pca "${CFG[9]}" approx \
+  --pca "${CFG[9]}" \
   --out "${QC_PREFIX}.ancestry"
 plink2 --pfile "$QC_PREFIX" \
   --export A-transpose \
@@ -114,6 +127,8 @@ sex_path = Path(sys.argv[2])
 king_path = Path(sys.argv[3])
 if not sex_path.exists():
     raise SystemExit(f"Missing PLINK sex-check output: {sex_path}")
+if not king_path.exists():
+    raise SystemExit(f"Missing PLINK KING output: {king_path}")
 sex = pd.read_csv(sex_path, sep=r"\s+")
 status_column = "STATUS" if "STATUS" in sex.columns else None
 if status_column is None:
@@ -163,8 +178,10 @@ generated_root = resolve(
 crosswalk = pd.read_csv(
     generated_root / "11_seaad_rimbanet/11a_audit/donor_crosswalk.tsv",
     sep="\t", dtype=str,
-).dropna(subset=["wgs_sample_id"])
-id_to_donor = dict(zip(crosswalk["wgs_sample_id"], crosswalk["donor_id"]))
+).dropna(subset=["genotype_sample_id"])
+id_to_donor = dict(
+    zip(crosswalk["genotype_sample_id"], crosswalk["donor_id"])
+)
 traw = pd.read_csv(sys.argv[2], sep=r"\s+")
 meta = ["CHR", "SNP", "(C)M", "POS", "COUNTED", "ALT"]
 sample_cols = [c for c in traw.columns if c not in meta]
@@ -179,6 +196,12 @@ for column in sample_cols:
         raise SystemExit(f"Cannot uniquely map PLINK dosage column {column!r}")
     rename[column] = matches[0]
 geno = geno.rename(columns=rename)
+if len(rename) != int(config["expected_identity"]["genotype_primary_samples"]):
+    raise SystemExit("PLINK dosage export does not contain all primary donors")
+if len(set(rename.values())) != len(rename):
+    raise SystemExit("PLINK dosage columns do not map one-to-one to donors")
+if geno["variant_id"].duplicated().any():
+    raise SystemExit("PLINK dosage export contains duplicate variant IDs")
 dosage_columns = [column for column in geno.columns if column != "variant_id"]
 geno[dosage_columns] = geno[dosage_columns].apply(pd.to_numeric, errors="coerce")
 missing_before = int(geno[dosage_columns].isna().sum().sum())
@@ -192,13 +215,19 @@ positions = traw[["SNP", "CHR", "POS", "COUNTED", "ALT"]].rename(
     columns={"SNP": "variant_id", "CHR": "chromosome", "POS": "position",
              "COUNTED": "effect_allele", "ALT": "other_allele"}
 )
+positions["chromosome"] = positions["chromosome"].replace(
+    {"PAR1": "X", "PAR2": "X"}
+)
 geno_path = resolve(config["genetics"]["genotype_matrix"])
 pos_path = resolve(config["genetics"]["variant_positions"])
 pcs_path = resolve(config["genetics"]["ancestry_covariates"])
 for path in (geno_path, pos_path, pcs_path):
     path.parent.mkdir(parents=True, exist_ok=True)
-geno.to_csv(geno_path, sep="\t", index=False, compression="gzip")
-positions.to_csv(pos_path, sep="\t", index=False, compression="gzip")
+gzip_options = {"method": "gzip", "compresslevel": 6, "mtime": 0}
+geno.to_csv(geno_path, sep="\t", index=False, compression=gzip_options)
+positions.to_csv(
+    pos_path, sep="\t", index=False, compression=gzip_options
+)
 pd.DataFrame([{
     "imputation": config["genetics"]["missing_genotype_imputation"],
     "missing_dosages_before": missing_before,
@@ -209,14 +238,18 @@ pd.DataFrame([{
 
 pcs = pd.read_csv(sys.argv[3], sep=r"\s+")
 if "#FID" in pcs.columns:
-    pcs = pcs.rename(columns={"#FID": "FID", "IID": "wgs_sample_id"})
+    pcs = pcs.rename(
+        columns={"#FID": "genotype_fid", "IID": "genotype_sample_id"}
+    )
 elif "IID" in pcs.columns:
-    pcs = pcs.rename(columns={"IID": "wgs_sample_id"})
+    pcs = pcs.rename(columns={"IID": "genotype_sample_id"})
 else:
-    pcs = pcs.rename(columns={pcs.columns[0]: "wgs_sample_id"})
-pcs["donor_id"] = pcs["wgs_sample_id"].map(id_to_donor)
+    pcs = pcs.rename(columns={pcs.columns[0]: "genotype_sample_id"})
+pcs["donor_id"] = pcs["genotype_sample_id"].map(id_to_donor)
 if pcs["donor_id"].isna().any():
     raise SystemExit("Cannot map all ancestry-PC samples to SEA-AD donors")
+if pcs["donor_id"].duplicated().any():
+    raise SystemExit("Ancestry-PC samples do not map one-to-one to donors")
 pcs.to_csv(pcs_path, sep="\t", index=False)
 PY
 
@@ -232,7 +265,12 @@ project = pathlib.Path.cwd().resolve()
 def resolve(value):
     path = pathlib.Path(value)
     return (path if path.is_absolute() else project / path).resolve()
+raw_prefix = resolve(c["inputs"]["genotype_raw_plink_prefix"])
 files = [
+    pathlib.Path(f"{raw_prefix}.import_status.tsv"),
+    pathlib.Path(f"{raw_prefix}.import_summary.tsv"),
+    pathlib.Path(f"{raw_prefix}.variant_mapping.tsv.gz"),
+    pathlib.Path(f"{raw_prefix}.vcf.gz"),
     prefix.with_suffix(".pgen"), prefix.with_suffix(".pvar"),
     prefix.with_suffix(".psam"),
     resolve(c["genetics"]["genotype_matrix"]),

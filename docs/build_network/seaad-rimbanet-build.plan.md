@@ -21,9 +21,10 @@ isProject: false
 
 ## Execution status — September 5, 2026
 
-**Steps 1–3 are complete.** The source and identity contracts, production
-input audit, and pinned Linux runtime have passed their gates. Active work now
-moves to **Step 4 — prepare donor-level broad-cell expression**.
+**Steps 1–4 are complete for the Microglia pilot.** The source and identity
+contracts, production input audit, pinned Linux runtime, and pilot expression
+matrix have passed their gates. Active work is **Step 5 — harmonize GDA-8
+genotypes and run the Microglia cis-eQTL stage**.
 
 - The Minerva work checkout started at commit
   b4486062ac77b3189e4f80a6b6a689c6b5952c0f.
@@ -178,9 +179,11 @@ moves to **Step 4 — prepare donor-level broad-cell expression**.
   **SNP-array-derived genetic priors**, never WGS-derived priors.
 - The scientific/execution configs and VH11A input audit have been refactored
   to the frozen GDA-8 source, final remap summary, protected crosswalk, generic
-  genotype terminology, and LSF project `acc_adineto`. The downstream
-  genotype preparation wrapper still uses WGS-specific keys and must be
-  replaced by the deterministic array importer before production genotype QC.
+  genotype terminology, and LSF project `acc_adineto`. The production
+  genotype wrapper now calls the deterministic GDA-8 importer, reproduces the
+  frozen transformation audit before publishing genotypes, uses generic
+  genotype keys and VH11A `array_keep.tsv`/`array_sex.tsv` artifacts, and
+  binds the shared controlled source read-only.
 - Revised GDA-8 VH11A LSF job 268209222 completed on 2026-09-05. It passed
   every pseudobulk, genotype-source, D1/D2 manifest, GRCh38 reference,
   transformation-summary, protected-crosswalk, 78-donor identity, sex-update,
@@ -227,6 +230,14 @@ moves to **Step 4 — prepare donor-level broad-cell expression**.
   input/output smoke tests pass without changing or rebuilding the frozen
   image, and the runtime gate now checks that `gzip` is available. Both failed
   jobs are rejected technical attempts; neither produced `status.tsv`.
+- Step 4 production retry 268232774 completed successfully on Minerva. It is
+  the accepted Microglia VH11B run: LSF state `DONE`, empty stderr,
+  `validated_complete`, 78 donors, 5,000 genes, zero failed checks, and
+  valid gzip streams for all four compressed expression artifacts.
+- The original Step 5 wrapper was not submitted because it still consumed
+  removed WGS-specific config keys and named artifacts, and the planned
+  deterministic GDA-8 importer did not yet exist. These defects are corrected
+  before the first production genotype job.
 - Steps 5–12 have not started in production. No stochastic search array,
   including the Microglia pilot, has been submitted.
 
@@ -1021,7 +1032,137 @@ The accepted Step 4 run must be LSF `DONE`, have empty stderr, report
 `validated_complete` in `status.tsv`, and contain no failed check rows. Jobs
 268232687 and 268232747 are rejected technical attempts. The latter's two
 uncompressed manifests do not constitute a completed stage and are replaced
-atomically by the retry; manual cleanup is not required.
+atomically by accepted job 268232774; manual cleanup is not required.
+
+### Step 5 execution — harmonize and QC the GDA-8 genotypes
+
+Run this from a Minerva login node. The command verifies the completed VH11A
+and Microglia VH11B gates, then submits the controlled-data transformation and
+PLINK2 QC to LSF. The production importer independently reproduces every
+metric in the frozen final allele audit before it writes a normalized VCF.
+It then retains only the 78 explicitly matched primary donors before any
+missingness, MAF/MAC, HWE, relatedness, or ancestry-PC calculation. The
+read-only controlled-data bind and absolute Apptainer executable are
+mandatory.
+
+```bash
+(
+set -euo pipefail
+
+export PROJECT_ROOT=/sc/arion/work/zhuane01/alzheimer
+export RIMBANET_STORAGE_ROOT=/sc/arion/scratch/zhuane01/alzheimer
+export RIMBANET_OUTPUT_ROOT="$RIMBANET_STORAGE_ROOT/results/validation_human"
+export RIMBANET_IMAGE="$RIMBANET_STORAGE_ROOT/external_tools/containers/seaad-rimbanet.sif"
+export SEAAD_CONTROLLED_ROOT=/sc/arion/projects/adineto/sea_ad
+export CONTAINER_RUNTIME=/hpc/packages/minerva-rocky9/apptainer/1.4.5/bin/apptainer
+export CONFIG=config/seaad_rimbanet.yml
+export STAGE=genotypes
+export LSF_PROJECT=acc_adineto
+export PREP_LOG_ROOT="$RIMBANET_OUTPUT_ROOT/11_seaad_rimbanet/logs/preparation"
+export AUDIT_ROOT="$RIMBANET_OUTPUT_ROOT/11_seaad_rimbanet/11a_audit"
+export EXPRESSION_ROOT="$RIMBANET_OUTPUT_ROOT/11_seaad_rimbanet/11b_expression/Microglia"
+
+cd "$PROJECT_ROOT"
+test -z "$(git status --porcelain --untracked-files=no)"
+git pull --ff-only origin main
+test "$(awk -F $'\t' 'NR == 2 {print $3}' "$AUDIT_ROOT/status.tsv")" = \
+  validated_complete
+test "$(awk -F $'\t' 'NR == 2 {print $3}' "$EXPRESSION_ROOT/status.tsv")" = \
+  validated_complete
+test -x "$CONTAINER_RUNTIME"
+test -r \
+  "$SEAAD_CONTROLLED_ROOT/Data/SNP_Genomic_Variants/SEA_AD_SNPs_vcf.tar.gz"
+test "$(sha256sum "$RIMBANET_IMAGE" | awk '{print $1}')" = \
+  1df82906537e74c73fb331e7652c4057bac92182293d7d3739d0a015a4f25840
+
+mkdir -p "$PREP_LOG_ROOT"
+SUBMISSION="$(
+  bsub \
+    -P "$LSF_PROJECT" \
+    -J seaad_vh11c_genotypes \
+    -q premium \
+    -n 4 \
+    -W 12:00 \
+    -R 'rusage[mem=64000]' \
+    -R 'span[hosts=1]' \
+    -M 64000 \
+    -o "$PREP_LOG_ROOT/vh11c_genotypes.%J.out" \
+    -e "$PREP_LOG_ROOT/vh11c_genotypes.%J.err" \
+    -L /bin/bash \
+    bash scripts/validation_human/11_prepare_rimbanet_minerva.lsf
+)"
+
+printf '%s\n' "$SUBMISSION"
+VH11C_JOB_ID="$(
+  printf '%s\n' "$SUBMISSION" |
+  awk -F '[<>]' '/Job </ {print $2}'
+)"
+test -n "$VH11C_JOB_ID"
+printf '%s\n' "$VH11C_JOB_ID" > \
+  "$PREP_LOG_ROOT/latest_vh11c_genotypes_job_id.txt"
+printf 'VH11C_JOB_ID=%s\n' "$VH11C_JOB_ID"
+)
+```
+
+This is the first production Step 5 job, and it can take materially longer
+than expression preparation because it scans the 1.9-million-row VCF and both
+1.9-million-row Illumina manifests, writes 825,989 accepted variants, runs
+PLINK2 QC, and exports the donor-by-variant matrix.
+
+After the job finishes, run:
+
+```bash
+export RIMBANET_STORAGE_ROOT=/sc/arion/scratch/zhuane01/alzheimer
+export RIMBANET_OUTPUT_ROOT="$RIMBANET_STORAGE_ROOT/results/validation_human"
+export PREP_LOG_ROOT="$RIMBANET_OUTPUT_ROOT/11_seaad_rimbanet/logs/preparation"
+export GENETICS_ROOT="$RIMBANET_OUTPUT_ROOT/11_seaad_rimbanet/11c_genetics"
+export ARRAY_ROOT="$RIMBANET_STORAGE_ROOT/data/seaad_genotypes/syn49430589/derived"
+export RAW_PREFIX="$ARRAY_ROOT/seaad_gda8_grch38"
+
+VH11C_JOB_ID="$(cat "$PREP_LOG_ROOT/latest_vh11c_genotypes_job_id.txt")"
+echo "VH11C_JOB_ID=$VH11C_JOB_ID"
+bjobs -a "$VH11C_JOB_ID"
+
+echo "=== job output ==="
+tail -n 100 "$PREP_LOG_ROOT/vh11c_genotypes.$VH11C_JOB_ID.out"
+
+echo "=== job errors ==="
+if test -s "$PREP_LOG_ROOT/vh11c_genotypes.$VH11C_JOB_ID.err"; then
+  cat "$PREP_LOG_ROOT/vh11c_genotypes.$VH11C_JOB_ID.err"
+else
+  echo "none"
+fi
+
+echo "=== deterministic import status ==="
+cat "${RAW_PREFIX}.import_status.tsv"
+
+echo "=== reproduced final allele audit ==="
+cat "${RAW_PREFIX}.import_summary.tsv"
+
+echo "=== genotype QC summaries ==="
+cat "$ARRAY_ROOT/sample_genetic_qc_summary.tsv"
+cat "$ARRAY_ROOT/genotype_imputation_summary.tsv"
+
+echo "=== genotype stage status ==="
+cat "$GENETICS_ROOT/genotype_status.tsv"
+
+echo "=== compressed artifact integrity ==="
+gzip -t \
+  "${RAW_PREFIX}.vcf.gz" \
+  "${RAW_PREFIX}.variant_mapping.tsv.gz" \
+  "$ARRAY_ROOT/genotypes.tsv.gz" \
+  "$ARRAY_ROOT/variant_positions.tsv.gz"
+echo "compressed_artifact_integrity=OK"
+```
+
+Accept Step 5 genotype preparation only when LSF is `DONE`, stderr is empty,
+the import status is `validated_complete` with 95 source samples and exactly
+825,989 transformed variants, all 30 reproduced audit metrics equal the frozen
+summary, genetic QC reports zero sex-check failures and zero related pairs
+above the configured threshold, the exported matrix has 78 samples and no
+missing dosages after imputation, and `genotype_status.tsv` reports
+`validated_complete`. The subsequent Microglia cis-eQTL/CIT job remains part
+of Step 5 and is submitted only after this genotype gate passes.
 
 ### Submit and gate the 1,000-search Microglia pilot
 

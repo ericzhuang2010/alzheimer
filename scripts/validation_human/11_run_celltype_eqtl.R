@@ -186,7 +186,7 @@ variant_positions <- fread_tsv(position_path, data.table = FALSE)
 donors <- intersect(colnames(expression), names(genotype_table)[-1L])
 minimum_matched <- as.integer(config$genetics$minimum_matched_donors)
 if (length(donors) < minimum_matched) {
-  stop("Fewer than ", minimum_matched, " matched expression/WGS donors")
+  stop("Fewer than ", minimum_matched, " matched expression/genotype donors")
 }
 expression <- expression[, donors, drop = FALSE]
 samples <- samples[match(donors, samples$donor_id), , drop = FALSE]

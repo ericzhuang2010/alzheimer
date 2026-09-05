@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 #BSUB -J "seaad_rimbanet_prepare"
+#BSUB -P acc_adineto
 #BSUB -q premium
 #BSUB -n 4
 #BSUB -R "span[hosts=1]"
@@ -10,13 +11,15 @@
 #BSUB -e /sc/arion/scratch/zhuane01/alzheimer/results/validation_human/11_seaad_rimbanet/logs/preparation/%J.%I.err
 
 set -euo pipefail
+umask 077
 
 : "${PROJECT_ROOT:?Set PROJECT_ROOT to the repository root}"
 : "${STAGE:?Set STAGE to genotypes or network}"
 CONFIG="${CONFIG:-config/seaad_rimbanet.yml}"
 IMAGE="${RIMBANET_IMAGE:-/sc/arion/scratch/zhuane01/alzheimer/external_tools/containers/seaad-rimbanet.sif}"
 STORAGE_ROOT="${RIMBANET_STORAGE_ROOT:-/sc/arion/scratch/zhuane01/alzheimer}"
-CONTAINER_RUNTIME="${CONTAINER_RUNTIME:-apptainer}"
+CONTROLLED_ROOT="${SEAAD_CONTROLLED_ROOT:-/sc/arion/projects/adineto/sea_ad}"
+CONTAINER_RUNTIME="${CONTAINER_RUNTIME:-/hpc/packages/minerva-rocky9/apptainer/1.4.5/bin/apptainer}"
 
 cd "$PROJECT_ROOT"
 command -v "$CONTAINER_RUNTIME" >/dev/null 2>&1 || {
@@ -32,10 +35,16 @@ command -v "$CONTAINER_RUNTIME" >/dev/null 2>&1 || {
   exit 3
 }
 
+[[ -d "$CONTROLLED_ROOT" ]] || {
+  echo "Controlled SEA-AD root is unavailable: $CONTROLLED_ROOT" >&2
+  exit 3
+}
+
 RIMBANET_EXEC=(
   "$CONTAINER_RUNTIME" exec
   --bind "$PROJECT_ROOT:$PROJECT_ROOT"
   --bind "$STORAGE_ROOT:$STORAGE_ROOT"
+  --bind "$CONTROLLED_ROOT:$CONTROLLED_ROOT:ro"
   --env R_PROFILE_USER=/dev/null
   --pwd "$PROJECT_ROOT"
   "$IMAGE"

@@ -27,7 +27,7 @@ read-only.
 
 ## VH11: full-integrative SEA-AD RIMBANet networks
 
-VH11 builds seven donor-level broad-cell networks with matched SEA-AD WGS
+VH11 builds seven donor-level broad-cell networks with matched SEA-AD GDA-8
 eQTL/CIT and pinned ENCODE TF-target priors. It never substitutes the
 expression-only variant when genetics or TF priors are missing.
 
@@ -43,7 +43,7 @@ resume, consensus, and release commands are in
 
 On Minerva, keep the repository and compact final releases in the work
 allocation. The frozen VH11 configs route the RIMBANet checkout, SIF, staged
-pseudobulk/WGS/ENCODE inputs, generated matrices, 7,000 search outputs,
+pseudobulk/GDA-8/ENCODE inputs, generated matrices, 7,000 search outputs,
 intermediates, and logs to disposable scratch:
 
 ~~~text
@@ -144,8 +144,8 @@ and combined input hashes match. Consensus is blocked unless all 1,000 task
 records validate, so missing jobs cannot change the denominator.
 
 Final permitted release files are copied atomically to the persistent
-`data/bayesian_network/SEAAD_A9_2024/<cell_type>/` directory. Controlled WGS,
-dense matrices, priors, container/source files, and per-search outputs remain
+`data/bayesian_network/SEAAD_A9_2024/<cell_type>/` directory. Controlled
+GDA-8 data, dense matrices, priors, container/source files, and per-search outputs remain
 in scratch. Scratch may be purged, so retain input identities/checksums and the
 final release in the work checkout and rebuild/restage bulk artifacts when
 needed. Follow the

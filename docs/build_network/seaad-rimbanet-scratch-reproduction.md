@@ -13,14 +13,14 @@ not rebuild scratch. Use the compact network release under
 `data/bayesian_network/SEAAD_A9_2024/`. Rehydrate scratch only when rerunning,
 auditing, or extending network construction.
 
-Exact recovery is possible only after every required production source row in
-`data/reference/rimbanet/sources.tsv` has a frozen release, checksum, and
-non-placeholder status. As of September 5, 2026, the shared
-`syn49430589` GDA-8 source has been selected and its 78-donor identity rule
-has passed; its archive/supporting-file SHA-256s, D1/D2 manifests, GRCh38
-reference, final marker-mapping audit, and ENCODE TF-target transformation are
-frozen. The deterministic production genotype importer and genotype QC remain
-explicit blockers.
+Exact recovery requires every production source row in
+`data/reference/rimbanet/sources.tsv` to retain its frozen release, checksum,
+and non-placeholder status. As of September 5, 2026, the shared
+`syn49430589` GDA-8 archive/supporting files, D1/D2 manifests, GRCh38
+reference, final marker-mapping audit, 78-donor identity rule, and ENCODE
+TF-target transformation are frozen. The deterministic production importer
+and generic genotype-QC wrapper are implemented; their first production run
+is the active Step 5 gate.
 
 ## Persistent material that must survive a scratch purge
 
@@ -201,9 +201,8 @@ Recovery must stop if the shared archive checksum differs, the D2 marker map is
 unavailable, or any donor mapping becomes missing, duplicated, or ambiguous.
 Never infer sample identity from VCF column order.
 
-Once the deterministic array-import stage and generic genotype schema are
-implemented, re-create the normalized PLINK source and all derived genetics
-with the canonical workers from the main build plan:
+The generic genotype wrapper calls the deterministic importer itself, so use
+only the canonical Step 5 worker from the main build plan:
 
 ```bash
 "$APPTAINER_BIN" exec \
@@ -212,20 +211,12 @@ with the canonical workers from the main build plan:
   --bind "$SEAAD_CONTROLLED_ROOT:$SEAAD_CONTROLLED_ROOT:ro" \
   --env R_PROFILE_USER=/dev/null \
   --pwd "$PROJECT_ROOT" "$RIMBANET_IMAGE" \
-  python scripts/validation_human/11_import_seaad_array.py \
-    --config config/seaad_rimbanet.yml
-
-"$APPTAINER_BIN" exec \
-  --bind "$PROJECT_ROOT:$PROJECT_ROOT" \
-  --bind "$RIMBANET_STORAGE_ROOT:$RIMBANET_STORAGE_ROOT" \
-  --env R_PROFILE_USER=/dev/null \
-  --pwd "$PROJECT_ROOT" "$RIMBANET_IMAGE" \
   bash scripts/validation_human/11_prepare_seaad_genotypes.sh \
     --config config/seaad_rimbanet.yml
 ```
 
-The importer command is a planned interface, not yet runnable in the current
-checkout. Do not bypass it with an undocumented coordinate conversion.
+The importer must reproduce the frozen final allele audit before publishing
+the normalized VCF. Do not bypass it with an undocumented conversion.
 
 The stage must recreate the QC PLINK prefix, dosage matrix, variant positions,
 ancestry PCs, QC summaries, artifact hashes, and `genotype_status.tsv`. Do not
