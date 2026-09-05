@@ -229,6 +229,64 @@ def test_array_importer_preserves_frozen_rejection_precedence():
     assert metrics["classification_source_not_biallelic_snv"] == 0
 
 
+def test_array_importer_writes_final_coordinate_sorted_vcf(tmp_path):
+    archive_path = tmp_path / "source.tar.gz"
+    member = "SEA_AD_SNPs_vcf/sea_ad.vcf"
+    payload = (
+        "##fileformat=VCFv4.2\n"
+        "#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\tFORMAT\ts1\n"
+        "23\t10\tx_late\tA\tG\t.\tPASS\t.\tGT\t0/1\n"
+        "24\t20\ty_record\tA\tG\t.\tPASS\t.\tGT\t0/0\n"
+        "25\t30\txy_to_x_early\tA\tG\t.\tPASS\t.\tGT\t1/1\n"
+    ).encode()
+    with tarfile.open(archive_path, "w:gz") as archive:
+        info = tarfile.TarInfo(member)
+        info.size = len(payload)
+        archive.addfile(info, io.BytesIO(payload))
+
+    def transform(chromosome, position, raw_chromosome):
+        return array_import.Transform(
+            chromosome=chromosome,
+            position=position,
+            ref="A",
+            alt="G",
+            orientation="direct",
+            swap=False,
+            source=array_import.SourceMarker(
+                raw_chromosome, chromosome, position, "A", "G"
+            ),
+            d1_ref_strand="+",
+            d2_ref_strand="+",
+        )
+
+    transforms = {
+        "x_late": transform("X", 200, "23"),
+        "y_record": transform("Y", 150, "24"),
+        "xy_to_x_early": transform("X", 100, "25"),
+    }
+    output = tmp_path / "normalized.vcf.gz"
+    array_import.write_vcf(
+        output,
+        archive_path,
+        member,
+        transforms,
+        ["s1"],
+        [("X", 1000), ("Y", 1000)],
+    )
+
+    with gzip.open(output, "rt") as handle:
+        records = [
+            line.rstrip("\n").split("\t")[:3]
+            for line in handle
+            if not line.startswith("#")
+        ]
+    assert records == [
+        ["X", "100", "xy_to_x_early"],
+        ["X", "200", "x_late"],
+        ["Y", "150", "y_record"],
+    ]
+
+
 def test_minerva_genotype_wrapper_uses_gda8_contract():
     wrapper = (SCRIPT_DIR / "11_prepare_seaad_genotypes.sh").read_text()
     launcher = (SCRIPT_DIR / "11_prepare_rimbanet_minerva.lsf").read_text()

@@ -645,7 +645,9 @@ def write_vcf(
 
     def write(output: TextIO) -> None:
         nonlocal written
-        injected = False
+        metadata: list[str] = []
+        sample_header: str | None = None
+        records: dict[str, list[tuple[int, str, str]]] = {}
         with tarfile.open(archive, "r:gz") as container:
             raw_handle = container.extractfile(member)
             if raw_handle is None:
@@ -655,23 +657,13 @@ def write_vcf(
                 if line.startswith("##contig=") or line.startswith("##reference="):
                     continue
                 if line.startswith("##"):
-                    output.write(line + "\n")
+                    metadata.append(line)
                     continue
                 if line.startswith("#CHROM"):
                     fields = line.split("\t")
                     if fields[9:] != expected_samples:
                         raise RuntimeError("Source VCF sample header changed between passes")
-                    output.write("##reference=GENCODE_v44_GRCh38_primary_assembly\n")
-                    output.write(
-                        "##seaad_rimbanet_transform="
-                        "GDA8_D1_AB_to_D2_RefStrand_GRCh38_FASTA\n"
-                    )
-                    for chromosome, length in contigs:
-                        output.write(
-                            f"##contig=<ID={chromosome},length={length}>\n"
-                        )
-                    output.write(line + "\n")
-                    injected = True
+                    sample_header = line
                     continue
                 if line.startswith("#") or not line:
                     continue
@@ -690,10 +682,26 @@ def write_vcf(
                     fields[9:] = [
                         swap_genotype(value, fields[8]) for value in fields[9:]
                     ]
-                output.write("\t".join(fields) + "\n")
+                records.setdefault(item.chromosome, []).append(
+                    (item.position, fields[2], "\t".join(fields))
+                )
                 written += 1
-        if not injected:
+        if sample_header is None:
             raise RuntimeError("Source VCF #CHROM header was not written")
+
+        for line in metadata:
+            output.write(line + "\n")
+        output.write("##reference=GENCODE_v44_GRCh38_primary_assembly\n")
+        output.write(
+            "##seaad_rimbanet_transform="
+            "GDA8_D1_AB_to_D2_RefStrand_GRCh38_FASTA\n"
+        )
+        for chromosome, length in contigs:
+            output.write(f"##contig=<ID={chromosome},length={length}>\n")
+        output.write(sample_header + "\n")
+        for chromosome in sorted(records, key=chromosome_sort_key):
+            for _, _, line in sorted(records[chromosome]):
+                output.write(line + "\n")
 
     publish_gzip(path, write)
     if written != len(transforms):

@@ -1115,7 +1115,10 @@ printf 'VH11C_JOB_ID=%s\n' "$VH11C_JOB_ID"
 This is the first production Step 5 job, and it can take materially longer
 than expression preparation because it scans the 1.9-million-row VCF and both
 1.9-million-row Illumina manifests, writes 825,989 accepted variants, runs
-PLINK2 QC, and exports the donor-by-variant matrix.
+PLINK2 QC, and exports the donor-by-variant matrix. The normalized VCF is
+written in final GRCh38 chromosome/position order (including XY-to-X PAR
+records) because the pinned Minerva PLINK2 build rejects split chromosomes
+before applying its own `--sort-vars` pass.
 
 After the job finishes, run:
 
