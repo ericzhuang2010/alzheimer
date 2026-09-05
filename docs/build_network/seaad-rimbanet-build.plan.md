@@ -19,7 +19,7 @@ isProject: false
 
 # SEA-AD Wang-Style RIMBANet Build Plan
 
-## Execution status — September 4, 2026
+## Execution status — September 5, 2026
 
 **Step 3 — Build and validate the pinned Linux runtime is complete.** The
 active work returns to **Steps 1–2 — freeze and audit production input
@@ -47,8 +47,8 @@ contracts** before Step 4 can begin.
   `validated_complete` with zero failures at 2026-09-04T22:40:05Z.
 - The original WGS-specific input contract has been superseded. The primary
   genotype source is now the locally available GDA-8 SNP-array VCF described
-  below. ENCODE release/transformation/checksum selection and the repository
-  genotype-import refactor remain incomplete.
+  below. The generic GDA-8 input audit and ENCODE transformation are frozen;
+  the production genotype importer and genotype QC remain incomplete.
 - The formal VH11A audit at 2026-09-04T22:47:28Z used the superseded
   WGS-specific configuration and reported four failed checks: all 14 broad
   pseudobulk shards absent from scratch, a raw WGS PLINK trio absent, zero WGS
@@ -57,9 +57,8 @@ contracts** before Step 4 can begin.
   the revised plan.
 - The validated 14-file broad pseudobulk bundle was synchronized through Git,
   staged in Minerva scratch, and independently matched all frozen SHA-256s.
-  The rerun VH11A audit cleared the pseudobulk check. Its three remaining
-  failures are stale WGS/crosswalk checks that must be replaced by generic
-  genotype checks, plus the still-valid frozen ENCODE TF-target failure.
+  The historical rerun cleared the pseudobulk check before the audit was
+  refactored to generic GDA-8 terms.
 - The selected genotype source is the access-controlled shared archive
   `/sc/arion/projects/adineto/sea_ad/Data/SNP_Genomic_Variants/SEA_AD_SNPs_vcf.tar.gz`,
   identified by its Synapse metadata as `syn49430589`, assay `snpArray`,
@@ -182,6 +181,28 @@ contracts** before Step 4 can begin.
   genotype terminology, and LSF project `acc_adineto`. The downstream
   genotype preparation wrapper still uses WGS-specific keys and must be
   replaced by the deterministic array importer before production genotype QC.
+- Revised GDA-8 VH11A LSF job 268209222 completed on 2026-09-05. It passed
+  every pseudobulk, genotype-source, D1/D2 manifest, GRCh38 reference,
+  transformation-summary, protected-crosswalk, 78-donor identity, sex-update,
+  RIMBANet commit, and source-manifest check. Its only failure was the expected
+  missing ENCODE artifact, so the job ended with the controlled state
+  `blocked_missing_prerequisites` and audit exit code 2 rather than a runtime
+  error.
+- The ENCODE structural prior is now frozen to the original 2012 Gerstein
+  ENCODE filtered proximal TIP network, `enets2.Proximal_filtered.txt`. The
+  784,996-byte source has SHA-256
+  `ee34cb261c989746d6eecd89e477ab1c8b9f8982d0a5aaea17f221aece2f94d0`
+  and exactly 26,070 unique TF-target rows from 115 TFs. The repository-native
+  transformer maps exact approved, unique previous/alias HGNC 2026-06-05
+  symbols and exact GENCODE v44 symbols; rejects unresolved or ambiguous
+  symbols and self-loops; collapses mapped duplicates; sorts by parent and
+  child; and writes a version-independent stored-block gzip stream. The frozen
+  result contains 25,105 unique directed edges, 115 TFs, and 8,738 targets;
+  963 source rows are rejected (including 27 self-loops), and two mapped
+  duplicates are collapsed. The 1,551,481-byte output SHA-256 is
+  `3604241c4f1765046f151f0394e9d74b49467c233ee0963ff9553dab968410fe`.
+  This artifact is frozen in code/config but still must be staged and verified
+  on Minerva before VH11A can become `validated_complete`.
 - Steps 4–12 have not started in production. No stochastic search array,
   including the Microglia pilot, has been submitted.
 
@@ -300,7 +321,11 @@ Repo changes: add the plan and two configs; change the feasibility document. No 
   duplicate/relatedness checks, missingness, heterozygosity, ancestry PCs, and
   variant build/alleles. Report per-gene cis-marker coverage and sparse
   instrument coverage so array ascertainment is visible in the final release.
-- Pin the ENCODE TF-target release and transformation rules. Store the bulk table under `/sc/arion/scratch/zhuane01/alzheimer/data/reference/rimbanet/`; keep only source metadata/checksums and permitted compact derived tables in Git.
+- Use the checksum-frozen 2012 Gerstein ENCODE filtered proximal TIP network
+  and the repository transformer declared above. Store its normalized bulk
+  table under `/sc/arion/scratch/zhuane01/alzheimer/data/reference/rimbanet/`;
+  keep only source metadata/checksums and permitted compact derived tables in
+  Git.
 - Require each cell-type sample set to be a subset of the 78 analysis donors with its nucleus threshold met. Record exclusions and final `N` separately for every network.
 
 Repo changes: refactor `config/seaad_rimbanet.yml` and VH11 scripts from

@@ -147,8 +147,26 @@ cit:
 encode:
   required: true
   source_manifest: data/reference/rimbanet/sources.tsv
-  release: ENCODE_SCREEN_or_TF_target_release_to_be_frozen
-  source_sha256: TO_BE_FROZEN
+  release: ENCODE_2012_Gerstein_filtered_proximal_TIP
+  source_url: http://encodenets.gersteinlab.org/enets2.Proximal_filtered.txt
+  source_download: /sc/arion/scratch/zhuane01/alzheimer/data/reference/rimbanet/source/enets2.Proximal_filtered.txt
+  source_download_bytes: 784996
+  source_download_sha256: ee34cb261c989746d6eecd89e477ab1c8b9f8982d0a5aaea17f221aece2f94d0
+  source_relation: proximal_filtered
+  source_rows: 26070
+  transform_script: scripts/validation_human/11_prepare_encode_tf_targets.py
+  symbol_mapping: HGNC_2026-06-05_then_GENCODE_v44
+  reject_ambiguous_or_unresolved_symbols: true
+  reject_self_loops: true
+  collapse_duplicate_mapped_edges: true
+  output_order: parent_then_child_C_locale
+  output_columns: [parent, child, source, release]
+  output_sha256: 3604241c4f1765046f151f0394e9d74b49467c233ee0963ff9553dab968410fe
+  output_bytes: 1551481
+  output_edges: 25105
+  output_unique_tfs: 115
+  output_unique_targets: 8738
+  rejected_source_rows: 963
 
 priors:
   evidence_weight_transform: fixed_log_sample_fields

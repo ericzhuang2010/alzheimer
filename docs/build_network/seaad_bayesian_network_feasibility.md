@@ -28,8 +28,8 @@ That interpretation is documented in the [August 31 meeting summary](../email_no
 |---|---|---|
 | SEA-AD expression data | A9 H5AD has 1.4 million nuclei, 83 donors, and raw UMIs | Available upstream, but the large H5AD and pseudobulk matrices are not in this checkout |
 | Independent network samples | 78 donors in the current analytic cohort | Usable, but small for genome-wide network inference |
-| Matched genetics | Shared GDA-8 VCF has 95 samples; strict ID audit matches all 78 primary expression donors one-to-one | Locally accessible; GRCh37-to-GRCh38 marker mapping and genotype QC remain required |
-| Regulatory priors | SEA-AD snATAC/Multiome and external TF-target resources exist | Technically available |
+| Matched genetics | Shared GDA-8 VCF has 95 samples; strict ID audit matches all 78 primary expression donors one-to-one; the final GRCh38 transformation audit is frozen | Locally accessible; deterministic genotype import and genotype QC remain required |
+| Regulatory priors | The 2012 Gerstein ENCODE filtered proximal TIP network and HGNC/GENCODE transformation are checksum-frozen | Ready to stage and verify on Minerva |
 | Original construction procedure | Final ROSMAP edge lists and the public RIMBANet wrapper/source are available | The previous analyst's run-specific `prior.txt`, parameter files, and edge-support results are still missing |
 | Software | NetworkX/KDA code and pinned Docker/Apptainer recipes exist; public RIMBANet source and Linux binary are available upstream | The production SIF must be built and checksum-frozen under `/sc/arion/scratch/zhuane01/alzheimer`, with both work and scratch roots bound into each job |
 
@@ -138,10 +138,11 @@ Only scale to genome-wide, seven-cell-type networks if that pilot is stable.
 A SEA-AD Bayesian network is technically possible because the cohort has
 expression, chromatin, and matched genetic data. The construction code and
 validated runtime are available, and the shared GDA-8 VCF matches all 78
-primary expression donors. The array and official D2/GRCh38 manifest
-checksums are frozen. Production remains blocked until the D1-to-D2
-marker-mapping contract, generic genotype import/config refactor, genotype QC,
-and TF-target snapshot are complete.
+primary expression donors. The array, D1/D2 manifests, GRCh38 reference, final
+marker transformation, and ENCODE TF-target snapshot are checksum-frozen.
+Production remains blocked until deterministic genotype import and genotype QC
+are complete; the frozen ENCODE artifact must also be staged in Minerva
+scratch before the input audit can pass.
 Downloadable/reproducible bulk inputs, the SIF, and run products are staged in
 Minerva scratch; only code, frozen provenance, and compact validated releases
 remain in the work checkout. The
@@ -152,7 +153,7 @@ sample size and measured-array coverage make individual edges exploratory.
 The scientifically strongest near-term plan is:
 
 1. Continue independent DEG replication now.
-2. Complete the frozen GDA-8 GRCh38 import, genotype QC, and ENCODE source.
+2. Stage ENCODE and complete the frozen GDA-8 GRCh38 import and genotype QC.
 3. Pilot one prior-constrained SEA-AD broad-cell network.
 4. Decide whether full SEA-AD KDA replication is sufficiently stable.
 

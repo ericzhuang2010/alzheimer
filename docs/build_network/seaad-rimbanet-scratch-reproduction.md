@@ -15,13 +15,12 @@ auditing, or extending network construction.
 
 Exact recovery is possible only after every required production source row in
 `data/reference/rimbanet/sources.tsv` has a frozen release, checksum, and
-non-placeholder status. As of September 4, 2026, the shared
+non-placeholder status. As of September 5, 2026, the shared
 `syn49430589` GDA-8 source has been selected and its 78-donor identity rule
-has passed, its archive/supporting-file SHA-256s are frozen, and the matching
-D2 GRCh38 manifest ZIP is frozen. The D1-to-D2 marker-mapping contract and
-ENCODE TF-target transformation are not yet frozen. Those are
-explicit blockers: a shared path or product page alone is not enough to
-reproduce the scientific input exactly.
+has passed; its archive/supporting-file SHA-256s, D1/D2 manifests, GRCh38
+reference, final marker-mapping audit, and ENCODE TF-target transformation are
+frozen. The deterministic production genotype importer and genotype QC remain
+explicit blockers.
 
 ## Persistent material that must survive a scratch purge
 
@@ -53,7 +52,7 @@ scratch.
 | `external_tools/BayesianNetwork/` | Pinned public source checkout | GitHub repository plus frozen commit |
 | `external_tools/proteomics_networks/` | Optional Wang-workflow reference checkout | GitHub repository plus frozen commit; not a production dependency |
 | `external_tools/containers/seaad-rimbanet.sif` | Linux x86-64 runtime | `containers/rimbanet/Apptainer.def` plus pinned source checkout |
-| `data/reference/rimbanet/encode_tf_targets.tsv.gz` | Frozen TF-target input | Exact ENCODE release and transformation contract; currently not frozen |
+| `data/reference/rimbanet/encode_tf_targets.tsv.gz` | Frozen TF-target input | `11_prepare_encode_tf_targets.py`, original ENCODE 2012 Gerstein filtered proximal TIP source, HGNC 2026-06-05, and GENCODE v44 |
 | `data/seaad_genotypes/syn49430589/source/` | Checksum-verified GDA-8 VCF working copy and frozen D2 GRCh38 marker map | Shared `syn49430589` archive plus frozen Illumina manifest |
 | `data/seaad_genotypes/syn49430589/derived/` | GRCh38-normalized/QC PLINK files, dosage matrix, positions, ancestry PCs | `11_import_seaad_array.py` and `11_prepare_seaad_genotypes.sh` |
 | `results/validation_human/05_pseudobulk/direct_broad_counts/` | Seven broad-cell count/sample shards | Validated VH05 raw-UMI aggregation |
@@ -240,20 +239,38 @@ copy derived files from another configuration.
 
 ## 6. Restore the ENCODE TF-target input
 
-Retrieve and transform the exact release declared by the frozen ENCODE row in
-`data/reference/rimbanet/sources.tsv`, then write the result to:
+Retrieve only the frozen source bytes, verify them before transformation, and
+run the canonical transformer:
 
-```text
-/sc/arion/scratch/zhuane01/alzheimer/data/reference/rimbanet/encode_tf_targets.tsv.gz
+```bash
+ENCODE_ROOT="$RIMBANET_STORAGE_ROOT/data/reference/rimbanet"
+ENCODE_SOURCE="$ENCODE_ROOT/source/enets2.Proximal_filtered.txt"
+mkdir -p "$ENCODE_ROOT/source"
+module load proxies/1
+wget -O "$ENCODE_SOURCE.part" \
+  http://encodenets.gersteinlab.org/enets2.Proximal_filtered.txt
+test "$(stat -c '%s' "$ENCODE_SOURCE.part")" -eq 784996
+test "$(sha256sum "$ENCODE_SOURCE.part" | awk '{print $1}')" = \
+  ee34cb261c989746d6eecd89e477ab1c8b9f8982d0a5aaea17f221aece2f94d0
+mv "$ENCODE_SOURCE.part" "$ENCODE_SOURCE"
+
+python3 "$PROJECT_ROOT/scripts/validation_human/11_prepare_encode_tf_targets.py" \
+  --source "$ENCODE_SOURCE" \
+  --source-sha256 ee34cb261c989746d6eecd89e477ab1c8b9f8982d0a5aaea17f221aece2f94d0 \
+  --gencode "$PROJECT_ROOT/data/reference/gencode/gencode.v44.basic.annotation.gtf.gz" \
+  --hgnc "$PROJECT_ROOT/data/reference/hgnc/hgnc_complete_set_2026-06-05.txt" \
+  --output "$ENCODE_ROOT/encode_tf_targets.tsv.gz" \
+  --summary "$ENCODE_ROOT/encode_tf_targets.summary.tsv" \
+  --rejections "$ENCODE_ROOT/encode_tf_targets.rejections.tsv"
+
+test "$(stat -c '%s' "$ENCODE_ROOT/encode_tf_targets.tsv.gz")" -eq 1551481
+test "$(sha256sum "$ENCODE_ROOT/encode_tf_targets.tsv.gz" | awk '{print $1}')" = \
+  3604241c4f1765046f151f0394e9d74b49467c233ee0963ff9553dab968410fe
+gzip -t "$ENCODE_ROOT/encode_tf_targets.tsv.gz"
 ```
 
-The current release name, source checksum, and transformation rules are not
-yet frozen, and the repository does not yet contain a canonical ENCODE
-transformation script. Therefore this file is not exactly reproducible today.
-Production and scratch recovery must remain blocked until the release,
-download identity, column/identifier mapping, filtering rules, output sort
-order, compression command, and final SHA-256 are recorded. Never substitute
-a current ENCODE download for the missing frozen snapshot.
+Do not replace this snapshot with a current portal query or mix the distal
+network into the frozen proximal prior without a new versioned decision.
 
 ## 7. Regenerate VH11 products in dependency order
 

@@ -411,19 +411,55 @@ def main() -> int:
     encode_path = configured_path(
         project_root, config["inputs"]["encode_tf_targets"], must_exist=False
     )
-    encode_frozen = (
-        encode_path.exists()
-        and config["encode"]["source_sha256"] != "TO_BE_FROZEN"
-        and "TO_BE_FROZEN" not in str(config["encode"]["release"])
-    )
-    if encode_path.exists():
+    encode_contract = config["encode"]
+    encode_observed = "missing"
+    encode_frozen = False
+    if encode_path.exists() and encode_path.is_file():
         artifacts.append(encode_path)
+        try:
+            encode_table = pd.read_csv(encode_path, sep="\t", dtype=str)
+            required_columns = ["parent", "child", "source", "release"]
+            encode_sha256 = sha256_file(encode_path)
+            schema_ok = list(encode_table.columns) == required_columns
+            content_ok = (
+                schema_ok
+                and len(encode_table) == int(encode_contract["output_edges"])
+                and encode_table[["parent", "child"]].notna().all().all()
+                and not encode_table.duplicated(["parent", "child"]).any()
+                and not encode_table["parent"].eq(encode_table["child"]).any()
+                and encode_table["source"].eq("ENCODE").all()
+                and encode_table["release"].eq(str(encode_contract["release"])).all()
+                and encode_table[["parent", "child"]].values.tolist()
+                == encode_table.sort_values(["parent", "child"])[
+                    ["parent", "child"]
+                ].values.tolist()
+                and encode_table["parent"].nunique()
+                == int(encode_contract["output_unique_tfs"])
+                and encode_table["child"].nunique()
+                == int(encode_contract["output_unique_targets"])
+            )
+            encode_frozen = (
+                content_ok
+                and encode_path.stat().st_size == int(encode_contract["output_bytes"])
+                and encode_sha256 == str(encode_contract["output_sha256"])
+                and "TO_BE_FROZEN" not in str(encode_contract["release"])
+            )
+            encode_observed = (
+                f"rows={len(encode_table)};bytes={encode_path.stat().st_size};"
+                f"sha256={encode_sha256}"
+            )
+        except (OSError, ValueError, KeyError, pd.errors.ParserError) as error:
+            encode_observed = f"invalid:{type(error).__name__}"
     checks.append(
         (
             "encode_tf_targets_present_and_frozen",
             encode_frozen,
-            encode_path.exists(),
-            True,
+            encode_observed,
+            (
+                f"rows={encode_contract['output_edges']};"
+                f"bytes={encode_contract['output_bytes']};"
+                f"sha256={encode_contract['output_sha256']}"
+            ),
             provenance_path(encode_path, project_root),
         )
     )
