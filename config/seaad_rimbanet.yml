@@ -114,7 +114,15 @@ genetics:
   source_genome_build: GRCh37
   genome_build: GRCh38
   minimum_matched_donors: 50
-  plink2_version: "2.0"
+  plink2_binary: /sc/arion/scratch/zhuane01/alzheimer/external_tools/plink2/20260818/plink2
+  plink2_version: PLINK v2.0.0-a.6.35LM 64-bit Intel (18 Aug 2026)
+  plink2_archive_url: https://s3.amazonaws.com/plink2-assets/alpha6/plink2_linux_x86_64_20260818.zip
+  plink2_archive_bytes: 7454470
+  plink2_archive_sha256: cdbade483347678b4f5ddbd8f199b2c1b9c822f7ab6a9345d30505cf3a2e2b00
+  plink2_binary_bytes: 24682184
+  plink2_binary_sha256: 29a14752a5e8a8e5212e3ffa1b2e69c258f85516f405478c5dbf8ab00a54c03f
+  plink2_threads: 4
+  plink2_memory_mb: 60000
   sample_missingness_maximum: 0.02
   variant_missingness_maximum: 0.02
   missing_genotype_imputation: mean_dosage
@@ -123,6 +131,8 @@ genetics:
   hwe_p_minimum: 1.0e-6
   relatedness_kinship_maximum: 0.0884
   require_sexcheck_pass: true
+  sexcheck_max_female_xf: 0.2
+  sexcheck_min_male_xf: 0.8
   ancestry_pcs: 5
   expression_pcs: 5
   cis_window_bp: 1000000

@@ -295,9 +295,20 @@ def test_minerva_genotype_wrapper_uses_gda8_contract():
     assert "array_keep.tsv" in wrapper
     assert "--split-par hg38" in wrapper
     assert "--sort-vars" in wrapper
+    assert 'PLINK2="${CFG[14]}"' in wrapper
+    assert "plink2_binary_sha256" in wrapper
+    assert "max-female-xf=" in wrapper
+    assert "min-male-xf=" in wrapper
+    assert "minimum_matched_donors" in wrapper
+    assert "sample_genetic_qc_exclusions.tsv" in wrapper
+    assert "AUDIT_CONFIG_SHA256" in wrapper
+    assert 'PLINK2_RUN=(' in wrapper
+    assert '--threads "$PLINK2_THREADS"' in wrapper
+    assert '--memory "$PLINK2_MEMORY_MB"' in wrapper
     assert "wgs_" not in wrapper.lower()
     assert "/hpc/packages/minerva-rocky9/apptainer/1.4.5/bin/apptainer" in launcher
     assert "$CONTROLLED_ROOT:$CONTROLLED_ROOT:ro" in launcher
+    assert "11_audit_rimbanet_inputs.py" in launcher
 
 
 
@@ -376,7 +387,9 @@ def test_production_bulk_paths_are_under_minerva_scratch():
         scientific["genetics"]["genotype_matrix"],
         scientific["genetics"]["variant_positions"],
         scientific["genetics"]["ancestry_covariates"],
+        scientific["genetics"]["plink2_binary"],
         execution["runtime"]["image"],
+        execution["runtime"]["plink2"],
         execution["paths"]["generated_output_root"],
         execution["paths"]["scratch_root"],
         execution["paths"]["log_root"],
@@ -391,6 +404,25 @@ def test_production_bulk_paths_are_under_minerva_scratch():
     assert all(Path(value).is_relative_to(scratch) for value in scratch_paths)
     assert Path(scientific["inputs"]["genotype_source_archive"]) == controlled_source
     assert execution["lsf_production"]["project"] == "acc_adineto"
+    assert scientific["genetics"]["plink2_version"] == execution["runtime"]["plink2_version"]
+    assert (
+        scientific["genetics"]["plink2_binary_sha256"]
+        == execution["runtime"]["plink2_sha256"]
+    )
+    assert scientific["genetics"]["plink2_archive_bytes"] == 7454470
+    assert scientific["genetics"]["plink2_binary_bytes"] == 24682184
+    assert scientific["genetics"]["plink2_threads"] == 4
+    assert scientific["genetics"]["plink2_memory_mb"] == 60000
+    assert (
+        scientific["genetics"]["plink2_threads"]
+        == execution["runtime"]["plink2_threads"]
+    )
+    assert (
+        scientific["genetics"]["plink2_memory_mb"]
+        == execution["runtime"]["plink2_memory_mb"]
+    )
+    assert scientific["genetics"]["sexcheck_max_female_xf"] == 0.2
+    assert scientific["genetics"]["sexcheck_min_male_xf"] == 0.8
     assert not Path(scientific["release_root"]).is_absolute()
     assert not Path(
         scientific["inputs"]["genotype_sample_crosswalk"]

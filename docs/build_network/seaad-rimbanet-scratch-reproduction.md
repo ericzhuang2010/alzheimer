@@ -52,6 +52,7 @@ scratch.
 | `external_tools/BayesianNetwork/` | Pinned public source checkout | GitHub repository plus frozen commit |
 | `external_tools/proteomics_networks/` | Optional Wang-workflow reference checkout | GitHub repository plus frozen commit; not a production dependency |
 | `external_tools/containers/seaad-rimbanet.sif` | Linux x86-64 runtime | `containers/rimbanet/Apptainer.def` plus pinned source checkout |
+| `external_tools/plink2/20260818/plink2` | Genotype QC runtime with `--check-sex` | Official dated PLINK v2.0.0-a.6.35LM package plus frozen package/executable SHA-256s |
 | `data/reference/rimbanet/encode_tf_targets.tsv.gz` | Frozen TF-target input | `11_prepare_encode_tf_targets.py`, original ENCODE 2012 Gerstein filtered proximal TIP source, HGNC 2026-06-05, and GENCODE v44 |
 | `data/seaad_genotypes/syn49430589/source/` | Checksum-verified GDA-8 VCF working copy and frozen D2 GRCh38 marker map | Shared `syn49430589` archive plus frozen Illumina manifest |
 | `data/seaad_genotypes/syn49430589/derived/` | GRCh38-normalized/QC PLINK files, dosage matrix, positions, ancestry PCs | `11_import_seaad_array.py` and `11_prepare_seaad_genotypes.sh` |
@@ -218,9 +219,18 @@ only the canonical Step 5 worker from the main build plan:
 The importer must reproduce the frozen final allele audit before publishing
 the normalized VCF. Do not bypass it with an undocumented conversion.
 
+Before invoking the worker, restore and verify the exact PLINK2 package and
+executable with the installation block in the main Step 5 plan. The container's
+Debian PLINK2 is a February 2022 build that predates `--check-sex` and is not
+the accepted production genotype-QC executable. The wrapper independently
+checks the external executable's SHA-256 and exact version.
+
 The stage must recreate the QC PLINK prefix, dosage matrix, variant positions,
-ancestry PCs, QC summaries, artifact hashes, and `genotype_status.tsv`. Do not
-copy derived files from another configuration.
+ancestry PCs, missingness exclusions, QC summaries, artifact hashes, and
+`genotype_status.tsv`. Donors above the frozen sample-missingness threshold
+are excluded explicitly; downstream expression/genotype analyses use the
+intersection and require the configured minimum donor count. Do not copy
+derived files from another configuration.
 
 ## 6. Restore the ENCODE TF-target input
 

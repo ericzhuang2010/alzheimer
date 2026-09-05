@@ -234,12 +234,31 @@ genotypes and run the Microglia cis-eQTL stage**.
   the accepted Microglia VH11B run: LSF state `DONE`, empty stderr,
   `validated_complete`, 78 donors, 5,000 genes, zero failed checks, and
   valid gzip streams for all four compressed expression artifacts.
-- The original Step 5 wrapper was not submitted because it still consumed
-  removed WGS-specific config keys and named artifacts, and the planned
-  deterministic GDA-8 importer did not yet exist. These defects are corrected
-  before the first production genotype job.
-- Steps 5–12 have not started in production. No stochastic search array,
-  including the Microglia pilot, has been submitted.
+- Four rejected technical Step 5 attempts exposed and corrected runtime
+  contracts without producing an accepted genotype stage. Job 268232982 did
+  not inherit `PROJECT_ROOT`; all LSF preparation submissions now attach
+  required variables directly with `env`. Job 268233045 detected that the
+  production importer classified 153 palindromic and three non-SNV records
+  before their higher-priority invalid-D2-location reason; restoring the
+  frozen rejection precedence reproduced all 30 audit metrics. Job 268233190
+  passed that audit and produced exactly 825,989 variants, then the image's
+  February 2022 PLINK2 rejected X records separated by former-XY PAR records;
+  the importer now writes final GRCh38 coordinate order. Job 268234296 passed
+  import and initial PLINK filtering, retaining 76 of 78 matched donors after
+  the prespecified `--mind 0.02` gate, then stopped because that PLINK2 build
+  predates `--check-sex`.
+- Production genotype QC now uses the checksum-pinned official PLINK
+  v2.0.0-a.6.35LM 64-bit Intel build dated 18 August 2026. Its 7,454,470-byte
+  package SHA-256 is
+  `cdbade483347678b4f5ddbd8f199b2c1b9c822f7ab6a9345d30505cf3a2e2b00`;
+  the 24,682,184-byte executable SHA-256 is
+  `29a14752a5e8a8e5212e3ffa1b2e69c258f85516f405478c5dbf8ab00a54c03f`.
+  Sex checking uses LD-pruned markers with explicit chrX F thresholds
+  max-female=0.2 and min-male=0.8. Donors failing the frozen missingness gate
+  are explicitly recorded and excluded; downstream eQTL code intersects the
+  post-QC genotype donors with expression and still requires at least 50.
+- Step 5 is active but has no accepted run yet. Steps 6–12 and every stochastic
+  search array, including the Microglia pilot, remain unsubmitted.
 
 ## Goal and end state
 
@@ -1036,8 +1055,51 @@ atomically by accepted job 268232774; manual cleanup is not required.
 
 ### Step 5 execution — harmonize and QC the GDA-8 genotypes
 
-Run this from a Minerva login node. The command verifies the completed VH11A
-and Microglia VH11B gates, then submits the controlled-data transformation and
+First install the checksum-pinned PLINK2 executable from the official dated
+package. Run this once from a Minerva login node:
+
+```bash
+(
+set -euo pipefail
+umask 077
+
+export PLINK2_ROOT=/sc/arion/scratch/zhuane01/alzheimer/external_tools/plink2/20260818
+export PLINK2_ZIP="$PLINK2_ROOT/plink2_linux_x86_64_20260818.zip"
+export PLINK2_BIN="$PLINK2_ROOT/plink2"
+export PLINK2_URL=https://s3.amazonaws.com/plink2-assets/alpha6/plink2_linux_x86_64_20260818.zip
+
+mkdir -p "$PLINK2_ROOT"
+module load proxies/1
+
+if ! test -f "$PLINK2_ZIP"; then
+  wget --timeout=60 --tries=5 -O "$PLINK2_ZIP.part.$$" "$PLINK2_URL"
+  mv "$PLINK2_ZIP.part.$$" "$PLINK2_ZIP"
+fi
+
+test "$(stat -c '%s' "$PLINK2_ZIP")" = 7454470
+test "$(sha256sum "$PLINK2_ZIP" | awk '{print $1}')" = \
+  cdbade483347678b4f5ddbd8f199b2c1b9c822f7ab6a9345d30505cf3a2e2b00
+
+unzip -p "$PLINK2_ZIP" plink2 > "$PLINK2_BIN.part.$$"
+chmod 700 "$PLINK2_BIN.part.$$"
+test "$(stat -c '%s' "$PLINK2_BIN.part.$$")" = 24682184
+test "$(sha256sum "$PLINK2_BIN.part.$$" | awk '{print $1}')" = \
+  29a14752a5e8a8e5212e3ffa1b2e69c258f85516f405478c5dbf8ab00a54c03f
+mv "$PLINK2_BIN.part.$$" "$PLINK2_BIN"
+
+"$PLINK2_BIN" --version
+"$PLINK2_BIN" --help check-sex | grep -F -- '--check-sex'
+echo "pinned_plink2_status=validated_complete"
+)
+```
+
+The version line must be
+`PLINK v2.0.0-a.6.35LM 64-bit Intel (18 Aug 2026)`, and the final status must
+be `validated_complete`.
+
+Then run the submission block below from the Minerva login node. It verifies
+the completed VH11A and Microglia VH11B gates, then submits the
+controlled-data transformation and
 PLINK2 QC to LSF. The production importer independently reproduces every
 metric in the frozen final allele audit before it writes a normalized VCF.
 It then retains only the 78 explicitly matched primary donors before any
@@ -1061,6 +1123,7 @@ export LSF_PROJECT=acc_adineto
 export PREP_LOG_ROOT="$RIMBANET_OUTPUT_ROOT/11_seaad_rimbanet/logs/preparation"
 export AUDIT_ROOT="$RIMBANET_OUTPUT_ROOT/11_seaad_rimbanet/11a_audit"
 export EXPRESSION_ROOT="$RIMBANET_OUTPUT_ROOT/11_seaad_rimbanet/11b_expression/Microglia"
+export PLINK2_BIN="$RIMBANET_STORAGE_ROOT/external_tools/plink2/20260818/plink2"
 
 cd "$PROJECT_ROOT"
 test -z "$(git status --porcelain --untracked-files=no)"
@@ -1074,6 +1137,8 @@ test -r \
   "$SEAAD_CONTROLLED_ROOT/Data/SNP_Genomic_Variants/SEA_AD_SNPs_vcf.tar.gz"
 test "$(sha256sum "$RIMBANET_IMAGE" | awk '{print $1}')" = \
   1df82906537e74c73fb331e7652c4057bac92182293d7d3739d0a015a4f25840
+test "$(sha256sum "$PLINK2_BIN" | awk '{print $1}')" = \
+  29a14752a5e8a8e5212e3ffa1b2e69c258f85516f405478c5dbf8ab00a54c03f
 
 mkdir -p "$PREP_LOG_ROOT"
 SUBMISSION="$(
@@ -1083,7 +1148,7 @@ SUBMISSION="$(
     -q premium \
     -n 4 \
     -W 12:00 \
-    -R 'rusage[mem=64000]' \
+    -R 'rusage[mem=16000]' \
     -R 'span[hosts=1]' \
     -M 64000 \
     -o "$PREP_LOG_ROOT/vh11c_genotypes.%J.out" \
@@ -1112,13 +1177,15 @@ printf 'VH11C_JOB_ID=%s\n' "$VH11C_JOB_ID"
 )
 ```
 
-This is the first production Step 5 job, and it can take materially longer
+This is the next candidate production Step 5 job, and it can take materially longer
 than expression preparation because it scans the 1.9-million-row VCF and both
 1.9-million-row Illumina manifests, writes 825,989 accepted variants, runs
 PLINK2 QC, and exports the donor-by-variant matrix. The normalized VCF is
 written in final GRCh38 chromosome/position order (including XY-to-X PAR
 records) because the pinned Minerva PLINK2 build rejects split chromosomes
-before applying its own `--sort-vars` pass.
+before applying its own `--sort-vars` pass. PLINK is bounded to the four
+allocated cores and 60,000 MB instead of inferring the compute host's full
+64-core/1.5-TB capacity.
 
 After the job finishes, run:
 
@@ -1152,6 +1219,7 @@ cat "${RAW_PREFIX}.import_summary.tsv"
 
 echo "=== genotype QC summaries ==="
 cat "$ARRAY_ROOT/sample_genetic_qc_summary.tsv"
+cat "$ARRAY_ROOT/sample_genetic_qc_exclusions.tsv"
 cat "$ARRAY_ROOT/genotype_imputation_summary.tsv"
 
 echo "=== genotype stage status ==="
@@ -1170,9 +1238,11 @@ Accept Step 5 genotype preparation only when LSF is `DONE`, stderr is empty,
 the import status is `validated_complete` with 95 source samples and exactly
 825,989 transformed variants, all 30 reproduced audit metrics equal the frozen
 summary, genetic QC reports zero sex-check failures and zero related pairs
-above the configured threshold, the exported matrix has 78 samples and no
-missing dosages after imputation, and `genotype_status.tsv` reports
-`validated_complete`. The subsequent Microglia cis-eQTL/CIT job remains part
+above the configured threshold, at least 50 post-QC donors remain, the exported
+matrix donor count equals the recorded post-QC count with no missing dosages
+after imputation, and `genotype_status.tsv` reports `validated_complete`
+with the pinned PLINK version and checksum. The subsequent Microglia
+cis-eQTL/CIT job remains part
 of Step 5 and is submitted only after this genotype gate passes.
 
 ### Submit and gate the 1,000-search Microglia pilot

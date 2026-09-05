@@ -42,6 +42,14 @@ print(resolve(c["genetics"]["genotype_matrix"]))
 print(resolve(c["genetics"]["variant_positions"]))
 print(resolve(c["genetics"]["ancestry_covariates"]))
 print(resolve(c.get("storage", {}).get("generated_output_root", c["output_root"])))
+print(resolve(c["genetics"]["plink2_binary"]))
+print(c["genetics"]["plink2_binary_sha256"])
+print(c["genetics"]["plink2_version"])
+print(c["genetics"]["minimum_matched_donors"])
+print(c["genetics"]["sexcheck_max_female_xf"])
+print(c["genetics"]["sexcheck_min_male_xf"])
+print(c["genetics"]["plink2_threads"])
+print(c["genetics"]["plink2_memory_mb"])
 PY
 )
 
@@ -50,6 +58,7 @@ QC_PREFIX="${CFG[1]}"
 KEEP="${CFG[13]}/11_seaad_rimbanet/11a_audit/array_keep.tsv"
 SEX_UPDATE="${CFG[13]}/11_seaad_rimbanet/11a_audit/array_sex.tsv"
 AUDIT_STATUS="${CFG[13]}/11_seaad_rimbanet/11a_audit/status.tsv"
+PLINK2="${CFG[14]}"
 mkdir -p "$(dirname "$QC_PREFIX")"
 [[ -s "$KEEP" ]] || {
   echo "Missing explicit genotype keep file from VH11A: $KEEP" >&2
@@ -67,11 +76,55 @@ then
   echo "VH11A is not validated_complete: $AUDIT_STATUS" >&2
   exit 3
 fi
-command -v plink2 >/dev/null || { echo "plink2 is required" >&2; exit 3; }
+CURRENT_CONFIG_SHA256="$(sha256sum "$CONFIG" | awk '{print $1}')"
+AUDIT_CONFIG_SHA256="$(
+  awk -F '\t' '
+    NR == 1 {
+      for (i = 1; i <= NF; i++) {
+        if ($i == "config_sha256") column = i
+      }
+      next
+    }
+    NR == 2 && column { print $column }
+  ' "$AUDIT_STATUS"
+)"
+[[ "$AUDIT_CONFIG_SHA256" == "$CURRENT_CONFIG_SHA256" ]] || {
+  echo "VH11A config SHA-256 does not match the active config" >&2
+  echo "audit=$AUDIT_CONFIG_SHA256 active=$CURRENT_CONFIG_SHA256" >&2
+  exit 3
+}
+[[ -x "$PLINK2" ]] || {
+  echo "Pinned PLINK2 executable is unavailable: $PLINK2" >&2
+  exit 3
+}
+PLINK2_SHA256="$(sha256sum "$PLINK2" | awk '{print $1}')"
+[[ "$PLINK2_SHA256" == "${CFG[15]}" ]] || {
+  echo "Pinned PLINK2 SHA-256 mismatch: $PLINK2" >&2
+  echo "observed=$PLINK2_SHA256 expected=${CFG[15]}" >&2
+  exit 3
+}
+PLINK2_VERSION="$("$PLINK2" --version)"
+[[ "$PLINK2_VERSION" == "${CFG[16]}" ]] || {
+  echo "Pinned PLINK2 version mismatch: $PLINK2_VERSION" >&2
+  exit 3
+}
+PLINK2_THREADS="${CFG[20]}"
+PLINK2_MEMORY_MB="${CFG[21]}"
+if [[ -n "${LSB_DJOB_NUMPROC:-}" ]] && \
+   (( LSB_DJOB_NUMPROC < PLINK2_THREADS ))
+then
+  echo "LSF allocated $LSB_DJOB_NUMPROC slots; PLINK2 requires $PLINK2_THREADS" >&2
+  exit 3
+fi
+PLINK2_RUN=(
+  "$PLINK2"
+  --threads "$PLINK2_THREADS"
+  --memory "$PLINK2_MEMORY_MB"
+)
 
 python3 scripts/validation_human/11_import_seaad_array.py --config "$CONFIG"
 
-plink2 \
+"${PLINK2_RUN[@]}" \
   --vcf "${RAW_PREFIX}.vcf.gz" \
   --vcf-require-gt \
   --const-fid 0 \
@@ -82,7 +135,7 @@ plink2 \
   --make-pgen \
   --out "$RAW_PREFIX"
 
-plink2 --pfile "$RAW_PREFIX" \
+"${PLINK2_RUN[@]}" --pfile "$RAW_PREFIX" \
   --mind "${CFG[2]}" \
   --geno "${CFG[3]}" \
   --maf "${CFG[4]}" \
@@ -91,28 +144,36 @@ plink2 --pfile "$RAW_PREFIX" \
   --make-pgen \
   --out "$QC_PREFIX"
 
-plink2 --pfile "$QC_PREFIX" \
+"${PLINK2_RUN[@]}" --pfile "$QC_PREFIX" \
   --indep-pairwise 200 50 0.2 \
   --out "${QC_PREFIX}.ld"
-plink2 --pfile "$QC_PREFIX" \
+"${PLINK2_RUN[@]}" --pfile "$QC_PREFIX" \
+  --extract "${QC_PREFIX}.ld.prune.in" \
   --check-sex \
+    "max-female-xf=${CFG[18]}" \
+    "min-male-xf=${CFG[19]}" \
   --out "${QC_PREFIX}.sexcheck"
-plink2 --pfile "$QC_PREFIX" \
+"${PLINK2_RUN[@]}" --pfile "$QC_PREFIX" \
   --extract "${QC_PREFIX}.ld.prune.in" \
   --make-king-table \
   --out "${QC_PREFIX}.kinship"
-plink2 --pfile "$QC_PREFIX" \
+"${PLINK2_RUN[@]}" --pfile "$QC_PREFIX" \
   --het \
   --out "${QC_PREFIX}.heterozygosity"
-plink2 --pfile "$QC_PREFIX" \
+"${PLINK2_RUN[@]}" --pfile "$QC_PREFIX" \
   --extract "${QC_PREFIX}.ld.prune.in" \
   --pca "${CFG[9]}" \
   --out "${QC_PREFIX}.ancestry"
-plink2 --pfile "$QC_PREFIX" \
+"${PLINK2_RUN[@]}" --pfile "$QC_PREFIX" \
   --export A-transpose \
   --out "${QC_PREFIX}.dosage"
 
-python3 - "$CONFIG" "${QC_PREFIX}.sexcheck" "${QC_PREFIX}.kinship.kin0" <<'PY'
+python3 - \
+  "$CONFIG" \
+  "${QC_PREFIX}.sexcheck" \
+  "${QC_PREFIX}.kinship.kin0" \
+  "${RAW_PREFIX}.psam" \
+  "${QC_PREFIX}.psam" <<'PY'
 import sys
 from pathlib import Path
 import pandas as pd
@@ -125,6 +186,8 @@ def resolve(value):
     return (path if path.is_absolute() else project / path).resolve()
 sex_path = Path(sys.argv[2])
 king_path = Path(sys.argv[3])
+raw_psam_path = Path(sys.argv[4])
+qc_psam_path = Path(sys.argv[5])
 if not sex_path.exists():
     raise SystemExit(f"Missing PLINK sex-check output: {sex_path}")
 if not king_path.exists():
@@ -138,6 +201,35 @@ sex_failures = int(
 )
 if config["genetics"]["require_sexcheck_pass"] and sex_failures:
     raise SystemExit(f"Sex check failed for {sex_failures} samples")
+
+def read_iids(path):
+    frame = pd.read_csv(path, sep=r"\s+", dtype=str)
+    iid_column = "#IID" if "#IID" in frame.columns else "IID"
+    if iid_column not in frame.columns:
+        raise SystemExit(f"Cannot identify IID column in {path}")
+    values = frame[iid_column].dropna().astype(str)
+    if values.duplicated().any():
+        raise SystemExit(f"Duplicate sample IDs in {path}")
+    return set(values)
+
+raw_samples = read_iids(raw_psam_path)
+qc_samples = read_iids(qc_psam_path)
+expected_primary = int(config["expected_identity"]["genotype_primary_samples"])
+minimum_matched = int(config["genetics"]["minimum_matched_donors"])
+if len(raw_samples) != expected_primary:
+    raise SystemExit(
+        f"Raw matched genotype cohort has {len(raw_samples)} samples; "
+        f"expected {expected_primary}"
+    )
+if not qc_samples.issubset(raw_samples):
+    raise SystemExit("Post-QC genotype samples are not a subset of the matched cohort")
+if len(qc_samples) < minimum_matched:
+    raise SystemExit(
+        f"Only {len(qc_samples)} genotype samples survived QC; "
+        f"minimum is {minimum_matched}"
+    )
+if len(sex) != len(qc_samples):
+    raise SystemExit("Sex-check report does not contain every post-QC sample")
 
 related_pairs = 0
 if king_path.exists() and king_path.stat().st_size:
@@ -153,12 +245,30 @@ if king_path.exists() and king_path.stat().st_size:
     )
 if related_pairs:
     raise SystemExit(f"{related_pairs} donor pairs exceed the kinship threshold")
+summary_root = resolve(config["genetics"]["ancestry_covariates"]).parent
 pd.DataFrame([{
+    "matched_samples_before_qc": len(raw_samples),
+    "samples_removed_by_missingness": len(raw_samples - qc_samples),
+    "samples_retained_after_qc": len(qc_samples),
     "sexcheck_samples": len(sex),
     "sexcheck_failures": sex_failures,
     "related_pairs_above_threshold": related_pairs,
-}]).to_csv(resolve(config["genetics"]["ancestry_covariates"]).parent /
-           "sample_genetic_qc_summary.tsv", sep="\t", index=False)
+}]).to_csv(
+    summary_root / "sample_genetic_qc_summary.tsv", sep="\t", index=False
+)
+excluded_samples = sorted(raw_samples - qc_samples)
+pd.DataFrame(
+    [
+        {
+            "genotype_sample_id": sample_id,
+            "exclusion_reason": "sample_missingness_above_threshold",
+        }
+        for sample_id in excluded_samples
+    ],
+    columns=["genotype_sample_id", "exclusion_reason"],
+).to_csv(
+    summary_root / "sample_genetic_qc_exclusions.tsv", sep="\t", index=False
+)
 PY
 
 python3 - "$CONFIG" "${QC_PREFIX}.dosage.traw" "${QC_PREFIX}.ancestry.eigenvec" <<'PY'
@@ -196,8 +306,13 @@ for column in sample_cols:
         raise SystemExit(f"Cannot uniquely map PLINK dosage column {column!r}")
     rename[column] = matches[0]
 geno = geno.rename(columns=rename)
-if len(rename) != int(config["expected_identity"]["genotype_primary_samples"]):
-    raise SystemExit("PLINK dosage export does not contain all primary donors")
+minimum_matched = int(config["genetics"]["minimum_matched_donors"])
+primary_samples = int(config["expected_identity"]["genotype_primary_samples"])
+if not minimum_matched <= len(rename) <= primary_samples:
+    raise SystemExit(
+        f"PLINK dosage export has {len(rename)} mapped donors; expected "
+        f"between {minimum_matched} and {primary_samples}"
+    )
 if len(set(rename.values())) != len(rename):
     raise SystemExit("PLINK dosage columns do not map one-to-one to donors")
 if geno["variant_id"].duplicated().any():
@@ -278,6 +393,7 @@ files = [
     resolve(c["genetics"]["ancestry_covariates"]),
     resolve(c["genetics"]["genotype_matrix"]).parent / "genotype_imputation_summary.tsv",
     resolve(c["genetics"]["ancestry_covariates"]).parent / "sample_genetic_qc_summary.tsv",
+    resolve(c["genetics"]["ancestry_covariates"]).parent / "sample_genetic_qc_exclusions.tsv",
 ]
 rows = []
 def sha256(path):
@@ -296,7 +412,10 @@ for path in files:
 pd.DataFrame(rows).to_csv(out / "genotype_artifacts.tsv", sep="\t", index=False)
 pd.DataFrame([{
     "schema_version": "seaad_rimbanet_genotype_status_v1",
-    "stage": "VH11C_GENOTYPE", "state": "validated_complete"
+    "stage": "VH11C_GENOTYPE",
+    "state": "validated_complete",
+    "plink2_version": c["genetics"]["plink2_version"],
+    "plink2_sha256": c["genetics"]["plink2_binary_sha256"],
 }]).to_csv(out / "genotype_status.tsv", sep="\t", index=False)
 PY
 
