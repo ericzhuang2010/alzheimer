@@ -171,6 +171,43 @@ def write_prior(rows, path: Path) -> None:
     os.replace(temporary, path)
 
 
+def augment_base_prior(
+    base_path: Path, output_path: Path, added_weights: dict[tuple[str, str], float]
+) -> tuple[int, set[tuple[str, str]]]:
+    """Stream the quadratic base-prior table and add sparse evidence weights."""
+    temporary = output_path.with_name(f"{output_path.name}.tmp.{os.getpid()}")
+    rows = 0
+    matched: set[tuple[str, str]] = set()
+    try:
+        with base_path.open("rt", encoding="utf-8") as source, temporary.open(
+            "wt", encoding="utf-8", newline=""
+        ) as target:
+            for line_number, line in enumerate(source, start=1):
+                fields = line.split()
+                if len(fields) < 5 or fields[1] != "->":
+                    raise ValueError(
+                        f"Bad base prior line {line_number}: {line.rstrip()}"
+                    )
+                key = (fields[0], fields[2])
+                log_prior = float(fields[3])
+                if key in added_weights:
+                    log_prior += added_weights[key]
+                    matched.add(key)
+                target.write(
+                    f"{fields[0]} -> {fields[2]} "
+                    f"{log_prior:.17g} {fields[4]}\n"
+                )
+                rows += 1
+    except BaseException:
+        temporary.unlink(missing_ok=True)
+        raise
+    if not rows:
+        temporary.unlink(missing_ok=True)
+        raise ValueError("Base prior is empty")
+    os.replace(temporary, output_path)
+    return rows, matched
+
+
 def write_identity_ban(nodes: list[str], path: Path) -> None:
     temporary = path.with_name(f"{path.name}.tmp.{os.getpid()}")
     with temporary.open("wt", encoding="utf-8", newline="") as handle:
@@ -196,8 +233,6 @@ def main() -> int:
         )
     nodes, number_of_fields = read_nodes(data_path)
     node_set = set(nodes)
-    base = parse_base_prior(base_path)
-    base_keys = {(row["parent"], row["child"]) for row in base}
 
     weight = float(config["priors"]["default_added_weight_multiplier"]) * math.log(
         number_of_fields
@@ -212,14 +247,13 @@ def main() -> int:
         (str(row.parent), str(row.child)): float(row.added_weight)
         for row in selected.itertuples(index=False)
     }
-    matched = set(selected_keys).intersection(base_keys)
-    unmatched = set(selected_keys).difference(base_keys)
-    for row in base:
-        row["log_prior"] += selected_keys.get((row["parent"], row["child"]), 0.0)
-
     prior_path = input_dir / "prior.txt"
+    base_prior_rows, matched = augment_base_prior(
+        base_path, prior_path, selected_keys
+    )
+    unmatched = set(selected_keys).difference(matched)
+
     banned_path = input_dir / "banned.txt"
-    write_prior(base, prior_path)
     write_identity_ban(nodes, banned_path)
     combined_path = prior_dir / "combined_prior_evidence.tsv.gz"
     conflict_path = prior_dir / "prior_conflicts.tsv"
@@ -235,7 +269,7 @@ def main() -> int:
             {
                 "network": network,
                 "nodes": len(nodes),
-                "base_prior_rows": len(base),
+                "base_prior_rows": base_prior_rows,
                 "CIT_evidence_rows": int(
                     (evidence.get("source", pd.Series(dtype=str)) == "CIT").sum()
                 ),

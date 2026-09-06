@@ -122,10 +122,36 @@ def test_fake_runtime_generates_expression_base_prior(tmp_path):
     fake = FIXTURE / "fake_testBN.py"
     fake.chmod(0o755)
     output = tmp_path / "prior.base.txt"
-    prepare.generate_base_prior(fake, node_path, data, 6, output)
+    rows = prepare.generate_base_prior(fake, node_path, data, 6, output)
     base = priors.parse_base_prior(output)
+    assert rows == 12
     assert len(base) == 12
     assert {row["parent"] for row in base} == {"GENE_A", "GENE_B", "GENE_C", "GENE_D"}
+
+
+def test_base_prior_paths_stream_quadratic_tables(tmp_path):
+    prepare_source = (SCRIPT_DIR / "11_prepare_rimbanet_inputs.py").read_text()
+    prior_source = (SCRIPT_DIR / "11_build_rimbanet_priors.py").read_text()
+    assert "subprocess.Popen(" in prepare_source
+    assert "for line in process.stdout:" in prepare_source
+    assert "capture_output=True" not in prepare_source
+    assert "def augment_base_prior(" in prior_source
+
+    base = tmp_path / "prior.base.txt"
+    base.write_text(
+        "A -> B -1 0.1\n"
+        "B -> A -2 0.2\n"
+        "A -> C -3 0.3\n"
+    )
+    output = tmp_path / "prior.txt"
+    rows, matched = priors.augment_base_prior(
+        base, output, {("A", "B"): 0.5, ("C", "A"): 1.0}
+    )
+    assert rows == 3
+    assert matched == {("A", "B")}
+    parsed = priors.parse_base_prior(output)
+    assert parsed[0]["log_prior"] == -0.5
+    assert parsed[1]["log_prior"] == -2.0
 
 
 def test_prior_parser_and_direction_conflict():
@@ -345,6 +371,10 @@ def test_minerva_genotype_wrapper_uses_gda8_contract():
     assert '--network "$NETWORK" --stage cit' in launcher
     assert "  discretize)" in launcher
     assert "11_discretize_rimbanet_expression.R" in launcher
+    assert "  inputs)" in launcher
+    assert "  priors)" in launcher
+    assert "11_prepare_rimbanet_inputs.py" in launcher
+    assert "11_build_rimbanet_priors.py" in launcher
 
 
 
