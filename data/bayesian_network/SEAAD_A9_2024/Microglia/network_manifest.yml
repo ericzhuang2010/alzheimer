@@ -1,0 +1,21 @@
+schema_version: seaad_rimbanet_network_manifest_v1
+release_id: SEAAD_A9_2024_RIMBANET_v1
+network: Microglia
+method: RIMBANet
+mode: full_integrative
+rimbanet_source_commit: ebd5f4a6c31da22705622e71b6dc5f1eae195fdd
+config_path: config/seaad_rimbanet.yml
+config_sha256: 545e8396c406f2410e82f8092aee16f6555f1c1f14c8b1d09edee9e93076a9fd
+searches: 1000
+nodes: 5000
+edges: 1279
+direction_interpretation: prior-constrained probabilistic upstream relation; not signed
+  or proven causal
+files:
+  result.links3.links.txt: 97c236b53b27907ff438c9dce7dace4e7c660bcf11c748f7a5eb1db6cbce9a86
+  edge_support.tsv.gz: 6573da97c8257a7535962add2fa57552cde8a253c9297c476c5061789b14ff54
+  nodes.tsv: 7bf910ca4fc66ef0a0ed10d84d674f4c66ad9ab602737d7d6efbfd8ba347e121
+  sample_manifest.tsv: 21129db9c681948b6af03e84907d7d386928407eb967daed48bdc6e31c10c859
+  gene_manifest.tsv: 3536f15cfb06d9315a43ea1a51aa6dbd53c44f0a31721479d1ceece2af7562db
+  prior_summary.tsv: 7b14434dbd3aee9352112266104cce12e35c5bbda8fa89962f57518a3cfad1fc
+  network_qc.tsv: 04bf9473e7bef74d2be5e759517961f75dfa570027e4d0fb4b9a0fc3b424efc4

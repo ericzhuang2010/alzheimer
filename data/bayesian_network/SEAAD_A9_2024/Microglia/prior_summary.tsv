@@ -1,0 +1,2 @@
+network	nodes	base_prior_rows	CIT_evidence_rows	ENCODE_evidence_rows	selected_prior_directions	matched_base_prior_directions	unmatched_base_prior_directions	direction_conflicts	added_weight
+Microglia	5000	24995000	26	563	574	574	0	0	8.738895704934043

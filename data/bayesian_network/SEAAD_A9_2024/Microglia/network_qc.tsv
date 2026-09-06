@@ -1,0 +1,2 @@
+network	searches	nodes	candidate_edges	final_edges	removed_by_deloop	roots	leaves	weak_components	density	maximum_indegree	half_search_directed_jaccard	rerun_identical	release_state
+Microglia	1000	5000	1279	1279	0	3765	4438	3745	5.1170234046809365e-05	2	0.932381667918858	True	validated_complete
