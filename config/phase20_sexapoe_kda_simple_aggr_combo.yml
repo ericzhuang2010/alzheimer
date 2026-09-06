@@ -1,0 +1,51 @@
+schema_version: phase20_sexapoe_kda_simple_aggr_combo_config_v1
+
+analysis:
+  analysis_id: phase20_sexapoe_kda_simple_aggr_combo_v1
+  query_mode: AD_both_mito
+  aggregation_scope: sex_apoe_by_broad_cell_type
+
+paths:
+  phase08_status_glob: results/minerva_production/08_mast/*.yu_mast_contrast_status.tsv
+  phase12_run_manifest: results/minerva_production/12_kda/kda_run_manifest.tsv
+  phase12_query_members: results/minerva_production/12_kda/kda_signature_members.tsv.gz
+  phase12_results: results/minerva_production/12_kda/kda_results.tsv.gz
+  gene_annotation: results/minerva_production/09_annotate_genes/gene_annotation_master.tsv.gz
+  output_directory: results/minerva_production/20_sex_apoe_kda_simple_aggr_combo
+
+thresholds:
+  minimum_cells_per_deg_arm: 3
+  minimum_effective_query_genes: 3
+
+scope:
+  groups:
+    - {group_id: F_e2, sex: Female, apoe_group: e2}
+    - {group_id: F_e33, sex: Female, apoe_group: e33}
+    - {group_id: F_e4, sex: Female, apoe_group: e4}
+    - {group_id: M_e2, sex: Male, apoe_group: e2}
+    - {group_id: M_e33, sex: Male, apoe_group: e33}
+    - {group_id: M_e4, sex: Male, apoe_group: e4}
+  broad_cell_types:
+    - Astrocytes
+    - CAMs
+    - Excitatory_neurons
+    - Inhibitory_neurons
+    - Microglia
+    - OPCs
+    - Oligodendrocytes
+    - T_cells
+    - Vasculature_cells
+
+aggregation:
+  singleton: within_call_adjusted_p_value_passthrough
+  recurrent: equal_weight_ACAT_of_within_call_adjusted_p_values
+  across_gene_multiple_testing: none
+  interpretation: exploratory_postselection
+
+expected_source:
+  structural_contrasts: 324
+  phase08_valid_contrasts: 321
+  phase12_combined_completed_calls: 194
+  phase12_combined_significant_calls: 164
+  phase12_combined_returned_rows: 1833
+  structural_categories: 54

@@ -105,8 +105,10 @@ results/minerva_production/13_respiratory_modifier/respiratory_pseudobulk_counts
 !results/minerva_production/19b_genetic_support_candidates
 !results/minerva_production/19b_genetic_support_regional
 !results/minerva_production/19b_genetic_support_tier1
-!results/minerva_production/20_sex_apoe_kda
-!results/minerva_production/20_sex_apoe_kda_broad
+!results/minerva_production/20_sex_apoe_kda_source
+!results/minerva_production/20_sex_apoe_kda_simple_aggr
+!results/minerva_production/20_sex_apoe_kda_simple_aggr_combo
+
 
 !results/validation_human/
 # SEA-AD validation keeps bulky matrices, compressed per-feature tables,
