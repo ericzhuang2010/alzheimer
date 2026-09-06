@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import os
 import subprocess
+import tempfile
 from pathlib import Path
 from xml.sax.saxutils import escape
 
@@ -95,7 +96,7 @@ def write_identity(size: int, path: Path) -> None:
 
 def generate_base_prior(
     binary: Path, node_path: Path, data_path: Path, samples: int, output: Path
-) -> None:
+) -> int:
     command = [
         str(binary),
         "-f",
@@ -117,21 +118,44 @@ def generate_base_prior(
         "-L",
         "1",
     ]
-    result = subprocess.run(
-        command,
-        cwd=data_path.parent,
-        text=True,
-        capture_output=True,
-    )
-    if result.returncode != 0:
-        raise RuntimeError(
-            f"RIMBANet base-prior command failed ({result.returncode}): "
-            f"{result.stderr[-2000:]}"
+    temporary = output.with_name(f"{output.name}.tmp.{os.getpid()}")
+    prior_rows = 0
+    with tempfile.TemporaryFile(mode="w+t", encoding="utf-8") as stderr:
+        process = subprocess.Popen(
+            command,
+            cwd=data_path.parent,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=stderr,
         )
-    prior_lines = [line for line in result.stdout.splitlines() if ">" in line]
-    if not prior_lines:
+        if process.stdout is None:
+            process.kill()
+            raise RuntimeError("RIMBANet base-prior stdout pipe is unavailable")
+        try:
+            with temporary.open("wt", encoding="utf-8", newline="") as handle:
+                for line in process.stdout:
+                    if ">" in line:
+                        handle.write(line)
+                        prior_rows += 1
+        except BaseException:
+            process.kill()
+            process.wait()
+            temporary.unlink(missing_ok=True)
+            raise
+        returncode = process.wait()
+        stderr.seek(0)
+        error_text = stderr.read()
+    if returncode != 0:
+        temporary.unlink(missing_ok=True)
+        raise RuntimeError(
+            f"RIMBANet base-prior command failed ({returncode}): "
+            f"{error_text[-2000:]}"
+        )
+    if not prior_rows:
+        temporary.unlink(missing_ok=True)
         raise ValueError("RIMBANet produced no base-prior lines")
-    atomic_write_text("\n".join(prior_lines) + "\n", output)
+    os.replace(temporary, output)
+    return prior_rows
 
 
 def main() -> int:
@@ -178,10 +202,13 @@ def main() -> int:
             project_root, config["method"]["binary"], must_exist=False
         )
     )
+    base_prior_rows = 0
     if not args.skip_base_prior:
         if not binary.exists():
             raise FileNotFoundError(binary)
-        generate_base_prior(binary, node_path, data_path, sample_count, base_path)
+        base_prior_rows = generate_base_prior(
+            binary, node_path, data_path, sample_count, base_path
+        )
 
     parameter_lines = [
         str(sample_count),
@@ -215,6 +242,13 @@ def main() -> int:
         ("node_xml_present", node_path.stat().st_size > 0, node_path.stat().st_size, ">0", ""),
         ("banned_rows", sum(1 for _ in banned_path.open()) == len(nodes), sum(1 for _ in banned_path.open()), len(nodes), ""),
         ("base_prior_present", args.skip_base_prior or base_path.exists(), base_path.exists(), not args.skip_base_prior, "skip is fixture-only"),
+        (
+            "base_prior_directed_rows",
+            args.skip_base_prior or base_prior_rows == len(nodes) * (len(nodes) - 1),
+            base_prior_rows,
+            len(nodes) * (len(nodes) - 1),
+            "all ordered non-self node pairs",
+        ),
     ]
     failed = [name for name, passed, *_ in checks if not passed]
     state = (
@@ -238,6 +272,7 @@ def main() -> int:
         network=network,
         nodes=len(nodes),
         samples=sample_count,
+        base_prior_rows=base_prior_rows,
         binary=str(binary),
     )
     print(f"VH11E input status: {state}; network={network}")

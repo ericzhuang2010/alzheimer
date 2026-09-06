@@ -24,9 +24,9 @@ isProject: false
 **Steps 1–5 are complete for the Microglia pilot.** The source and identity
 contracts, production input audit, pinned Linux runtime, corrected pilot
 expression matrix, final 75-donor genotype matrix, and Microglia cis-eQTL
-results have passed their gates. The Step 6 CIT direction analysis is also
-complete; combined prior assembly follows the final gene-universe gate.
-Active work is **Step 7, discretizing the Microglia expression matrix**.
+results have passed their gates. The Step 6 CIT direction analysis and Step 7
+discretization gate are also complete. Active work is **assembling the exact
+RIMBANet input contract and the combined CIT/ENCODE prior** before Step 8.
 
 - The Minerva work checkout started at commit
   b4486062ac77b3189e4f80a6b6a689c6b5952c0f.
@@ -317,7 +317,14 @@ Active work is **Step 7, discretizing the Microglia expression matrix**.
   CIT checks passed and both compressed artifacts passed integrity checks.
   Final Step 6 CIT/ENCODE prior assembly waits for the Step 7 discretization
   gate so evidence is restricted to the actual final node universe.
-- Step 7 is now active. Steps 8–12 and every stochastic search array,
+- Microglia discretization job 268268661 is accepted. Although the completed
+  job had aged out of `bjobs -a`, `bhist` recorded a successful exit; its
+  stderr is empty and peak memory was 121 MB. All 5,000 input genes were
+  retained across 78 samples, all four checks passed, every gene contains
+  states 0/1/2, and the matrix has zero inconsistent rows or invalid states.
+  Its frozen data SHA-256 is
+  `df081b9ca880e7244a21918cc2ec1d8d6ac4f6e0c25094e2aa2a8c0e04a91769`.
+- Exact input and combined-prior assembly are now active. Steps 8–12 and every stochastic search array,
   including the Microglia pilot, remain unsubmitted.
 
 ## Goal and end state
@@ -1615,6 +1622,86 @@ Accept discretization only when LSF is `DONE`, stderr is empty,
 `discretization_status.tsv` is `validated_complete`, all four checks pass,
 all retained genes contain each state 0/1/2, and the persisted node and sample
 counts agree with the generated matrix.
+
+### Assemble exact Microglia RIMBANet inputs and base prior
+
+For 5,000 nodes, the complete directed base-prior table has 24,995,000
+non-self rows. The pinned binary emits both relationship and diagnostic lines,
+so input preparation must stream stdout and retain only relationship rows;
+buffering the complete output in Python is prohibited. The downstream sparse
+CIT/ENCODE weight update must likewise stream the quadratic base table rather
+than materializing millions of Python dictionaries.
+
+Submit the base-input assembly independently:
+
+```bash
+(
+set -euo pipefail
+
+export PROJECT_ROOT=/sc/arion/work/zhuane01/alzheimer
+export RIMBANET_STORAGE_ROOT=/sc/arion/scratch/zhuane01/alzheimer
+export RIMBANET_OUTPUT_ROOT="$RIMBANET_STORAGE_ROOT/results/validation_human"
+export RIMBANET_IMAGE="$RIMBANET_STORAGE_ROOT/external_tools/containers/seaad-rimbanet.sif"
+export SEAAD_CONTROLLED_ROOT=/sc/arion/projects/adineto/sea_ad
+export CONTAINER_RUNTIME=/hpc/packages/minerva-rocky9/apptainer/1.4.5/bin/apptainer
+export CONFIG=config/seaad_rimbanet.yml
+export STAGE=inputs
+export NETWORK=Microglia
+export LSF_PROJECT=acc_adineto
+export PREP_LOG_ROOT="$RIMBANET_OUTPUT_ROOT/11_seaad_rimbanet/logs/preparation"
+export INPUT_ROOT="$RIMBANET_OUTPUT_ROOT/11_seaad_rimbanet/11e_inputs/Microglia"
+
+cd "$PROJECT_ROOT"
+test -z "$(git status --porcelain --untracked-files=no)"
+git pull --ff-only origin main
+test "$(awk -F $'\t' 'NR == 2 {print $3}' \
+  "$INPUT_ROOT/discretization_status.tsv")" = validated_complete
+test -x "$CONTAINER_RUNTIME"
+test "$(sha256sum "$RIMBANET_IMAGE" | awk '{print $1}')" = \
+  1df82906537e74c73fb331e7652c4057bac92182293d7d3739d0a015a4f25840
+
+mkdir -p "$PREP_LOG_ROOT"
+SUBMISSION="$(
+  bsub \
+    -P "$LSF_PROJECT" \
+    -J seaad_vh11e_inputs_microglia \
+    -q premium \
+    -n 1 \
+    -W 24:00 \
+    -R 'rusage[mem=32000]' \
+    -R 'span[hosts=1]' \
+    -M 32000 \
+    -o "$PREP_LOG_ROOT/vh11e_inputs_microglia.%J.out" \
+    -e "$PREP_LOG_ROOT/vh11e_inputs_microglia.%J.err" \
+    -L /bin/bash \
+    env \
+      PROJECT_ROOT="$PROJECT_ROOT" \
+      RIMBANET_STORAGE_ROOT="$RIMBANET_STORAGE_ROOT" \
+      RIMBANET_IMAGE="$RIMBANET_IMAGE" \
+      SEAAD_CONTROLLED_ROOT="$SEAAD_CONTROLLED_ROOT" \
+      CONTAINER_RUNTIME="$CONTAINER_RUNTIME" \
+      CONFIG="$CONFIG" \
+      STAGE="$STAGE" \
+      NETWORK="$NETWORK" \
+      bash scripts/validation_human/11_prepare_rimbanet_minerva.lsf
+)"
+
+printf '%s\n' "$SUBMISSION"
+VH11E_INPUT_JOB_ID="$(
+  printf '%s\n' "$SUBMISSION" |
+  awk -F '[<>]' '/Job </ {print $2}'
+)"
+test -n "$VH11E_INPUT_JOB_ID"
+printf '%s\n' "$VH11E_INPUT_JOB_ID" > \
+  "$PREP_LOG_ROOT/latest_vh11e_inputs_microglia_job_id.txt"
+printf 'VH11E_INPUT_JOB_ID=%s\n' "$VH11E_INPUT_JOB_ID"
+)
+```
+
+Accept this gate only when LSF is `DONE`, stderr has no runtime errors, the
+input stage is `validated_complete`, the base-prior check reports exactly
+24,995,000 directed rows, and all node, sample, XML, banned-matrix, and base-
+prior checks pass. Then run the separate streaming combined-prior stage.
 
 ### Submit and gate the 1,000-search Microglia pilot
 
