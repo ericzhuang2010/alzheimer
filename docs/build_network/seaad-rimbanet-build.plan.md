@@ -21,12 +21,11 @@ isProject: false
 
 ## Execution status — September 6, 2026
 
-**Steps 1–3 and the shared-genotype portion of Step 5 are complete for the
-Microglia pilot.** The source and identity contracts, production input audit,
-pinned Linux runtime, and final 75-donor genotype matrix have passed their
-gates. The first Step 4 expression artifact was superseded after the Step 5
-eQTL position gate exposed unresolved gene symbols. Active work is the
-**corrected Microglia expression refresh and cis-eQTL portion of Step 5**.
+**Steps 1–5 are complete for the Microglia pilot.** The source and identity
+contracts, production input audit, pinned Linux runtime, corrected pilot
+expression matrix, final 75-donor genotype matrix, and Microglia cis-eQTL
+results have passed their gates. Active work is **Step 6, deriving Microglia
+CIT directions and assembling the CIT/ENCODE priors**.
 
 - The Minerva work checkout started at commit
   b4486062ac77b3189e4f80a6b6a689c6b5952c0f.
@@ -297,8 +296,18 @@ eQTL position gate exposed unresolved gene symbols. Active work is the
   A local full Microglia preparation retained 16,540 genes after the combined
   expression/annotation filters, selected 5,000 unique mapped genes, passed
   all six VH11B checks, and mapped all 5,000 to unique GENCODE coordinates.
-- Step 5 remains active at the Microglia cis-eQTL gate. Steps 6–12 and every
-  stochastic search array, including the Microglia pilot, remain unsubmitted.
+- Microglia eQTL retry 268268600 is accepted. LSF reported `DONE`; the
+  corrected VH11B refresh retained 78 donors, 16,540 genes after combined
+  expression/annotation filtering, and 5,000 variance-ranked genes; all six
+  expression checks passed. MatrixEQTL matched all 5,000 genes and all
+  546,632 SNPs, used 75 intersected donors and a full-rank 10-covariate
+  matrix, tested 2,051,340 cis pairs, and found 2,244 BH-significant pairs
+  spanning 280 eGenes and 1,842 instruments. Both eQTL gzip streams passed
+  integrity checks. The stderr file contains only MatrixEQTL's expected
+  progress messages and no warning or error; this is accepted diagnostic
+  output rather than a technical failure.
+- Step 6 is now active. Steps 7–12 and every stochastic search array,
+  including the Microglia pilot, remain unsubmitted.
 
 ## Goal and end state
 
@@ -1437,8 +1446,9 @@ Accept the corrected expression refresh only when VH11B is
 `validated_complete`, all six expression checks pass (including
 `selected_annotations_resolvable`), QC reports 78 donors and 5,000 selected
 genes, and every expression gzip is valid. Accept the Microglia cis-eQTL
-portion of Step 5 only when LSF is `DONE`, stderr is empty, eQTL `status.tsv`
-is `validated_complete`, all three eQTL checks pass, the summary reports 75
+portion of Step 5 only when LSF is `DONE`, stderr contains no warnings or
+errors (MatrixEQTL progress messages are expected), eQTL `status.tsv` is
+`validated_complete`, all three eQTL checks pass, the summary reports 75
 matched donors and at least one significant cis pair, and both eQTL gzip
 streams are valid. A valid run with no significant cis-eQTL is a scientific
 gate failure and must not proceed to CIT or the search pilot.
