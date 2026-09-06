@@ -341,6 +341,8 @@ def test_minerva_genotype_wrapper_uses_gda8_contract():
     assert "11_audit_rimbanet_inputs.py" in launcher
     assert "  eqtl)" in launcher
     assert '--network "$NETWORK" --stage eqtl' in launcher
+    assert "  cit)" in launcher
+    assert '--network "$NETWORK" --stage cit' in launcher
 
 
 

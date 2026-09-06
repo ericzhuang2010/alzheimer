@@ -306,6 +306,10 @@ CIT directions and assembling the CIT/ENCODE priors**.
   integrity checks. The stderr file contains only MatrixEQTL's expected
   progress messages and no warning or error; this is accepted diagnostic
   output rather than a technical failure.
+- The protected-data-safe CIT workload audit found 1,842 unique significant
+  instruments and 280 eGenes. Of those instruments, 378 link at least two
+  genes, no instrument links more than three genes, and the fixed algorithm
+  will run 852 ordered CIT direction tests.
 - Step 6 is now active. Steps 7–12 and every stochastic search array,
   including the Microglia pilot, remain unsubmitted.
 
@@ -1452,6 +1456,81 @@ errors (MatrixEQTL progress messages are expected), eQTL `status.tsv` is
 matched donors and at least one significant cis pair, and both eQTL gzip
 streams are valid. A valid run with no significant cis-eQTL is a scientific
 gate failure and must not proceed to CIT or the search pilot.
+
+### Submit and gate the Microglia CIT stage
+
+Run the 852-test Step 6 CIT workload without recomputing the accepted
+expression or eQTL stages:
+
+```bash
+(
+set -euo pipefail
+
+export PROJECT_ROOT=/sc/arion/work/zhuane01/alzheimer
+export RIMBANET_STORAGE_ROOT=/sc/arion/scratch/zhuane01/alzheimer
+export RIMBANET_OUTPUT_ROOT="$RIMBANET_STORAGE_ROOT/results/validation_human"
+export RIMBANET_IMAGE="$RIMBANET_STORAGE_ROOT/external_tools/containers/seaad-rimbanet.sif"
+export SEAAD_CONTROLLED_ROOT=/sc/arion/projects/adineto/sea_ad
+export CONTAINER_RUNTIME=/hpc/packages/minerva-rocky9/apptainer/1.4.5/bin/apptainer
+export CONFIG=config/seaad_rimbanet.yml
+export STAGE=cit
+export NETWORK=Microglia
+export LSF_PROJECT=acc_adineto
+export PREP_LOG_ROOT="$RIMBANET_OUTPUT_ROOT/11_seaad_rimbanet/logs/preparation"
+export EQTL_ROOT="$RIMBANET_OUTPUT_ROOT/11_seaad_rimbanet/11c_genetics/Microglia"
+
+cd "$PROJECT_ROOT"
+test -z "$(git status --porcelain --untracked-files=no)"
+git pull --ff-only origin main
+test "$(awk -F $'\t' 'NR == 2 {print $3}' \
+  "$EQTL_ROOT/status.tsv")" = validated_complete
+gzip -t "$EQTL_ROOT/cis_eqtl_significant.tsv.gz"
+test -x "$CONTAINER_RUNTIME"
+test "$(sha256sum "$RIMBANET_IMAGE" | awk '{print $1}')" = \
+  1df82906537e74c73fb331e7652c4057bac92182293d7d3739d0a015a4f25840
+
+mkdir -p "$PREP_LOG_ROOT"
+SUBMISSION="$(
+  bsub \
+    -P "$LSF_PROJECT" \
+    -J seaad_vh11d_cit_microglia \
+    -q premium \
+    -n 1 \
+    -W 24:00 \
+    -R 'rusage[mem=32000]' \
+    -R 'span[hosts=1]' \
+    -M 32000 \
+    -o "$PREP_LOG_ROOT/vh11d_cit_microglia.%J.out" \
+    -e "$PREP_LOG_ROOT/vh11d_cit_microglia.%J.err" \
+    -L /bin/bash \
+    env \
+      PROJECT_ROOT="$PROJECT_ROOT" \
+      RIMBANET_STORAGE_ROOT="$RIMBANET_STORAGE_ROOT" \
+      RIMBANET_IMAGE="$RIMBANET_IMAGE" \
+      SEAAD_CONTROLLED_ROOT="$SEAAD_CONTROLLED_ROOT" \
+      CONTAINER_RUNTIME="$CONTAINER_RUNTIME" \
+      CONFIG="$CONFIG" \
+      STAGE="$STAGE" \
+      NETWORK="$NETWORK" \
+      bash scripts/validation_human/11_prepare_rimbanet_minerva.lsf
+)"
+
+printf '%s\n' "$SUBMISSION"
+VH11D_CIT_JOB_ID="$(
+  printf '%s\n' "$SUBMISSION" |
+  awk -F '[<>]' '/Job </ {print $2}'
+)"
+test -n "$VH11D_CIT_JOB_ID"
+printf '%s\n' "$VH11D_CIT_JOB_ID" > \
+  "$PREP_LOG_ROOT/latest_vh11d_cit_microglia_job_id.txt"
+printf 'VH11D_CIT_JOB_ID=%s\n' "$VH11D_CIT_JOB_ID"
+)
+```
+
+After the job finishes, require LSF `DONE`, no runtime errors, 852 completed
+ordered tests, at least one valid and significant direction, and valid gzip
+streams for both complete and significant CIT tables before assembling the
+combined CIT/ENCODE prior.
 
 ### Submit and gate the 1,000-search Microglia pilot
 
