@@ -391,7 +391,9 @@ crosswalk = pd.read_csv(
 id_to_donor = dict(
     zip(crosswalk["genotype_sample_id"], crosswalk["donor_id"])
 )
-traw = pd.read_csv(sys.argv[2], sep=r"\s+")
+traw = pd.read_csv(
+    sys.argv[2], sep=r"\s+", dtype={"CHR": str}, low_memory=False
+)
 meta = ["CHR", "SNP", "(C)M", "POS", "COUNTED", "ALT"]
 sample_cols = [c for c in traw.columns if c not in meta]
 if not sample_cols:

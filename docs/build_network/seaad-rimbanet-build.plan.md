@@ -19,12 +19,13 @@ isProject: false
 
 # SEA-AD Wang-Style RIMBANet Build Plan
 
-## Execution status — September 5, 2026
+## Execution status — September 6, 2026
 
-**Steps 1–4 are complete for the Microglia pilot.** The source and identity
-contracts, production input audit, pinned Linux runtime, and pilot expression
-matrix have passed their gates. Active work is **Step 5 — harmonize GDA-8
-genotypes and run the Microglia cis-eQTL stage**.
+**Steps 1–4 and the shared-genotype portion of Step 5 are complete for the
+Microglia pilot.** The source and identity contracts, production input audit,
+pinned Linux runtime, pilot expression matrix, and final 75-donor genotype
+matrix have passed their gates. Active work is the **Microglia cis-eQTL
+portion of Step 5**.
 
 - The Minerva work checkout started at commit
   b4486062ac77b3189e4f80a6b6a689c6b5952c0f.
@@ -269,8 +270,19 @@ genotypes and run the Microglia cis-eQTL stage**.
   exclusions, and reruns sex checking, relatedness, PCA, and dosage generation
   on the expected 75 retained donors. The final retained cohort must still
   have zero sex-check failures.
-- Step 5 is active but has no accepted run yet. Steps 6–12 and every stochastic
-  search array, including the Microglia pilot, remain unsubmitted.
+- Step 5 genotype job 268262591 is accepted: LSF `DONE`; deterministic import
+  `validated_complete` with 95 source samples and 825,989 variants; all 30
+  final-allele-audit metrics reproduced; 75 donors retained after two
+  missingness and one borderline sex-check exclusions; zero final sex-check
+  failures; zero related pairs; 546,632 variants; 28,595 missing dosages
+  mean-imputed to zero remaining; pinned PLINK version/checksum recorded; and
+  all compressed artifacts passed integrity checks. Its sole stderr line was
+  a nonfatal pandas mixed-type warning for the chromosome-label column, which
+  necessarily contains numeric autosomes and string sex/mitochondrial labels.
+  The reader now declares that column as string with whole-file type inference,
+  so reproductions do not emit the warning; no genotype rerun is required.
+- Step 5 remains active at the Microglia cis-eQTL gate. Steps 6–12 and every
+  stochastic search array, including the Microglia pilot, remain unsubmitted.
 
 ## Goal and end state
 
@@ -1262,6 +1274,138 @@ and `genotype_status.tsv` must report `validated_complete`
 with the pinned PLINK version and checksum. The subsequent Microglia
 cis-eQTL/CIT job remains part
 of Step 5 and is submitted only after this genotype gate passes.
+
+Accepted job 268262591 predates the explicit chromosome-string reader and has
+one reviewed `DtypeWarning` in stderr; all scientific and artifact gates above
+passed, and the warning cannot change the serialized chromosome labels. This
+is a documented one-run exception to the empty-stderr rule, not permission to
+ignore warnings in later runs.
+
+### Continue Step 5 — run and gate the Microglia cis-eQTL stage
+
+Run this from the Minerva login node only after the shared genotype gate above
+is accepted. The worker reruns the inexpensive Microglia expression preparation
+under the current full-config hash, then runs only the cis-eQTL portion; it does
+not start CIT, discretization, prior assembly, or any stochastic search.
+
+```bash
+(
+set -euo pipefail
+
+export PROJECT_ROOT=/sc/arion/work/zhuane01/alzheimer
+export RIMBANET_STORAGE_ROOT=/sc/arion/scratch/zhuane01/alzheimer
+export RIMBANET_OUTPUT_ROOT="$RIMBANET_STORAGE_ROOT/results/validation_human"
+export RIMBANET_IMAGE="$RIMBANET_STORAGE_ROOT/external_tools/containers/seaad-rimbanet.sif"
+export SEAAD_CONTROLLED_ROOT=/sc/arion/projects/adineto/sea_ad
+export CONTAINER_RUNTIME=/hpc/packages/minerva-rocky9/apptainer/1.4.5/bin/apptainer
+export CONFIG=config/seaad_rimbanet.yml
+export STAGE=eqtl
+export NETWORK=Microglia
+export LSF_PROJECT=acc_adineto
+export PREP_LOG_ROOT="$RIMBANET_OUTPUT_ROOT/11_seaad_rimbanet/logs/preparation"
+export GENOTYPE_STATUS_ROOT="$RIMBANET_OUTPUT_ROOT/11_seaad_rimbanet/11c_genetics"
+export ARRAY_ROOT="$RIMBANET_STORAGE_ROOT/data/seaad_genotypes/syn49430589/derived"
+
+cd "$PROJECT_ROOT"
+test -z "$(git status --porcelain --untracked-files=no)"
+git pull --ff-only origin main
+test "$(awk -F $'\t' 'NR == 2 {print $3}' \
+  "$GENOTYPE_STATUS_ROOT/genotype_status.tsv")" = validated_complete
+test "$(awk -F $'\t' 'NR == 2 {print $3}' \
+  "$ARRAY_ROOT/seaad_gda8_grch38.import_status.tsv")" = validated_complete
+test -x "$CONTAINER_RUNTIME"
+test "$(sha256sum "$RIMBANET_IMAGE" | awk '{print $1}')" = \
+  1df82906537e74c73fb331e7652c4057bac92182293d7d3739d0a015a4f25840
+gzip -t \
+  "$ARRAY_ROOT/genotypes.tsv.gz" \
+  "$ARRAY_ROOT/variant_positions.tsv.gz"
+
+mkdir -p "$PREP_LOG_ROOT"
+SUBMISSION="$(
+  bsub \
+    -P "$LSF_PROJECT" \
+    -J seaad_vh11c_eqtl_microglia \
+    -q premium \
+    -n 4 \
+    -W 24:00 \
+    -R 'rusage[mem=16000]' \
+    -R 'span[hosts=1]' \
+    -M 64000 \
+    -o "$PREP_LOG_ROOT/vh11c_eqtl_microglia.%J.out" \
+    -e "$PREP_LOG_ROOT/vh11c_eqtl_microglia.%J.err" \
+    -L /bin/bash \
+    env \
+      PROJECT_ROOT="$PROJECT_ROOT" \
+      RIMBANET_STORAGE_ROOT="$RIMBANET_STORAGE_ROOT" \
+      RIMBANET_IMAGE="$RIMBANET_IMAGE" \
+      SEAAD_CONTROLLED_ROOT="$SEAAD_CONTROLLED_ROOT" \
+      CONTAINER_RUNTIME="$CONTAINER_RUNTIME" \
+      CONFIG="$CONFIG" \
+      STAGE="$STAGE" \
+      NETWORK="$NETWORK" \
+      bash scripts/validation_human/11_prepare_rimbanet_minerva.lsf
+)"
+
+printf '%s\n' "$SUBMISSION"
+VH11C_EQTL_JOB_ID="$(
+  printf '%s\n' "$SUBMISSION" |
+  awk -F '[<>]' '/Job </ {print $2}'
+)"
+test -n "$VH11C_EQTL_JOB_ID"
+printf '%s\n' "$VH11C_EQTL_JOB_ID" > \
+  "$PREP_LOG_ROOT/latest_vh11c_eqtl_microglia_job_id.txt"
+printf 'VH11C_EQTL_JOB_ID=%s\n' "$VH11C_EQTL_JOB_ID"
+)
+```
+
+After it finishes, run:
+
+```bash
+export RIMBANET_STORAGE_ROOT=/sc/arion/scratch/zhuane01/alzheimer
+export RIMBANET_OUTPUT_ROOT="$RIMBANET_STORAGE_ROOT/results/validation_human"
+export PREP_LOG_ROOT="$RIMBANET_OUTPUT_ROOT/11_seaad_rimbanet/logs/preparation"
+export EQTL_ROOT="$RIMBANET_OUTPUT_ROOT/11_seaad_rimbanet/11c_genetics/Microglia"
+
+VH11C_EQTL_JOB_ID="$(
+  cat "$PREP_LOG_ROOT/latest_vh11c_eqtl_microglia_job_id.txt"
+)"
+echo "VH11C_EQTL_JOB_ID=$VH11C_EQTL_JOB_ID"
+bjobs -a "$VH11C_EQTL_JOB_ID"
+
+echo "=== job output ==="
+tail -n 120 \
+  "$PREP_LOG_ROOT/vh11c_eqtl_microglia.$VH11C_EQTL_JOB_ID.out"
+
+echo "=== job errors ==="
+if test -s \
+  "$PREP_LOG_ROOT/vh11c_eqtl_microglia.$VH11C_EQTL_JOB_ID.err"
+then
+  cat "$PREP_LOG_ROOT/vh11c_eqtl_microglia.$VH11C_EQTL_JOB_ID.err"
+else
+  echo "none"
+fi
+
+echo "=== eQTL status ==="
+cat "$EQTL_ROOT/status.tsv"
+
+echo "=== eQTL checks ==="
+cat "$EQTL_ROOT/checks.tsv"
+
+echo "=== eQTL summary ==="
+cat "$EQTL_ROOT/eqtl_summary.tsv"
+
+echo "=== compressed artifact integrity ==="
+gzip -t \
+  "$EQTL_ROOT/cis_eqtl_all.tsv.gz" \
+  "$EQTL_ROOT/cis_eqtl_significant.tsv.gz"
+echo "compressed_artifact_integrity=OK"
+```
+
+Accept the Microglia cis-eQTL portion of Step 5 only when LSF is `DONE`,
+stderr is empty, `status.tsv` is `validated_complete`, all three checks pass,
+the summary reports 75 matched donors and at least one significant cis pair,
+and both gzip streams are valid. A valid run with no significant cis-eQTL is a
+scientific gate failure and must not proceed to CIT or the search pilot.
 
 ### Submit and gate the 1,000-search Microglia pilot
 

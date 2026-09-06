@@ -71,6 +71,7 @@ def test_genotype_wrapper_excludes_and_rechecks_sexcheck_failures():
     assert '--keep "$SEXPASS_KEEP"' in script
     assert '"exclude_sexcheck_failures"' in script
     assert '"ambiguous_or_discordant_genetic_sex"' in script
+    assert 'dtype={"CHR": str}, low_memory=False' in script
     assert '  "$SEXCHECK_REPORT" \\\n' in script
 
 
@@ -322,6 +323,8 @@ def test_minerva_genotype_wrapper_uses_gda8_contract():
     assert "/hpc/packages/minerva-rocky9/apptainer/1.4.5/bin/apptainer" in launcher
     assert "$CONTROLLED_ROOT:$CONTROLLED_ROOT:ro" in launcher
     assert "11_audit_rimbanet_inputs.py" in launcher
+    assert "  eqtl)" in launcher
+    assert '--network "$NETWORK" --stage eqtl' in launcher
 
 
 
