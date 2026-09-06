@@ -28,6 +28,7 @@ inputs:
   seaad_config: scripts/validation_human/seaad_deg_config.yml
   cohort: results/validation_human/02_cohort/donor_cohort_primary.tsv
   feature_order: results/validation_human/03_genes/feature_order.tsv
+  gene_annotation_master: results/validation_human/03_genes/gene_annotation_master.tsv
   celltype_mapping: results/validation_human/04_supertype_manifest/supertype_to_broad_network.tsv
   broad_profile_manifest: results/validation_human/04_supertype_manifest/donor_direct_broad_nucleus_counts.tsv
   pseudobulk_directory: /sc/arion/scratch/zhuane01/alzheimer/results/validation_human/05_pseudobulk/direct_broad_counts
@@ -54,6 +55,8 @@ expected_identity:
   source_donors: 83
   analysis_donors: 78
   feature_order_sha256: 7dcafda20108ee578e451c410238e1b659478f02ca7a50bde24bd618b9ba972d
+  gene_annotation_master_sha256: c2b43261a5620a8648dd93213bf51bfddeef90527893c47053698222305bde6a
+  gencode_gtf_sha256: 3e52f82c63f8fd860bf632ccde10441c05751f4c342ad08c0a98e9e2700171a5
   metadata_csv_sha256: 9ef1c9e1180d4404ce814283a25e3b2f0da05ab152af305990a1e3f2f682f3fc
   genotype_source_bytes: 41491256
   genotype_source_sha256: f9d60b00db44e6a4f7c96329b1b8bbc1998dc96b3f4b1c4d3d4d274812dc9459

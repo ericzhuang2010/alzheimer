@@ -75,7 +75,23 @@ provenance_paths <- function(paths, project_root) {
   ifelse(startsWith(resolved, prefix), substring(resolved, nchar(prefix) + 1L), resolved)
 }
 
-read_gene_positions <- function(gtf_path, genes) {
+read_gene_positions <- function(gtf_path, annotation_path, genes) {
+  annotation <- data.table::fread(
+    annotation_path, sep = "\t", data.table = FALSE,
+    colClasses = c(feature_index = "integer", source_symbol = "character",
+                   ensembl_id = "character")
+  )
+  if (!all(c("source_symbol", "ensembl_id") %in% names(annotation))) {
+    stop("Gene annotation master lacks source_symbol/ensembl_id")
+  }
+  annotation <- annotation[
+    match(genes, annotation$source_symbol),
+    c("source_symbol", "ensembl_id"), drop = FALSE
+  ]
+  if (anyNA(annotation$source_symbol) || anyNA(annotation$ensembl_id) ||
+      anyDuplicated(annotation$ensembl_id)) {
+    stop("Selected genes lack one-to-one Ensembl stable IDs")
+  }
   gtf <- data.table::fread(
     cmd = paste(shQuote(gzip_executable()), "-cd --", shQuote(gtf_path)),
     sep = "\t", header = FALSE, quote = "", data.table = FALSE,
@@ -83,10 +99,22 @@ read_gene_positions <- function(gtf_path, genes) {
     col.names = c("chr", "feature", "left", "right", "attributes")
   )
   gtf <- gtf[gtf$feature == "gene", , drop = FALSE]
-  gtf$geneid <- sub('.*gene_name "([^"]+)".*', "\\1", gtf$attributes)
-  gtf <- gtf[gtf$geneid %in% genes, c("geneid", "chr", "left", "right")]
-  gtf <- gtf[!duplicated(gtf$geneid), , drop = FALSE]
-  gtf
+  gtf$ensembl_id <- sub('.*gene_id "([^"]+)".*', "\\1", gtf$attributes)
+  gtf$ensembl_id <- sub("[.][0-9]+$", "", gtf$ensembl_id)
+  duplicate_gtf_ids <- duplicated(gtf$ensembl_id) |
+    duplicated(gtf$ensembl_id, fromLast = TRUE)
+  gtf <- gtf[!duplicate_gtf_ids, c("ensembl_id", "chr", "left", "right")]
+  positions <- gtf[match(annotation$ensembl_id, gtf$ensembl_id), , drop = FALSE]
+  if (anyNA(positions$ensembl_id)) {
+    stop("Selected Ensembl IDs lack unique GENCODE gene positions")
+  }
+  data.frame(
+    geneid = annotation$source_symbol,
+    chr = positions$chr,
+    left = positions$left,
+    right = positions$right,
+    stringsAsFactors = FALSE
+  )
 }
 
 build_covariates <- function(expression, samples, ancestry_path, n_expression_pcs) {
@@ -224,7 +252,9 @@ if (args$stage %in% c("eqtl", "all")) {
   names(snpspos) <- c("snpid", "chr", "pos")
   snpspos$chr <- sub("^chr", "", as.character(snpspos$chr), ignore.case = TRUE)
   genepos <- read_gene_positions(
-    resolve_config_path(config$inputs$gencode_gtf, project_root), rownames(expression)
+    resolve_config_path(config$inputs$gencode_gtf, project_root),
+    resolve_config_path(config$inputs$gene_annotation_master, project_root),
+    rownames(expression)
   )
   if (!setequal(genepos$geneid, rownames(expression))) {
     missing_genes <- setdiff(rownames(expression), genepos$geneid)

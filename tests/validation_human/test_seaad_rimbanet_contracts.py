@@ -61,6 +61,22 @@ def test_r_scripts_stream_gzip_without_optional_data_table_compression():
     assert "samples <- fread_tsv(samples_path)" in expression
 
 
+def test_expression_and_eqtl_use_stable_gencode_gene_identity():
+    expression = (SCRIPT_DIR / "11_prepare_rimbanet_expression.R").read_text()
+    eqtl = (SCRIPT_DIR / "11_run_celltype_eqtl.R").read_text()
+    scientific = yaml.safe_load((ROOT / "config/seaad_rimbanet.yml").read_text())
+
+    assert "gene_annotation_master" in scientific["inputs"]
+    assert "gene_annotation_master_sha256" in scientific["expected_identity"]
+    assert "gencode_gtf_sha256" in scientific["expected_identity"]
+    assert "annotation_pass <- resolved_mapping & conflict_free" in expression
+    assert "base_pass <- expression_pass & annotation_pass" in expression
+    assert "selected_annotations_resolvable" in expression
+    assert "gene_name" not in eqtl
+    assert "gene_id" in eqtl
+    assert "annotation$ensembl_id" in eqtl
+
+
 def test_genotype_wrapper_excludes_and_rechecks_sexcheck_failures():
     script = (SCRIPT_DIR / "11_prepare_seaad_genotypes.sh").read_text()
     assert 'PRESEX_PREFIX="${QC_PREFIX}.presex"' in script

@@ -80,6 +80,20 @@ fread_tsv <- function(path) {
   data.table::fread(path, sep = "\t", data.table = FALSE)
 }
 
+read_gencode_gene_ids <- function(gtf_path) {
+  gtf <- data.table::fread(
+    cmd = paste(shQuote(gzip_executable()), "-dc --", shQuote(gtf_path)),
+    sep = "\t", header = FALSE, quote = "", data.table = FALSE,
+    select = c(3L, 9L), col.names = c("feature", "attributes")
+  )
+  gtf <- gtf[gtf$feature == "gene", , drop = FALSE]
+  has_gene_id <- grepl('gene_id "[^"]+"', gtf$attributes)
+  if (!all(has_gene_id)) stop("GENCODE gene records lack gene_id attributes")
+  gene_ids <- sub('.*gene_id "([^"]+)".*', "\\1", gtf$attributes)
+  gene_ids <- sub("[.][0-9]+$", "", gene_ids)
+  gene_ids[!(duplicated(gene_ids) | duplicated(gene_ids, fromLast = TRUE))]
+}
+
 
 args <- parse_cli(commandArgs(trailingOnly = TRUE))
 required <- c("yaml", "data.table", "digest", "edgeR")
@@ -111,8 +125,27 @@ if (!file.exists(counts_path) || !file.exists(samples_path)) {
   stop("Missing VH05 broad pseudobulk inputs for ", args$network)
 }
 
+annotation_path <- resolve_config_path(
+  config$inputs$gene_annotation_master, project_root
+)
+gtf_path <- resolve_config_path(config$inputs$gencode_gtf, project_root)
+expected_annotation_sha <- as.character(
+  config$expected_identity$gene_annotation_master_sha256
+)
+expected_gtf_sha <- as.character(config$expected_identity$gencode_gtf_sha256)
+if (!file.exists(annotation_path) || !file.exists(gtf_path)) {
+  stop("Missing frozen gene annotation inputs")
+}
+if (!identical(sha256_file(annotation_path), expected_annotation_sha)) {
+  stop("Gene annotation master SHA-256 mismatch")
+}
+if (!identical(sha256_file(gtf_path), expected_gtf_sha)) {
+  stop("GENCODE GTF SHA-256 mismatch")
+}
+
 counts_table <- fread_tsv(counts_path)
 samples <- fread_tsv(samples_path)
+annotation <- fread_tsv(annotation_path)
 required_sample_cols <- c(
   "pseudobulk_id", "donor_id", "broad_network", "nuclei", "diagnosis",
   "sex", "apoe_group", "age_death_scaled", "pmi_scaled", "study"
@@ -122,6 +155,21 @@ if (!all(required_sample_cols %in% names(samples))) {
 }
 if (!all(c("feature_index", "source_symbol") %in% names(counts_table))) {
   stop("Count matrix lacks feature_index/source_symbol")
+}
+required_annotation_cols <- c(
+  "feature_index", "source_symbol", "ensembl_id", "mapping_status",
+  "gencode_mapping_method", "phase18_hgnc_identity_conflict",
+  "phase18_mitocarta_conflict"
+)
+if (!all(required_annotation_cols %in% names(annotation))) {
+  stop("Gene annotation master lacks required columns")
+}
+if (nrow(annotation) != nrow(counts_table) ||
+    !identical(as.integer(annotation$feature_index),
+               as.integer(counts_table$feature_index)) ||
+    !identical(as.character(annotation$source_symbol),
+               as.character(counts_table$source_symbol))) {
+  stop("Gene annotation master/count matrix feature order mismatch")
 }
 if (anyDuplicated(counts_table$source_symbol)) {
   stop("Duplicate source symbols must be resolved before network preparation")
@@ -149,9 +197,26 @@ minimum_donors <- ceiling(
 )
 unique_values <- apply(raw_counts, 1L, function(x) length(unique(x)))
 symbols <- as.character(counts_table$source_symbol)
-base_pass <- detected >= minimum_donors &
+expression_pass <- detected >= minimum_donors &
   unique_values >= as.integer(config$expression$minimum_unique_values) &
   nzchar(symbols) & symbols != "NA"
+
+ensembl_ids <- as.character(annotation$ensembl_id)
+valid_ensembl_id <- !is.na(ensembl_ids) & nzchar(ensembl_ids) &
+  ensembl_ids != "NA"
+unique_source_ensembl_id <- valid_ensembl_id &
+  !(duplicated(ensembl_ids) | duplicated(ensembl_ids, fromLast = TRUE))
+resolved_mapping <- as.character(annotation$mapping_status) != "unresolved" &
+  as.character(annotation$gencode_mapping_method) %in% c(
+    "phase18", "unique_symbol"
+  )
+conflict_free <- !as.logical(annotation$phase18_hgnc_identity_conflict) &
+  !as.logical(annotation$phase18_mitocarta_conflict)
+gencode_gene_ids <- read_gencode_gene_ids(gtf_path)
+gencode_position_pass <- unique_source_ensembl_id &
+  ensembl_ids %in% gencode_gene_ids
+annotation_pass <- resolved_mapping & conflict_free & gencode_position_pass
+base_pass <- expression_pass & annotation_pass
 
 if (sum(base_pass) < 3L) stop("Expression filters retained fewer than three genes")
 filtered_counts <- raw_counts[base_pass, , drop = FALSE]
@@ -197,16 +262,26 @@ selected_symbols <- filtered_symbols[selected_indices]
 gene_manifest <- data.frame(
   feature_index = as.integer(counts_table$feature_index),
   source_symbol = symbols,
+  ensembl_id = ensembl_ids,
+  mapping_status = as.character(annotation$mapping_status),
+  gencode_mapping_method = as.character(annotation$gencode_mapping_method),
   eligible_donors_detected = detected,
   unique_count_values = unique_values,
-  expression_filter_pass = base_pass,
+  expression_filter_pass = expression_pass,
+  annotation_filter_pass = annotation_pass,
+  network_filter_pass = base_pass,
   residual_variance = NA_real_,
   selected_network_gene = FALSE,
   exclusion_reason = ifelse(
     detected < minimum_donors, "low_expression",
     ifelse(unique_values < as.integer(config$expression$minimum_unique_values),
            "insufficient_unique_values",
-           ifelse(!nzchar(symbols) | symbols == "NA", "invalid_symbol", "variance_cap"))
+           ifelse(!nzchar(symbols) | symbols == "NA", "invalid_symbol",
+           ifelse(!resolved_mapping, "unresolved_gene_annotation",
+           ifelse(!conflict_free, "conflicting_gene_annotation",
+           ifelse(!unique_source_ensembl_id, "missing_or_nonunique_ensembl_id",
+           ifelse(!gencode_position_pass, "missing_or_nonunique_gencode_position",
+                  "variance_cap"))))))
   ),
   stringsAsFactors = FALSE
 )
@@ -264,23 +339,26 @@ if (isTRUE(config$expression$write_unadjusted_sensitivity)) {
 qc <- data.frame(
   metric = c(
     "eligible_donors", "input_genes", "expression_filter_genes",
-    "selected_genes", "minimum_donors_detected", "design_columns",
-    "design_rank"
+    "annotation_filter_genes", "network_filter_genes", "selected_genes",
+    "minimum_donors_detected", "design_columns", "design_rank"
   ),
   value = c(
-    nrow(samples), nrow(raw_counts), sum(base_pass), length(selected_indices),
-    minimum_donors, ncol(design), qr(design)$rank
+    nrow(samples), nrow(raw_counts), sum(expression_pass), sum(annotation_pass),
+    sum(base_pass), length(selected_indices), minimum_donors, ncol(design),
+    qr(design)$rank
   )
 )
 atomic_fwrite(qc, qc_path)
 checks <- data.frame(
   check = c(
     "sample_order_matches_matrix", "selected_symbols_unique",
-    "adjusted_finite", "design_full_rank", "selected_within_cap"
+    "selected_annotations_resolvable", "adjusted_finite",
+    "design_full_rank", "selected_within_cap"
   ),
   passed = c(
     identical(colnames(adjusted), sample_ids),
     !anyDuplicated(selected_symbols),
+    all(annotation_pass[base_pass][selected_indices]),
     all(is.finite(adjusted[selected_indices, , drop = FALSE])),
     qr(design)$rank == ncol(design),
     length(selected_indices) <= cap + length(force_include)

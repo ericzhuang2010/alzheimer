@@ -21,11 +21,12 @@ isProject: false
 
 ## Execution status — September 6, 2026
 
-**Steps 1–4 and the shared-genotype portion of Step 5 are complete for the
+**Steps 1–3 and the shared-genotype portion of Step 5 are complete for the
 Microglia pilot.** The source and identity contracts, production input audit,
-pinned Linux runtime, pilot expression matrix, and final 75-donor genotype
-matrix have passed their gates. Active work is the **Microglia cis-eQTL
-portion of Step 5**.
+pinned Linux runtime, and final 75-donor genotype matrix have passed their
+gates. The first Step 4 expression artifact was superseded after the Step 5
+eQTL position gate exposed unresolved gene symbols. Active work is the
+**corrected Microglia expression refresh and cis-eQTL portion of Step 5**.
 
 - The Minerva work checkout started at commit
   b4486062ac77b3189e4f80a6b6a689c6b5952c0f.
@@ -231,10 +232,13 @@ portion of Step 5**.
   input/output smoke tests pass without changing or rebuilding the frozen
   image, and the runtime gate now checks that `gzip` is available. Both failed
   jobs are rejected technical attempts; neither produced `status.tsv`.
-- Step 4 production retry 268232774 completed successfully on Minerva. It is
-  the accepted Microglia VH11B run: LSF state `DONE`, empty stderr,
-  `validated_complete`, 78 donors, 5,000 genes, zero failed checks, and
-  valid gzip streams for all four compressed expression artifacts.
+- Step 4 production retry 268232774 completed successfully on Minerva under
+  the original expression contract: LSF state `DONE`, empty stderr,
+  `validated_complete`, 78 donors, 5,000 genes, zero then-defined failed
+  checks, and valid gzip streams for all four compressed expression artifacts.
+  It proved the runtime and matrix-writing path, but is now superseded because
+  the downstream position audit showed that the original contract had not
+  removed unresolved GENCODE symbols before the variance cap.
 - Five rejected technical Step 5 attempts exposed and corrected runtime
   contracts without producing an accepted genotype stage. Job 268232982 did
   not inherit `PROJECT_ROOT`; all LSF preparation submissions now attach
@@ -281,6 +285,18 @@ portion of Step 5**.
   necessarily contains numeric autosomes and string sex/mitochondrial labels.
   The reader now declares that column as string with whole-file type inference,
   so reproductions do not emit the warning; no genotype rerun is required.
+- The first Microglia eQTL attempt, job 268268580, is rejected. Its in-job
+  expression refresh again produced 78 donors and 5,000 genes, but the eQTL
+  stage exited before MatrixEQTL because exact GTF `gene_name` matching could
+  not position 2,224 selected source symbols. The corrected expression stage
+  now freezes and validates `gene_annotation_master.tsv` and GENCODE v44,
+  requires each retained feature to have a conflict-free, one-to-one Ensembl
+  stable ID with a unique GENCODE gene record, and applies that filter before
+  residual-variance ranking. The eQTL stage joins those stable IDs to GTF
+  `gene_id` coordinates while retaining source symbols as network node names.
+  A local full Microglia preparation retained 16,540 genes after the combined
+  expression/annotation filters, selected 5,000 unique mapped genes, passed
+  all six VH11B checks, and mapped all 5,000 to unique GENCODE coordinates.
 - Step 5 remains active at the Microglia cis-eQTL gate. Steps 6–12 and every
   stochastic search array, including the Microglia pilot, remain unsubmitted.
 
@@ -450,7 +466,12 @@ Repo changes: add `containers/rimbanet/Dockerfile`, `containers/rimbanet/Apptain
 - Reuse the raw-UMI aggregation from [scripts/validation_human/05_stream_pseudobulk.py](scripts/validation_human/05_stream_pseudobulk.py): synchronize the explicitly tracked 14-file `results/validation_human/05_pseudobulk/direct_broad_counts/` bundle, then stage each reproducible `<cell_type>.counts.tsv.gz` and companion sample file under `/sc/arion/scratch/zhuane01/alzheimer/results/validation_human/05_pseudobulk/direct_broad_counts/`. Each matrix is genes × 78 donors with companion nuclei counts and covariates.
 - Require VH05/VH06 validated-complete status and checksum every count/sample shard. Do not treat nuclei as independent network samples.
 - For each cell type, retain donors meeting the prespecified primary nucleus threshold (initially the existing ≥20); report a ≥50-nucleus sensitivity set. Freeze sample order in `sample_manifest.tsv`.
-- Filter genes using donor-level expression criteria declared in config (CPM threshold and minimum donor fraction), remove duplicated/unresolved symbols and genes with insufficient variability, and preserve a reason for every exclusion.
+- Filter genes using donor-level expression criteria declared in config (CPM
+  threshold and minimum donor fraction), then require a conflict-free,
+  one-to-one Ensembl stable ID present exactly once among GENCODE v44 gene
+  records before applying the variance cap. Remove duplicated/unresolved
+  symbols and genes with insufficient variability, and preserve a reason for
+  every exclusion.
 - TMM-normalize to log-CPM, then residualize declared nuisance variables (study, PMI, age, nuclei count, and configured technical terms) while retaining diagnosis, APOE, and sex biology. Produce an unresidualized sensitivity matrix to quantify dependence on this choice.
 - Rank the robust gene universe by residual variance if a compute cap is required; the cap and any prespecified force-inclusion set must be fixed before network learning and cannot be selected from KDA outcomes.
 - Stream gzipped TSV inputs through the runtime's `gzip -dc` executable before
@@ -469,9 +490,10 @@ Repo changes: add `scripts/validation_human/11_prepare_rimbanet_expression.R` an
   and genotype missingness rules from config. Exclude the 17 samples outside
   the frozen primary cohort before computing QC statistics or PCs.
 - For each broad cell type, use only donors present in both its expression
-  matrix and the explicit genotype crosswalk. Fit MatrixEQTL cis associations
-  within the configured window (default ±1 Mb around the GENCODE v44 gene
-  coordinates).
+  matrix and the explicit genotype crosswalk. Map source symbols through the
+  frozen annotation master's Ensembl stable ID to GENCODE v44 `gene_id`
+  coordinates, then fit MatrixEQTL cis associations within the configured
+  window (default ±1 Mb around the gene coordinates).
 - Include ancestry PCs and prespecified technical/expression covariates; generate covariate-rank and sample-size checks to prevent singular models.
 - Apply BH FDR <0.05 as stated in Wang’s paper. Preserve complete tested-pair
   counts, measured-array marker coverage, and significant instruments;
@@ -1364,6 +1386,7 @@ After it finishes, run:
 export RIMBANET_STORAGE_ROOT=/sc/arion/scratch/zhuane01/alzheimer
 export RIMBANET_OUTPUT_ROOT="$RIMBANET_STORAGE_ROOT/results/validation_human"
 export PREP_LOG_ROOT="$RIMBANET_OUTPUT_ROOT/11_seaad_rimbanet/logs/preparation"
+export EXPRESSION_ROOT="$RIMBANET_OUTPUT_ROOT/11_seaad_rimbanet/11b_expression/Microglia"
 export EQTL_ROOT="$RIMBANET_OUTPUT_ROOT/11_seaad_rimbanet/11c_genetics/Microglia"
 
 VH11C_EQTL_JOB_ID="$(
@@ -1385,6 +1408,15 @@ else
   echo "none"
 fi
 
+echo "=== refreshed expression status ==="
+cat "$EXPRESSION_ROOT/status.tsv"
+
+echo "=== refreshed expression checks ==="
+cat "$EXPRESSION_ROOT/checks.tsv"
+
+echo "=== refreshed expression QC ==="
+cat "$EXPRESSION_ROOT/expression_qc.tsv"
+
 echo "=== eQTL status ==="
 cat "$EQTL_ROOT/status.tsv"
 
@@ -1401,11 +1433,15 @@ gzip -t \
 echo "compressed_artifact_integrity=OK"
 ```
 
-Accept the Microglia cis-eQTL portion of Step 5 only when LSF is `DONE`,
-stderr is empty, `status.tsv` is `validated_complete`, all three checks pass,
-the summary reports 75 matched donors and at least one significant cis pair,
-and both gzip streams are valid. A valid run with no significant cis-eQTL is a
-scientific gate failure and must not proceed to CIT or the search pilot.
+Accept the corrected expression refresh only when VH11B is
+`validated_complete`, all six expression checks pass (including
+`selected_annotations_resolvable`), QC reports 78 donors and 5,000 selected
+genes, and every expression gzip is valid. Accept the Microglia cis-eQTL
+portion of Step 5 only when LSF is `DONE`, stderr is empty, eQTL `status.tsv`
+is `validated_complete`, all three eQTL checks pass, the summary reports 75
+matched donors and at least one significant cis pair, and both eQTL gzip
+streams are valid. A valid run with no significant cis-eQTL is a scientific
+gate failure and must not proceed to CIT or the search pilot.
 
 ### Submit and gate the 1,000-search Microglia pilot
 
