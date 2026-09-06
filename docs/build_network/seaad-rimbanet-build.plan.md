@@ -7,7 +7,7 @@ todos:
     status: completed
   - id: implement-preparation
     content: Implement/test expression, SNP-array/eQTL/CIT, TF-prior, discretization, and RIMBANet input preparation stages
-    status: pending
+    status: completed
   - id: run-pilot
     content: Build the pinned runtime and complete the gated 1,000-search Microglia pilot
     status: pending
@@ -21,12 +21,13 @@ isProject: false
 
 ## Execution status — September 6, 2026
 
-**Steps 1–5 are complete for the Microglia pilot.** The source and identity
+**Steps 1–7 are complete for the Microglia pilot.** The source and identity
 contracts, production input audit, pinned Linux runtime, corrected pilot
 expression matrix, final 75-donor genotype matrix, and Microglia cis-eQTL
-results have passed their gates. The Step 6 CIT direction analysis and Step 7
-discretization gate are also complete. Active work is **assembling the exact
-RIMBANet input contract and the combined CIT/ENCODE prior** before Step 8.
+results have passed their gates. The CIT direction analysis, discretization,
+exact RIMBANet inputs, and combined CIT/ENCODE prior are also accepted. All
+1,000 Step 8 stochastic searches completed; active work is the aggregate
+search validator and consensus/release gates.
 
 - The Minerva work checkout started at commit
   b4486062ac77b3189e4f80a6b6a689c6b5952c0f.
@@ -324,8 +325,29 @@ RIMBANet input contract and the combined CIT/ENCODE prior** before Step 8.
   states 0/1/2, and the matrix has zero inconsistent rows or invalid states.
   Its frozen data SHA-256 is
   `df081b9ca880e7244a21918cc2ec1d8d6ac4f6e0c25094e2aa2a8c0e04a91769`.
-- Exact input and combined-prior assembly are now active. Steps 8–12 and every stochastic search array,
-  including the Microglia pilot, remain unsubmitted.
+- Microglia exact-input job 268268728 is accepted: LSF completed successfully,
+  stderr was empty, VH11E_INPUTS reported `validated_complete`, and all checks
+  passed for 5,000 nodes, 78 samples, and exactly 24,995,000 ordered non-self
+  base-prior rows. The 960,979,420-byte `prior.base.txt` has SHA-256
+  `b89831f8fb202a8a3e2951c7fd0b4c56d2ee0c816d9da66913f93897ba09960b`.
+- Microglia combined-prior job 268268970 is accepted: LSF `DONE`, empty
+  stderr, VH11D `validated_complete`, all checks passed, and all 574 selected
+  structural directions (26 CIT and 563 ENCODE evidence rows before
+  direction-level combination) matched the complete base-prior table with
+  zero unmatched directions and zero conflicts. The 1,185,934,420-byte final
+  `prior.txt` has SHA-256
+  `72990a32f2f8fef5a60dd7bcda93f84a1ae75738aa91aedb04668e171311291a`.
+- Step 8 Microglia array 268269089 submitted all 1,000 configured stochastic
+  searches with a 100-task concurrency limit. Every task produced a
+  `validated_complete` task contract. Aggregate validator job 268270495 is a
+  rejected technical attempt: all 1,000 task contracts were present, but the
+  shared edge parser treated legitimate RIMBANet DOT-style standalone node
+  declarations such as `FAM41C;` as malformed edges, resulting in 0/1,000
+  aggregate-valid searches. The parser now ignores syntactically valid
+  standalone node declarations while retaining strict malformed-record,
+  checksum, seed, duplicate-edge, likelihood, and DAG gates. The stochastic
+  searches themselves remain accepted and must not be rerun for this parser
+  correction.
 
 ## Goal and end state
 

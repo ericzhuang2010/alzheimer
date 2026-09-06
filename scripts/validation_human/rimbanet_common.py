@@ -25,6 +25,7 @@ from seaad_common import (
 
 PHASE = "11_seaad_rimbanet"
 EDGE_RE = re.compile(r"^\s*([^\s;]+)\s*->\s*([^\s;]+)")
+NODE_RE = re.compile(r"^\s*[^\s;]+\s*;\s*$")
 
 
 def parser(description: str, *, network: bool = False) -> argparse.ArgumentParser:
@@ -156,6 +157,10 @@ def parse_edge_file(path: Path) -> list[tuple[str, str]]:
             match = EDGE_RE.match(stripped)
             if match:
                 edges.append((match.group(1), match.group(2)))
+                continue
+            if NODE_RE.fullmatch(stripped):
+                # RIMBANet emits DOT-style declarations for isolated nodes.
+                # They are valid network records but are not directed edges.
                 continue
             fields = stripped.rstrip(";").split("\t")
             if len(fields) >= 2 and fields[0] and fields[1]:

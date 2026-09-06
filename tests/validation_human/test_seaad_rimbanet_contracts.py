@@ -104,6 +104,32 @@ def test_discretized_contract_and_xml():
     assert "<VALUE>down</VALUE>" in xml
 
 
+def test_edge_parser_accepts_standalone_rimbanet_nodes(tmp_path):
+    path = tmp_path / "result.1"
+    path.write_text(
+        "digraph network {\n"
+        "GENE_A -> GENE_B;\n"
+        "FAM41C;\n"
+        "GENE_C\tGENE_D\n"
+        "}\n"
+    )
+    assert rimbanet_common.parse_edge_file(path) == [
+        ("GENE_A", "GENE_B"),
+        ("GENE_C", "GENE_D"),
+    ]
+
+
+def test_edge_parser_still_rejects_malformed_records(tmp_path):
+    path = tmp_path / "result.bad"
+    path.write_text("GENE_A malformed;\n")
+    try:
+        rimbanet_common.parse_edge_file(path)
+    except ValueError as error:
+        assert "Unparseable edge" in str(error)
+    else:
+        raise AssertionError("Malformed output record should be rejected")
+
+
 def test_identity_banned_matrix(tmp_path):
     path = tmp_path / "banned.txt"
     prepare.write_identity(4, path)
