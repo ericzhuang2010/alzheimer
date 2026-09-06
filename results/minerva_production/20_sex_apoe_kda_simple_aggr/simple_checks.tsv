@@ -1,0 +1,19 @@
+schema_version	check_id	observed	expected	passed	severity	message
+phase20_simple_returned_only_acat_v1_checks_v1	included_run_count	295	295	TRUE	error	Use the frozen 295-call Phase 20 source scope
+phase20_simple_returned_only_acat_v1_checks_v1	included_run_contract	295	295	TRUE	error	Every included call must satisfy the frozen Phase 20 scope
+phase20_simple_returned_only_acat_v1_checks_v1	stock_returned_row_count	2494	2494	TRUE	error	Use every stock significant return from the 295 included calls
+phase20_simple_returned_only_acat_v1_checks_v1	stock_returned_unique_keys	2494	2494	TRUE	error	Each run and gene must occur at most once
+phase20_simple_returned_only_acat_v1_checks_v1	stock_significance_filter	0	0	TRUE	error	Every stock input row must have within-call q <= 0.05
+phase20_simple_returned_only_acat_v1_checks_v1	stock_manifest_metadata	0	0	TRUE	error	Stock result metadata must match the frozen run manifest
+phase20_simple_returned_only_acat_v1_checks_v1	returned_gene_annotation	0	0	TRUE	error	Every returned gene should have recorded mitochondrial annotation
+phase20_simple_returned_only_acat_v1_checks_v1	acat_reference_fixture	0.4768092002695658	0.4768092003	TRUE	error	ACAT must reproduce the repository reference fixture
+phase20_simple_returned_only_acat_v1_checks_v1	global_gene_count	615	615	TRUE	error	Literal global output must contain every distinct returned gene
+phase20_simple_returned_only_acat_v1_checks_v1	global_singleton_count	363	363	TRUE	error	Singleton genes must pass their one within-call q through
+phase20_simple_returned_only_acat_v1_checks_v1	global_recurrent_count	252	252	TRUE	error	Recurrent genes must use ACAT
+phase20_simple_returned_only_acat_v1_checks_v1	category_gene_unit_count	1298	1298	TRUE	error	Category output must contain every returned gene-category unit
+phase20_simple_returned_only_acat_v1_checks_v1	category_singleton_count	892	892	TRUE	error	Category singleton units must pass through their q
+phase20_simple_returned_only_acat_v1_checks_v1	category_recurrent_count	406	406	TRUE	error	Category recurrent units must use ACAT
+phase20_simple_returned_only_acat_v1_checks_v1	singleton_passthrough	0	0	TRUE	error	Every singleton final value must equal its one returned q
+phase20_simple_returned_only_acat_v1_checks_v1	recurrent_acat_assignment	0	0	TRUE	error	Every recurrent final value must equal its returned-q ACAT value
+phase20_simple_returned_only_acat_v1_checks_v1	final_value_bounds	0	0	TRUE	error	Every requested final value must lie in [0, 1]
+phase20_simple_returned_only_acat_v1_checks_v1	structural_category_count	42	42	TRUE	error	Preserve all six-by-seven Phase 20 structural categories
