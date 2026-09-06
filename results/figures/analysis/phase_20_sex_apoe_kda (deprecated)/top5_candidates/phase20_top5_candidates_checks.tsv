@@ -1,4 +1,0 @@
-schema_version	check_id	severity	observed	expected	passed
-phase20_sex_apoe_non_mt_figure_v2_checks_v1	plot_data_nonempty	error	48	>0	True
-phase20_sex_apoe_non_mt_figure_v2_checks_v1	all_declared_files_exist	error	6	6	True
-phase20_sex_apoe_non_mt_figure_v2_checks_v1	non_mt_scope	error	non_mt_driver	non_mt_driver	True

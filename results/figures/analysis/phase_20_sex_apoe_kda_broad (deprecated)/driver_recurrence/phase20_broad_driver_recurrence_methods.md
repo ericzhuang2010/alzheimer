@@ -1,7 +1,0 @@
-# Methods
-
-The renderer reads the validated production tables `phase20_broad_status.tsv`, `phase20_broad_checks.tsv`, `phase20_broad_artifacts.tsv`, `phase20_broad_direction_manifest.tsv`, and `phase20_broad_non_mt_candidates.tsv` from `results/minerva_production/20_sex_apoe_kda_broad`. Registered byte sizes and SHA-256 hashes are checked for the direction manifest, candidate table, production checks, and top-five table before plotting.
-
-The plot contains one row per frozen relaxed primary candidate, without grouping, deduplication, reranking, or cross-run aggregation. Candidates must be non-core-MT, have query overlap ≥ 2, fold enrichment > 1, and a non-core-MT within-run BH q ≤ 0.10. The strict direct-reference tier uses the same gates with q ≤ 0.05. Stored `direction_rank` determines the vertical order within each run. Bars show −log10(`non_mt_run_q`); dotted and dashed reference lines mark q = 0.10 and q = 0.05, respectively. The run-specific BH family sizes are 151 genes for Astrocytes · F_e4 · AD down and 133 genes for OPCs · F_e4 · AD down; the completed Astrocytes · M_e33 · AD-down run tested a 78-gene non-core-MT family and selected zero candidates.
-
-The figure uses Okabe-Ito blue and orange, with hatching as a redundant tier encoding. It is exported as a 300-DPI PNG and as vector SVG and PDF files. The output bundle records the exact plotted rows, checks, validation status, file sizes, and SHA-256 hashes.
