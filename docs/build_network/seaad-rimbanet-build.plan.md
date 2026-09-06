@@ -24,8 +24,9 @@ isProject: false
 **Steps 1–5 are complete for the Microglia pilot.** The source and identity
 contracts, production input audit, pinned Linux runtime, corrected pilot
 expression matrix, final 75-donor genotype matrix, and Microglia cis-eQTL
-results have passed their gates. Active work is **Step 6, deriving Microglia
-CIT directions and assembling the CIT/ENCODE priors**.
+results have passed their gates. The Step 6 CIT direction analysis is also
+complete; combined prior assembly follows the final gene-universe gate.
+Active work is **Step 7, discretizing the Microglia expression matrix**.
 
 - The Minerva work checkout started at commit
   b4486062ac77b3189e4f80a6b6a689c6b5952c0f.
@@ -310,7 +311,13 @@ CIT directions and assembling the CIT/ENCODE priors**.
   instruments and 280 eGenes. Of those instruments, 378 link at least two
   genes, no instrument links more than three genes, and the fixed algorithm
   will run 852 ordered CIT direction tests.
-- Step 6 is now active. Steps 7–12 and every stochastic search array,
+- Microglia CIT job 268268645 is accepted. LSF reported `DONE` with empty
+  stderr and only 1,025 MB peak memory. All 852 ordered tests completed with
+  valid p-values, zero per-test errors, and 26 significant directions; both
+  CIT checks passed and both compressed artifacts passed integrity checks.
+  Final Step 6 CIT/ENCODE prior assembly waits for the Step 7 discretization
+  gate so evidence is restricted to the actual final node universe.
+- Step 7 is now active. Steps 8–12 and every stochastic search array,
   including the Microglia pilot, remain unsubmitted.
 
 ## Goal and end state
@@ -1531,6 +1538,83 @@ After the job finishes, require LSF `DONE`, no runtime errors, 852 completed
 ordered tests, at least one valid and significant direction, and valid gzip
 streams for both complete and significant CIT tables before assembling the
 combined CIT/ENCODE prior.
+
+### Submit and gate Microglia discretization
+
+Run Step 7 independently so accepted expression, eQTL, and CIT artifacts are
+not recomputed:
+
+```bash
+(
+set -euo pipefail
+
+export PROJECT_ROOT=/sc/arion/work/zhuane01/alzheimer
+export RIMBANET_STORAGE_ROOT=/sc/arion/scratch/zhuane01/alzheimer
+export RIMBANET_OUTPUT_ROOT="$RIMBANET_STORAGE_ROOT/results/validation_human"
+export RIMBANET_IMAGE="$RIMBANET_STORAGE_ROOT/external_tools/containers/seaad-rimbanet.sif"
+export SEAAD_CONTROLLED_ROOT=/sc/arion/projects/adineto/sea_ad
+export CONTAINER_RUNTIME=/hpc/packages/minerva-rocky9/apptainer/1.4.5/bin/apptainer
+export CONFIG=config/seaad_rimbanet.yml
+export STAGE=discretize
+export NETWORK=Microglia
+export LSF_PROJECT=acc_adineto
+export PREP_LOG_ROOT="$RIMBANET_OUTPUT_ROOT/11_seaad_rimbanet/logs/preparation"
+export EXPRESSION_ROOT="$RIMBANET_OUTPUT_ROOT/11_seaad_rimbanet/11b_expression/Microglia"
+export PRIOR_ROOT="$RIMBANET_OUTPUT_ROOT/11_seaad_rimbanet/11d_priors/Microglia"
+
+cd "$PROJECT_ROOT"
+test -z "$(git status --porcelain --untracked-files=no)"
+git pull --ff-only origin main
+test "$(awk -F $'\t' 'NR == 2 {print $3}' \
+  "$EXPRESSION_ROOT/status.tsv")" = validated_complete
+test "$(awk -F $'\t' 'NR == 2 {print $3}' \
+  "$PRIOR_ROOT/cit_status.tsv")" = validated_complete
+test -x "$CONTAINER_RUNTIME"
+test "$(sha256sum "$RIMBANET_IMAGE" | awk '{print $1}')" = \
+  1df82906537e74c73fb331e7652c4057bac92182293d7d3739d0a015a4f25840
+
+mkdir -p "$PREP_LOG_ROOT"
+SUBMISSION="$(
+  bsub \
+    -P "$LSF_PROJECT" \
+    -J seaad_vh11e_discretize_microglia \
+    -q premium \
+    -n 1 \
+    -W 01:00 \
+    -R 'rusage[mem=8000]' \
+    -R 'span[hosts=1]' \
+    -M 8000 \
+    -o "$PREP_LOG_ROOT/vh11e_discretize_microglia.%J.out" \
+    -e "$PREP_LOG_ROOT/vh11e_discretize_microglia.%J.err" \
+    -L /bin/bash \
+    env \
+      PROJECT_ROOT="$PROJECT_ROOT" \
+      RIMBANET_STORAGE_ROOT="$RIMBANET_STORAGE_ROOT" \
+      RIMBANET_IMAGE="$RIMBANET_IMAGE" \
+      SEAAD_CONTROLLED_ROOT="$SEAAD_CONTROLLED_ROOT" \
+      CONTAINER_RUNTIME="$CONTAINER_RUNTIME" \
+      CONFIG="$CONFIG" \
+      STAGE="$STAGE" \
+      NETWORK="$NETWORK" \
+      bash scripts/validation_human/11_prepare_rimbanet_minerva.lsf
+)"
+
+printf '%s\n' "$SUBMISSION"
+VH11E_JOB_ID="$(
+  printf '%s\n' "$SUBMISSION" |
+  awk -F '[<>]' '/Job </ {print $2}'
+)"
+test -n "$VH11E_JOB_ID"
+printf '%s\n' "$VH11E_JOB_ID" > \
+  "$PREP_LOG_ROOT/latest_vh11e_discretize_microglia_job_id.txt"
+printf 'VH11E_JOB_ID=%s\n' "$VH11E_JOB_ID"
+)
+```
+
+Accept discretization only when LSF is `DONE`, stderr is empty,
+`discretization_status.tsv` is `validated_complete`, all four checks pass,
+all retained genes contain each state 0/1/2, and the persisted node and sample
+counts agree with the generated matrix.
 
 ### Submit and gate the 1,000-search Microglia pilot
 

@@ -14,7 +14,7 @@ set -euo pipefail
 umask 077
 
 : "${PROJECT_ROOT:?Set PROJECT_ROOT to the repository root}"
-: "${STAGE:?Set STAGE to genotypes, eqtl, cit, or network}"
+: "${STAGE:?Set STAGE to genotypes, eqtl, cit, discretize, or network}"
 CONFIG="${CONFIG:-config/seaad_rimbanet.yml}"
 IMAGE="${RIMBANET_IMAGE:-/sc/arion/scratch/zhuane01/alzheimer/external_tools/containers/seaad-rimbanet.sif}"
 STORAGE_ROOT="${RIMBANET_STORAGE_ROOT:-/sc/arion/scratch/zhuane01/alzheimer}"
@@ -74,6 +74,12 @@ case "$STAGE" in
       Rscript --vanilla scripts/validation_human/11_run_celltype_eqtl.R \
       --config "$CONFIG" --network "$NETWORK" --stage cit
     ;;
+  discretize)
+    : "${NETWORK:?Set NETWORK for the discretization stage}"
+    "${RIMBANET_EXEC[@]}" \
+      Rscript --vanilla scripts/validation_human/11_discretize_rimbanet_expression.R \
+      --config "$CONFIG" --network "$NETWORK"
+    ;;
   network)
     NETWORK="${NETWORK:-}"
     if [[ -z "$NETWORK" ]]; then
@@ -112,7 +118,7 @@ PY
       --config "$CONFIG" --network "$NETWORK"
     ;;
   *)
-    echo "Unknown STAGE=$STAGE; expected genotypes, eqtl, cit, or network" >&2
+    echo "Unknown STAGE=$STAGE; expected genotypes, eqtl, cit, discretize, or network" >&2
     exit 2
     ;;
 esac

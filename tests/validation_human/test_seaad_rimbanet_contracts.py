@@ -343,6 +343,8 @@ def test_minerva_genotype_wrapper_uses_gda8_contract():
     assert '--network "$NETWORK" --stage eqtl' in launcher
     assert "  cit)" in launcher
     assert '--network "$NETWORK" --stage cit' in launcher
+    assert "  discretize)" in launcher
+    assert "11_discretize_rimbanet_expression.R" in launcher
 
 
 
