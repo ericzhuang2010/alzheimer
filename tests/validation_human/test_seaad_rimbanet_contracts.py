@@ -407,6 +407,15 @@ def test_minerva_bsub_command_uses_execution_profile(tmp_path):
     assert str(tmp_path / "scratch/logs/Microglia/%J.%I.out") in command
 
 
+def test_minerva_array_wrapper_uses_pinned_container_runtime():
+    wrapper = (SCRIPT_DIR / "11_submit_rimbanet_minerva.lsf").read_text()
+    expected = "/hpc/packages/minerva-rocky9/apptainer/1.4.5/bin/apptainer"
+    assert f"CONTAINER_RUNTIME=\"${{CONTAINER_RUNTIME:-{expected}}}\"" in wrapper
+    assert '[[ -x "$CONTAINER_RUNTIME" ]]' in wrapper
+    assert '"$CONTAINER_RUNTIME" exec' in wrapper
+    assert "\napptainer exec" not in wrapper
+
+
 def test_rimbanet_config_routes_generated_outputs_outside_repo(tmp_path):
     scratch_output = tmp_path.parent / f"{tmp_path.name}_scratch/results/validation_human"
     config_path = tmp_path / "config.yml"

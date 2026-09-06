@@ -1705,10 +1705,11 @@ prior checks pass. Then run the separate streaming combined-prior stage.
 
 ### Submit and gate the 1,000-search Microglia pilot
 
-
 The Python submit wrapper reads queue, memory, wall time, array range, and
 concurrency from `config/seaad_rimbanet_execution.yml`, creates LSF log
 directories before submission, and passes absolute paths to the array job.
+Each array task uses the pinned absolute Minerva Apptainer path; do not rely on
+`apptainer` being available on compute-node `PATH`.
 
 ```bash
 # Inspect the exact bsub command first.

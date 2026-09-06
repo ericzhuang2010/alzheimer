@@ -16,15 +16,20 @@ set -euo pipefail
 CONFIG="${CONFIG:-config/seaad_rimbanet.yml}"
 IMAGE="${RIMBANET_IMAGE:-/sc/arion/scratch/zhuane01/alzheimer/external_tools/containers/seaad-rimbanet.sif}"
 STORAGE_ROOT="${RIMBANET_STORAGE_ROOT:-/sc/arion/scratch/zhuane01/alzheimer}"
+CONTAINER_RUNTIME="${CONTAINER_RUNTIME:-/hpc/packages/minerva-rocky9/apptainer/1.4.5/bin/apptainer}"
 : "${LSB_JOBINDEX:?This file must run as an LSF array job}"
 
 cd "$PROJECT_ROOT"
+[[ -x "$CONTAINER_RUNTIME" ]] || {
+  echo "Container runtime is unavailable: $CONTAINER_RUNTIME" >&2
+  exit 3
+}
 [[ -d "$STORAGE_ROOT" ]] || {
   echo "Minerva scratch storage root is unavailable: $STORAGE_ROOT" >&2
   exit 3
 }
 
-apptainer exec \
+"$CONTAINER_RUNTIME" exec \
   --bind "$PROJECT_ROOT:$PROJECT_ROOT" \
   --bind "$STORAGE_ROOT:$STORAGE_ROOT" \
   --env R_PROFILE_USER=/dev/null \
