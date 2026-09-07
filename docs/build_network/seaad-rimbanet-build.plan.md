@@ -27,9 +27,10 @@ expression matrix, final 75-donor genotype matrix, and Microglia cis-eQTL
 results have passed their gates. The CIT direction analysis, discretization,
 exact RIMBANet inputs, combined CIT/ENCODE prior, all 1,000 Step 8 searches,
 aggregate validation, legacy consensus, independent QC, and Microglia release
-are accepted. Five remaining networks have also completed full-integrative
-preparation. Active work is the explicitly amended Step 9 Vasculature
-preparation followed by the six remaining search arrays.
+are accepted. The remaining six networks have completed preparation: five in
+full-integrative mode and Vasculature under its explicit exploratory
+ENCODE-only amendment. Active work is submission of the six Step 9 search
+arrays.
 
 - Scale-out preparation completed for Astrocytes, Excitatory neurons,
   Inhibitory neurons, OPCs, and Oligodendrocytes with validated expression,
@@ -48,6 +49,14 @@ preparation followed by the six remaining search arrays.
   This is not an expression-only fallback, and release/QC artifacts must carry
   `prior_mode=encode_only_exploratory`, zero CIT evidence rows, and nonzero
   ENCODE evidence rows.
+- Vasculature post-eQTL preparation job 268295016 is accepted. LSF reported
+  `DONE` with empty stderr, 479 seconds runtime, and 1,510 MB peak memory. The
+  rerun confirmed 70/70 valid CIT tests, zero significant directions at the
+  unchanged 0.05 FDR, and `validated_complete_encode_only`. Discretization
+  retained 10,000 nodes and 76 expression samples; exact-input generation
+  produced all 99,990,000 ordered non-self base-prior rows; and combined-prior
+  assembly selected 3,545 ENCODE directions with zero CIT rows, conflicts, or
+  unmatched directions. All status and compressed-integrity gates passed.
 
 - The Minerva work checkout started at commit
   b4486062ac77b3189e4f80a6b6a689c6b5952c0f.
