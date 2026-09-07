@@ -10,7 +10,7 @@ todos:
     status: completed
   - id: run-pilot
     content: Build the pinned runtime and complete the gated 1,000-search Microglia pilot
-    status: pending
+    status: completed
   - id: scale-release
     content: Run all seven networks, reproduce consensus/de-looping, validate DAGs, and publish immutable release artifacts
     status: pending
@@ -25,9 +25,9 @@ isProject: false
 contracts, production input audit, pinned Linux runtime, corrected pilot
 expression matrix, final 75-donor genotype matrix, and Microglia cis-eQTL
 results have passed their gates. The CIT direction analysis, discretization,
-exact RIMBANet inputs, and combined CIT/ENCODE prior are also accepted. All
-1,000 Step 8 stochastic searches completed; active work is the aggregate
-search validator and consensus/release gates.
+exact RIMBANet inputs, combined CIT/ENCODE prior, all 1,000 Step 8 searches,
+aggregate validation, legacy consensus, independent QC, and Microglia release
+are accepted. Active work is Step 9 preparation of the remaining six networks.
 
 - The Minerva work checkout started at commit
   b4486062ac77b3189e4f80a6b6a689c6b5952c0f.
@@ -348,6 +348,23 @@ search validator and consensus/release gates.
   checksum, seed, duplicate-edge, likelihood, and DAG gates. The stochastic
   searches themselves remain accepted and must not be rerun for this parser
   correction.
+- The corrected aggregate validation completed at 2026-09-06T21:51:21Z with
+  VH11F `validated_complete`: 1,000/1,000 outputs, statuses, checksums,
+  likelihood records, DAGs, and unique seeds passed. Per-search runtimes were
+  782–1,315 seconds (median 1,096), totaling 301.353 task-hours; all 1,000
+  resource reports were present, with median peak RSS 778.70 MB and maximum
+  855.04 MB.
+- Legacy consensus job 268270552 is accepted. It completed successfully with
+  normal `testBN` progress diagnostics, no `.in_progress` marker, and 1,279
+  candidate and final edges. The final headerless edge-list SHA-256 is
+  `97c236b53b27907ff438c9dce7dace4e7c660bcf11c748f7a5eb1db6cbce9a86`.
+- Final Microglia validation/publication job 268270597 is accepted. VH11H is
+  `validated_complete`; independent selection exactly matches the legacy
+  candidate set; the 1,279-edge graph is a DAG with no self-loops, duplicate,
+  reciprocal, or unknown-node edges; maximum indegree is 2; the disjoint-half
+  directed Jaccard is 0.9323816679; and a full consensus rerun is
+  byte-identical. The pilot gate is `passed`, and commit b12aa13 publishes the
+  nine permitted Microglia release files/manifest. Step 8 is complete.
 
 ## Goal and end state
 
@@ -1732,6 +1749,9 @@ concurrency from `config/seaad_rimbanet_execution.yml`, creates LSF log
 directories before submission, and passes absolute paths to the array job.
 Each array task uses the pinned absolute Minerva Apptainer path; do not rely on
 `apptainer` being available on compute-node `PATH`.
+The Minerva host submitter only imports PyYAML. Its system Python 3.9 cannot
+install NetworkX 3.3+, so install only `PyYAML>=6,<7` in the host `.venv` and
+run NetworkX-based validation inside the pinned container.
 
 ```bash
 # Inspect the exact bsub command first.
@@ -1753,7 +1773,8 @@ After the array has finished, validate all tasks, build consensus, and publish
 the pilot:
 
 ```bash
-.venv/bin/python scripts/validation_human/11_validate_rimbanet_runs.py \
+"${RIMBANET_EXEC[@]}" \
+  python scripts/validation_human/11_validate_rimbanet_runs.py \
   --config "$SEAAD_RIMBANET_CONFIG" --network Microglia
 
 "${RIMBANET_EXEC[@]}" \
@@ -1774,10 +1795,47 @@ The final pilot gate must say `passed`. Re-running the same submission command
 is the resume/retry operation: tasks with matching validated outputs exit
 without being overwritten, while incomplete technical failures rerun.
 
-### Scale out after the pilot passes
+### Prepare and scale out after the pilot passes
 
 The submit wrapper refuses these six networks until the final Microglia
-consensus/release QC gate has passed.
+consensus/release QC gate has passed. Before submitting stochastic searches,
+prepare expression, eQTL/CIT, discretization, exact inputs/base prior, and the
+combined CIT/ENCODE prior independently for every remaining network. These
+jobs write disjoint network directories and may run concurrently:
+
+```bash
+SCALEOUT_PREP_LOG_ROOT="$RIMBANET_OUTPUT_ROOT/11_seaad_rimbanet/logs/preparation"
+mkdir -p "$SCALEOUT_PREP_LOG_ROOT"
+for network in \
+  Astrocytes Excitatory_neurons Inhibitory_neurons \
+  OPCs Oligodendrocytes Vasculature_cells
+do
+  bsub \
+    -P "$LSF_PROJECT" \
+    -J "seaad_prepare_${network}" \
+    -q premium -n 4 -W 24:00 \
+    -R 'rusage[mem=16000]' -R 'span[hosts=1]' -M 64000 \
+    -o "$SCALEOUT_PREP_LOG_ROOT/scaleout_${network}.%J.out" \
+    -e "$SCALEOUT_PREP_LOG_ROOT/scaleout_${network}.%J.err" \
+    -L /bin/bash \
+    env \
+      PROJECT_ROOT="$PROJECT_ROOT" \
+      RIMBANET_STORAGE_ROOT="$RIMBANET_STORAGE_ROOT" \
+      RIMBANET_IMAGE="$RIMBANET_IMAGE" \
+      SEAAD_CONTROLLED_ROOT="$SEAAD_CONTROLLED_ROOT" \
+      CONTAINER_RUNTIME="$CONTAINER_RUNTIME" \
+      CONFIG="$SEAAD_RIMBANET_CONFIG" \
+      STAGE=network NETWORK="$network" \
+      bash scripts/validation_human/11_prepare_rimbanet_minerva.lsf
+done
+```
+
+Require each network's VH11B expression, VH11C eQTL, CIT, discretization,
+VH11E inputs, and VH11D combined-prior state to be `validated_complete` before
+submitting its search array. Production networks use the configured 10,000-
+gene cap, so a complete base prior has 99,990,000 ordered non-self rows.
+
+Only after all six preparation gates pass, submit their searches:
 
 ```bash
 for network in \
@@ -1798,7 +1856,8 @@ for network in \
   Astrocytes Excitatory_neurons Inhibitory_neurons \
   OPCs Oligodendrocytes Vasculature_cells
 do
-  .venv/bin/python scripts/validation_human/11_validate_rimbanet_runs.py \
+  "${RIMBANET_EXEC[@]}" \
+    python scripts/validation_human/11_validate_rimbanet_runs.py \
     --config "$SEAAD_RIMBANET_CONFIG" --network "$network"
   "${RIMBANET_EXEC[@]}" \
     bash scripts/validation_human/11_build_rimbanet_consensus.sh \
