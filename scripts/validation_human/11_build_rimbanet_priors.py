@@ -19,6 +19,7 @@ from rimbanet_common import (
     write_stage_contract,
 )
 from seaad_common import atomic_write_tsv
+from seaad_common import sha256_file
 
 
 def read_nodes(path: Path) -> tuple[list[str], int]:
@@ -108,6 +109,43 @@ def evidence_rows(
     return pd.DataFrame(
         rows, columns=["parent", "child", "source", "added_weight"]
     )
+
+
+def determine_prior_mode(config: dict, network: str, cit_rows: int) -> str:
+    """Return the declared prior mode, rejecting silent evidence fallback."""
+    configured_mode = str(config["method"]["mode"])
+    allowed = {
+        str(value)
+        for value in config.get("cit", {}).get(
+            "allow_zero_significant_for_encode_only", []
+        )
+    }
+    if configured_mode == "full_integrative":
+        if cit_rows < 1:
+            raise ValueError(
+                "Full-integrative prior requires at least one matched CIT direction"
+            )
+        return configured_mode
+    if configured_mode == "encode_only_exploratory":
+        if network not in allowed:
+            raise ValueError(
+                f"ENCODE-only prior is not explicitly authorized for {network}"
+            )
+        if cit_rows != 0:
+            raise ValueError(
+                "ENCODE-only exception may be used only after zero significant CIT directions"
+            )
+        return configured_mode
+    raise ValueError(f"Unsupported RIMBANet prior mode: {configured_mode}")
+
+
+def read_single_status(path: Path) -> dict[str, str]:
+    if not path.is_file():
+        raise FileNotFoundError(path)
+    table = pd.read_csv(path, sep="\t", dtype=str, keep_default_na=False)
+    if len(table) != 1:
+        raise ValueError(f"Expected exactly one status row: {path}")
+    return {str(key): str(value) for key, value in table.iloc[0].items()}
 
 
 def resolve_conflicts(evidence: pd.DataFrame):
@@ -219,7 +257,10 @@ def write_identity_ban(nodes: list[str], path: Path) -> None:
 
 
 def main() -> int:
-    args = parser("Build full-integrative RIMBANet priors", network=True).parse_args()
+    args = parser(
+        "Build declared full-integrative or exploratory ENCODE-only RIMBANet priors",
+        network=True,
+    ).parse_args()
     config, config_path, project_root, output_root = load_rimbanet_config(args.config)
     network = validate_network(config, args.network)
     input_dir = stage_dir(output_root, "11e_inputs") / network
@@ -242,6 +283,19 @@ def main() -> int:
         project_root, config["inputs"]["encode_tf_targets"], must_exist=False
     )
     evidence = evidence_rows(cit_path, encode_path, node_set, weight)
+    cit_evidence_rows = int(
+        (evidence.get("source", pd.Series(dtype=str)) == "CIT").sum()
+    )
+    encode_evidence_rows = int(
+        (evidence.get("source", pd.Series(dtype=str)) == "ENCODE").sum()
+    )
+    prior_mode = determine_prior_mode(config, network, cit_evidence_rows)
+    cit_status = read_single_status(prior_dir / "cit_status.tsv")
+    expected_cit_state = (
+        "validated_complete_encode_only"
+        if prior_mode == "encode_only_exploratory"
+        else "validated_complete"
+    )
     selected, conflicts = resolve_conflicts(evidence)
     selected_keys = {
         (str(row.parent), str(row.child)): float(row.added_weight)
@@ -268,14 +322,11 @@ def main() -> int:
         [
             {
                 "network": network,
+                "prior_mode": prior_mode,
                 "nodes": len(nodes),
                 "base_prior_rows": base_prior_rows,
-                "CIT_evidence_rows": int(
-                    (evidence.get("source", pd.Series(dtype=str)) == "CIT").sum()
-                ),
-                "ENCODE_evidence_rows": int(
-                    (evidence.get("source", pd.Series(dtype=str)) == "ENCODE").sum()
-                ),
+                "CIT_evidence_rows": cit_evidence_rows,
+                "ENCODE_evidence_rows": encode_evidence_rows,
                 "selected_prior_directions": len(selected),
                 "matched_base_prior_directions": len(matched),
                 "unmatched_base_prior_directions": len(unmatched),
@@ -289,10 +340,14 @@ def main() -> int:
 
     banned_rows = sum(1 for _ in banned_path.open())
     checks = [
-        ("full_integrative_mode", config["method"]["mode"] == "full_integrative", config["method"]["mode"], "full_integrative", ""),
+        ("declared_prior_mode", prior_mode == config["method"]["mode"], prior_mode, config["method"]["mode"], ""),
         ("expression_fallback_disabled", not config["method"]["allow_expression_only_fallback"], config["method"]["allow_expression_only_fallback"], False, ""),
-        ("CIT_source_present", cit_path.exists(), cit_path.exists(), True, ""),
+        ("CIT_analysis_present", cit_path.exists(), cit_path.exists(), True, ""),
+        ("CIT_status_valid_for_prior_mode", cit_status.get("state") == expected_cit_state, cit_status.get("state"), expected_cit_state, ""),
+        ("CIT_status_config_frozen", cit_status.get("config_sha256") == sha256_file(config_path), cit_status.get("config_sha256"), sha256_file(config_path), ""),
+        ("CIT_direction_policy_satisfied", cit_evidence_rows > 0 or prior_mode == "encode_only_exploratory", cit_evidence_rows, ">0 or declared ENCODE-only exception", ""),
         ("ENCODE_source_present", encode_path.exists(), encode_path.exists(), True, ""),
+        ("ENCODE_evidence_present", encode_evidence_rows > 0, encode_evidence_rows, ">0", ""),
         ("prior_nonempty", prior_path.stat().st_size > 0, prior_path.stat().st_size, ">0", ""),
         ("banned_matrix_rows", banned_rows == len(nodes), banned_rows, len(nodes), ""),
         ("all_structural_evidence_matched", not unmatched, len(unmatched), 0, ""),

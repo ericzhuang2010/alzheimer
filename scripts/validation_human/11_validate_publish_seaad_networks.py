@@ -115,6 +115,20 @@ def main() -> int:
     candidate_path = consensus_dir / "result.links.3"
     final_path = consensus_dir / "result.links3.links.txt"
     runtime_path = run_dir / "runtime_report.tsv"
+    prior_summary_path = prior_dir / "prior_summary.tsv"
+    prior_summary = pd.read_csv(prior_summary_path, sep="\t", dtype=str)
+    if len(prior_summary) != 1:
+        raise ValueError(f"Expected exactly one prior summary row: {prior_summary_path}")
+    prior_mode = str(
+        prior_summary.iloc[0].get("prior_mode", config["method"]["mode"])
+    )
+    cit_evidence_rows = int(
+        prior_summary.iloc[0].get(
+            "CIT_evidence_rows",
+            prior_summary.iloc[0].get("selected_prior_directions", 0),
+        )
+    )
+    encode_evidence_rows = int(prior_summary.iloc[0].get("ENCODE_evidence_rows", 0))
     candidate = set(parse_edge_file(candidate_path))
     final_edges = parse_edge_file(final_path)
     final = set(final_edges)
@@ -215,6 +229,8 @@ def main() -> int:
         ("directed_acyclic_graph", nx.is_directed_acyclic_graph(graph), nx.is_directed_acyclic_graph(graph), True, ""),
         ("maximum_indegree", maximum_indegree <= int(config["release_checks"]["maximum_indegree"]), maximum_indegree, f"<={config['release_checks']['maximum_indegree']}", ""),
         ("byte_identical_consensus_rerun", rerun_identical, rerun_identical, True, "fixture skip is not permitted for production"),
+        ("prior_mode_matches_configuration", prior_mode == config["method"]["mode"], prior_mode, config["method"]["mode"], ""),
+        ("structural_prior_evidence_present", cit_evidence_rows + encode_evidence_rows > 0, cit_evidence_rows + encode_evidence_rows, ">0", ""),
         (
             "pilot_runtime_report_present",
             network != config["cohort"]["pilot_network"] or runtime_path.is_file(),
@@ -239,6 +255,9 @@ def main() -> int:
                 "weak_components": nx.number_weakly_connected_components(graph),
                 "density": nx.density(graph),
                 "maximum_indegree": maximum_indegree,
+                "prior_mode": prior_mode,
+                "CIT_evidence_rows": cit_evidence_rows,
+                "ENCODE_evidence_rows": encode_evidence_rows,
                 "half_search_directed_jaccard": jaccard(first, second),
                 "rerun_identical": rerun_identical,
                 "release_state": state,
@@ -292,7 +311,7 @@ def main() -> int:
         input_dir / "nodes.tsv": destination / "nodes.tsv",
         input_dir / "sample_manifest.tsv": destination / "sample_manifest.tsv",
         input_dir / "gene_manifest.tsv": destination / "gene_manifest.tsv",
-        prior_dir / "prior_summary.tsv": destination / "prior_summary.tsv",
+        prior_summary_path: destination / "prior_summary.tsv",
         qc_path: destination / "network_qc.tsv",
     }
     for source, target in copies.items():
@@ -304,7 +323,13 @@ def main() -> int:
         "release_id": config["release_id"],
         "network": network,
         "method": config["method"]["name"],
-        "mode": config["method"]["mode"],
+        "mode": prior_mode,
+        "exploratory": prior_mode != "full_integrative",
+        "structural_prior_sources": (
+            ["ENCODE"]
+            if prior_mode == "encode_only_exploratory"
+            else ["CIT", "ENCODE"]
+        ),
         "rimbanet_source_commit": config["method"]["source_commit"],
         "config_path": str(config_path.relative_to(project_root)),
         "config_sha256": sha256_file(config_path),

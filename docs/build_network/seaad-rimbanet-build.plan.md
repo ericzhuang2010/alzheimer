@@ -1,6 +1,6 @@
 ---
 name: seaad-rimbanet-build
-overview: Create a repository-native, full integrative Wang/RIMBANet workflow for seven SEA-AD broad cell types using donor-level expression, matched GDA-8 SNP-array-derived eQTL/CIT priors, ENCODE TF-target priors, 1,000 stochastic searches per cell type, the legacy consensus/de-loop procedure, and independent DAG validation. This accepted plan is saved as `docs/build_network/seaad-rimbanet-build.plan.md`; protected genotype data and bulky run products remain untracked.
+overview: Create a repository-native Wang/RIMBANet workflow for seven SEA-AD broad cell types using donor-level expression, matched GDA-8 SNP-array-derived eQTL/CIT priors where significant directions exist, ENCODE TF-target priors, 1,000 stochastic searches per cell type, the legacy consensus/de-loop procedure, and independent DAG validation. Six networks retain the full-integrative method; Vasculature is an explicitly labeled exploratory ENCODE-only exception after a valid zero-result CIT analysis at the unchanged FDR gate. Protected genotype data and bulky run products remain untracked.
 todos:
   - id: freeze-contracts
     content: Write the accepted plan and freeze configs, source commits, data identities, and full-integrative method gates
@@ -27,7 +27,27 @@ expression matrix, final 75-donor genotype matrix, and Microglia cis-eQTL
 results have passed their gates. The CIT direction analysis, discretization,
 exact RIMBANet inputs, combined CIT/ENCODE prior, all 1,000 Step 8 searches,
 aggregate validation, legacy consensus, independent QC, and Microglia release
-are accepted. Active work is Step 9 preparation of the remaining six networks.
+are accepted. Five remaining networks have also completed full-integrative
+preparation. Active work is the explicitly amended Step 9 Vasculature
+preparation followed by the six remaining search arrays.
+
+- Scale-out preparation completed for Astrocytes, Excitatory neurons,
+  Inhibitory neurons, OPCs, and Oligodendrocytes with validated expression,
+  eQTL, CIT, discretization, exact-input, and combined-prior contracts.
+- Vasculature eQTL completed with 73 matched donors, 4,114,469 tested cis
+  pairs, 718 significant pairs, 102 eGenes, and 683 instruments. All 70
+  ordered CIT tests completed without technical errors, but zero directions
+  passed BH FDR <=0.05. The smallest raw p-value was 0.0617093974798 and the
+  smallest BH FDR was 0.247838630865; thresholds through 0.20 would still
+  select zero directions. The FDR gate remains 0.05 and is not relaxed.
+- The September 6 amendment authorizes only `Vasculature_cells` to proceed
+  with an exploratory ENCODE-only structural prior after that valid zero-CIT
+  result. It uses
+  `config/seaad_rimbanet_vasculature_encode_only.yml`; the canonical
+  full-integrative config and accepted Microglia checksum remain unchanged.
+  This is not an expression-only fallback, and release/QC artifacts must carry
+  `prior_mode=encode_only_exploratory`, zero CIT evidence rows, and nonzero
+  ENCODE evidence rows.
 
 - The Minerva work checkout started at commit
   b4486062ac77b3189e4f80a6b6a689c6b5952c0f.
@@ -368,12 +388,16 @@ are accepted. Active work is Step 9 preparation of the remaining six networks.
 
 ## Goal and end state
 
-Build seven SEA-AD donor-level Bayesian networks—Astrocytes, Excitatory neurons, Inhibitory neurons, Microglia, OPCs, Oligodendrocytes, and Vasculature cells—using the full integrative Wang method selected for this project:
+Build seven SEA-AD donor-level Bayesian networks—Astrocytes, Excitatory
+neurons, Inhibitory neurons, Microglia, OPCs, Oligodendrocytes, and
+Vasculature cells. Six use the selected full-integrative Wang method;
+Vasculature uses the explicitly amended exploratory ENCODE-only prior while
+retaining the same expression, eQTL, RIMBANet, consensus, and QC workflow:
 
 ```mermaid
 flowchart LR
   Expr["SEA-AD donor pseudobulk"] --> Adjust["Normalize and adjust"]
-  Array["Matched SEA-AD GDA-8 genotypes"] --> EQTL["cis-eQTL and CIT"]
+  Array["Matched SEA-AD GDA-8 genotypes"] --> EQTL["cis-eQTL and gated CIT"]
   ENCODE["Pinned ENCODE TF targets"] --> Priors["Structural priors"]
   EQTL --> Priors
   Adjust --> Discrete["Three-state discretization"]
@@ -572,6 +596,12 @@ Repo changes: add `scripts/validation_human/11_prepare_seaad_genotypes.sh` and `
 ## Step 6 — Derive CIT directions and ENCODE structural priors
 
 - For gene pairs linked to the same significant cis-eQTL instrument, run the validated CIT orientation workflow and retain direction, instrument, test components, probability/p-value, multiplicity adjustment, and exclusion reason.
+- Keep BH FDR <=0.05 for CIT. A technically valid analysis with zero
+  significant directions remains a zero result; do not choose a larger
+  threshold from the observed p-values. The only declared exception is
+  Vasculature: its 70 valid tests and zero significant directions permit an
+  exploratory ENCODE-only prior under the separate, network-scoped config.
+  Any other network with zero significant CIT directions remains blocked.
 - Map CIT and ENCODE identifiers through the frozen GENCODE/HGNC assets already used by this repository; reject ambiguous mappings and restrict priors to each cell type’s declared gene universe.
 - Convert evidence to RIMBANet prior format only with a documented, frozen weight transform. Keep evidence sources separate in a long table before combining them; resolve conflicting directions deterministically and report conflicts.
 - Generate the default expression-derived RIMBANet prior first, then apply CIT and ENCODE additions. This ordering is mandatory because the public `runBN.bsh` overwrites `prior.txt`.
@@ -600,7 +630,7 @@ Repo changes: add `scripts/validation_human/11_prepare_rimbanet_minerva.lsf`, `s
 
 ## Step 9 — Scale the validated search workflow to all seven cell types
 
-- Freeze the pilot-approved runtime and scientific parameters; only per-cell-type gene/sample/prior files vary.
+- Freeze the pilot-approved runtime and scientific parameters; only per-cell-type gene/sample/prior files vary. The Vasculature exploratory exception changes only its declared prior mode and zero-CIT policy; all FDR, expression, genotype, search, consensus, and QC parameters remain identical.
 - Submit 1,000 searches for each remaining cell type, with per-network resource estimates and concurrency controls. Seven complete networks require 7,000 validated searches, not 9,000.
 - Validate every network independently before consensus. Missing jobs are retried or block release; they never reduce the consensus denominator.
 - Produce one run ledger with cell type, task ID, seed, config/input hashes, start/end, host, exit code, likelihood, edge count, retries, and output hash.
@@ -1830,23 +1860,93 @@ do
 done
 ```
 
-Require each network's VH11B expression, VH11C eQTL, CIT, discretization,
-VH11E inputs, and VH11D combined-prior state to be `validated_complete` before
-submitting its search array. Production networks use the configured 10,000-
-gene cap, so a complete base prior has 99,990,000 ordered non-self rows.
+The six-job command above records the original full-integrative preparation
+attempt. Five jobs passed. Resume Vasculature after its accepted eQTL artifacts
+with the separate exploratory config; do not rerun its accepted 4,114,469 cis
+tests:
+
+```bash
+(
+set -euo pipefail
+
+export PROJECT_ROOT=/sc/arion/work/zhuane01/alzheimer
+export RIMBANET_STORAGE_ROOT=/sc/arion/scratch/zhuane01/alzheimer
+export RIMBANET_OUTPUT_ROOT="$RIMBANET_STORAGE_ROOT/results/validation_human"
+export RIMBANET_IMAGE="$RIMBANET_STORAGE_ROOT/external_tools/containers/seaad-rimbanet.sif"
+export SEAAD_CONTROLLED_ROOT=/sc/arion/projects/adineto/sea_ad
+export CONTAINER_RUNTIME=/hpc/packages/minerva-rocky9/apptainer/1.4.5/bin/apptainer
+export CONFIG=config/seaad_rimbanet_vasculature_encode_only.yml
+export NETWORK=Vasculature_cells
+export LSF_PROJECT=acc_adineto
+export PREP_LOG_ROOT="$RIMBANET_OUTPUT_ROOT/11_seaad_rimbanet/logs/preparation"
+export EQTL_ROOT="$RIMBANET_OUTPUT_ROOT/11_seaad_rimbanet/11c_genetics/$NETWORK"
+
+cd "$PROJECT_ROOT"
+test -z "$(git status --porcelain --untracked-files=no)"
+git pull --ff-only origin main
+test -f "$CONFIG"
+test "$(awk -F $'\t' 'NR == 2 {print $3}' "$EQTL_ROOT/status.tsv")" = \
+  validated_complete
+test -x "$CONTAINER_RUNTIME"
+test "$(sha256sum "$RIMBANET_IMAGE" | awk '{print $1}')" = \
+  1df82906537e74c73fb331e7652c4057bac92182293d7d3739d0a015a4f25840
+
+mkdir -p "$PREP_LOG_ROOT"
+SUBMISSION="$(
+  bsub \
+    -P "$LSF_PROJECT" \
+    -J seaad_vasculature_encode_only \
+    -q premium -n 4 -W 24:00 \
+    -R 'rusage[mem=16000]' -R 'span[hosts=1]' -M 64000 \
+    -o "$PREP_LOG_ROOT/vasculature_encode_only.%J.out" \
+    -e "$PREP_LOG_ROOT/vasculature_encode_only.%J.err" \
+    -L /bin/bash \
+    env \
+      PROJECT_ROOT="$PROJECT_ROOT" \
+      RIMBANET_STORAGE_ROOT="$RIMBANET_STORAGE_ROOT" \
+      RIMBANET_IMAGE="$RIMBANET_IMAGE" \
+      SEAAD_CONTROLLED_ROOT="$SEAAD_CONTROLLED_ROOT" \
+      CONTAINER_RUNTIME="$CONTAINER_RUNTIME" \
+      CONFIG="$CONFIG" STAGE=post_eqtl NETWORK="$NETWORK" \
+      bash scripts/validation_human/11_prepare_rimbanet_minerva.lsf
+)"
+
+printf '%s\n' "$SUBMISSION"
+VAS_ENCODE_JOB_ID="$(
+  printf '%s\n' "$SUBMISSION" | awk -F '[<>]' '/Job </ {print $2}'
+)"
+test -n "$VAS_ENCODE_JOB_ID"
+printf '%s\n' "$VAS_ENCODE_JOB_ID" > \
+  "$PREP_LOG_ROOT/latest_vasculature_encode_only_job_id.txt"
+printf 'VAS_ENCODE_JOB_ID=%s\n' "$VAS_ENCODE_JOB_ID"
+)
+```
+
+For the five normal scale-out networks, require every preparation state to be
+`validated_complete`. For Vasculature, require CIT state
+`validated_complete_encode_only`, prior mode `encode_only_exploratory`, zero
+CIT evidence rows, nonzero ENCODE evidence rows, and validated discretization,
+exact-input, and combined-prior states before submitting its search array.
+Production networks use the configured 10,000-gene cap, so a complete base
+prior has 99,990,000 ordered non-self rows.
 
 Only after all six preparation gates pass, submit their searches:
 
 ```bash
 for network in \
   Astrocytes Excitatory_neurons Inhibitory_neurons \
-  OPCs Oligodendrocytes Vasculature_cells
+  OPCs Oligodendrocytes
 do
   .venv/bin/python scripts/validation_human/11_submit_rimbanet_minerva.py \
     --config "$SEAAD_RIMBANET_CONFIG" \
     --execution-config "$SEAAD_RIMBANET_EXECUTION" \
     --network "$network" --lsf-project "$LSF_PROJECT"
 done
+
+.venv/bin/python scripts/validation_human/11_submit_rimbanet_minerva.py \
+  --config config/seaad_rimbanet_vasculature_encode_only.yml \
+  --execution-config "$SEAAD_RIMBANET_EXECUTION" \
+  --network Vasculature_cells --lsf-project "$LSF_PROJECT"
 ```
 
 After each array is finished:
@@ -1854,7 +1954,7 @@ After each array is finished:
 ```bash
 for network in \
   Astrocytes Excitatory_neurons Inhibitory_neurons \
-  OPCs Oligodendrocytes Vasculature_cells
+  OPCs Oligodendrocytes
 do
   "${RIMBANET_EXEC[@]}" \
     python scripts/validation_human/11_validate_rimbanet_runs.py \
@@ -1868,6 +1968,19 @@ do
     --config "$SEAAD_RIMBANET_CONFIG" --network "$network" \
     --binary /usr/local/bin/testBN
 done
+
+VAS_CONFIG=config/seaad_rimbanet_vasculature_encode_only.yml
+"${RIMBANET_EXEC[@]}" \
+  python scripts/validation_human/11_validate_rimbanet_runs.py \
+  --config "$VAS_CONFIG" --network Vasculature_cells
+"${RIMBANET_EXEC[@]}" \
+  bash scripts/validation_human/11_build_rimbanet_consensus.sh \
+  --config "$VAS_CONFIG" --network Vasculature_cells \
+  --binary /usr/local/bin/testBN
+"${RIMBANET_EXEC[@]}" \
+  python scripts/validation_human/11_validate_publish_seaad_networks.py \
+  --config "$VAS_CONFIG" --network Vasculature_cells \
+  --binary /usr/local/bin/testBN
 ```
 
 ### Scratch purge and rehydration
@@ -1899,7 +2012,9 @@ Added source/config/documentation:
 
 - `docs/build_network/seaad-rimbanet-build.plan.md`
 - `docs/build_network/seaad-rimbanet-scratch-reproduction.md`
-- `config/seaad_rimbanet.yml`, `config/seaad_rimbanet_execution.yml`
+- `config/seaad_rimbanet.yml`,
+  `config/seaad_rimbanet_vasculature_encode_only.yml`, and
+  `config/seaad_rimbanet_execution.yml`
 - `data/reference/rimbanet/sources.tsv`
 - `containers/rimbanet/Dockerfile`, `containers/rimbanet/Apptainer.def`, `containers/rimbanet/README.md`
 - `requirements/seaad_rimbanet.txt`
@@ -1936,9 +2051,12 @@ Removed:
 
 ## Acceptance criteria
 
-- Full integrative inputs are provenance-frozen: donor-level expression,
+- Six full-integrative networks have provenance-frozen donor-level expression,
   matched `syn49430589` GDA-8 genotypes, validated GRCh38 marker mapping,
   significant cis-eQTL/CIT evidence, and pinned ENCODE TF-targets.
+- Vasculature retains the same expression, genotype, significant cis-eQTL,
+  FDR, search, and ENCODE contracts but is explicitly released as exploratory
+  ENCODE-only after 70 valid CIT tests yielded zero significant directions.
 - Microglia passes the production-scale gate before scale-out.
 - Each of seven cell types has exactly 1,000 validated searches and an explicit denominator of 1,000.
 - Consensus uses the verified forward/reverse adjacency rule, followed by pinned legacy de-looping.

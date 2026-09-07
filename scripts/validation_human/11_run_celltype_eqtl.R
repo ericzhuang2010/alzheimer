@@ -171,6 +171,18 @@ config_path <- normalizePath(args$config, mustWork = TRUE)
 config <- yaml::read_yaml(config_path, handlers = list(int = function(x) as.numeric(x)))
 if (!identical(config$schema_version, "seaad_rimbanet_config_v1")) stop("Bad config")
 if (!args$network %in% unlist(config$networks)) stop("Unknown network")
+encode_only_networks <- if (is.null(config$cit$allow_zero_significant_for_encode_only)) {
+  character()
+} else {
+  as.character(unlist(config$cit$allow_zero_significant_for_encode_only))
+}
+encode_only_exception <- identical(
+  as.character(config$method$mode), "encode_only_exploratory"
+) && args$network %in% encode_only_networks
+if (identical(as.character(config$method$mode), "encode_only_exploratory") &&
+    !encode_only_exception) {
+  stop("encode_only_exploratory is not authorized for this network")
+}
 generated_root <- config$storage$generated_output_root
 if (is.null(generated_root)) generated_root <- config$output_root
 generated_root <- resolve_config_path(generated_root, project_root)
@@ -466,15 +478,41 @@ if (args$stage %in% c("eqtl", "all")) {
   failed <- failed || !all(eqtl_checks$passed)
 }
 if (args$stage %in% c("cit", "all")) {
+  cit_all_path <- file.path(prior_dir, "cit_edges.tsv.gz")
+  cit_all_check <- fread_tsv(cit_all_path, data.table = FALSE)
   cit_check <- fread_tsv(
     file.path(prior_dir, "cit_edges_significant.tsv.gz"), data.table = FALSE
   )
+  cit_errors_absent <- "error" %in% names(cit_all_check) && all(
+    is.na(cit_all_check$error) | !nzchar(as.character(cit_all_check$error))
+  )
+  all_cit_tests_valid <- nrow(cit_all_check) > 0L &&
+    "p_cit" %in% names(cit_all_check) &&
+    all(is.finite(cit_all_check$p_cit)) && cit_errors_absent
+  direction_policy_satisfied <- nrow(cit_check) > 0L || encode_only_exception
   cit_checks <- data.frame(
-    check = c("CIT_completed", "significant_CIT_direction_present"),
-    passed = c(file.exists(file.path(prior_dir, "cit_edges.tsv.gz")),
-               nrow(cit_check) > 0L),
-    observed = c(TRUE, nrow(cit_check)),
-    expected = c(TRUE, ">0")
+    check = c(
+      "CIT_completed",
+      "all_CIT_tests_valid",
+      "CIT_FDR_maximum_preserved",
+      "CIT_direction_policy_satisfied"
+    ),
+    passed = c(file.exists(cit_all_path),
+               all_cit_tests_valid,
+               isTRUE(all.equal(as.numeric(config$cit$fdr_maximum), 0.05)),
+               direction_policy_satisfied),
+    observed = c(
+      file.exists(cit_all_path),
+      paste0(sum(is.finite(cit_all_check$p_cit)), "/", nrow(cit_all_check)),
+      as.numeric(config$cit$fdr_maximum),
+      paste0(nrow(cit_check), ";encode_only_exception=", encode_only_exception)
+    ),
+    expected = c(
+      TRUE,
+      "all finite p_cit and no per-test errors",
+      0.05,
+      ">0 or explicit encode_only_exploratory exception"
+    )
   )
   atomic_fwrite(cit_checks, file.path(prior_dir, "cit_checks.tsv"))
   cit_artifact_paths <- c(
@@ -497,7 +535,17 @@ if (args$stage %in% c("cit", "all")) {
     ),
     file.path(prior_dir, "cit_artifacts.tsv")
   )
-  cit_state <- if (all(cit_checks$passed)) {
+  prior_mode <- if (nrow(cit_check) > 0L) {
+    "full_integrative"
+  } else if (encode_only_exception) {
+    "encode_only_exploratory"
+  } else {
+    "blocked"
+  }
+  cit_state <- if (all(cit_checks$passed) && encode_only_exception &&
+                   nrow(cit_check) == 0L) {
+    "validated_complete_encode_only"
+  } else if (all(cit_checks$passed)) {
     "validated_complete"
   } else {
     "blocked_no_significant_cit"
@@ -509,6 +557,8 @@ if (args$stage %in% c("cit", "all")) {
       state = cit_state,
       network = args$network,
       significant_directions = nrow(cit_check),
+      prior_mode = prior_mode,
+      cit_fdr_maximum = as.numeric(config$cit$fdr_maximum),
       config_sha256 = digest::digest(
         file = config_path, algo = "sha256", serialize = FALSE
       )

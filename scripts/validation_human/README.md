@@ -25,11 +25,15 @@ All scientific outputs are isolated under results/validation_human/. Raw
 inputs, Phase 18 references, networks, and unrelated ROSMAP results are opened
 read-only.
 
-## VH11: full-integrative SEA-AD RIMBANet networks
+## VH11: SEA-AD RIMBANet networks
 
 VH11 builds seven donor-level broad-cell networks with matched SEA-AD GDA-8
-eQTL/CIT and pinned ENCODE TF-target priors. It never substitutes the
-expression-only variant when genetics or TF priors are missing.
+eQTL and pinned ENCODE TF-target priors. Six networks use significant CIT
+directions in the full-integrative mode. Vasculature is explicitly labeled
+exploratory and uses an ENCODE-only structural prior after all 70 CIT tests
+completed but none passed the unchanged BH FDR <=0.05 gate. The exception is
+restricted to `config/seaad_rimbanet_vasculature_encode_only.yml`; it never
+permits an expression-only network or a missing/failed CIT analysis.
 
 Run the platform-independent synthetic test locally:
 
@@ -60,6 +64,7 @@ export RIMBANET_OUTPUT_ROOT="$RIMBANET_STORAGE_ROOT/results/validation_human"
 export RIMBANET_LOG_ROOT="$RIMBANET_OUTPUT_ROOT/11_seaad_rimbanet/logs"
 export RIMBANET_IMAGE="$RIMBANET_STORAGE_ROOT/external_tools/containers/seaad-rimbanet.sif"
 export SEAAD_RIMBANET_CONFIG=config/seaad_rimbanet.yml
+export VASCULATURE_RIMBANET_CONFIG=config/seaad_rimbanet_vasculature_encode_only.yml
 export SEAAD_RIMBANET_EXECUTION=config/seaad_rimbanet_execution.yml
 cd "$PROJECT_ROOT"
 
@@ -89,7 +94,7 @@ bash scripts/validation_human/11_prepare_seaad_genotypes.sh \
 
 for network in \
   Astrocytes Excitatory_neurons Inhibitory_neurons Microglia \
-  OPCs Oligodendrocytes Vasculature_cells
+  OPCs Oligodendrocytes
 do
   Rscript --vanilla scripts/validation_human/11_run_celltype_eqtl.R \
     --config "$SEAAD_RIMBANET_CONFIG" --network "$network" --stage all
@@ -104,6 +109,12 @@ do
     --config "$SEAAD_RIMBANET_CONFIG" --network "$network"
 done
 ~~~
+
+For Vasculature, first generate expression and eQTL with the canonical config,
+then use the build plan's `STAGE=post_eqtl` Minerva command with
+`$VASCULATURE_RIMBANET_CONFIG`. That command reruns the completed CIT table
+under the explicit zero-result policy and builds the ENCODE-only downstream
+prior without changing the FDR threshold.
 
 The production gate is Microglia. On Minerva, submit its 1,000-task LSF array
 through the checked wrapper first:

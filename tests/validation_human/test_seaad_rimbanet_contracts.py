@@ -198,6 +198,56 @@ def test_prior_parser_and_direction_conflict():
     assert len(conflicts) == 1
 
 
+def test_encode_only_prior_exception_is_explicit_and_network_scoped():
+    full = {
+        "method": {"mode": "full_integrative"},
+        "cit": {},
+    }
+    assert priors.determine_prior_mode(full, "Microglia", 1) == "full_integrative"
+    try:
+        priors.determine_prior_mode(full, "Microglia", 0)
+    except ValueError as error:
+        assert "at least one matched CIT direction" in str(error)
+    else:
+        raise AssertionError("Full-integrative mode must not silently drop CIT")
+
+    exploratory = {
+        "method": {"mode": "encode_only_exploratory"},
+        "cit": {
+            "allow_zero_significant_for_encode_only": ["Vasculature_cells"]
+        },
+    }
+    assert (
+        priors.determine_prior_mode(exploratory, "Vasculature_cells", 0)
+        == "encode_only_exploratory"
+    )
+    for network, cit_rows in (("Astrocytes", 0), ("Vasculature_cells", 1)):
+        try:
+            priors.determine_prior_mode(exploratory, network, cit_rows)
+        except ValueError:
+            pass
+        else:
+            raise AssertionError("Exploratory exception escaped its declared boundary")
+
+
+def test_vasculature_exploratory_config_changes_only_declared_policy():
+    canonical = yaml.safe_load((ROOT / "config/seaad_rimbanet.yml").read_text())
+    exploratory = yaml.safe_load(
+        (ROOT / "config/seaad_rimbanet_vasculature_encode_only.yml").read_text()
+    )
+    assert canonical["cit"]["fdr_maximum"] == 0.05
+    assert exploratory["cit"]["fdr_maximum"] == 0.05
+    assert canonical["method"]["mode"] == "full_integrative"
+    assert exploratory["method"]["mode"] == "encode_only_exploratory"
+    assert exploratory["cit"]["allow_zero_significant_for_encode_only"] == [
+        "Vasculature_cells"
+    ]
+
+    exploratory["method"]["mode"] = canonical["method"]["mode"]
+    exploratory["cit"].pop("allow_zero_significant_for_encode_only")
+    assert exploratory == canonical
+
+
 def test_plink_file_detection(tmp_path):
     prefix = tmp_path / "cohort"
     for suffix in [".pgen", ".pvar", ".psam"]:
@@ -395,6 +445,8 @@ def test_minerva_genotype_wrapper_uses_gda8_contract():
     assert '--network "$NETWORK" --stage eqtl' in launcher
     assert "  cit)" in launcher
     assert '--network "$NETWORK" --stage cit' in launcher
+    assert "  post_eqtl)" in launcher
+    assert "Set NETWORK for the post-eQTL preparation stage" in launcher
     assert "  discretize)" in launcher
     assert "11_discretize_rimbanet_expression.R" in launcher
     assert "  inputs)" in launcher
