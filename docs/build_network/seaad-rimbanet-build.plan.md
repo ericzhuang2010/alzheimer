@@ -19,7 +19,7 @@ isProject: false
 
 # SEA-AD Wang-Style RIMBANet Build Plan
 
-## Execution status — September 6, 2026
+## Execution status — September 8, 2026
 
 **Steps 1–7 are complete for the Microglia pilot.** The source and identity
 contracts, production input audit, pinned Linux runtime, corrected pilot
@@ -27,10 +27,12 @@ expression matrix, final 75-donor genotype matrix, and Microglia cis-eQTL
 results have passed their gates. The CIT direction analysis, discretization,
 exact RIMBANet inputs, combined CIT/ENCODE prior, all 1,000 Step 8 searches,
 aggregate validation, legacy consensus, independent QC, and Microglia release
-are accepted. The remaining six networks have completed preparation: five in
-full-integrative mode and Vasculature under its explicit exploratory
-ENCODE-only amendment. The six Step 9 arrays have completed their task phase;
-active work is aggregate validation of all 6,000 durable search contracts.
+are accepted. The remaining six networks have completed preparation, all
+6,000 Step 9 searches and provenance-aware aggregate validation, the legacy
+consensus/de-loop procedure, independent topology and stability QC, and
+scratch-to-work release publication. Five retain full-integrative mode and
+Vasculature carries its explicit exploratory ENCODE-only label. Active work is
+the final enriched root-manifest regeneration, audit, and Git publication.
 
 - Scale-out preparation completed for Astrocytes, Excitatory neurons,
   Inhibitory neurons, OPCs, and Oligodendrocytes with validated expression,
@@ -60,14 +62,33 @@ active work is aggregate validation of all 6,000 durable search contracts.
 - Step 9 arrays were submitted with 1,000 tasks and a 100-task concurrency
   limit per network: Astrocytes 268295124, Excitatory neurons 268295125,
   Inhibitory neurons 268295126, OPCs 268295127, Oligodendrocytes 268295128,
-  and Vasculature 268295129. The user reports that all task phases are now
-  complete; aggregate VH11F validation remains the acceptance authority.
+  and Vasculature 268295129. All 6,000 task contracts are
+  `validated_complete`, with matching frozen config/input hashes, zero exit
+  failures, and all expected graph and likelihood outputs present.
 - Before that gate, the aggregate validator was hardened to reproduce the
   task wrapper's bytewise combined-input hash and require every task's frozen
   config and input checksums to match the current network-specific config and
   exact `node.xml`, discretized data, banned matrix, and final prior. This is
   especially required to prove that Vasculature used its exploratory config
   while the other five arrays used the unchanged full-integrative config.
+- Aggregate validator jobs 268403218–268403223 all completed with VH11F
+  `validated_complete`, 1,000/1,000 valid searches per network, empty failed-
+  check sets, and no runtime errors.
+- Legacy consensus jobs 268403621–268403626 all completed successfully. Each
+  produced the four required recurrence/de-loop artifacts and the explicit
+  `RIMBANet consensus complete` marker with no `.in_progress` marker left
+  behind.
+- Independent QC/publication jobs 268404441 and 268404443–268404447 all
+  produced VH11H `validated_complete`, no failed checks, and eight permitted
+  release files per network. Final edge counts are 6,641 Astrocytes, 8,478
+  Excitatory neurons, 8,421 Inhibitory neurons, 1,279 Microglia, 3,964 OPCs,
+  6,498 Oligodendrocytes, and 761 exploratory Vasculature edges.
+- The first seven-network root manifest contained all 56 files with exact byte
+  and SHA-256 agreement, but exposed only file identity columns. Step 12 also
+  requires release, donor, topology, method-mode, and source/config provenance
+  on every row. The finalizer now reconstructs the complete root manifest from
+  all published network manifests, verifies each declared file checksum, and
+  supports a manifest-only refresh without rerunning consensus or searches.
 
 - The Minerva work checkout started at commit
   b4486062ac77b3189e4f80a6b6a689c6b5952c0f.
@@ -2004,6 +2025,15 @@ VAS_CONFIG=config/seaad_rimbanet_vasculature_encode_only.yml
   python scripts/validation_human/11_validate_publish_seaad_networks.py \
   --config "$VAS_CONFIG" --network Vasculature_cells \
   --binary /usr/local/bin/testBN
+
+# After all seven network directories are published, rebuild the root manifest
+# from the complete release. This verifies every network-manifest checksum and
+# adds donor, topology, method-mode, release, and source/config provenance to
+# every one of the 56 file rows without rerunning consensus.
+"${RIMBANET_EXEC[@]}" \
+  python scripts/validation_human/11_validate_publish_seaad_networks.py \
+  --config "$SEAAD_RIMBANET_CONFIG" --network Microglia \
+  --refresh-release-manifest-only
 ```
 
 ### Scratch purge and rehydration

@@ -816,3 +816,30 @@ def test_scheduler_neutral_task_and_resume(tmp_path):
     assert (release / "result.links3.links.txt").exists()
     assert (release / "edge_support.tsv.gz").exists()
     assert (release / "network_manifest.yml").exists()
+    release_manifest = pd.read_csv(release.parent / "release_manifest.tsv", sep="\t")
+    assert len(release_manifest) == 8
+    assert set(
+        [
+            "cell_type",
+            "release_id",
+            "method",
+            "mode",
+            "exploratory",
+            "donors",
+            "searches",
+            "nodes",
+            "edges",
+            "rimbanet_source_commit",
+            "config_path",
+            "config_sha256",
+            "path",
+            "bytes",
+            "sha256",
+        ]
+    ).issubset(release_manifest.columns)
+    assert release_manifest["cell_type"].eq("Microglia").all()
+    assert release_manifest["release_id"].eq("fixture_release").all()
+    assert release_manifest["mode"].eq("full_integrative").all()
+    assert not release_manifest["exploratory"].astype(bool).any()
+    assert release_manifest["donors"].eq(6).all()
+    assert release_manifest["nodes"].eq(4).all()

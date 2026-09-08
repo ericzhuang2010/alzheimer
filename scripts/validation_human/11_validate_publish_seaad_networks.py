@@ -62,24 +62,70 @@ def jaccard(left: set, right: set) -> float:
 
 
 def update_release_manifest(release_root: Path, network: str) -> Path:
+    requested_directory = release_root / network
+    if not requested_directory.is_dir():
+        raise FileNotFoundError(requested_directory)
     rows = []
-    for path in sorted((release_root / network).glob("*")):
-        if path.is_file():
+    network_directories = sorted(
+        path
+        for path in release_root.iterdir()
+        if path.is_dir() and (path / "network_manifest.yml").is_file()
+    )
+    for directory in network_directories:
+        manifest_path = directory / "network_manifest.yml"
+        manifest = yaml.safe_load(manifest_path.read_text(encoding="utf-8"))
+        declared_network = str(manifest["network"])
+        if declared_network != directory.name:
+            raise ValueError(
+                f"Network manifest identity mismatch: {manifest_path}"
+            )
+        declared_files = dict(manifest["files"])
+        expected_names = set(declared_files) | {"network_manifest.yml"}
+        actual_files = sorted(path for path in directory.iterdir() if path.is_file())
+        actual_names = {path.name for path in actual_files}
+        if actual_names != expected_names:
+            raise ValueError(
+                f"Release file inventory mismatch for {declared_network}: "
+                f"missing={sorted(expected_names - actual_names)}, "
+                f"extra={sorted(actual_names - expected_names)}"
+            )
+        for name, expected_sha in declared_files.items():
+            observed_sha = sha256_file(directory / name)
+            if observed_sha != expected_sha:
+                raise ValueError(
+                    f"Release checksum mismatch: {directory / name}"
+                )
+        sample_manifest = pd.read_csv(
+            directory / "sample_manifest.tsv", sep="\t", dtype=str
+        )
+        mode = str(manifest["mode"])
+        metadata = {
+            "cell_type": declared_network,
+            "release_id": str(manifest["release_id"]),
+            "method": str(manifest["method"]),
+            "mode": mode,
+            "exploratory": bool(
+                manifest.get("exploratory", mode != "full_integrative")
+            ),
+            "donors": len(sample_manifest),
+            "searches": int(manifest["searches"]),
+            "nodes": int(manifest["nodes"]),
+            "edges": int(manifest["edges"]),
+            "rimbanet_source_commit": str(manifest["rimbanet_source_commit"]),
+            "config_path": str(manifest["config_path"]),
+            "config_sha256": str(manifest["config_sha256"]),
+        }
+        for path in actual_files:
             rows.append(
                 {
-                    "cell_type": network,
+                    **metadata,
                     "path": str(path.relative_to(release_root)),
                     "bytes": path.stat().st_size,
                     "sha256": sha256_file(path),
                 }
             )
     manifest_path = release_root / "release_manifest.tsv"
-    if manifest_path.exists():
-        existing = pd.read_csv(manifest_path, sep="\t", dtype=str)
-        existing = existing.loc[existing["cell_type"] != network]
-        frame = pd.concat([existing, pd.DataFrame(rows)], ignore_index=True)
-    else:
-        frame = pd.DataFrame(rows)
+    frame = pd.DataFrame(rows)
     atomic_write_tsv(frame.sort_values(["cell_type", "path"]), manifest_path)
     return manifest_path
 
@@ -91,6 +137,11 @@ def main() -> int:
     parser.add_argument("--binary")
     parser.add_argument("--consensus-script")
     parser.add_argument(
+        "--refresh-release-manifest-only",
+        action="store_true",
+        help="Rebuild the root manifest from already published network releases",
+    )
+    parser.add_argument(
         "--skip-rerun-check",
         action="store_true",
         help="Fixture-only; production release requires a byte-identical rerun",
@@ -98,6 +149,25 @@ def main() -> int:
     args = parser.parse_args()
     config, config_path, project_root, output_root = load_rimbanet_config(args.config)
     network = validate_network(config, args.network)
+    release_root = safe_project_path(
+        project_root, config["release_root"], must_exist=False
+    )
+    if args.refresh_release_manifest_only:
+        manifest_path = update_release_manifest(release_root, network)
+        manifest_frame = pd.read_csv(manifest_path, sep="\t", dtype=str)
+        observed_networks = set(manifest_frame["cell_type"])
+        expected_networks = set(config["networks"])
+        if observed_networks != expected_networks:
+            raise ValueError(
+                "Published network set differs from configuration: "
+                f"missing={sorted(expected_networks - observed_networks)}, "
+                f"extra={sorted(observed_networks - expected_networks)}"
+            )
+        print(
+            f"VH11 release manifest refreshed: networks={len(observed_networks)}; "
+            f"rows={len(manifest_frame)}"
+        )
+        return 0
     expected = int(config["rimbanet"]["number_of_searches"])
     prefix = str(config["rimbanet"]["output_prefix"])
     run_dir = stage_dir(output_root, "11f_runs", create=False) / network
@@ -300,9 +370,6 @@ def main() -> int:
         print(f"VH11H failed: network={network}; {','.join(failed)}")
         return 2
 
-    release_root = safe_project_path(
-        project_root, config["release_root"], must_exist=False
-    )
     destination = release_root / network
     destination.mkdir(parents=True, exist_ok=True)
     copies = {
