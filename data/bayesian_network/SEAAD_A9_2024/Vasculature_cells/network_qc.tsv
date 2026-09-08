@@ -1,0 +1,2 @@
+network	searches	nodes	candidate_edges	final_edges	removed_by_deloop	roots	leaves	weak_components	density	maximum_indegree	prior_mode	CIT_evidence_rows	ENCODE_evidence_rows	half_search_directed_jaccard	rerun_identical	release_state
+Vasculature_cells	1000	10000	763	761	2	9253	9585	9245	7.610761076107611e-06	2	encode_only_exploratory	0	3545	0.8023668639053254	True	validated_complete

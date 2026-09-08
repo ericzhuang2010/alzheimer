@@ -1,0 +1,25 @@
+schema_version: seaad_rimbanet_network_manifest_v1
+release_id: SEAAD_A9_2024_RIMBANET_v1
+network: Oligodendrocytes
+method: RIMBANet
+mode: full_integrative
+exploratory: false
+structural_prior_sources:
+- CIT
+- ENCODE
+rimbanet_source_commit: ebd5f4a6c31da22705622e71b6dc5f1eae195fdd
+config_path: config/seaad_rimbanet.yml
+config_sha256: 545e8396c406f2410e82f8092aee16f6555f1c1f14c8b1d09edee9e93076a9fd
+searches: 1000
+nodes: 10000
+edges: 6498
+direction_interpretation: prior-constrained probabilistic upstream relation; not signed
+  or proven causal
+files:
+  result.links3.links.txt: adaf273e60c11f9dbbb3e76e2fc9b76e2b40a67f9d275c935c95d20e9beeaed6
+  edge_support.tsv.gz: f95d5d10226f1f0f2e3aadddb1b69a5c0a6623149d46cc75963f58bf352ac88f
+  nodes.tsv: 03d4356eb9dfa36ee7ef03ee1edf91eacf379340a4ba0e3e98b19bc2dda759fc
+  sample_manifest.tsv: a536251e26858654a6f46349cdc7916e08d79a511760420f5088fcc9e20c00b9
+  gene_manifest.tsv: 0333fe1fb21ed1fa3f2286c9f74f69ffb848f9a5b3a698569311db3213969b98
+  prior_summary.tsv: 2cb5fac8983afdf29a58dd2e990a1d9bf4ad5a8b53563178f787268ebaa9e336
+  network_qc.tsv: a03fd6a7ec7b1bbfa4ae983d66c55db9f6668213564d0b12487e181e0ddff75b

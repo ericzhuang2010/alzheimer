@@ -1,0 +1,2 @@
+network	searches	nodes	candidate_edges	final_edges	removed_by_deloop	roots	leaves	weak_components	density	maximum_indegree	prior_mode	CIT_evidence_rows	ENCODE_evidence_rows	half_search_directed_jaccard	rerun_identical	release_state
+Inhibitory_neurons	1000	10000	8423	8421	2	1991	6213	1715	8.421842184218422e-05	2	full_integrative	1150	4529	0.963649073750437	True	validated_complete

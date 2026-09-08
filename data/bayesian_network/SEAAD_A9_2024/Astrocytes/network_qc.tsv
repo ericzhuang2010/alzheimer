@@ -1,0 +1,2 @@
+network	searches	nodes	candidate_edges	final_edges	removed_by_deloop	roots	leaves	weak_components	density	maximum_indegree	prior_mode	CIT_evidence_rows	ENCODE_evidence_rows	half_search_directed_jaccard	rerun_identical	release_state
+Astrocytes	1000	10000	6648	6641	7	3649	7171	3476	6.641664166416642e-05	2	full_integrative	1274	4043	0.9616349417146229	True	validated_complete

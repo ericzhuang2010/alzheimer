@@ -1,0 +1,25 @@
+schema_version: seaad_rimbanet_network_manifest_v1
+release_id: SEAAD_A9_2024_RIMBANET_v1
+network: Excitatory_neurons
+method: RIMBANet
+mode: full_integrative
+exploratory: false
+structural_prior_sources:
+- CIT
+- ENCODE
+rimbanet_source_commit: ebd5f4a6c31da22705622e71b6dc5f1eae195fdd
+config_path: config/seaad_rimbanet.yml
+config_sha256: 545e8396c406f2410e82f8092aee16f6555f1c1f14c8b1d09edee9e93076a9fd
+searches: 1000
+nodes: 10000
+edges: 8478
+direction_interpretation: prior-constrained probabilistic upstream relation; not signed
+  or proven causal
+files:
+  result.links3.links.txt: 86dd5ccde40d3947d55b6401103c7134a32412f9a416d0b7089d01203939a16c
+  edge_support.tsv.gz: a8c71ba3089f8f895905a5789a56151660943aebcc5ad23adad4f44e5711ffa8
+  nodes.tsv: ed8799e278213d93dfaaf239c16073bed69fe2435c060953058cfdefd4729e4f
+  sample_manifest.tsv: 8388d8572a494d5b56344bad8cdfa9dd5188303924f95eee52374ae2d086df31
+  gene_manifest.tsv: 000982a7c54052da82c854a3017d0ea23d0812382ef47a0cf19c0316d409191c
+  prior_summary.tsv: c538137313b6e3c5da6c8313a40b181e071232a20d3217c7e1dcd56062ba6b86
+  network_qc.tsv: 5219554ada345d5687342d916f1be44bbd95a0781801eee370f6ac81c1c006f4

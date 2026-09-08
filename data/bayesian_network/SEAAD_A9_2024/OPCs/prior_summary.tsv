@@ -1,0 +1,2 @@
+network	nodes	base_prior_rows	CIT_evidence_rows	ENCODE_evidence_rows	selected_prior_directions	matched_base_prior_directions	unmatched_base_prior_directions	direction_conflicts	added_weight
+OPCs	10000	99990000	204	4511	4531	4531	0	12	8.738895704934043

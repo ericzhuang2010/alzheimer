@@ -1,0 +1,2 @@
+network	searches	nodes	candidate_edges	final_edges	removed_by_deloop	roots	leaves	weak_components	density	maximum_indegree	prior_mode	CIT_evidence_rows	ENCODE_evidence_rows	half_search_directed_jaccard	rerun_identical	release_state
+OPCs	1000	10000	3967	3964	3	6165	8334	6092	3.9643964396439646e-05	2	full_integrative	204	4511	0.9447852760736196	True	validated_complete

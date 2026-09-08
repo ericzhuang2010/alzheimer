@@ -1,0 +1,24 @@
+schema_version: seaad_rimbanet_network_manifest_v1
+release_id: SEAAD_A9_2024_RIMBANET_v1
+network: Vasculature_cells
+method: RIMBANet
+mode: encode_only_exploratory
+exploratory: true
+structural_prior_sources:
+- ENCODE
+rimbanet_source_commit: ebd5f4a6c31da22705622e71b6dc5f1eae195fdd
+config_path: config/seaad_rimbanet_vasculature_encode_only.yml
+config_sha256: ff95694086b8737f4f54d3ca765ecba84336f2fe7216b8a36a9fae96b5952344
+searches: 1000
+nodes: 10000
+edges: 761
+direction_interpretation: prior-constrained probabilistic upstream relation; not signed
+  or proven causal
+files:
+  result.links3.links.txt: 3b7578e0fa71451dc991f12febc68462eedaed59489eac88eb21a2a99a67ab32
+  edge_support.tsv.gz: acc476cef1d9d03dea00661beea684de450a15d45c8f6c878f67f8e267b74500
+  nodes.tsv: 5431d4d5ccea4fb8fea2ea24ac4cdcc2271f749d3e287169f518533ccc682c7f
+  sample_manifest.tsv: 1357c2a431a1baa2fb6bc5324a09eb3efb3d271c30449b79cda7e86b39406cf4
+  gene_manifest.tsv: fa9a5dbec627112fcb3a395a657a7c620e27a3de3368853d40b5e4e05614249c
+  prior_summary.tsv: a814984984c2c9b8e80f5f1ab4a11ec32136dabe0917049866095f651b86eae6
+  network_qc.tsv: d20dd07a3264d05c1c9f59c7121fba4558e50d490aab2ba2fbbe3fd34d09a6e7

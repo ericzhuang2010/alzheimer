@@ -1,0 +1,25 @@
+schema_version: seaad_rimbanet_network_manifest_v1
+release_id: SEAAD_A9_2024_RIMBANET_v1
+network: OPCs
+method: RIMBANet
+mode: full_integrative
+exploratory: false
+structural_prior_sources:
+- CIT
+- ENCODE
+rimbanet_source_commit: ebd5f4a6c31da22705622e71b6dc5f1eae195fdd
+config_path: config/seaad_rimbanet.yml
+config_sha256: 545e8396c406f2410e82f8092aee16f6555f1c1f14c8b1d09edee9e93076a9fd
+searches: 1000
+nodes: 10000
+edges: 3964
+direction_interpretation: prior-constrained probabilistic upstream relation; not signed
+  or proven causal
+files:
+  result.links3.links.txt: a7ed03b8d57a1d2dadb4f01fbcf2afb08eff5566897a001fe2ee1db4f6280ac5
+  edge_support.tsv.gz: ebf0c3b5a1727e09d057de906852f285519b5574009ffa4b314ba6d3029317f4
+  nodes.tsv: 614961798bea43d3968df580213af86e72c0c6fcbc5976da655f99f9dd4cede5
+  sample_manifest.tsv: 7e72b33b93c8e1b51919d15329d59c3246a77679350b875c5610e99defa27a9c
+  gene_manifest.tsv: 2bcf6b754db5d887e90d8d72d834eae5bf153f684a15bd2d880846c578f71358
+  prior_summary.tsv: 2e1bd4cfd8c7ef76a6eb2acdb483b82d490b6d4f4a5b7b71946d718daf707ce6
+  network_qc.tsv: c14a1d23c964b42d06614dd00ada20d17ec30670d96e93dd56dbed1c87a1c3aa

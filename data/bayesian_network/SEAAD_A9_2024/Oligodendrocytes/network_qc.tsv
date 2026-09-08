@@ -1,0 +1,2 @@
+network	searches	nodes	candidate_edges	final_edges	removed_by_deloop	roots	leaves	weak_components	density	maximum_indegree	prior_mode	CIT_evidence_rows	ENCODE_evidence_rows	half_search_directed_jaccard	rerun_identical	release_state
+Oligodendrocytes	1000	10000	6499	6498	1	3770	7181	3616	6.498649864986499e-05	2	full_integrative	491	3736	0.949063670411985	True	validated_complete

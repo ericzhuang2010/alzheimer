@@ -1,0 +1,2 @@
+network	searches	nodes	candidate_edges	final_edges	removed_by_deloop	roots	leaves	weak_components	density	maximum_indegree	prior_mode	CIT_evidence_rows	ENCODE_evidence_rows	half_search_directed_jaccard	rerun_identical	release_state
+Excitatory_neurons	1000	10000	8481	8478	3	1963	6148	1686	8.47884788478848e-05	2	full_integrative	1400	4792	0.9609429165703721	True	validated_complete

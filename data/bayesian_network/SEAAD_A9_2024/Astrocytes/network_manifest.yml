@@ -1,0 +1,25 @@
+schema_version: seaad_rimbanet_network_manifest_v1
+release_id: SEAAD_A9_2024_RIMBANET_v1
+network: Astrocytes
+method: RIMBANet
+mode: full_integrative
+exploratory: false
+structural_prior_sources:
+- CIT
+- ENCODE
+rimbanet_source_commit: ebd5f4a6c31da22705622e71b6dc5f1eae195fdd
+config_path: config/seaad_rimbanet.yml
+config_sha256: 545e8396c406f2410e82f8092aee16f6555f1c1f14c8b1d09edee9e93076a9fd
+searches: 1000
+nodes: 10000
+edges: 6641
+direction_interpretation: prior-constrained probabilistic upstream relation; not signed
+  or proven causal
+files:
+  result.links3.links.txt: 68ed3d2f21d37752f6ab99a479e9ab81a8b66476fd3f9a71b9f64443f0d4eef1
+  edge_support.tsv.gz: 9ccea15b817570924d0097dbb3ac7adb7cd6f91da673950a6e1af1e8dc6ef2e5
+  nodes.tsv: d57f9a08009be7258173bdbf1156a4fa74ca624278a9de418106cf99b5de4fb7
+  sample_manifest.tsv: 29cfa28a2bcf4da2d66a13604e1aab9104c89da2047da0b1d5c5b8d6a81edbc2
+  gene_manifest.tsv: 96f7a9bc54a10f451f80fdec4acf690c1aaf7a2ab588673215c6934e76959b34
+  prior_summary.tsv: e208f92577c119d5d051c82b12935b9d784309cf13df3912c7bcacbce6ee9f30
+  network_qc.tsv: 3795bd8031e281dcdae42591280e26084e7cf064d42cfc71b9da4e276e18e40c
