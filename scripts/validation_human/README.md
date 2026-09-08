@@ -155,7 +155,9 @@ and combined input hashes match. Consensus is blocked unless all 1,000 task
 records validate, so missing jobs cannot change the denominator.
 
 Final permitted release files are copied atomically to the persistent
-`data/bayesian_network/SEAAD_A9_2024/<cell_type>/` directory. Controlled
+`data/bayesian_network_seaad/<cell_type>/` directory. The checksum-frozen
+execution configs retain `data/bayesian_network/SEAAD_A9_2024` as a
+compatibility symlink to that canonical directory. Controlled
 GDA-8 data, dense matrices, priors, container/source files, and per-search outputs remain
 in scratch. Scratch may be purged, so retain input identities/checksums and the
 final release in the work checkout and rebuild/restage bulk artifacts when

@@ -462,7 +462,11 @@ The terminal release for each cell type will contain:
 - Independent checks for acyclicity, no self-loops/duplicates/unknown genes, maximum in-degree ≤3, deterministic parsing, and complete provenance.
 
 The compact, validated release will live persistently under
-`/sc/arion/work/zhuane01/alzheimer/data/bayesian_network/SEAAD_A9_2024/<cell_type>/`.
+`/sc/arion/work/zhuane01/alzheimer/data/bayesian_network_seaad/<cell_type>/`.
+The checksum-frozen execution configs retain their historical
+`data/bayesian_network/SEAAD_A9_2024` path through a compatibility symlink to
+this canonical directory, so relocation does not invalidate the 7,000 task
+provenance hashes.
 All downloadable or reproducible bulk storage is rooted at
 `/sc/arion/scratch/zhuane01/alzheimer/`: the external RIMBANet checkout,
 Apptainer image, staged pseudobulk/genotype-array/ENCODE inputs, normalized matrices,
@@ -705,12 +709,12 @@ Repo changes: add `scripts/validation_human/11_validate_publish_seaad_networks.p
 
 ## Step 12 — Publish the seven immutable network releases
 
-- Atomically copy only validated release artifacts to `data/bayesian_network/SEAAD_A9_2024/<cell_type>/` and generate a root `release_manifest.tsv` containing every file’s SHA-256, byte count, cell type, donor N, node/edge count, release ID, and source/config commits.
+- Atomically copy only validated release artifacts to `data/bayesian_network_seaad/<cell_type>/` and generate a root `release_manifest.tsv` containing every file’s SHA-256, byte count, cell type, donor N, node/edge count, release ID, and source/config commits.
 - Update `.gitignore` so controlled data, external tools, container images, normalized matrices, priors containing restricted data, and per-search outputs remain ignored while the final permitted edge lists and compact provenance/QC files are tracked.
 - Update [scripts/validation_human/README.md](scripts/validation_human/README.md) with exact audit, preparation, pilot, production, resume, consensus, validation, and release commands.
 - Do not change [config/phase12_kda.yml](config/phase12_kda.yml), existing `data/bayesian_network/<ROSMAP_cell_type>/` files, or the current VH10 KDA workflow in this build. Connecting KDA to the SEA-AD release is a separate, checksum-frozen follow-up.
 
-Repo changes: add seven network release directories and `data/bayesian_network/SEAAD_A9_2024/release_manifest.tsv`; change `.gitignore` and the validation README. No tracked files are removed.
+Repo changes: add seven network release directories and `data/bayesian_network_seaad/release_manifest.tsv`; change `.gitignore` and the validation README. No tracked files are removed.
 
 ## Local and Minerva command runbook
 
@@ -2092,7 +2096,7 @@ Added source/config/documentation:
 - `scripts/validation_human/11_build_rimbanet_consensus.sh`
 - `scripts/validation_human/11_validate_publish_seaad_networks.py`
 - Focused fixtures/tests under `tests/validation_human/`
-- Validated final release files under `data/bayesian_network/SEAAD_A9_2024/`
+- Validated final release files under `data/bayesian_network_seaad/`
 
 Changed:
 

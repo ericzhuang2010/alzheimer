@@ -10,7 +10,7 @@ credentials and the small, untracked donor crosswalk.
 
 If only the validated release is needed for KDA or downstream analysis, do
 not rebuild scratch. Use the compact network release under
-`data/bayesian_network/SEAAD_A9_2024/`. Rehydrate scratch only when rerunning,
+`data/bayesian_network_seaad/`. Rehydrate scratch only when rerunning,
 auditing, or extending network construction.
 
 Exact recovery requires every production source row in
@@ -36,7 +36,7 @@ persistent/controlled location:
 - the small protected identity map at
   `data/seaad_genotypes/syn49430589/sample_crosswalk.tsv` (untracked; protect
   according to the source data's access requirements);
-- the final `data/bayesian_network/SEAAD_A9_2024/` release and its checksums;
+- the final `data/bayesian_network_seaad/` release and its checksums;
 - authorization and retrieval instructions for the shared GDA-8 source and
   the checksum-frozen Illumina D2 GRCh38 manifest.
 
