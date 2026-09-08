@@ -36,6 +36,7 @@ priors = load_script("11_build_rimbanet_priors.py")
 audit = load_script("11_audit_rimbanet_inputs.py")
 submit = load_script("11_submit_rimbanet_minerva.py")
 array_import = load_script("11_import_seaad_array.py")
+validate_runs = load_script("11_validate_rimbanet_runs.py")
 
 
 def test_r_scripts_stream_gzip_without_optional_data_table_compression():
@@ -178,6 +179,18 @@ def test_base_prior_paths_stream_quadratic_tables(tmp_path):
     parsed = priors.parse_base_prior(output)
     assert parsed[0]["log_prior"] == -0.5
     assert parsed[1]["log_prior"] == -2.0
+
+
+def test_aggregate_validator_matches_task_input_hash_contract(tmp_path):
+    paths = []
+    for name, content in (("a", b"one\n"), ("b", b"two\n")):
+        path = tmp_path / name
+        path.write_bytes(content)
+        paths.append(path)
+    import hashlib
+
+    expected = hashlib.sha256(b"one\ntwo\n").hexdigest()
+    assert validate_runs.sha256_concatenated(paths) == expected
 
 
 def test_prior_parser_and_direction_conflict():

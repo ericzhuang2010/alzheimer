@@ -29,8 +29,8 @@ exact RIMBANet inputs, combined CIT/ENCODE prior, all 1,000 Step 8 searches,
 aggregate validation, legacy consensus, independent QC, and Microglia release
 are accepted. The remaining six networks have completed preparation: five in
 full-integrative mode and Vasculature under its explicit exploratory
-ENCODE-only amendment. Active work is submission of the six Step 9 search
-arrays.
+ENCODE-only amendment. The six Step 9 arrays have completed their task phase;
+active work is aggregate validation of all 6,000 durable search contracts.
 
 - Scale-out preparation completed for Astrocytes, Excitatory neurons,
   Inhibitory neurons, OPCs, and Oligodendrocytes with validated expression,
@@ -57,6 +57,17 @@ arrays.
   produced all 99,990,000 ordered non-self base-prior rows; and combined-prior
   assembly selected 3,545 ENCODE directions with zero CIT rows, conflicts, or
   unmatched directions. All status and compressed-integrity gates passed.
+- Step 9 arrays were submitted with 1,000 tasks and a 100-task concurrency
+  limit per network: Astrocytes 268295124, Excitatory neurons 268295125,
+  Inhibitory neurons 268295126, OPCs 268295127, Oligodendrocytes 268295128,
+  and Vasculature 268295129. The user reports that all task phases are now
+  complete; aggregate VH11F validation remains the acceptance authority.
+- Before that gate, the aggregate validator was hardened to reproduce the
+  task wrapper's bytewise combined-input hash and require every task's frozen
+  config and input checksums to match the current network-specific config and
+  exact `node.xml`, discretized data, banned matrix, and final prior. This is
+  especially required to prove that Vasculature used its exploratory config
+  while the other five arrays used the unchanged full-integrative config.
 
 - The Minerva work checkout started at commit
   b4486062ac77b3189e4f80a6b6a689c6b5952c0f.
@@ -641,7 +652,10 @@ Repo changes: add `scripts/validation_human/11_prepare_rimbanet_minerva.lsf`, `s
 
 - Freeze the pilot-approved runtime and scientific parameters; only per-cell-type gene/sample/prior files vary. The Vasculature exploratory exception changes only its declared prior mode and zero-CIT policy; all FDR, expression, genotype, search, consensus, and QC parameters remain identical.
 - Submit 1,000 searches for each remaining cell type, with per-network resource estimates and concurrency controls. Seven complete networks require 7,000 validated searches, not 9,000.
-- Validate every network independently before consensus. Missing jobs are retried or block release; they never reduce the consensus denominator.
+- Validate every network independently before consensus, including equality
+  of every task's config and combined-input hashes to the current exact files.
+  Missing jobs are retried or block release; they never reduce the consensus
+  denominator.
 - Produce one run ledger with cell type, task ID, seed, config/input hashes, start/end, host, exit code, likelihood, edge count, retries, and output hash.
 
 Repo changes: no new source files beyond Step 8; generated per-cell-type runs and compact ledgers populate the scratch-backed `11f_runs/`.

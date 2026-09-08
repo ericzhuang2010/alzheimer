@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import hashlib
 from pathlib import Path
 
 import networkx as nx
@@ -19,12 +20,34 @@ from rimbanet_common import (
 from seaad_common import atomic_write_tsv, sha256_file
 
 
+def sha256_concatenated(paths: list[Path]) -> str:
+    """Match the task wrapper's bytewise `cat inputs | shasum` contract."""
+    digest = hashlib.sha256()
+    for path in paths:
+        with path.open("rb") as handle:
+            while block := handle.read(16 * 1024 * 1024):
+                digest.update(block)
+    return digest.hexdigest()
+
+
 def main() -> int:
     args = parser("Validate all RIMBANet searches", network=True).parse_args()
     config, config_path, project_root, output_root = load_rimbanet_config(args.config)
     network = validate_network(config, args.network)
     run_dir = stage_dir(output_root, "11f_runs") / network
     run_dir.mkdir(parents=True, exist_ok=True)
+    input_dir = stage_dir(output_root, "11e_inputs", create=False) / network
+    parameter_path = input_dir / "bn.param.txt"
+    parameters = parameter_path.read_text(encoding="utf-8").splitlines()
+    if len(parameters) != 10:
+        raise ValueError(f"bn.param.txt must have 10 lines: {parameter_path}")
+    input_paths = []
+    for name in parameters[2:6]:
+        path = (input_dir / name).resolve(strict=True)
+        path.relative_to(input_dir.resolve(strict=True))
+        input_paths.append(path)
+    expected_config_sha = sha256_file(config_path)
+    expected_input_sha = sha256_concatenated(input_paths)
     expected = int(config["rimbanet"]["number_of_searches"])
     prefix = str(config["rimbanet"]["output_prefix"])
     rows = []
@@ -48,6 +71,8 @@ def main() -> int:
             "elapsed_seconds": pd.NA,
             "max_rss_kb": pd.NA,
             "resource_usage_present": resource_path.exists(),
+            "config_sha256_match": False,
+            "input_sha256_match": False,
             "output_sha256": pd.NA,
             "dag": False,
             "likelihood_record": False,
@@ -69,6 +94,16 @@ def main() -> int:
                 row["max_rss_kb"] = int(state["max_rss_kb"])
             if state["state"] != "validated_complete" or state["exit_code"] != "0":
                 raise ValueError("task status is not validated_complete")
+            row["config_sha256_match"] = (
+                state.get("config_sha256") == expected_config_sha
+            )
+            if not row["config_sha256_match"]:
+                raise ValueError("config checksum mismatch")
+            row["input_sha256_match"] = (
+                state.get("input_sha256") == expected_input_sha
+            )
+            if not row["input_sha256_match"]:
+                raise ValueError("combined input checksum mismatch")
             if int(state["seed"]) != row["expected_seed"]:
                 raise ValueError("seed mismatch")
             if not output_path.exists() or not log_path.exists():
@@ -128,6 +163,8 @@ def main() -> int:
     checks = [
         ("expected_task_rows", len(ledger) == expected, len(ledger), expected, ""),
         ("all_tasks_valid", valid_count == expected, valid_count, expected, ""),
+        ("all_config_hashes_match", bool(ledger["config_sha256_match"].all()), int(ledger["config_sha256_match"].sum()), expected, ""),
+        ("all_input_hashes_match", bool(ledger["input_sha256_match"].all()), int(ledger["input_sha256_match"].sum()), expected, ""),
         ("all_seeds_unique", ledger["expected_seed"].is_unique, ledger["expected_seed"].nunique(), expected, ""),
         ("explicit_consensus_denominator", int(config["consensus"]["denominator"]) == expected, config["consensus"]["denominator"], expected, ""),
     ]
