@@ -2,6 +2,10 @@
 
 ## Purpose and recovery boundary
 
+This is a disaster-recovery and full-rerun guide, not a prerequisite for using
+the published networks. For ordinary downstream analysis, use
+`data/bayesian_network_seaad/` and do not recreate scratch.
+
 `/sc/arion/scratch/zhuane01/alzheimer` is a disposable cache for large files
 that can be downloaded again or regenerated. It is not a backup. The
 persistent recovery authority is the Git checkout at
@@ -13,14 +17,14 @@ not rebuild scratch. Use the compact network release under
 `data/bayesian_network_seaad/`. Rehydrate scratch only when rerunning,
 auditing, or extending network construction.
 
-Exact recovery requires every production source row in
-`data/reference/rimbanet/sources.tsv` to retain its frozen release, checksum,
-and non-placeholder status. As of September 5, 2026, the shared
-`syn49430589` GDA-8 archive/supporting files, D1/D2 manifests, GRCh38
-reference, final marker-mapping audit, 78-donor identity rule, and ENCODE
-TF-target transformation are frozen. The deterministic production importer
-and generic genotype-QC wrapper are implemented; their first production run
-is the active Step 5 gate.
+The production build completed on September 8, 2026. Exact recovery must use
+the commits and SHA-256 identities frozen in the configs, execution config,
+network manifests, release manifest, and `data/reference/rimbanet/sources.tsv`.
+The shared `syn49430589` GDA-8 archive/supporting files, D1/D2 manifests,
+GRCh38 reference, final marker-mapping audit, donor identity rule, ENCODE
+TF-target transformation, deterministic importer, and genotype-QC procedure
+all passed production. Recovery is complete only after regenerating and
+validating the same stage contracts; filename agreement alone is insufficient.
 
 ## Persistent material that must survive a scratch purge
 
@@ -37,6 +41,8 @@ persistent/controlled location:
   `data/seaad_genotypes/syn49430589/sample_crosswalk.tsv` (untracked; protect
   according to the source data's access requirements);
 - the final `data/bayesian_network_seaad/` release and its checksums;
+- the compatibility symlink at `data/bayesian_network/SEAAD_A9_2024`, retained
+  because the checksum-frozen execution configs use that historical path;
 - authorization and retrieval instructions for the shared GDA-8 source and
   the checksum-frozen Illumina D2 GRCh38 manifest.
 
@@ -54,7 +60,7 @@ scratch.
 | `external_tools/containers/seaad-rimbanet.sif` | Linux x86-64 runtime | `containers/rimbanet/Apptainer.def` plus pinned source checkout |
 | `external_tools/plink2/20260818/plink2` | Genotype QC runtime with `--check-sex` | Official dated PLINK v2.0.0-a.6.35LM package plus frozen package/executable SHA-256s |
 | `data/reference/rimbanet/encode_tf_targets.tsv.gz` | Frozen TF-target input | `11_prepare_encode_tf_targets.py`, original ENCODE 2012 Gerstein filtered proximal TIP source, HGNC 2026-06-05, and GENCODE v44 |
-| `data/seaad_genotypes/syn49430589/source/` | Checksum-verified GDA-8 VCF working copy and frozen D2 GRCh38 marker map | Shared `syn49430589` archive plus frozen Illumina manifest |
+| `data/seaad_genotypes/syn49430589/source/` | Frozen D1/D2 manifest packages and controlled-source support files | Shared `syn49430589` archive plus frozen Illumina manifests |
 | `data/seaad_genotypes/syn49430589/derived/` | GRCh38-normalized/QC PLINK files, dosage matrix, positions, ancestry PCs | `11_import_seaad_array.py` and `11_prepare_seaad_genotypes.sh` |
 | `results/validation_human/05_pseudobulk/direct_broad_counts/` | Seven broad-cell count/sample shards | Validated VH05 raw-UMI aggregation |
 | `results/validation_human/11_seaad_rimbanet/11a_*` | Input/runtime audits | VH11 audit and environment scripts |
@@ -188,7 +194,8 @@ Re-read the access-controlled source from:
 /sc/arion/projects/adineto/sea_ad/Data/SNP_Genomic_Variants/SEA_AD_SNPs_vcf.tar.gz
 ```
 
-Before production, freeze in `data/reference/rimbanet/sources.tsv`:
+A recovery must reproduce the identities already frozen in the configs and
+`data/reference/rimbanet/sources.tsv`:
 
 - Synapse file identity `syn49430589`, filename, byte count, and SHA-256;
 - archive member path, byte count, VCF version, and hard-call format;
@@ -293,6 +300,11 @@ Use the exact commands in the “Audit and prepare production inputs,” “Subm
 and gate,” and “Scale out” sections of
 `docs/build_network/seaad-rimbanet-build.plan.md`. Those commands bind both
 storage roots and derive all output paths from the frozen configs.
+
+The configs intentionally retain `data/bayesian_network/SEAAD_A9_2024` as the
+persistent release root. In current checkouts this is a compatibility symlink
+to `data/bayesian_network_seaad`; do not replace the frozen config path merely
+to follow the relocation.
 
 Never rebuild a downstream directory by hand. If an upstream checksum changes,
 invalidate and regenerate every dependent stage.

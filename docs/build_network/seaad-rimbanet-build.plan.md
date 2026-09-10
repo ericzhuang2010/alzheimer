@@ -19,6 +19,11 @@ isProject: false
 
 # SEA-AD Wang-Style RIMBANet Build Plan
 
+> **Final state:** completed September 8, 2026. The canonical compact release
+> is `data/bayesian_network_seaad/`. The execution narrative below retains
+> explicitly labeled failed attempts because they explain the frozen fixes;
+> they are historical evidence, not current blockers.
+
 ## Execution status — September 8, 2026
 
 **Steps 1–7 are complete for the Microglia pilot.** The source and identity
@@ -116,7 +121,8 @@ published in Git commit 4dbc46e.
 - The original WGS-specific input contract has been superseded. The primary
   genotype source is now the locally available GDA-8 SNP-array VCF described
   below. The generic GDA-8 input audit and ENCODE transformation are frozen;
-  the production genotype importer and genotype QC remain incomplete.
+  the production genotype importer and genotype QC subsequently completed and
+  passed the frozen gates described below.
 - The formal VH11A audit at 2026-09-04T22:47:28Z used the superseded
   WGS-specific configuration and reported four failed checks: all 14 broad
   pseudobulk shards absent from scratch, a raw WGS PLINK trio absent, zero WGS
@@ -497,7 +503,7 @@ Existing ROSMAP networks and current KDA outputs will not be overwritten.
   parameters, and release artifacts remain in the work checkout so scratch can
   be rehydrated and the workflow resumed or rerun.
 - Before submission, require both roots to be writable, verify available
-  scratch capacity, and freeze the rebuilt image SHA-256. A missing/purged
+  scratch capacity, and verify the rebuilt image SHA-256. A missing/purged
   scratch artifact is a hard prerequisite or resume failure, never a reason to
   fall back to the work allocation.
 
@@ -507,7 +513,10 @@ and verification commands.
 
 ## Step 1 — Freeze the method, inputs, and decision gates
 
-- Maintain [docs/build_network/seaad-rimbanet-build.plan.md](docs/build_network/seaad-rimbanet-build.plan.md) as this plan and update [docs/build_network/seaad_bayesian_network_feasibility.md](docs/build_network/seaad_bayesian_network_feasibility.md) to remove the obsolete claim that the public RIMBANet construction code is unavailable.
+- Maintain this build plan as the authoritative contract, use
+  [README.md](README.md) as the concise entry point, and retain the
+  [genotype-source decision](seaad-genotype-source-decision.md) as the record
+  of the WGS-to-GDA-8 amendment.
 - Add `config/seaad_rimbanet.yml` with schema version, seven-cell-type order, SEA-AD A9 input identities, cohort and profile thresholds, normalization/residualization formula, gene filters, random seeds, source commits, eQTL/CIT/TF-prior settings, 1,000-search requirement, and exact consensus thresholds.
 - Add `config/seaad_rimbanet_execution.yml` with local-smoke and LSF production profiles, container/image digest, queue/resources, concurrency cap, retry policy, the absolute `/sc/arion/scratch/zhuane01/alzheimer` storage/log roots, and resume rules.
 - Pin `mw201608/BayesianNetwork` commit `ebd5f4a6c31da22705622e71b6dc5f1eae195fdd`; do not vendor or redistribute its source/binary until its licensing is clarified.
@@ -516,11 +525,18 @@ and verification commands.
   QC must pass; expression-only fallback is not silently substituted;
   Microglia must pass the pilot gate before the remaining six networks run.
 
-Repo changes: add the plan and two configs; change the feasibility document. No analysis output is produced yet.
+Repo changes: add this plan, the frozen configs, and the genotype-source
+decision record. No analysis output is produced by this contract-freezing
+step.
 
 ## Step 2 — Audit SEA-AD expression, SNP-array, TF sources, and donor concordance
 
-- Reuse the 78-donor authority in [results/validation_human/02_cohort/donor_cohort_primary.tsv](results/validation_human/02_cohort/donor_cohort_primary.tsv), the seven-type mapping in [results/validation_human/04_supertype_manifest/supertype_to_broad_network.tsv](results/validation_human/04_supertype_manifest/supertype_to_broad_network.tsv), and the frozen H5AD identity in [scripts/validation_human/seaad_deg_config.yml](scripts/validation_human/seaad_deg_config.yml).
+- Reuse the 78-donor authority in
+  [donor_cohort_primary.tsv](../../results/validation_human/02_cohort/donor_cohort_primary.tsv),
+  the seven-type mapping in
+  [supertype_to_broad_network.tsv](../../results/validation_human/04_supertype_manifest/supertype_to_broad_network.tsv),
+  and the frozen H5AD identity in
+  [seaad_deg_config.yml](../../scripts/validation_human/seaad_deg_config.yml).
 - Use the shared `syn49430589` GDA-8 archive at
   `/sc/arion/projects/adineto/sea_ad/Data/SNP_Genomic_Variants/SEA_AD_SNPs_vcf.tar.gz`.
   Freeze its filename, byte count, SHA-256, Synapse identity, retrieval/source
@@ -601,7 +617,13 @@ Repo changes: add `containers/rimbanet/Dockerfile`, `containers/rimbanet/Apptain
 
 ## Step 4 — Prepare donor-level broad-cell expression
 
-- Reuse the raw-UMI aggregation from [scripts/validation_human/05_stream_pseudobulk.py](scripts/validation_human/05_stream_pseudobulk.py): synchronize the explicitly tracked 14-file `results/validation_human/05_pseudobulk/direct_broad_counts/` bundle, then stage each reproducible `<cell_type>.counts.tsv.gz` and companion sample file under `/sc/arion/scratch/zhuane01/alzheimer/results/validation_human/05_pseudobulk/direct_broad_counts/`. Each matrix is genes × 78 donors with companion nuclei counts and covariates.
+- Reuse the raw-UMI aggregation from
+  [05_stream_pseudobulk.py](../../scripts/validation_human/05_stream_pseudobulk.py):
+  synchronize the explicitly tracked 14-file
+  `results/validation_human/05_pseudobulk/direct_broad_counts/` bundle, then
+  stage each reproducible `<cell_type>.counts.tsv.gz` and companion sample file
+  under `/sc/arion/scratch/zhuane01/alzheimer/results/validation_human/05_pseudobulk/direct_broad_counts/`.
+  Each matrix is genes × 78 donors with companion nuclei counts and covariates.
 - Require VH05/VH06 validated-complete status and checksum every count/sample shard. Do not treat nuclei as independent network samples.
 - For each cell type, retain donors meeting the prespecified primary nucleus threshold (initially the existing ≥20); report a ≥50-nucleus sensitivity set. Freeze sample order in `sample_manifest.tsv`.
 - Filter genes using donor-level expression criteria declared in config (CPM
@@ -711,10 +733,18 @@ Repo changes: add `scripts/validation_human/11_validate_publish_seaad_networks.p
 
 - Atomically copy only validated release artifacts to `data/bayesian_network_seaad/<cell_type>/` and generate a root `release_manifest.tsv` containing every file’s SHA-256, byte count, cell type, donor N, node/edge count, release ID, and source/config commits.
 - Update `.gitignore` so controlled data, external tools, container images, normalized matrices, priors containing restricted data, and per-search outputs remain ignored while the final permitted edge lists and compact provenance/QC files are tracked.
-- Update [scripts/validation_human/README.md](scripts/validation_human/README.md) with exact audit, preparation, pilot, production, resume, consensus, validation, and release commands.
-- Do not change [config/phase12_kda.yml](config/phase12_kda.yml), existing `data/bayesian_network/<ROSMAP_cell_type>/` files, or the current VH10 KDA workflow in this build. Connecting KDA to the SEA-AD release is a separate, checksum-frozen follow-up.
+- Update [scripts/validation_human/README.md](../../scripts/validation_human/README.md)
+  with exact audit, preparation, pilot, production, resume, consensus,
+  validation, and release commands.
+- Do not change [config/phase12_kda.yml](../../config/phase12_kda.yml), existing
+  `data/bayesian_network/<ROSMAP_cell_type>/` files, or the current VH10 KDA
+  workflow in this build. Connecting KDA to the SEA-AD release is a separate,
+  checksum-frozen follow-up.
 
-Repo changes: add seven network release directories and `data/bayesian_network_seaad/release_manifest.tsv`; change `.gitignore` and the validation README. No tracked files are removed.
+Repo changes: add seven network release directories and
+`data/bayesian_network_seaad/release_manifest.tsv`; change `.gitignore` and the
+validation README. Later documentation cleanup removes only superseded
+pre-build assessments, not scientific results.
 
 ## Local and Minerva command runbook
 
@@ -1008,16 +1038,16 @@ checksum-frozen shared `syn49430589` GDA-8 archive and final mapping audit, and
 stage the frozen ENCODE TF-target table at the
 absolute scratch paths in `config/seaad_rimbanet.yml`. Keep the small VH05/VH06
 status and cohort manifests plus the protected donor/genotype crosswalk in an
-approved persistent location. The generic GDA-8 input audit is active; the
-deterministic array importer and genotype-QC stage remain gated work after the
-input audit.
+approved persistent location. The generic GDA-8 audit, deterministic array
+importer, and genotype-QC stages are implemented; a recovery reruns them in
+dependency order and accepts only their validated contracts.
 This rerun command validates the currently frozen Step 2 artifacts; it does not
 silently regenerate a missing genotype transformation. If a scratch checksum
 target is absent, first follow the matching source-restoration section in the
 [scratch reproduction runbook](seaad-rimbanet-scratch-reproduction.md). A
-complete loss of the final allele-audit artifact remains a hard stop until the
-repository-native array importer is implemented; do not substitute an ad hoc
-coordinate conversion.
+complete loss of the final allele-audit artifact requires rerunning the
+repository-native array importer; do not substitute an ad hoc coordinate
+conversion.
 
 Run:
 
@@ -2049,7 +2079,7 @@ Treat `/sc/arion/scratch/zhuane01/alzheimer` as a cache, not an archive. Keep
 the frozen configs, source/input checksums, compact release manifests, and
 final releases under the Git checkout in `/sc/arion/work/zhuane01/alzheimer`.
 Use the [scratch reproduction runbook](seaad-rimbanet-scratch-reproduction.md)
-for the complete path-by-path procedure and current recovery blockers. In
+for the complete path-by-path procedure and recovery prerequisites. In
 summary, if scratch is purged:
 
 1. Recreate the scratch directory layout from the build section.
@@ -2066,11 +2096,12 @@ work checkout before scratch cleanup or expiry. Large matrices, raw/staged
 inputs, the SIF, source checkout, logs, and search outputs are intentionally
 recreated rather than copied back into the work allocation.
 
-## Planned repository file impact
+## Implemented repository file impact
 
 Added source/config/documentation:
 
 - `docs/build_network/seaad-rimbanet-build.plan.md`
+- `docs/build_network/README.md`
 - `docs/build_network/seaad-rimbanet-scratch-reproduction.md`
 - `config/seaad_rimbanet.yml`,
   `config/seaad_rimbanet_vasculature_encode_only.yml`, and
@@ -2098,16 +2129,17 @@ Added source/config/documentation:
 - Focused fixtures/tests under `tests/validation_human/`
 - Validated final release files under `data/bayesian_network_seaad/`
 
-Changed:
+Updated:
 
-- `docs/build_network/seaad_bayesian_network_feasibility.md`
 - `scripts/validation_human/README.md`
 - `.gitignore`
-- `renv.lock` only after dependency resolution succeeds
 
 Removed:
 
-- No tracked files. Existing ROSMAP networks, SEA-AD DEG/KDA scripts, and results remain intact.
+- Superseded pre-build feasibility/resource documents and the redundant binary
+  DOCX were removed after the validated release and recovery documentation
+  incorporated their still-relevant content. Existing ROSMAP networks,
+  SEA-AD DEG/KDA scripts, and scientific results remain intact.
 
 ## Acceptance criteria
 

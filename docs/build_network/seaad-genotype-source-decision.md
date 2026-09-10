@@ -45,8 +45,8 @@ The integrative method requires:
 - CIT-derived directional evidence.
 - RIMBANet priors built from CIT and ENCODE evidence.
 
-The pre-refactor configuration makes genetics mandatory but still contains
-the superseded NG00174 dataset label:
+The final production configuration makes genetics mandatory and identifies
+the selected array explicitly:
 
 ```yaml
 method:
@@ -55,7 +55,8 @@ method:
 
 genetics:
   required: true
-  dataset: NIAGADS_NG00174
+  dataset: SEAAD_syn49430589_GDA8
+  platform: Infinium_Global_Diversity_Array_8
   minimum_matched_donors: 50
 ```
 
@@ -101,8 +102,8 @@ The disadvantages and risks are:
   [array-imputation versus WGS study](https://pubmed.ncbi.nlm.nih.gov/35981533/).
 - Header and identity audits established VCFv4.2, 95 hard-called `GT`
   samples, a GRCh37 D1 manifest, and exact one-to-one suffix matches for all 78
-  primary expression donors. GRCh38 marker mapping, allele representation, and
-  genotype quality still require validation.
+  primary expression donors. The subsequent GRCh38 marker mapping, allele
+  representation, and genotype-QC gates all passed.
 - The final network must be described as using **SNP-array-derived genetic
   priors**, not WGS-derived priors.
 
@@ -123,12 +124,16 @@ eligible unique source IDs matched it, with zero source or D2-name duplicates;
 991,538 matches had a valid GRCh38 target. All 1,127 invalid D2 targets are
 unplaced. The rejected source records comprise 107 unplaced records, 9,933
 additional missing-reference records, and 901,894 additional missing-alternate
-records. The 991,538 exact, unique, placed candidates advance to reference-
-allele and strand validation. The
-configuration and executable VH11 scripts still require the corresponding
-generic-genotype refactor before production resumes. The array VCF, explicit
-crosswalk, and all derived participant-level genotype data must remain outside
-Git.
+records. The allele/strand audit retained 825,989 final unique reference-
+aligned GRCh38 variants. Genetic QC retained 75 donors, with zero final sex-
+check failures and zero related pairs above the configured threshold;
+cell-type analyses used the available expression/genotype intersection and
+remained above the prespecified 50-donor minimum. All seven networks were
+subsequently constructed and validated. Six use full-integrative CIT/ENCODE
+priors; Vasculature is explicitly exploratory ENCODE-only because its 70 valid
+CIT tests produced zero directions at the unchanged BH FDR threshold of 0.05.
+The array VCF, explicit crosswalk, and all derived participant-level genotype
+data remain outside Git.
 
 ### Read-only VCF header audit on Minerva
 
