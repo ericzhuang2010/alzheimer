@@ -1,0 +1,11 @@
+check	passed	observed	expected	details
+structural_direction_slots	True	1548	1548	
+direction_slot_ids_unique	True	1548	1548	
+one_active_query_rule	True	1	1	
+completed_source_direction_reconciliation	True	762	762	two signed directions per completed DEG contrast
+active_call_tier_reconciliation	True	34	34	
+active_call_direction_reconciliation	True	34	34	
+effective_queries_subset_background	True	True	True	
+eligible_run_ids_unique	True	34	34	
+result_hash_checks	True	381	381	
+seaad_phase18_annotation_agreement	True	0	0	

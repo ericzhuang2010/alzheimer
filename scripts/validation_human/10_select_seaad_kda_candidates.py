@@ -85,7 +85,20 @@ def require_validated(directory: Path, project_root: Path) -> pd.DataFrame:
 
 
 def main() -> int:
-    args = parse_config_cli("VH10B/C: reconstruct and select SEA-AD KDA candidates")
+    def add_arguments(parser) -> None:
+        parser.add_argument(
+            "--finalize-only",
+            action="store_true",
+            help=(
+                "Validate/reconstruct the KDA calls and publish the 10b bundle "
+                "without creating the deprecated gated 10c selection bundle"
+            ),
+        )
+
+    args = parse_config_cli(
+        "VH10B/C: reconstruct and select SEA-AD KDA candidates",
+        add_arguments,
+    )
     started = utc_now()
     config, config_path, project_root, output_root = load_config(args.config)
     cfg = config["vh10"]
@@ -501,6 +514,14 @@ def main() -> int:
         artifact_count=len(kda_artifacts),
     )
     atomic_write_tsv(kda_status, kda_dir / "status.tsv")
+
+    if args.finalize_only:
+        print(f"VH10B validated_complete: {kda_dir}")
+        print(
+            "finalize_only=True "
+            f"active_calls={len(included_runs)} significant_returns={len(significant_rows)}"
+        )
+        return 0
 
     if selection_dir.exists() and any(selection_dir.iterdir()):
         raise FileExistsError(

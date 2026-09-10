@@ -16,7 +16,6 @@ from seaad_common import (
     load_config,
     parse_config_cli,
     repo_path,
-    require_phase,
     sha256_file,
     sha256_strings,
     status_frame,
@@ -55,7 +54,6 @@ def main() -> int:
     analysis = cfg["analysis"]
     expected = analysis["expected"]
 
-    require_phase(output_root, "08_deg")
     authority_paths = {}
     authority_rows = []
     for role, item in cfg["input_authority"].items():
@@ -72,6 +70,16 @@ def main() -> int:
                 "sha256": observed,
             }
         )
+
+    vh08_status = pd.read_csv(
+        authority_paths["vh08_status"], sep="\t", keep_default_na=False
+    )
+    if (
+        len(vh08_status) != 1
+        or vh08_status.loc[0, "phase"] != "VH08"
+        or vh08_status.loc[0, "validation_status"] != "validated_complete"
+    ):
+        raise ValueError("VH08 authority is not a single validated_complete release")
 
     with authority_paths["phase12_config"].open() as handle:
         phase12 = yaml.safe_load(handle)
@@ -181,9 +189,27 @@ def main() -> int:
     warning_below = int(analysis["small_query_warning_below"])
     caches = {}
     result_hash_checks = 0
+    source_result_directory = cfg.get("source_deg_result_directory")
+    source_result_root = (
+        repo_path(project_root, source_result_directory)
+        if source_result_directory
+        else None
+    )
 
     for contrast_id, source in index_by_contrast.iterrows():
-        result_path = repo_path(project_root, source["result_path"])
+        indexed_result_path = repo_path(
+            project_root, source["result_path"], must_exist=False
+        )
+        result_path = (
+            source_result_root / indexed_result_path.name
+            if source_result_root is not None
+            else indexed_result_path
+        )
+        if not result_path.is_file():
+            raise FileNotFoundError(
+                "Missing checksum-frozen fine DEG result for Phase 12 input "
+                f"replay: {result_path}"
+            )
         if result_path.stat().st_size != int(source["result_bytes"]):
             raise ValueError(f"DEG result byte mismatch: {result_path}")
         if sha256_file(result_path) != source["result_sha256"]:

@@ -1,0 +1,7 @@
+# Methods
+
+The renderer reads the validated `simple_category_gene_aggregates.tsv` table from `results/validation_human/12_sex_apoe_kda_simple_aggr_network` and verifies its registered SHA-256 hash, source completion status, and source checks. The source already excludes core-MitoCarta drivers, so every row is a `case_id = non_mt_driver`, `is_core_mito = FALSE` unit; the renderer re-verifies this scope. No KDA or ACAT calculation is rerun. Rows are ordered within each `signature_group × broad_network` category by `returned_run_q_acat_score`, then gene symbol, and the resulting display rank is confirmed to match the stored source rank.
+
+The score is the requested exploratory returned-only value from 34 active SEA-AD KDA calls run with network release `SEAAD_A9_2024_RIMBANET_v1`: a singleton stock within-call BH q is passed through unchanged, whereas two or more returned q values are combined by equal-weight ACAT. It is post-selected and is not a formally FDR-controlled cross-call q value; the figures are descriptive rankings of stock-significant returns. 5 of the 42 structural sex/APOE-by-broad-cell categories have non-MT returns, so category breadth remains bounded by the available call distribution.
+
+For recurrence, each gene is counted at most once in each category. Genes are ordered by category count (descending), best returned-q ACAT score (ascending), and symbol; up to 20 are displayed. 2 displayed genes appear in at least two categories; the remaining displayed genes appear once and are ordered by their best exploratory score.

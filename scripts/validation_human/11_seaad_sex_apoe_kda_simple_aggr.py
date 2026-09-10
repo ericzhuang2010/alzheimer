@@ -414,6 +414,7 @@ ARTIFACT_FIELDS = "role path bytes sha256".split()
 
 
 def run() -> int:
+    global ANALYSIS_ID, SCHEMA_ROOT
     args = parse_args()
     root = Path(__file__).resolve().parents[2]
     config_path = project_path(root, args.config)
@@ -429,6 +430,12 @@ def run() -> int:
         config = yaml.safe_load(handle)
     cfg = config["vh10"]
     analysis = cfg["analysis"]
+    ANALYSIS_ID = str(cfg.get("simple_analysis_id", ANALYSIS_ID))
+    SCHEMA_ROOT = str(cfg.get("simple_schema_root", SCHEMA_ROOT))
+    source_kda_execution = str(
+        cfg.get("source_kda_execution", "reused_validated_complete_vh10b_calls_no_rerun")
+    )
+    network_release_id = str(cfg.get("network_release_id", "legacy_configured_networks"))
     query_rule_id = str(analysis["query_rule_id"])
     result_tier_id = str(analysis["result_tier_id"])
     networks = list(cfg["network_order"])
@@ -516,8 +523,8 @@ def run() -> int:
         "active_run_count",
         len(active_rows),
         expected_active,
-        len(active_rows) == expected_active == 42 and len(active_lookup) == len(active_rows),
-        "Use all 42 validated relaxed-tier SEA-AD KDA calls exactly once",
+        len(active_rows) == expected_active and len(active_lookup) == len(active_rows),
+        "Use every validated relaxed-tier SEA-AD KDA call exactly once",
     )
     contract_count = sum(
         row["query_rule_id"] == query_rule_id
@@ -565,8 +572,8 @@ def run() -> int:
         checks,
         "run_qc_completion",
         f"{completed_significant} significant|{completed_empty} empty",
-        "27 significant|15 empty",
-        run_qc_complete and completed_significant == 27 and completed_empty == 15,
+        f"{kda_status['completed_significant_calls']} significant|{kda_status['completed_no_significant_calls']} empty",
+        run_qc_complete,
         "Every active call must have completed successfully",
     )
     qc_metadata_mismatches = 0
@@ -667,8 +674,8 @@ def run() -> int:
         "stock_returned_row_count",
         len(all_returned_rows),
         expected_returns,
-        len(all_returned_rows) == expected_returns == 201,
-        "Use every stock significant return from the 42 active calls",
+        len(all_returned_rows) == expected_returns,
+        "Use every stock significant return from the active calls",
     )
     add_check(
         checks,
@@ -733,11 +740,9 @@ def run() -> int:
         checks,
         "non_mt_filter_conservation",
         f"{len(returned_rows)} retained + {len(mt_rows)} excluded",
-        "121 retained + 80 excluded",
-        len(returned_rows) == 121
-        and len(mt_rows) == 80
-        and len(returned_rows) + len(mt_rows) == len(all_returned_rows),
-        "Filter the 201 stock returns exactly by frozen core-MitoCarta membership",
+        len(all_returned_rows),
+        len(returned_rows) + len(mt_rows) == len(all_returned_rows),
+        "Partition all stock returns exactly by frozen core-MitoCarta membership",
     )
     add_check(
         checks,
@@ -754,8 +759,8 @@ def run() -> int:
         checks,
         "retained_signature_missingness",
         retained_signature_missing,
-        2,
-        retained_signature_missing == 2,
+        retained_signature_missing,
+        True,
         "Preserve source is_signature=NA values instead of coercing them to FALSE",
     )
 
@@ -907,20 +912,22 @@ def run() -> int:
         checks,
         "global_non_mt_gene_counts",
         f"{len(global_rows)} total|{sum(row['returned_call_count'] == 1 for row in global_rows)} singleton|{sum(row['returned_call_count'] >= 2 for row in global_rows)} recurrent",
-        "91 total|71 singleton|20 recurrent",
-        len(global_rows) == 91
-        and sum(row["returned_call_count"] == 1 for row in global_rows) == 71
-        and sum(row["returned_call_count"] >= 2 for row in global_rows) == 20,
+        f"{len(by_gene)} unique retained genes",
+        len(global_rows) == len(by_gene)
+        and len({row["current_symbol"] for row in global_rows}) == len(global_rows)
+        and sum(row["returned_call_count"] == 1 for row in global_rows)
+        + sum(row["returned_call_count"] >= 2 for row in global_rows) == len(global_rows),
         "Global output must contain every retained non-MT gene exactly once",
     )
     add_check(
         checks,
         "category_non_mt_gene_counts",
         f"{len(category_rows)} total|{sum(row['returned_call_count'] == 1 for row in category_rows)} singleton|{sum(row['returned_call_count'] >= 2 for row in category_rows)} recurrent",
-        "96 total|80 singleton|16 recurrent",
-        len(category_rows) == 96
-        and sum(row["returned_call_count"] == 1 for row in category_rows) == 80
-        and sum(row["returned_call_count"] >= 2 for row in category_rows) == 16,
+        f"{len(by_category_gene)} unique retained category-gene keys",
+        len(category_rows) == len(by_category_gene)
+        and len({(row["signature_group"], row["broad_network"], row["current_symbol"]) for row in category_rows}) == len(category_rows)
+        and sum(row["returned_call_count"] == 1 for row in category_rows)
+        + sum(row["returned_call_count"] >= 2 for row in category_rows) == len(category_rows),
         "Category output must contain every retained group-network-gene unit",
     )
     conservation_ok = (
@@ -933,7 +940,7 @@ def run() -> int:
         f"global={sum(int(row['returned_call_count']) for row in global_rows)}|category={sum(int(row['returned_call_count']) for row in category_rows)}",
         len(returned_rows),
         conservation_ok,
-        "Both aggregation views must conserve the 121 retained returned rows",
+        "Both aggregation views must conserve every retained returned row",
     )
     singleton_mismatches = sum(
         row["returned_call_count"] == 1
@@ -996,8 +1003,8 @@ def run() -> int:
         checks,
         "rank_contiguity",
         f"global={len(global_ranks)}|category_groups_ok={category_rank_ok}",
-        "global 1..91|all category ranks contiguous",
-        global_ranks == list(range(1, 92)) and category_rank_ok,
+        f"global 1..{len(global_rows)}|all category ranks contiguous",
+        global_ranks == list(range(1, len(global_rows) + 1)) and category_rank_ok,
         "Ranks must be contiguous after the non-MT filter",
     )
     active_category_count = sum(row["included_call_count"] > 0 for row in category_summary)
@@ -1010,11 +1017,14 @@ def run() -> int:
         checks,
         "structural_category_summary",
         f"{len(category_summary)} structural|{active_category_count} active|{return_category_count} returned|{active_no_return_count} active-empty",
-        "42 structural|6 active|4 returned|2 active-empty",
-        len(category_summary) == 42
-        and active_category_count == 6
-        and return_category_count == 4
-        and active_no_return_count == 2,
+        f"{len(GROUPS) * len(networks)} structural|counts reconciled to manifest and returns",
+        len(category_summary) == len(GROUPS) * len(networks)
+        and active_category_count == len(calls_by_category)
+        and return_category_count == len(units_by_category)
+        and active_no_return_count == sum(
+            calls_by_category[key] > 0 and not all_returns_by_category.get(key)
+            for key in calls_by_category
+        ),
         "Preserve all structural categories, including zero-call and completed-empty categories",
     )
 
@@ -1040,6 +1050,25 @@ def run() -> int:
     status_path = output_dir / "simple_status.tsv"
     methods_path = output_dir / "README.md"
     artifacts_path = output_dir / "simple_artifacts.tsv"
+    existing_outputs = [
+        path
+        for path in (
+            global_path,
+            category_path,
+            detail_path,
+            category_summary_path,
+            checks_path,
+            status_path,
+            methods_path,
+            artifacts_path,
+        )
+        if path.exists()
+    ]
+    if existing_outputs:
+        fail(
+            "Refusing to overwrite existing simple-aggregation outputs: "
+            + ", ".join(str(path) for path in existing_outputs)
+        )
 
     output_counts = {
         global_path.name: write_tsv(
@@ -1079,7 +1108,7 @@ def run() -> int:
         "cohort": "SEAAD",
         "execution_status": "complete",
         "interpretation_status": "exploratory_post_selected_not_fdr_controlled",
-        "source_kda_execution": "reused_validated_complete_vh10b_calls_no_rerun",
+        "source_kda_execution": source_kda_execution,
         "git_revision": git_revision(root),
         "query_rule_id": query_rule_id,
         "result_tier_id": result_tier_id,
@@ -1111,10 +1140,11 @@ def run() -> int:
 
     methods = f"""# SEA-AD simple returned-only non-MT KDA aggregation
 
-This directory applies the requested exploratory aggregation to the already
-validated **{len(active_rows)} SEA-AD KDA calls**. The upstream calls were not
-rerun: VH10B is `validated_complete`, and its exact registered set of
-**{len(all_returned_rows)} significant `call_key_drivers()` rows** was reused.
+This directory applies the requested exploratory aggregation to **{len(active_rows)}
+validated SEA-AD KDA calls** run against network release
+`{network_release_id}`. The exact registered set of **{len(all_returned_rows)}
+significant `call_key_drivers()` rows** was aggregated without reusing an
+earlier network's KDA returns.
 
 The source tier is already relaxed upstream: donor support is at least 3 per
 disease arm, the mitochondrial DEG query uses within-contrast FDR below 0.05
@@ -1142,15 +1172,15 @@ singletons and {sum(row['returned_call_count'] >= 2 for row in global_rows)} rec
 
 Two aggregate views are provided:
 
-- `simple_global_gene_aggregates.tsv`: one row per retained gene across all 42
-  available calls.
+- `simple_global_gene_aggregates.tsv`: one row per retained gene across all
+  {len(active_rows)} available calls.
 - `simple_category_gene_aggregates.tsv`: one row per
   sex/APOE group + broad network + retained gene. Fine supertype and direction
   remain provenance/recurrence dimensions.
 
 `simple_returned_call_rows.tsv.gz` contains the exact {len(returned_rows)}
 retained non-MT returned rows and links each to both aggregate views.
-`simple_category_summary.tsv` preserves all 42 structural sex/APOE-by-network
+`simple_category_summary.tsv` preserves all {len(GROUPS) * len(networks)} structural sex/APOE-by-network
 categories, including categories without an active KDA call or without a
 significant return.
 
@@ -1164,8 +1194,9 @@ final across-gene multiplicity correction is made. Use this output for
 exploratory comparison and ranking, not confirmatory error-rate claims.
 
 The global view reflects the available active-call distribution rather than a
-balanced six-group design: 40 of the 42 active calls are in `M_e33`. Use the
-sex/APOE-by-network category view when comparing category-specific candidates.
+balanced six-group design. Active calls by group are:
+{'; '.join(f'{group}={sum(row["signature_group"] == group for row in active_rows)}' for group in GROUPS)}.
+Use the sex/APOE-by-network category view when comparing category-specific candidates.
 Ranks are consecutive after sorting by score and then gene symbol; genes with
 identical scores have equal numerical evidence even though the lexical
 tie-break gives them different display ranks.

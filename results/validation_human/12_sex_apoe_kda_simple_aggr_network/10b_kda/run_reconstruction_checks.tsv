@@ -1,0 +1,12 @@
+check	passed	observed	expected	details
+r_worker_complete	True	worker_complete	worker_complete	
+active_call_count	True	34	34	
+all_r_calls_completed	True	34	34	
+r_python_significant_parity	True	34	34	
+explicit_run_gene_keys_unique	True	3752	3752	
+candidate_unit_keys_unique	True	25427	25427	
+driver_classes_exact	True	mt_driver|non_mt_driver	mt_driver|non_mt_driver	
+top5_rank_cap	True	3.0	5	
+list_status_rows	True	14	14	
+no_optional_sensitivity_tier	True	posthoc_exploratory__fdr_only__donor3__query3__seaad_rimbanet_v1__q05	posthoc_exploratory__fdr_only__donor3__query3__seaad_rimbanet_v1__q05	
+acat_regression	True	3.043421070714203e-11	<=1e-9	

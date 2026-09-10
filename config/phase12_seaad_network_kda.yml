@@ -1,0 +1,80 @@
+schema_version: phase12_seaad_network_kda_config_v1
+
+description: >-
+  SEA-AD sex/APOE KDA rerun using the SEA-AD-specific RIMBANet release
+  SEAAD_A9_2024_RIMBANET_v1. Query construction and fKDA settings match the
+  earlier VH10 analysis so the network source is the intended changed factor.
+
+network_release:
+  release_id: SEAAD_A9_2024_RIMBANET_v1
+  root: data/bayesian_network_seaad
+  release_manifest: data/bayesian_network_seaad/release_manifest.tsv
+  release_manifest_sha256: 38c8a3d275872299e2b9245d0a5f5918474c96ce29cd0f78abc385cec6e0c198
+
+query_universe:
+  profile: core_mito
+  mito_tiers: [core_mito_protein]
+
+signature_directions: [AD_up_mito, AD_down_mito]
+
+background:
+  primary_policy: exact_contrast_tested_intersect_induced_network
+
+eligibility:
+  minimum_effective_query_genes: 3
+  small_query_warning_below: 10
+
+kda:
+  source: scripts/NetWeaver/fKDA.R
+  source_sha256: fed8f89f35a3f08f38a420eb9b26c590cdc5f13a12064af1b9fa4a4cb1168550
+  nLayerToTest: 3
+  nLayersToExpand: 0
+  directed: true
+  reduce_within_nlayer: 2
+  fdr: 0.05
+  p_correction_method: BH
+  return_overlap: true
+
+networks:
+  Astrocytes:
+    path: data/bayesian_network_seaad/Astrocytes/result.links3.links.txt
+    sha256: 68ed3d2f21d37752f6ab99a479e9ab81a8b66476fd3f9a71b9f64443f0d4eef1
+    manifest: data/bayesian_network_seaad/Astrocytes/network_manifest.yml
+    manifest_sha256: 3ae28484cdc3ce8fce66ec278b79c4aa7d5f6f3fc04c92ab59ed4cb452b66c40
+    release_mode: full_integrative
+  Excitatory_neurons:
+    path: data/bayesian_network_seaad/Excitatory_neurons/result.links3.links.txt
+    sha256: 86dd5ccde40d3947d55b6401103c7134a32412f9a416d0b7089d01203939a16c
+    manifest: data/bayesian_network_seaad/Excitatory_neurons/network_manifest.yml
+    manifest_sha256: 3166f7fb6bc998c0b8f03aabff5fbdf91b672ddc48168569ba2eac147535c98e
+    release_mode: full_integrative
+  Inhibitory_neurons:
+    path: data/bayesian_network_seaad/Inhibitory_neurons/result.links3.links.txt
+    sha256: 42c74e6e47c2f4251a8d001b9a19bee593dc4c419bc368c5ef5c576e95ec895a
+    manifest: data/bayesian_network_seaad/Inhibitory_neurons/network_manifest.yml
+    manifest_sha256: 1e0e7d277d291051741e190ca463b6c8ab472e528695f3ad4f8d023a5328ff13
+    release_mode: full_integrative
+  Microglia:
+    path: data/bayesian_network_seaad/Microglia/result.links3.links.txt
+    sha256: 97c236b53b27907ff438c9dce7dace4e7c660bcf11c748f7a5eb1db6cbce9a86
+    manifest: data/bayesian_network_seaad/Microglia/network_manifest.yml
+    manifest_sha256: bb38b78e6d4f496c5c6f44e7c7a835094b90004366e498a43e996404a824af9e
+    release_mode: full_integrative
+  OPCs:
+    path: data/bayesian_network_seaad/OPCs/result.links3.links.txt
+    sha256: a7ed03b8d57a1d2dadb4f01fbcf2afb08eff5566897a001fe2ee1db4f6280ac5
+    manifest: data/bayesian_network_seaad/OPCs/network_manifest.yml
+    manifest_sha256: 3170340b72e7f63431c0782f281953402a596a6a87ff3a96b97c7f24ff995133
+    release_mode: full_integrative
+  Oligodendrocytes:
+    path: data/bayesian_network_seaad/Oligodendrocytes/result.links3.links.txt
+    sha256: adaf273e60c11f9dbbb3e76e2fc9b76e2b40a67f9d275c935c95d20e9beeaed6
+    manifest: data/bayesian_network_seaad/Oligodendrocytes/network_manifest.yml
+    manifest_sha256: 50617ef2458e13883920e7795664381a86da6c7e8222085653f32e043ad6f211
+    release_mode: full_integrative
+  Vasculature_cells:
+    path: data/bayesian_network_seaad/Vasculature_cells/result.links3.links.txt
+    sha256: 3b7578e0fa71451dc991f12febc68462eedaed59489eac88eb21a2a99a67ab32
+    manifest: data/bayesian_network_seaad/Vasculature_cells/network_manifest.yml
+    manifest_sha256: c17db9ba2ff4aaa9d9a16c7c871e541bb211b4498bef8a5010df54e296cdb918
+    release_mode: encode_only_exploratory

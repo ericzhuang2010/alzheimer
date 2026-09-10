@@ -1,0 +1,6 @@
+source_terminal_status	terminal_status	query_size_tier	direction_slots
+completed	eligible_phase18_sized	phase18_sized	19
+completed	eligible_small_query	small_query	15
+completed	query_below_minimum	below_minimum	20
+completed	query_empty	empty	708
+not_estimable	source_contrast_not_estimable	not_applicable	786

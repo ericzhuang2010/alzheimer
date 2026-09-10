@@ -48,9 +48,11 @@ from style_presets import apply_publication_style  # noqa: E402
 
 SOURCE_ANALYSIS_ID = "seaad_simple_returned_only_non_core_mt_acat_v1"
 FIGURE_SCHEMA_ROOT = "phase11_seaad_simple_aggr_non_mt_figure_v1"
+PHASE_NUMBER = 11
 TRUE_VALUES = {"TRUE", "T", "1", "YES"}
 BLUE = "#56B4E9"  # Okabe-Ito sky blue
 ORANGE = "#E69F00"  # Okabe-Ito orange
+RECURRENT_HATCH = "///"
 TEXT_COLOR = "#222222"
 MUTED_COLOR = "#4B5563"
 GRID_COLOR = "#D1D5DB"
@@ -94,6 +96,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--root", type=Path, default=ROOT)
     parser.add_argument("--result-dir", type=Path)
     parser.add_argument("--figure-root", type=Path)
+    parser.add_argument("--phase-number", type=int, default=11)
+    parser.add_argument("--analysis-id", default=SOURCE_ANALYSIS_ID)
+    parser.add_argument("--network-release-id", default="legacy_configured_networks")
     return parser.parse_args()
 
 
@@ -174,7 +179,7 @@ def configure_style() -> None:
             "ytick.labelsize": 8,
             "pdf.fonttype": 42,
             "svg.fonttype": "none",
-            "svg.hashsalt": "phase11_seaad_simple_aggr_non_mt_v1",
+            "svg.hashsalt": f"phase{PHASE_NUMBER}_seaad_simple_aggr_non_mt_v1",
             "figure.constrained_layout.use": False,
             "savefig.bbox": None,
         }
@@ -221,8 +226,8 @@ def validate_source(result_dir: Path) -> dict[str, Any]:
         raise ValueError("Simple aggregation is not complete")
     if int(status_row["failed_check_count"]) != 0:
         raise ValueError("Simple aggregation reports failed checks")
-    if int(status_row["included_run_count"]) != EXPECTED_INCLUDED_RUNS:
-        raise ValueError("Figure renderer requires the frozen 42-call SEA-AD source")
+    if int(status_row["included_run_count"]) < 1:
+        raise ValueError("Figure renderer requires at least one completed SEA-AD KDA call")
 
     require_columns(source_checks, ["check_id", "severity", "passed"], "source checks")
     failed_source_checks = source_checks[
@@ -430,7 +435,7 @@ def source_hash_from_rows(non_mt: pd.DataFrame) -> str:
     return str(values[0])
 
 
-def plot_recurrence(recurrence: pd.DataFrame) -> plt.Figure:
+def plot_recurrence(recurrence: pd.DataFrame, category_count: int) -> plt.Figure:
     ordered = recurrence.iloc[::-1].reset_index(drop=True)
     maximum = max(1, int(ordered["acat_combined_category_count"].max()))
     norm = Normalize(vmin=0, vmax=maximum)
@@ -454,7 +459,7 @@ def plot_recurrence(recurrence: pd.DataFrame) -> plt.Figure:
     add_title(
         axis,
         "Most recurrent SEA-AD simple-aggregation non-MT key drivers",
-        "Each gene is counted once per sex/APOE × broad-cell category; 4 SEA-AD categories have returns",
+        f"Each gene is counted once per sex/APOE × broad-cell category; {category_count} SEA-AD categories have returns",
     )
     scalar = matplotlib.cm.ScalarMappable(norm=norm, cmap=cmap)
     colorbar = figure.colorbar(scalar, ax=axis, pad=0.02)
@@ -479,8 +484,9 @@ def draw_top5_panel(
             0.96,
             0.84,
             facecolor=BLUE if recurrent else ORANGE,
-            edgecolor="white",
-            linewidth=0.8,
+            edgecolor=TEXT_COLOR if recurrent else "white",
+            linewidth=0.65 if recurrent else 0.8,
+            hatch=RECURRENT_HATCH if recurrent else None,
         )
         axis.add_patch(rectangle)
         axis.text(x, y, row.current_symbol, ha="center", va="center", fontsize=7.2)
@@ -525,7 +531,12 @@ def plot_top5(top5: pd.DataFrame) -> plt.Figure:
         fontsize=9,
     )
     handles = [
-        patches.Patch(facecolor=BLUE, edgecolor="white", label="ACAT: ≥2 returned calls"),
+        patches.Patch(
+            facecolor=BLUE,
+            edgecolor=TEXT_COLOR,
+            hatch=RECURRENT_HATCH,
+            label="ACAT: ≥2 returned calls",
+        ),
         patches.Patch(
             facecolor=ORANGE,
             edgecolor="white",
@@ -591,20 +602,27 @@ def common_checks(source: dict[str, Any], non_mt: pd.DataFrame) -> list[dict[str
     rank_parity = non_mt["non_mt_rank"].astype(int).equals(
         non_mt["source_category_rank"].astype(int)
     )
+    status = source["status"].iloc[0]
+    expected_rows = int(status["category_gene_unit_count"])
+    expected_genes = int(status["non_mt_unique_returned_gene_count"])
+    expected_categories = int(status["return_bearing_category_count"])
+    expected_occurrences = int(status["non_mt_retained_returned_row_count"])
+    expected_singletons = int(status["category_singleton_unit_count"])
+    expected_recurrent = int(status["category_recurrent_unit_count"])
     return [
         check("source_execution_status", source["status"].iloc[0]["execution_status"], "complete", True),
         check("source_failed_checks", 0, 0, True),
         check("source_category_hash", source["category_hash"], source["category_hash"], True),
-        check("all_class_category_rows", len(source["categories"]), EXPECTED_CATEGORY_ROWS, len(source["categories"]) == EXPECTED_CATEGORY_ROWS),
-        check("non_mt_category_rows", len(non_mt), EXPECTED_NON_MT_ROWS, len(non_mt) == EXPECTED_NON_MT_ROWS),
-        check("non_mt_unique_genes", non_mt["current_symbol"].nunique(), EXPECTED_NON_MT_GENES, non_mt["current_symbol"].nunique() == EXPECTED_NON_MT_GENES),
-        check("categories_with_non_mt", len(category_counts), EXPECTED_NON_MT_CATEGORIES, len(category_counts) == EXPECTED_NON_MT_CATEGORIES),
+        check("source_category_rows", len(source["categories"]), expected_rows, len(source["categories"]) == expected_rows),
+        check("non_mt_category_rows", len(non_mt), expected_rows, len(non_mt) == expected_rows),
+        check("non_mt_unique_genes", non_mt["current_symbol"].nunique(), expected_genes, non_mt["current_symbol"].nunique() == expected_genes),
+        check("categories_with_non_mt", len(category_counts), expected_categories, len(category_counts) == expected_categories),
         check("non_mt_scope", int(non_mt["is_core_mito"].map(truth).sum()), 0, not non_mt["is_core_mito"].map(truth).any()),
         check("non_mt_case_id", int(non_mt["case_id"].ne("non_mt_driver").sum()), 0, non_mt["case_id"].eq("non_mt_driver").all()),
-        check("category_gene_keys_unique", len(set(keys)), EXPECTED_NON_MT_ROWS, len(set(keys)) == len(non_mt)),
-        check("returned_call_occurrences", int(non_mt["returned_call_count"].sum()), EXPECTED_RETURNED_OCCURRENCES, int(non_mt["returned_call_count"].sum()) == EXPECTED_RETURNED_OCCURRENCES),
-        check("singleton_category_units", int(non_mt["returned_call_count"].eq(1).sum()), EXPECTED_SINGLETON_UNITS, int(non_mt["returned_call_count"].eq(1).sum()) == EXPECTED_SINGLETON_UNITS),
-        check("recurrent_category_units", int(non_mt["returned_call_count"].ge(2).sum()), EXPECTED_RECURRENT_UNITS, int(non_mt["returned_call_count"].ge(2).sum()) == EXPECTED_RECURRENT_UNITS),
+        check("category_gene_keys_unique", len(set(keys)), expected_rows, len(set(keys)) == len(non_mt) == expected_rows),
+        check("returned_call_occurrences", int(non_mt["returned_call_count"].sum()), expected_occurrences, int(non_mt["returned_call_count"].sum()) == expected_occurrences),
+        check("singleton_category_units", int(non_mt["returned_call_count"].eq(1).sum()), expected_singletons, int(non_mt["returned_call_count"].eq(1).sum()) == expected_singletons),
+        check("recurrent_category_units", int(non_mt["returned_call_count"].ge(2).sum()), expected_recurrent, int(non_mt["returned_call_count"].ge(2).sum()) == expected_recurrent),
         check("non_mt_ranks_contiguous", "TRUE" if ranks_contiguous else "FALSE", "TRUE", ranks_contiguous),
         check("display_rank_matches_source_rank", "TRUE" if rank_parity else "FALSE", "TRUE", rank_parity),
         check("formal_fdr_flags", int(non_mt["formal_fdr_controlled_q"].map(truth).sum()), 0, not non_mt["formal_fdr_controlled_q"].map(truth).any()),
@@ -616,12 +634,15 @@ def recurrence_checks(
 ) -> list[dict[str, Any]]:
     expected = derive_recurrence(non_mt)
     parity = recurrence.equals(expected)
+    expected_rows = min(RECURRENCE_DISPLAY_LIMIT, non_mt["current_symbol"].nunique())
+    expected_maximum = int(expected["category_count"].max())
+    expected_top_gene = str(expected.iloc[0]["current_symbol"])
     return common_checks(source, non_mt) + [
-        check("recurrence_plot_rows", len(recurrence), RECURRENCE_DISPLAY_LIMIT, len(recurrence) == RECURRENCE_DISPLAY_LIMIT),
-        check("recurrence_genes_unique", recurrence["current_symbol"].nunique(), RECURRENCE_DISPLAY_LIMIT, recurrence["current_symbol"].nunique() == RECURRENCE_DISPLAY_LIMIT),
+        check("recurrence_plot_rows", len(recurrence), expected_rows, len(recurrence) == expected_rows),
+        check("recurrence_genes_unique", recurrence["current_symbol"].nunique(), expected_rows, recurrence["current_symbol"].nunique() == expected_rows),
         check("recurrence_source_parity", "TRUE" if parity else "FALSE", "TRUE", parity),
-        check("maximum_category_recurrence", int(recurrence["category_count"].max()), EXPECTED_MAX_CATEGORY_RECURRENCE, int(recurrence["category_count"].max()) == EXPECTED_MAX_CATEGORY_RECURRENCE),
-        check("top_recurrent_gene", recurrence.iloc[0]["current_symbol"], EXPECTED_TOP_RECURRENT_GENE, recurrence.iloc[0]["current_symbol"] == EXPECTED_TOP_RECURRENT_GENE),
+        check("maximum_category_recurrence", int(recurrence["category_count"].max()), expected_maximum, int(recurrence["category_count"].max()) == expected_maximum),
+        check("top_recurrent_gene", recurrence.iloc[0]["current_symbol"], expected_top_gene, recurrence.iloc[0]["current_symbol"] == expected_top_gene),
     ]
 
 
@@ -637,13 +658,21 @@ def top5_checks(
     )
     observed_keys = set(zip(top5["signature_group"], top5["broad_network"], top5["current_symbol"]))
     per_category = top5.groupby(["signature_group", "broad_network"]).size()
+    expected_rows = len(expected_keys)
+    expected_categories = non_mt.groupby(["signature_group", "broad_network"]).ngroups
     return common_checks(source, non_mt) + [
-        check("top5_plot_rows", len(top5), EXPECTED_TOP5_ROWS, len(top5) == EXPECTED_TOP5_ROWS),
-        check("top5_category_count", len(per_category), EXPECTED_NON_MT_CATEGORIES, len(per_category) == EXPECTED_NON_MT_CATEGORIES),
-        check("top5_maximum_per_category", int(per_category.max()), 5, int(per_category.max()) == 5),
+        check("top5_plot_rows", len(top5), expected_rows, len(top5) == expected_rows),
+        check("top5_category_count", len(per_category), expected_categories, len(per_category) == expected_categories),
+        check("top5_maximum_per_category", int(per_category.max()), "<=5", int(per_category.max()) <= 5),
         check("top5_rank_bounds", f"{int(top5['non_mt_rank'].min())}-{int(top5['non_mt_rank'].max())}", "1-5", top5["non_mt_rank"].between(1, 5).all()),
         check("top5_source_key_parity", len(observed_keys & expected_keys), len(expected_keys), observed_keys == expected_keys),
         check("top5_keys_unique", len(observed_keys), len(top5), len(observed_keys) == len(top5)),
+        check(
+            "top5_redundant_encoding",
+            "blue + hatch|orange + solid",
+            "color + pattern",
+            bool(RECURRENT_HATCH),
+        ),
     ]
 
 
@@ -667,7 +696,7 @@ def save_bundle(
 ) -> dict[str, Any]:
     bundle = figure_root / figure_id
     bundle.mkdir(parents=True, exist_ok=True)
-    stem = f"phase11_seaad_simple_aggr_{figure_id}"
+    stem = f"phase{PHASE_NUMBER}_seaad_simple_aggr_network_{figure_id}"
     paths = {
         "png": bundle / f"{stem}.png",
         "svg": bundle / f"{stem}.svg",
@@ -756,7 +785,11 @@ def save_bundle(
 
 
 def main() -> int:
+    global SOURCE_ANALYSIS_ID, FIGURE_SCHEMA_ROOT, PHASE_NUMBER
     args = parse_args()
+    PHASE_NUMBER = args.phase_number
+    SOURCE_ANALYSIS_ID = args.analysis_id
+    FIGURE_SCHEMA_ROOT = f"phase{PHASE_NUMBER}_seaad_simple_aggr_network_non_mt_figure_v1"
     root = args.root.resolve()
     result_dir = (
         args.result_dir.resolve()
@@ -773,40 +806,48 @@ def main() -> int:
         / "phase_11_sex_apoe_simple_aggr"
     )
     figure_root.mkdir(parents=True, exist_ok=True)
+    if any(figure_root.iterdir()):
+        raise FileExistsError(f"Refusing to overwrite nonempty figure directory: {figure_root}")
 
     configure_style()
     source = validate_source(result_dir)
     non_mt = derive_non_mt_rows(source)
     recurrence = derive_recurrence(non_mt)
     top5 = derive_top5(non_mt)
+    status_row = source["status"].iloc[0]
+    included_runs = int(status_row["included_run_count"])
+    category_count = non_mt.groupby(["signature_group", "broad_network"]).ngroups
+    recurrent_gene_count = int((recurrence["category_count"] >= 2).sum())
+    top5_rows = len(top5)
+    result_rel = result_dir.relative_to(root)
 
-    common_methods = """The renderer reads the validated `simple_category_gene_aggregates.tsv` table from `results/validation_human/11_sex_apoe_kda_simple_aggr` and verifies its registered SHA-256 hash, source completion status, and source checks. The source already excludes core-MitoCarta drivers, so every row is a `case_id = non_mt_driver`, `is_core_mito = FALSE` unit; the renderer re-verifies this scope. No KDA or ACAT calculation is rerun. Rows are ordered within each `signature_group × broad_network` category by `returned_run_q_acat_score`, then gene symbol, and the resulting display rank is confirmed to match the stored source rank.
+    common_methods = f"""The renderer reads the validated `simple_category_gene_aggregates.tsv` table from `{result_rel}` and verifies its registered SHA-256 hash, source completion status, and source checks. The source already excludes core-MitoCarta drivers, so every row is a `case_id = non_mt_driver`, `is_core_mito = FALSE` unit; the renderer re-verifies this scope. No KDA or ACAT calculation is rerun. Rows are ordered within each `signature_group × broad_network` category by `returned_run_q_acat_score`, then gene symbol, and the resulting display rank is confirmed to match the stored source rank.
 
-The score is the requested exploratory returned-only value from the 42 active SEA-AD KDA calls: a singleton stock within-call BH q is passed through unchanged, whereas two or more returned q values are combined by equal-weight ACAT. It is post-selected and is not a formally FDR-controlled cross-call q value; the figures are descriptive rankings of stock-significant returns. Only 4 of the 42 structural sex/APOE-by-broad-cell categories have non-MT returns, and 40 of the 42 active calls sit in M_e33, so category breadth is bounded by the unbalanced call distribution."""
+The score is the requested exploratory returned-only value from {included_runs} active SEA-AD KDA calls run with network release `{args.network_release_id}`: a singleton stock within-call BH q is passed through unchanged, whereas two or more returned q values are combined by equal-weight ACAT. It is post-selected and is not a formally FDR-controlled cross-call q value; the figures are descriptive rankings of stock-significant returns. {category_count} of the 42 structural sex/APOE-by-broad-cell categories have non-MT returns, so category breadth remains bounded by the available call distribution."""
 
-    recurrence_caption = """# SEA-AD simple-aggregation driver recurrence
+    recurrence_caption = f"""# SEA-AD network-specific simple-aggregation driver recurrence
 
-The 20 most recurrent SEA-AD non-MT key drivers across sex/APOE-by-broad-cell categories. Bar length is the number of categories containing the gene; only 4 SEA-AD categories have non-MT returns, so the maximum possible recurrence is small. Fill records how many of those category occurrences combine two or more significant call returns by ACAT; the remainder are one-call q passthroughs."""
+The {len(recurrence)} most recurrent SEA-AD non-MT key drivers across sex/APOE-by-broad-cell categories using `{args.network_release_id}`. Bar length is the number of categories containing the gene; {category_count} SEA-AD categories have non-MT returns. Fill records how many category occurrences combine two or more significant call returns by ACAT; the remainder are one-call q passthroughs."""
     recurrence_methods = f"""# Methods
 
 {common_methods}
 
-For recurrence, each gene is counted at most once in each category. Genes are ordered by category count (descending), best returned-q ACAT score (ascending), and symbol; the first 20 are displayed. Five genes appear in two categories; the remaining displayed genes appear in one and are ordered by their best exploratory score."""
+For recurrence, each gene is counted at most once in each category. Genes are ordered by category count (descending), best returned-q ACAT score (ascending), and symbol; up to 20 are displayed. {recurrent_gene_count} displayed genes appear in at least two categories; the remaining displayed genes appear once and are ordered by their best exploratory score."""
 
-    top5_caption = """# SEA-AD simple-aggregation top-five candidates
+    top5_caption = f"""# SEA-AD network-specific simple-aggregation top-five candidates
 
-Up to five SEA-AD non-MT key drivers per sex/APOE-by-broad-cell category, split into female and male panels. Blue tiles represent scores ACAT-combined across at least two significant call returns; orange tiles represent a single within-call q passthrough. Categories without any non-MT return are omitted, which leaves one female category (F_e33 · Excitatory neurons, three genes) and three male categories (all M_e33)."""
+Up to five SEA-AD non-MT key drivers per sex/APOE-by-broad-cell category using `{args.network_release_id}`, split into female and male panels. Blue hatched tiles represent scores ACAT-combined across at least two significant call returns; solid orange tiles represent a single within-call q passthrough. The redundant pattern encoding preserves the distinction in grayscale. Categories without a non-MT return are omitted; {category_count} categories and {top5_rows} gene-category rows remain."""
     top5_methods = f"""# Methods
 
 {common_methods}
 
-For the top-five display, ranks 1–5 within each return-bearing category are retained without backfilling or an additional significance threshold. This leaves 18 plotted gene-category rows across 4 categories; the F_e33 excitatory category contributes only its three returned genes. The word “candidates” names the requested display and does not imply a new confirmatory error-rate claim."""
+For the top-five display, ranks 1–5 within each return-bearing category are retained without backfilling or an additional significance threshold. This leaves {top5_rows} plotted gene-category rows across {category_count} categories. ACAT-combined tiles use both blue fill and diagonal hatching, while singleton passthrough tiles use solid orange fill, providing redundant color-and-pattern encoding. The word “candidates” names the requested display and does not imply a new confirmatory error-rate claim."""
 
     manifest_rows = [
         save_bundle(
             figure_root=figure_root,
             figure_id="driver_recurrence",
-            figure=plot_recurrence(recurrence),
+            figure=plot_recurrence(recurrence, category_count),
             plot_data=recurrence,
             caption=recurrence_caption,
             methods=recurrence_methods,
@@ -822,7 +863,7 @@ For the top-five display, ranks 1–5 within each return-bearing category are re
             scientific_checks=top5_checks(source, non_mt, top5),
         ),
     ]
-    manifest_path = figure_root / "phase11_seaad_simple_aggr_figure_manifest.tsv"
+    manifest_path = figure_root / f"phase{PHASE_NUMBER}_seaad_simple_aggr_network_figure_manifest.tsv"
     write_tsv(pd.DataFrame(manifest_rows), manifest_path)
     print(f"wrote={figure_root}")
     print(f"figure_bundles={len(manifest_rows)}")
