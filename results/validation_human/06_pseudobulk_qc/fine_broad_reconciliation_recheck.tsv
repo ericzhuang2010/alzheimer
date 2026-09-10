@@ -1,0 +1,8 @@
+broad_network	fine_rollup_umi_total	direct_broad_umi_total	mismatched_gene_donor_cells	exact_equal
+Astrocytes	841474216	841474216	0	TRUE
+Excitatory_neurons	21813617007	21813617007	0	TRUE
+Inhibitory_neurons	7771906194	7771906194	0	TRUE
+Microglia	220761426	220761426	0	TRUE
+OPCs	263150803	263150803	0	TRUE
+Oligodendrocytes	909331788	909331788	0	TRUE
+Vasculature_cells	47501917	47501917	0	TRUE

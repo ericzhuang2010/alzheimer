@@ -1,0 +1,8 @@
+broad_network	structural_profiles	primary_eligible_profiles	sensitivity_eligible_profiles	total_nuclei	total_umis	median_library_size_eligible
+Astrocytes	78	78	78	76996	841474216	8502181.5
+Excitatory_neurons	78	78	78	552199	21813617007	292754697.5
+Inhibitory_neurons	78	78	78	362183	7771906194	99250169.5
+Microglia	78	78	78	37102	220761426	2287771
+OPCs	78	78	76	24529	263150803	2926831
+Oligodendrocytes	78	78	77	129573	909331788	9308133.5
+Vasculature_cells	78	76	60	6590	47501917	482789

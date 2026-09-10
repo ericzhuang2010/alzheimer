@@ -1,0 +1,130 @@
+supertype_id	supertype_label	broad_network	structural_profiles	primary_eligible_profiles	sensitivity_eligible_profiles	total_nuclei	total_umis	median_library_size_eligible
+st001_astro_1	Astro_1	Astrocytes	78	35	4	1665	21120422	383930
+st002_astro_2	Astro_2	Astrocytes	78	78	77	57216	648921138	6192457
+st003_astro_6_seaad	Astro_6-SEAAD	Astrocytes	78	41	21	3205	35543705	536602
+st004_astro_5	Astro_5	Astrocytes	78	50	23	2845	24664451	361431.5
+st005_astro_3	Astro_3	Astrocytes	78	72	64	11031	103686901	1116728.5
+st006_astro_4	Astro_4	Astrocytes	78	17	2	1034	7537599	224601
+st007_l2_3_it_1	L2/3 IT_1	Excitatory_neurons	78	77	77	98398	3225048202	40331234
+st008_l2_3_it_2	L2/3 IT_2	Excitatory_neurons	78	15	0	987	35859115	833592
+st009_l2_3_it_6	L2/3 IT_6	Excitatory_neurons	78	75	75	48989	1931766906	25157214
+st010_l2_3_it_7	L2/3 IT_7	Excitatory_neurons	78	48	13	2433	98665210	1438600
+st011_l2_3_it_5	L2/3 IT_5	Excitatory_neurons	78	77	75	38380	1672509652	21257838
+st012_l2_3_it_13	L2/3 IT_13	Excitatory_neurons	78	77	75	32612	1701380257	21330950
+st013_l2_3_it_10	L2/3 IT_10	Excitatory_neurons	78	62	57	26612	934824080	12267588
+st014_l2_3_it_8	L2/3 IT_8	Excitatory_neurons	78	71	62	9893	434755901	5840817
+st015_l2_3_it_12	L2/3 IT_12	Excitatory_neurons	78	75	68	11502	557557615	6154696
+st016_l6_it_1	L6 IT_1	Excitatory_neurons	78	72	52	4939	209209762	2683169.5
+st017_l6_it_2	L6 IT_2	Excitatory_neurons	78	78	77	34628	1813339695	23220398.5
+st018_l4_it_2	L4 IT_2	Excitatory_neurons	78	78	78	28499	765068112	8341150.5
+st019_l4_it_3	L4 IT_3	Excitatory_neurons	78	76	54	4957	213199400	2697593.5
+st020_l4_it_4	L4 IT_4	Excitatory_neurons	78	78	78	19772	640381132	7962701.5
+st021_l5_it_1	L5 IT_1	Excitatory_neurons	78	78	77	10339	340201903	4272444
+st022_l5_it_3	L5 IT_3	Excitatory_neurons	78	74	31	3799	172148155	2234457.5
+st023_l2_3_it_3	L2/3 IT_3	Excitatory_neurons	78	74	73	13828	577967899	7417737
+st024_l4_it_1	L4 IT_1	Excitatory_neurons	78	78	77	15790	582505776	7318565
+st025_l5_it_2	L5 IT_2	Excitatory_neurons	78	78	78	37194	1253311630	16307276.5
+st026_l5_it_5	L5 IT_5	Excitatory_neurons	78	78	74	15645	683878052	8291820.5
+st027_l5_it_6	L5 IT_6	Excitatory_neurons	78	74	66	10712	506844394	6465561
+st028_l5_it_7	L5 IT_7	Excitatory_neurons	78	75	62	9555	581969646	6844087
+st029_l5_et_2	L5 ET_2	Excitatory_neurons	78	64	28	3363	233620445	3579921.5
+st030_l6_ct_1	L6 CT_1	Excitatory_neurons	78	76	69	9836	352544220	4455667
+st031_l6_ct_2	L6 CT_2	Excitatory_neurons	78	76	73	14297	524499410	6520640
+st032_l6_ct_3	L6 CT_3	Excitatory_neurons	78	0	0	485	22661933	NA
+st033_l6_ct_4	L6 CT_4	Excitatory_neurons	78	1	0	510	25676298	1075312
+st034_l6b_1	L6b_1	Excitatory_neurons	78	6	0	618	20512575	843222
+st035_l6b_2	L6b_2	Excitatory_neurons	78	57	25	3166	136299253	1767025
+st036_l6b_3	L6b_3	Excitatory_neurons	78	0	0	286	9988256	NA
+st037_l6b_4	L6b_4	Excitatory_neurons	78	48	14	2314	81732644	1420177.5
+st038_l6b_5	L6b_5	Excitatory_neurons	78	13	0	889	38891043	1175349
+st039_l6b_6	L6b_6	Excitatory_neurons	78	73	60	8461	408022871	5004642
+st040_l6_it_car3_1	L6 IT Car3_1	Excitatory_neurons	78	16	0	1050	45854637	1297710
+st041_l6_it_car3_2	L6 IT Car3_2	Excitatory_neurons	78	21	2	1274	60126528	1145197
+st042_l6_it_car3_3	L6 IT Car3_3	Excitatory_neurons	78	77	69	9505	417068423	4903384
+st043_l5_6_np_1	L5/6 NP_1	Excitatory_neurons	78	74	69	7311	210663593	2787448
+st044_l5_6_np_2	L5/6 NP_2	Excitatory_neurons	78	74	62	5954	173744964	2327564
+st045_l5_6_np_3	L5/6 NP_3	Excitatory_neurons	78	0	0	62	2110916	NA
+st046_l5_6_np_6	L5/6 NP_6	Excitatory_neurons	78	2	0	361	11764940	485838.5
+st047_l5_6_np_4	L5/6 NP_4	Excitatory_neurons	78	69	20	2994	105441564	1356032
+st048_lamp5_lhx6_1	Lamp5_Lhx6_1	Inhibitory_neurons	78	77	76	19940	523279580	6783916
+st049_lamp5_1	Lamp5_1	Inhibitory_neurons	78	78	59	5481	109020433	1342431
+st050_lamp5_2	Lamp5_2	Inhibitory_neurons	78	78	78	22996	438586305	5418605.5
+st051_lamp5_3	Lamp5_3	Inhibitory_neurons	78	76	68	7427	137100221	1733341.5
+st052_lamp5_4	Lamp5_4	Inhibitory_neurons	78	34	2	1522	27001017	479824
+st053_lamp5_5	Lamp5_5	Inhibitory_neurons	78	73	63	7673	132783567	1635595
+st054_lamp5_6	Lamp5_6	Inhibitory_neurons	78	67	24	3242	48595052	630208
+st055_pax6_1	Pax6_1	Inhibitory_neurons	78	69	36	4213	102081276	1170752
+st056_pax6_2	Pax6_2	Inhibitory_neurons	78	27	0	1310	34202781	649829
+st057_pax6_3	Pax6_3	Inhibitory_neurons	78	9	0	900	36910639	888615
+st058_pax6_4	Pax6_4	Inhibitory_neurons	78	42	1	1665	46542093	733141.5
+st059_sncg_3	Sncg_3	Inhibitory_neurons	78	49	1	1891	49723088	742260
+st060_sncg_6	Sncg_6	Inhibitory_neurons	78	69	20	2945	53600987	740430
+st061_sncg_2	Sncg_2	Inhibitory_neurons	78	22	0	1153	18700049	408932
+st062_sncg_1	Sncg_1	Inhibitory_neurons	78	62	19	3162	42400799	536842.5
+st063_sncg_8	Sncg_8	Inhibitory_neurons	78	69	20	3146	53559737	670506
+st064_sncg_4	Sncg_4	Inhibitory_neurons	78	73	62	6027	90142757	1131028
+st065_sncg_5	Sncg_5	Inhibitory_neurons	78	58	27	3089	48320319	643222
+st066_vip_14	Vip_14	Inhibitory_neurons	78	14	0	1129	26146131	557213.5
+st067_vip_15	Vip_15	Inhibitory_neurons	78	77	72	7461	132557656	1674452
+st068_vip_16	Vip_16	Inhibitory_neurons	78	29	2	1460	35688699	637069
+st069_vip_4	Vip_4	Inhibitory_neurons	78	78	76	11241	207845359	2603347.5
+st070_vip_5	Vip_5	Inhibitory_neurons	78	52	2	2088	45558750	673408.5
+st071_vip_6	Vip_6	Inhibitory_neurons	78	62	9	2589	64922654	943488.5
+st072_vip_9	Vip_9	Inhibitory_neurons	78	76	52	4882	112244670	1402096.5
+st073_vip_2	Vip_2	Inhibitory_neurons	78	76	60	6113	92276503	1157161
+st074_vip_11	Vip_11	Inhibitory_neurons	78	75	72	8328	142560253	1684867
+st075_vip_13	Vip_13	Inhibitory_neurons	78	77	59	5584	106328453	1310450
+st076_vip_1	Vip_1	Inhibitory_neurons	78	76	70	8415	129712352	1513772.5
+st077_vip_12	Vip_12	Inhibitory_neurons	78	75	37	3725	69811512	883736
+st078_vip_18	Vip_18	Inhibitory_neurons	78	70	22	3146	64442556	863636
+st079_vip_19	Vip_19	Inhibitory_neurons	78	75	74	9408	184767889	2365570
+st080_vip_21	Vip_21	Inhibitory_neurons	78	60	1	2096	37324542	556806
+st081_vip_23	Vip_23	Inhibitory_neurons	78	77	74	8388	143928753	1880379
+st082_sst_chodl_1	Sst Chodl_1	Inhibitory_neurons	78	16	0	1027	26324006	638838
+st083_sst_1	Sst_1	Inhibitory_neurons	78	56	4	2207	54981601	753645
+st084_sst_4	Sst_4	Inhibitory_neurons	78	66	11	2603	61955839	887235.5
+st085_sst_5	Sst_5	Inhibitory_neurons	78	69	16	2795	64958974	858537
+st086_sst_7	Sst_7	Inhibitory_neurons	78	53	2	1919	48129720	731351
+st087_sst_3	Sst_3	Inhibitory_neurons	78	78	72	16180	258872438	3011571.5
+st088_sst_19	Sst_19	Inhibitory_neurons	78	73	52	5682	76257022	897604
+st089_sst_9	Sst_9	Inhibitory_neurons	78	65	33	3475	65136595	906588
+st090_sst_10	Sst_10	Inhibitory_neurons	78	73	47	4379	76420438	993545
+st091_sst_13	Sst_13	Inhibitory_neurons	78	74	62	6948	110706886	1411731
+st092_sst_12	Sst_12	Inhibitory_neurons	78	62	13	2639	57999596	847620.5
+st093_sst_chodl_2	Sst Chodl_2	Inhibitory_neurons	78	1	0	571	14912908	754611
+st094_sst_11	Sst_11	Inhibitory_neurons	78	33	11	1859	22266821	505061
+st095_sst_20	Sst_20	Inhibitory_neurons	78	46	24	2845	36862488	669277
+st096_sst_22	Sst_22	Inhibitory_neurons	78	20	1	1025	14450961	495099
+st097_sst_23	Sst_23	Inhibitory_neurons	78	59	25	3305	44910752	573447
+st098_sst_25	Sst_25	Inhibitory_neurons	78	39	9	1979	28629748	531941
+st099_sst_2	Sst_2	Inhibitory_neurons	78	64	36	3610	54367935	744688
+st100_pvalb_6	Pvalb_6	Inhibitory_neurons	78	73	38	3796	88336128	1159488
+st101_pvalb_5	Pvalb_5	Inhibitory_neurons	78	55	11	2389	44052224	719718
+st102_pvalb_8	Pvalb_8	Inhibitory_neurons	78	51	14	2386	38265096	635629
+st103_pvalb_7	Pvalb_7	Inhibitory_neurons	78	58	6	2336	62256297	949508.5
+st104_pvalb_1	Pvalb_1	Inhibitory_neurons	78	72	68	6605	220091365	2833084
+st105_pvalb_3	Pvalb_3	Inhibitory_neurons	78	73	65	7641	226101500	2936043
+st106_pvalb_2	Pvalb_2	Inhibitory_neurons	78	74	73	17334	502335304	6154006
+st107_pvalb_15	Pvalb_15	Inhibitory_neurons	78	78	77	42261	1206287862	15232420.5
+st108_pvalb_14	Pvalb_14	Inhibitory_neurons	78	61	25	3268	80215757	1155668
+st109_pvalb_12	Pvalb_12	Inhibitory_neurons	78	60	13	2626	63920375	959096
+st110_pvalb_10	Pvalb_10	Inhibitory_neurons	78	63	19	2821	88391691	1270482
+st111_pvalb_13	Pvalb_13	Inhibitory_neurons	78	41	2	1638	54824818	914311
+st112_pvalb_9	Pvalb_9	Inhibitory_neurons	78	72	52	4807	115206176	1535185
+st113_chandelier_1	Chandelier_1	Inhibitory_neurons	78	77	68	9926	199174028	2527630
+st114_chandelier_2	Chandelier_2	Inhibitory_neurons	78	70	31	3466	75635413	1011037
+st115_micro_pvm_1	Micro-PVM_1	Microglia	78	5	0	666	4629369	186328
+st116_micro_pvm_2_1_seaad	Micro-PVM_2_1-SEAAD	Microglia	78	3	0	261	2265300	320776
+st117_micro_pvm_2	Micro-PVM_2	Microglia	78	78	78	34917	205598912	2196597.5
+st118_micro_pvm_3_seaad	Micro-PVM_3-SEAAD	Microglia	78	22	9	1258	8267845	227769.5
+st119_opc_1	OPC_1	OPCs	78	1	0	181	2826788	401470
+st120_opc_2	OPC_2	OPCs	78	78	74	21845	234825125	2428874
+st121_opc_2_2_seaad	OPC_2_2-SEAAD	OPCs	78	21	11	2503	25498890	613928
+st122_oligo_1	Oligo_1	Oligodendrocytes	78	69	64	13248	106300969	1253419
+st123_oligo_2	Oligo_2	Oligodendrocytes	78	76	75	62908	498808905	4048053
+st124_oligo_4	Oligo_4	Oligodendrocytes	78	78	75	52060	293698453	3027166
+st125_oligo_3	Oligo_3	Oligodendrocytes	78	24	2	1357	10523461	202882
+st126_endo_2	Endo_2	Vasculature_cells	78	53	10	2228	17233560	247074
+st127_vlmc_1	VLMC_1	Vasculature_cells	78	32	4	1594	10752494	211024
+st128_smc_seaad	SMC-SEAAD	Vasculature_cells	78	0	0	142	847263	NA
+st129_pericyte_1	Pericyte_1	Vasculature_cells	78	54	15	2626	18668600	249563

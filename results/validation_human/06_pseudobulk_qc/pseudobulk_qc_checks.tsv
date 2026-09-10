@@ -1,0 +1,11 @@
+check	passed	observed	expected	details
+fine_shards_reloaded	TRUE	129	129	
+broad_shards_reloaded	TRUE	7	7	
+feature_sample_order	TRUE	1	1	
+stable_donor_clinical_joins	TRUE	1	1	
+fine_total_recheck	TRUE	31867743351	31867743351	
+broad_total_recheck	TRUE	31867743351	31867743351	
+fine_direct_broad_reconciliation	TRUE	0	0	
+model_profiles_valid	TRUE	1	1	
+all_structural_fine_profiles_retained	TRUE	10062	10062	
+all_structural_broad_profiles_retained	TRUE	546	546	

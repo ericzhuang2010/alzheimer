@@ -1,0 +1,137 @@
+resolution	context_id	scientific_label	broad_network	structural_profiles	primary_eligible_profiles	sensitivity_eligible_profiles
+fine_supertype	st001_astro_1	Astro_1	Astrocytes	78	35	4
+fine_supertype	st002_astro_2	Astro_2	Astrocytes	78	78	77
+fine_supertype	st003_astro_6_seaad	Astro_6-SEAAD	Astrocytes	78	41	21
+fine_supertype	st004_astro_5	Astro_5	Astrocytes	78	50	23
+fine_supertype	st005_astro_3	Astro_3	Astrocytes	78	72	64
+fine_supertype	st006_astro_4	Astro_4	Astrocytes	78	17	2
+fine_supertype	st007_l2_3_it_1	L2/3 IT_1	Excitatory_neurons	78	77	77
+fine_supertype	st008_l2_3_it_2	L2/3 IT_2	Excitatory_neurons	78	15	0
+fine_supertype	st009_l2_3_it_6	L2/3 IT_6	Excitatory_neurons	78	75	75
+fine_supertype	st010_l2_3_it_7	L2/3 IT_7	Excitatory_neurons	78	48	13
+fine_supertype	st011_l2_3_it_5	L2/3 IT_5	Excitatory_neurons	78	77	75
+fine_supertype	st012_l2_3_it_13	L2/3 IT_13	Excitatory_neurons	78	77	75
+fine_supertype	st013_l2_3_it_10	L2/3 IT_10	Excitatory_neurons	78	62	57
+fine_supertype	st014_l2_3_it_8	L2/3 IT_8	Excitatory_neurons	78	71	62
+fine_supertype	st015_l2_3_it_12	L2/3 IT_12	Excitatory_neurons	78	75	68
+fine_supertype	st016_l6_it_1	L6 IT_1	Excitatory_neurons	78	72	52
+fine_supertype	st017_l6_it_2	L6 IT_2	Excitatory_neurons	78	78	77
+fine_supertype	st018_l4_it_2	L4 IT_2	Excitatory_neurons	78	78	78
+fine_supertype	st019_l4_it_3	L4 IT_3	Excitatory_neurons	78	76	54
+fine_supertype	st020_l4_it_4	L4 IT_4	Excitatory_neurons	78	78	78
+fine_supertype	st021_l5_it_1	L5 IT_1	Excitatory_neurons	78	78	77
+fine_supertype	st022_l5_it_3	L5 IT_3	Excitatory_neurons	78	74	31
+fine_supertype	st023_l2_3_it_3	L2/3 IT_3	Excitatory_neurons	78	74	73
+fine_supertype	st024_l4_it_1	L4 IT_1	Excitatory_neurons	78	78	77
+fine_supertype	st025_l5_it_2	L5 IT_2	Excitatory_neurons	78	78	78
+fine_supertype	st026_l5_it_5	L5 IT_5	Excitatory_neurons	78	78	74
+fine_supertype	st027_l5_it_6	L5 IT_6	Excitatory_neurons	78	74	66
+fine_supertype	st028_l5_it_7	L5 IT_7	Excitatory_neurons	78	75	62
+fine_supertype	st029_l5_et_2	L5 ET_2	Excitatory_neurons	78	64	28
+fine_supertype	st030_l6_ct_1	L6 CT_1	Excitatory_neurons	78	76	69
+fine_supertype	st031_l6_ct_2	L6 CT_2	Excitatory_neurons	78	76	73
+fine_supertype	st032_l6_ct_3	L6 CT_3	Excitatory_neurons	78	0	0
+fine_supertype	st033_l6_ct_4	L6 CT_4	Excitatory_neurons	78	1	0
+fine_supertype	st034_l6b_1	L6b_1	Excitatory_neurons	78	6	0
+fine_supertype	st035_l6b_2	L6b_2	Excitatory_neurons	78	57	25
+fine_supertype	st036_l6b_3	L6b_3	Excitatory_neurons	78	0	0
+fine_supertype	st037_l6b_4	L6b_4	Excitatory_neurons	78	48	14
+fine_supertype	st038_l6b_5	L6b_5	Excitatory_neurons	78	13	0
+fine_supertype	st039_l6b_6	L6b_6	Excitatory_neurons	78	73	60
+fine_supertype	st040_l6_it_car3_1	L6 IT Car3_1	Excitatory_neurons	78	16	0
+fine_supertype	st041_l6_it_car3_2	L6 IT Car3_2	Excitatory_neurons	78	21	2
+fine_supertype	st042_l6_it_car3_3	L6 IT Car3_3	Excitatory_neurons	78	77	69
+fine_supertype	st043_l5_6_np_1	L5/6 NP_1	Excitatory_neurons	78	74	69
+fine_supertype	st044_l5_6_np_2	L5/6 NP_2	Excitatory_neurons	78	74	62
+fine_supertype	st045_l5_6_np_3	L5/6 NP_3	Excitatory_neurons	78	0	0
+fine_supertype	st046_l5_6_np_6	L5/6 NP_6	Excitatory_neurons	78	2	0
+fine_supertype	st047_l5_6_np_4	L5/6 NP_4	Excitatory_neurons	78	69	20
+fine_supertype	st048_lamp5_lhx6_1	Lamp5_Lhx6_1	Inhibitory_neurons	78	77	76
+fine_supertype	st049_lamp5_1	Lamp5_1	Inhibitory_neurons	78	78	59
+fine_supertype	st050_lamp5_2	Lamp5_2	Inhibitory_neurons	78	78	78
+fine_supertype	st051_lamp5_3	Lamp5_3	Inhibitory_neurons	78	76	68
+fine_supertype	st052_lamp5_4	Lamp5_4	Inhibitory_neurons	78	34	2
+fine_supertype	st053_lamp5_5	Lamp5_5	Inhibitory_neurons	78	73	63
+fine_supertype	st054_lamp5_6	Lamp5_6	Inhibitory_neurons	78	67	24
+fine_supertype	st055_pax6_1	Pax6_1	Inhibitory_neurons	78	69	36
+fine_supertype	st056_pax6_2	Pax6_2	Inhibitory_neurons	78	27	0
+fine_supertype	st057_pax6_3	Pax6_3	Inhibitory_neurons	78	9	0
+fine_supertype	st058_pax6_4	Pax6_4	Inhibitory_neurons	78	42	1
+fine_supertype	st059_sncg_3	Sncg_3	Inhibitory_neurons	78	49	1
+fine_supertype	st060_sncg_6	Sncg_6	Inhibitory_neurons	78	69	20
+fine_supertype	st061_sncg_2	Sncg_2	Inhibitory_neurons	78	22	0
+fine_supertype	st062_sncg_1	Sncg_1	Inhibitory_neurons	78	62	19
+fine_supertype	st063_sncg_8	Sncg_8	Inhibitory_neurons	78	69	20
+fine_supertype	st064_sncg_4	Sncg_4	Inhibitory_neurons	78	73	62
+fine_supertype	st065_sncg_5	Sncg_5	Inhibitory_neurons	78	58	27
+fine_supertype	st066_vip_14	Vip_14	Inhibitory_neurons	78	14	0
+fine_supertype	st067_vip_15	Vip_15	Inhibitory_neurons	78	77	72
+fine_supertype	st068_vip_16	Vip_16	Inhibitory_neurons	78	29	2
+fine_supertype	st069_vip_4	Vip_4	Inhibitory_neurons	78	78	76
+fine_supertype	st070_vip_5	Vip_5	Inhibitory_neurons	78	52	2
+fine_supertype	st071_vip_6	Vip_6	Inhibitory_neurons	78	62	9
+fine_supertype	st072_vip_9	Vip_9	Inhibitory_neurons	78	76	52
+fine_supertype	st073_vip_2	Vip_2	Inhibitory_neurons	78	76	60
+fine_supertype	st074_vip_11	Vip_11	Inhibitory_neurons	78	75	72
+fine_supertype	st075_vip_13	Vip_13	Inhibitory_neurons	78	77	59
+fine_supertype	st076_vip_1	Vip_1	Inhibitory_neurons	78	76	70
+fine_supertype	st077_vip_12	Vip_12	Inhibitory_neurons	78	75	37
+fine_supertype	st078_vip_18	Vip_18	Inhibitory_neurons	78	70	22
+fine_supertype	st079_vip_19	Vip_19	Inhibitory_neurons	78	75	74
+fine_supertype	st080_vip_21	Vip_21	Inhibitory_neurons	78	60	1
+fine_supertype	st081_vip_23	Vip_23	Inhibitory_neurons	78	77	74
+fine_supertype	st082_sst_chodl_1	Sst Chodl_1	Inhibitory_neurons	78	16	0
+fine_supertype	st083_sst_1	Sst_1	Inhibitory_neurons	78	56	4
+fine_supertype	st084_sst_4	Sst_4	Inhibitory_neurons	78	66	11
+fine_supertype	st085_sst_5	Sst_5	Inhibitory_neurons	78	69	16
+fine_supertype	st086_sst_7	Sst_7	Inhibitory_neurons	78	53	2
+fine_supertype	st087_sst_3	Sst_3	Inhibitory_neurons	78	78	72
+fine_supertype	st088_sst_19	Sst_19	Inhibitory_neurons	78	73	52
+fine_supertype	st089_sst_9	Sst_9	Inhibitory_neurons	78	65	33
+fine_supertype	st090_sst_10	Sst_10	Inhibitory_neurons	78	73	47
+fine_supertype	st091_sst_13	Sst_13	Inhibitory_neurons	78	74	62
+fine_supertype	st092_sst_12	Sst_12	Inhibitory_neurons	78	62	13
+fine_supertype	st093_sst_chodl_2	Sst Chodl_2	Inhibitory_neurons	78	1	0
+fine_supertype	st094_sst_11	Sst_11	Inhibitory_neurons	78	33	11
+fine_supertype	st095_sst_20	Sst_20	Inhibitory_neurons	78	46	24
+fine_supertype	st096_sst_22	Sst_22	Inhibitory_neurons	78	20	1
+fine_supertype	st097_sst_23	Sst_23	Inhibitory_neurons	78	59	25
+fine_supertype	st098_sst_25	Sst_25	Inhibitory_neurons	78	39	9
+fine_supertype	st099_sst_2	Sst_2	Inhibitory_neurons	78	64	36
+fine_supertype	st100_pvalb_6	Pvalb_6	Inhibitory_neurons	78	73	38
+fine_supertype	st101_pvalb_5	Pvalb_5	Inhibitory_neurons	78	55	11
+fine_supertype	st102_pvalb_8	Pvalb_8	Inhibitory_neurons	78	51	14
+fine_supertype	st103_pvalb_7	Pvalb_7	Inhibitory_neurons	78	58	6
+fine_supertype	st104_pvalb_1	Pvalb_1	Inhibitory_neurons	78	72	68
+fine_supertype	st105_pvalb_3	Pvalb_3	Inhibitory_neurons	78	73	65
+fine_supertype	st106_pvalb_2	Pvalb_2	Inhibitory_neurons	78	74	73
+fine_supertype	st107_pvalb_15	Pvalb_15	Inhibitory_neurons	78	78	77
+fine_supertype	st108_pvalb_14	Pvalb_14	Inhibitory_neurons	78	61	25
+fine_supertype	st109_pvalb_12	Pvalb_12	Inhibitory_neurons	78	60	13
+fine_supertype	st110_pvalb_10	Pvalb_10	Inhibitory_neurons	78	63	19
+fine_supertype	st111_pvalb_13	Pvalb_13	Inhibitory_neurons	78	41	2
+fine_supertype	st112_pvalb_9	Pvalb_9	Inhibitory_neurons	78	72	52
+fine_supertype	st113_chandelier_1	Chandelier_1	Inhibitory_neurons	78	77	68
+fine_supertype	st114_chandelier_2	Chandelier_2	Inhibitory_neurons	78	70	31
+fine_supertype	st115_micro_pvm_1	Micro-PVM_1	Microglia	78	5	0
+fine_supertype	st116_micro_pvm_2_1_seaad	Micro-PVM_2_1-SEAAD	Microglia	78	3	0
+fine_supertype	st117_micro_pvm_2	Micro-PVM_2	Microglia	78	78	78
+fine_supertype	st118_micro_pvm_3_seaad	Micro-PVM_3-SEAAD	Microglia	78	22	9
+fine_supertype	st119_opc_1	OPC_1	OPCs	78	1	0
+fine_supertype	st120_opc_2	OPC_2	OPCs	78	78	74
+fine_supertype	st121_opc_2_2_seaad	OPC_2_2-SEAAD	OPCs	78	21	11
+fine_supertype	st122_oligo_1	Oligo_1	Oligodendrocytes	78	69	64
+fine_supertype	st123_oligo_2	Oligo_2	Oligodendrocytes	78	76	75
+fine_supertype	st124_oligo_4	Oligo_4	Oligodendrocytes	78	78	75
+fine_supertype	st125_oligo_3	Oligo_3	Oligodendrocytes	78	24	2
+fine_supertype	st126_endo_2	Endo_2	Vasculature_cells	78	53	10
+fine_supertype	st127_vlmc_1	VLMC_1	Vasculature_cells	78	32	4
+fine_supertype	st128_smc_seaad	SMC-SEAAD	Vasculature_cells	78	0	0
+fine_supertype	st129_pericyte_1	Pericyte_1	Vasculature_cells	78	54	15
+direct_broad	Astrocytes	Astrocytes	Astrocytes	78	78	78
+direct_broad	Excitatory_neurons	Excitatory_neurons	Excitatory_neurons	78	78	78
+direct_broad	Inhibitory_neurons	Inhibitory_neurons	Inhibitory_neurons	78	78	78
+direct_broad	Microglia	Microglia	Microglia	78	78	78
+direct_broad	OPCs	OPCs	OPCs	78	78	76
+direct_broad	Oligodendrocytes	Oligodendrocytes	Oligodendrocytes	78	78	77
+direct_broad	Vasculature_cells	Vasculature_cells	Vasculature_cells	78	76	60

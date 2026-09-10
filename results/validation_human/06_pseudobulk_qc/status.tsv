@@ -1,0 +1,2 @@
+schema_version	phase	validation_status	failed_checks	started_at_utc	completed_at_utc	fine_shards	broad_shards	structural_fine_profiles	primary_eligible_fine_profiles	fine_pseudobulk_umi_total	direct_broad_umi_total	config_sha256	vh05_status_sha256
+seaad_fine_phase_status_v2	VH06	validated_complete		2026-08-20 18:45:04 UTC	2026-08-20 18:45:30 UTC	129	7	10062	7208	31867743351	31867743351	8057f30622198fd2f629c46c3897040e44aaa4893b83f709796187bae2fa55a5	e28cac4dfc9a57df6d0e79b7945c3de69fa214d265d99850b4a85585ab8539bb
