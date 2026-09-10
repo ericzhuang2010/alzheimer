@@ -38,7 +38,8 @@ consensus/de-loop procedure, independent topology and stability QC, and
 scratch-to-work release publication. Five retain full-integrative mode and
 Vasculature carries its explicit exploratory ENCODE-only label. Active work is
 complete: the enriched root manifest and all permitted release artifacts were
-published in Git commit 4dbc46e.
+first published in Git commit `4dbc46e` and then relocated byte-identically to
+the canonical `data/bayesian_network_seaad/` path in commit `bad7195`.
 
 - Scale-out preparation completed for Astrocytes, Excitatory neurons,
   Inhibitory neurons, OPCs, and Oligodendrocytes with validated expression,
@@ -94,9 +95,11 @@ published in Git commit 4dbc46e.
   finalizer reconstructed the complete root manifest from all published
   network manifests and added release, donor, topology, method-mode, and
   source/config provenance to every row without rerunning consensus or
-  searches. The final Git release is commit 4dbc46e; an independent local audit
-  confirmed 56 unique files, eight files for each of seven networks, all byte
-  counts and SHA-256 checksums, every gzip stream, and all method-mode labels.
+  searches. The release content was finalized in commit `4dbc46e` and moved
+  byte-identically to its canonical path in commit `bad7195`; an independent
+  local audit confirmed 56 unique files, eight files for each of seven
+  networks, all byte counts and SHA-256 checksums, every gzip stream, and all
+  method-mode labels.
 
 - The Minerva work checkout started at commit
   b4486062ac77b3189e4f80a6b6a689c6b5952c0f.
