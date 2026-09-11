@@ -1,0 +1,12 @@
+schema_version	cohort	check	passed	observed	expected
+harmonized_broad_kda_run_checks_v1	seaad	input_release_validated	TRUE	validated_complete	validated_complete
+harmonized_broad_kda_run_checks_v1	seaad	structural_slot_count	TRUE	42	42
+harmonized_broad_kda_run_checks_v1	seaad	eligible_call_count	TRUE	5	5
+harmonized_broad_kda_run_checks_v1	seaad	all_calls_completed	TRUE	5	5
+harmonized_broad_kda_run_checks_v1	seaad	all_returned_q_values_reconstructed	TRUE	5	5
+harmonized_broad_kda_run_checks_v1	seaad	return_keys_unique	TRUE	0	0
+harmonized_broad_kda_run_checks_v1	seaad	significant_return_identity	TRUE	24	24
+harmonized_broad_kda_run_checks_v1	seaad	terminal_state_complete	TRUE	42	42
+harmonized_broad_kda_run_checks_v1	seaad	minimum3_support_slots	TRUE	0	0
+harmonized_broad_kda_run_checks_v1	seaad	minimum3_support_propagated	TRUE	TRUE	TRUE
+harmonized_broad_kda_run_checks_v1	seaad	seaad_vasculature_exploratory	TRUE	6	6

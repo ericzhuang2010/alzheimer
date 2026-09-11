@@ -39,6 +39,10 @@ def truth(value: Any) -> bool:
     return str(value).strip().lower() in TRUE_VALUES
 
 
+def row_value(row: Any, name: str, default: Any) -> Any:
+    return getattr(row, name, default)
+
+
 def sha256_file(path: Path) -> str:
     digest = hashlib.sha256()
     with path.open("rb") as handle:
@@ -189,6 +193,19 @@ def source_contrasts(
     if cohort == "rosmap":
         for row in status.itertuples(index=False):
             complete = row.terminal_status == "validated_complete"
+            exploratory_min3 = truth(row_value(row, "exploratory_min3_support", False))
+            confirmatory = truth(row_value(
+                row,
+                "confirmatory_support",
+                min(int(row.donors_ad), int(row.donors_nci)) >= 10,
+            ))
+            support_tier = str(row_value(
+                row,
+                "support_tier",
+                "exploratory_min3_support" if exploratory_min3 else (
+                    "confirmatory_support" if confirmatory else "standard_nonconfirmatory_support"
+                ),
+            ))
             result_path = repo_path(
                 Path(cfg["result_directory"])
                 / f"{row.broad_cell_type}__{row.group_id}.broad_deg.tsv.gz",
@@ -207,6 +224,9 @@ def source_contrasts(
                     "source_terminal_status": "completed" if complete else "source_not_estimable",
                     "source_terminal_reason": "" if complete else str(row.message or "not_estimable"),
                     "tested_feature_count": int(row.genes_returned) if complete else 0,
+                    "support_tier": support_tier,
+                    "exploratory_min3_support": exploratory_min3,
+                    "confirmatory_support": confirmatory,
                     "result_path": result_path if complete else None,
                     "registered_result_sha256": "",
                 }
@@ -214,6 +234,7 @@ def source_contrasts(
     else:
         for row in status.itertuples(index=False):
             complete = row.terminal_status == "completed"
+            confirmatory = min(int(row.n_case_donors), int(row.n_reference_donors)) >= 10
             result_path = repo_path(row.result_path, must_exist=True) if complete else None
             output.append(
                 {
@@ -228,6 +249,11 @@ def source_contrasts(
                     "source_terminal_status": "completed" if complete else "source_not_estimable",
                     "source_terminal_reason": "" if complete else str(row.terminal_reason),
                     "tested_feature_count": int(row.tested_feature_count) if complete else 0,
+                    "support_tier": "confirmatory_support" if confirmatory else (
+                        "standard_nonconfirmatory_support" if complete else "source_not_estimable"
+                    ),
+                    "exploratory_min3_support": False,
+                    "confirmatory_support": confirmatory,
                     "result_path": result_path,
                     "registered_result_sha256": str(row.result_sha256) if complete else "",
                 }
@@ -245,8 +271,14 @@ def main() -> int:
     scope = config["scope"]
     query_cfg = config["query"]
     output_dir = repo_path(cfg["input_directory"], must_exist=False)
-    if output_dir.exists() and any(output_dir.iterdir()):
-        fail(f"Refusing to overwrite nonempty input release: {output_dir}")
+    allowed_existing = {"00_source_deg_min3"} if args.cohort == "rosmap" else set()
+    existing_entries = {path.name for path in output_dir.iterdir()} if output_dir.exists() else set()
+    unexpected_entries = existing_entries - allowed_existing
+    if unexpected_entries or not existing_entries.issubset(allowed_existing):
+        fail(
+            f"Refusing to overwrite input release entries in {output_dir}: "
+            f"{sorted(unexpected_entries)}"
+        )
 
     authority: list[dict[str, Any]] = []
     add_authority(authority, "configuration", config_path)
@@ -401,6 +433,9 @@ def main() -> int:
                 "source_terminal_status": contrast["source_terminal_status"],
                 "source_terminal_reason": contrast["source_terminal_reason"],
                 "tested_feature_count": contrast["tested_feature_count"],
+                "support_tier": contrast["support_tier"],
+                "exploratory_min3_support": contrast["exploratory_min3_support"],
+                "confirmatory_support": contrast["confirmatory_support"],
                 "result_path": relative(result_path) if isinstance(result_path, Path) else "",
                 "result_sha256": contrast.get("result_sha256", ""),
             }
@@ -440,6 +475,9 @@ def main() -> int:
                             "cohort": args.cohort,
                             "kda_run_id": run_id,
                             "gene": gene,
+                            "support_tier": contrast["support_tier"],
+                            "exploratory_min3_support": contrast["exploratory_min3_support"],
+                            "confirmatory_support": contrast["confirmatory_support"],
                             "in_upregulated_query": gene in cache["up"],
                             "in_downregulated_query": gene in cache["down"],
                             "effective_member": gene in effective,
@@ -453,6 +491,9 @@ def main() -> int:
                             "cohort": args.cohort,
                             "kda_run_id": run_id,
                             "gene": gene,
+                            "support_tier": contrast["support_tier"],
+                            "exploratory_min3_support": contrast["exploratory_min3_support"],
+                            "confirmatory_support": contrast["confirmatory_support"],
                         }
                     )
             query_manifest_rows.append(
@@ -474,6 +515,9 @@ def main() -> int:
                     "query_mode": mode,
                     "n_case_donors": contrast["n_case_donors"],
                     "n_reference_donors": contrast["n_reference_donors"],
+                    "support_tier": contrast["support_tier"],
+                    "exploratory_min3_support": contrast["exploratory_min3_support"],
+                    "confirmatory_support": contrast["confirmatory_support"],
                     "source_terminal_status": contrast["source_terminal_status"],
                     "source_terminal_reason": contrast["source_terminal_reason"],
                     "candidate_query_genes": len(candidate) if contrast["source_terminal_status"] == "completed" else pd.NA,
@@ -495,15 +539,19 @@ def main() -> int:
     contrast_frame = pd.DataFrame(contrast_rows)
     query_manifest = pd.DataFrame(query_manifest_rows)
     query_members = pd.DataFrame(query_member_rows, columns=[
-        "schema_version", "cohort", "kda_run_id", "gene", "in_upregulated_query",
+        "schema_version", "cohort", "kda_run_id", "gene", "support_tier",
+        "exploratory_min3_support", "confirmatory_support", "in_upregulated_query",
         "in_downregulated_query", "effective_member", "exclusion_reason"
     ])
     background_members = pd.DataFrame(background_rows, columns=[
-        "schema_version", "cohort", "kda_run_id", "gene"
+        "schema_version", "cohort", "kda_run_id", "gene", "support_tier",
+        "exploratory_min3_support", "confirmatory_support"
     ])
     attrition = (
         query_manifest.groupby(
-            ["source_terminal_status", "terminal_status", "network_release_mode", "exploratory_network"],
+            ["source_terminal_status", "terminal_status", "support_tier",
+             "exploratory_min3_support", "confirmatory_support",
+             "network_release_mode", "exploratory_network"],
             dropna=False,
         )
         .size()
@@ -544,6 +592,16 @@ def main() -> int:
                 set(background_members.loc[background_members["kda_run_id"] == run_id, "gene"])
             ) for run_id in query_manifest.loc[query_manifest["execute_kda"].map(truth), "kda_run_id"]
         ), True, True),
+        ("rosmap_exactly_two_min3_exploratory_slots", args.cohort != "rosmap" or (
+            int(query_manifest["exploratory_min3_support"].map(truth).sum()) == 2
+            and set(query_manifest.loc[
+                query_manifest["exploratory_min3_support"].map(truth), "contrast_id"
+            ]) == {
+                "Vasculature_cells::AD_vs_NCI__Female__e2",
+                "Vasculature_cells::AD_vs_NCI__Male__e2",
+            }
+        ), int(query_manifest["exploratory_min3_support"].map(truth).sum()), 2 if args.cohort == "rosmap" else 0),
+        ("seaad_has_no_rosmap_min3_support_flag", args.cohort != "seaad" or not query_manifest["exploratory_min3_support"].map(truth).any(), int(query_manifest["exploratory_min3_support"].map(truth).sum()), 0),
         ("seaad_vasculature_exploratory", args.cohort != "seaad" or query_manifest.loc[query_manifest["broad_cell_type"].eq("Vasculature_cells"), "exploratory_network"].map(truth).all(), True, True),
     ]
     checks = pd.DataFrame(
@@ -563,7 +621,7 @@ def main() -> int:
     if failed:
         fail(f"Blocking input checks failed: {failed}")
 
-    if output_dir.exists():
+    if output_dir.exists() and not existing_entries:
         output_dir.rmdir()
     stage = output_dir.with_name(f".{output_dir.name}.tmp.{os.getpid()}")
     if stage.exists():
@@ -612,6 +670,8 @@ def main() -> int:
                 "small_query_calls": int(query_manifest["terminal_status"].eq("eligible_small_query").sum()),
                 "source_query_members": int(query_manifest["candidate_query_genes"].fillna(0).sum()),
                 "effective_query_members": int(query_manifest["effective_query_genes"].fillna(0).sum()),
+                "exploratory_min3_support_slots": int(query_manifest["exploratory_min3_support"].map(truth).sum()),
+                "confirmatory_support_slots": int(query_manifest["confirmatory_support"].map(truth).sum()),
                 "core_identity_conflicts_blocked": len(identity_conflicts),
                 "config_sha256": sha256_file(config_path),
                 "fkda_source_sha256": fkda_hash,
@@ -622,7 +682,12 @@ def main() -> int:
         ]
     )
     deterministic_tsv(status_frame, stage / "status.tsv")
-    os.replace(stage, output_dir)
+    if args.cohort == "rosmap" and output_dir.exists():
+        for staged_product in sorted(stage.iterdir()):
+            os.replace(staged_product, output_dir / staged_product.name)
+        stage.rmdir()
+    else:
+        os.replace(stage, output_dir)
     print(
         f"{cfg['input_phase']} validated_complete: {relative(output_dir)}; "
         f"completed_contrasts={completed}; eligible_kda_calls={eligible_calls}"

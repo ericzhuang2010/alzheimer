@@ -47,17 +47,17 @@ cohorts:
     run_phase: Phase22
     input_directory: results/minerva_production/21_harmonized_broad_kda_inputs
     output_directory: results/minerva_production/22_harmonized_broad_kda_combo
-    expected_completed_contrasts: 40
-    expected_not_estimable_contrasts: 2
-    minimum_donors_per_arm: 5
+    expected_completed_contrasts: 42
+    expected_not_estimable_contrasts: 0
+    minimum_donors_per_arm: 3
     case_phenotype: AD
     reference_phenotype: NCI
     coefficient_direction: AD_minus_NCI
     native_query_mode: AD_both_mito
-    source_status: results/minerva_production/08_deg_broad/broad_deg_status.tsv
-    contrast_status: results/minerva_production/08_deg_broad/broad_deg_contrast_status.tsv
-    combined_results: results/minerva_production/08_deg_broad/broad_deg_results.tsv.gz
-    result_directory: results/minerva_production/08_deg_broad/05_by_contrast
+    source_status: results/minerva_production/21_harmonized_broad_kda_inputs/00_source_deg_min3/status.tsv
+    contrast_status: results/minerva_production/21_harmonized_broad_kda_inputs/00_source_deg_min3/contrast_status.tsv
+    combined_results: results/minerva_production/21_harmonized_broad_kda_inputs/00_source_deg_min3/broad_deg_results.tsv.gz
+    result_directory: results/minerva_production/21_harmonized_broad_kda_inputs/00_source_deg_min3/by_contrast
     annotation: results/minerva_production/09_annotate_genes/gene_annotation_master.tsv.gz
     network_config: config/phase12_kda.yml
     result_columns:

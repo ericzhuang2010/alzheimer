@@ -79,6 +79,8 @@ empty_returns <- function() {
     sex = character(), apoe_group = character(), case_phenotype = character(),
     reference_phenotype = character(), coefficient_direction = character(),
     native_query_mode = character(), query_mode = character(),
+    support_tier = character(), exploratory_min3_support = logical(),
+    confirmatory_support = logical(),
     network_release_mode = character(), exploratory_network = logical(),
     key_driver = character(), best_layer = integer(), overlap_count = integer(),
     neighborhood_size = integer(), non_neighborhood_size = integer(),
@@ -95,6 +97,8 @@ empty_candidates <- function() {
     sex = character(), apoe_group = character(), case_phenotype = character(),
     reference_phenotype = character(), coefficient_direction = character(),
     native_query_mode = character(), query_mode = character(),
+    support_tier = character(), exploratory_min3_support = logical(),
+    confirmatory_support = logical(),
     network_release_mode = character(), exploratory_network = logical(),
     key_driver = character(), best_layer = integer(), overlap_count = integer(),
     neighborhood_size = integer(), non_neighborhood_size = integer(),
@@ -116,6 +120,9 @@ metadata_table <- function(meta, n) {
     coefficient_direction = rep(meta$coefficient_direction, n),
     native_query_mode = rep(meta$native_query_mode, n),
     query_mode = rep(meta$query_mode, n),
+    support_tier = rep(meta$support_tier, n),
+    exploratory_min3_support = rep(as.logical(meta$exploratory_min3_support), n),
+    confirmatory_support = rep(as.logical(meta$confirmatory_support), n),
     network_release_mode = rep(meta$network_release_mode, n),
     exploratory_network = rep(as.logical(meta$exploratory_network), n)
   )
@@ -339,6 +346,9 @@ main <- function() {
       kda_run_id = run_id, contrast_id = run$contrast_id[[1L]],
       broad_cell_type = run$broad_cell_type[[1L]], group_id = run$group_id[[1L]],
       query_mode = run$query_mode[[1L]],
+      support_tier = run$support_tier[[1L]],
+      exploratory_min3_support = as.logical(run$exploratory_min3_support[[1L]]),
+      confirmatory_support = as.logical(run$confirmatory_support[[1L]]),
       network_release_mode = run$network_release_mode[[1L]],
       exploratory_network = as.logical(run$exploratory_network[[1L]]),
       effective_query_genes = length(query), effective_background_genes = length(background),
@@ -349,6 +359,9 @@ main <- function() {
     reconstruction_parts[[i]] <- data.table::data.table(
       schema_version = "harmonized_broad_kda_reconstruction_checks_v1",
       cohort = args$cohort, kda_run_id = run_id,
+      contrast_id = run$contrast_id[[1L]], support_tier = run$support_tier[[1L]],
+      exploratory_min3_support = as.logical(run$exploratory_min3_support[[1L]]),
+      confirmatory_support = as.logical(run$confirmatory_support[[1L]]),
       stock_return_rows = nrow(stock), reconstructed_significant_rows = nrow(reconstructed_significant),
       driver_keys_match = keys_match, integer_statistics_match = integer_fields_match,
       maximum_adjusted_p_delta = q_delta, maximum_log_p_delta = logp_delta,
@@ -367,8 +380,9 @@ main <- function() {
   significant <- data.table::copy(returns[adjusted_p_value <= as.numeric(config$kda$fdr)])
   driver_units <- significant[, .(
     schema_version = "harmonized_broad_kda_driver_units_v1", cohort, key_driver,
-    group_id, sex, apoe_group, broad_cell_type, case_phenotype, reference_phenotype,
+    contrast_id, group_id, sex, apoe_group, broad_cell_type, case_phenotype, reference_phenotype,
     coefficient_direction, native_query_mode, query_mode, kda_run_id,
+    support_tier, exploratory_min3_support, confirmatory_support,
     effective_query_genes = signature_size, best_layer, overlap_count,
     neighborhood_size, fold_enrichment, raw_p_value, adjusted_p_value,
     global_key_driver, network_release_mode, exploratory_network, overlap_items
@@ -385,12 +399,28 @@ main <- function() {
     run_manifest[active, significant_driver_count := as.integer(unname(qc_counts[kda_run_id]))]
   }
 
+  min3_ids <- c(
+    "Vasculature_cells::AD_vs_NCI__Female__e2",
+    "Vasculature_cells::AD_vs_NCI__Male__e2"
+  )
+  expected_min3_slots <- if (args$cohort == "rosmap") 2L else 0L
+  min3_manifest_match <-
+    sum(run_manifest$exploratory_min3_support) == expected_min3_slots &&
+    all(run_manifest$exploratory_min3_support == (run_manifest$contrast_id %in% min3_ids))
+  min3_derived_match <-
+    (nrow(returns) == 0L || all(returns$exploratory_min3_support == (returns$contrast_id %in% min3_ids))) &&
+    (nrow(candidates) == 0L || all(candidates$exploratory_min3_support == (candidates$contrast_id %in% min3_ids))) &&
+    (nrow(qc) == 0L || all(qc$exploratory_min3_support == (qc$contrast_id %in% min3_ids))) &&
+    (nrow(reconstruction) == 0L || all(reconstruction$exploratory_min3_support == (reconstruction$contrast_id %in% min3_ids))) &&
+    (nrow(driver_units) == 0L || all(driver_units$exploratory_min3_support == (driver_units$contrast_id %in% min3_ids)))
+
   checks <- data.table::data.table(
     schema_version = "harmonized_broad_kda_run_checks_v1", cohort = args$cohort,
     check = c(
       "input_release_validated", "structural_slot_count", "eligible_call_count",
       "all_calls_completed", "all_returned_q_values_reconstructed",
       "return_keys_unique", "significant_return_identity", "terminal_state_complete",
+      "minimum3_support_slots", "minimum3_support_propagated",
       "seaad_vasculature_exploratory"
     ),
     passed = c(
@@ -400,6 +430,7 @@ main <- function() {
       !anyDuplicated(returns[, .(kda_run_id, key_driver)]),
       nrow(significant) == nrow(returns),
       !any(is.na(run_manifest$kda_terminal_status) | !nzchar(run_manifest$kda_terminal_status)),
+      min3_manifest_match, min3_derived_match,
       args$cohort != "seaad" || all(run_manifest[broad_cell_type == "Vasculature_cells"]$exploratory_network)
     ),
     observed = c(
@@ -407,11 +438,13 @@ main <- function() {
       sum(grepl("^completed_", qc$terminal_status)), sum(reconstruction$passed),
       nrow(returns) - data.table::uniqueN(returns[, .(kda_run_id, key_driver)]), nrow(significant),
       sum(!is.na(run_manifest$kda_terminal_status) & nzchar(run_manifest$kda_terminal_status)),
+      sum(run_manifest$exploratory_min3_support), min3_derived_match,
       sum(run_manifest[broad_cell_type == "Vasculature_cells"]$exploratory_network)
     ),
     expected = c(
       "validated_complete", 42L, nrow(runs), nrow(runs), nrow(runs), 0L,
-      nrow(returns), 42L, if (args$cohort == "seaad") 6L else 0L
+      nrow(returns), 42L, expected_min3_slots, TRUE,
+      if (args$cohort == "seaad") 6L else 0L
     )
   )
   must(all(checks$passed), paste("Blocking KDA checks failed:", paste(checks[passed == FALSE]$check, collapse = ", ")))
@@ -450,6 +483,9 @@ main <- function() {
     completed_no_significant_calls = sum(qc$terminal_status == "completed_no_significant"),
     candidate_test_rows = nrow(candidates), significant_return_rows = nrow(significant),
     unique_key_drivers = data.table::uniqueN(significant$key_driver),
+    exploratory_min3_support_slots = sum(run_manifest$exploratory_min3_support),
+    exploratory_min3_executed_calls = sum(qc$exploratory_min3_support),
+    exploratory_min3_driver_rows = sum(driver_units$exploratory_min3_support),
     exploratory_executed_calls = sum(qc$exploratory_network),
     config_sha256 = sha256_file(config_path), fkda_source_sha256 = sha256_file(fkda_path),
     R_version = R.version.string, data_table_version = as.character(utils::packageVersion("data.table")),
