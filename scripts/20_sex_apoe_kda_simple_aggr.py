@@ -331,7 +331,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--output",
         default=(
-            "results/minerva_production/20_sex_apoe_kda_simple_aggr"
+            "results/minerva_production/20_sex_apoe_kda"
         ),
     )
     return parser.parse_args()

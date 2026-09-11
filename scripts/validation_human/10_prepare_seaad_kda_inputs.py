@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""VH10A: freeze SEA-AD DEG inputs and construct ≥3-gene KDA queries."""
+"""VH10A: freeze SEA-AD DEG inputs and construct ≥3-gene KDA queries.
+
+The default mode preserves one KDA slot per DEG direction. A configuration may
+instead request ``merged_up_down`` mode, which emits one deduplicated union
+query per structural contrast and no directional slots.
+"""
 
 from __future__ import annotations
 
@@ -184,6 +189,62 @@ def main() -> int:
         raise ValueError("Fine query input contrast IDs are not unique")
     index_by_contrast = query_index.set_index("contrast_id", drop=False)
 
+    query_mode = str(analysis.get("query_mode", "directional"))
+    if query_mode not in {"directional", "merged_up_down"}:
+        raise ValueError(f"Unsupported SEA-AD KDA query mode: {query_mode}")
+    if query_mode == "merged_up_down":
+        merged_label = str(analysis.get("merged_query_label", "AD_both_mito"))
+        expected_directions = {"AD_up_mito", "AD_down_mito"}
+        source_rows = []
+        grouped = direction.groupby("contrast_id", sort=False, dropna=False)
+        for contrast_slot, (contrast_id, members) in enumerate(grouped, start=1):
+            observed_directions = set(members["phase18_signature_direction"])
+            if len(members) != 2 or observed_directions != expected_directions:
+                raise ValueError(
+                    f"Merged contrast does not have exactly one up/down pair: {contrast_id}"
+                )
+            stable_columns = [
+                "deg_tier",
+                "supertype_id",
+                "supertype_label",
+                "broad_network",
+                "signature_group",
+                "source_eligibility_status",
+                "terminal_reason",
+                "tested_feature_count",
+                "filtered_feature_count",
+                "result_path",
+                "result_sha256",
+                "filter_path",
+                "filter_sha256",
+                "source_terminal_status",
+            ]
+            inconsistent = [
+                column for column in stable_columns if members[column].nunique() != 1
+            ]
+            if inconsistent:
+                raise ValueError(
+                    f"Merged contrast metadata differs across directions for "
+                    f"{contrast_id}: {inconsistent}"
+                )
+            first = members.iloc[0].to_dict()
+            first.update(
+                {
+                    "contrast_slot": contrast_slot,
+                    "contrast_slot_id": contrast_id,
+                    "phase18_signature_direction": merged_label,
+                    "query_handoff_status": (
+                        "pending_merged_query"
+                        if first["source_terminal_status"] == "completed"
+                        else "source_contrast_not_estimable"
+                    ),
+                }
+            )
+            source_rows.append(first)
+        manifest_source = pd.DataFrame(source_rows)
+    else:
+        manifest_source = direction
+
     fdr_cut = float(analysis["fdr_threshold_exclusive"])
     minimum = int(analysis["minimum_effective_query_genes"])
     warning_below = int(analysis["small_query_warning_below"])
@@ -251,16 +312,19 @@ def main() -> int:
             "background": background,
             "AD_up_mito": up,
             "AD_down_mito": down,
+            "AD_both_mito": up.union(down),
         }
 
     manifest_rows = []
     signature_rows = []
     background_rows = []
-    for row in direction.itertuples(index=False):
+    for row in manifest_source.itertuples(index=False):
         record = {
-            "schema_version": "seaad_kda_run_manifest_v1",
-            "direction_slot": row.direction_slot,
-            "direction_slot_id": row.direction_slot_id,
+            "schema_version": (
+                "seaad_kda_combo_run_manifest_v1"
+                if query_mode == "merged_up_down"
+                else "seaad_kda_run_manifest_v1"
+            ),
             "contrast_id": row.contrast_id,
             "query_rule_id": analysis["query_rule_id"],
             "result_tier_id": analysis["result_tier_id"],
@@ -287,10 +351,26 @@ def main() -> int:
             "effective_query_sha256": "",
             "effective_background_sha256": "",
         }
+        if query_mode == "merged_up_down":
+            record.update(
+                {
+                    "contrast_slot": row.contrast_slot,
+                    "contrast_slot_id": row.contrast_slot_id,
+                    "query_mode": query_mode,
+                }
+            )
+        else:
+            record.update(
+                {
+                    "direction_slot": row.direction_slot,
+                    "direction_slot_id": row.direction_slot_id,
+                    "query_mode": query_mode,
+                }
+            )
         if row.source_terminal_status == "completed":
             cached = caches.get(row.contrast_id)
             if cached is None:
-                raise ValueError(f"Completed direction lacks query input: {row.contrast_id}")
+                raise ValueError(f"Completed contrast lacks query input: {row.contrast_id}")
             source_query = cached[row.phase18_signature_direction]
             background = cached["background"]
             effective = source_query.intersection(background)
@@ -384,20 +464,55 @@ def main() -> int:
             dropna=False,
         )
         .size()
-        .rename("direction_slots")
+        .rename("contrasts" if query_mode == "merged_up_down" else "direction_slots")
         .reset_index()
     )
-    completed_source_directions = int(
+    completed_source_units = int(
         manifest["source_terminal_status"].eq("completed").sum()
     )
-    checks = checks_frame(
-        [
+    if query_mode == "merged_up_down":
+        structure_checks = [
+            (
+                "structural_contrasts",
+                len(manifest) == expected["structural_contrasts"],
+                len(manifest),
+                expected["structural_contrasts"],
+                "one merged KDA opportunity per structural contrast",
+            ),
+            (
+                "contrast_slot_ids_unique",
+                manifest["contrast_slot_id"].is_unique,
+                manifest["contrast_slot_id"].nunique(),
+                len(manifest),
+                "",
+            ),
+            (
+                "completed_source_contrast_reconciliation",
+                completed_source_units == len(query_index),
+                completed_source_units,
+                len(query_index),
+                "one merged query opportunity per completed DEG contrast",
+            ),
+            (
+                "merged_query_label_reconciliation",
+                len(eligible)
+                == int(eligible["signature_direction"].eq(merged_label).sum()),
+                len(eligible),
+                int(eligible["signature_direction"].eq(merged_label).sum()),
+                "every active call must use the single merged-query label",
+            ),
+        ]
+    else:
+        structure_checks = [
             ("structural_direction_slots", len(manifest) == expected["structural_direction_slots"], len(manifest), expected["structural_direction_slots"], ""),
             ("direction_slot_ids_unique", manifest["direction_slot_id"].is_unique, manifest["direction_slot_id"].nunique(), len(manifest), ""),
-            ("one_active_query_rule", manifest["query_rule_id"].nunique() == 1, manifest["query_rule_id"].nunique(), 1, ""),
-            ("completed_source_direction_reconciliation", completed_source_directions == 2 * len(query_index), completed_source_directions, 2 * len(query_index), "two signed directions per completed DEG contrast"),
-            ("active_call_tier_reconciliation", len(eligible) == int(eligible["query_size_tier"].isin(["small_query", "phase18_sized"]).sum()), len(eligible), int(eligible["query_size_tier"].isin(["small_query", "phase18_sized"]).sum()), ""),
+            ("completed_source_direction_reconciliation", completed_source_units == 2 * len(query_index), completed_source_units, 2 * len(query_index), "two signed directions per completed DEG contrast"),
             ("active_call_direction_reconciliation", len(eligible) == int(eligible["signature_direction"].isin(analysis["directions"]).sum()), len(eligible), int(eligible["signature_direction"].isin(analysis["directions"]).sum()), ""),
+        ]
+    checks = checks_frame(
+        structure_checks + [
+            ("one_active_query_rule", manifest["query_rule_id"].nunique() == 1, manifest["query_rule_id"].nunique(), 1, ""),
+            ("active_call_tier_reconciliation", len(eligible) == int(eligible["query_size_tier"].isin(["small_query", "phase18_sized"]).sum()), len(eligible), int(eligible["query_size_tier"].isin(["small_query", "phase18_sized"]).sum()), ""),
             ("effective_queries_subset_background", all(set(signatures.loc[(signatures["kda_run_id"] == run_id) & signatures["effective_member"].map(truth), "gene"]).issubset(set(backgrounds.loc[backgrounds["kda_run_id"] == run_id, "gene"])) for run_id in eligible["kda_run_id"]), True, True, ""),
             ("eligible_run_ids_unique", eligible["kda_run_id"].is_unique, eligible["kda_run_id"].nunique(), len(eligible), ""),
             ("result_hash_checks", result_hash_checks == len(query_index), result_hash_checks, len(query_index), ""),
@@ -438,14 +553,26 @@ def main() -> int:
     os.replace(stage, final_dir)
     final_outputs = [final_dir / item.name for item in paths.values()]
     artifacts = write_artifacts(final_outputs, project_root, final_dir / "artifacts.tsv")
+    structural_status = (
+        {
+            "query_mode": query_mode,
+            "structural_contrasts": len(manifest),
+            "completed_source_contrasts": completed_source_units,
+        }
+        if query_mode == "merged_up_down"
+        else {
+            "query_mode": query_mode,
+            "structural_direction_slots": len(manifest),
+            "completed_source_directions": completed_source_units,
+        }
+    )
     status = status_frame(
         "VH10A",
         "validated_complete",
         project_root,
         config_path,
         started,
-        structural_direction_slots=len(manifest),
-        completed_source_directions=int(manifest["source_terminal_status"].eq("completed").sum()),
+        **structural_status,
         active_kda_calls=len(eligible),
         small_query_calls=int(eligible["query_size_tier"].eq("small_query").sum()),
         phase18_sized_calls=int(eligible["query_size_tier"].eq("phase18_sized").sum()),

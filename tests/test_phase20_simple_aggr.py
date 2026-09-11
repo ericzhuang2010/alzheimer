@@ -187,7 +187,7 @@ def main() -> int:
     parser.add_argument(
         "--output",
         type=Path,
-        default=ROOT / "results/minerva_production/20_sex_apoe_kda_simple_aggr",
+        default=ROOT / "results/minerva_production/20_sex_apoe_kda",
     )
     args = parser.parse_args()
     unit_tests()

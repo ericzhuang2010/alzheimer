@@ -26,7 +26,7 @@ from pptx import Presentation
 
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_DECK = ROOT / "docs" / "presentations" / "phase20_sex_apoe_kda_fine_broad.pptx"
-RESULT_DIR = ROOT / "results" / "minerva_production" / "20_sex_apoe_kda_simple_aggr"
+RESULT_DIR = ROOT / "results" / "minerva_production" / "20_sex_apoe_kda"
 FIGURE_DIR = ROOT / "results" / "figures" / "analysis" / "phase_20_sex_apoe_simple_aggr"
 RECURRENCE_PNG = (
     FIGURE_DIR

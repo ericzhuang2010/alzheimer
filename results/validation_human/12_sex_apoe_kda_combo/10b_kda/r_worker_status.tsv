@@ -1,0 +1,2 @@
+schema_version	task_status	started_at_utc	completed_at_utc	active_kda_calls	completed_significant_calls	completed_no_significant_calls	significant_return_rows	failed_calls	config_sha256	fkda_source_sha256
+seaad_kda_r_worker_status_v1	worker_complete	2026-09-11 16:58:07 UTC	2026-09-11 16:58:11 UTC	22	20	2	112	0	f5391c6760623edc4a80e439b47a9aa1f7b10f166116c56f5a3fe7f1f5c4a97e	fed8f89f35a3f08f38a420eb9b26c590cdc5f13a12064af1b9fa4a4cb1168550

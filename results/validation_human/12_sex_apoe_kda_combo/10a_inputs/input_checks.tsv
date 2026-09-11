@@ -1,0 +1,11 @@
+check	passed	observed	expected	details
+structural_contrasts	True	774	774	one merged KDA opportunity per structural contrast
+contrast_slot_ids_unique	True	774	774	
+completed_source_contrast_reconciliation	True	381	381	one merged query opportunity per completed DEG contrast
+merged_query_label_reconciliation	True	22	22	every active call must use the single merged-query label
+one_active_query_rule	True	1	1	
+active_call_tier_reconciliation	True	22	22	
+effective_queries_subset_background	True	True	True	
+eligible_run_ids_unique	True	22	22	
+result_hash_checks	True	381	381	
+seaad_phase18_annotation_agreement	True	0	0	

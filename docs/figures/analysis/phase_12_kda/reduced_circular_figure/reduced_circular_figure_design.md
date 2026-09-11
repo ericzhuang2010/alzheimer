@@ -138,7 +138,7 @@ aggregation table must report `ranking_runs` and `eligible_directional_runs`
 so score coverage is visible and auditable.
 
 This requirement follows the ranking recommendation in
-[`email_08042026_circular_figure_sort_order.md`](../../email_notes/email_08042026_circular_figure_sort_order.md).
+[`08042026_email_circular_figure_sort_order.md`](../../email_notes/08042026_email_circular_figure_sort_order.md).
 
 ## Driver selection
 
@@ -428,7 +428,7 @@ the ranking from significant-only data during rendering.
 ## References informing the design
 
 - Professor's ranking interpretation and required matrix caveat:
-  [`email_08042026_circular_figure_sort_order.md`](../../email_notes/email_08042026_circular_figure_sort_order.md)
+  [`08042026_email_circular_figure_sort_order.md`](../../email_notes/08042026_email_circular_figure_sort_order.md)
 - Current figure construction:
   [`phase_12_kda_circular_figure_plan.md`](phase_12_kda_circular_figure_plan.md)
 - Biological interpretation and conservative prioritization:

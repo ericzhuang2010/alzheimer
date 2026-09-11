@@ -732,7 +732,7 @@ def main() -> int:
     result_dir = (
         args.result_dir.resolve()
         if args.result_dir
-        else root / "results" / "minerva_production" / "20_sex_apoe_kda_simple_aggr"
+        else root / "results" / "minerva_production" / "20_sex_apoe_kda"
     )
     figure_root = (
         args.figure_root.resolve()
@@ -747,7 +747,7 @@ def main() -> int:
     recurrence = derive_recurrence(non_mt)
     top5 = derive_top5(non_mt)
 
-    common_methods = """The renderer reads the validated `simple_category_gene_aggregates.tsv` table from `results/minerva_production/20_sex_apoe_kda_simple_aggr` and verifies its registered SHA-256 hash, source completion status, and source checks. Rows are restricted to `case_id = non_mt_driver` and `is_core_mito = FALSE` before figure-specific ordering. No KDA or ACAT calculation is rerun. The stored all-class rank is not reused: non-MT rows are ordered within each `signature_group × broad_network` category by `returned_run_q_acat_score`, then gene symbol, and assigned a new display rank.
+    common_methods = """The renderer reads the validated `simple_category_gene_aggregates.tsv` table from `results/minerva_production/20_sex_apoe_kda` and verifies its registered SHA-256 hash, source completion status, and source checks. Rows are restricted to `case_id = non_mt_driver` and `is_core_mito = FALSE` before figure-specific ordering. No KDA or ACAT calculation is rerun. The stored all-class rank is not reused: non-MT rows are ordered within each `signature_group × broad_network` category by `returned_run_q_acat_score`, then gene symbol, and assigned a new display rank.
 
 The score is the requested exploratory returned-only value: a singleton stock within-call BH q is passed through unchanged, whereas two or more returned q values are combined by equal-weight ACAT. It is post-selected and is not a formally FDR-controlled cross-call q value; the figures are descriptive rankings of stock-significant returns."""
 

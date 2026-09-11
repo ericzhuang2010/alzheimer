@@ -3,7 +3,7 @@
 **Status:** planned; not executed
 **Date:** 2026-08-29
 **Candidate scope:** all 433 non-MT driver genes from
-`results/minerva_production/20_sex_apoe_kda_simple_aggr` (689 gene × category
+`results/minerva_production/20_sex_apoe_kda` (689 gene × category
 units; category-aggregate SHA-256
 `4e0ab4204ba837ec7ca0d5920e27f2557849f6acbc0d92189d5737193eab8ebd`)
 **Companion files:**
@@ -39,7 +39,7 @@ bounded acquisitions, unique-gene counting). One rule is added:
 New script `scripts/19b_freeze_simple_aggr_candidates.py`:
 
 - **Input:** `simple_category_gene_aggregates.tsv` from
-  `20_sex_apoe_kda_simple_aggr`, filtered to `case_id = non_mt_driver`,
+  `20_sex_apoe_kda`, filtered to `case_id = non_mt_driver`,
   `is_core_mito = FALSE`; verify the registered SHA-256 above and the source
   bundle's `validated`/zero-failed-check status before freezing.
 - **Units:** one candidate row per unique gene (433 expected) plus a companion

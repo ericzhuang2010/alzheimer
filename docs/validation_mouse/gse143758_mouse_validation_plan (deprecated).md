@@ -636,14 +636,14 @@ Every table must include stable IDs, exact denominator, effect sign, estimate, u
 
 ### Project-specific frozen references
 
-- The instruction that GSE143758 is for the sex-difference question, while APOE-isoform dataset search continues, is in [email_08192026.txt](../email_notes/email_08192026.txt).
+- The instruction that GSE143758 is for the sex-difference question, while APOE-isoform dataset search continues, is in [08192026_email.txt](../email_notes/08192026_email.txt).
 - The ROSMAP Phase 08 gene-level branch is cell-level MAST for paper comparability and does not replace donor-level inference, as documented in [processing_pipeline_phase_summaries.md](../processing_pipeline_phase_summaries.md).
 - The four respiratory modules are defined in [phase13_respiratory_modules.tsv](../../config/phase13_respiratory_modules.tsv) and [phase13_respiratory_modifier.yml](../../config/phase13_respiratory_modifier.yml).
 - The descriptive human mitochondrial patterns and their caveats are summarized in [phase11_pathway_discussion_summary.md](../analysis/mt_pathway/phase11_pathway_discussion_summary.md).
 - The formal Phase 13 outcome—180 estimable but inconclusive tests, 16 not testable, zero supported—is documented in [phase13_figure_proposal.md](../figures/analysis/phase_13_respiratory_modifier/phase13_figure_proposal.md).
 - The current Phase 18 targets are [phase18_selected_candidate_units.tsv](../../results/validation_human/09_rosmap_kda_candidates/phase18_selected_candidate_units.tsv), [phase18_selected_genes.tsv](../../results/validation_human/09_rosmap_kda_candidates/phase18_selected_genes.tsv), and the [cross-validation guide](../analysis/kda_phase_18/phase18_key_driver_cross_validation_guide.md).
 - Current independent-human Phase 18 evidence—36 of 47 units testable in SEA-AD, six strict MT rediscoveries, and zero strict non-MT rediscoveries—is frozen in [vh09_vh10_execution_summary.md](../validation_human/vh09_vh10_execution_summary.md).
-- The project preference for direction, rank/enrichment, cell-type consistency, mitochondrial enrichment, effect sizes, and CIs is recorded in [meeting_08182026_summary_action_items.md](../email_notes/meeting_08182026_summary_action_items.md).
+- The project preference for direction, rank/enrichment, cell-type consistency, mitochondrial enrichment, effect sizes, and CIs is recorded in [08182026_meeting_summary_action_items.md](../email_notes/08182026_meeting_summary_action_items.md).
 
 ### Reference interpretation rule
 

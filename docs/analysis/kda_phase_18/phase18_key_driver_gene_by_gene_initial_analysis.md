@@ -439,4 +439,4 @@ The list below emphasizes primary human, animal, or mechanistic studies identifi
 - [Phase 18 MT sex/APOE plot data](../../../results/figures/analysis/phase_18_key_driver_selection/sex_apoe_mt/phase18_sex_apoe_mt_plot_data.tsv)
 - [Phase 8 MAST DEG outputs](../../../results/minerva_production/08_mast/), used for the direct-DEG context counts in Section 2
 - [Earlier joint mitochondrial discussion](../kda_and_pathway/phase11_phase12_joint_mitochondrial_discussion.md), used only for earlier DEG/pathway context and conceptual framing; deprecated Phase 12 key-driver selections and figures were not used.
-- [Notes after the 2026-08-12 presentation](../../email_notes/notes_after_08122026_presentation.txt)
+- [Notes after the 2026-08-12 presentation](../../email_notes/08122026_notes_after_presentation.txt)

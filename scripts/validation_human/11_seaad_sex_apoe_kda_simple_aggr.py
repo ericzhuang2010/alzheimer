@@ -438,6 +438,7 @@ def run() -> int:
     network_release_id = str(cfg.get("network_release_id", "legacy_configured_networks"))
     query_rule_id = str(analysis["query_rule_id"])
     result_tier_id = str(analysis["result_tier_id"])
+    query_mode = str(analysis.get("query_mode", "directional"))
     networks = list(cfg["network_order"])
 
     checks: list[dict[str, Any]] = []
@@ -1138,6 +1139,20 @@ def run() -> int:
         f"{SCHEMA_ROOT}_status_v1",
     )
 
+    if query_mode == "merged_up_down":
+        query_design_text = f"""This is a contrast-level merged-query analysis: all {input_status['structural_contrasts']}
+structural supertype x sex/APOE contrasts occur once in the run manifest. For
+each completed contrast, significant up- and downregulated core-MitoCarta genes
+were deduplicated into one `AD_both_mito` query before network mapping and the
+three-gene eligibility gate. No directional KDA slots were created."""
+        provenance_text = (
+            "Fine supertype and the single merged-query label remain "
+            "provenance/recurrence dimensions."
+        )
+    else:
+        query_design_text = "This is the directional SEA-AD KDA analysis."
+        provenance_text = "Fine supertype and direction remain provenance/recurrence dimensions."
+
     methods = f"""# SEA-AD simple returned-only non-MT KDA aggregation
 
 This directory applies the requested exploratory aggregation to **{len(active_rows)}
@@ -1145,6 +1160,8 @@ validated SEA-AD KDA calls** run against network release
 `{network_release_id}`. The exact registered set of **{len(all_returned_rows)}
 significant `call_key_drivers()` rows** was aggregated without reusing an
 earlier network's KDA returns.
+
+{query_design_text}
 
 The source tier is already relaxed upstream: donor support is at least 3 per
 disease arm, the mitochondrial DEG query uses within-contrast FDR below 0.05
@@ -1175,8 +1192,7 @@ Two aggregate views are provided:
 - `simple_global_gene_aggregates.tsv`: one row per retained gene across all
   {len(active_rows)} available calls.
 - `simple_category_gene_aggregates.tsv`: one row per
-  sex/APOE group + broad network + retained gene. Fine supertype and direction
-  remain provenance/recurrence dimensions.
+  sex/APOE group + broad network + retained gene. {provenance_text}
 
 `simple_returned_call_rows.tsv.gz` contains the exact {len(returned_rows)}
 retained non-MT returned rows and links each to both aggregate views.

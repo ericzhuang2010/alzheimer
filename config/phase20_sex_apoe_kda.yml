@@ -2,9 +2,9 @@
 # returned-only simple aggregation (scripts/20_sex_apoe_kda_simple_aggr.py),
 # which reads only the `scope` section (groups, broad_networks, group_labels).
 # The `analysis.output_directory` and `analysis.figure_directory` entries below
-# preserve the historical pre-archive paths for the deprecated coverage/support
-# candidate-selection release. Its production and figure bundles now live under
-# "archive/results/" in the corresponding mirrored directories.
+# point to the archived coverage/support candidate-selection release. The active
+# returned-only simple aggregation writes to results/minerva_production/
+# 20_sex_apoe_kda through its own CLI default.
 schema_version: phase20_sex_apoe_kda_config_v2
 
 analysis:
@@ -20,8 +20,8 @@ paths:
   phase18_config: config/phase18_key_driver_selection.yml
   historical_phase18_archive: results/minerva_production/18_key_driver_selection/archive
   source_directory: results/minerva_production/20_sex_apoe_kda_source
-  output_directory: results/minerva_production/20_sex_apoe_kda
-  figure_directory: results/figures/analysis/phase_20_sex_apoe_kda
+  output_directory: archive/results/minerva_production/20_sex_apoe_kda (deprecated)
+  figure_directory: archive/results/figures/analysis/phase_20_sex_apoe_kda (deprecated)
 
 source:
   analysis_tier: primary

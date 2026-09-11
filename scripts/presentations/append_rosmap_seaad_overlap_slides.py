@@ -37,7 +37,7 @@ ROS_CATEGORIES = (
     ROOT
     / "results"
     / "minerva_production"
-    / "20_sex_apoe_kda_simple_aggr"
+    / "20_sex_apoe_kda"
     / "simple_category_gene_aggregates.tsv"
 )
 SEA_CATEGORIES = (

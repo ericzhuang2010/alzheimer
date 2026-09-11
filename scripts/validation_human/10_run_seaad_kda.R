@@ -68,6 +68,13 @@ read_network <- function(path) {
   ])
 }
 
+fread_input <- function(path) {
+  if (grepl("[.]gz$", path)) {
+    return(data.table::fread(cmd = paste("gzip -dc", shQuote(path))))
+  }
+  data.table::fread(path)
+}
+
 empty_results <- function() {
   data.table::data.table(
     schema_version = character(),
@@ -176,10 +183,10 @@ main <- function() {
   must(nrow(runs) == expected_calls,
        paste("Manifest/status active-call mismatch:", nrow(runs), expected_calls))
   must(!anyDuplicated(runs$kda_run_id), "Active KDA run IDs are not unique")
-  signatures <- data.table::fread(
+  signatures <- fread_input(
     file.path(input_dir, "seaad_kda_signature_members.tsv.gz")
   )
-  backgrounds <- data.table::fread(
+  backgrounds <- fread_input(
     file.path(input_dir, "seaad_kda_background_members.tsv.gz")
   )
 

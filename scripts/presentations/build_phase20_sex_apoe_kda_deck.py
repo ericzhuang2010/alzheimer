@@ -2,7 +2,7 @@
 """Build a teaching deck for fine-cell and broad-cell Phase 20 KDA.
 
 DEPRECATED (2026-08-29): this builder reads the deprecated fine-cell and
-broad-cell releases (now ``results/minerva_production/20_sex_apoe_kda
+broad-cell releases (now ``archive/results/minerva_production/20_sex_apoe_kda
 (deprecated)`` and ``20_sex_apoe_kda_broad (deprecated)``) and rebuilds the
 original 22-slide deck. The current deck at
 ``docs/presentations/phase20_sex_apoe_kda_fine_broad.pptx`` has been rewritten
@@ -42,19 +42,19 @@ REPO = Path(__file__).resolve().parents[2]
 DEFAULT_OUT = REPO / "docs" / "presentations" / "phase20_sex_apoe_kda_fine_broad.pptx"
 AUDIT_DIR = REPO / "results" / "presentations" / "phase20_sex_apoe_kda_fine_broad"
 
-FINE = REPO / "results" / "minerva_production" / "20_sex_apoe_kda"
-BROAD = REPO / "results" / "minerva_production" / "20_sex_apoe_kda_broad"
+FINE = REPO / "archive" / "results" / "minerva_production" / "20_sex_apoe_kda (deprecated)"
+BROAD = REPO / "archive" / "results" / "minerva_production" / "20_sex_apoe_kda_broad (deprecated)"
 DOCS = REPO / "docs" / "phase_20_sex_apoe_kda"
 
 FIG = {
     "fine_recurrence": REPO
-    / "results/figures/analysis/phase_20_sex_apoe_kda/driver_recurrence/phase20_driver_recurrence.png",
+    / "archive/results/figures/analysis/phase_20_sex_apoe_kda (deprecated)/driver_recurrence/phase20_driver_recurrence.png",
     "fine_top5": REPO
-    / "results/figures/analysis/phase_20_sex_apoe_kda/top5_candidates/phase20_top5_candidates.png",
+    / "archive/results/figures/analysis/phase_20_sex_apoe_kda (deprecated)/top5_candidates/phase20_top5_candidates.png",
     "broad_recurrence": REPO
-    / "results/figures/analysis/phase_20_sex_apoe_kda_broad/driver_recurrence/phase20_broad_driver_recurrence.png",
+    / "archive/results/figures/analysis/phase_20_sex_apoe_kda_broad (deprecated)/driver_recurrence/phase20_broad_driver_recurrence.png",
     "broad_top5": REPO
-    / "results/figures/analysis/phase_20_sex_apoe_kda_broad/top5_candidates/phase20_broad_top5_candidates.png",
+    / "archive/results/figures/analysis/phase_20_sex_apoe_kda_broad (deprecated)/top5_candidates/phase20_broad_top5_candidates.png",
 }
 
 INPUTS = {

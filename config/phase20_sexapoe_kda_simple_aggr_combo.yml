@@ -11,7 +11,7 @@ paths:
   phase12_query_members: results/minerva_production/12_kda/kda_signature_members.tsv.gz
   phase12_results: results/minerva_production/12_kda/kda_results.tsv.gz
   gene_annotation: results/minerva_production/09_annotate_genes/gene_annotation_master.tsv.gz
-  output_directory: results/minerva_production/20_sex_apoe_kda_simple_aggr_combo
+  output_directory: results/minerva_production/20_sex_apoe_kda_combo
 
 thresholds:
   minimum_cells_per_deg_arm: 3

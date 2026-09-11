@@ -3,9 +3,9 @@
 > **AUTHORITATIVE (2026-08-29).** This returned-only simple aggregation is the
 > authoritative Phase 20 sex/APOE result. It supersedes the fine-cell
 > coverage/support candidate selection
-> (`results/minerva_production/20_sex_apoe_kda (deprecated)`) and the direct
+> (`archive/results/minerva_production/20_sex_apoe_kda (deprecated)`) and the direct
 > broad-cell analysis
-> (`results/minerva_production/20_sex_apoe_kda_broad (deprecated)`).
+> (`archive/results/minerva_production/20_sex_apoe_kda_broad (deprecated)`).
 
 This directory implements the requested exploratory rule over the frozen
 Phase 20 set of **295 KDA calls**:

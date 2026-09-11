@@ -1,7 +1,7 @@
 # Phase 20 Combined KDA Simple Aggregation Plan
 
 **Status:** Implemented and validated on 2026-09-06.  
-**Result directory:** `results/minerva_production/20_sex_apoe_kda_simple_aggr_combo/`
+**Result directory:** `results/minerva_production/20_sex_apoe_kda_combo/`
 
 ## Goal
 
@@ -105,7 +105,7 @@ the baseline would require upstream reruns and is outside this plan.
 ## Output files
 
 ```text
-20_sex_apoe_kda_simple_aggr_combo/
+20_sex_apoe_kda_combo/
 ├── combo_key_drivers_by_category.tsv
 ├── combo_category_summary.tsv
 ├── combo_run_manifest.tsv

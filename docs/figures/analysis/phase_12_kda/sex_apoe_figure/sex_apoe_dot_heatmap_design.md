@@ -509,9 +509,9 @@ reorder or rescale the two directions.
 ## References informing the design
 
 - Professor's figure comments:
-  [`notes_08042026.txt`](../../email_notes/notes_08042026.txt)
+  [`08042026_notes.txt`](../../email_notes/08042026_notes.txt)
 - MeanOfLog ranking recommendation:
-  [`email_08042026_circular_figure_sort_order.md`](../../email_notes/email_08042026_circular_figure_sort_order.md)
+  [`08042026_email_circular_figure_sort_order.md`](../../email_notes/08042026_email_circular_figure_sort_order.md)
 - Phase 12 biological prioritization and stratum patterns:
   [`phase12_driver_gene_discussion.md`](phase12_driver_gene_discussion.md)
 - Figure A companion design:

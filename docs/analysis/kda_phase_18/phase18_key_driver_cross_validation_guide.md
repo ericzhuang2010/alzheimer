@@ -784,7 +784,7 @@ If individual candidates fail but their target modules replicate, publish the sy
 
 - [Phase 18 key-driver selection process](../../phase_18_key_driver_selection/key_driver_selection_process.md)
 - [Phase 18 initial gene-by-gene interpretation](phase18_key_driver_gene_by_gene_initial_analysis.md)
-- [Professor's notes after the 2026-08-12 presentation](../../email_notes/notes_after_08122026_presentation.txt)
+- [Professor's notes after the 2026-08-12 presentation](../../email_notes/08122026_notes_after_presentation.txt)
 - STRING [network types/evidence channels](https://string-db.org/help/scores/) and [API](https://string-db.org/help/api/)
 - [Agora](https://agora.adknowledgeportal.org/about)
 - [AD Knowledge Portal](https://adknowledgeportal.synapse.org/)

@@ -121,7 +121,7 @@ that computation must run on Minerva.
 ### Priority 0 (added 2026-08-29): rerun against the simple-aggregation driver list
 
 The authoritative ROSMAP driver list is now the returned-only simple
-aggregation (`results/minerva_production/20_sex_apoe_kda_simple_aggr`; 433
+aggregation (`results/minerva_production/20_sex_apoe_kda`; 433
 non-MT genes), which supersedes the Phase 18 top-five freeze this phase
 originally screened. A dedicated rerun plan — new candidate freeze, staged
 workstreams, recalibrated thresholds, missing-input manifest, and transfer

@@ -1,7 +1,7 @@
 #!/usr/bin/env Rscript
 
 # DEPRECATED (2026-08-29): renders figures for the deprecated fine-cell
-# candidate selection (results/minerva_production/20_sex_apoe_kda
+# candidate selection (archive/results/minerva_production/20_sex_apoe_kda
 # (deprecated)). Authoritative figures come from the returned-only simple
 # aggregation renderer under
 # scripts/figures/analysis/phase_20_sex_apoe_simple_aggr/. Retained for
@@ -12,9 +12,9 @@ suppressPackageStartupMessages(library(ggplot2))
 args <- commandArgs(trailingOnly = TRUE)
 root <- if (length(args)) normalizePath(args[[1]], mustWork = TRUE) else normalizePath(".")
 result_dir <- if (length(args) >= 2) normalizePath(args[[2]], mustWork = TRUE) else
-  file.path(root, "results", "minerva_production", "20_sex_apoe_kda")
+  file.path(root, "archive", "results", "minerva_production", "20_sex_apoe_kda (deprecated)")
 figure_root <- if (length(args) >= 3) args[[3]] else
-  file.path(root, "results", "figures", "analysis", "phase_20_sex_apoe_kda")
+  file.path(root, "archive", "results", "figures", "analysis", "phase_20_sex_apoe_kda (deprecated)")
 dir.create(figure_root, recursive = TRUE, showWarnings = FALSE)
 
 read_result <- function(name) {

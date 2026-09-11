@@ -3,7 +3,7 @@
 
 DEPRECATED (2026-08-29): these figures visualize the deprecated
 coverage/support candidate selection
-(``results/minerva_production/20_sex_apoe_kda (deprecated)``); the figure
+(``archive/results/minerva_production/20_sex_apoe_kda (deprecated)``); the figure
 bundles were renamed to
 ``results/figures/analysis/phase_20_sex_apoe_kda (deprecated)``. The
 authoritative figures are rendered by
@@ -523,12 +523,12 @@ def main() -> int:
     result_dir = (
         args.result_dir.resolve()
         if args.result_dir
-        else root / "results" / "minerva_production" / "20_sex_apoe_kda"
+        else root / "archive" / "results" / "minerva_production" / "20_sex_apoe_kda (deprecated)"
     )
     figure_root = (
         args.figure_root.resolve()
         if args.figure_root
-        else root / "results" / "figures" / "analysis" / "phase_20_sex_apoe_kda"
+        else root / "archive" / "results" / "figures" / "analysis" / "phase_20_sex_apoe_kda (deprecated)"
     )
     figure_root.mkdir(parents=True, exist_ok=True)
     configure_style()

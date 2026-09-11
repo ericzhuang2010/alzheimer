@@ -1,0 +1,17 @@
+Dear Prof Wang, Prof Zhang:
+
+Again, thank you very much for your comments and suggestions during the presentation.
+Just want to summarize the next steps to take and also some questions. 
+
+Combine AD up/down
+The work is to combine AD-up and AD-down mitochondrial DEGs into one query, rerun kda and look at shared/common drivers and subgroup-specific drivers, with attention to male-versus-female differences.
+Then, I will present this comparison as a direct gene-by-group matrix or heatmap rather than relying mainly on the current recurrence summaries.
+
+Threshold adjustment
+1. Minimum cells per arm for DEG: 3, 5, and possibly higher values.
+2. Minimum effective query genes: 3, 10, 20, and 30.
+For each combination, measure: number of eligible ROSMAP/SEA-AD comparisons, KDA runs, returned drivers.
+
+Cross-cohort validation with SEA-AD
+For cross-cohort validation, use a cell-type- and sex/APOE-specific DEG comparison between ROSMAP and SEA-AD as the next step. 
+Need to build the Bayesian network for SEA-AD

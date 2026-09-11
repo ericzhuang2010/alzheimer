@@ -2,9 +2,9 @@
 
 > **DEPRECATED (2026-08-29).** This plan describes the coverage/support/ACAT
 > candidate-selection analysis whose release was renamed to
-> `results/minerva_production/20_sex_apoe_kda (deprecated)`. The authoritative
+> `archive/results/minerva_production/20_sex_apoe_kda (deprecated)`. The authoritative
 > Phase 20 result is the returned-only simple aggregation in
-> `results/minerva_production/20_sex_apoe_kda_simple_aggr`
+> `results/minerva_production/20_sex_apoe_kda`
 > (`scripts/20_sex_apoe_kda_simple_aggr.py`): keep only genes returned by
 > `call_key_drivers()` and ACAT-combine within-call q values when a gene has
 > two or more returns.
@@ -145,7 +145,7 @@ is never rewritten or substituted for the canonical ≥3 Phase 20 source.
 At Phase 20 execution, the validated source files are copied byte-for-byte to:
 
 ```text
-results/minerva_production/20_sex_apoe_kda/00_inputs/
+archive/results/minerva_production/20_sex_apoe_kda (deprecated)/00_inputs/
   phase20_source_candidate_tests.tsv.gz
   phase20_source_run_manifest.tsv
   phase20_source_input_authority.tsv
@@ -526,13 +526,13 @@ tests/test_phase20_sex_apoe_kda.py
 All Phase 20 analysis results are stored under:
 
 ```text
-results/minerva_production/20_sex_apoe_kda/
+archive/results/minerva_production/20_sex_apoe_kda (deprecated)/
 ```
 
 Validated structure:
 
 ```text
-results/minerva_production/20_sex_apoe_kda/
+archive/results/minerva_production/20_sex_apoe_kda (deprecated)/
 ├── 00_inputs/
 │   ├── phase20_source_candidate_tests.tsv.gz
 │   ├── phase20_source_run_manifest.tsv

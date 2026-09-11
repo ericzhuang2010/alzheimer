@@ -1,0 +1,2 @@
+schema_version	phase	validation_status	failed_checks	started_at_utc	completed_at_utc	git_revision	config_sha256	host	active_kda_calls	completed_significant_calls	completed_no_significant_calls	significant_return_rows	explicit_call_return_rows	candidate_test_rows	artifact_count
+seaad_fine_phase_status_v2	VH10B	validated_complete		2026-09-11T16:58:17.455525+00:00	2026-09-11T16:58:22.788934+00:00	9144bf9a872de1b1f3a6d71c104021b5ee09ccd1	f5391c6760623edc4a80e439b47a9aa1f7b10f166116c56f5a3fe7f1f5c4a97e	D200XMRQ5R	22	20	2	112	3772	157812	7

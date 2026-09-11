@@ -4,10 +4,10 @@
 DEPRECATED (2026-08-29): this coverage/support/ACAT candidate-selection
 branch is superseded by the returned-only simple aggregation
 (``scripts/20_sex_apoe_kda_simple_aggr.py`` writing
-``results/minerva_production/20_sex_apoe_kda_simple_aggr``), which keeps only
+``results/minerva_production/20_sex_apoe_kda``), which keeps only
 genes returned by ``call_key_drivers()`` and ACAT-combines within-call q
 values when a gene has two or more returns. The release this script produced
-was renamed to ``results/minerva_production/20_sex_apoe_kda (deprecated)``.
+was renamed to ``archive/results/minerva_production/20_sex_apoe_kda (deprecated)``.
 The script is retained for provenance only.
 
 The program consumes a validated complete-evidence source reconstructed from

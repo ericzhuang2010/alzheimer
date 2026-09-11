@@ -173,6 +173,6 @@ The raw transcript contains substantial automatic-transcription errors and no re
 
 ## Source files
 
-- `meeting_08312026_recording_raw.txt`
+- `08312026_meeting_recording_raw.txt`
 - `../presentations/08312026/sex_apoe_kda_fine_broad_08312026.pptx`
 - `../presentations/08312026/human_genetic_support_for_key_drivers_08312026.pptx`

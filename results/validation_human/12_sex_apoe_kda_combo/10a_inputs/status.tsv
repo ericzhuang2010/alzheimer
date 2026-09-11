@@ -1,0 +1,2 @@
+schema_version	phase	validation_status	failed_checks	started_at_utc	completed_at_utc	git_revision	config_sha256	host	query_mode	structural_contrasts	completed_source_contrasts	active_kda_calls	small_query_calls	phase18_sized_calls	active_query_members	active_background_members	artifact_count
+seaad_fine_phase_status_v2	VH10A	validated_complete		2026-09-11T16:56:19.210542+00:00	2026-09-11T16:56:30.920047+00:00	9144bf9a872de1b1f3a6d71c104021b5ee09ccd1	f5391c6760623edc4a80e439b47a9aa1f7b10f166116c56f5a3fe7f1f5c4a97e	D200XMRQ5R	merged_up_down	774	381	22	8	14	589	129448	7

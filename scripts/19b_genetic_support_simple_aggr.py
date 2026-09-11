@@ -55,7 +55,7 @@ PLAN_DIR = ROOT / "docs" / "phase_19_genetic_support" / "simple_aggr_rerun"
 
 ROSMAP_PRIMARY = (
     ROOT
-    / "results/minerva_production/20_sex_apoe_kda_simple_aggr"
+    / "results/minerva_production/20_sex_apoe_kda"
     / "simple_category_gene_aggregates.tsv"
 )
 ROSMAP_FROZEN = PLAN_DIR / "frozen_inputs" / "rosmap_simple_category_gene_aggregates.tsv"

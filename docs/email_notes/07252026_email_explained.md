@@ -10,7 +10,7 @@ This is not another ranking of mitochondrial DEGs. The main analysis should be a
 
 ## What the second part contains
 
-From the [email](email_07252026.txt), I interpret three deliverables:
+From the [email](07252026_email.txt), I interpret three deliverables:
 
 1. Project your mitochondrial AD DEG signatures onto the matching cell-type Bayesian networks.
 2. Find upstream network nodes whose downstream neighborhoods are significantly enriched for those DEGs.

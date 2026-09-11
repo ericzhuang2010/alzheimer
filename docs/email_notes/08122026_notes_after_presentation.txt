@@ -35,4 +35,3 @@ appear. This should probably be done later though.
 I think the presentation was well received by the audience. There were many constructive comments, such as checking APOE gene expression changes, clarification about the genes tested, interaction models, and comparison with mouse APOE knock-in single cell data, etc. Please try to addresses them as much as you can. For cross-species comparison, I will send you relevant data rather.
 
 
-

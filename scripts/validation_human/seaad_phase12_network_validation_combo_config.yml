@@ -1,0 +1,75 @@
+schema_version: seaad_phase12_network_validation_combo_config_v1
+
+project_root: .
+output_root: results/validation_human
+
+# This is an isolated VH12 rerun. Each structural supertype x sex/APOE
+# contrast contributes one deduplicated union of its significant up- and
+# downregulated core-MitoCarta genes. There are no directional KDA slots.
+vh10:
+  output_directory: 12_sex_apoe_kda_combo
+  network_release_id: SEAAD_A9_2024_RIMBANET_v1
+  simple_analysis_id: seaad_network_combo_returned_only_non_core_mt_acat_v1
+  simple_schema_root: seaad_network_combo_returned_only_non_core_mt_acat_v1
+  source_kda_execution: rerun_validated_kda_with_seaad_specific_networks_merged_up_down
+  input_authority:
+    # This file supplies frozen network identities and fKDA parameters. Query
+    # construction is controlled by the merged_up_down mode below.
+    phase12_config:
+      path: config/phase12_seaad_network_kda.yml
+      sha256: 752f0444050f8447bd3a00f5c1df183037de5b0ee80ae99531d62a402509298a
+    seaad_network_release:
+      path: data/bayesian_network_seaad/release_manifest.tsv
+      sha256: 38c8a3d275872299e2b9245d0a5f5918474c96ce29cd0f78abc385cec6e0c198
+    fkda_source:
+      path: scripts/NetWeaver/fKDA.R
+      sha256: fed8f89f35a3f08f38a420eb9b26c590cdc5f13a12064af1b9fa4a4cb1168550
+    phase18_code:
+      path: scripts/18_key_driver_selection.py
+      sha256: e34f478f2fb6f766287dd4524933717c42ac6cedfec22f456c1126aa8064a8e0
+    phase18_config:
+      path: config/phase18_key_driver_selection.yml
+      sha256: d1979ef4b66d1e841633a2f235419147fa130da140d20b40c2d84b99cd90ae4f
+    phase18_annotation:
+      path: results/minerva_production/09_annotate_genes/gene_annotation_master.tsv.gz
+      sha256: b1a7e9b627c983d083df74cbe1173b8cb3e9007e1afc641747e8c30ec17f9203
+    vh08_status:
+      path: results/validation_human/08_deg/status.tsv
+      sha256: d65ee48c2c96b4f34a08dc963d96d2de44eb819eed12258c942fee1e799609d1
+    vh08_artifacts:
+      path: results/validation_human/08_deg/artifacts.tsv
+      sha256: ec8e5435d3a35a721a5bb5cb5745075c62cd1605f4357ab9959e9adc5ceb0cdc
+    direction_manifest:
+      path: results/validation_human/08_deg/query_handoff/fine_direction_manifest.tsv
+      sha256: 19c86571ee75d814e359d5c259b2125c1c7aa5ba6d22a2dc833ad626fafe9601
+    query_input_index:
+      path: results/validation_human/08_deg/query_handoff/fine_query_input_index.tsv
+      sha256: 03eaad5c0bdc255ec3900f26c162e3cbead0d9416f1a162754b3fa9a3756f46c
+    seaad_annotation:
+      path: results/validation_human/03_genes/gene_annotation_master.tsv
+      sha256: c2b43261a5620a8648dd93213bf51bfddeef90527893c47053698222305bde6a
+  analysis:
+    query_rule_id: fdr_only_query_sensitivity_merged_up_down
+    result_tier_id: posthoc_exploratory__fdr_only__donor3__query3__seaad_rimbanet_v1__merged_up_down__q05
+    query_mode: merged_up_down
+    merged_query_label: AD_both_mito
+    fdr_threshold_exclusive: 0.05
+    minimum_effective_query_genes: 3
+    small_query_warning_below: 10
+    directions: [AD_both_mito]
+    expected:
+      structural_contrasts: 774
+  selection:
+    minimum_coverage: 0.80
+    aggregate_q_threshold: 0.05
+    minimum_conservative_supporting_runs: 1
+    display_limit: 5
+    driver_classes: [mt_driver, non_mt_driver]
+  network_order:
+    - Astrocytes
+    - Excitatory_neurons
+    - Inhibitory_neurons
+    - Microglia
+    - OPCs
+    - Oligodendrocytes
+    - Vasculature_cells

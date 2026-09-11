@@ -68,7 +68,7 @@ SEA_RECURRENCE_DATA = (
 )
 ROS_CATEGORIES = (
     ROOT
-    / "results/minerva_production/20_sex_apoe_kda_simple_aggr/simple_category_gene_aggregates.tsv"
+    / "results/minerva_production/20_sex_apoe_kda/simple_category_gene_aggregates.tsv"
 )
 
 GROUP_ORDER = ["F_e2", "F_e33", "F_e4", "M_e2", "M_e33", "M_e4"]

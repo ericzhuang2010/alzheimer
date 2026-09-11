@@ -2,9 +2,9 @@
 
 > **PARTIALLY DEPRECATED (2026-08-29).** The 295-run universe described here is
 > still the frozen input of the authoritative returned-only simple aggregation
-> (`results/minerva_production/20_sex_apoe_kda_simple_aggr`). The candidate
+> (`results/minerva_production/20_sex_apoe_kda`). The candidate
 > counts below, however, come from the deprecated coverage/support selection
-> (`results/minerva_production/20_sex_apoe_kda (deprecated)`) and no longer
+> (`archive/results/minerva_production/20_sex_apoe_kda (deprecated)`) and no longer
 > describe the authoritative output.
 
 The canonical fine-cell Phase 20 v2 release uses 295 validated Phase 12
@@ -79,5 +79,5 @@ Totals:
 The authoritative machine-readable table is:
 
 ```text
-results/minerva_production/20_sex_apoe_kda/phase20_category_manifest.tsv
+archive/results/minerva_production/20_sex_apoe_kda (deprecated)/phase20_category_manifest.tsv
 ```

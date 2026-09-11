@@ -2,9 +2,9 @@
 
 > **DEPRECATED (2026-08-29).** The coverage/support/ACAT candidate funnel
 > explained here belongs to the deprecated release
-> `results/minerva_production/20_sex_apoe_kda (deprecated)`. The authoritative
+> `archive/results/minerva_production/20_sex_apoe_kda (deprecated)`. The authoritative
 > Phase 20 result is the returned-only simple aggregation in
-> `results/minerva_production/20_sex_apoe_kda_simple_aggr`, which applies no
+> `results/minerva_production/20_sex_apoe_kda`, which applies no
 > coverage, support, or category-BH gates.
 
 ## The full picture
@@ -483,10 +483,10 @@ and BH calculation is repeated.
 
 ## Machine-readable authorities
 
-- [Source run manifest](../../results/minerva_production/20_sex_apoe_kda/00_inputs/phase20_source_run_manifest.tsv)
-- [Source validation checks](../../results/minerva_production/20_sex_apoe_kda/00_inputs/phase20_source_checks.tsv)
-- [Phase 20 status](../../results/minerva_production/20_sex_apoe_kda/phase20_status.tsv)
-- [Phase 20 category manifest](../../results/minerva_production/20_sex_apoe_kda/phase20_category_manifest.tsv)
-- [Phase 20 filter funnel](../../results/minerva_production/20_sex_apoe_kda/phase20_filter_funnel.tsv)
-- [Phase 20 checks](../../results/minerva_production/20_sex_apoe_kda/phase20_checks.tsv)
+- [Source run manifest](../../archive/results/minerva_production/20_sex_apoe_kda%20(deprecated)/00_inputs/phase20_source_run_manifest.tsv)
+- [Source validation checks](../../archive/results/minerva_production/20_sex_apoe_kda%20(deprecated)/00_inputs/phase20_source_checks.tsv)
+- [Phase 20 status](../../archive/results/minerva_production/20_sex_apoe_kda%20(deprecated)/phase20_status.tsv)
+- [Phase 20 category manifest](../../archive/results/minerva_production/20_sex_apoe_kda%20(deprecated)/phase20_category_manifest.tsv)
+- [Phase 20 filter funnel](../../archive/results/minerva_production/20_sex_apoe_kda%20(deprecated)/phase20_filter_funnel.tsv)
+- [Phase 20 checks](../../archive/results/minerva_production/20_sex_apoe_kda%20(deprecated)/phase20_checks.tsv)
 - [Phase 20 methods](phase20_methods.md)

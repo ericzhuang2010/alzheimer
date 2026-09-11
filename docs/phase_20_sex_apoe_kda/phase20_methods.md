@@ -2,9 +2,9 @@
 
 > **DEPRECATED (2026-08-29).** These methods describe the coverage/support/ACAT
 > candidate selection whose release was renamed to
-> `results/minerva_production/20_sex_apoe_kda (deprecated)`. The authoritative
+> `archive/results/minerva_production/20_sex_apoe_kda (deprecated)`. The authoritative
 > Phase 20 result is the returned-only simple aggregation in
-> `results/minerva_production/20_sex_apoe_kda_simple_aggr` (see its README for
+> `results/minerva_production/20_sex_apoe_kda` (see its README for
 > the aggregation rule).
 
 ## Analysis scope and source authority
@@ -33,7 +33,7 @@ call with at least three effective query genes. The source status records:
 The validated source files are copied into:
 
 ```text
-results/minerva_production/20_sex_apoe_kda/00_inputs/
+archive/results/minerva_production/20_sex_apoe_kda (deprecated)/00_inputs/
 ```
 
 The source and copied-file SHA-256 hashes must match before aggregation. The

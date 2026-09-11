@@ -3,7 +3,7 @@
 > **DEPRECATED (2026-08-29).** The direct broad-cell release described here was
 > renamed to `results/minerva_production/20_sex_apoe_kda_broad (deprecated)`.
 > The authoritative Phase 20 result is the returned-only simple aggregation in
-> `results/minerva_production/20_sex_apoe_kda_simple_aggr`.
+> `results/minerva_production/20_sex_apoe_kda`.
 
 **Status:** Executed; local-production release is `validated_complete` (release later deprecated)  
 **Date:** 2026-08-28  
@@ -129,7 +129,7 @@ statistical units:
 The current fine-cell Phase 20 result remains frozen under:
 
 ```text
-results/minerva_production/20_sex_apoe_kda/
+archive/results/minerva_production/20_sex_apoe_kda (deprecated)/
 ```
 
 The broad-direct result uses a separate namespace:

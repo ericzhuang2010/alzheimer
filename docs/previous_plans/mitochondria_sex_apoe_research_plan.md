@@ -3049,7 +3049,7 @@ The plan can proceed with the defaults above, but these decisions should be docu
 
 - Yu et al. local paper: `docs/Yu_sex_apoe.pdf` (~2.3 MB).
 - Local method summary: `docs/Yu_sex_apoe_method.md` (~11 KB).
-- Professor's data and normalization instructions: `docs/email_07092026.txt` (~1.0 KB).
+- Professor's data and normalization instructions: `docs/email_notes/07092026_email.txt` (~1.0 KB).
 - Local Seurat-object tutorial: `docs/vasculature_cells_rds_structure.md` (~32 KB).
 - Local data triage: `docs/yu_data_file_triage.md` (~8.9 KB).
 - Local data-access notes: `docs/data_availability.md` (~12 KB).
