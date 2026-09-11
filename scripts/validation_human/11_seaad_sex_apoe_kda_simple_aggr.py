@@ -356,7 +356,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--output",
-        default="results/validation_human/11_sex_apoe_kda_simple_aggr",
+        default="results/validation_human/11_sex_apoe_kda_rosmap_network",
     )
     return parser.parse_args()
 

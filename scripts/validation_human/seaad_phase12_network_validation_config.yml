@@ -7,7 +7,7 @@ output_root: results/validation_human
 # and an isolated result root. No Phase 10 or Phase 11 output is read as KDA
 # evidence or overwritten.
 vh10:
-  output_directory: 12_sex_apoe_kda_simple_aggr_network
+  output_directory: 12_sex_apoe_kda
   network_release_id: SEAAD_A9_2024_RIMBANET_v1
   simple_analysis_id: seaad_network_simple_returned_only_non_core_mt_acat_v1
   simple_schema_root: seaad_network_simple_returned_only_non_core_mt_acat_v1

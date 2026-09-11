@@ -4,9 +4,9 @@ The Phase 12 rerun completed successfully using the SEA-AD-specific Bayesian net
 
 ## Outputs
 
-- Results: `results/validation_human/12_sex_apoe_kda_simple_aggr_network`
-- Analysis status: `results/validation_human/12_sex_apoe_kda_simple_aggr_network/simple_status.tsv`
-- Results README: `results/validation_human/12_sex_apoe_kda_simple_aggr_network/README.md`
+- Results: `results/validation_human/12_sex_apoe_kda`
+- Analysis status: `results/validation_human/12_sex_apoe_kda/simple_status.tsv`
+- Results README: `results/validation_human/12_sex_apoe_kda/README.md`
 - Figures: `results/figures/validation_human/phase_12_sex_apoe_simple_aggr_network`
 - KDA configuration: `config/phase12_seaad_network_kda.yml`
 

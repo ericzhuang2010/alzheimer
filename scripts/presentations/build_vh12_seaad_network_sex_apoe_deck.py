@@ -41,7 +41,7 @@ DEFAULT_OUTPUT = (
 )
 AUDIT_DIR = ROOT / "results/presentations/vh12_seaad_network_sex_apoe_deck"
 
-SEA_RESULT = ROOT / "results/validation_human/12_sex_apoe_kda_simple_aggr_network"
+SEA_RESULT = ROOT / "results/validation_human/12_sex_apoe_kda"
 SEA_MANIFEST = SEA_RESULT / "10a_inputs/seaad_kda_run_manifest.tsv"
 SEA_STATUS = SEA_RESULT / "simple_status.tsv"
 SEA_CATEGORIES = SEA_RESULT / "simple_category_gene_aggregates.tsv"

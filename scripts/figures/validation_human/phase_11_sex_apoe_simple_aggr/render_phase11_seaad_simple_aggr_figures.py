@@ -4,7 +4,7 @@
 This renderer mirrors the Phase 20 simple-aggregation figure bundles for the
 SEA-AD validation cohort. It does not rerun KDA or ACAT. It reads the
 validated category aggregate from ``results/validation_human/
-11_sex_apoe_kda_simple_aggr``, confirms every row is a non-core-MT driver,
+11_sex_apoe_kda_rosmap_network``, confirms every row is a non-core-MT driver,
 assigns display ranks within each sex/APOE-by-broad-cell category, and writes
 two publication-ready figure bundles: driver recurrence and top-five
 candidates.
@@ -794,7 +794,7 @@ def main() -> int:
     result_dir = (
         args.result_dir.resolve()
         if args.result_dir
-        else root / "results" / "validation_human" / "11_sex_apoe_kda_simple_aggr"
+        else root / "results" / "validation_human" / "11_sex_apoe_kda_rosmap_network"
     )
     figure_root = (
         args.figure_root.resolve()

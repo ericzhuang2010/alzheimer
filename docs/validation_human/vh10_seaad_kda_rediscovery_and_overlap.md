@@ -3,7 +3,7 @@
 > **PARTIALLY DEPRECATED (2026-08-29).** The gated candidate selection
 > (`10c_seaad_selection`) and its ROSMAP overlap (`10d_overlap`) described
 > here are superseded by the authoritative returned-only simple aggregation in
-> `results/validation_human/11_sex_apoe_kda_simple_aggr`
+> `results/validation_human/11_sex_apoe_kda_rosmap_network`
 > (`scripts/validation_human/11_seaad_sex_apoe_kda_simple_aggr.py`). The VH10
 > run universe, `10a_inputs`, and the 42 validated KDA calls in `10b_kda`
 > remain the frozen, non-deprecated inputs of that aggregation. The current

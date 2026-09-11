@@ -52,7 +52,7 @@ ROS_CATEGORIES = (
 )
 SEA_CATEGORIES = (
     ROOT
-    / "results/validation_human/11_sex_apoe_kda_simple_aggr"
+    / "results/validation_human/11_sex_apoe_kda_rosmap_network"
     / "simple_category_gene_aggregates.tsv"
 )
 REGIONAL_GWAS = (

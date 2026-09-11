@@ -31,7 +31,7 @@ from pptx.util import Inches, Pt
 
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_DECK = ROOT / "docs" / "presentations" / "phase20_sex_apoe_kda_fine_broad.pptx"
-RESULT_DIR = ROOT / "results" / "validation_human" / "11_sex_apoe_kda_simple_aggr"
+RESULT_DIR = ROOT / "results" / "validation_human" / "11_sex_apoe_kda_rosmap_network"
 MANIFEST_PATH = (
     ROOT
     / "results"

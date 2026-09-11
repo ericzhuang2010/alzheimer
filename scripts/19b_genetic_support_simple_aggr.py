@@ -62,7 +62,7 @@ ROSMAP_FROZEN = PLAN_DIR / "frozen_inputs" / "rosmap_simple_category_gene_aggreg
 ROSMAP_SHA256 = "4e0ab4204ba837ec7ca0d5920e27f2557849f6acbc0d92189d5737193eab8ebd"
 SEAAD_PRIMARY = (
     ROOT
-    / "results/validation_human/11_sex_apoe_kda_simple_aggr"
+    / "results/validation_human/11_sex_apoe_kda_rosmap_network"
     / "simple_category_gene_aggregates.tsv"
 )
 SEAAD_FROZEN = PLAN_DIR / "frozen_inputs" / "seaad_simple_category_gene_aggregates.tsv"

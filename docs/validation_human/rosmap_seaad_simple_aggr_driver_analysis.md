@@ -6,7 +6,7 @@
 **Sources:**
 
 - ROSMAP: `results/minerva_production/20_sex_apoe_kda_simple_aggr/simple_category_gene_aggregates.tsv` (689 non-MT gene × category units, 433 genes)
-- SEA-AD: `results/validation_human/11_sex_apoe_kda_simple_aggr/simple_category_gene_aggregates.tsv` (96 units, 91 genes)
+- SEA-AD: `results/validation_human/11_sex_apoe_kda_rosmap_network/simple_category_gene_aggregates.tsv` (96 units, 91 genes)
 
 Both tables were filtered to `case_id = non_mt_driver` and `is_core_mito = FALSE`, and display ranks were recomputed within each `signature_group × broad_network` category by `returned_run_q_acat_score`, then gene symbol — the same rule the deck's figures use.
 
