@@ -6,7 +6,7 @@ The recovery plan was executed locally on homedesktop on 2026-08-21. No
 Minerva compute was used. The validated bundle was published atomically to:
 
 ~~~text
-results/minerva_production/19_genetic_support_tier2_recovery/
+results/minerva_production/19_genetic_support_tier2_recovery (deprecated)/
 ~~~
 
 The terminal status is:

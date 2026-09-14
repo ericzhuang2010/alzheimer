@@ -28,7 +28,7 @@ document is silent, the Tier 1 plan remains authoritative.
 As of 2026-08-21, the original controlled-source pilot and the approved
 open-data alternative below are complete. The local run published the
 validated 23-file bundle to
-`results/minerva_production/19_genetic_support_tier2_regional/`. It retained 9,363
+`results/minerva_production/19_genetic_support_tier2_regional (deprecated)/`. It retained 9,363
 candidate QTL fine-mapping rows and 311,180 dense candidate-region GWAS rows;
 all source and artifact checks passed. The
 FunGen-xQTL Synapse entities remain unreadable by the current account even
@@ -60,7 +60,7 @@ validated counts, source hashes, terminal route states, and limitations.
 The validated Tier 1 bundle is:
 
 ```text
-results/minerva_production/19_genetic_support_tier1/
+results/minerva_production/19_genetic_support_tier1 (deprecated)/
 ```
 
 Its status records:
@@ -545,7 +545,7 @@ Do not change:
 config/phase19_genetic_support.yml
 config/phase19_local_production_execution.yml
 scripts/19_run_genetic_support.py
-results/minerva_production/19_genetic_support_tier1/
+results/minerva_production/19_genetic_support_tier1 (deprecated)/
 ```
 
 If a shared helper must be extracted from the Tier 1 script, Tier 1 tests and
@@ -678,7 +678,7 @@ result; discordance remains explicit.
 
 ```text
 results/local_pilot/19_genetic_support_tier2/
-results/minerva_production/19_genetic_support_tier2_regional/
+results/minerva_production/19_genetic_support_tier2_regional (deprecated)/
 ```
 
 Pilot output is nonfinal and is never copied into the production directory.

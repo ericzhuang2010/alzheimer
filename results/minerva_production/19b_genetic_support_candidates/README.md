@@ -25,6 +25,6 @@ The matched SEA-AD combo list assigns three P1 cross-cohort genes: `LAGE3`,
 
 The public-summary Tier 1 screen is complete in
 `../19b_genetic_support_tier1/`. Regional outputs in
-`../19b_genetic_support_regional/` are explicitly partial because the raw GWAS
-files needed to scan 30 newly introduced autosomal genes are unavailable on
-this machine.
+`../19b_genetic_support_regional/` now come from complete current-source scans.
+The MAGMA, QTL, and colocalization-gating follow-up is complete in the three
+corresponding `19b_genetic_support_*` bundles.

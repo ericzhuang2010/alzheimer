@@ -1,0 +1,2 @@
+schema_version	stage	generated_at_utc	failed_checks	validation_status	candidate_rows	tested_rows	not_assessable_rows	candidate_significant_rows	candidate_significant_genes	candidate_threshold	threshold_definition	clinical_pvalue_rows	clinical_rejected_rows
+phase19b_sex_apoe_kda_combo_v2_status	magma	2026-09-14T15:14:09+00:00	0	validated_complete	912	832	80	6	3	5.482456140350877e-05	0.05/(228_candidates*4_traits)	21101103	11

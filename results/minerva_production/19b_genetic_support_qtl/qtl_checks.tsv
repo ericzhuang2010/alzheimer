@@ -1,0 +1,8 @@
+schema_version	check_id	observed	expected	passed
+phase19b_sex_apoe_kda_combo_v2_checks	followup_genes	116	116	True
+phase19b_sex_apoe_kda_combo_v2_checks	followup_contexts	269	269	True
+phase19b_sex_apoe_kda_combo_v2_checks	route_rows	538	538	True
+phase19b_sex_apoe_kda_combo_v2_checks	archives	3	3	True
+phase19b_sex_apoe_kda_combo_v2_checks	source_validation	4	4	True
+phase19b_sex_apoe_kda_combo_v2_checks	extracted_rows	69308	>0	True
+phase19b_sex_apoe_kda_combo_v2_checks	sex_apoe_exact_routes	0	0	True

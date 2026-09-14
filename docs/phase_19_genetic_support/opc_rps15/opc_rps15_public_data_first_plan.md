@@ -8,7 +8,7 @@
 **Execution model:** local production-equivalent; Minerva is not required  
 **Author-data dependency:** none  
 **Planned publication directory:**  
-`/home/ericzhuang2010/VscodeProjects/alzheimer/results/minerva_production/19_genetic_support_opc_rps15_public_recovery/`
+`/home/ericzhuang2010/VscodeProjects/alzheimer/results/minerva_production/19_genetic_support_opc_rps15_public_recovery (deprecated)/`
 
 ## Executive decision
 
@@ -79,10 +79,10 @@ positive H4.
 The following result bundles are immutable inputs:
 
 ```text
-results/minerva_production/19_genetic_support_tier1/
-results/minerva_production/19_genetic_support_tier2_regional/
-results/minerva_production/19_genetic_support_tier2_recovery/
-results/minerva_production/19_genetic_support_endophenotype_gwas_qtl_extension/
+results/minerva_production/19_genetic_support_tier1 (deprecated)/
+results/minerva_production/19_genetic_support_tier2_regional (deprecated)/
+results/minerva_production/19_genetic_support_tier2_recovery (deprecated)/
+results/minerva_production/19_genetic_support_endophenotype_gwas_qtl_extension (deprecated)/
 ```
 
 The authoritative existing `RPS15` rows are in:
@@ -125,7 +125,7 @@ new_targeted_download_root = /home/ericzhuang2010/VscodeProjects/alzheimer/data/
 compact_regional_extract_root = /home/ericzhuang2010/VscodeProjects/alzheimer/data/reference/phase19_genetic_support/opc_rps15_public_recovery/regional_extracts
 temporary_work_root = /home/ericzhuang2010/VscodeProjects/alzheimer/data/reference/phase19_genetic_support/opc_rps15_public_recovery/work
 staging_result_root = /home/ericzhuang2010/VscodeProjects/alzheimer/results/minerva_production/.19_genetic_support_opc_rps15_public_recovery.staging
-final_result_root = /home/ericzhuang2010/VscodeProjects/alzheimer/results/minerva_production/19_genetic_support_opc_rps15_public_recovery
+final_result_root = /home/ericzhuang2010/VscodeProjects/alzheimer/results/minerva_production/19_genetic_support_opc_rps15_public_recovery (deprecated)
 execution_report = /home/ericzhuang2010/VscodeProjects/alzheimer/docs/phase_19_genetic_support/opc_rps15/opc_rps15_public_data_first_execution_report.md
 ```
 
@@ -631,7 +631,7 @@ existing_source_root = /home/ericzhuang2010/VscodeProjects/alzheimer/data/refere
 targeted_data_root = /home/ericzhuang2010/VscodeProjects/alzheimer/data/reference/phase19_genetic_support/opc_rps15_public_recovery
 working_root = /home/ericzhuang2010/VscodeProjects/alzheimer/data/reference/phase19_genetic_support/opc_rps15_public_recovery/work
 staging_result_root = /home/ericzhuang2010/VscodeProjects/alzheimer/results/minerva_production/.19_genetic_support_opc_rps15_public_recovery.staging
-final_result_root = /home/ericzhuang2010/VscodeProjects/alzheimer/results/minerva_production/19_genetic_support_opc_rps15_public_recovery
+final_result_root = /home/ericzhuang2010/VscodeProjects/alzheimer/results/minerva_production/19_genetic_support_opc_rps15_public_recovery (deprecated)
 publication_namespace = minerva_production
 use_minerva = false
 gpu_required = false
@@ -835,7 +835,7 @@ Record:
 ## Planned output contract
 
 The exact final directory is
-`/home/ericzhuang2010/VscodeProjects/alzheimer/results/minerva_production/19_genetic_support_opc_rps15_public_recovery/`.
+`/home/ericzhuang2010/VscodeProjects/alzheimer/results/minerva_production/19_genetic_support_opc_rps15_public_recovery (deprecated)/`.
 It must contain exactly these 24 files and no others:
 
 ```text

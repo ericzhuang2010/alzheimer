@@ -4,7 +4,7 @@
 **Completed:** 2026-08-21  
 **Execution stage:** local production-equivalent  
 **Backend:** direct local execution; Minerva was not used  
-**Published bundle:** `results/minerva_production/19_genetic_support_endophenotype_gwas_qtl_extension/`  
+**Published bundle:** `results/minerva_production/19_genetic_support_endophenotype_gwas_qtl_extension (deprecated)/`
 **Validation status:** `validated_complete_endophenotype_gwas_qtl_extension`
 
 ## Executive outcome

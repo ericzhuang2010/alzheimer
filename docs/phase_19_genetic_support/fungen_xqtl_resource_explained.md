@@ -231,7 +231,7 @@ Current combo-list results: 2 strong (`APOE`, `PLCG2`), 1 moderate (`INTS8`),
 
 ## 6. Related files
 
-- Tier 1 (original 25-gene screen): `results/minerva_production/19_genetic_support_tier1/`
+- Tier 1 (original 25-gene screen): `results/minerva_production/19_genetic_support_tier1 (deprecated)/`
 - 19b full-list screen: `results/minerva_production/19b_genetic_support_tier1/fungen_gene_evidence.tsv`
 - Rerun plan: [`simple_aggr_rerun/phase19_simple_aggr_rerun_plan.md`](simple_aggr_rerun/phase19_simple_aggr_rerun_plan.md)
 - Consolidated Phase 19 results: [`phase19_genetic_support_results_summary.md`](phase19_genetic_support_results_summary.md)

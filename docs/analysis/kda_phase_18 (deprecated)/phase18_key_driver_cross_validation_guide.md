@@ -465,7 +465,7 @@ For mtDNA-encoded candidates, examine mtDNA variation, heteroplasmy, copy number
 ### Output
 
 ```text
-results/minerva_production/19_genetic_support_tier1/genetic_support_evidence_summary.tsv
+results/minerva_production/19_genetic_support_tier1 (deprecated)/genetic_support_evidence_summary.tsv
 ```
 
 ## 10. WP6 — Human proteomics and proteogenomics

@@ -1,0 +1,7 @@
+schema_version	check_id	observed	expected	passed
+phase19b_sex_apoe_kda_combo_v2_checks	route_decisions	2152	2152	True
+phase19b_sex_apoe_kda_combo_v2_checks	traits_per_qtl_route	2152	2152	True
+phase19b_sex_apoe_kda_combo_v2_checks	valid_h0_h4_results	0	0	True
+phase19b_sex_apoe_kda_combo_v2_checks	coloc_gzip_has_header	1	1	True
+phase19b_sex_apoe_kda_combo_v2_checks	final_evidence_genes	228	228	True
+phase19b_sex_apoe_kda_combo_v2_checks	no_regional_only_gene_grade	0	0	True

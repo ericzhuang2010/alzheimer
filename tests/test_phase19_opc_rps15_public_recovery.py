@@ -96,7 +96,7 @@ class ContractTest(unittest.TestCase):
             self.assertTrue((ROOT / relative).is_file(), relative)
 
     def test_published_bundle_if_present(self):
-        output = ROOT / "results/minerva_production/19_genetic_support_opc_rps15_public_recovery"
+        output = ROOT / "results/minerva_production/19_genetic_support_opc_rps15_public_recovery (deprecated)"
         if not output.exists():
             self.skipTest("Published bundle not created yet")
         subprocess.run(

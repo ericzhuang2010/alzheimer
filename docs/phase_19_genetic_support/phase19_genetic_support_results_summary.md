@@ -7,8 +7,10 @@ workstreams completed; broader genetic validation remains incomplete<br>
 
 Current candidate authority and rerun outputs are the Phase 20 combo-based
 19b bundles under `results/minerva_production/19b_genetic_support_*`; see the
-[rerun record](simple_aggr_rerun/phase19_simple_aggr_rerun_plan.md). The
-results below remain valid only for the original frozen 25-gene scope.
+[completed Phase 19b result](simple_aggr_rerun/phase19b_genetic_support_results_summary.md)
+and [rerun record](simple_aggr_rerun/phase19_simple_aggr_rerun_plan.md). The
+results below remain valid only for the original frozen 25-gene scope, whose
+five result directories now carry the suffix ` (deprecated)`.
 
 ## Executive summary
 
@@ -161,11 +163,11 @@ multi-signal-colocalization recovery increment.
 
 | Workstream | Primary question | Published result directory |
 |---|---|---|
-| Tier 1 | Does a compact public AD fine-mapping/xQTL/TWAS/GVC summary directly map evidence to any frozen gene? | [`19_genetic_support_tier1`](../../results/minerva_production/19_genetic_support_tier1/) |
-| Tier 2 regional | Do full regional AD GWAS data and released QTL fine-mapping summaries provide valid inputs for the primary multi-signal H0-H4 analysis? | [`19_genetic_support_tier2_regional`](../../results/minerva_production/19_genetic_support_tier2_regional/) |
-| Tier 2 recovery | Can targeted dense eQTL/sQTL data and released models resolve the Tier 2 routes? | [`19_genetic_support_tier2_recovery`](../../results/minerva_production/19_genetic_support_tier2_recovery/) |
-| CSF endophenotype extension | Do amyloid-beta 42, total-tau, or p-tau181 GWAS reveal candidate signals missed by clinical diagnosis? | [`19_genetic_support_endophenotype_gwas_qtl_extension`](../../results/minerva_production/19_genetic_support_endophenotype_gwas_qtl_extension/) |
-| OPC/RPS15 public recovery | Can already-local, small public QTL resources resolve RPS15 in OPCs or inhibitory neurons? | [`19_genetic_support_opc_rps15_public_recovery`](../../results/minerva_production/19_genetic_support_opc_rps15_public_recovery/) |
+| Tier 1 | Does a compact public AD fine-mapping/xQTL/TWAS/GVC summary directly map evidence to any frozen gene? | [`19_genetic_support_tier1`](../../results/minerva_production/19_genetic_support_tier1%20%28deprecated%29/) |
+| Tier 2 regional | Do full regional AD GWAS data and released QTL fine-mapping summaries provide valid inputs for the primary multi-signal H0-H4 analysis? | [`19_genetic_support_tier2_regional`](../../results/minerva_production/19_genetic_support_tier2_regional%20%28deprecated%29/) |
+| Tier 2 recovery | Can targeted dense eQTL/sQTL data and released models resolve the Tier 2 routes? | [`19_genetic_support_tier2_recovery`](../../results/minerva_production/19_genetic_support_tier2_recovery%20%28deprecated%29/) |
+| CSF endophenotype extension | Do amyloid-beta 42, total-tau, or p-tau181 GWAS reveal candidate signals missed by clinical diagnosis? | [`19_genetic_support_endophenotype_gwas_qtl_extension`](../../results/minerva_production/19_genetic_support_endophenotype_gwas_qtl_extension%20%28deprecated%29/) |
+| OPC/RPS15 public recovery | Can already-local, small public QTL resources resolve RPS15 in OPCs or inhibitory neurons? | [`19_genetic_support_opc_rps15_public_recovery`](../../results/minerva_production/19_genetic_support_opc_rps15_public_recovery%20%28deprecated%29/) |
 
 All workstreams ran locally by direct execution. `minerva_production` is the
 repository publication namespace; it does not mean Minerva compute was used.
@@ -318,7 +320,7 @@ The frozen 47-context Tier 1 matrix reported:
 | None found | 23 | No direct mapping in the registered summary; not proof of absence |
 | Not assessable | 20 | Six mtDNA genes represented in 20 contexts |
 
-The [Tier 1 evidence matrix](../../results/minerva_production/19_genetic_support_tier1/genetic_support_evidence_matrix.png)
+The [Tier 1 evidence matrix](../../results/minerva_production/19_genetic_support_tier1%20%28deprecated%29/genetic_support_evidence_matrix.png)
 visualizes these context-level grades. The specialized RPS15 workstream later
 assigned RPS15 a separate weak/suggestive result, but this was not reintegrated
 into the formal 47-row cumulative grade, where RPS15 remains `none_found`.
@@ -603,9 +605,9 @@ in established AD biology.
 These issues do not change the reported gene-level conclusions, but they should
 be repaired before describing the result bundles as fully reproducible:
 
-1. [`tier2_prior_sensitivity.tsv.gz`](../../results/minerva_production/19_genetic_support_tier2_regional/tier2_prior_sensitivity.tsv.gz)
+1. [`tier2_prior_sensitivity.tsv.gz`](../../results/minerva_production/19_genetic_support_tier2_regional%20%28deprecated%29/tier2_prior_sensitivity.tsv.gz)
    and
-   [`tier2_variant_harmonization.tsv.gz`](../../results/minerva_production/19_genetic_support_tier2_regional/tier2_variant_harmonization.tsv.gz)
+   [`tier2_variant_harmonization.tsv.gz`](../../results/minerva_production/19_genetic_support_tier2_regional%20%28deprecated%29/tier2_variant_harmonization.tsv.gz)
    fail `gzip -t` with “unexpected end of file.” Their bytes match the artifact
    manifest and both are declared zero-row outputs, suggesting an empty-output
    writer/close bug. Hash validation alone did not test gzip structure.
@@ -613,7 +615,7 @@ be repaired before describing the result bundles as fully reproducible:
    APOE CSF pQTL files were acquired, and downstream route/harmonization tables
    record their use. However, the individual raw files, URLs, sizes, and
    checksums are not enumerated in
-   [`endophenotype_input_inventory.tsv`](../../results/minerva_production/19_genetic_support_endophenotype_gwas_qtl_extension/endophenotype_input_inventory.tsv)
+   [`endophenotype_input_inventory.tsv`](../../results/minerva_production/19_genetic_support_endophenotype_gwas_qtl_extension%20%28deprecated%29/endophenotype_input_inventory.tsv)
    or the published source checks.
 3. Most large raw-source directories are ignored and are not present in this
    checkout. The published inventories preserve recorded paths and hashes, but
@@ -622,16 +624,16 @@ be repaired before describing the result bundles as fully reproducible:
    original Linux execution host; the result manifests are mostly portable,
    but documentation links should use repository-relative paths.
 5. The Tier 2 recovery
-   [`analysis manifest`](../../results/minerva_production/19_genetic_support_tier2_recovery/recovery_analysis_manifest.tsv)
+   [`analysis manifest`](../../results/minerva_production/19_genetic_support_tier2_recovery%20%28deprecated%29/recovery_analysis_manifest.tsv)
    records 111,326 cases and 677,663 controls, whereas every row in
-   [`recovery_regional_gwas_summary.tsv`](../../results/minerva_production/19_genetic_support_tier2_recovery/recovery_regional_gwas_summary.tsv)
+   [`recovery_regional_gwas_summary.tsv`](../../results/minerva_production/19_genetic_support_tier2_recovery%20%28deprecated%29/recovery_regional_gwas_summary.tsv)
    records 85,934 cases and 401,577 controls. The encoded Bellenguez analysis
    sample and case fraction should be reconciled before any future custom
    case-control fine-mapping or colocalization run; no primary H0-H4 model was
    executed in the current recovery, so this inconsistency does not alter the
    reported zero-resolved-route result.
 6. In
-   [`endophenotype_prior_sensitivity.tsv.gz`](../../results/minerva_production/19_genetic_support_endophenotype_gwas_qtl_extension/endophenotype_prior_sensitivity.tsv.gz),
+   [`endophenotype_prior_sensitivity.tsv.gz`](../../results/minerva_production/19_genetic_support_endophenotype_gwas_qtl_extension%20%28deprecated%29/endophenotype_prior_sensitivity.tsv.gz),
    all nine sensitivity rows with signal ID `QTD000579` are labeled as sQTL
    routes. The eQTL Catalogue registry and route manifest identify `QTD000579`
    as the Walker bulk-neocortex **eQTL** dataset; `QTD000583` is the paired sQTL
@@ -721,12 +723,12 @@ multi-signal colocalization routes are addressed.
 
 ### Results
 
-- [Tier 1 candidate manifest](../../results/minerva_production/19_genetic_support_tier1/genetic_support_candidate_manifest.tsv)
-- [Tier 1 evidence summary](../../results/minerva_production/19_genetic_support_tier1/genetic_support_evidence_summary.tsv)
-- [Tier 2 recovery route decisions](../../results/minerva_production/19_genetic_support_tier2_recovery/recovery_route_decisions.tsv)
-- [Tier 2 recovery regional-GWAS summary](../../results/minerva_production/19_genetic_support_tier2_recovery/recovery_regional_gwas_summary.tsv)
-- [Tier 2 recovery regional-QTL summary](../../results/minerva_production/19_genetic_support_tier2_recovery/recovery_regional_qtl_summary.tsv)
-- [CSF endophenotype evidence summary](../../results/minerva_production/19_genetic_support_endophenotype_gwas_qtl_extension/endophenotype_evidence_summary.tsv)
-- [CSF gate decisions](../../results/minerva_production/19_genetic_support_endophenotype_gwas_qtl_extension/endophenotype_gate_decisions.tsv)
-- [RPS15 public-recovery evidence summary](../../results/minerva_production/19_genetic_support_opc_rps15_public_recovery/opc_rps15_evidence_summary.tsv)
-- [RPS15 route audit](../../results/minerva_production/19_genetic_support_opc_rps15_public_recovery/opc_rps15_qtl_audit.tsv)
+- [Tier 1 candidate manifest](../../results/minerva_production/19_genetic_support_tier1%20%28deprecated%29/genetic_support_candidate_manifest.tsv)
+- [Tier 1 evidence summary](../../results/minerva_production/19_genetic_support_tier1%20%28deprecated%29/genetic_support_evidence_summary.tsv)
+- [Tier 2 recovery route decisions](../../results/minerva_production/19_genetic_support_tier2_recovery%20%28deprecated%29/recovery_route_decisions.tsv)
+- [Tier 2 recovery regional-GWAS summary](../../results/minerva_production/19_genetic_support_tier2_recovery%20%28deprecated%29/recovery_regional_gwas_summary.tsv)
+- [Tier 2 recovery regional-QTL summary](../../results/minerva_production/19_genetic_support_tier2_recovery%20%28deprecated%29/recovery_regional_qtl_summary.tsv)
+- [CSF endophenotype evidence summary](../../results/minerva_production/19_genetic_support_endophenotype_gwas_qtl_extension%20%28deprecated%29/endophenotype_evidence_summary.tsv)
+- [CSF gate decisions](../../results/minerva_production/19_genetic_support_endophenotype_gwas_qtl_extension%20%28deprecated%29/endophenotype_gate_decisions.tsv)
+- [RPS15 public-recovery evidence summary](../../results/minerva_production/19_genetic_support_opc_rps15_public_recovery%20%28deprecated%29/opc_rps15_evidence_summary.tsv)
+- [RPS15 route audit](../../results/minerva_production/19_genetic_support_opc_rps15_public_recovery%20%28deprecated%29/opc_rps15_qtl_audit.tsv)

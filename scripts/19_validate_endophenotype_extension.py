@@ -14,7 +14,7 @@ from typing import Iterator
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_OUTPUT = ROOT / "results/minerva_production/19_genetic_support_endophenotype_gwas_qtl_extension"
+DEFAULT_OUTPUT = ROOT / "results/minerva_production/19_genetic_support_endophenotype_gwas_qtl_extension (deprecated)"
 RUNNER = ROOT / "scripts/19_run_endophenotype_extension.py"
 
 

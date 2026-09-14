@@ -1128,7 +1128,7 @@ The local [phase19b first-pass screen](../../../results/minerva_production/19b_g
 - **Weak:** `SELENOW` through public TWAS-list membership;
 - **None found in that registered source:** `RPL11`, `RPS15`, `WDR82`, `SELENOM`, `LAMTOR5`, `PGK1`, `FTL`, `ANKRD11`, and `LAGE3`.
 
-“None found” is not evidence that no genetic association exists. A focused [RPS15 public-data recovery](../../../results/minerva_production/19_genetic_support_opc_rps15_public_recovery/opc_rps15_status.tsv) found suggestive QTL signals but no resolved colocalization and no newly validated gene.
+“None found” is not evidence that no genetic association exists. A focused [RPS15 public-data recovery](../../../results/minerva_production/19_genetic_support_opc_rps15_public_recovery%20%28deprecated%29/opc_rps15_status.tsv) found suggestive QTL signals but no resolved colocalization and no newly validated gene.
 
 The genetics therefore strengthens `PLCG2` and expectedly `APOE`, modestly supports `SELENOW`, and does not independently validate the main ribosomal or LAMTOR5 network mechanisms.
 

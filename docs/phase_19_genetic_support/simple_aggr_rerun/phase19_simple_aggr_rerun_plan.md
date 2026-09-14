@@ -1,9 +1,7 @@
 # Phase 19 rerun plan: genetic support for the simple-aggregation drivers
 
-**Status:** WS0 and WS1 rerun complete; WS2 partially materialized from the
-validated prior full-list scans because the four raw GWAS sources are not on
-this machine; WS3–WS5 remain pending
-**Updated:** 2026-09-13
+**Status:** WS0–WS5 completed and validated; Phase 19b is authoritative
+**Updated:** 2026-09-14
 **Candidate scope:** all 228 non-MT returned drivers from
 `results/minerva_production/20_sex_apoe_kda_combo` (381 gene × sex/APOE ×
 broad-network units; category-aggregate SHA-256
@@ -21,8 +19,11 @@ returned-only aggregation: 228 non-MT genes across 381 units and 29 populated
 sex/APOE × broad-cell categories.
 
 The 19b pipeline reruns genetic support against the new candidate freeze. The
-original 2026-08 Phase 19 result bundles remain historical; current rerun
-outputs go to the separate `19b_*` result directories.
+original 2026-08 Phase 19 result bundles are historical and now carry the
+suffix ` (deprecated)`; current rerun outputs go to the separate `19b_*`
+result directories. See the
+[`Phase 19b result summary`](phase19b_genetic_support_results_summary.md) for
+the completed result.
 
 All execution rules of the [overall plan](../overall_plan.md) apply unchanged
 (freeze before looking, separate result roots, no-signal vs not-assessable
@@ -67,16 +68,15 @@ Implementation: `scripts/19b_genetic_support_simple_aggr.py`.
 | WS | Analysis | Genes | Inputs | Where it can run |
 |---|---|---|---|---|
 | WS1 | Tier-1-style public summary screen (FunGen fine-mapping, xQTL, TWAS lists) | all 228 | complete locally | this Mac |
-| WS2 | Regional clinical-AD and CSF GWAS screen (min P, lead variant per window) | 182 cached autosomal genes complete; 30 new autosomal genes per trait pending; 14 X-chromosome genes structurally unassessable | four raw GWAS sources — **missing locally** | data host for completion |
-| WS3 | MAGMA gene-based tests: clinical AD + 3 CSF biomarkers | all 228 | CSF GWAS + FUMA `g1000_eur` + MAGMA v1.10 (~9 GB) — **missing locally**; the MAGMA binary is a **Linux** build | other machine (Linux) |
-| WS4 | QTL coverage + signal gates (NG00184 fine-mapping; eQTL Catalogue r7 panels) | P1 + P2 only | NG00184 tars + eQTL Catalogue models (~6 GB) — **missing locally** | either, after transfer |
-| WS5 | Colocalization / same-variant tests | only routes with both signals and complete models + matched LD | same as WS4 | either |
+| WS2 | Regional clinical-AD and CSF GWAS screen (min P, lead variant per window) | all 226 mapped genes × four traits; X routes retain structural source status | four official GWAS files, checksum registered | completed locally |
+| WS3 | MAGMA gene-based tests: clinical AD + 3 CSF biomarkers | all 228, with explicit reference-model gaps | official MAGMA v1.10 Mac build and `g1000_eur`; checksum-validated CSF reuse | completed locally |
+| WS4 | QTL coverage + signal gates (NG00184 fine-mapping) | P1 + P2 only | three official fine-mapping archives, exact registered MD5 | completed locally |
+| WS5 | Colocalization / same-variant tests | signal-positive routes gated for complete models + compatible LD | released tables are incomplete model summaries | completed as a terminal assessability audit; no valid H0–H4 run |
 
 Design changes relative to the 2026-08 execution:
 
 - **Thresholds are re-frozen for the new scale.** MAGMA candidate correction
-  becomes `0.05 / (228 × 4 traits)` (or per-trait `0.05 / 228`; fix one rule in
-  the WS3 config before running). QTL signal gates remain gene-specific
+  is `0.05 / (228 × 4 traits) = 5.48245614e-5`. QTL signal gates remain gene-specific
   regional Bonferroni as in the recovery workstream.
 - **Regional results are annotation, not grades** (rule 11). The Tier-1 grade
   vocabulary (`strong`/`moderate`/`weak`/`none_found`/`not_assessable`) is kept
@@ -103,7 +103,13 @@ results/minerva_production/19b_genetic_support_qtl/
 results/minerva_production/19b_genetic_support_coloc/
 ```
 
-## 4. Input availability audit (this machine)
+## 4. Pre-execution input availability audit (superseded)
+
+This table records the 2026-08-29 planning state. On 2026-09-14 the four GWAS
+files, official MAGMA v1.10 macOS distribution and `g1000_eur` reference, and
+the three NG00184 fine-mapping archives needed by the frozen Phase 19b scope
+were acquired and checksum-validated. The full 14.34 GB contingency transfer
+was therefore unnecessary.
 
 Verified on 2026-08-29 against the five published input inventories:
 
@@ -130,7 +136,7 @@ Two additional gaps that the manifest cannot cover:
   for archival completeness but cannot run on this Mac (macOS/ARM). Plan
   WS3 on the other machine, or obtain a macOS MAGMA build separately.
 
-## 5. Commands to run on the other machine
+## 5. Archived contingency commands (not needed for the completed run)
 
 All commands assume the repository checkout root on the other machine
 (`cd /path/to/alzheimer` first). Pull the current repo state before starting so
@@ -211,26 +217,34 @@ transfer the 2.04 GB tier-2-regional group for WS2 if local execution is
 preferred; leave WS3 on Linux; decide WS4/WS5 placement by whichever machine
 holds the QTL archives when the P1/P2 routes are fixed.
 
-## 6. Order of operations
+## 6. Completed order of operations
 
-1. **Completed on this Mac:** WS0 froze 228 genes/381 contexts and WS1 screened
-   all 228 genes.
-2. **Other machine:** run §5.1 verification and §5.2 NG00130 discovery.
-3. Choose Option A or B per workstream; rescan the 30 current autosomal genes
-   absent from the validated legacy cache to complete WS2, then run WS3
-   (MAGMA, Linux).
-4. Fix the P1/P2 QTL route table from WS1–WS3 outcomes; run WS4, then WS5 only
-   where complete models and matched LD exist.
-5. Consolidate into a `19b` results summary mirroring
-   [`phase19_genetic_support_results_summary.md`](../phase19_genetic_support_results_summary.md),
-   reporting unique supported genes separately from route counts.
+1. WS0 froze 228 genes/381 contexts and mapped 226 genes.
+2. WS1 screened all 228 genes against the frozen FunGen summary snapshot.
+3. WS2 streamed all four current GWAS sources across every mapped window.
+4. WS3 fixed the four-trait threshold, ran clinical-AD MAGMA with v1.10, and
+   reused the three unchanged full-genome CSF scans only after exact checksum
+   validation.
+5. WS4 streamed the three checksum-validated NG00184 archives for the frozen
+   116-gene/269-context P1+P2 scope.
+6. WS5 enumerated every QTL × GWAS-trait decision and produced no H0–H4 values
+   where compatible fitted models and LD/full statistics were absent.
+7. Results were consolidated in
+   [`phase19b_genetic_support_results_summary.md`](phase19b_genetic_support_results_summary.md),
+   with unique genes kept separate from context and route counts.
 
 ## 7. What this rerun can and cannot change
 
-WS1 now covers all 228 current genes and reports 2 strong, 1 moderate, 9 weak,
-and 216 `none_found` public-summary grades. WS2 currently reuses validated
-regional values for 182 autosomal genes per trait; 30 new autosomal genes per
-trait remain unscanned because the source GWAS files are absent, and 14
-X-chromosome genes are outside those autosomal sources. WS5 remains limited by
-the same public-data gaps: complete fitted multi-signal QTL models and
-source-matched LD are still the rate-limiting inputs.
+WS1 covers all 228 current genes and reports 2 strong, 1 moderate, 9 weak, and
+216 `none_found` public-summary grades. WS2 is a current-source scan rather
+than a cache-based partial result. WS3 tested 832 of 912 candidate-trait rows;
+six rows across APOE, INTS8, and PLCG2 passed the frozen four-trait correction.
+WS4 extracted 69,308 released fine-mapping rows and covers all 538
+prespecified P1/P2 context-modality routes; 269 routes across 90 genes carry a
+source-significant QTL signal,
+while preserving the fact that the public QTL data are not sex/APOE-stratified.
+WS5 gated 2,152 QTL-by-trait decisions. Forty-seven passed both signal gates,
+but WS5 is terminally `not_assessable` for those routes: released PIP/credible-set
+rows are not complete fitted multi-signal models, and compatible source-matched
+LD/full QTL statistics are absent. Consequently, model-incompatible routes are
+`not_assessable`, not negative colocalizations.

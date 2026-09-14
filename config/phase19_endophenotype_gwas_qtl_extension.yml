@@ -38,15 +38,15 @@ analysis:
   selection_frozen_before_qtl_result: true
 
 inputs:
-  tier1_root: results/minerva_production/19_genetic_support_tier1
-  tier2_root: results/minerva_production/19_genetic_support_tier2_regional
-  recovery_root: results/minerva_production/19_genetic_support_tier2_recovery
-  candidate_manifest: results/minerva_production/19_genetic_support_tier1/genetic_support_candidate_manifest.tsv
-  tier1_artifacts: results/minerva_production/19_genetic_support_tier1/genetic_support_artifacts.tsv
-  tier2_artifacts: results/minerva_production/19_genetic_support_tier2_regional/tier2_artifacts.tsv
-  recovery_artifacts: results/minerva_production/19_genetic_support_tier2_recovery/recovery_artifacts.tsv
-  recovery_evidence_summary: results/minerva_production/19_genetic_support_tier2_recovery/recovery_evidence_summary.tsv
-  recovery_regions: results/minerva_production/19_genetic_support_tier2_recovery/recovery_regional_gwas_summary.tsv
+  tier1_root: results/minerva_production/19_genetic_support_tier1 (deprecated)
+  tier2_root: results/minerva_production/19_genetic_support_tier2_regional (deprecated)
+  recovery_root: results/minerva_production/19_genetic_support_tier2_recovery (deprecated)
+  candidate_manifest: results/minerva_production/19_genetic_support_tier1 (deprecated)/genetic_support_candidate_manifest.tsv
+  tier1_artifacts: results/minerva_production/19_genetic_support_tier1 (deprecated)/genetic_support_artifacts.tsv
+  tier2_artifacts: results/minerva_production/19_genetic_support_tier2_regional (deprecated)/tier2_artifacts.tsv
+  recovery_artifacts: results/minerva_production/19_genetic_support_tier2_recovery (deprecated)/recovery_artifacts.tsv
+  recovery_evidence_summary: results/minerva_production/19_genetic_support_tier2_recovery (deprecated)/recovery_evidence_summary.tsv
+  recovery_regions: results/minerva_production/19_genetic_support_tier2_recovery (deprecated)/recovery_regional_gwas_summary.tsv
   source_root: data/reference/phase19_genetic_support/endophenotype_gwas_qtl_extension
   inventory_dir: data/reference/phase19_genetic_support/endophenotype_gwas_qtl_extension/inventory
   raw_gwas_dir: data/reference/phase19_genetic_support/endophenotype_gwas_qtl_extension/gwas_raw
@@ -153,7 +153,7 @@ qtl_sources:
     overlap_state: source_specific
 
 outputs:
-  root: results/minerva_production/19_genetic_support_endophenotype_gwas_qtl_extension
+  root: results/minerva_production/19_genetic_support_endophenotype_gwas_qtl_extension (deprecated)
   pilot_root: results/local_pilot/19_genetic_support_endophenotype_gwas_qtl_extension
   schema: phase19_endophenotype_gwas_qtl_extension_v1
   exact_file_count: 36

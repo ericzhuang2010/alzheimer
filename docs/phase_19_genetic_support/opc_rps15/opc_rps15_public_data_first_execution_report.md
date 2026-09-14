@@ -5,7 +5,7 @@
 **Minerva used:** no  
 **Author data required:** no  
 **New downloaded source bytes:** 0  
-**Final result directory:** `/home/ericzhuang2010/VscodeProjects/alzheimer/results/minerva_production/19_genetic_support_opc_rps15_public_recovery`
+**Final result directory:** `/home/ericzhuang2010/VscodeProjects/alzheimer/results/minerva_production/19_genetic_support_opc_rps15_public_recovery (deprecated)`
 
 ## Outcome
 

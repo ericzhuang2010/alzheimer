@@ -6,7 +6,7 @@ Tier 1 was executed locally on 2026-08-16 for all 25 Phase 18 genes in all 47
 selected gene × broad-cell-type × driver-class units. The validated output is:
 
 ```text
-results/minerva_production/19_genetic_support_tier1/
+results/minerva_production/19_genetic_support_tier1 (deprecated)/
 ```
 
 Path-only migration (2026-08-21): the canonical directory was renamed from

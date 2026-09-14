@@ -98,15 +98,20 @@ results/minerva_production/09_annotate_genes/deg_all_annotated.tsv.gz
 results/minerva_production/13_respiratory_modifier/respiratory_pseudobulk_counts.rds
 !results/minerva_production/15_mitonuclear_coupling
 !results/minerva_production/18_sex_apoe_bidir_kda_complex_aggr (deprecated)
-# Validated Phase 19 result bundles.
-!results/minerva_production/19_genetic_support_tier1
-!results/minerva_production/19_genetic_support_tier2_regional
-!results/minerva_production/19_genetic_support_tier2_recovery
-!results/minerva_production/19_genetic_support_endophenotype_gwas_qtl_extension
-!results/minerva_production/19_genetic_support_opc_rps15_public_recovery
+# Validated historical Phase 19 result bundles (superseded by Phase 19b).
+!results/minerva_production/19_genetic_support_tier1 (deprecated)
+!results/minerva_production/19_genetic_support_tier2_regional (deprecated)
+!results/minerva_production/19_genetic_support_tier2_recovery (deprecated)
+!results/minerva_production/19_genetic_support_endophenotype_gwas_qtl_extension (deprecated)
+!results/minerva_production/19_genetic_support_opc_rps15_public_recovery (deprecated)
 !results/minerva_production/19b_genetic_support_candidates
 !results/minerva_production/19b_genetic_support_regional
 !results/minerva_production/19b_genetic_support_tier1
+!results/minerva_production/19b_genetic_support_magma
+!results/minerva_production/19b_genetic_support_qtl
+!results/minerva_production/19b_genetic_support_coloc
+# Rebuildable MAGMA intermediates include a 370 MB p-value table and stay local.
+results/minerva_production/19b_genetic_support_magma/work/
 !results/minerva_production/20_sex_apoe_kda_source
 !results/minerva_production/20_sex_apoe_kda
 !results/minerva_production/20_sex_apoe_kda_combo

@@ -61,7 +61,7 @@ SEA_CATEGORIES = (
 )
 REGIONAL_GWAS = (
     ROOT
-    / "results/minerva_production/19_genetic_support_tier2_recovery"
+    / "results/minerva_production/19_genetic_support_tier2_recovery (deprecated)"
     / "recovery_regional_gwas_summary.tsv"
 )
 AUDIT_PATH = (

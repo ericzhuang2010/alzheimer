@@ -1,0 +1,2 @@
+schema_version	stage	generated_at_utc	failed_checks	validation_status	followup_genes	followup_contexts	routes	extracted_finemapping_rows	source_significant_routes	source_significant_genes	exact_broad_lineage_routes	bulk_brain_fallback_routes	no_released_finemapping_routes
+phase19b_sex_apoe_kda_combo_v2_status	qtl	2026-09-14T15:22:13+00:00	0	validated_complete	116	269	538	69308	269	90	218	236	84

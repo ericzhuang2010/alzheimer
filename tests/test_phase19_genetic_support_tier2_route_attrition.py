@@ -42,7 +42,7 @@ def test_default_output_contract() -> None:
 def test_derivation_preserves_terminal_partition_and_posterior_boundary() -> None:
     source = (
         ROOT
-        / "results/minerva_production/19_genetic_support_tier2_recovery"
+        / "results/minerva_production/19_genetic_support_tier2_recovery (deprecated)"
     )
     frames = FIGURE.validate_inputs(source)
     plot_data, derived = FIGURE.derive_plot_data(frames)
@@ -103,7 +103,7 @@ def test_full_figure_package_in_temporary_directory(tmp_path: Path) -> None:
             "--input-root",
             str(
                 ROOT
-                / "results/minerva_production/19_genetic_support_tier2_recovery"
+                / "results/minerva_production/19_genetic_support_tier2_recovery (deprecated)"
             ),
             "--output-root",
             str(output),

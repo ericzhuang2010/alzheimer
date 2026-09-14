@@ -74,24 +74,24 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--tier1-root",
-        default="results/minerva_production/19_genetic_support_tier1",
+        default="results/minerva_production/19_genetic_support_tier1 (deprecated)",
     )
     parser.add_argument(
         "--recovery-root",
-        default="results/minerva_production/19_genetic_support_tier2_recovery",
+        default="results/minerva_production/19_genetic_support_tier2_recovery (deprecated)",
     )
     parser.add_argument(
         "--rps15-root",
         default=(
             "results/minerva_production/"
-            "19_genetic_support_opc_rps15_public_recovery"
+            "19_genetic_support_opc_rps15_public_recovery (deprecated)"
         ),
     )
     parser.add_argument(
         "--endophenotype-root",
         default=(
             "results/minerva_production/"
-            "19_genetic_support_endophenotype_gwas_qtl_extension"
+            "19_genetic_support_endophenotype_gwas_qtl_extension (deprecated)"
         ),
     )
     parser.add_argument("--output-root", default=DEFAULT_OUTPUT_ROOT)

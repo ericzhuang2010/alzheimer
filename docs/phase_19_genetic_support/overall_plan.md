@@ -1,17 +1,25 @@
 # Phase 19 human genetic support: overall plan and roadmap
 
-**Status:** four planned workstreams executed locally; further validation routes remain optional  
-**Current through:** 2026-08-21  
-**Scope:** 25 ROSMAP Phase 18 key-driver genes in 47 candidate-context units
+**Status:** historical Phase 19 bundles deprecated; Phase 19b is authoritative
+**Current through:** 2026-09-14
+**Current scope:** 228 non-MT ROSMAP Phase 20 combo-KDA genes in 381
+candidate-context units
+
+> **Deprecation notice:** The five original `19_genetic_support_*` result
+> bundles are retained with the suffix ` (deprecated)` for provenance. They
+> describe the older 25-gene Phase 18 freeze and must not be used as the
+> current candidate-level result. The completed current analysis is Phase 19b;
+> see the [Phase 19b result summary](simple_aggr_rerun/phase19b_genetic_support_results_summary.md).
 
 ## Purpose
 
-This is the root coordination document for Phase 19. It records the relationship
+This is the root coordination document for the historical Phase 19 work and
+its Phase 19b replacement. It records the relationship
 between workstreams, their cumulative scientific outcome, and the order of any
 future work. Detailed scientific rules, input contracts, execution tasks, and
 reports belong in the applicable subdirectory and are not duplicated here.
 
-Phase 19 asks whether inherited human genetic variation supports any Phase 18
+The historical Phase 19 analysis asked whether inherited human genetic variation supports any Phase 18
 key-driver gene and, when possible, whether an AD or AD-endophenotype signal
 shares a causal variant with a molecular QTL for that gene.
 
@@ -25,7 +33,7 @@ models, harmonized variants, and ancestry-appropriate LD.
 
 - [Tier 1 plan](tier1/human_genetic_support_plan.md)
 - [Tier 1 execution report](tier1/tier1_execution_report.md)
-- Result root: results/minerva_production/19_genetic_support_tier1/
+- Result root: results/minerva_production/19_genetic_support_tier1 (deprecated)/
 
 Tier 1 screens all 25 genes using public precomputed AD GWAS, fine-mapping,
 xQTL, TWAS, and companion summary resources. It is the frozen baseline for
@@ -39,8 +47,8 @@ later workstreams.
 - [Recovery execution report](tier2/tier2_recovery_execution_report.md)
 - [Why APOE and RPS15 remain unresolved](tier2/apoe_rps15_unresolved_colocalization_explained.md)
 - Result roots:
-  - results/minerva_production/19_genetic_support_tier2_regional/
-  - results/minerva_production/19_genetic_support_tier2_recovery/
+  - results/minerva_production/19_genetic_support_tier2_regional (deprecated)/
+  - results/minerva_production/19_genetic_support_tier2_recovery (deprecated)/
 
 Tier 2 tests whether dense candidate-region GWAS/QTL statistics, fitted
 fine-mapping models, and compatible LD can resolve comparisons left open by
@@ -51,7 +59,7 @@ Tier 1.
 - [Extension plan](endophenotype_gwas_qtl_extension/endophenotype_gwas_qtl_extension_plan.md)
 - [Execution report](endophenotype_gwas_qtl_extension/endophenotype_gwas_qtl_extension_execution_report.md)
 - [Historical analysis that selected this workstream](endophenotype_gwas_qtl_extension/remaining_gwas_qtl_analyses_and_next_step.md)
-- Result root: results/minerva_production/19_genetic_support_endophenotype_gwas_qtl_extension/
+- Result root: results/minerva_production/19_genetic_support_endophenotype_gwas_qtl_extension (deprecated)/
 
 This workstream tests CSF amyloid-beta 42, total tau, and p-tau181 GWAS so that
 genes without a clinical-diagnosis GWAS signal can be evaluated against
@@ -61,13 +69,13 @@ phenotypes closer to AD pathology.
 
 - [OPC/RPS15 public-data-first plan](opc_rps15/opc_rps15_public_data_first_plan.md)
 - [Execution report](opc_rps15/opc_rps15_public_data_first_execution_report.md)
-- Result root: results/minerva_production/19_genetic_support_opc_rps15_public_recovery/
+- Result root: results/minerva_production/19_genetic_support_opc_rps15_public_recovery (deprecated)/
 
 This workstream asks whether already-public, small, locally manageable QTL
 resources can resolve RPS15 in OPCs or inhibitory neurons without waiting for
 authors or downloading very large archives.
 
-## Cumulative execution state
+## Historical cumulative execution state
 
 | Workstream | Frozen coverage | Technical outcome | Scientific outcome |
 |---|---|---|---|
@@ -116,18 +124,21 @@ Every new Phase 19 workstream must:
 The results/minerva_production name is a repository namespace. It does not mean
 that computation must run on Minerva.
 
-## Remaining roadmap
+## Phase 19b replacement
 
-### Priority 0: current Phase 20 combo driver list
+### Authoritative current Phase 20 combo driver list
 
 The authoritative ROSMAP list is the direction-combined returned-only
 aggregation
 (`results/minerva_production/20_sex_apoe_kda_combo`; 228 non-MT genes in
 381 sex/APOE × broad-network units). It supersedes both the Phase 18 top-five
-freeze and the earlier non-combo Phase 20 list. WS0 and WS1 have been rerun;
-WS2 is partial because four raw GWAS sources are absent locally. The execution
-record, missing-input manifest, and data-host commands are at
+freeze and the earlier non-combo Phase 20 list. Phase 19b has rerun the Tier 1,
+regional-GWAS, MAGMA, QTL-coverage, and colocalization-gating workstreams. The execution
+record and results are at
 [simple_aggr_rerun/phase19_simple_aggr_rerun_plan.md](simple_aggr_rerun/phase19_simple_aggr_rerun_plan.md).
+
+The remaining priorities below are optional future extensions, not unfinished
+Phase 19b work.
 
 ### Priority 1: public pQTL, PWAS, and TWAS support
 

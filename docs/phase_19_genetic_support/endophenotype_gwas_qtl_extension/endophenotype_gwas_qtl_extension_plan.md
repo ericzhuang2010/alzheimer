@@ -6,7 +6,7 @@
 **Execution report:** [endophenotype_gwas_qtl_extension_execution_report.md](endophenotype_gwas_qtl_extension_execution_report.md)  
 **Execution model:** local production-equivalent; Minerva is not required  
 **Planned publication directory:**
-`results/minerva_production/19_genetic_support_endophenotype_gwas_qtl_extension/`
+`results/minerva_production/19_genetic_support_endophenotype_gwas_qtl_extension (deprecated)/`
 
 ## Executive decision
 
@@ -75,9 +75,9 @@ The extension is additive and immutable with respect to the three completed
 result bundles:
 
 ```text
-results/minerva_production/19_genetic_support_tier1/
-results/minerva_production/19_genetic_support_tier2_regional/
-results/minerva_production/19_genetic_support_tier2_recovery/
+results/minerva_production/19_genetic_support_tier1 (deprecated)/
+results/minerva_production/19_genetic_support_tier2_regional (deprecated)/
+results/minerva_production/19_genetic_support_tier2_recovery (deprecated)/
 ```
 
 It must read and hash-validate their relevant manifests and summaries. It must
@@ -199,7 +199,7 @@ route- and context-specific.
 The primary screening regions are the existing GRCh38 candidate windows in:
 
 ```text
-results/minerva_production/19_genetic_support_tier2_recovery/
+results/minerva_production/19_genetic_support_tier2_recovery (deprecated)/
   recovery_regional_gwas_summary.tsv
 ```
 
@@ -802,7 +802,7 @@ Pilot and final outputs:
 
 ```text
 results/local_pilot/19_genetic_support_endophenotype_gwas_qtl_extension/
-results/minerva_production/19_genetic_support_endophenotype_gwas_qtl_extension/
+results/minerva_production/19_genetic_support_endophenotype_gwas_qtl_extension (deprecated)/
 ```
 
 Credentials, cookies, access tokens, signed URLs, and authorization headers

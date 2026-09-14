@@ -1,0 +1,56 @@
+schema_version: phase19b_genetic_support_config_v1
+
+analysis:
+  analysis_id: phase19b_sex_apoe_kda_combo_genetic_support_v1
+  genome_build: GRCh38
+  expected_genes: 228
+  expected_mapped_genes: 226
+  expected_contexts: 381
+  expected_followup_genes: 116
+  expected_followup_contexts: 269
+  traits: 4
+  regional_signal_p: 5.0e-8
+  magma_familywise_alpha: 0.05
+  magma_candidate_tests: 912
+  magma_candidate_p: 5.482456140350877e-5
+  qtl_scope: [P1, P2]
+  qtl_modalities: [eQTL, sQTL]
+  coloc_strong_h4: 0.80
+  definitions_frozen: true
+
+inputs:
+  candidates: results/minerva_production/19b_genetic_support_candidates/candidates.tsv
+  candidate_loci: results/minerva_production/19b_genetic_support_candidates/candidate_loci.tsv
+  candidate_contexts: results/minerva_production/19b_genetic_support_candidates/candidate_contexts.tsv
+  tier1_evidence: results/minerva_production/19b_genetic_support_tier1/fungen_gene_evidence.tsv
+  regional_summary: results/minerva_production/19b_genetic_support_regional/regional_summary_all_traits.tsv
+  legacy_csf_magma: results/minerva_production/19_genetic_support_endophenotype_gwas_qtl_extension (deprecated)/endophenotype_magma_results.tsv
+  legacy_csf_magma_sha256: 9f21a94f2eee60873133583270b708df403cc7340c8a6e93d44794bad54fd02e
+  clinical_ad_gwas: data/reference/phase19_genetic_support/tier2/gwas_catalog/GCST90027158_buildGRCh38.tsv.gz
+  clinical_ad_accession: GCST90027158
+  clinical_ad_total_sample_size: 788989
+  magma_binary: external_tools/magma_v1.10_mac/magma
+  magma_reference_prefix: external_tools/magma_reference/official/g1000_eur
+  niagads_qtl_dir: data/reference/phase19_genetic_support/tier2/niagads_ng00184
+  niagads_metadata: data/reference/phase19_genetic_support/tier2/niagads_ng00184/ADSP_FunGen_xQTL.v1.metadata.txt
+  niagads_metadata_md5: 618ae1a9167160d5eb647f989c2e6531
+
+qtl_archives:
+  - modality: eQTL
+    filename: ADSP_FunGen_xQTL.v1.eQTL.single_context_finemapping_all.tar
+    bytes: 365291520
+    md5: cb06f0fded0879612fa534066b255e63
+  - modality: sQTL
+    filename: ADSP_FunGen_xQTL.v1.sQTL.single_context_finemapping_all.tar
+    bytes: 563374080
+    md5: c1e0c85799b027849fbe64496d7ef326
+  - modality: snuc-eQTL
+    filename: ADSP_FunGen_xQTL.v1.snuc-eQTL.single_context_finemapping_all.tar
+    bytes: 313733120
+    md5: f0d3457b1ed556f85cfbc2651a20190f
+
+outputs:
+  magma: results/minerva_production/19b_genetic_support_magma
+  qtl: results/minerva_production/19b_genetic_support_qtl
+  coloc: results/minerva_production/19b_genetic_support_coloc
+  summary: docs/phase_19_genetic_support/simple_aggr_rerun/phase19b_genetic_support_results_summary.md

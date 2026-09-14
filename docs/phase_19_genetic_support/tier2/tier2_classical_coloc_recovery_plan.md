@@ -3,7 +3,7 @@
 ## Decision and purpose
 
 Execution status: completed locally on 2026-08-21. The validated 26-file bundle
-is under `results/minerva_production/19_genetic_support_tier2_recovery/`; exact
+is under `results/minerva_production/19_genetic_support_tier2_recovery (deprecated)/`; exact
 route outcomes, source acquisition, validation, and remaining access gaps are
 recorded in the [execution report](tier2_recovery_execution_report.md).
 
@@ -13,8 +13,8 @@ local-first analysis increment. It does not replace or rewrite either of the
 validated result bundles:
 
 ```text
-results/minerva_production/19_genetic_support_tier1/
-results/minerva_production/19_genetic_support_tier2_regional/
+results/minerva_production/19_genetic_support_tier1 (deprecated)/
+results/minerva_production/19_genetic_support_tier2_regional (deprecated)/
 ```
 
 The completed Tier 2 analysis found useful AD GWAS and QTL fine-mapping data,
@@ -514,7 +514,7 @@ results/local_pilot/19_genetic_support_tier2_recovery/
 Validated local production output:
 
 ```text
-results/minerva_production/19_genetic_support_tier2_recovery/
+results/minerva_production/19_genetic_support_tier2_recovery (deprecated)/
 ```
 
 The final directory contains exactly these 26 declared files:

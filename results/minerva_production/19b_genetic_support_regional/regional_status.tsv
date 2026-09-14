@@ -1,2 +1,2 @@
 schema_version	stage	generated_at_utc	failed_checks	validation_status	sources_scanned	sources_reused	candidate_windows_unresolved
-phase19b_sex_apoe_kda_combo_v2_status	regional	2026-09-14T03:29:33+00:00	0	validated_partial_source_unavailable	0	4	120
+phase19b_sex_apoe_kda_combo_v2_status	regional	2026-09-14T14:48:16+00:00	0	validated_complete	4	0	0

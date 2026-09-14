@@ -40,11 +40,11 @@ FIG = {
 }
 
 AUX = {
-    "tier1_matrix": RESULTS / "19_genetic_support_tier1/genetic_support_evidence_matrix.png",
-    "tier1_loci": RESULTS / "19_genetic_support_tier1/genetic_support_locus_plots.pdf",
-    "recovery_matrix": RESULTS / "19_genetic_support_tier2_recovery/recovery_evidence_matrix.png",
-    "recovery_loci": RESULTS / "19_genetic_support_tier2_recovery/recovery_locus_plots.pdf",
-    "csf_matrix": RESULTS / "19_genetic_support_endophenotype_gwas_qtl_extension/endophenotype_evidence_matrix.png",
+    "tier1_matrix": RESULTS / "19_genetic_support_tier1 (deprecated)/genetic_support_evidence_matrix.png",
+    "tier1_loci": RESULTS / "19_genetic_support_tier1 (deprecated)/genetic_support_locus_plots.pdf",
+    "recovery_matrix": RESULTS / "19_genetic_support_tier2_recovery (deprecated)/recovery_evidence_matrix.png",
+    "recovery_loci": RESULTS / "19_genetic_support_tier2_recovery (deprecated)/recovery_locus_plots.pdf",
+    "csf_matrix": RESULTS / "19_genetic_support_endophenotype_gwas_qtl_extension (deprecated)/endophenotype_evidence_matrix.png",
 }
 
 SLIDE_W = Inches(13.333333)

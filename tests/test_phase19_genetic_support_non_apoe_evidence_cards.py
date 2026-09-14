@@ -30,10 +30,10 @@ def digest(path: Path) -> str:
 def source_roots() -> tuple[Path, Path, Path, Path]:
     base = ROOT / "results/minerva_production"
     return (
-        base / "19_genetic_support_tier1",
-        base / "19_genetic_support_tier2_recovery",
-        base / "19_genetic_support_opc_rps15_public_recovery",
-        base / "19_genetic_support_endophenotype_gwas_qtl_extension",
+        base / "19_genetic_support_tier1 (deprecated)",
+        base / "19_genetic_support_tier2_recovery (deprecated)",
+        base / "19_genetic_support_opc_rps15_public_recovery (deprecated)",
+        base / "19_genetic_support_endophenotype_gwas_qtl_extension (deprecated)",
     )
 
 

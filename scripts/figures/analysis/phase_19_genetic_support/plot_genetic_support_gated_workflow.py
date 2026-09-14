@@ -117,16 +117,16 @@ def resolve(root: Path, value: str | Path) -> Path:
 
 
 def default_sources(root: Path) -> SourcePaths:
-    tier1 = root / "results/minerva_production/19_genetic_support_tier1"
-    tier2 = root / "results/minerva_production/19_genetic_support_tier2_regional"
-    recovery = root / "results/minerva_production/19_genetic_support_tier2_recovery"
+    tier1 = root / "results/minerva_production/19_genetic_support_tier1 (deprecated)"
+    tier2 = root / "results/minerva_production/19_genetic_support_tier2_regional (deprecated)"
+    recovery = root / "results/minerva_production/19_genetic_support_tier2_recovery (deprecated)"
     endophenotype = (
         root
-        / "results/minerva_production/19_genetic_support_endophenotype_gwas_qtl_extension"
+        / "results/minerva_production/19_genetic_support_endophenotype_gwas_qtl_extension (deprecated)"
     )
     rps15 = (
         root
-        / "results/minerva_production/19_genetic_support_opc_rps15_public_recovery"
+        / "results/minerva_production/19_genetic_support_opc_rps15_public_recovery (deprecated)"
     )
     return SourcePaths(
         phase18_calls=(

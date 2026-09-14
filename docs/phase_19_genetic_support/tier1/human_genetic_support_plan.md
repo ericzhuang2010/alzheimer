@@ -14,11 +14,11 @@ future priorities are maintained in the [Phase 19 overall roadmap](../overall_pl
 Tier 1 status (2026-08-16): **implemented and validated locally** for all 25
 genes and 47 candidate-context units. See the
 [Tier 1 execution report](tier1_execution_report.md) and the validated bundle
-in `results/minerva_production/19_genetic_support_tier1/`.
+in `results/minerva_production/19_genetic_support_tier1 (deprecated)/`.
 
 Tier 2 execution status (2026-08-21): **open-data alternative executed and
 validated locally**. The canonical 23-file bundle is in
-`results/minerva_production/19_genetic_support_tier2_regional/`. The original
+`results/minerva_production/19_genetic_support_tier2_regional (deprecated)/`. The original
 exact-source FunGen-xQTL Synapse release is
 not readable by the current account, so it is retained as a later sensitivity
 route rather than a production prerequisite. The primary route uses immutable
@@ -52,7 +52,7 @@ scientific stage and no optional later expansion.
 
 ```text
 results/local_pilot/19_genetic_support/
-results/minerva_production/19_genetic_support_tier1/
+results/minerva_production/19_genetic_support_tier1 (deprecated)/
 ```
 
 Pilot files are nonfinal. They must not be copied into, combined with, or
@@ -1121,7 +1121,7 @@ validated, and has `validation_status = validated_complete`.
 Final production root:
 
 ```text
-results/minerva_production/19_genetic_support_tier1/
+results/minerva_production/19_genetic_support_tier1 (deprecated)/
 ```
 
 | File | Required content |

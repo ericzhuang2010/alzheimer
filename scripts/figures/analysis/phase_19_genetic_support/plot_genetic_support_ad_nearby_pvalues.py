@@ -50,7 +50,7 @@ SCHEMA = "genetic_support_ad_nearby_pvalues_v1"
 INPUT_SCHEMA = "human_genetic_support_tier2_classical_coloc_recovery_v1"
 STEM = "genetic_support_ad_nearby_pvalues"
 DEFAULT_INPUT_ROOT = (
-    "results/minerva_production/19_genetic_support_tier2_recovery"
+    "results/minerva_production/19_genetic_support_tier2_recovery (deprecated)"
 )
 DEFAULT_OUTPUT_ROOT = (
     "results/figures/analysis/phase_19_genetic_support/ad_nearby_pvalues"

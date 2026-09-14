@@ -39,7 +39,7 @@ INPUT_SCHEMA = "phase19_endophenotype_gwas_qtl_extension_v1"
 STEM = "genetic_support_csf_outcome_summary"
 DEFAULT_INPUT_ROOT = (
     "results/minerva_production/"
-    "19_genetic_support_endophenotype_gwas_qtl_extension"
+    "19_genetic_support_endophenotype_gwas_qtl_extension (deprecated)"
 )
 DEFAULT_OUTPUT_ROOT = (
     "results/figures/analysis/phase_19_genetic_support/csf_outcome_summary"

@@ -3,7 +3,7 @@
 Execution date: 2026-08-21  
 Execution host: `homedesktop`  
 Execution backend: local direct execution  
-Canonical results: `results/minerva_production/19_genetic_support_tier2_regional/`
+Canonical results: `results/minerva_production/19_genetic_support_tier2_regional (deprecated)/`
 
 Path-only migration (2026-08-21): this directory was renamed from
 `results/minerva_production/19_genetic_support_tier2/` by adding the
