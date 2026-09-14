@@ -164,9 +164,9 @@ expected_validation_status <- if (identical(execution_stage, "local_pilot")) {
 }
 output_root <- absolute_path(config$outputs$root, project_root)
 phase10_root <- file.path(output_root, "10_similarity")
-final_root <- file.path(output_root, "11_pathway")
+final_root <- file.path(output_root, "11_pathway_similarity")
 staging_root <- file.path(
-  output_root, paste0(".11_pathway.staging.", Sys.getpid())
+  output_root, paste0(".11_pathway_similarity.staging.", Sys.getpid())
 )
 
 required_phase10 <- c(

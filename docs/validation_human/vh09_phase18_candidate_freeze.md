@@ -1,10 +1,17 @@
 # VH09 ROSMAP Phase 18 Candidate Freeze
 
-**Status:** executed; `validated_complete` on 2026-08-20
+**Status:** executed and preserved as a historical Phase 18 contract;
+`validated_complete` on 2026-08-20
 **Code:** `scripts/validation_human/09_freeze_rosmap_kda_candidates.py`
 **Configuration:** `scripts/validation_human/seaad_phase18_validation_config.yml`
-**Output:** `results/validation_human/09_rosmap_kda_candidates/`
+**Output:** `results/validation_human/09_rosmap_kda_candidates (deprecated)/`
 **Execution:** completed locally; Minerva was not required
+
+VH09 is not the current human-validation authority and cannot be repointed by
+substituting an input path. No replacement VH09 or VH10 phase is defined.
+Current direction-combined reporting reads
+`results/minerva_production/20_sex_apoe_kda_combo/` for ROSMAP and
+`results/validation_human/12_sex_apoe_kda_combo/` for SEA-AD directly.
 
 ## Execution result
 
@@ -74,17 +81,23 @@ the selected-unit key.
 
 | Input | Role |
 |---|---|
-| `results/minerva_production/18_key_driver_selection/call_key_driver_returns.tsv` | Canonical current Phase 18 explicit test and candidate-selection table |
-| `results/minerva_production/18_key_driver_selection/call_key_driver_significant_returns.tsv` | Corroborating run-return subset; not used to select candidates |
+| `results/minerva_production/18_sex_apoe_bidir_kda_complex_aggr (deprecated)/call_key_driver_returns.tsv` | Frozen historical Phase 18 explicit test and candidate-selection table |
+| `results/minerva_production/18_sex_apoe_bidir_kda_complex_aggr (deprecated)/call_key_driver_significant_returns.tsv` | Corroborating run-return subset; not used to select candidates |
 | `config/phase18_key_driver_selection.yml` | Current two-class selection constants and run-scope authority |
 | `scripts/18_key_driver_selection.py` | Current reconstruction, self-exclusion, ACAT, BH, gate, and ranking authority |
 | `docs/phase_18_key_driver_selection/key_driver_selection_process.md` | Human-readable current selection contract |
-| `results/validation_human/08_deg/status.tsv` | Sequence gate: require the clean SEA-AD DEG release to be complete |
+| `results/validation_human/08_deg_fine/status.tsv` | Sequence gate: require the clean SEA-AD fine DEG release to be complete |
 | `results/validation_human/04_supertype_manifest/supertype_to_broad_network.tsv` | Verify the seven shared broad-network names only; no DEG or candidate scoring |
 
 Phase 12 is not a source of candidates. Its network, background, annotation,
 and `fKDA.R` assets are technical inputs to VH10, not VH09 selection inputs.
 Archived three-case Phase 18 files are not selection authorities.
+
+Migration note (2026-09-13): the frozen
+`results/validation_human/09_rosmap_kda_candidates/phase18_selection_authority.tsv`
+retains its pre-split VH08 path and hash as historical provenance. Active
+fine-DEG consumers use `results/validation_human/08_deg_fine/`; the frozen
+candidate rows were not recomputed during the storage-only split.
 
 All authoritative inputs, the VH09 code, and the configuration must be
 full-file SHA-256 frozen. Input identity mismatch is blocking.

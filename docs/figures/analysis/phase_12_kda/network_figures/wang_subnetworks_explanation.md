@@ -86,7 +86,7 @@ edge-confidence weights. When multiple equally short routes exist, the code
 selects one reproducibly using alphabetical/lexicographic ordering.
 
 The exact paths are recorded in
-[`phase12_kda_wang_subnetworks_paths.tsv`](../../../../../../results/figures/analysis/phase12_kda/network_figures/phase12_kda_wang_subnetworks_paths.tsv).
+[`phase12_kda_wang_subnetworks_paths.tsv`](../../../../../../results/figures/analysis/phase12_kda (deprecated)/network_figures/phase12_kda_wang_subnetworks_paths.tsv).
 
 ## How node size is scaled
 

@@ -102,7 +102,7 @@ and obscure the sex/APOE-direction structure that Figure B is meant to show.
 Figure B requires the same pre-FDR candidate-test table specified for Figure A:
 
 ```text
-results/minerva_production/12_kda/kda_candidate_tests.tsv.gz
+results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs/kda_candidate_tests.tsv.gz
 ```
 
 Do not compute group-specific mean negative log P values from
@@ -405,7 +405,7 @@ interaction analysis has been performed and documented.
 Write a long-format table beside the figure. Recommended filename:
 
 ```text
-results/figures/analysis/phase12_kda/sex_apoe_figure/
+results/figures/analysis/phase12_kda (deprecated)/sex_apoe_figure/
   phase12_kda_figure_b_sex_apoe_plotted_data.tsv
 ```
 
@@ -544,7 +544,7 @@ scripts/figures/analysis/phease12_kda/
 Generated Panel B files:
 
 ```text
-results/figures/analysis/phase12_kda/sex_apoe_figure/
+results/figures/analysis/phase12_kda (deprecated)/sex_apoe_figure/
   phase12_kda_sex_apoe.png
   phase12_kda_sex_apoe.pdf
   phase12_kda_sex_apoe.svg

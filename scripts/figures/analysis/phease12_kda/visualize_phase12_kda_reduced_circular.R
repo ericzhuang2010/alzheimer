@@ -24,8 +24,8 @@ cli_args <- commandArgs(trailingOnly = TRUE)
 args <- parse_value_args(
   cli_args,
   defaults = list(
-    input_dir = "results/figures/analysis/phase12_kda",
-    output_dir = "results/figures/analysis/phase12_kda/reduced_circular_figure",
+    input_dir = "results/figures/analysis/phase12_kda (deprecated)",
+    output_dir = "results/figures/analysis/phase12_kda (deprecated)/reduced_circular_figure",
     basename = "phase12_kda_reduced_circular",
     ranking_method = "mean_of_log",
     top_per_network = "3",
@@ -48,7 +48,7 @@ figure_height_inches <- 7.1
 if (ranking_method == "acat") {
   if (!"--output-dir" %in% cli_args) {
     args$output_dir <-
-      "results/figures/analysis/phase12_kda/reduced_circular_figure_ACAT"
+      "results/figures/analysis/phase12_kda (deprecated)/reduced_circular_figure_ACAT"
   }
   if (!"--basename" %in% cli_args) {
     args$basename <- "phase12_kda_reduced_circular_ACAT"

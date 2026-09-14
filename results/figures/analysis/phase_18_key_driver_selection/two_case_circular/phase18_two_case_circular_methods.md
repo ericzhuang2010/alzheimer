@@ -10,7 +10,7 @@ Both figures use identical seven-network, 35-slot geometry and a common evidence
 Rscript --vanilla \
   scripts/figures/analysis/phase_18_key_driver_selection/ \
   visualize_phase18_two_case_circular.R \
-  --input results/minerva_production/18_key_driver_selection/call_key_driver_returns.tsv \
+  --input results/minerva_production/18_sex_apoe_bidir_kda_complex_aggr (deprecated)/call_key_driver_returns.tsv \
   --output-dir results/figures/analysis/phase_18_key_driver_selection/two_case_circular \
   --top-per-network 5 \
   --evidence-cap 15 \

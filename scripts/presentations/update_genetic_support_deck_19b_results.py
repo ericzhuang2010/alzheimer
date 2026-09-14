@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Update the genetic-support deck with the completed 19b screen results.
+"""Update the historical 433-gene non-combo genetic-support deck.
+
+This updater is frozen to the first Phase 19b release and must not be run
+against the current Phase 20 combo-based 19b outputs. A current genetic-support
+deck requires a separate partial-regional-results design.
 
 The 19b rerun extended the public genetic screen from 15 drivers to all 433
 (summary screen + regional AD/CSF scans). This updater surgically:
@@ -88,6 +92,11 @@ def load_facts() -> dict[str, Any]:
         if not path.is_file():
             raise FileNotFoundError(path)
     evidence = pd.read_csv(TIER1_EVIDENCE, sep="\t")
+    if set(evidence["schema_version"]) != {"phase19b_simple_aggr_v1_fungen"}:
+        raise RuntimeError(
+            "This historical deck updater does not accept the current "
+            "Phase 20 combo-based Phase 19b outputs"
+        )
     grades = evidence["grade"].value_counts().to_dict()
     strong = evidence[evidence["grade"].eq("strong")].sort_values("direct_min_p")
     moderate = evidence[evidence["grade"].eq("moderate")].sort_values("direct_min_p")

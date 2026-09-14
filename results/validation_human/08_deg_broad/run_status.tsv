@@ -1,0 +1,2 @@
+schema_version	task	release_scope	task_status	failed_checks	started_at_utc	completed_at_utc	config_sha256	pooled_completed	broad_stratified_completed	result_files
+seaad_deg_broad_run_status_v1	VH08B_edgeR_runner	broad	worker_complete		2026-08-23 02:09:50 UTC	2026-08-23 02:50:52 UTC	1c0c895dc12b6eb2489cfa5a39d8f8d5e3d27fb912f618d27a47c5e050846418	7	28	35

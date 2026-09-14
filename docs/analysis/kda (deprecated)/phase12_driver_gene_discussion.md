@@ -1,7 +1,7 @@
 # Phase 12 key-driver analysis: driver-gene prioritization and biological interpretation
 
 **Analysis date:** 2026-07-30  
-**Production output:** [`results/minerva_production/12_kda/`](../../../results/minerva_production/12_kda/)  
+**Production output:** [`results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs/`](../../../results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs/)
 **Scope:** cell-type-, sex-, and APOE-stratified key-driver analysis (KDA) of
 Alzheimer's disease (AD)-associated core mitochondrial gene signatures
 
@@ -1073,13 +1073,13 @@ downstream transcript. It is whether perturbing the candidate:
 
 Primary source tables:
 
-- [`kda_status.tsv`](../../../results/minerva_production/12_kda/kda_status.tsv)
-- [`kda_checks.tsv`](../../../results/minerva_production/12_kda/kda_checks.tsv)
-- [`kda_run_manifest.tsv`](../../../results/minerva_production/12_kda/kda_run_manifest.tsv)
-- [`kda_results.tsv.gz`](../../../results/minerva_production/12_kda/kda_results.tsv.gz)
-- [`kda_key_driver_summary.tsv`](../../../results/minerva_production/12_kda/kda_key_driver_summary.tsv)
-- [`kda_signature_members.tsv.gz`](../../../results/minerva_production/12_kda/kda_signature_members.tsv.gz)
-- [`kda_background_members.tsv.gz`](../../../results/minerva_production/12_kda/kda_background_members.tsv.gz)
+- [`kda_status.tsv`](../../../results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs/kda_status.tsv)
+- [`kda_checks.tsv`](../../../results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs/kda_checks.tsv)
+- [`kda_run_manifest.tsv`](../../../results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs/kda_run_manifest.tsv)
+- [`kda_results.tsv.gz`](../../../results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs/kda_results.tsv.gz)
+- [`kda_key_driver_summary.tsv`](../../../results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs/kda_key_driver_summary.tsv)
+- [`kda_signature_members.tsv.gz`](../../../results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs/kda_signature_members.tsv.gz)
+- [`kda_background_members.tsv.gz`](../../../results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs/kda_background_members.tsv.gz)
 
 Reviewed method/configuration:
 

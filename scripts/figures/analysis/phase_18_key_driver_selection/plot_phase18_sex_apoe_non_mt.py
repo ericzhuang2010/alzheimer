@@ -29,7 +29,7 @@ CASE_DISPLAY_LABEL = "non-MT"
 FIGURE_ID = "phase18_sex_apoe_non_mt"
 RENDERER_FILE = "visualize_phase18_sex_apoe_non_mt.R"
 DEFAULT_INPUT = (
-    "results/minerva_production/18_key_driver_selection/"
+    "results/minerva_production/18_sex_apoe_bidir_kda_complex_aggr (deprecated)/"
     "call_key_driver_returns.tsv"
 )
 DEFAULT_OUTPUT = (
@@ -37,7 +37,7 @@ DEFAULT_OUTPUT = (
     "sex_apoe_non_mt"
 )
 DEFAULT_CANDIDATE_TESTS = (
-    "results/minerva_production/18_key_driver_selection/archive/"
+    "results/minerva_production/18_sex_apoe_bidir_kda_complex_aggr (deprecated)/archive (deprecated)/"
     "key_driver_candidate_tests.tsv.gz"
 )
 DEFAULT_DPI = 450

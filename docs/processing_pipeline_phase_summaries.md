@@ -165,7 +165,7 @@ returned by `FindMarkers`; a Yu-compatible DEG requires `FDR < 0.05` and
 model space; the underlying age values are Yu's exact uncensored ages.
 
 **Outputs and handoff.** Per-RDS outputs under
-`results/<environment>/08_mast/` include the contrast manifest, complete DEG
+`results/<environment>/08_deg_fine/` include the contrast manifest, complete DEG
 table, model diagnostics, contrast statuses, checks, artifact inventory, and
 task status. A separate bundle compares the results with Yu Supplemental Table
 S1. Phase 09 consumes the validated Phase 08 result and status bundles.
@@ -176,7 +176,7 @@ not be presented as replacing donor-level pseudobulk inference.
 
 **Implementation and documentation.** The scientific script is
 [`scripts/08_run_mast.R`](../scripts/08_run_mast.R). See the
-[Phase 08 Yu DEG alignment plan](phase_08_deg/phase_08_yu_deg_alignment_plan.md)
+[Phase 08 Yu DEG alignment plan](phase_08_deg_fine/phase_08_yu_deg_alignment_plan.md)
 for the model, DEG rule, and validation targets.
 
 ## Phase 09 — Annotate DEG genes
@@ -279,7 +279,7 @@ ranked features into panel-ready long tables without changing the Phase 10
 ordering or inference.
 
 **Outputs and handoff.** Outputs under
-`results/<environment>/11_pathway/` include pathway reference and membership
+`results/<environment>/11_pathway_similarity/` include pathway reference and membership
 tables, exact backgrounds and queries, the complete ORA grid, overlap genes,
 similarity panel data, pathway panel data, downstream panel definitions, QC
 checks, artifacts, and status. Later figure scripts consume these compact,

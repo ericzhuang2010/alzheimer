@@ -120,7 +120,7 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     parser.add_argument(
         "--input",
         default=(
-            "results/minerva_production/18_key_driver_selection/"
+            "results/minerva_production/18_sex_apoe_bidir_kda_complex_aggr (deprecated)/"
             "call_key_driver_returns.tsv"
         ),
     )

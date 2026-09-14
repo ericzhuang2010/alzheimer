@@ -16,9 +16,9 @@ analysis:
   execution_stage: local_production
 
 paths:
-  phase12_directory: results/minerva_production/12_kda
+  phase12_directory: results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs
   phase18_config: config/phase18_key_driver_selection.yml
-  historical_phase18_archive: results/minerva_production/18_key_driver_selection/archive
+  historical_phase18_archive: results/minerva_production/18_sex_apoe_bidir_kda_complex_aggr (deprecated)/archive (deprecated)
   source_directory: results/minerva_production/20_sex_apoe_kda_source
   output_directory: archive/results/minerva_production/20_sex_apoe_kda (deprecated)
   figure_directory: archive/results/figures/analysis/phase_20_sex_apoe_kda (deprecated)

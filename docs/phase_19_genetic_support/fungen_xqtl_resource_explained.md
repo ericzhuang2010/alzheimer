@@ -180,7 +180,7 @@ It does **not**, however, satisfy our prespecified same-variant contract:
 
 ## 4. How the 19b screen uses it
 
-For each of the 433 frozen drivers, the screen reads three things: direct
+For each of the 228 Phase 20 combo drivers, the screen reads three things: direct
 Gene Locus table mappings (by symbol, then Ensembl ID), TWAS/GVC list
 membership, and window-level variant annotation (fine-mapped variants inside
 the gene ± 1 Mb window, reported separately and never graded). The frozen
@@ -193,9 +193,8 @@ grade rules:
 | `weak` | any other direct mapping, or TWAS/GVC list membership only |
 | `none_found` | absent from all published summaries |
 
-Results on the 433 drivers: 8 strong (APOE, PLCG2, STAG3, PPP4C, SEPHS2,
-ZNF251, ZNF652, AC087500.1), 3 moderate (INTS8, DGKQ, TPCN1), 17 weak,
-405 none found.
+Current combo-list results: 2 strong (`APOE`, `PLCG2`), 1 moderate (`INTS8`),
+9 weak, and 216 `none_found`.
 
 ### Worked examples
 

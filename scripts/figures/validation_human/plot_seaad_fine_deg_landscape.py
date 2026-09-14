@@ -99,13 +99,13 @@ NETWORK_COLORS = {
 DEG_CONFIG_PATH = "scripts/validation_human/seaad_deg_config.yml"
 VALIDATION_CONFIG_PATH = "scripts/validation_human/seaad_phase18_validation_config.yml"
 INPUT_PATHS = {
-    "vh08_status": "results/validation_human/08_deg/status.tsv",
-    "vh08_artifacts": "results/validation_human/08_deg/artifacts.tsv",
-    "vh08_checks": "results/validation_human/08_deg/deg_checks.tsv",
-    "deg_summary": "results/validation_human/08_deg/deg_summary.tsv",
-    "direction_summary": "results/validation_human/08_deg/query_handoff/fine_direction_deg_summary.tsv",
-    "query_index": "results/validation_human/08_deg/query_handoff/fine_query_input_index.tsv",
-    "contrast_status": "results/validation_human/08_deg/fine_supertype_phase18_parity/fine_contrast_status.tsv",
+    "vh08_status": "results/validation_human/08_deg_fine/status.tsv",
+    "vh08_artifacts": "results/validation_human/08_deg_fine/artifacts.tsv",
+    "vh08_checks": "results/validation_human/08_deg_fine/deg_checks.tsv",
+    "deg_summary": "results/validation_human/08_deg_fine/deg_summary.tsv",
+    "direction_summary": "results/validation_human/08_deg_fine/query_handoff/fine_direction_deg_summary.tsv",
+    "query_index": "results/validation_human/08_deg_fine/query_handoff/fine_query_input_index.tsv",
+    "contrast_status": "results/validation_human/08_deg_fine/fine_supertype_phase18_parity/fine_contrast_status.tsv",
 }
 
 OUTPUT_FILES = [

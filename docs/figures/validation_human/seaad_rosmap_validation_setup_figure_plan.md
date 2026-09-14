@@ -613,7 +613,7 @@ Read only the compact validated artifacts required for visible claims:
 | SEA-AD current-symbol and gene-annotation authority | `results/validation_human/03_genes/status.tsv`; `gene_annotation_master.tsv` |
 | Selected nuclei, 129 supertypes, and support counts | `results/validation_human/04_supertype_manifest/status.tsv`; `supertype_to_broad_network.tsv`; `donor_supertype_nucleus_counts.tsv` |
 | 774 contrasts and 1,548 directions | `results/validation_human/07_contrasts/status.tsv` |
-| Completed/not-estimable DEG counts and group distribution | `results/validation_human/08_deg/status.tsv`; `fine_supertype_phase18_parity/fine_contrast_status.tsv`; `query_handoff/fine_direction_manifest.tsv` |
+| Completed/not-estimable DEG counts and group distribution | `results/validation_human/08_deg_fine/status.tsv`; `fine_supertype_phase18_parity/fine_contrast_status.tsv`; `query_handoff/fine_direction_manifest.tsv` |
 | DEG model, covariates, and profile/contrast gates | `scripts/validation_human/seaad_deg_config.yml` |
 | Query rule and threshold | `scripts/validation_human/seaad_phase18_validation_config.yml` |
 | Query attrition, networks, and recorded input checks | `results/validation_human/10_seaad_kda_rediscovery/10a_inputs/status.tsv`; `input_authority.tsv`; `input_checks.tsv`; `network_identity.tsv`; `query_attrition.tsv`; `seaad_kda_run_manifest.tsv` |
@@ -621,7 +621,7 @@ Read only the compact validated artifacts required for visible claims:
 | SEA-AD freeze and selected units | `results/validation_human/10_seaad_kda_rediscovery/10c_seaad_selection/status.tsv`; `seaad_selection_freeze.tsv`; `seaad_top5.tsv` |
 | ROSMAP global donor count | `results/minerva_production/02_cohort/cohort_status.tsv` |
 | Frozen ROSMAP units | `results/validation_human/09_rosmap_kda_candidates/status.tsv`; `phase18_selected_candidate_units.tsv`; `shared_network_scope.tsv` |
-| ROSMAP fine-type, source-network, and KDA/run scope | `results/minerva_production/12_kda/kda_status.tsv`; `kda_run_manifest.tsv`; `config/phase12_kda.yml`; `config/phase18_key_driver_selection.yml` |
+| ROSMAP fine-type, source-network, and KDA/run scope | `results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs/kda_status.tsv`; `kda_run_manifest.tsv`; `config/phase12_kda.yml`; `config/phase18_key_driver_selection.yml` |
 | Strict comparison definition and optional badge | `results/validation_human/10_seaad_kda_rediscovery/10d_overlap/status.tsv`; `rosmap_seaad_candidate_overlap.tsv` |
 
 Phases 05 and 06 are not inputs. Their compact pseudobulk/QC artifacts are not

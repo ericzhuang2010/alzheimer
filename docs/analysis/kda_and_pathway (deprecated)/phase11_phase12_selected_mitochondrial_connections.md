@@ -3,7 +3,7 @@
 **Analysis date:** 2026-08-02  
 **Scope:** `APOE`–`TUFM`/ATP synthase, `LAMTOR5`–`ATP5IF1`, and
 `GABARAPL2`–`CHCHD2`/`PARK7`  
-**Main data:** `results/minerva_production/12_kda/kda_results.tsv` and
+**Main data:** `results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs/kda_results.tsv` and
 `kda_run_manifest.tsv`  
 **Cross-phase context:** Phase 08 differential-expression outputs and the
 [joint Phase 11–12 discussion](phase11_phase12_joint_mitochondrial_discussion.md)

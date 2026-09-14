@@ -302,7 +302,7 @@ reference_hashes <- vapply(names(reference_specs), function(name) {
 }, character(1))
 
 phase03_root <- file.path(output_root, "03_annotations")
-phase08_root <- file.path(output_root, "08_mast")
+phase08_root <- file.path(output_root, "08_deg_fine")
 phase03_status_path <- file.path(phase03_root, "annotation_status.tsv")
 phase03_manifest_path <- file.path(phase03_root, "annotation_manifest.tsv")
 must(file.exists(phase03_status_path), "Phase 03 annotation status is missing")

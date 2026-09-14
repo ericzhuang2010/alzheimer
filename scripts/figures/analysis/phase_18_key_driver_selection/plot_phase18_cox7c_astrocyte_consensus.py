@@ -25,12 +25,12 @@ DEFAULT_OUTPUT_DIR = (
     / "COX7C"
     / "astrocytes"
 )
-CANONICAL = ROOT / "results/minerva_production/18_key_driver_selection/call_key_driver_returns.tsv"
-BACKGROUNDS = ROOT / "results/minerva_production/12_kda/kda_background_members.tsv.gz"
-SIGNATURES = ROOT / "results/minerva_production/12_kda/kda_signature_members.tsv"
+CANONICAL = ROOT / "results/minerva_production/18_sex_apoe_bidir_kda_complex_aggr (deprecated)/call_key_driver_returns.tsv"
+BACKGROUNDS = ROOT / "results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs/kda_background_members.tsv.gz"
+SIGNATURES = ROOT / "results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs/kda_signature_members.tsv"
 NETWORK = ROOT / "data/bayesian_network/Astrocytes/result.links3.links.txt"
 ANNOTATION = ROOT / "results/minerva_production/09_annotate_genes/gene_annotation_master.tsv.gz"
-MAST = ROOT / "results/minerva_production/08_mast/astrocytes.yu_mast_de.tsv.gz"
+MAST = ROOT / "results/minerva_production/08_deg_fine/astrocytes.yu_mast_de.tsv.gz"
 MSIGDB = ROOT / "data/reference/msigdb/c2.cp.v2026.1.Hs.symbols.gmt"
 
 DRIVER = "COX7C"

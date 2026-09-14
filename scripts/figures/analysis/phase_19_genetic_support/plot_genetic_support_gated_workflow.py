@@ -131,7 +131,7 @@ def default_sources(root: Path) -> SourcePaths:
     return SourcePaths(
         phase18_calls=(
             root
-            / "results/minerva_production/18_key_driver_selection/call_key_driver_returns.tsv"
+            / "results/minerva_production/18_sex_apoe_bidir_kda_complex_aggr (deprecated)/call_key_driver_returns.tsv"
         ),
         tier1_manifest=tier1 / "genetic_support_analysis_manifest.tsv",
         tier1_candidates=tier1 / "genetic_support_candidate_manifest.tsv",

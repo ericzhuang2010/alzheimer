@@ -52,7 +52,14 @@ def read_network(path: Path) -> pd.DataFrame:
 
 
 def main() -> int:
-    args = parse_config_cli("VH10A: construct SEA-AD KDA queries")
+    def add_arguments(parser) -> None:
+        parser.add_argument(
+            "--force",
+            action="store_true",
+            help="Replace an existing VH10A input bundle after validation succeeds",
+        )
+
+    args = parse_config_cli("VH10A: construct SEA-AD KDA queries", add_arguments)
     started = utc_now()
     config, config_path, project_root, output_root = load_config(args.config)
     cfg = config["vh10"]
@@ -81,10 +88,13 @@ def main() -> int:
     )
     if (
         len(vh08_status) != 1
-        or vh08_status.loc[0, "phase"] != "VH08"
+        or vh08_status.loc[0, "phase"] != "VH08F"
+        or vh08_status.loc[0, "release_scope"] != "fine"
         or vh08_status.loc[0, "validation_status"] != "validated_complete"
     ):
-        raise ValueError("VH08 authority is not a single validated_complete release")
+        raise ValueError(
+            "VH08F authority is not a single validated_complete fine release"
+        )
 
     with authority_paths["phase12_config"].open() as handle:
         phase12 = yaml.safe_load(handle)
@@ -527,7 +537,11 @@ def main() -> int:
     root_dir.mkdir(parents=True, exist_ok=True)
     final_dir = root_dir / "10a_inputs"
     if final_dir.exists() and any(final_dir.iterdir()):
-        raise FileExistsError(f"Refusing to overwrite nonempty VH10A directory: {final_dir}")
+        if not args.force:
+            raise FileExistsError(
+                f"Refusing to overwrite nonempty VH10A directory: {final_dir}"
+            )
+        shutil.rmtree(final_dir)
     stage = root_dir / f".10a_inputs.tmp.{os.getpid()}"
     if stage.exists():
         shutil.rmtree(stage)

@@ -67,7 +67,8 @@ registry <- data.frame(
   task_mode = c(
     "environment", "parity", "audit", "cohort", "annotations", "qc",
     "normalize", "descriptive", "pseudobulk", "contrasts", "pseudobulk_de",
-    "mast", "annotate_genes", "similarity", "pathway", "kda",
+    "mast", "annotate_genes", "similarity", "pathway", "pathway_deg_fine",
+    "pathway_deg_broad", "kda",
     "respiratory_modifier", "modifier_heterogeneity", "mitonuclear_coupling",
     "genetic_support", "genetic_support_tier2", "genetic_support_tier2_recovery",
     "genetic_support_endophenotype"
@@ -75,7 +76,9 @@ registry <- data.frame(
   scope = c(
     "global", "global", "rds", "global", "global", "rds", "rds", "rds",
     "rds", "global", "rds", "rds", "global", "global", "global", "global",
-    "global", "global", "global", "global", "global", "global", "global"
+    "global", "global", "global", "global", "global", "global", "global",
+    "global",
+    "global"
   ),
   script = c(
     "scripts/00_check_environment.R",
@@ -93,6 +96,8 @@ registry <- data.frame(
     "scripts/09_annotate_mitochondrial_genes.R",
     "scripts/10_calculate_mitochondrial_similarity.R",
     "scripts/11_prepare_mitochondrial_pathway_data.R",
+    "scripts/11_run_fine_deg_pathway_analysis.R",
+    "scripts/11_run_broad_deg_pathway_analysis.R",
     "scripts/12_run_kda.R",
     "scripts/13_run_respiratory_modifier.R",
     "scripts/14_run_modifier_heterogeneity.R",
@@ -104,7 +109,7 @@ registry <- data.frame(
   ),
   argument_names = c(
     "config,execution-config,report,status",
-    rep("config,execution-config,manifest-row,task-mode", 22L)
+    rep("config,execution-config,manifest-row,task-mode", 24L)
   ),
   output_schema = c(
     "environment_checks_v1", "parity_v1", "rds_audit_v1", "cohort_v1",
@@ -112,7 +117,9 @@ registry <- data.frame(
     "descriptive_v1", "pseudobulk_v1", "contrast_manifest_v1",
     "pseudobulk_de_v1", "yu_mast_de_v2",
     "mitochondrial_annotation_status_v1", "mitochondrial_similarity_v1",
-    "mitochondrial_pathway_data_v1", "mitochondrial_kda_v1",
+    "mitochondrial_pathway_data_v1", "fine_deg_pathway_v1",
+    "broad_deg_pathway_v1",
+    "mitochondrial_kda_v1",
     "mitochondrial_respiratory_modifier_v1",
     "mitochondrial_modifier_heterogeneity_v1",
     "mitochondrial_mitonuclear_coupling_v1",
@@ -136,6 +143,12 @@ registry$argument_names[registry$task_mode == "similarity"] <- paste(
   c("config", "execution-config", "task-mode"), collapse = ","
 )
 registry$argument_names[registry$task_mode == "pathway"] <- paste(
+  c("config", "execution-config", "task-mode"), collapse = ","
+)
+registry$argument_names[registry$task_mode == "pathway_deg_fine"] <- paste(
+  c("config", "execution-config", "task-mode"), collapse = ","
+)
+registry$argument_names[registry$task_mode == "pathway_deg_broad"] <- paste(
   c("config", "execution-config", "task-mode"), collapse = ","
 )
 registry$argument_names[registry$task_mode == "kda"] <- paste(
@@ -253,6 +266,24 @@ for (i in seq_len(nrow(selected_registry))) {
         stop("project.phase11_pathway_config is required for pathway", call. = FALSE)
       }
       absolute_path(phase11_config, root)
+    } else if (task$task_mode == "pathway_deg_fine") {
+      phase11_deg_config <- config$project$phase11_pathway_deg_fine_config
+      if (is.null(phase11_deg_config)) {
+        stop(
+          "project.phase11_pathway_deg_fine_config is required for pathway_deg_fine",
+          call. = FALSE
+        )
+      }
+      absolute_path(phase11_deg_config, root)
+    } else if (task$task_mode == "pathway_deg_broad") {
+      phase11_broad_config <- config$project$phase11_pathway_deg_broad_config
+      if (is.null(phase11_broad_config)) {
+        stop(
+          "project.phase11_pathway_deg_broad_config is required for pathway_deg_broad",
+          call. = FALSE
+        )
+      }
+      absolute_path(phase11_broad_config, root)
     } else if (task$task_mode == "kda") {
       phase12_config <- config$project$phase12_kda_config
       if (is.null(phase12_config)) {
@@ -379,7 +410,9 @@ if (args$phase == "environment") {
 # scientific entry point in every execution stage.
 implemented_global_modes <- c(
   "cohort", "annotations", "contrasts", "annotate_genes", "similarity",
-  "pathway", "kda", "respiratory_modifier", "modifier_heterogeneity",
+  "pathway", "pathway_deg_fine", "pathway_deg_broad", "kda",
+  "respiratory_modifier",
+  "modifier_heterogeneity",
   "mitonuclear_coupling", "genetic_support", "genetic_support_tier2",
   "genetic_support_tier2_recovery", "genetic_support_endophenotype"
 )

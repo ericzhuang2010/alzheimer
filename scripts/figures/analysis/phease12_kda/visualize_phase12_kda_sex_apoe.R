@@ -23,8 +23,8 @@ usage <- function() {
 args <- parse_value_args(
   commandArgs(trailingOnly = TRUE),
   defaults = list(
-    input_dir = "results/figures/analysis/phase12_kda",
-    output_dir = "results/figures/analysis/phase12_kda/sex_apoe_figure",
+    input_dir = "results/figures/analysis/phase12_kda (deprecated)",
+    output_dir = "results/figures/analysis/phase12_kda (deprecated)/sex_apoe_figure",
     basename = "phase12_kda_sex_apoe",
     maximum_rows = "20",
     maximum_per_network = "3",

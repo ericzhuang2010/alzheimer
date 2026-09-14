@@ -32,11 +32,11 @@ import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 from matplotlib import patches  # noqa: E402
-from matplotlib.colors import Normalize  # noqa: E402
+from matplotlib.colors import BoundaryNorm, ListedColormap, Normalize  # noqa: E402
 from PIL import Image  # noqa: E402
 from pptx import Presentation  # noqa: E402
 from pptx.enum.text import MSO_ANCHOR, PP_ALIGN  # noqa: E402
-from pptx.util import Inches  # noqa: E402
+from pptx.util import Inches, Pt  # noqa: E402
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -66,6 +66,16 @@ NETWORK_ORDER = [
     "Oligodendrocytes",
     "Vasculature_cells",
 ]
+TOP5_BROAD_CELL_ORDER = [
+    "Astrocytes",
+    "Excitatory_neurons",
+    "Inhibitory_neurons",
+    "OPCs",
+    "Oligodendrocytes",
+    "Vasculature_cells",
+    "Microglia",
+]
+APOE_ORDER = ["e2", "e33", "e4"]
 NETWORK_LABELS = {
     "Astrocytes": "Astrocytes",
     "Excitatory_neurons": "Excitatory neurons",
@@ -75,8 +85,18 @@ NETWORK_LABELS = {
     "Oligodendrocytes": "Oligodendrocytes",
     "Vasculature_cells": "Vasculature",
 }
+BROAD_CELL_COLORS = {
+    "Astrocytes": "#88CCB0",
+    "Excitatory_neurons": "#77BDEB",
+    "Inhibitory_neurons": "#F3B562",
+    "Microglia": "#E89072",
+    "OPCs": "#D5A6BD",
+    "Oligodendrocytes": "#B0D7E8",
+    "Vasculature_cells": "#E9D66B",
+}
 
 BLUE = "#56B4E9"
+TEAL = "#009E73"
 ORANGE = "#E69F00"
 TEXT = "#222222"
 MUTED = "#4B5563"
@@ -88,6 +108,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--input", type=Path, default=DEFAULT_DECK)
     parser.add_argument("--output", type=Path, default=DEFAULT_DECK)
     parser.add_argument("--audit-root", type=Path, default=AUDIT_ROOT)
+    parser.add_argument(
+        "--figures-only",
+        action="store_true",
+        help="Regenerate and validate combo figures without modifying a deck",
+    )
     return parser.parse_args()
 
 
@@ -142,6 +167,38 @@ def set_text(slide, shape_name: str, value: str) -> None:
         paragraph._element.getparent().remove(paragraph._element)
 
 
+def set_split_text(
+    slide,
+    shape_name: str,
+    prefix: str,
+    tail: str,
+    *,
+    prefix_size: float,
+    tail_size: float,
+) -> None:
+    set_text(slide, shape_name, prefix)
+    paragraph = next(
+        shape for shape in slide.shapes if shape.name == shape_name
+    ).text_frame.paragraphs[0]
+    first = paragraph.runs[0]
+    first.font.size = Pt(prefix_size)
+    if len(paragraph.runs) > 1:
+        final = paragraph.runs[1]
+    else:
+        final = paragraph.add_run()
+        final.font.name = first.font.name
+        final.font.bold = first.font.bold
+        final.font.italic = first.font.italic
+        try:
+            final.font.color.rgb = first.font.color.rgb
+        except AttributeError:
+            pass
+    final.text = tail
+    final.font.size = Pt(tail_size)
+    for run in paragraph.runs[2:]:
+        run.text = ""
+
+
 def set_notes(slide, goal: str, walkthrough: str, boundary: str, transition: str) -> None:
     ui.add_notes(
         slide,
@@ -159,7 +216,62 @@ def clear_slide(slide) -> None:
     slide.background.fill.fore_color.rgb = ui.OFF_WHITE
 
 
-def replace_picture(slide, old_shape_name: str, image_path: Path, alt: str) -> None:
+def remove_named_shapes(slide, shape_names: Iterable[str]) -> None:
+    for shape_name in shape_names:
+        matches = [shape for shape in slide.shapes if shape.name == shape_name]
+        if len(matches) != 1:
+            raise RuntimeError(
+                f"Expected one shape named {shape_name!r}, found {len(matches)}"
+            )
+        matches[0]._element.getparent().remove(matches[0]._element)
+
+
+def remove_slide_range(prs: Presentation, start: int, stop: int) -> list[str]:
+    """Remove a zero-based half-open slide range and return its titles."""
+    titles: list[str] = []
+    for index in range(stop - 1, start - 1, -1):
+        slide = prs.slides[index]
+        title = next(
+            (
+                " ".join(shape.text.split())
+                for shape in slide.shapes
+                if getattr(shape, "has_text_frame", False) and shape.text.strip()
+            ),
+            "",
+        )
+        titles.append(title)
+        slide_id = prs.slides._sldIdLst[index]
+        prs.part.drop_rel(slide_id.rId)
+        prs.slides._sldIdLst.remove(slide_id)
+    return list(reversed(titles))
+
+
+def reorder_slide_block(prs: Presentation, source_indices: list[int]) -> list[str]:
+    """Reorder one contiguous slide block using zero-based source indices."""
+    start = min(source_indices)
+    if sorted(source_indices) != list(range(start, start + len(source_indices))):
+        raise ValueError("source_indices must describe one contiguous slide block")
+    slide_id_list = prs.slides._sldIdLst
+    selected = [slide_id_list[index] for index in source_indices]
+    titles = [
+        next(
+            (
+                " ".join(shape.text.split())
+                for shape in prs.slides[index].shapes
+                if getattr(shape, "has_text_frame", False) and shape.text.strip()
+            ),
+            "",
+        )
+        for index in source_indices
+    ]
+    for slide_id in selected:
+        slide_id_list.remove(slide_id)
+    for offset, slide_id in enumerate(selected):
+        slide_id_list.insert(start + offset, slide_id)
+    return titles
+
+
+def replace_picture(slide, old_shape_name: str, image_path: Path, alt: str) -> Any:
     matches = [shape for shape in slide.shapes if shape.name == old_shape_name]
     if len(matches) != 1:
         raise RuntimeError(f"Expected one picture named {old_shape_name!r}")
@@ -175,6 +287,7 @@ def replace_picture(slide, old_shape_name: str, image_path: Path, alt: str) -> N
     element = picture._element
     element.getparent().remove(element)
     parent.insert(old_index, element)
+    return picture
 
 
 def prepare_facts() -> dict[str, Any]:
@@ -249,6 +362,9 @@ def prepare_facts() -> dict[str, Any]:
             frame.groupby(["signature_group", "broad_network"], sort=False).cumcount()
             + 1
         )
+        frame["category_gene_count"] = frame.groupby(
+            ["signature_group", "broad_network"], sort=False
+        )["current_symbol"].transform("nunique")
         frame["category_label"] = [
             f"{group} · {NETWORK_LABELS[network]}"
             for group, network in zip(
@@ -520,12 +636,184 @@ def plot_top5(rows: pd.DataFrame, cohort: str) -> plt.Figure:
     return figure
 
 
-def plot_recurrence(rows: pd.DataFrame, cohort: str) -> plt.Figure:
+def top5_broad_cell_row_slots(
+    rows: pd.DataFrame,
+) -> list[tuple[str, str]]:
+    present = set(zip(rows["broad_network"], rows["apoe_group"], strict=True))
+    return [
+        (network, apoe)
+        for network in TOP5_BROAD_CELL_ORDER
+        for apoe in APOE_ORDER
+        if (network, apoe) in present
+    ]
+
+
+def draw_top5_broad_cell_panel(
+    axis,
+    rows: pd.DataFrame,
+    sex: str,
+    panel: str,
+    row_slots: list[tuple[str, str]],
+) -> None:
+    category_index = {slot: index for index, slot in enumerate(row_slots)}
+    sex_prefix = "F" if sex == "Female" else "M"
+    category_labels = [
+        f"{NETWORK_LABELS[network]} · {sex_prefix}_{apoe}"
+        for network, apoe in row_slots
+    ]
+
+    for row in rows.itertuples():
+        x = int(row.display_rank) - 1
+        y = category_index[(row.broad_network, row.apoe_group)]
+        rectangle = patches.Rectangle(
+            (x - 0.48, y - 0.42),
+            0.96,
+            0.84,
+            facecolor=BROAD_CELL_COLORS[row.broad_network],
+            edgecolor="#4B5563",
+            linewidth=0.45,
+        )
+        axis.add_patch(rectangle)
+        axis.text(
+            x,
+            y,
+            row.current_symbol,
+            ha="center",
+            va="center",
+            fontsize=7.0,
+            color=TEXT,
+        )
+
+    category_counts = (
+        rows.groupby(["broad_network", "apoe_group"], sort=False)[
+            "category_gene_count"
+        ]
+        .first()
+        .astype(int)
+    )
+    for category, count in category_counts.items():
+        if count <= 5:
+            continue
+        y = category_index[category]
+        axis.text(
+            4.64,
+            y,
+            f"n={count}",
+            ha="left",
+            va="center",
+            fontsize=10.0,
+            color=MUTED,
+            fontweight="bold",
+        )
+
+    axis.set_xlim(-0.5, 5.45)
+    axis.set_ylim(len(row_slots) - 0.5, -0.5)
+    axis.set_xticks(range(5), range(1, 6))
+    axis.set_yticks(range(len(row_slots)), category_labels)
+    axis.set_xlabel("Within-category rank (1 = strongest)")
+    axis.set_ylabel("Broad cell type · sex/APOE group" if panel == "A" else "")
+    axis.set_title(f"{panel}  {sex}", loc="left", fontsize=10, fontweight="bold")
+    axis.grid(False)
+
+    networks = [network for network, _ in row_slots]
+    for index in range(1, len(networks)):
+        if networks[index] != networks[index - 1]:
+            axis.axhline(index - 0.5, color="#9CA3AF", linewidth=0.9, zorder=0)
+
+
+def plot_top5_by_broad_cell(
+    rows: pd.DataFrame,
+    cohort: str,
+    *,
+    figure_width: float = 20.5,
+    minimum_height: float = 5.1,
+) -> plt.Figure:
+    female = rows[rows["sex"].eq("Female")]
+    male = rows[rows["sex"].eq("Male")]
+    row_slots = top5_broad_cell_row_slots(rows)
+    height = max(minimum_height, 0.47 * len(row_slots) + 2.7)
+    subtitle_y = 0.98 - 0.36 / height
+    axes_top = min(0.87, 0.98 - 0.85 / height)
+    figure, axes = plt.subplots(1, 2, figsize=(figure_width, height))
+    draw_top5_broad_cell_panel(axes[0], female, "Female", "A", row_slots)
+    draw_top5_broad_cell_panel(axes[1], male, "Male", "B", row_slots)
+    figure.suptitle(
+        f"Top five {cohort} non-MT key drivers",
+        x=0.06,
+        y=0.98,
+        ha="left",
+        fontsize=14,
+        fontweight="bold",
+    )
+    figure.text(
+        0.06,
+        subtitle_y,
+        "Rows align APOE groups across sex; blank rows mark categories without returns\n"
+        "n = total non-MT driver genes in that category (shown when n > 5)",
+        ha="left",
+        va="center",
+        color=MUTED,
+        fontsize=9.5,
+    )
+    figure.text(
+        0.81,
+        subtitle_y - 0.018,
+        "SCORE USED FOR WITHIN-CATEGORY RANKING\n"
+        "1 returned call: within-call BH-adjusted KDA P\n"
+        "≥2 returned calls: ACAT of returned adjusted P values\n"
+        "Lower = stronger; rank 1 is lowest  •  ties alphabetical",
+        ha="center",
+        va="center",
+        color=TEXT,
+        fontsize=10.5,
+        bbox={
+            "boxstyle": "round,pad=0.45",
+            "facecolor": "#F7F9FC",
+            "edgecolor": GRID,
+            "linewidth": 0.7,
+        },
+    )
+    present_networks = set(rows["broad_network"])
+    handles = [
+        patches.Patch(
+            facecolor=BROAD_CELL_COLORS[network],
+            edgecolor="#4B5563",
+            linewidth=0.45,
+            label=NETWORK_LABELS[network],
+        )
+        for network in TOP5_BROAD_CELL_ORDER
+        if network in present_networks
+    ]
+    figure.legend(
+        handles=handles,
+        frameon=False,
+        loc="lower center",
+        bbox_to_anchor=(0.5, 0.005),
+        ncol=7,
+        fontsize=8,
+    )
+    figure.subplots_adjust(
+        left=0.125, right=0.985, top=axes_top, bottom=0.15, wspace=0.30
+    )
+    return figure
+
+
+def plot_recurrence(
+    rows: pd.DataFrame,
+    cohort: str,
+    *,
+    bar_color: str | None = None,
+) -> plt.Figure:
     ordered = rows.iloc[::-1].reset_index(drop=True)
-    maximum = max(1, int(ordered["acat_category_count"].max()))
-    norm = Normalize(vmin=0, vmax=maximum)
-    cmap = matplotlib.colormaps["cividis"]
-    colors = [cmap(norm(value)) for value in ordered["acat_category_count"]]
+    if bar_color is None:
+        maximum = max(1, int(ordered["acat_category_count"].max()))
+        norm = Normalize(vmin=0, vmax=maximum)
+        cmap = matplotlib.colormaps["cividis"]
+        colors: Any = [
+            cmap(norm(value)) for value in ordered["acat_category_count"]
+        ]
+    else:
+        colors = bar_color
     figure, axis = plt.subplots(figsize=(8, 7))
     bars = axis.barh(ordered["current_symbol"], ordered["category_count"], color=colors)
     for bar, value in zip(bars, ordered["category_count"], strict=True):
@@ -556,10 +844,237 @@ def plot_recurrence(rows: pd.DataFrame, cohort: str) -> plt.Figure:
         va="bottom",
         fontsize=9,
     )
-    scalar = matplotlib.cm.ScalarMappable(norm=norm, cmap=cmap)
-    colorbar = figure.colorbar(scalar, ax=axis, pad=0.02)
-    colorbar.set_label("Categories aggregated across ≥2 returned calls")
-    figure.subplots_adjust(left=0.20, right=0.88, top=0.84, bottom=0.11)
+    if bar_color is None:
+        scalar = matplotlib.cm.ScalarMappable(norm=norm, cmap=cmap)
+        colorbar = figure.colorbar(scalar, ax=axis, pad=0.02)
+        colorbar.set_label("Categories aggregated across ≥2 returned calls")
+        right = 0.88
+    else:
+        right = 0.97
+    figure.subplots_adjust(left=0.20, right=right, top=0.84, bottom=0.11)
+    return figure
+
+
+def prepare_broad_cell_recurrence(
+    rows: pd.DataFrame,
+    broad_network: str,
+    *,
+    cohort: str,
+) -> pd.DataFrame:
+    broad_cell_rows = rows.loc[
+        rows["broad_network"].eq(broad_network),
+        ["signature_group", "current_symbol"],
+    ].drop_duplicates()
+    if broad_cell_rows.empty:
+        raise RuntimeError(f"No {cohort} {broad_network} key drivers found")
+    unexpected_groups = sorted(
+        set(broad_cell_rows["signature_group"]) - set(GROUP_ORDER)
+    )
+    if unexpected_groups:
+        raise RuntimeError(
+            f"Unexpected {cohort} {broad_network} groups: "
+            + ", ".join(unexpected_groups)
+        )
+    recurrence = (
+        broad_cell_rows.groupby("current_symbol", sort=False)["signature_group"]
+        .nunique()
+        .astype(int)
+    )
+    genes = sorted(recurrence.index, key=lambda gene: (-recurrence[gene], gene))
+    present = set(
+        zip(
+            broad_cell_rows["signature_group"],
+            broad_cell_rows["current_symbol"],
+            strict=True,
+        )
+    )
+    rows_out = []
+    for group_index, group in enumerate(GROUP_ORDER, start=1):
+        sex, apoe_group = group.split("_", maxsplit=1)
+        for gene_index, gene in enumerate(genes, start=1):
+            is_present = (group, gene) in present
+            rows_out.append(
+                {
+                    "signature_group": group,
+                    "sex": "Female" if sex == "F" else "Male",
+                    "apoe_group": apoe_group,
+                    "current_symbol": gene,
+                    "is_key_driver_in_category": is_present,
+                    "recurrence_across_six_categories": int(recurrence[gene]),
+                    "group_order": group_index,
+                    "gene_order": gene_index,
+                }
+            )
+    plot_data = pd.DataFrame(rows_out)
+    if int(plot_data["is_key_driver_in_category"].sum()) != len(broad_cell_rows):
+        raise RuntimeError(
+            f"{cohort} {broad_network} recurrence matrix lost category units"
+        )
+    return plot_data
+
+
+def plot_broad_cell_recurrence(
+    plot_data: pd.DataFrame,
+) -> plt.Figure:
+    genes = (
+        plot_data[["current_symbol", "gene_order"]]
+        .drop_duplicates()
+        .sort_values("gene_order")["current_symbol"]
+        .tolist()
+    )
+    recurrence = (
+        plot_data.drop_duplicates("current_symbol")
+        .set_index("current_symbol")["recurrence_across_six_categories"]
+        .astype(int)
+    )
+    maximum_recurrence = int(recurrence.max())
+    group_counts = (
+        plot_data.loc[plot_data["is_key_driver_in_category"]]
+        .groupby("signature_group")["current_symbol"]
+        .nunique()
+        .reindex(GROUP_ORDER, fill_value=0)
+    )
+    row_positions = {
+        "F_e2": 0,
+        "F_e33": 1,
+        "F_e4": 2,
+        "M_e2": 4,
+        "M_e33": 5,
+        "M_e4": 6,
+    }
+    matrix = np.full((7, len(genes)), np.nan)
+    matrix[[0, 1, 2, 4, 5, 6], :] = 0
+    gene_index = {gene: index for index, gene in enumerate(genes)}
+    for row in plot_data.loc[plot_data["is_key_driver_in_category"]].itertuples():
+        matrix[row_positions[row.signature_group], gene_index[row.current_symbol]] = (
+            row.recurrence_across_six_categories
+        )
+
+    recurrence_colors = [
+        matplotlib.colormaps["cividis"](value)
+        for value in np.linspace(0.12, 0.92, 5)
+    ]
+    absent_color = "#EEF1F4"
+    heatmap_cmap = ListedColormap([absent_color, *recurrence_colors])
+    heatmap_cmap.set_bad("#FFFFFF")
+    norm = BoundaryNorm(np.arange(-0.5, 6.5, 1), heatmap_cmap.N)
+
+    figure = plt.figure(figsize=(12.6, 5.55))
+    axis = figure.add_axes([0.095, 0.31, 0.885, 0.51])
+    axis.imshow(
+        matrix,
+        cmap=heatmap_cmap,
+        norm=norm,
+        interpolation="none",
+        aspect="auto",
+    )
+    axis.set_xticks(np.arange(len(genes)))
+    axis.set_xticklabels(
+        genes,
+        rotation=90,
+        ha="center",
+        va="top",
+        fontsize=max(4.2, min(5.4, 455 / len(genes))),
+    )
+    axis.set_yticks([0, 1, 2, 4, 5, 6])
+    axis.set_yticklabels(
+        [f"{group}  (n={int(group_counts[group])})" for group in GROUP_ORDER],
+        fontsize=8.5,
+    )
+    axis.tick_params(axis="x", length=0, pad=3)
+    axis.tick_params(axis="y", length=0, pad=5)
+    axis.set_xlabel("Unique non-MT key-driver genes", fontsize=9.5, labelpad=8)
+    axis.set_ylabel("")
+    axis.set_xticks(np.arange(-0.5, len(genes), 1), minor=True)
+    axis.set_yticks(np.arange(-0.5, 7, 1), minor=True)
+    axis.grid(which="minor", color="white", linewidth=0.35)
+    axis.tick_params(which="minor", bottom=False, left=False)
+    for spine in axis.spines.values():
+        spine.set_visible(False)
+
+    axis.text(
+        -0.095,
+        0.79,
+        "FEMALE",
+        transform=axis.transAxes,
+        rotation=90,
+        ha="center",
+        va="center",
+        color=BLUE,
+        fontsize=8.5,
+        fontweight="bold",
+    )
+    axis.text(
+        -0.095,
+        0.21,
+        "MALE",
+        transform=axis.transAxes,
+        rotation=90,
+        ha="center",
+        va="center",
+        color=TEAL,
+        fontsize=8.5,
+        fontweight="bold",
+    )
+
+    start = 0
+    for value in sorted(recurrence.unique(), reverse=True):
+        count = int((recurrence == value).sum())
+        end = start + count
+        if count >= 6:
+            axis.text(
+                (start + end - 1) / 2,
+                -0.87,
+                f"{value} categor{'y' if value == 1 else 'ies'}",
+                ha="center",
+                va="bottom",
+                fontsize=6.3,
+                color=TEXT,
+                fontweight="bold",
+                clip_on=False,
+            )
+        if end < len(genes):
+            axis.axvline(end - 0.5, color="#64748B", linewidth=0.8)
+        start = end
+
+    figure.text(
+        0.045,
+        0.955,
+        "Colored tile = gene is a key driver in that category; color = recurrence across all six categories.",
+        ha="left",
+        va="center",
+        fontsize=9.2,
+        color=TEXT,
+    )
+    legend_handles = [
+        patches.Patch(
+            facecolor=absent_color,
+            edgecolor="#CBD2D9",
+            linewidth=0.5,
+            label="Not returned",
+        )
+    ] + [
+        patches.Patch(
+            facecolor=recurrence_colors[value - 1],
+            edgecolor="#4B5563",
+            linewidth=0.35,
+            label=str(value),
+        )
+        for value in range(1, maximum_recurrence + 1)
+    ]
+    figure.legend(
+        handles=legend_handles,
+        title="Number of categories containing the gene",
+        loc="upper right",
+        bbox_to_anchor=(0.985, 0.995),
+        frameon=False,
+        ncol=6,
+        columnspacing=0.8,
+        handlelength=1.15,
+        handleheight=0.8,
+        fontsize=7.5,
+        title_fontsize=8.2,
+    )
     return figure
 
 
@@ -587,9 +1102,55 @@ def render_figures(facts: dict[str, Any], figure_root: Path) -> dict[str, Path]:
         recurrence = facts[f"{prefix}_recurrence"]
         top5_base = figure_root / prefix / f"{prefix}_combo_top5"
         recurrence_base = figure_root / prefix / f"{prefix}_combo_recurrence"
-        export_figure(plot_top5(top5, cohort), top5_base)
-        export_figure(plot_recurrence(recurrence, cohort), recurrence_base)
-        top5.to_csv(
+        top5_figure = (
+            plot_top5_by_broad_cell(top5, cohort)
+            if prefix == "ros"
+            else plot_top5_by_broad_cell(
+                top5,
+                cohort,
+                figure_width=12.6,
+                minimum_height=6.0,
+            )
+        )
+        export_figure(top5_figure, top5_base)
+        recurrence_figure = plot_recurrence(
+            recurrence,
+            cohort,
+            bar_color=BLUE,
+        )
+        export_figure(recurrence_figure, recurrence_base)
+        top5_plot_data = top5.copy()
+        top5_plot_data["_sex_order"] = top5_plot_data["sex"].map(
+            {"Female": 0, "Male": 1}
+        )
+        row_index = {
+            slot: index + 1
+            for index, slot in enumerate(
+                top5_broad_cell_row_slots(top5_plot_data)
+            )
+        }
+        top5_plot_data["aligned_row_index"] = [
+            row_index[(network, apoe)]
+            for network, apoe in zip(
+                top5_plot_data["broad_network"],
+                top5_plot_data["apoe_group"],
+                strict=True,
+            )
+        ]
+        top5_plot_data["broad_cell_color"] = top5_plot_data[
+            "broad_network"
+        ].map(BROAD_CELL_COLORS)
+        top5_plot_data.sort_values(
+            [
+                "_sex_order",
+                "aligned_row_index",
+                "display_rank",
+            ],
+            inplace=True,
+            kind="mergesort",
+        )
+        top5_plot_data.drop(columns="_sex_order", inplace=True)
+        top5_plot_data.to_csv(
             top5_base.with_name(top5_base.name + "_plot_data.tsv"),
             sep="\t",
             index=False,
@@ -603,7 +1164,173 @@ def render_figures(facts: dict[str, Any], figure_root: Path) -> dict[str, Path]:
         )
         paths[f"{prefix}_top5"] = top5_base.with_suffix(".png")
         paths[f"{prefix}_recurrence"] = recurrence_base.with_suffix(".png")
+    for broad_network, stem, path_key in [
+        (
+            "Excitatory_neurons",
+            "ros_excitatory_driver_recurrence_matrix",
+            "ros_excitatory_recurrence",
+        ),
+        (
+            "Inhibitory_neurons",
+            "ros_inhibitory_driver_recurrence_matrix",
+            "ros_inhibitory_recurrence",
+        ),
+        (
+            "Astrocytes",
+            "ros_astrocyte_driver_recurrence_matrix",
+            "ros_astrocyte_recurrence",
+        ),
+        (
+            "OPCs",
+            "ros_opc_driver_recurrence_matrix",
+            "ros_opc_recurrence",
+        ),
+    ]:
+        plot_data = prepare_broad_cell_recurrence(
+            facts["ros_categories"],
+            broad_network,
+            cohort="ROSMAP",
+        )
+        base = figure_root / "ros" / stem
+        export_figure(plot_broad_cell_recurrence(plot_data), base)
+        plot_data.to_csv(
+            base.with_name(base.name + "_plot_data.tsv"),
+            sep="\t",
+            index=False,
+            lineterminator="\n",
+        )
+        paths[path_key] = base.with_suffix(".png")
+    sea_excitatory_plot_data = prepare_broad_cell_recurrence(
+        facts["sea_categories"],
+        "Excitatory_neurons",
+        cohort="SEA-AD",
+    )
+    sea_excitatory_base = (
+        figure_root / "sea" / "sea_excitatory_driver_recurrence_matrix"
+    )
+    export_figure(
+        plot_broad_cell_recurrence(sea_excitatory_plot_data),
+        sea_excitatory_base,
+    )
+    sea_excitatory_plot_data.to_csv(
+        sea_excitatory_base.with_name(
+            sea_excitatory_base.name + "_plot_data.tsv"
+        ),
+        sep="\t",
+        index=False,
+        lineterminator="\n",
+    )
+    paths["sea_excitatory_recurrence"] = sea_excitatory_base.with_suffix(
+        ".png"
+    )
     return paths
+
+
+def update_rosmap_section_divider(slide) -> None:
+    set_text(slide, "TextBox 3", "ROSMAP KDA analysis")
+    remove_named_shapes(slide, ["TextBox 4"])
+    step_text = {
+        "TextBox 9": ("Run DEG", 2034828),
+        "TextBox 12": ("Call key driver", 2790427),
+        "TextBox 15": ("ACAT aggregation", 3551805),
+        "TextBox 18": ("Result analysis", 4295829),
+    }
+    for shape_name, (text, top) in step_text.items():
+        set_text(slide, shape_name, text)
+        shape = next(item for item in slide.shapes if item.name == shape_name)
+        shape.top = top
+        shape.height = 226216
+
+
+def update_four_steps_slide(slide) -> None:
+    text_updates = {
+        "TextBox 2": "Four steps: one KDA query per contrast",
+        "TextBox 7": "DEG",
+        "TextBox 10": "AD-versus-NCI DEG for each contrast",
+        "TextBox 14": "Mitochondrial query",
+        "TextBox 15": "MT DEGs",
+        "TextBox 17": "Build query per contrast with MT DEGs",
+        "TextBox 22": "Use call_key_drivers",
+        "TextBox 24": (
+            "KDA run for valid DEG contrast valid\n"
+            "number of genes in query ≥ 3"
+        ),
+        "TextBox 28": "Category result",
+        "TextBox 29": "gene × category",
+        "TextBox 31": (
+            "Aggregate genes across fine cell type for the same broad cell "
+            "type with ACAT."
+        ),
+    }
+    for shape_name, text in text_updates.items():
+        set_text(slide, shape_name, text)
+
+    geometry = {
+        "TextBox 7": (804672, 2267712, 2157984, 347788),
+        "TextBox 10": (932688, 4192099, 1901952, 403187),
+        "TextBox 15": (3639312, 3017520, 2157984, 255455),
+        "TextBox 17": (3767328, 4192099, 1901952, 403187),
+        "TextBox 22": (6473952, 3017520, 2157984, 255455),
+        "TextBox 24": (6601968, 4105152, 1940298, 577081),
+        "TextBox 31": (9436608, 4105152, 1901952, 577081),
+    }
+    for shape_name, (left, top, width, height) in geometry.items():
+        shape = next(item for item in slide.shapes if item.name == shape_name)
+        shape.left = left
+        shape.top = top
+        shape.width = width
+        shape.height = height
+
+
+def insert_broad_cell_recurrence_slide(
+    prs: Presentation,
+    figure_path: Path,
+    *,
+    cohort: str = "ROSMAP",
+    broad_cell_adjective: str,
+    unique_gene_count: int,
+    category_unit_count: int,
+    transition: str,
+    insert_index: int = 10,
+    title: str | None = None,
+    subtitle: str | None = None,
+) -> None:
+    ui.set_notes_body_template(
+        prs.slides[0].notes_slide.notes_placeholder._element
+    )
+    slide = ui.new_slide(prs)
+    ui.add_title_block(
+        slide,
+        title
+        or f"{cohort} {broad_cell_adjective} drivers recur across sex/APOE groups",
+        subtitle
+        or f"{unique_gene_count} unique non-MT genes across {category_unit_count} gene × category combinations; columns are ordered by recurrence, then alphabetically.",
+    )
+    picture = slide.shapes.add_picture(
+        str(figure_path),
+        Inches(0.58),
+        Inches(1.34),
+        width=Inches(12.17),
+        height=Inches(5.36),
+    )
+    ui.set_alt_text(
+        picture,
+        f"Matrix of {unique_gene_count} {cohort} {broad_cell_adjective} non-mitochondrial key-driver genes across six female and male sex/APOE categories; colored cells mark category membership and color indicates recurrence across categories.",
+    )
+    picture.name = (
+        f"{cohort} {broad_cell_adjective} non-MT key-driver recurrence matrix"
+    )
+    set_notes(
+        slide,
+        f"Show how {cohort} {broad_cell_adjective} key drivers recur across the six sex/APOE categories.",
+        f"Rows are the three female groups followed by the three male groups. Columns contain all {unique_gene_count} distinct non-mitochondrial key-driver genes observed in the {broad_cell_adjective} broad cell type. A colored tile means the gene is present in that category; its color gives the total number of the six categories containing that gene. Columns are ordered from highest to lowest recurrence and alphabetically within ties.",
+        "Category recurrence is descriptive presence across returned-only category results. It is not an effect size, an independent replication count, or a sex/APOE interaction test.",
+        transition,
+    )
+    slide_id_list = prs.slides._sldIdLst
+    new_slide_id = slide_id_list[-1]
+    slide_id_list.remove(new_slide_id)
+    slide_id_list.insert(insert_index, new_slide_id)
 
 
 def update_slides_1_to_18(prs: Presentation, facts: dict[str, Any], figures: dict[str, Path]) -> None:
@@ -611,21 +1338,19 @@ def update_slides_1_to_18(prs: Presentation, facts: dict[str, Any], figures: dic
 
     # Slide 1
     set_text(slides[0], "TextBox 2", "ROSMAP and SEA-AD sex/APOE key-driver analysis")
-    set_text(
+    remove_named_shapes(
         slides[0],
-        "TextBox 3",
-        "Mitochondrial DEG queries with returned-only simple aggregation",
-    )
-    set_text(slides[0], "TextBox 6", "ROSMAP KDA")
-    set_text(
-        slides[0],
-        "TextBox 7",
-        "194 KDA calls → returned-only non-MT aggregation → 381 category units",
-    )
-    set_text(
-        slides[0],
-        "TextBox 11",
-        "22 SEA-AD-network KDA calls → returned-only non-MT aggregation → 44 category units",
+        [
+            "TextBox 1",
+            "TextBox 3",
+            "Rounded Rectangle 4",
+            "TextBox 6",
+            "TextBox 7",
+            "Rounded Rectangle 8",
+            "TextBox 9",
+            "TextBox 10",
+            "TextBox 11",
+        ],
     )
     set_notes(
         slides[0],
@@ -636,7 +1361,11 @@ def update_slides_1_to_18(prs: Presentation, facts: dict[str, Any], figures: dic
     )
 
     # Slide 2
-    set_text(slides[1], "TextBox 2", "Two cohorts, one aggregation rule")
+    set_text(
+        slides[1],
+        "TextBox 2",
+        "Summary for two cohorts: ROSMAP and SEA-AD",
+    )
     set_text(
         slides[1],
         "TextBox 3",
@@ -645,86 +1374,53 @@ def update_slides_1_to_18(prs: Presentation, facts: dict[str, Any], figures: dic
     set_text(slides[1], "TextBox 8", "324")
     set_text(slides[1], "TextBox 9", "planned contrasts")
     set_text(slides[1], "TextBox 11", "194")
-    set_text(slides[1], "TextBox 12", "included KDA calls")
+    set_text(slides[1], "TextBox 12", "KDA calls")
     set_text(slides[1], "TextBox 14", "381")
-    set_text(slides[1], "TextBox 15", "gene × category units")
+    set_text(slides[1], "TextBox 15", "gene × category combinations")
     set_text(
         slides[1],
         "TextBox 17",
-        "Builds one core-MT DEG query within each fine-cell contrast.",
+        "Builds one query with DEG MT genes for each contrast.",
     )
     set_text(
         slides[1],
         "TextBox 19",
-        "Groups returned drivers within sex/APOE × broad network.",
+        "Aggregate KDA returned key driver using ACAT for each category",
     )
     set_text(
         slides[1],
         "TextBox 21",
-        "Final 381 units represent 228 genes in 29 categories.",
+        "Final 381 combinations represent 228 unique genes in 29 categories.",
     )
     set_text(slides[1], "TextBox 26", "774")
     set_text(slides[1], "TextBox 27", "planned contrasts")
     set_text(slides[1], "TextBox 29", "22")
-    set_text(slides[1], "TextBox 30", "active KDA calls")
+    set_text(slides[1], "TextBox 30", "KDA calls")
     set_text(slides[1], "TextBox 32", "44")
-    set_text(slides[1], "TextBox 33", "gene × category units")
+    set_text(slides[1], "TextBox 33", "gene × category combinations")
     set_text(
         slides[1], "TextBox 35", "Uses SEA-AD-specific Bayesian networks."
     )
     set_text(
         slides[1],
         "TextBox 37",
-        "Donor ≥3 per arm; FDR-only query; mapped n ≥3.",
+        "Final 44 combinations represent 43 unique genes in 5 categories",
     )
     set_text(
         slides[1],
         "TextBox 39",
-        "20 of 22 calls are M_e33; five categories have returns.",
+        "20 of 22 calls are M_e33.",
     )
-    category_band = ui.add_rect(
-        slides[1],
-        0.90,
-        6.15,
-        11.50,
-        0.72,
-        color=ui.PALE_GOLD,
-        outline=ui.GOLD,
-    )
-    # Preserve the manual slide-2 placement from the reviewed deck.  Raw EMUs
-    # avoid rounding away PowerPoint's fractional-inch coordinates.
-    category_band.left = 838200
-    category_band.top = 5754624
-    category_text = ui.add_text(
-        slides[1],
-        "Category = one sex/APOE group × one broad cell type (for example, M_e33 × excitatory neurons). Returned drivers from eligible fine-cell or supertype KDA calls are combined within that category.",
-        1.14,
-        6.31,
-        11.02,
-        0.40,
-        size=10.6,
-        color=ui.GOLD_TEXT,
-        bold=True,
-        align=PP_ALIGN.CENTER,
-        valign=MSO_ANCHOR.MIDDLE,
-    )
-    category_text.left = 1042415
-    category_text.top = 5905331
     set_notes(
         slides[1],
         "Give a side-by-side map of the two analyses.",
-        "Define a category before using the counts: one sex/APOE group crossed with one broad cell type, such as M_e33 excitatory neurons. Returned drivers from eligible fine-cell or supertype KDA calls are aggregated within that category. ROSMAP contributes 194 calls and 381 gene-by-category units; SEA-AD contributes 22 active calls and 44 units.",
+        "ROSMAP is the primary analysis: 324 planned contrasts yield 194 KDA calls and 381 gene-by-category combinations, representing 228 unique genes in 29 categories. SEA-AD is the validation analysis: 774 planned contrasts yield 22 KDA calls and 44 combinations, representing 43 unique genes in five categories.",
         "Twenty of 22 SEA-AD calls are M_e33. Categories without calls are unavailable, not negative tests.",
         "Review the ROSMAP branch first.",
     )
 
     # Slide 3
-    set_text(slides[2], "TextBox 3", "ROSMAP KDA reaggregation")
-    set_text(
-        slides[2],
-        "TextBox 4",
-        "54 fine cell types define 324 contrasts; 194 calls from 43 fine types are aggregated within six groups and seven broad networks.",
-    )
+    update_rosmap_section_divider(slides[2])
     set_notes(
         slides[2],
         "Introduce the ROSMAP fine-cell KDA branch.",
@@ -734,17 +1430,7 @@ def update_slides_1_to_18(prs: Presentation, facts: dict[str, Any], figures: dic
     )
 
     # Slide 4
-    set_text(slides[3], "TextBox 2", "Four steps: one KDA query per contrast")
-    set_text(slides[3], "TextBox 14", "Mitochondrial query")
-    set_text(slides[3], "TextBox 15", "core-MT DEGs")
-    set_text(slides[3], "TextBox 17", "One query per contrast")
-    set_text(slides[3], "TextBox 28", "Category result")
-    set_text(slides[3], "TextBox 29", "gene × category")
-    set_text(
-        slides[3],
-        "TextBox 31",
-        "Category = sex/APOE group × broad network",
-    )
+    update_four_steps_slide(slides[3])
     set_notes(
         slides[3],
         "Separate contrast, mitochondrial query, KDA call, and category result.",
@@ -760,9 +1446,20 @@ def update_slides_1_to_18(prs: Presentation, facts: dict[str, Any], figures: dic
         "TextBox 3",
         "Each contrast contributes one mitochondrial DEG query and at most one KDA call.",
     )
-    set_text(slides[4], "TextBox 8", "324 signed results")
+    set_text(slides[4], "TextBox 8", "324 DEG contrasts")
+    next(
+        shape for shape in slides[4].shapes if shape.name == "TextBox 8"
+    ).height = 347788
     set_text(slides[4], "TextBox 9", "one query per contrast")
     set_text(slides[4], "TextBox 11", "194 call_key_drivers calls")
+    set_text(
+        slides[4],
+        "TextBox 12",
+        "All valid DEG contrast and number of genes in queries ≥3",
+    )
+    next(
+        shape for shape in slides[4].shapes if shape.name == "TextBox 12"
+    ).height = 375487
     call_count_box = next(
         shape for shape in slides[4].shapes if shape.name == "TextBox 11"
     )
@@ -778,6 +1475,32 @@ def update_slides_1_to_18(prs: Presentation, facts: dict[str, Any], figures: dic
     set_text(slides[4], "TextBox 48", "194")
     set_text(slides[4], "TextBox 64", "324")
     set_text(slides[4], "TextBox 66", "194 calls")
+    set_text(slides[4], "TextBox 30", "Number of genes in query: 0")
+    query_zero = next(
+        shape for shape in slides[4].shapes if shape.name == "TextBox 30"
+    )
+    query_zero.text_frame.paragraphs[0].runs[0].font.size = Pt(9)
+    set_split_text(
+        slides[4],
+        "TextBox 38",
+        "Number of genes in query: ",
+        "1–2",
+        prefix_size=9,
+        tail_size=9.5,
+    )
+    query_one_two = next(
+        shape for shape in slides[4].shapes if shape.name == "TextBox 38"
+    )
+    query_one_two.top = 4356132
+    query_one_two.height = 203133
+    set_split_text(
+        slides[4],
+        "TextBox 46",
+        "Number of genes in query: ",
+        ">=3",
+        prefix_size=9,
+        tail_size=9.5,
+    )
     set_notes(
         slides[4],
         "Show how 324 contrasts become 194 KDA calls.",
@@ -837,16 +1560,20 @@ def update_slides_1_to_18(prs: Presentation, facts: dict[str, Any], figures: dic
 
     # Slides 8-10
     set_text(slides[7], "TextBox 2", "Top five: 123 non-MT entries across 29 categories")
-    replace_picture(
+    top5_picture = replace_picture(
         slides[7],
         "Simple returned-only Phase 20 female and male panels showing up to five non-MT genes per sex/APOE by broad-cell category",
         figures["ros_top5"],
         "ROSMAP top-five non-MT key drivers by sex/APOE and broad-cell category",
     )
+    top5_picture.left = Inches(0.67)
+    top5_picture.top = Inches(0.87)
+    top5_picture.width = Inches(12.00)
+    top5_picture.height = Inches(6.53)
     set_notes(
         slides[7],
         "Present the ROSMAP top-five results.",
-        "The figure displays up to five non-MT drivers in each of 29 populated categories, for 123 displayed entries. Blue hatching denotes ACAT across at least two returned calls; orange denotes one-call q passthrough.",
+        "The figure displays up to five non-MT drivers in each of 29 populated categories, for 123 displayed entries. For rows containing more than five drivers, n reports the total number of distinct non-MT driver genes in that category. For a gene returned by one KDA call, the ranking score is that call's within-call BH-adjusted KDA P value. For a gene returned by at least two calls, the score is the equal-weight ACAT combination of the returned adjusted P values. Lower scores rank more strongly; ties are resolved alphabetically. Female and male rows are aligned by broad cell type and APOE group, with blank counterpart rows where only one sex has returns. Microglia is placed last because no female Microglia category has returned drivers. Each broad-cell color is held constant across panels.",
         "Top five is a display cap, and returned-only scores are exploratory without final across-gene FDR control.",
         "Summarize recurrence across categories.",
     )
@@ -858,25 +1585,61 @@ def update_slides_1_to_18(prs: Presentation, facts: dict[str, Any], figures: dic
         figures["ros_recurrence"],
         "ROSMAP recurrence chart for the twenty broadest non-MT key drivers",
     )
+    remove_named_shapes(slides[8], ["Oval 11", "TextBox 12"])
     set_text(
         slides[8],
         "TextBox 14",
-        "RPS15: 11 categories, 6 groups, 4 networks; ACAT in 4.",
+        "RPS15: 11 categories, 6 groups, 4 networks.",
     )
     set_text(
         slides[8],
         "TextBox 16",
-        "RPL11: 10 categories, 6 groups, 4 networks; ACAT in 3.",
+        "RPL11: 10 categories, 6 groups, 4 networks.",
     )
+    for shape_name, top, height in [
+        ("Oval 13", 2770632, 77724),
+        ("TextBox 14", 2642615, 403187),
+        ("Oval 15", 3328415, 77724),
+        ("TextBox 16", 3200399, 403187),
+    ]:
+        shape = next(item for item in slides[8].shapes if item.name == shape_name)
+        shape.top = top
+        shape.height = height
     set_notes(
         slides[8],
         "Interpret category recurrence.",
-        "RPS15 occurs in 11 categories from 22 returned calls. RPL11 occurs in 10 categories from 24 calls. Color encodes how many category scores combine at least two returned calls.",
+        "RPS15 occurs in 11 categories from 22 returned calls. RPL11 occurs in 10 categories from 24 calls. Bar length and the end label show the category count.",
         "Category presence is descriptive and not independent replication.",
         "Summarize the full ROSMAP output scale.",
     )
 
-    set_text(slides[9], "TextBox 2", "Simple output: 381 non-MT category units represent 228 genes")
+    set_text(
+        slides[9],
+        "TextBox 2",
+        "ROSMAP KDA summary: 381 non-MT gene x category combinations represent 228 distinct genes",
+    )
+    next(
+        shape for shape in slides[9].shapes if shape.name == "TextBox 2"
+    ).height = 701731
+    set_text(
+        slides[9],
+        "TextBox 6",
+        "non-MT gene returned from call_key_driver (before aggregation)",
+    )
+    ros_returned_label = next(
+        shape for shape in slides[9].shapes if shape.name == "TextBox 6"
+    )
+    ros_returned_label.height = 606320
+    ros_returned_label.text_frame.paragraphs[0].runs[0].font.size = Pt(9)
+    ros_returned_label.text_frame.add_paragraph()
+    set_text(
+        slides[9],
+        "TextBox 9",
+        "non-MT gene × category combinations",
+    )
+    next(
+        shape for shape in slides[9].shapes if shape.name == "TextBox 9"
+    ).height = 350865
     for name, value in {
         "TextBox 5": "623",
         "TextBox 8": "381",
@@ -895,6 +1658,10 @@ def update_slides_1_to_18(prs: Presentation, facts: dict[str, Any], figures: dic
         "TextBox 25",
         "Excitatory 153 • Inhibitory 146 • Astrocytes 32 • OPCs 21\nOligo 18 • Vasculature 6 • Microglia 5",
     )
+    set_text(slides[9], "TextBox 28", "Most recurrent genes")
+    next(
+        shape for shape in slides[9].shapes if shape.name == "TextBox 28"
+    ).height = 289310
     top_six = [("RPS15", 11), ("RPL11", 10), ("RPLP1", 8), ("RPL15", 7), ("SELENOM", 7), ("SELENOW", 6)]
     for (gene_box, bar_name, count_box), (gene, count) in zip(
         [
@@ -921,12 +1688,8 @@ def update_slides_1_to_18(prs: Presentation, facts: dict[str, Any], figures: dic
     )
 
     # Slides 11-15
-    set_text(slides[10], "TextBox 3", "SEA-AD network-specific KDA")
-    set_text(
-        slides[10],
-        "TextBox 4",
-        "129 supertypes define 774 contrasts; 22 KDA calls were run against SEA-AD-specific Bayesian networks.",
-    )
+    set_text(slides[10], "TextBox 3", "SEA-AD KDA analysis")
+    remove_named_shapes(slides[10], ["TextBox 4"])
     set_notes(
         slides[10],
         "Introduce the SEA-AD-specific-network analysis.",
@@ -941,9 +1704,23 @@ def update_slides_1_to_18(prs: Presentation, facts: dict[str, Any], figures: dic
         "TextBox 2",
         "One mitochondrial DEG query per supertype × sex/APOE contrast.",
     )
-    set_text(slides[11], "TextBox 7", "774 signed results")
+    set_text(slides[11], "TextBox 7", "774 DEG contrasts")
+    next(
+        shape for shape in slides[11].shapes if shape.name == "TextBox 7"
+    ).height = 347788
     set_text(slides[11], "TextBox 8", "one query per contrast")
-    set_text(slides[11], "TextBox 10", "22 KDA calls")
+    set_text(slides[11], "TextBox 10", "22 call_key_drivers calls")
+    next(
+        shape for shape in slides[11].shapes if shape.name == "TextBox 10"
+    ).height = 347788
+    set_text(
+        slides[11],
+        "TextBox 11",
+        "All valid DEG contrast and number of genes in query ≥ 3",
+    )
+    next(
+        shape for shape in slides[11].shapes if shape.name == "TextBox 11"
+    ).height = 433965
     set_text(slides[11], "TextBox 13", "Mutually exclusive contrast outcome")
     set_text(slides[11], "TextBox 15", "Contrasts")
     for name, value in {
@@ -960,6 +1737,18 @@ def update_slides_1_to_18(prs: Presentation, facts: dict[str, Any], figures: dic
         "TextBox 54",
         "Availability remains unbalanced: 20 M_e33 calls, one F_e33 call, and one F_e4 call.",
     )
+    for shape_name, text, top, height in [
+        ("TextBox 19", "Source DEG contrast not valid", 3386869, 203133),
+        ("TextBox 25", "Number of genes in query: 0", 3816637, 203133),
+        ("TextBox 31", "Number of genes in query: 1–2", 4246404, 203133),
+        ("TextBox 37", "Number of genes in query: >=3", 4676173, 203133),
+    ]:
+        set_text(slides[11], shape_name, text)
+        shape = next(
+            item for item in slides[11].shapes if item.name == shape_name
+        )
+        shape.top = top
+        shape.height = height
     set_notes(
         slides[11],
         "Show how 774 SEA-AD contrasts reduce to 22 executable calls.",
@@ -969,16 +1758,21 @@ def update_slides_1_to_18(prs: Presentation, facts: dict[str, Any], figures: dic
     )
 
     set_text(slides[12], "TextBox 1", "Top-five display: 17 non-MT entries across 5 categories")
-    replace_picture(
+    sea_top5_picture = replace_picture(
         slides[12],
         "VH12 SEA-AD-network top-five non-mitochondrial key drivers by sex/APOE and broad-cell category",
         figures["sea_top5"],
         "SEA-AD top-five non-MT key drivers by sex/APOE and broad-cell category",
     )
+    sea_top5_picture.left = Inches(0.67)
+    sea_top5_picture.top = Inches(1.05)
+    sea_top5_picture.width = Inches(12.00)
+    sea_top5_picture.height = Inches(5.71)
+    remove_named_shapes(slides[12], ["TextBox 3"])
     set_notes(
         slides[12],
         "Present leading SEA-AD non-MT candidates.",
-        "Seventeen entries appear across F_e33 excitatory, F_e4 astrocyte, and three M_e33 categories. Blue hatching denotes ACAT across at least two calls; orange is one-call q passthrough.",
+        "Seventeen entries appear across F_e33 excitatory, F_e4 astrocyte, and three M_e33 categories. As on the ROSMAP display, rows are aligned across female and male panels, colors identify broad cell types consistently, and n gives the total non-MT driver count when a category contains more than five genes. Within each category, one returned call passes through its within-call adjusted KDA P value, while at least two returned calls are combined by ACAT; lower scores rank more strongly.",
         "Top five is a display cap and the five populated categories expose strong availability imbalance.",
         "Review recurrence across those categories.",
     )
@@ -990,17 +1784,27 @@ def update_slides_1_to_18(prs: Presentation, facts: dict[str, Any], figures: dic
         figures["sea_recurrence"],
         "SEA-AD recurrence chart for the twenty broadest non-MT key drivers",
     )
-    set_text(slides[13], "TextBox 13", "PJVK: M_e33 excitatory + inhibitory neurons.")
     set_text(
         slides[13],
-        "TextBox 15",
-        "Its inhibitory category combines 3 returned calls by ACAT.",
+        "TextBox 13",
+        "PJVK: 2 categories, 1 group, 2 networks.",
     )
     set_text(
         slides[13],
         "TextBox 17",
         "The remaining 19 displayed genes occur in one category.",
     )
+    remove_named_shapes(
+        slides[13],
+        ["Oval 10", "TextBox 11", "Oval 14", "TextBox 15"],
+    )
+    for shape_name, top in {
+        "Oval 12": 2770632,
+        "TextBox 13": 2642615,
+        "Oval 16": 3328415,
+        "TextBox 17": 3200399,
+    }.items():
+        next(shape for shape in slides[13].shapes if shape.name == shape_name).top = top
     set_notes(
         slides[13],
         "Interpret SEA-AD category recurrence.",
@@ -1009,7 +1813,30 @@ def update_slides_1_to_18(prs: Presentation, facts: dict[str, Any], figures: dic
         "Summarize the SEA-AD output scale.",
     )
 
-    set_text(slides[14], "TextBox 1", "SEA-AD output: 44 non-MT units represent 43 genes")
+    set_text(
+        slides[14],
+        "TextBox 1",
+        "SEA-AD KDA summary: 44 non-MT gene x category combinations represent 43 distinct genes",
+    )
+    next(
+        shape for shape in slides[14].shapes if shape.name == "TextBox 1"
+    ).height = 809452
+    set_text(
+        slides[14],
+        "TextBox 4",
+        "non-MT gene returned from call_key_driver (before aggregation)",
+    )
+    next(
+        shape for shape in slides[14].shapes if shape.name == "TextBox 4"
+    ).height = 498598
+    set_text(
+        slides[14],
+        "TextBox 7",
+        "gene × category combinations",
+    )
+    next(
+        shape for shape in slides[14].shapes if shape.name == "TextBox 7"
+    ).height = 350865
     for name, value in {
         "TextBox 3": "54",
         "TextBox 6": "44",
@@ -1018,7 +1845,10 @@ def update_slides_1_to_18(prs: Presentation, facts: dict[str, Any], figures: dic
         "TextBox 15": "17",
     }.items():
         set_text(slides[14], name, value)
-    set_text(slides[14], "TextBox 19", "Where the 44 units occur")
+    set_text(slides[14], "TextBox 19", "Where the 44 combinations occur")
+    next(
+        shape for shape in slides[14].shapes if shape.name == "TextBox 19"
+    ).height = 289310
     set_text(
         slides[14], "TextBox 21", "M_e33 39 • F_e4 3 • F_e33 2 • other groups 0"
     )
@@ -1027,7 +1857,14 @@ def update_slides_1_to_18(prs: Presentation, facts: dict[str, Any], figures: dic
         "TextBox 23",
         "Excitatory 27 • Inhibitory 12 • Astrocytes 3 • Oligo 2\nMicroglia, OPCs, Vasculature 0",
     )
-    set_text(slides[14], "TextBox 28", "20 calls with returns; 2 completed empty.")
+    set_text(
+        slides[14],
+        "TextBox 28",
+        "20 call_key_driver with returned results; 2 completed empty.",
+    )
+    next(
+        shape for shape in slides[14].shapes if shape.name == "TextBox 28"
+    ).height = 224677
     set_text(
         slides[14],
         "TextBox 30",
@@ -1035,6 +1872,7 @@ def update_slides_1_to_18(prs: Presentation, facts: dict[str, Any], figures: dic
     )
     set_text(slides[14], "TextBox 32", "58 core-MitoCarta rows excluded.")
     set_text(slides[14], "TextBox 34", "54 non-MT rows retained for aggregation.")
+    remove_named_shapes(slides[14], ["TextBox 35"])
     set_notes(
         slides[14],
         "Summarize the SEA-AD output.",
@@ -1460,6 +2298,10 @@ def rebuild_slides_19_to_24(prs: Presentation) -> None:
 
 def update_sensitivity_terminology(prs: Presentation) -> None:
     """Remove direction-combination terminology from the sensitivity section."""
+    set_text(prs.slides[24], "TextBox 1", "PART 3")
+    next(
+        shape for shape in prs.slides[24].shapes if shape.name == "TextBox 1"
+    ).height = 216982
     set_text(
         prs.slides[27],
         "TextBox 157",
@@ -1482,7 +2324,7 @@ def validate_deck(prs: Presentation, later_before: list[tuple[Any, ...]]) -> lis
 
     add("slide_count", len(prs.slides), 30, len(prs.slides) == 30)
     later_after = [semantic_slide_fingerprint(prs.slides[index]) for index in range(24, len(prs.slides))]
-    unchanged_later_positions = [0, 1, 2, 4, 5]
+    unchanged_later_positions = [1, 2, 4, 5]
     add(
         "non_query_sensitivity_slides_semantically_unchanged",
         sum(later_before[index] == later_after[index] for index in unchanged_later_positions),
@@ -1526,18 +2368,6 @@ def validate_deck(prs: Presentation, later_before: list[tuple[Any, ...]]) -> lis
         ";".join(observed_design_terms),
         "none",
         not observed_design_terms,
-    )
-    slide_2_text = "\n".join(
-        shape.text
-        for shape in prs.slides[1].shapes
-        if getattr(shape, "has_text_frame", False)
-    )
-    category_definition = "Category = one sex/APOE group × one broad cell type"
-    add(
-        "category_defined_on_slide_2",
-        category_definition in slide_2_text,
-        True,
-        category_definition in slide_2_text,
     )
     add("three_shared_genes_present", "LAGE3  •  MIPOL1  •  PAPOLA" in text_1_24, True, "LAGE3  •  MIPOL1  •  PAPOLA" in text_1_24)
     add("zero_exact_match_present", "0 of 44" in text_1_24, True, "0 of 44" in text_1_24)
@@ -1635,11 +2465,71 @@ def main() -> int:
     input_path = args.input.resolve()
     output_path = args.output.resolve()
     audit_root = args.audit_root.resolve()
-    if not input_path.is_file():
+    if not args.figures_only and not input_path.is_file():
         raise FileNotFoundError(input_path)
 
     facts = prepare_facts()
     figures = render_figures(facts, audit_root / "figures")
+    if args.figures_only:
+        artifact_rows = []
+        for role, png_path in sorted(figures.items()):
+            base = png_path.with_suffix("")
+            paths = [
+                png_path,
+                base.with_suffix(".svg"),
+                base.with_suffix(".pdf"),
+                base.with_name(base.name + "_plot_data.tsv"),
+            ]
+            for path in paths:
+                if not path.is_file() or path.stat().st_size == 0:
+                    raise RuntimeError(f"Missing or empty figure artifact: {path}")
+                artifact_rows.append(
+                    {
+                        "role": role,
+                        "path": str(
+                            path.relative_to(ROOT)
+                            if path.is_relative_to(ROOT)
+                            else path
+                        ),
+                        "bytes": path.stat().st_size,
+                        "sha256": sha256_file(path),
+                    }
+                )
+        audit_root.mkdir(parents=True, exist_ok=True)
+        artifacts_path = audit_root / "combo_figure_artifacts.tsv"
+        pd.DataFrame(artifact_rows).to_csv(
+            artifacts_path,
+            sep="\t",
+            index=False,
+            lineterminator="\n",
+        )
+        status = pd.DataFrame(
+            [
+                {
+                    "execution_status": "complete",
+                    "rosmap_non_mt_category_units": len(facts["ros_categories"]),
+                    "rosmap_non_mt_genes": facts["ros_genes"],
+                    "rosmap_top5_entries": facts["ros_top5_count"],
+                    "seaad_non_mt_category_units": len(facts["sea_categories"]),
+                    "seaad_non_mt_genes": facts["sea_genes"],
+                    "seaad_top5_entries": facts["sea_top5_count"],
+                    "figure_roles": len(figures),
+                    "artifact_files": len(artifact_rows),
+                    "artifact_manifest_sha256": sha256_file(artifacts_path),
+                }
+            ]
+        )
+        status.to_csv(
+            audit_root / "combo_figure_status.tsv",
+            sep="\t",
+            index=False,
+            lineterminator="\n",
+        )
+        print(
+            f"Rendered {len(figures)} validated combo figure roles "
+            f"({len(artifact_rows)} files)"
+        )
+        return 0
 
     input_hash = sha256_file(input_path)
     backup_dir = audit_root / "backups"
@@ -1657,6 +2547,194 @@ def main() -> int:
     rebuild_slides_19_to_24(prs)
     update_sensitivity_terminology(prs)
     checks = validate_deck(prs, later_before)
+    reordered_titles = reorder_slide_block(prs, [9, 8, 7])
+    expected_rosmap_order = [
+        "ROSMAP KDA summary: 381 non-MT gene x category combinations represent 228 distinct genes",
+        "RPS15 recurs across 11 returned-only categories",
+        "Top five: 123 non-MT entries across 29 categories",
+    ]
+    checks.append(
+        {
+            "check_id": "rosmap_slides_reordered_summary_recurrence_top5",
+            "observed": " | ".join(reordered_titles),
+            "expected": " | ".join(expected_rosmap_order),
+            "passed": reordered_titles == expected_rosmap_order,
+        }
+    )
+    reordered_titles = reorder_slide_block(prs, [14, 13, 12])
+    expected_seaad_order = [
+        "SEA-AD KDA summary: 44 non-MT gene x category combinations represent 43 distinct genes",
+        "PJVK is the only gene recurring across 2 SEA-AD categories",
+        "Top-five display: 17 non-MT entries across 5 categories",
+    ]
+    checks.append(
+        {
+            "check_id": "seaad_slides_reordered_summary_recurrence_top5",
+            "observed": " | ".join(reordered_titles),
+            "expected": " | ".join(expected_seaad_order),
+            "passed": reordered_titles == expected_seaad_order,
+        }
+    )
+    ros_excitatory = facts["ros_categories"].loc[
+        facts["ros_categories"]["broad_network"].eq("Excitatory_neurons")
+    ]
+    insert_broad_cell_recurrence_slide(
+        prs,
+        figures["ros_excitatory_recurrence"],
+        broad_cell_adjective="excitatory-neuron",
+        unique_gene_count=int(ros_excitatory["current_symbol"].nunique()),
+        category_unit_count=len(ros_excitatory),
+        transition="Compare this pattern with inhibitory neurons.",
+    )
+    ros_inhibitory = facts["ros_categories"].loc[
+        facts["ros_categories"]["broad_network"].eq("Inhibitory_neurons")
+    ]
+    insert_broad_cell_recurrence_slide(
+        prs,
+        figures["ros_inhibitory_recurrence"],
+        broad_cell_adjective="inhibitory-neuron",
+        unique_gene_count=int(ros_inhibitory["current_symbol"].nunique()),
+        category_unit_count=len(ros_inhibitory),
+        transition="Compare this pattern with astrocytes.",
+        insert_index=11,
+    )
+    ros_astrocytes = facts["ros_categories"].loc[
+        facts["ros_categories"]["broad_network"].eq("Astrocytes")
+    ]
+    insert_broad_cell_recurrence_slide(
+        prs,
+        figures["ros_astrocyte_recurrence"],
+        broad_cell_adjective="astrocyte",
+        unique_gene_count=int(ros_astrocytes["current_symbol"].nunique()),
+        category_unit_count=len(ros_astrocytes),
+        transition="Compare this pattern with OPCs.",
+        insert_index=12,
+    )
+    ros_opcs = facts["ros_categories"].loc[
+        facts["ros_categories"]["broad_network"].eq("OPCs")
+    ]
+    insert_broad_cell_recurrence_slide(
+        prs,
+        figures["ros_opc_recurrence"],
+        broad_cell_adjective="OPC",
+        unique_gene_count=int(ros_opcs["current_symbol"].nunique()),
+        category_unit_count=len(ros_opcs),
+        transition="Move to the SEA-AD KDA analysis.",
+        insert_index=13,
+    )
+    sea_excitatory = facts["sea_categories"].loc[
+        facts["sea_categories"]["broad_network"].eq("Excitatory_neurons")
+    ]
+    insert_broad_cell_recurrence_slide(
+        prs,
+        figures["sea_excitatory_recurrence"],
+        cohort="SEA-AD",
+        broad_cell_adjective="excitatory-neuron",
+        unique_gene_count=int(sea_excitatory["current_symbol"].nunique()),
+        category_unit_count=len(sea_excitatory),
+        title="SEA-AD excitatory-neuron drivers occur in two sex/APOE groups",
+        subtitle="27 unique non-MT genes across 27 gene × category combinations; no gene recurs across sex/APOE categories.",
+        transition="Move to the sensitivity analyses.",
+        insert_index=19,
+    )
+    excitatory_slide_text = "\n".join(
+        shape.text
+        for shape in prs.slides[10].shapes
+        if getattr(shape, "has_text_frame", False)
+    )
+    inhibitory_slide_text = "\n".join(
+        shape.text
+        for shape in prs.slides[11].shapes
+        if getattr(shape, "has_text_frame", False)
+    )
+    astrocyte_slide_text = "\n".join(
+        shape.text
+        for shape in prs.slides[12].shapes
+        if getattr(shape, "has_text_frame", False)
+    )
+    opc_slide_text = "\n".join(
+        shape.text
+        for shape in prs.slides[13].shapes
+        if getattr(shape, "has_text_frame", False)
+    )
+    sea_excitatory_slide_text = "\n".join(
+        shape.text
+        for shape in prs.slides[19].shapes
+        if getattr(shape, "has_text_frame", False)
+    )
+    checks.append(
+        {
+            "check_id": "rosmap_excitatory_recurrence_inserted_after_top5",
+            "observed": "ROSMAP excitatory-neuron drivers recur"
+            in excitatory_slide_text,
+            "expected": True,
+            "passed": "ROSMAP excitatory-neuron drivers recur"
+            in excitatory_slide_text,
+        }
+    )
+    checks.append(
+        {
+            "check_id": "rosmap_inhibitory_recurrence_inserted_after_excitatory",
+            "observed": "ROSMAP inhibitory-neuron drivers recur"
+            in inhibitory_slide_text,
+            "expected": True,
+            "passed": "ROSMAP inhibitory-neuron drivers recur"
+            in inhibitory_slide_text,
+        }
+    )
+    checks.append(
+        {
+            "check_id": "rosmap_astrocyte_recurrence_inserted_after_inhibitory",
+            "observed": "ROSMAP astrocyte drivers recur"
+            in astrocyte_slide_text,
+            "expected": True,
+            "passed": "ROSMAP astrocyte drivers recur"
+            in astrocyte_slide_text,
+        }
+    )
+    checks.append(
+        {
+            "check_id": "rosmap_opc_recurrence_inserted_after_astrocyte",
+            "observed": "ROSMAP OPC drivers recur" in opc_slide_text,
+            "expected": True,
+            "passed": "ROSMAP OPC drivers recur" in opc_slide_text,
+        }
+    )
+    checks.append(
+        {
+            "check_id": "seaad_excitatory_recurrence_inserted_after_top5",
+            "observed": "SEA-AD excitatory-neuron drivers occur"
+            in sea_excitatory_slide_text,
+            "expected": True,
+            "passed": "SEA-AD excitatory-neuron drivers occur"
+            in sea_excitatory_slide_text,
+        }
+    )
+    checks.append(
+        {
+            "check_id": "slide_count_before_cross_cohort_removal",
+            "observed": len(prs.slides),
+            "expected": 35,
+            "passed": len(prs.slides) == 35,
+        }
+    )
+    removed_titles = remove_slide_range(prs, 20, 29)
+    checks.append(
+        {
+            "check_id": "cross_cohort_slides_16_to_24_removed",
+            "observed": len(removed_titles),
+            "expected": 9,
+            "passed": len(removed_titles) == 9,
+        }
+    )
+    checks.append(
+        {
+            "check_id": "output_slide_count_after_removal",
+            "observed": len(prs.slides),
+            "expected": 26,
+            "passed": len(prs.slides) == 26,
+        }
+    )
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     handle, temp_name = tempfile.mkstemp(
@@ -1667,7 +2745,7 @@ def main() -> int:
     try:
         prs.save(temp_path)
         reopened = Presentation(temp_path)
-        if len(reopened.slides) != 30:
+        if len(reopened.slides) != 26:
             raise RuntimeError("Saved deck failed reopen/slide-count validation")
         os.replace(temp_path, output_path)
     finally:

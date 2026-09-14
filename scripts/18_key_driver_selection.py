@@ -1381,7 +1381,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--output",
         default=root
-        / "results/minerva_production/18_key_driver_selection"
+        / "results/minerva_production/18_sex_apoe_bidir_kda_complex_aggr (deprecated)"
         / "call_key_driver_returns.tsv",
         type=Path,
     )

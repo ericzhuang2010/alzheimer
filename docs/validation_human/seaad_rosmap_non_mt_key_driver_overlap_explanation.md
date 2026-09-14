@@ -156,7 +156,7 @@ The Venn diagram is a descriptive gene-level view that collapses broad-network m
 
 - SEA-AD donor-group counts: [`results/validation_human/02_cohort/donor_group_counts.tsv`](../../results/validation_human/02_cohort/donor_group_counts.tsv)
 - Frozen ROSMAP selected units: [`results/validation_human/09_rosmap_kda_candidates/phase18_selected_candidate_units.tsv`](../../results/validation_human/09_rosmap_kda_candidates/phase18_selected_candidate_units.tsv)
-- ROSMAP Phase 18 aggregate evidence: [`results/minerva_production/18_key_driver_selection/call_key_driver_returns.tsv`](../../results/minerva_production/18_key_driver_selection/call_key_driver_returns.tsv)
+- ROSMAP Phase 18 aggregate evidence: [`results/minerva_production/18_sex_apoe_bidir_kda_complex_aggr (deprecated)/call_key_driver_returns.tsv`](../../results/minerva_production/18_sex_apoe_bidir_kda_complex_aggr (deprecated)/call_key_driver_returns.tsv)
 - SEA-AD KDA run manifest: [`results/validation_human/10_seaad_kda_rediscovery/10a_inputs/seaad_kda_run_manifest.tsv`](../../results/validation_human/10_seaad_kda_rediscovery/10a_inputs/seaad_kda_run_manifest.tsv)
 - SEA-AD significant KDA returns: [`results/validation_human/10_seaad_kda_rediscovery/10b_kda/seaad_kda_significant_returns.tsv`](../../results/validation_human/10_seaad_kda_rediscovery/10b_kda/seaad_kda_significant_returns.tsv)
 - SEA-AD selected top drivers: [`results/validation_human/10_seaad_kda_rediscovery/10c_seaad_selection/seaad_top5.tsv`](../../results/validation_human/10_seaad_kda_rediscovery/10c_seaad_selection/seaad_top5.tsv)

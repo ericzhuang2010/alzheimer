@@ -48,10 +48,10 @@ DATA = {
     "donor_groups": REPO / "results/validation_human/02_cohort/donor_group_counts.tsv",
     "vh04_status": REPO / "results/validation_human/04_supertype_manifest/status.tsv",
     "fine_contrasts": REPO / (
-        "results/validation_human/08_deg/fine_supertype_phase18_parity/"
+        "results/validation_human/08_deg_fine/fine_supertype_phase18_parity/"
         "fine_contrast_status.tsv"
     ),
-    "deg_summary": REPO / "results/validation_human/08_deg/deg_summary.tsv",
+    "deg_summary": REPO / "results/validation_human/08_deg_fine/deg_summary.tsv",
     "query_attrition": REPO / (
         "results/validation_human/10_seaad_kda_rediscovery/10a_inputs/"
         "query_attrition.tsv"

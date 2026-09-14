@@ -7,10 +7,18 @@ from pathlib import Path
 import subprocess
 
 import pandas as pd
+import pytest
 from PIL import Image
 
 
 ROOT = Path(__file__).resolve().parents[2]
+pytestmark = pytest.mark.skipif(
+    not (ROOT / "results/minerva_production/18_key_driver_selection").is_dir(),
+    reason=(
+        "Historical Phase 18 figure contract; current combo figures are covered "
+        "by test_sex_apoe_kda_combo_figures.py"
+    ),
+)
 SCRIPT = ROOT / "scripts/figures/validation_human/plot_seaad_rosmap_overlap_slide_figures.py"
 SPEC = importlib.util.spec_from_file_location("seaad_rosmap_overlap_slide_figures", SCRIPT)
 assert SPEC and SPEC.loader

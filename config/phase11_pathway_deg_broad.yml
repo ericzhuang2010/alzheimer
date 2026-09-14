@@ -1,0 +1,230 @@
+schema_version: phase11_pathway_deg_broad_config_v1
+
+inputs:
+  broad_deg_root: results/minerva_production/08_deg_broad
+  phase09_root: results/minerva_production/09_annotate_genes
+  phase11_similarity_root: results/minerva_production/11_pathway_similarity
+  phase11_fine_root: results/minerva_production/11_pathway_deg_fine
+  legacy_module_membership: config/phase13_respiratory_modules.tsv
+  mitocarta_source: data/reference/Human.MitoCarta3.0.xls
+
+output:
+  directory: 11_pathway_deg_broad
+
+expected:
+  broad_cell_types: 7
+  sex_apoe_strata: 6
+  planned_contrasts: 42
+  completed_contrasts: 40
+  nonestimable_contrasts: 2
+  broad_result_rows: 786242
+  primary_core_mito_rows: 41520
+  primary_core_mito_symbols: 1136
+  primary_tiny_negative_f_clamped: 1
+  strict_core_mito_degs: 43
+  relaxed_core_mito_degs: 65
+  exploratory_core_mito_degs: 141
+  ora_query_definitions: 378
+  primary_rank_definitions: 42
+  composition_rank_definitions: 42
+  composition_completed_contrasts: 28
+  composition_not_applicable_contrasts: 12
+  composition_nonestimable_contrasts: 2
+  composition_core_mito_rows: 28476
+  composition_tiny_negative_f_clamped: 0
+  legacy_modules: 4
+  broad_mitocarta_pathways: 46
+  complete_mitocarta_pathways: 149
+  program_definitions: 199
+  reference_inputs: 70
+  output_artifacts: 23
+  mitocarta_memberships: 3904
+  mitocarta_unique_symbols: 1035
+  primary_gsea_rows: 8358
+  composition_gsea_rows: 8358
+  primary_ora_rows: 75222
+  background_gene_rows: 42666
+  ora_query_gene_rows: 498
+  broad_cell_summary_rows: 15323
+  sex_apoe_summary_rows: 13134
+  redundancy_pairs: 11026
+  broad_vs_fine_rows: 25074
+  primary_background_sizes:
+    Astrocytes: 1084
+    Excitatory_neurons: 1134
+    Inhibitory_neurons: 1113
+    Microglia: 1033
+    OPCs: 1070
+    Oligodendrocytes: 1104
+    Vasculature_cells: 573
+  testable_query_slots:
+    strict:
+      AD_any_mito: 6
+      AD_up_mito: 1
+      AD_down_mito: 5
+    relaxed:
+      AD_any_mito: 7
+      AD_up_mito: 1
+      AD_down_mito: 6
+    exploratory:
+      AD_any_mito: 10
+      AD_up_mito: 5
+      AD_down_mito: 7
+
+expected_schemas:
+  broad_status: broad_deg_status_v1
+  broad_checks: broad_deg_checks_v1
+  broad_artifacts: broad_deg_artifacts_v1
+  broad_contrast_manifest: broad_deg_contrast_manifest_v1
+  broad_contrast_status: broad_deg_contrast_status_v1
+  broad_results: broad_deg_results_v1
+  broad_model_diagnostics: broad_deg_model_diagnostics_v1
+  broad_filter_funnel: broad_deg_filter_funnel_v1
+  composition_results: broad_deg_composition_sensitivity_results_v1
+  composition_status: broad_deg_sensitivity_contrast_status_v1
+  composition_summary: broad_deg_sensitivity_summary_v1
+  composition_checks: broad_deg_sensitivity_checks_v1
+  phase09_status: mitochondrial_annotation_status_v1
+  phase09_checks: mitochondrial_annotation_checks_v1
+  phase09_artifacts: mitochondrial_annotation_artifacts_v1
+  phase11_status: mitochondrial_pathway_status_v1
+  phase11_artifacts: pathway_artifacts_v1
+  phase11_reference_manifest: pathway_reference_manifest_v1
+  phase11_membership: pathway_membership_long_v1
+  fine_status: fine_deg_pathway_status_v1
+  fine_artifacts: fine_deg_pathway_artifacts_v1
+  fine_reference_manifest: fine_deg_pathway_reference_manifest_v1
+  fine_program_manifest: fine_deg_pathway_program_manifest_v1
+  fine_ora: fine_deg_pathway_ora_v1
+
+analysis:
+  primary_mito_tier: core_mito_protein
+  enrichment_identifier: symbol_hgnc_current
+  query_modes:
+    AD_any_mito:
+      order: 1
+      direction: any
+    AD_up_mito:
+      order: 2
+      direction: up
+    AD_down_mito:
+      order: 3
+      direction: down
+  deg_tiers:
+    strict:
+      order: 1
+      role: confirmatory_thresholded_companion
+      q_operator: lt
+      q_threshold: 0.05
+      absolute_fold_change_operator: gt
+      absolute_fold_change: 1.3
+    relaxed:
+      order: 2
+      role: prespecified_sensitivity
+      q_operator: le
+      q_threshold: 0.10
+      absolute_fold_change_operator: ge
+      absolute_fold_change: 1.2
+    exploratory:
+      order: 3
+      role: hypothesis_generation_only
+      q_operator: le
+      q_threshold: 0.20
+      absolute_fold_change: null
+  minimum_query_size: 3
+  negative_f_tolerance: 1.0e-8
+  minimum_background_pathway_members: 5
+  minimum_reference_coverage: 0.30
+  small_pathway_upper_bound: 9
+  significance_threshold: 0.05
+
+gsea:
+  engine: fgseaMultilevel
+  required_fgsea_version: 1.28.0
+  rank_statistic: sign_logFC_times_sqrt_F
+  exponent: 1
+  eps: 0
+  sample_size: 101
+  workers: 1
+  seed_base: 112026
+  minimum_pathway_size: 5
+  minimum_reference_coverage: 0.30
+  single_leading_edge_label: lower_confidence_single_leading_edge
+
+collections:
+  legacy_four:
+    collection_order: 1
+    collection_role: compatibility_benchmark
+    source: config/phase13_respiratory_modules.tsv
+    expected_programs: 4
+  mitocarta_broad_46:
+    collection_order: 2
+    collection_role: primary_expanded
+    source_collection: mitocarta_mitopathways_v3_0
+    hierarchy_depths: [1, 2]
+    expected_programs: 46
+  mitocarta_complete_149:
+    collection_order: 3
+    collection_role: supplemental_complete
+    source_collection: mitocarta_mitopathways_v3_0
+    hierarchy_depths: [1, 2, 3]
+    expected_programs: 149
+
+references:
+  mitocarta:
+    release: MitoCarta3.0
+    normalized_collection: mitocarta_mitopathways_v3_0
+    source_sha256: e6ada0ae8dcd5447a5efb6f77c69a1c10b1ffa66521540a1e81b92c61e5505f2
+
+fdr:
+  method: BH
+  threshold: 0.05
+  gsea_local_family: contrast_id_x_pathway_collection
+  gsea_global_family: pathway_collection
+  ora_local_family: contrast_id_x_deg_tier_x_query_mode_x_pathway_collection
+  ora_global_family: deg_tier_x_query_mode_x_pathway_collection
+  composition_local_family: contrast_id_x_pathway_collection
+  composition_global_family: pathway_collection
+
+redundancy:
+  collection: mitocarta_complete_149
+  report_all_pairs: true
+  representative_jaccard_threshold: 0.25
+
+fine_comparison:
+  shared_broad_cell_types:
+    - Astrocytes
+    - Excitatory_neurons
+    - Inhibitory_neurons
+    - Microglia
+    - OPCs
+    - Oligodendrocytes
+    - Vasculature_cells
+  broad_deg_tier: strict
+  significance_threshold: 0.05
+
+schemas:
+  status: broad_deg_pathway_status_v1
+  checks: broad_deg_pathway_checks_v1
+  artifacts: broad_deg_pathway_artifacts_v1
+  reference_manifest: broad_deg_pathway_reference_manifest_v1
+  program_manifest: broad_deg_pathway_program_manifest_v1
+  contrast_manifest: broad_deg_pathway_contrast_manifest_v1
+  rank_manifest: broad_deg_pathway_rank_manifest_v1
+  ranked_genes: broad_deg_pathway_ranked_genes_v1
+  gsea: broad_deg_pathway_gsea_v1
+  significant_gsea: broad_deg_pathway_significant_gsea_v1
+  background_manifest: broad_deg_pathway_background_manifest_v1
+  background_genes: broad_deg_pathway_background_genes_v1
+  ora_query_manifest: broad_deg_pathway_ora_query_manifest_v1
+  ora_query_genes: broad_deg_pathway_ora_query_genes_v1
+  ora: broad_deg_pathway_ora_v1
+  significant_ora: broad_deg_pathway_significant_ora_v1
+  composition_rank_manifest: broad_deg_pathway_composition_rank_manifest_v1
+  composition_ranked_genes: broad_deg_pathway_composition_ranked_genes_v1
+  composition_gsea: broad_deg_pathway_composition_gsea_v1
+  composition_concordance: broad_deg_pathway_composition_concordance_v1
+  broad_cell_summary: broad_deg_pathway_broad_cell_summary_v1
+  sex_apoe_summary: broad_deg_pathway_sex_apoe_summary_v1
+  broad_vs_fine: broad_deg_pathway_broad_vs_fine_concordance_v1
+  redundancy_map: broad_deg_pathway_redundancy_map_v1

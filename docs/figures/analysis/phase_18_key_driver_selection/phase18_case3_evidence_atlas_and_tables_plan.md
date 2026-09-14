@@ -17,7 +17,7 @@ Current implementation and outputs:
 - [gene-network detail table](../../../../results/figures/analysis/phase_18_key_driver_selection/evidence_atlas_non_mt/phase18_evidence_atlas_non_mt_gene_network_details.tsv)
 
 The source of truth is
-[`call_key_driver_returns.tsv`](../../../../results/minerva_production/18_key_driver_selection/call_key_driver_returns.tsv),
+[`call_key_driver_returns.tsv`](../../../../results/minerva_production/18_sex_apoe_bidir_kda_complex_aggr (deprecated)/call_key_driver_returns.tsv),
 schema `phase18_call_key_driver_returns_v1`. The atlas no longer depends on
 legacy Phase 18 auxiliary tables.
 

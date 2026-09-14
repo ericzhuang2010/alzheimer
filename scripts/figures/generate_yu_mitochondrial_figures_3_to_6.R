@@ -245,7 +245,7 @@ assert_check <- function(name, passed, observed, expected, details = "", blockin
 }
 
 sim_root <- file.path(input_root, "10_similarity")
-path_root <- file.path(input_root, "11_pathway")
+path_root <- file.path(input_root, "11_pathway_similarity")
 required_paths <- c(
   sim_status = file.path(sim_root, "similarity_status.tsv"),
   sim_checks = file.path(sim_root, "similarity_checks.tsv"),

@@ -6,7 +6,7 @@ This document specifies the replacement for the current eight-track circular
 figure:
 
 ```text
-results/figures/analysis/phase12_kda/circular_figure/phase12_kda_circular.png
+results/figures/analysis/phase12_kda (deprecated)/circular_figure/phase12_kda_circular.png
 ```
 
 Figure A is an overview of network-level key-driver ranking and cross-network
@@ -108,7 +108,7 @@ line in `scripts/NetWeaver/fKDA.R` that filters to `adj.P.Value <= fdr`.
 Recommended output:
 
 ```text
-results/minerva_production/12_kda/kda_candidate_tests.tsv.gz
+results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs/kda_candidate_tests.tsv.gz
 ```
 
 At minimum it should contain:
@@ -350,7 +350,7 @@ abbreviations.
 Write a plotted-data table beside the figure. Recommended filename:
 
 ```text
-results/figures/analysis/phase12_kda/reduced_circular_figure/
+results/figures/analysis/phase12_kda (deprecated)/reduced_circular_figure/
   phase12_kda_figure_a_circular_plotted_data.tsv
 ```
 
@@ -464,7 +464,7 @@ scripts/figures/analysis/phease12_kda/
 Generated Panel A files:
 
 ```text
-results/figures/analysis/phase12_kda/reduced_circular_figure/
+results/figures/analysis/phase12_kda (deprecated)/reduced_circular_figure/
   phase12_kda_reduced_circular.png
   phase12_kda_reduced_circular.pdf
   phase12_kda_reduced_circular.svg

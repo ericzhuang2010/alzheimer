@@ -34,10 +34,16 @@ from scipy.stats import cauchy, spearmanr  # noqa: E402
 
 
 SCHEMA_VERSION = "phase12_kda_network_figures_v1"
-PHASE12_DIR = PROJECT_ROOT / "results" / "minerva_production" / "12_kda"
-PHASE08_DIR = PROJECT_ROOT / "results" / "minerva_production" / "08_mast"
+PHASE12_DIR = PROJECT_ROOT / "results" / "minerva_production" / "12_rosmap_sex_apoe_mito_kda_runs"
+PHASE08_DIR = PROJECT_ROOT / "results" / "minerva_production" / "08_deg_fine"
 ANNOTATION_DIR = PROJECT_ROOT / "results" / "minerva_production" / "03_annotations"
-FIGURE_DATA_DIR = PROJECT_ROOT / "results" / "figures" / "analysis" / "phase12_kda"
+FIGURE_DATA_DIR = (
+    PROJECT_ROOT
+    / "results"
+    / "figures"
+    / "analysis"
+    / "phase12_kda (deprecated)"
+)
 DEFAULT_OUTPUT_DIR = FIGURE_DATA_DIR / "network_figures"
 
 NETWORK_ORDER = [

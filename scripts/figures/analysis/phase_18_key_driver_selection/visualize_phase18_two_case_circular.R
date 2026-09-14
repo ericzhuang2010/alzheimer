@@ -30,7 +30,7 @@ args <- parse_value_args(
   cli_args,
   defaults = list(
     input = paste0(
-      "results/minerva_production/18_key_driver_selection/",
+      "results/minerva_production/18_sex_apoe_bidir_kda_complex_aggr (deprecated)/",
       "call_key_driver_returns.tsv"
     ),
     output_dir = paste0(
@@ -815,7 +815,7 @@ methods_lines <- c(
     "Rscript --vanilla",
     "scripts/figures/analysis/phase_18_key_driver_selection/",
     "visualize_phase18_two_case_circular.R",
-    "--input results/minerva_production/18_key_driver_selection/call_key_driver_returns.tsv",
+    "--input results/minerva_production/18_sex_apoe_bidir_kda_complex_aggr (deprecated)/call_key_driver_returns.tsv",
     paste0(
       "--output-dir results/figures/analysis/phase_18_key_driver_selection/",
       "two_case_circular"

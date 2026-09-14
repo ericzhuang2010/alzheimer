@@ -1,6 +1,6 @@
 # Phase 12 connectivity-versus-KDA-evidence figure explained
 
-![Network connectivity is contextual evidence, not a substitute for KDA significance](../../../../../results/figures/analysis/phase12_kda/network_figures/phase12_kda_connectivity_evidence.png)
+![Network connectivity is contextual evidence, not a substitute for KDA significance](../../../../../results/figures/analysis/phase12_kda (deprecated)/network_figures/phase12_kda_connectivity_evidence.png)
 
 ## What question the figure addresses
 
@@ -218,9 +218,9 @@ diagnostics.
 
 ## Supporting files
 
-- [Vector figure](../../../../../results/figures/analysis/phase12_kda/network_figures/phase12_kda_connectivity_evidence.svg)
-- [Complete plotted points](../../../../../results/figures/analysis/phase12_kda/network_figures/phase12_kda_connectivity_evidence_points.tsv)
-- [Within-network correlations](../../../../../results/figures/analysis/phase12_kda/network_figures/phase12_kda_connectivity_evidence_correlations.tsv)
-- [Labeled candidate records](../../../../../results/figures/analysis/phase12_kda/network_figures/phase12_kda_connectivity_evidence_labels.tsv)
-- [Raw-degree diagnostic supplement](../../../../../results/figures/analysis/phase12_kda/network_figures/phase12_kda_connectivity_evidence_by_network.pdf)
+- [Vector figure](../../../../../results/figures/analysis/phase12_kda (deprecated)/network_figures/phase12_kda_connectivity_evidence.svg)
+- [Complete plotted points](../../../../../results/figures/analysis/phase12_kda (deprecated)/network_figures/phase12_kda_connectivity_evidence_points.tsv)
+- [Within-network correlations](../../../../../results/figures/analysis/phase12_kda (deprecated)/network_figures/phase12_kda_connectivity_evidence_correlations.tsv)
+- [Labeled candidate records](../../../../../results/figures/analysis/phase12_kda (deprecated)/network_figures/phase12_kda_connectivity_evidence_labels.tsv)
+- [Raw-degree diagnostic supplement](../../../../../results/figures/analysis/phase12_kda (deprecated)/network_figures/phase12_kda_connectivity_evidence_by_network.pdf)
 - [Figure-generation implementation](../../../../../scripts/figures/analysis/phease12_kda/phase12_kda_network_figure_common.py)

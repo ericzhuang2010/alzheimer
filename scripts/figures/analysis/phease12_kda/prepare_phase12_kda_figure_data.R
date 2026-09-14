@@ -21,8 +21,8 @@ usage <- function() {
 args <- parse_value_args(
   commandArgs(trailingOnly = TRUE),
   defaults = list(
-    input_dir = "results/minerva_production/12_kda",
-    output_dir = "results/figures/analysis/phase12_kda",
+    input_dir = "results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs",
+    output_dir = "results/figures/analysis/phase12_kda (deprecated)",
     kda_source = "scripts/NetWeaver/fKDA.R"
   ),
   allowed = c("--input-dir", "--output-dir", "--kda-source")

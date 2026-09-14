@@ -274,7 +274,7 @@ main <- function() {
       significant_key_drivers = nrow(normalized),
       elapsed_seconds = elapsed,
       terminal_status = terminal,
-      message = error_message
+      message = if (nzchar(error_message)) error_message else NA_character_
     )
     cat(sprintf(
       "VH10B call %d/%d %s status=%s significant=%d elapsed=%.2fs\n",

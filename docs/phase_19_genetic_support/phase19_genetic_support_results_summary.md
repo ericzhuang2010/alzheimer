@@ -1,8 +1,14 @@
 # Phase 19 human genetic support: consolidated results summary
 
-**Status:** four registered public-data workstreams completed; broader genetic validation remains incomplete<br>
+**Status:** historical Phase 18-based screen; four registered public-data
+workstreams completed; broader genetic validation remains incomplete<br>
 **Current through:** 2026-08-21<br>
 **Scope:** 25 unique Phase 18 genes in 47 gene-by-network candidate contexts
+
+Current candidate authority and rerun outputs are the Phase 20 combo-based
+19b bundles under `results/minerva_production/19b_genetic_support_*`; see the
+[rerun record](simple_aggr_rerun/phase19_simple_aggr_rerun_plan.md). The
+results below remain valid only for the original frozen 25-gene scope.
 
 ## Executive summary
 
@@ -57,7 +63,7 @@ could not validly evaluate.
 
 The candidate set was fixed before the Phase 19 genetic results were examined.
 The authoritative source was
-[`call_key_driver_returns.tsv`](../../results/minerva_production/18_key_driver_selection/call_key_driver_returns.tsv),
+[`call_key_driver_returns.tsv`](../../results/minerva_production/18_sex_apoe_bidir_kda_complex_aggr (deprecated)/call_key_driver_returns.tsv),
 frozen at SHA-256
 `b917f70e6edcdf030f63e88ba8fbc5b22b80714599c12c80ea449e8c38bd51d8`.
 Rows with `top5_display = TRUE` were deduplicated by

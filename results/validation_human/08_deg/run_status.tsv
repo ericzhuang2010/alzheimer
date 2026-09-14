@@ -1,2 +1,0 @@
-schema_version	task	task_status	failed_checks	started_at_utc	completed_at_utc	fine_completed	fine_no_genes_after_filter	pooled_completed	broad_stratified_completed	config_sha256
-seaad_deg_run_status_v2	VH08_edgeR_runner	worker_complete		2026-08-23 02:09:50 UTC	2026-08-23 02:50:52 UTC	381	0	7	28	1c0c895dc12b6eb2489cfa5a39d8f8d5e3d27fb912f618d27a47c5e050846418

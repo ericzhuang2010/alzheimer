@@ -1,0 +1,9 @@
+check	passed	observed	expected	details
+pooled_status_rows	True	7	7	
+broad_status_rows	True	42	42	
+broad_contrast_ids_unique	True	49	49	
+no_failed_contrasts	True	0	0	
+eligible_terminal_contract	True	True	True	not_estimable only permits no_genes_after_filterByExpr
+recognized_post_design_reason	True		no_genes_after_filterByExpr	
+broad_diagnostic_rows	True	14	14	seven pooled plus seven stratified model diagnostics
+all_result_files_validated	True	35	35	

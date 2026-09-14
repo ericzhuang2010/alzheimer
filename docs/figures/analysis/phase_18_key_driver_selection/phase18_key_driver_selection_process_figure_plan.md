@@ -164,7 +164,7 @@ are interpreted correctly.
 Read only:
 
 ```text
-results/minerva_production/18_key_driver_selection/call_key_driver_returns.tsv
+results/minerva_production/18_sex_apoe_bidir_kda_complex_aggr (deprecated)/call_key_driver_returns.tsv
 ```
 
 The renderer should:

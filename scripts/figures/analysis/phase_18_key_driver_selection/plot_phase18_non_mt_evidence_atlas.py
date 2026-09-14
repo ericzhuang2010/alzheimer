@@ -41,7 +41,7 @@ INPUT_SCHEMA = "phase18_call_key_driver_returns_v1"
 CASE_ID = "non_mt_driver"
 FIGURE_ID = "phase18_evidence_atlas_non_mt"
 DEFAULT_INPUT = (
-    "results/minerva_production/18_key_driver_selection/"
+    "results/minerva_production/18_sex_apoe_bidir_kda_complex_aggr (deprecated)/"
     "call_key_driver_returns.tsv"
 )
 DEFAULT_OUTPUT = (

@@ -1,34 +1,35 @@
 # Phase 19 rerun plan: genetic support for the simple-aggregation drivers
 
-**Status:** planned; not executed
-**Date:** 2026-08-29
-**Candidate scope:** all 433 non-MT driver genes from
-`results/minerva_production/20_sex_apoe_kda` (689 gene × category
-units; category-aggregate SHA-256
-`4e0ab4204ba837ec7ca0d5920e27f2557849f6acbc0d92189d5737193eab8ebd`)
+**Status:** WS0 and WS1 rerun complete; WS2 partially materialized from the
+validated prior full-list scans because the four raw GWAS sources are not on
+this machine; WS3–WS5 remain pending
+**Updated:** 2026-09-13
+**Candidate scope:** all 228 non-MT returned drivers from
+`results/minerva_production/20_sex_apoe_kda_combo` (381 gene × sex/APOE ×
+broad-network units; category-aggregate SHA-256
+`ba506a24d5fc925d732a7a9537b5c0201bf415b6848096068807db744e5498fd`)
 **Companion files:**
 [`missing_input_manifest.tsv`](missing_input_manifest.tsv),
 [`missing_input_paths.txt`](missing_input_paths.txt)
 
 ## 1. Purpose and relationship to the completed Phase 19
 
-The completed Phase 19 workstreams screened the 25 genes of the earlier
-Phase 18 top-five candidate freeze. That freeze has been superseded: the
-authoritative ROSMAP driver list is now the returned-only simple aggregation
-(433 non-MT genes across 32 sex/APOE × broad-cell categories). Only 15 of the
-433 current drivers have any genetic screening result, and those 15 were
-inherited from the old freeze rather than selected from the current list.
+The completed original Phase 19 workstreams screened the 25 genes of the
+earlier Phase 18 top-five candidate freeze. That freeze is historical. The
+authoritative ROSMAP driver list is now the Phase 20 direction-combined,
+returned-only aggregation: 228 non-MT genes across 381 units and 29 populated
+sex/APOE × broad-cell categories.
 
-This plan reruns the genetic-support pipeline against a new candidate freeze
-drawn from the simple aggregation. The five completed 2026-08 result bundles
-remain immutable; every rerun output goes to new `19b_*` result directories.
+The 19b pipeline reruns genetic support against the new candidate freeze. The
+original 2026-08 Phase 19 result bundles remain historical; current rerun
+outputs go to the separate `19b_*` result directories.
 
 All execution rules of the [overall plan](../overall_plan.md) apply unchanged
 (freeze before looking, separate result roots, no-signal vs not-assessable
 distinction, harmonization and LD requirements, ROSMAP-overlap audits, local
 bounded acquisitions, unique-gene counting). One rule is added:
 
-11. At 433 candidate windows (~2 Mb each), a nearby genome-wide-significant
+11. At 228 candidate windows (~2 Mb each), a nearby genome-wide-significant
     GWAS variant is expected for many genes by proximity alone. Regional
     signals are recorded as annotation and gating information only; they must
     never be reported as gene-level support without a downstream gene-level
@@ -36,14 +37,13 @@ bounded acquisitions, unique-gene counting). One rule is added:
 
 ## 2. WS0 — candidate freeze (new; run first; fully local)
 
-New script `scripts/19b_freeze_simple_aggr_candidates.py`:
+Implementation: `scripts/19b_genetic_support_simple_aggr.py`.
 
-- **Input:** `simple_category_gene_aggregates.tsv` from
-  `20_sex_apoe_kda`, filtered to `case_id = non_mt_driver`,
-  `is_core_mito = FALSE`; verify the registered SHA-256 above and the source
-  bundle's `validated`/zero-failed-check status before freezing.
-- **Units:** one candidate row per unique gene (433 expected) plus a companion
-  context table with the 689 gene × category rows (sex/APOE group, broad
+- **Input:** `combo_key_drivers_by_category.tsv` from
+  `20_sex_apoe_kda_combo`, filtered to `is_core_mito = FALSE`; verify the
+  registered SHA-256 above before freezing.
+- **Units:** one candidate row per unique gene (228) plus a companion
+  context table with the 381 gene × category rows (sex/APOE group, broad
   network, returned-call count, exploratory score, display rank).
 - **Gene mapping:** GENCODE v44 basic (GRCh38) + HGNC 2026-06-05, exactly as
   Tier 1; gene body ± 1 Mb windows. Both references are already local. Any
@@ -51,13 +51,11 @@ New script `scripts/19b_freeze_simple_aggr_candidates.py`:
   `symbol_mapping_failed` status, not silently dropped (the list includes
   non-coding symbols such as `LIFR-AS1`, so expect a small number).
 - **Priority tiers, frozen before any genetic lookup:**
-  - **P1 (deep workup):** the 35 genes that also return in the SEA-AD
-    validation aggregation (includes the four unscreened cross-cohort leads
-    WDR82, HGSNAT, TTC8, BEX3, and previously screened genes such as RPS15).
-  - **P2 (standard workup):** genes in a category top-five display or with
-    ≥ 2 categories or ≥ 3 returned calls (≈ 140 genes; exact count fixed at
-    freeze time).
-  - **P3 (batch annotation only):** the remaining one-off genes (~260).
+  - **P1 (deep workup):** the three genes also returned by the matched SEA-AD
+    combo workflow: `LAGE3`, `MIPOL1`, and `PAPOLA`.
+  - **P2 (standard workup):** 113 genes in a category top-five display or
+    with ≥ 2 categories or ≥ 3 returned calls.
+  - **P3 (batch annotation only):** the remaining 112 one-off genes.
 - **Output:** `results/minerva_production/19b_genetic_support_candidates/`
   with manifest/loci/checks/status files following the
   `genetic_support_candidate_manifest.tsv` and
@@ -68,16 +66,16 @@ New script `scripts/19b_freeze_simple_aggr_candidates.py`:
 
 | WS | Analysis | Genes | Inputs | Where it can run |
 |---|---|---|---|---|
-| WS1 | Tier-1-style public summary screen (FunGen fine-mapping, xQTL, TWAS lists) | all 433 | all present locally | this Mac, now |
-| WS2 | Regional clinical-AD GWAS screen (min P, lead variant per window) | all 433 | Bellenguez `GCST90027158` full GRCh38 sumstats (755 MB) — **missing locally** | Mac after transfer, or other machine |
-| WS3 | MAGMA gene-based tests: clinical AD + 3 CSF biomarkers | all 433 | CSF GWAS + FUMA `g1000_eur` + MAGMA v1.10 (~9 GB) — **missing locally**; the MAGMA binary is a **Linux** build | other machine (Linux) |
+| WS1 | Tier-1-style public summary screen (FunGen fine-mapping, xQTL, TWAS lists) | all 228 | complete locally | this Mac |
+| WS2 | Regional clinical-AD and CSF GWAS screen (min P, lead variant per window) | 182 cached autosomal genes complete; 30 new autosomal genes per trait pending; 14 X-chromosome genes structurally unassessable | four raw GWAS sources — **missing locally** | data host for completion |
+| WS3 | MAGMA gene-based tests: clinical AD + 3 CSF biomarkers | all 228 | CSF GWAS + FUMA `g1000_eur` + MAGMA v1.10 (~9 GB) — **missing locally**; the MAGMA binary is a **Linux** build | other machine (Linux) |
 | WS4 | QTL coverage + signal gates (NG00184 fine-mapping; eQTL Catalogue r7 panels) | P1 + P2 only | NG00184 tars + eQTL Catalogue models (~6 GB) — **missing locally** | either, after transfer |
 | WS5 | Colocalization / same-variant tests | only routes with both signals and complete models + matched LD | same as WS4 | either |
 
 Design changes relative to the 2026-08 execution:
 
 - **Thresholds are re-frozen for the new scale.** MAGMA candidate correction
-  becomes `0.05 / (433 × 4 traits)` (or per-trait `0.05 / 433`; fix one rule in
+  becomes `0.05 / (228 × 4 traits)` (or per-trait `0.05 / 228`; fix one rule in
   the WS3 config before running). QTL signal gates remain gene-specific
   regional Bonferroni as in the recovery workstream.
 - **Regional results are annotation, not grades** (rule 11). The Tier-1 grade
@@ -111,7 +109,7 @@ Verified on 2026-08-29 against the five published input inventories:
 
 | Input group | Files | Size | Local status |
 |---|---:|---:|---|
-| Tier 1 sources (FunGen snapshot, GENCODE v44, HGNC) | 9 | ~0.12 GB | **all present** — WS1 can run now |
+| Tier 1 sources (FunGen snapshot, GENCODE v44, HGNC) | 9 | ~0.12 GB | **all present; WS1 completed** |
 | Tier 2 regional (Bellenguez GWAS, NG00184 fine-mapping tars, tier2 source copies) | 41 | 2.04 GB | missing |
 | Tier 2 recovery (eQTL Catalogue r7 metadata, SuSiE credible sets/LBF, LeafCutter, NG00067 registry, extracted regions) | 33 | 2.97 GB | missing |
 | Endophenotype (3 CSF GWAS raw + harmonized + indexes, MAGMA gene locations, FUMA `g1000_eur`, MAGMA binary, NG00184 archives) | 29 | 9.13 GB | missing |
@@ -215,12 +213,12 @@ holds the QTL archives when the P1/P2 routes are fixed.
 
 ## 6. Order of operations
 
-1. **Now, this Mac:** write and run WS0 (freeze + tiers) and WS1 (Tier-1-style
-   screen for all 433) — no missing inputs.
-2. **Other machine:** run §5.1 verification and §5.2 NG00130 discovery; report
-   results.
-3. Choose Option A or B per workstream; complete WS2 (regional annotation) and
-   WS3 (MAGMA, Linux).
+1. **Completed on this Mac:** WS0 froze 228 genes/381 contexts and WS1 screened
+   all 228 genes.
+2. **Other machine:** run §5.1 verification and §5.2 NG00130 discovery.
+3. Choose Option A or B per workstream; rescan the 30 current autosomal genes
+   absent from the validated legacy cache to complete WS2, then run WS3
+   (MAGMA, Linux).
 4. Fix the P1/P2 QTL route table from WS1–WS3 outcomes; run WS4, then WS5 only
    where complete models and matched LD exist.
 5. Consolidate into a `19b` results summary mirroring
@@ -229,10 +227,10 @@ holds the QTL archives when the P1/P2 routes are fixed.
 
 ## 7. What this rerun can and cannot change
 
-Realistic expectations, given the completed screen's bottlenecks: WS1–WS3
-extend coverage from 15 to all 433 drivers cheaply and may surface new
-regional or gene-based leads (e.g., for WDR82, HGSNAT, TTC8, BEX3). WS5
-remains limited by the same public data gaps that blocked APOE and RPS15
-colocalization in August — complete fitted multi-signal QTL models and
-source-matched LD are still the rate-limiting inputs, and no amount of
-candidate-list updating changes that.
+WS1 now covers all 228 current genes and reports 2 strong, 1 moderate, 9 weak,
+and 216 `none_found` public-summary grades. WS2 currently reuses validated
+regional values for 182 autosomal genes per trait; 30 new autosomal genes per
+trait remain unscanned because the source GWAS files are absent, and 14
+X-chromosome genes are outside those autosomal sources. WS5 remains limited by
+the same public-data gaps: complete fitted multi-signal QTL models and
+source-matched LD are still the rate-limiting inputs.

@@ -45,7 +45,7 @@ from phase18_case3_common import (
 
 SCHEMA = "phase18_case3_sex_apoe_v1"
 FIGURE_ID = "phase18_case3_sex_apoe"
-DEFAULT_INPUT = "results/minerva_production/18_key_driver_selection"
+DEFAULT_INPUT = "results/minerva_production/18_sex_apoe_bidir_kda_complex_aggr (deprecated)"
 DEFAULT_OUTPUT = "results/figures/analysis/phase_18_key_driver_selection/case3_sex_apoe"
 DEFAULT_DPI = 450
 DEFAULT_WIDTH = 15.0
@@ -657,7 +657,7 @@ def methods_text(
     )
     return f"""# Methods
 
-Only the validated Phase 18 production bundle under `results/minerva_production/18_key_driver_selection` supplied scientific values. Preflight required terminal `validated_complete` status, every blocking production check to pass, recorded input byte counts and SHA-256 hashes to match, the frozen aggregate ranking rule and five-row display cap, the exact Case 3 rule `is_mitocarta3_FALSE`, and the primary group and direction order declared in the analysis manifest.
+Only the validated Phase 18 production bundle under `results/minerva_production/18_sex_apoe_bidir_kda_complex_aggr (deprecated)` supplied scientific values. Preflight required terminal `validated_complete` status, every blocking production check to pass, recorded input byte counts and SHA-256 hashes to match, the frozen aggregate ranking rule and five-row display cap, the exact Case 3 rule `is_mitocarta3_FALSE`, and the primary group and direction order declared in the analysis manifest.
 
 The official Case 3 top-five and figure-data tables reconciled to 15 unique circle genes and 21 displayed gene–network contexts. All passing Case 3 candidate contexts for those genes were then retained, yielding 22 rows. The sole below-cap context was RPS15 in the excitatory-neuron network at within-case rank 20. Genes were placed by decreasing passing-network count, decreasing number of unique conservatively supporting fine cell types, decreasing number of conservatively supporting run-specific queries, and symbol. Repeated-gene contexts followed the frozen seven-network order. This atlas order is a display order, not a statistical rank.
 

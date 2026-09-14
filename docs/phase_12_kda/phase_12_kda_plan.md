@@ -17,8 +17,8 @@ Phase 12 result will be produced until this plan is reviewed and approved.
 Local-pilot and Minerva-production outputs are separate:
 
 ```text
-results/local_pilot/12_kda/
-results/minerva_production/12_kda/
+results/local_pilot/12_rosmap_sex_apoe_mito_kda_runs/
+results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs/
 ```
 
 Pilot files must never be copied into, combined with, or promoted in place to
@@ -523,7 +523,7 @@ reviewed, implemented, and frozen.
 From:
 
 ```text
-results/minerva_production/08_mast/
+results/minerva_production/08_deg_fine/
 ```
 
 Require:
@@ -725,7 +725,7 @@ Run the eligible primary manifest rows without altering the frozen inputs or
 parameters. A `run_id` is a row identifier used in tables, not the name of a
 permanent result directory. If scheduled tasks require per-run shards, those
 shards must be written to disposable local or Minerva scratch space outside
-the final `results/<environment>/12_kda/` directory.
+the final `results/<environment>/12_rosmap_sex_apoe_mito_kda_runs/` directory.
 
 ### 9. Run eligible secondary signatures
 
@@ -754,14 +754,14 @@ run.
 The two output roots are:
 
 ```text
-results/local_pilot/12_kda/
-results/minerva_production/12_kda/
+results/local_pilot/12_rosmap_sex_apoe_mito_kda_runs/
+results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs/
 ```
 
 Each environment contains only this compact final bundle:
 
 ```text
-results/<environment>/12_kda/
+results/<environment>/12_rosmap_sex_apoe_mito_kda_runs/
 ├── kda_run_manifest.tsv
 ├── kda_signature_members.tsv.gz
 ├── kda_background_members.tsv.gz
@@ -798,7 +798,7 @@ review.
 The local pilot publishes only to:
 
 ```text
-results/local_pilot/12_kda/
+results/local_pilot/12_rosmap_sex_apoe_mito_kda_runs/
 ```
 
 It contains the five-fine-cell-type Vasculature pilot grid plus the synthetic
@@ -811,12 +811,12 @@ behavior; it is not a partial production result.
 The complete 1,782-row planned grid publishes only to:
 
 ```text
-results/minerva_production/12_kda/
+results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs/
 ```
 
 Minerva production must start from the frozen configuration and validated
 Phase 08, Phase 09, and network inputs. It must not read KDA results or
-membership tables from `results/local_pilot/12_kda/`. Temporary task shards
+membership tables from `results/local_pilot/12_rosmap_sex_apoe_mito_kda_runs/`. Temporary task shards
 belong in Minerva scratch or another explicitly disposable working location,
 not in the final production phase directory.
 
@@ -918,7 +918,7 @@ process performs the final combination and publication.
 ### Input
 
 ```text
-results/local_pilot/08_mast/
+results/local_pilot/08_deg_fine/
 results/local_pilot/09_annotate_genes/
 data/bayesian_network/Vasculature_cells/result.links3.links.txt
 config/local_pilot.yml
@@ -943,7 +943,7 @@ non-estimable. Its three primary rows and the six affected `male_pool` and
 ### Output
 
 ```text
-results/local_pilot/12_kda/
+results/local_pilot/12_rosmap_sex_apoe_mito_kda_runs/
 ```
 
 Only the flat nine-file bundle is published. No `runs/` or other subdirectory
@@ -961,8 +961,8 @@ test -r config/phase12_kda.yml
 test -r scripts/12_run_kda.R
 test -r scripts/NetWeaver/fKDA.R
 test -r data/bayesian_network/Vasculature_cells/result.links3.links.txt
-test -r results/local_pilot/08_mast/vasculature.yu_mast_de.tsv.gz
-test -r results/local_pilot/08_mast/vasculature.yu_mast_de_status.tsv
+test -r results/local_pilot/08_deg_fine/vasculature.yu_mast_de.tsv.gz
+test -r results/local_pilot/08_deg_fine/vasculature.yu_mast_de_status.tsv
 test -r results/local_pilot/09_annotate_genes/gene_annotation_master.tsv.gz
 test -r results/local_pilot/09_annotate_genes/annotation_status.tsv
 
@@ -973,7 +973,7 @@ stopifnot(
   requireNamespace("digest", quietly = TRUE)
 )
 de <- read.delim(
-  "results/local_pilot/08_mast/vasculature.yu_mast_de_status.tsv")
+  "results/local_pilot/08_deg_fine/vasculature.yu_mast_de_status.tsv")
 ann <- read.delim(
   "results/local_pilot/09_annotate_genes/annotation_status.tsv")
 stopifnot(
@@ -1012,7 +1012,7 @@ Rscript scripts/run_pipeline.R \
 ```bash
 Rscript -e '
 library(data.table)
-root <- "results/local_pilot/12_kda"
+root <- "results/local_pilot/12_rosmap_sex_apoe_mito_kda_runs"
 expected_files <- c(
   "kda_run_manifest.tsv",
   "kda_signature_members.tsv.gz",
@@ -1060,7 +1060,7 @@ Vasculature subset, not the complete 54-fine-cell-type analysis.
 ### Input
 
 ```text
-results/minerva_production/08_mast/
+results/minerva_production/08_deg_fine/
 results/minerva_production/09_annotate_genes/
 data/bayesian_network/*/result.links3.links.txt
 config/minerva_shared.yml
@@ -1072,7 +1072,7 @@ scripts/NetWeaver/fKDA.R
 ### Output
 
 ```text
-results/minerva_production/12_kda/
+results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs/
 ```
 
 Only the flat nine-file production bundle is published. The complete run
@@ -1092,7 +1092,7 @@ test -r scripts/NetWeaver/fKDA.R
 Rscript -e '
 library(data.table)
 phase08 <- list.files(
-  "results/minerva_production/08_mast",
+  "results/minerva_production/08_deg_fine",
   pattern = "[.]yu_mast_de_status[.]tsv$", full.names = TRUE)
 stopifnot(length(phase08) == 9L)
 de_status <- rbindlist(lapply(phase08, fread), fill = TRUE)
@@ -1174,7 +1174,7 @@ and scratch-shard metadata. Do not use local-pilot outputs for resume.
 ```bash
 Rscript -e '
 library(data.table)
-root <- "results/minerva_production/12_kda"
+root <- "results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs"
 expected_files <- c(
   "kda_run_manifest.tsv",
   "kda_signature_members.tsv.gz",

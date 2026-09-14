@@ -17,7 +17,7 @@ and aggregate-q gates; failing genes are not used as backfills.
 
 ## Input
 
-[`call_key_driver_returns.tsv`](../../../../results/minerva_production/18_key_driver_selection/call_key_driver_returns.tsv)
+[`call_key_driver_returns.tsv`](../../../../results/minerva_production/18_sex_apoe_bidir_kda_complex_aggr (deprecated)/call_key_driver_returns.tsv)
 
 The renderer deduplicates the run-level table to one record per:
 
@@ -70,7 +70,7 @@ circle, so repeated-gene links remain visible.
 ```bash
 Rscript --vanilla \
   scripts/figures/analysis/phase_18_key_driver_selection/visualize_phase18_two_case_circular.R \
-  --input results/minerva_production/18_key_driver_selection/call_key_driver_returns.tsv \
+  --input results/minerva_production/18_sex_apoe_bidir_kda_complex_aggr (deprecated)/call_key_driver_returns.tsv \
   --output-dir results/figures/analysis/phase_18_key_driver_selection/two_case_circular \
   --top-per-network 5 \
   --evidence-cap 15 \

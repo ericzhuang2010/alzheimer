@@ -1,7 +1,7 @@
 # ATP synthase genes in `LAMTOR5` KDA neighborhoods
 
 **Analysis date:** 2026-08-02  
-**Source:** `results/minerva_production/12_kda/kda_results.tsv`  
+**Source:** `results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs/kda_results.tsv`
 **Scope:** all 96 significant `LAMTOR5` KDA calls; fewer than 1,000 words
 
 ## Main result

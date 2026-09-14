@@ -2,6 +2,11 @@
 
 ## Status and phase boundary
 
+**Historical scope:** this plan and its immutable result bundle use the original
+Phase 18 25-gene freeze. Current work uses the Phase 20 combo-based 19b
+candidate and genetic-support bundles; see
+[`../simple_aggr_rerun/phase19_simple_aggr_rerun_plan.md`](../simple_aggr_rerun/phase19_simple_aggr_rerun_plan.md).
+
 This document is the scientific, implementation, data-acquisition, execution,
 output, and completion plan for Phase 19 Tier 1. The cross-workstream status and
 future priorities are maintained in the [Phase 19 overall roadmap](../overall_plan.md).
@@ -174,7 +179,7 @@ variation at its own locus measurably changing AD risk.
 The candidate set is derived from:
 
 ```text
-results/minerva_production/18_key_driver_selection/call_key_driver_returns.tsv
+results/minerva_production/18_sex_apoe_bidir_kda_complex_aggr (deprecated)/call_key_driver_returns.tsv
 ```
 
 The input currently has:
@@ -422,7 +427,7 @@ require new biological sample collection or participant-level sequencing.
 
 | File | Role | Bytes | SHA-256 |
 |---|---|---:|---|
-| `results/minerva_production/18_key_driver_selection/call_key_driver_returns.tsv` | Frozen candidates and contexts | 63,161,765 | `b917f70e6edcdf030f63e88ba8fbc5b22b80714599c12c80ea449e8c38bd51d8` |
+| `results/minerva_production/18_sex_apoe_bidir_kda_complex_aggr (deprecated)/call_key_driver_returns.tsv` | Frozen candidates and contexts | 63,161,765 | `b917f70e6edcdf030f63e88ba8fbc5b22b80714599c12c80ea449e8c38bd51d8` |
 | `data/reference/gencode/gencode.v44.basic.annotation.gtf.gz` | GRCh38 gene coordinates/transcripts | 29,570,410 | `3e52f82c63f8fd860bf632ccde10441c05751f4c342ad08c0a98e9e2700171a5` |
 | `data/reference/hgnc/hgnc_complete_set_2026-06-05.txt` | Approved symbols and aliases | 16,739,920 | `f3051e4aa6fac82166e1c26638d0077a95b0f66ab62a03e18bb35eb613e40a90` |
 | **Total** | Existing frozen local input | **109,472,095 bytes (about 104.4 MiB)** | — |

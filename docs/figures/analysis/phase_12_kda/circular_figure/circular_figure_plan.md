@@ -33,7 +33,7 @@ figure reads its published results.
 The default input is the validated production bundle:
 
 ```text
-results/minerva_production/12_kda/
+results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs/
 ```
 
 The figure uses:
@@ -46,7 +46,7 @@ The figure uses:
 | `kda_key_driver_summary.tsv` | Select recurrent drivers and obtain recurrence, tier, global-driver, adjusted-P, and fold-enrichment summaries |
 
 The script writes figures outside the nine-file Phase 12 output bundle, under
-`results/figures/analysis/phase12_kda/circular_figure/`.
+`results/figures/analysis/phase12_kda (deprecated)/circular_figure/`.
 
 ## Run it
 
@@ -60,9 +60,9 @@ Useful options:
 
 ```bash
 Rscript scripts/figures/analysis/phease12_kda/visualize_phase12_kda_netweaver.R \
-  --input-dir results/minerva_production/12_kda \
+  --input-dir results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs \
   --netweaver-dir untracked/NetWeaver \
-  --output-dir results/figures/analysis/phase12_kda/circular_figure \
+  --output-dir results/figures/analysis/phase12_kda (deprecated)/circular_figure \
   --basename phase12_kda_netweaver \
   --top-per-network 5
 ```
@@ -76,7 +76,7 @@ Rscript scripts/figures/analysis/phease12_kda/visualize_phase12_kda_netweaver.R 
 The default run creates:
 
 ```text
-results/figures/analysis/phase12_kda/circular_figure/
+results/figures/analysis/phase12_kda (deprecated)/circular_figure/
 ├── phase12_kda_circular.svg
 ├── phase12_kda_circular.png
 └── phase12_kda_circular_plotted_data.tsv

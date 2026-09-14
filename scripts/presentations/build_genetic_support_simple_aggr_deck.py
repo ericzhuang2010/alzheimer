@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Build the human-genetic-support deck for the current (simple) driver list.
+"""Build the historical 433-gene non-combo genetic-support deck.
+
+Deprecated for current reporting: the current candidate authority is the
+228-gene Phase 20 combo freeze in ``19b_genetic_support_candidates``. This
+builder is retained only to reproduce the earlier non-combo presentation.
 
 This standalone deck re-anchors the frozen Phase 19 public-data genetic
 evidence to the authoritative returned-only simple-aggregation key drivers.

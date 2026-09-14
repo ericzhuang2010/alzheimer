@@ -32,7 +32,7 @@ rows. Nonsignificant rows use `NA` in the `published_*` columns but have complet
 values in the reconstructed `original_*` and `final_*` columns.
 
 The significant-only provenance copy is
-[`call_key_driver_significant_returns.tsv`](../../results/minerva_production/18_key_driver_selection/call_key_driver_significant_returns.tsv).
+[`call_key_driver_significant_returns.tsv`](../../results/minerva_production/18_sex_apoe_bidir_kda_complex_aggr (deprecated)/call_key_driver_significant_returns.tsv).
 
 ## Calculation level for every column
 

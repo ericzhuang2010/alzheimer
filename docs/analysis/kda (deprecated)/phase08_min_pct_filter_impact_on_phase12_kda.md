@@ -715,7 +715,7 @@ results/minerva_production/09_annotate_genes/
 The induced edge and background-node counts were taken from:
 
 ```text
-results/minerva_production/12_kda/
+results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs/
     kda_run_manifest.tsv
 ```
 

@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""Build the dated sex/APOE KDA deck with VH12 SEA-AD-network results.
+"""Build the historical non-combo VH12 sex/APOE KDA deck.
+
+Deprecated for current reporting: this builder reads the earlier
+``20_sex_apoe_kda`` and ``11_sex_apoe_kda_rosmap_network`` bundles. Use
+``update_sex_apoe_kda_combo_slides.py`` for the current Phase 20 combo and
+matched SEA-AD combo results.
 
 Slides 1-10 are retained from the 2026-08-31 deck (with the SEA-AD summary
 on slides 1-2 updated). Part II and Part III are rebuilt from the validated

@@ -59,7 +59,7 @@ The figure workflow must **not**:
 - change a Phase 11 query, background, pathway collection, or gene mapping;
 - substitute nominal pathways when no pathway passes the required FDR;
 - write into `results/minerva_production/10_similarity/` or
-  `results/minerva_production/11_pathway/`; or
+  `results/minerva_production/11_pathway_similarity/`; or
 - modify any result from an earlier phase.
 
 The supporting design documents are:
@@ -221,7 +221,7 @@ group's bottom-200, most sex-divergent rank set, placed on categorical
 Panel A reads:
 
 ```text
-results/minerva_production/11_pathway/similarity_panel_data.tsv.gz
+results/minerva_production/11_pathway_similarity/similarity_panel_data.tsv.gz
 ```
 
 It filters to `analysis_universe == "core_mito"`, the required
@@ -306,10 +306,10 @@ The script first validates all 1,890 `core_mito` source rows, including the
 Panel B reads:
 
 ```text
-results/minerva_production/11_pathway/pathway_panel_data.tsv.gz
-results/minerva_production/11_pathway/similarity_tail_pathway_ora.tsv.gz
-results/minerva_production/11_pathway/pathway_query_manifest.tsv
-results/minerva_production/11_pathway/downstream_panel_manifest.tsv
+results/minerva_production/11_pathway_similarity/pathway_panel_data.tsv.gz
+results/minerva_production/11_pathway_similarity/similarity_tail_pathway_ora.tsv.gz
+results/minerva_production/11_pathway_similarity/pathway_query_manifest.tsv
+results/minerva_production/11_pathway_similarity/downstream_panel_manifest.tsv
 ```
 
 The query manifest contains 12 `core_mito` high/low 200-gene queries. The
@@ -478,15 +478,15 @@ schema does not distinguish blocking from informational rows.
 ### Required Phase 11 inputs
 
 ```text
-results/minerva_production/11_pathway/pathway_status.tsv
-results/minerva_production/11_pathway/pathway_checks.tsv
-results/minerva_production/11_pathway/pathway_artifacts.tsv
-results/minerva_production/11_pathway/pathway_reference_manifest.tsv
-results/minerva_production/11_pathway/pathway_query_manifest.tsv
-results/minerva_production/11_pathway/downstream_panel_manifest.tsv
-results/minerva_production/11_pathway/similarity_panel_data.tsv.gz
-results/minerva_production/11_pathway/pathway_panel_data.tsv.gz
-results/minerva_production/11_pathway/similarity_tail_pathway_ora.tsv.gz
+results/minerva_production/11_pathway_similarity/pathway_status.tsv
+results/minerva_production/11_pathway_similarity/pathway_checks.tsv
+results/minerva_production/11_pathway_similarity/pathway_artifacts.tsv
+results/minerva_production/11_pathway_similarity/pathway_reference_manifest.tsv
+results/minerva_production/11_pathway_similarity/pathway_query_manifest.tsv
+results/minerva_production/11_pathway_similarity/downstream_panel_manifest.tsv
+results/minerva_production/11_pathway_similarity/similarity_panel_data.tsv.gz
+results/minerva_production/11_pathway_similarity/pathway_panel_data.tsv.gz
+results/minerva_production/11_pathway_similarity/similarity_tail_pathway_ora.tsv.gz
 ```
 
 The required production conditions are:
@@ -753,7 +753,7 @@ No new figure or companion table may be written beneath
 
 ```text
 results/minerva_production/10_similarity/
-results/minerva_production/11_pathway/
+results/minerva_production/11_pathway_similarity/
 config/yu_mitochondrial_figures_3_to_6.yml
 ```
 
@@ -773,14 +773,14 @@ cd /home/ericzhuang2010/VscodeProjects/alzheimer
 test -r results/minerva_production/10_similarity/similarity_status.tsv
 test -r results/minerva_production/10_similarity/similarity_checks.tsv
 test -r results/minerva_production/10_similarity/similarity_artifacts.tsv
-test -r results/minerva_production/11_pathway/pathway_status.tsv
-test -r results/minerva_production/11_pathway/pathway_checks.tsv
-test -r results/minerva_production/11_pathway/pathway_artifacts.tsv
-test -r results/minerva_production/11_pathway/pathway_query_manifest.tsv
-test -r results/minerva_production/11_pathway/downstream_panel_manifest.tsv
-test -r results/minerva_production/11_pathway/similarity_panel_data.tsv.gz
-test -r results/minerva_production/11_pathway/pathway_panel_data.tsv.gz
-test -r results/minerva_production/11_pathway/similarity_tail_pathway_ora.tsv.gz
+test -r results/minerva_production/11_pathway_similarity/pathway_status.tsv
+test -r results/minerva_production/11_pathway_similarity/pathway_checks.tsv
+test -r results/minerva_production/11_pathway_similarity/pathway_artifacts.tsv
+test -r results/minerva_production/11_pathway_similarity/pathway_query_manifest.tsv
+test -r results/minerva_production/11_pathway_similarity/downstream_panel_manifest.tsv
+test -r results/minerva_production/11_pathway_similarity/similarity_panel_data.tsv.gz
+test -r results/minerva_production/11_pathway_similarity/pathway_panel_data.tsv.gz
+test -r results/minerva_production/11_pathway_similarity/similarity_tail_pathway_ora.tsv.gz
 test -r config/yu_mitochondrial_figures_3_to_6.yml
 
 Rscript -e '
@@ -797,13 +797,13 @@ sim <- fread(
   "results/minerva_production/10_similarity/similarity_status.tsv"
 )
 path <- fread(
-  "results/minerva_production/11_pathway/pathway_status.tsv"
+  "results/minerva_production/11_pathway_similarity/pathway_status.tsv"
 )
 sim_checks <- fread(
   "results/minerva_production/10_similarity/similarity_checks.tsv"
 )
 path_checks <- fread(
-  "results/minerva_production/11_pathway/pathway_checks.tsv"
+  "results/minerva_production/11_pathway_similarity/pathway_checks.tsv"
 )
 
 stopifnot(

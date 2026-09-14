@@ -862,4 +862,4 @@ cannot distinguish these explanations.
 - [Phase 09 mitochondrial DEG results](../../results/minerva_production/09_annotate_genes/deg_mito_core.tsv.gz)
 - [MitoCarta pathway definitions](../../results/minerva_production/03_annotations/mitocarta_pathways.gmt)
 - [Phase 10 paired similarity states](../../results/minerva_production/10_similarity/mitochondrial_similarity_state_pairs.tsv.gz)
-- [Phase 11 pathway results](../../results/minerva_production/11_pathway/similarity_tail_pathway_ora.tsv.gz)
+- [Phase 11 pathway results](../../results/minerva_production/11_pathway_similarity/similarity_tail_pathway_ora.tsv.gz)

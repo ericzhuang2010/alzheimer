@@ -161,7 +161,7 @@ project_root <- normalizePath(
 analysis_path <- absolute_path(config$project$analysis_config, project_root)
 analysis <- yaml::read_yaml(analysis_path)
 output_root <- absolute_path(config$outputs$root, project_root)
-phase08_dir <- file.path(output_root, "08_mast")
+phase08_dir <- file.path(output_root, "08_deg_fine")
 yu_path <- absolute_path(args$yu_supplement, project_root)
 if (!file.exists(yu_path)) stop("Yu supplement does not exist: ", yu_path, call. = FALSE)
 if (!dir.exists(phase08_dir)) stop("Phase 08 output directory is missing", call. = FALSE)

@@ -89,9 +89,9 @@ cohorts:
     reference_phenotype: No dementia
     coefficient_direction: Dementia_minus_No_dementia
     native_query_mode: Dementia_both
-    source_status: results/validation_human/08_deg/status.tsv
-    contrast_status: results/validation_human/08_deg/broad_stratified_support/contrast_status.tsv
-    result_directory: results/validation_human/08_deg/broad_stratified_support/tested
+    source_status: results/validation_human/08_deg_broad/status.tsv
+    contrast_status: results/validation_human/08_deg_broad/broad_stratified_support/contrast_status.tsv
+    result_directory: results/validation_human/08_deg_broad/broad_stratified_support/tested
     annotation: results/validation_human/03_genes/gene_annotation_master.tsv
     network_config: config/phase12_seaad_network_kda.yml
     network_release_manifest: data/bayesian_network_seaad/release_manifest.tsv

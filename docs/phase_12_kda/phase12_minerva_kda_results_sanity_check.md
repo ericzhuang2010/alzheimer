@@ -6,7 +6,7 @@ This report records the post-run audit of the Phase 12 production KDA bundle
 under:
 
 ```text
-results/minerva_production/12_kda/
+results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs/
 ```
 
 The audit was performed on 2026-07-28. It checked the complete output bundle,
@@ -34,8 +34,8 @@ implementation, and reports:
 The authoritative status and check tables are:
 
 ```text
-results/minerva_production/12_kda/kda_status.tsv
-results/minerva_production/12_kda/kda_checks.tsv
+results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs/kda_status.tsv
+results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs/kda_checks.tsv
 ```
 
 ## Full-table checks
@@ -279,11 +279,11 @@ causality.
 ## Primary files for review
 
 ```text
-results/minerva_production/12_kda/kda_status.tsv
-results/minerva_production/12_kda/kda_checks.tsv
-results/minerva_production/12_kda/kda_run_manifest.tsv
-results/minerva_production/12_kda/kda_results.tsv.gz
-results/minerva_production/12_kda/kda_key_driver_summary.tsv
-results/minerva_production/12_kda/kda_signature_members.tsv.gz
-results/minerva_production/12_kda/kda_background_members.tsv.gz
+results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs/kda_status.tsv
+results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs/kda_checks.tsv
+results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs/kda_run_manifest.tsv
+results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs/kda_results.tsv.gz
+results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs/kda_key_driver_summary.tsv
+results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs/kda_signature_members.tsv.gz
+results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs/kda_background_members.tsv.gz
 ```

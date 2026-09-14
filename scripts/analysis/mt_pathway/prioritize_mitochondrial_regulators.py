@@ -1122,7 +1122,7 @@ def main() -> None:
         / "results/minerva_production/10_similarity/"
         "mitochondrial_similarity_rank_sets.tsv",
         "ora": root
-        / "results/minerva_production/11_pathway/"
+        / "results/minerva_production/11_pathway_similarity/"
         "similarity_tail_pathway_ora.tsv.gz",
         "pathways": root
         / "results/minerva_production/03_annotations/mitocarta_pathways.tsv",

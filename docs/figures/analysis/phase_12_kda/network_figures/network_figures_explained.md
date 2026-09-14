@@ -12,7 +12,7 @@ definition.
 Authoritative vector figures, presentation PNGs, auditable plotting tables,
 and a checksum log are under:
 
-`results/figures/analysis/phase12_kda/network_figures/`
+`results/figures/analysis/phase12_kda (deprecated)/network_figures/`
 
 ## Shared visual language
 
@@ -42,7 +42,7 @@ expression, and key-driver nodes receive a distinct visual treatment.
 
 ## Figure 1 — Wang-style driver neighborhoods
 
-![Figure 1](../../../../results/figures/analysis/phase12_kda/network_figures/phase12_kda_wang_subnetworks.png)
+![Figure 1](../../../../results/figures/analysis/phase12_kda (deprecated)/network_figures/phase12_kda_wang_subnetworks.png)
 
 Files:
 
@@ -92,7 +92,7 @@ also connect them to mitochondrial translation and stress-response genes.
 
 ## Figure 2 — aligned female/male sex-reversal networks
 
-![Figure 2](../../../../results/figures/analysis/phase12_kda/network_figures/phase12_kda_sex_reversal_networks.png)
+![Figure 2](../../../../results/figures/analysis/phase12_kda (deprecated)/network_figures/phase12_kda_sex_reversal_networks.png)
 
 Files:
 
@@ -146,7 +146,7 @@ female APOE-e2 AD-up contexts and negative in male APOE-e2 AD-down contexts.
 
 ## Figure 3 — recurrent convergence on Complex V genes
 
-![Figure 3](../../../../results/figures/analysis/phase12_kda/network_figures/phase12_kda_atp_convergence.png)
+![Figure 3](../../../../results/figures/analysis/phase12_kda (deprecated)/network_figures/phase12_kda_atp_convergence.png)
 
 Files:
 
@@ -194,7 +194,7 @@ contexts, especially in excitatory and inhibitory neuronal networks.
 
 ## Figure 4 — connectivity versus aggregate KDA evidence
 
-![Figure 4](../../../../results/figures/analysis/phase12_kda/network_figures/phase12_kda_connectivity_evidence.png)
+![Figure 4](../../../../results/figures/analysis/phase12_kda (deprecated)/network_figures/phase12_kda_connectivity_evidence.png)
 
 Files:
 

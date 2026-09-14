@@ -1,0 +1,10 @@
+check	passed	observed	expected	details
+pooled_status_rows	True	7	7	
+broad_status_rows	True	42	42	
+no_failed_contrasts	True	0	0	
+eligible_pooled_terminal	True	True	True	
+eligible_broad_terminal	True	True	True	
+statistics_finite	True	True	True	inherited from byte-identical unified release
+BH_reproduced	True	True	True	inherited from byte-identical unified release
+sample_replay_reproduced	True	True	True	
+result_files_exist	True	35	35	

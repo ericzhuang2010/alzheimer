@@ -358,6 +358,11 @@ def parse_args() -> argparse.Namespace:
         "--output",
         default="results/validation_human/11_sex_apoe_kda_rosmap_network",
     )
+    parser.add_argument(
+        "--force",
+        action="store_true",
+        help="Replace existing simple-aggregation outputs",
+    )
     return parser.parse_args()
 
 
@@ -1066,10 +1071,13 @@ def run() -> int:
         if path.exists()
     ]
     if existing_outputs:
-        fail(
-            "Refusing to overwrite existing simple-aggregation outputs: "
-            + ", ".join(str(path) for path in existing_outputs)
-        )
+        if not args.force:
+            fail(
+                "Refusing to overwrite existing simple-aggregation outputs: "
+                + ", ".join(str(path) for path in existing_outputs)
+            )
+        for path in existing_outputs:
+            path.unlink()
 
     output_counts = {
         global_path.name: write_tsv(

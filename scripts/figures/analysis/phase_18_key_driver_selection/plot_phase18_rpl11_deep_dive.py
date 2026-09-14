@@ -59,22 +59,22 @@ CANONICAL = (
     ROOT
     / "results"
     / "minerva_production"
-    / "18_key_driver_selection"
+    / "18_sex_apoe_bidir_kda_complex_aggr"
     / "call_key_driver_returns.tsv"
 )
-RUN_MANIFEST = ROOT / "results" / "minerva_production" / "12_kda" / "kda_run_manifest.tsv"
+RUN_MANIFEST = ROOT / "results" / "minerva_production" / "12_rosmap_sex_apoe_mito_kda_runs" / "kda_run_manifest.tsv"
 SIGNATURE_MEMBERS = (
-    ROOT / "results" / "minerva_production" / "12_kda" / "kda_signature_members.tsv.gz"
+    ROOT / "results" / "minerva_production" / "12_rosmap_sex_apoe_mito_kda_runs" / "kda_signature_members.tsv.gz"
 )
 BACKGROUND_MEMBERS = (
-    ROOT / "results" / "minerva_production" / "12_kda" / "kda_background_members.tsv.gz"
+    ROOT / "results" / "minerva_production" / "12_rosmap_sex_apoe_mito_kda_runs" / "kda_background_members.tsv.gz"
 )
 MSIGDB_C2_CP = ROOT / "data" / "reference" / "msigdb" / "c2.cp.v2026.1.Hs.symbols.gmt"
 ANNOTATION = (
     ROOT / "results" / "minerva_production" / "09_annotate_genes" / "gene_annotation_master.tsv.gz"
 )
 NORMALIZED = ROOT / "results" / "minerva_production" / "05_normalized"
-MAST = ROOT / "results" / "minerva_production" / "08_mast"
+MAST = ROOT / "results" / "minerva_production" / "08_deg_fine"
 MAST_FILES = {
     "Astrocytes": [MAST / "astrocytes.yu_mast_de.tsv.gz"],
     "Excitatory_neurons": [

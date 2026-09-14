@@ -58,7 +58,7 @@ and `AD_down_mito`). Exclude pooled secondary runs and `AD_both_mito` because
 they reuse the primary results and would visually inflate recurrence.
 
 The exact mitochondrial signature membership is already stored in
-[`kda_signature_members.tsv`](../../results/minerva_production/12_kda/kda_signature_members.tsv).
+[`kda_signature_members.tsv`](../../results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs/kda_signature_members.tsv).
 The existing extraction logic for cumulative directed neighborhoods is in
 [`kda_core.R`](../../scripts/analysis/kda/lib/kda_core.R).
 

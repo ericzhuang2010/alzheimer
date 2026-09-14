@@ -1,19 +1,16 @@
 # VH10 SEA-AD Fine-Supertype KDA Rediscovery and ROSMAP Overlap
 
-> **PARTIALLY DEPRECATED (2026-08-29).** The gated candidate selection
-> (`10c_seaad_selection`) and its ROSMAP overlap (`10d_overlap`) described
-> here are superseded by the authoritative returned-only simple aggregation in
-> `results/validation_human/11_sex_apoe_kda_rosmap_network`
-> (`scripts/validation_human/11_seaad_sex_apoe_kda_simple_aggr.py`). The VH10
-> run universe, `10a_inputs`, and the 42 validated KDA calls in `10b_kda`
-> remain the frozen, non-deprecated inputs of that aggregation. The current
-> cross-cohort overlap analysis is in
-> `docs/validation_human/rosmap_seaad_simple_aggr_driver_analysis.md`.
+> **FULLY DEPRECATED HISTORICAL CONTRACT.** VH09 and VH10 are retained only to
+> reproduce the former directional Phase 18-parity validation. No replacement
+> VH09 or VH10 phase is defined. Current direction-combined reporting reads
+> `results/minerva_production/20_sex_apoe_kda_combo/` for ROSMAP and
+> `results/validation_human/12_sex_apoe_kda_combo/` for SEA-AD directly.
 
 **Status:** selection-only partial rerun executed; `validated_complete` on
 2026-08-23 (America/New_York)
 **Code root:** `scripts/validation_human/`
-**Result root:** `results/validation_human/10_seaad_kda_rediscovery/`
+**Result root:**
+`results/validation_human/10_seaad_kda_rediscovery (deprecated)/`
 **ROSMAP reference:** Phase 18 candidate units frozen by VH09
 **Execution:** completed locally from the checksum-frozen amended VH08 release;
 no H5AD or pseudobulk matrix was read

@@ -138,7 +138,7 @@ must not be interpreted, copied into production, or used for biological
 conclusions. The corrected pilot bundle is the nine-file output under:
 
 ```text
-results/local_pilot/12_kda/
+results/local_pilot/12_rosmap_sex_apoe_mito_kda_runs/
 ```
 
 It is still labeled `nonfinal_smoke_test`; no Minerva production KDA was run

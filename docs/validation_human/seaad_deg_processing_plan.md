@@ -1,7 +1,8 @@
-# SEA-AD Fine-Supertype Pseudobulk DEG Processing Plan
+# SEA-AD Fine-Supertype and Broad-Cell Pseudobulk DEG Processing Plan
 
 **Status:** amended VH07–VH08 rerun executed locally; downstream selection-only
-partial rerun `validated_complete` on 2026-08-23 (America/New_York)
+partial rerun `validated_complete` on 2026-08-23; fine/broad release split
+`validated_complete` on 2026-09-13 (America/New_York)
 **Workload:** Advanced
 **Original protocol date:** 2026-08-20
 **Amendment date:** 2026-08-22
@@ -9,6 +10,18 @@ partial rerun `validated_complete` on 2026-08-23 (America/New_York)
 contrasts and 1,548 structural downstream direction slots
 **Implementation root:** `scripts/validation_human/`
 **Result root:** `results/validation_human/`
+
+## 2026-09-13 storage-contract split — executed
+
+The unified VH08 release was separated without refitting any DEG model.
+Fine-supertype payloads now live in `08_deg_fine/`, while pooled and
+sex/APOE-stratified broad-cell payloads live in `08_deg_broad/`. All 416
+tested-result shards and all 136 filter shards retained their pre-split
+SHA-256 values. Each root has its own checks, summary, diagnostics, complete
+path-bound artifact manifest, and `validated_complete` status. Active VH10 and
+VH12 KDA provenance was regenerated against the fine release; KDA significant
+returns and finding-level tables were unchanged. The 552-file payload proof is
+stored in `results/validation_human/08_deg_split_payload_parity.tsv`.
 
 ## 2026-08-22 post-hoc exploratory protocol amendment — executed
 
@@ -870,11 +883,11 @@ If a task array is used, each supertype writes only to its own task directory an
 **Principal fine outputs:**
 
 ```text
-results/validation_human/08_deg/fine_supertype_phase18_parity/filters/<supertype_id>.filter.tsv.gz
-results/validation_human/08_deg/fine_supertype_phase18_parity/tested/<contrast_id>.tsv.gz
-results/validation_human/08_deg/fine_supertype_phase18_parity/diagnostics/<supertype_id>.tsv
-results/validation_human/08_deg/fine_supertype_phase18_parity/fine_contrast_status.tsv
-results/validation_human/08_deg/fine_supertype_phase18_parity/fine_result_index.tsv
+results/validation_human/08_deg_fine/fine_supertype_phase18_parity/filters/<supertype_id>.filter.tsv.gz
+results/validation_human/08_deg_fine/fine_supertype_phase18_parity/tested/<contrast_id>.tsv.gz
+results/validation_human/08_deg_fine/fine_supertype_phase18_parity/diagnostics/<supertype_id>.tsv
+results/validation_human/08_deg_fine/fine_supertype_phase18_parity/fine_contrast_status.tsv
+results/validation_human/08_deg_fine/fine_supertype_phase18_parity/fine_result_index.tsv
 ```
 
 Each tested result row contains at least:
@@ -889,15 +902,15 @@ mapping_status
 **Principal broad outputs:**
 
 ```text
-results/validation_human/08_deg/filters/broad/<broad_network>.filter.tsv.gz
-results/validation_human/08_deg/broad_pooled_anchor/tested/<contrast_id>.tsv.gz
-results/validation_human/08_deg/broad_pooled_anchor/diagnostics/<broad_network>.tsv
-results/validation_human/08_deg/broad_pooled_anchor/contrast_status.tsv
-results/validation_human/08_deg/broad_pooled_anchor/result_index.tsv
-results/validation_human/08_deg/broad_stratified_support/tested/<contrast_id>.tsv.gz
-results/validation_human/08_deg/broad_stratified_support/diagnostics/<broad_network>.tsv
-results/validation_human/08_deg/broad_stratified_support/contrast_status.tsv
-results/validation_human/08_deg/broad_stratified_support/result_index.tsv
+results/validation_human/08_deg_broad/filters/broad/<broad_network>.filter.tsv.gz
+results/validation_human/08_deg_broad/broad_pooled_anchor/tested/<contrast_id>.tsv.gz
+results/validation_human/08_deg_broad/broad_pooled_anchor/diagnostics/<broad_network>.tsv
+results/validation_human/08_deg_broad/broad_pooled_anchor/contrast_status.tsv
+results/validation_human/08_deg_broad/broad_pooled_anchor/result_index.tsv
+results/validation_human/08_deg_broad/broad_stratified_support/tested/<contrast_id>.tsv.gz
+results/validation_human/08_deg_broad/broad_stratified_support/diagnostics/<broad_network>.tsv
+results/validation_human/08_deg_broad/broad_stratified_support/contrast_status.tsv
+results/validation_human/08_deg_broad/broad_stratified_support/result_index.tsv
 ```
 
 The one broad filter table per network is shared by the pooled and stratified broad models, so its checksum must appear in both tier indexes.
@@ -905,19 +918,24 @@ The one broad filter table per network is shared by the pooled and stratified br
 **Directional handoff and release outputs:**
 
 ```text
-results/validation_human/08_deg/query_handoff/fine_direction_manifest.tsv
-results/validation_human/08_deg/query_handoff/fine_query_input_index.tsv
-results/validation_human/08_deg/query_handoff/fine_direction_deg_summary.tsv
-results/validation_human/08_deg/deg_summary.tsv
-results/validation_human/08_deg/model_diagnostics.tsv.gz
-results/validation_human/08_deg/deg_checks.tsv
-results/validation_human/08_deg/artifacts.tsv
-results/validation_human/08_deg/status.tsv
+results/validation_human/08_deg_fine/query_handoff/fine_direction_manifest.tsv
+results/validation_human/08_deg_fine/query_handoff/fine_query_input_index.tsv
+results/validation_human/08_deg_fine/query_handoff/fine_direction_deg_summary.tsv
+results/validation_human/08_deg_fine/deg_summary.tsv
+results/validation_human/08_deg_fine/model_diagnostics.tsv.gz
+results/validation_human/08_deg_fine/deg_checks.tsv
+results/validation_human/08_deg_fine/artifacts.tsv
+results/validation_human/08_deg_fine/status.tsv
+results/validation_human/08_deg_broad/deg_summary.tsv
+results/validation_human/08_deg_broad/model_diagnostics.tsv.gz
+results/validation_human/08_deg_broad/deg_checks.tsv
+results/validation_human/08_deg_broad/artifacts.tsv
+results/validation_human/08_deg_broad/status.tsv
 ```
 
 `fine_direction_deg_summary.tsv` contains one row per direction, not a duplicated structural grid. At minimum it records `fdr_significant_tested_feature_count`, `phase18_parity_tested_feature_count`, and `effect_gate_excluded_tested_feature_count`. These are pre-symbol-deduplication, pre-MitoCarta, and pre-network summaries; authoritative query sizes are added only by VH10.
 
-When fit objects are retained, their frozen path pattern is `results/validation_human/08_deg/model_objects/<deg_tier>/<context_id>.edgeR.rds`. They are ignored by Git and represented in `artifacts.tsv` by path, byte size, SHA-256, and restore/archive location. Deterministic fit inputs remain the required replay path if objects are not retained.
+When fit objects are retained, their frozen path pattern is `results/validation_human/08_deg_<resolution>/model_objects/<deg_tier>/<context_id>.edgeR.rds`. They are ignored by Git and represented in the corresponding release's `artifacts.tsv` by path, byte size, SHA-256, and restore/archive location. Deterministic fit inputs remain the required replay path if objects are not retained.
 
 The final direction manifest retains exactly 1,548 fine rows. Each row carries its source contrast status and one of:
 

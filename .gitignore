@@ -72,7 +72,7 @@ config/local_pilot_rds_manifest.tsv
 # docs/*
 # !docs/minerva
 
-# ignore everything in results directory except for results/minerva_production/08_mast
+# ignore everything in results directory except for results/minerva_production/08_deg_fine
 results/*
 !results/figures
 !results/minerva_production
@@ -85,17 +85,19 @@ results/minerva_production/*
 !results/minerva_production/05_normalized
 results/minerva_production/05_normalized/**/*.rds
 !results/minerva_production/06_descriptive
-!results/minerva_production/08_mast
+!results/minerva_production/08_deg_fine
 !results/minerva_production/08_deg_broad
 !results/minerva_production/09_annotate_genes
 results/minerva_production/09_annotate_genes/deg_all_annotated.tsv.gz
 !results/minerva_production/10_similarity
-!results/minerva_production/11_pathway
-!results/minerva_production/12_kda
+!results/minerva_production/11_pathway_similarity
+!results/minerva_production/11_pathway_deg_fine
+!results/minerva_production/11_pathway_deg_broad
+!results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs
 !results/minerva_production/13_respiratory_modifier
 results/minerva_production/13_respiratory_modifier/respiratory_pseudobulk_counts.rds
 !results/minerva_production/15_mitonuclear_coupling
-!results/minerva_production/18_key_driver_selection
+!results/minerva_production/18_sex_apoe_bidir_kda_complex_aggr (deprecated)
 # Validated Phase 19 result bundles.
 !results/minerva_production/19_genetic_support_tier1
 !results/minerva_production/19_genetic_support_tier2_regional
@@ -122,6 +124,10 @@ results/validation_human/**
 !results/validation_human/**/*.yaml
 !results/validation_human/**/*.patch
 !results/validation_human/**/*.txt
+!results/validation_human/08_deg_fine/**/*.tsv.gz
+!results/validation_human/08_deg_broad/**/*.tsv.gz
+!results/validation_human/15_pathway_deg_fine/**/*.tsv.gz
+!results/validation_human/15_pathway_deg_broad/**/*.tsv.gz
 
 # Keep fine-resolution pseudobulk matrices and QC outputs local. The validated
 # seven-network direct-broad transfer bundle is intentionally visible to Git.

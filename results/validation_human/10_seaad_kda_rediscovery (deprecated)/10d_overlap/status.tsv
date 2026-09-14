@@ -1,0 +1,2 @@
+schema_version	phase	validation_status	failed_checks	started_at_utc	completed_at_utc	git_revision	config_sha256	host	rosmap_selected_units	seaad_selected_units	rosmap_testable_selected_units	strict_shared_top5_units	common_assessable_units	shared_unique_genes	artifact_count
+seaad_fine_phase_status_v2	VH10D	validated_complete		2026-09-14T02:12:05.044415+00:00	2026-09-14T02:12:25.029186+00:00	7c8d0c623f507bdb111624846b00a26f2738b68d	8245ef9ffec567a4a6f142d57d2e7136f28e0602b1921be26272b6b27f593c7f	D200XMRQ5R	47	11	36	6	28725	6	6

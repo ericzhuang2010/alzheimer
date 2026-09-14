@@ -197,7 +197,7 @@ contain enough independent SEA-AD donors for disease inference in `F_e2` or
 | ROSMAP frozen broad pseudobulk counts | `results/minerva_production/08_deg_broad/02_broad_pseudobulk/` | Present for all seven broad classes; this is the count authority for the new minimum-3 Phase 21 DEG subrelease |
 | ROSMAP Phase 08 broad edgeR reference | `results/minerva_production/08_deg_broad/broad_deg_results.tsv.gz`, `05_by_contrast/`, and `broad_deg_contrast_status.tsv` | Present and validated with 40/42 completed contrasts; read-only regression reference, not the scientific source for the new ROSMAP KDA |
 | SEA-AD direct broad raw-count pseudobulks | `results/validation_human/05_pseudobulk/direct_broad_counts/` | Present for all seven broad classes; direct and fine-rollup counts previously reconciled exactly |
-| SEA-AD broad donor-level edgeR results | `results/validation_human/08_deg/broad_stratified_support/` | Present; all 28 eligible contrasts completed and compressed result files pass gzip checks |
+| SEA-AD broad donor-level edgeR results | `results/validation_human/08_deg_broad/broad_stratified_support/` | Present; all 28 eligible contrasts completed and compressed result files pass gzip checks |
 | ROSMAP gene/mitochondrial annotations | `results/minerva_production/09_annotate_genes/gene_annotation_master.tsv.gz` plus annotations embedded in the broad result | Present and gzip-valid |
 | SEA-AD gene/mitochondrial annotations | `results/validation_human/03_genes/gene_annotation_master.tsv` | Present |
 | ROSMAP broad Bayesian networks | `data/bayesian_network/<broad>/result.links3.links.txt` | Present for all seven required broad classes |

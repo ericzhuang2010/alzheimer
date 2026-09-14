@@ -1,0 +1,20 @@
+schema_version	check_order	check	blocking	passed	observed	expected	detail
+seaad_fine_deg_pathway_checks_v1	1	fine_release_validated	TRUE	TRUE	validated_complete	validated_complete	All declared VH08F artifacts were hash-checked
+seaad_fine_deg_pathway_checks_v1	2	structural_contrast_count	TRUE	TRUE	774	774	
+seaad_fine_deg_pathway_checks_v1	3	completed_contrast_count	TRUE	TRUE	381	381	
+seaad_fine_deg_pathway_checks_v1	4	nonestimable_contrast_count	TRUE	TRUE	393	393	
+seaad_fine_deg_pathway_checks_v1	5	completed_result_index_count	TRUE	TRUE	381	381	
+seaad_fine_deg_pathway_checks_v1	6	background_gene_rows	TRUE	TRUE	604758	604758	
+seaad_fine_deg_pathway_checks_v1	7	query_definition_count	TRUE	TRUE	2322	2322	
+seaad_fine_deg_pathway_checks_v1	8	query_genes_within_background	TRUE	TRUE	0	0	
+seaad_fine_deg_pathway_checks_v1	9	collapsed_direction_conflicts	TRUE	TRUE	0	0	A mapped symbol must not enter both directional queries
+seaad_fine_deg_pathway_checks_v1	10	program_definition_count	TRUE	TRUE	199	199	
+seaad_fine_deg_pathway_checks_v1	11	primary_ora_rows	TRUE	TRUE	462078	462078	
+seaad_fine_deg_pathway_checks_v1	12	primary_ora_keys_unique	TRUE	TRUE	0	0	
+seaad_fine_deg_pathway_checks_v1	13	primary_ora_pvalues_reproduce	TRUE	TRUE	TRUE	TRUE	
+seaad_fine_deg_pathway_checks_v1	14	primary_ora_fdr_flags_match	TRUE	TRUE	TRUE	TRUE	
+seaad_fine_deg_pathway_checks_v1	15	kda_effective_query_count	TRUE	TRUE	22	22	
+seaad_fine_deg_pathway_checks_v1	16	kda_ora_rows	TRUE	TRUE	4378	4378	
+seaad_fine_deg_pathway_checks_v1	17	kda_ora_pvalues_reproduce	TRUE	TRUE	TRUE	TRUE	
+seaad_fine_deg_pathway_checks_v1	18	kda_ora_fdr_flags_match	TRUE	TRUE	TRUE	TRUE	
+seaad_fine_deg_pathway_checks_v1	19	upstream_references_hash_bound	TRUE	TRUE	TRUE	TRUE	

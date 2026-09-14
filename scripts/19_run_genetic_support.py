@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
-"""Run the Phase 19 Tier 1 human-genetic-support screen.
+"""Reproduce the historical Phase 18-based Phase 19 Tier 1 screen.
 
 This entry point deliberately uses only summary-level, public data.  It does
 not turn a filtered public table into a negative claim, and it never labels
 FunGen-xQTL inclusion scores as classical coloc PP.H4 values.
+
+Current genetic-support screening starts from the Phase 20 combo authority and
+uses ``scripts/19b_genetic_support_simple_aggr.py``.
 """
 
 from __future__ import annotations

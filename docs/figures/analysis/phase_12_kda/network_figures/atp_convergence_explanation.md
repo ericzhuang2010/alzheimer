@@ -1,6 +1,6 @@
 # Phase 12 ATP-synthase convergence figure explained
 
-![Recurrent KDA convergence on ATP synthase / Complex V genes](../../../../../results/figures/analysis/phase12_kda/network_figures/phase12_kda_atp_convergence.svg)
+![Recurrent KDA convergence on ATP synthase / Complex V genes](../../../../../results/figures/analysis/phase12_kda (deprecated)/network_figures/phase12_kda_atp_convergence.svg)
 
 This figure is a focused summary of how repeatedly selected Phase 12 key
 drivers connect to ATP synthase/Complex V genes across many KDA runs. Unlike
@@ -132,10 +132,10 @@ underlying analysis resource and are not necessarily independent biological
 replications.
 
 The displayed figure contains 27 focused driver–target relationships. The
-[complete supplement](../../../../../results/figures/analysis/phase12_kda/network_figures/phase12_kda_atp_convergence_complete.pdf)
+[complete supplement](../../../../../results/figures/analysis/phase12_kda (deprecated)/network_figures/phase12_kda_atp_convergence_complete.pdf)
 contains all 93 qualifying combinations. Exact counts, directions, paths,
 fine-cell-type coverage, and run IDs are available in
-[`phase12_kda_atp_convergence_pairs.tsv`](../../../../../results/figures/analysis/phase12_kda/network_figures/phase12_kda_atp_convergence_pairs.tsv).
+[`phase12_kda_atp_convergence_pairs.tsv`](../../../../../results/figures/analysis/phase12_kda (deprecated)/network_figures/phase12_kda_atp_convergence_pairs.tsv).
 
 The filtering and plotting implementation is in
 [`phase12_kda_network_figure_common.py`](../../../../../scripts/figures/analysis/phease12_kda/phase12_kda_network_figure_common.py).

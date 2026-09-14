@@ -39,7 +39,7 @@ The new scientific output will be stored only under:
 results/minerva_production/08_deg_broad/
 ```
 
-It will not overwrite or modify `08_mast/`, Phase 12, Phase 18, or Phase 20.
+It will not overwrite or modify `08_deg_fine/`, Phase 12, Phase 18, or Phase 20.
 Phase 12 is not a runtime dependency of this branch.
 
 ## 1. Scientific question and estimand

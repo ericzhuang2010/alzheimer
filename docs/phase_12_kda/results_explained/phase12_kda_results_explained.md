@@ -15,7 +15,7 @@ This document explains, from beginning to end:
 The validated Phase 12 production bundle is:
 
 ```text
-results/minerva_production/12_kda/
+results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs/
 ```
 
 The figure-generation code is:
@@ -27,7 +27,7 @@ scripts/figures/analysis/phease12_kda/visualize_phase12_kda_netweaver.R
 The generated files are:
 
 ```text
-results/figures/analysis/phase12_kda/circular_figure/
+results/figures/analysis/phase12_kda (deprecated)/circular_figure/
 ├── phase12_kda_circular.svg
 ├── phase12_kda_circular.png
 └── phase12_kda_circular_plotted_data.tsv
@@ -257,7 +257,7 @@ Every Phase 12 output is a tab-separated text table.
 Small tables can be read in base R:
 
 ```r
-phase12_dir <- "results/minerva_production/12_kda"
+phase12_dir <- "results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs"
 
 manifest <- read.delim(
   file.path(phase12_dir, "kda_run_manifest.tsv"),

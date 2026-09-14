@@ -14,7 +14,7 @@ membership does not create another case.
 ## Starting table
 
 Start with
-[`call_key_driver_returns.tsv`](../../results/minerva_production/18_key_driver_selection/call_key_driver_returns.tsv).
+[`call_key_driver_returns.tsv`](../../results/minerva_production/18_sex_apoe_bidir_kda_complex_aggr (deprecated)/call_key_driver_returns.tsv).
 
 The table contains 95,557 rows from 161 included `call_key_drivers()` calls.
 One row is one explicitly tested gene in one run:

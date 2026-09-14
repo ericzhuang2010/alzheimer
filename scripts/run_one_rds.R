@@ -136,7 +136,7 @@ validate_mast_resume <- function() {
   require_check(field_matches(controller, "validation_status", "validated_complete"), "controller validation status")
   require_check(field_matches(controller, "exit_code", 0L), "controller exit code")
 
-  output_dir <- file.path(output_root, "08_mast")
+  output_dir <- file.path(output_root, "08_deg_fine")
   scientific_path <- file.path(output_dir, paste0(prefix, ".yu_mast_de_status.tsv"))
   artifact_manifest_path <- file.path(
     output_dir, paste0(prefix, ".yu_mast_de_artifacts.tsv")

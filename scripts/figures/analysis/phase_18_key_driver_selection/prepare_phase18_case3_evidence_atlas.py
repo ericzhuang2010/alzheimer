@@ -43,7 +43,7 @@ from phase18_case3_common import (
 
 SCHEMA = "phase18_case3_evidence_atlas_v1"
 FIGURE_ID = "phase18_case3_evidence_atlas"
-DEFAULT_INPUT = "results/minerva_production/18_key_driver_selection"
+DEFAULT_INPUT = "results/minerva_production/18_sex_apoe_bidir_kda_complex_aggr (deprecated)"
 DEFAULT_OUTPUT = "results/figures/analysis/phase_18_key_driver_selection/case3_evidence_atlas"
 DEFAULT_DPI = 450
 DEFAULT_WIDTH = 12.0
@@ -476,7 +476,7 @@ def methods_text(evidence_cap: float, width: float, height: float, dpi: int, vis
     )
     return f"""# Methods
 
-The atlas was derived only from the validated Phase 18 production bundle under `results/minerva_production/18_key_driver_selection`. Before preparation, the script required terminal `validated_complete` status, all production checks to pass, the frozen ranking rule and five-row display cap, and matching recorded SHA-256 hashes and byte counts for every declared scientific input.
+The atlas was derived only from the validated Phase 18 production bundle under `results/minerva_production/18_sex_apoe_bidir_kda_complex_aggr (deprecated)`. Before preparation, the script required terminal `validated_complete` status, all production checks to pass, the frozen ranking rule and five-row display cap, and matching recorded SHA-256 hashes and byte counts for every declared scientific input.
 
 The provenance universe was the union of symbols in the official Case 3 top-five figure data: 15 unique genes and 21 displayed gene-network contexts. For those genes, the detail universe was expanded to every Case 3 row with `terminal_candidate_status = driver_candidate`, yielding 22 contexts. The sole additional context was RPS15 in the excitatory-neuron network at within-case rank 20. Case membership remained based on absence from the 1,136-gene core MitoCarta inventory; the broader extended-reference annotation was retained separately.
 

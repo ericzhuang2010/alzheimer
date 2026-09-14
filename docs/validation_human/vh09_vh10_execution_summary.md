@@ -1,9 +1,19 @@
 # VH09 and amended VH10 execution summary
 
+> **Historical record: VH09 and VH10 are fully deprecated.** Their preserved
+> bundles use the `(deprecated)` directory suffix. No replacement VH09/VH10
+> phases are defined; current reporting reads the Phase 20 ROSMAP combo and
+> VH12 SEA-AD combo bundles directly.
+
 The latest selection-only SEA-AD partial rerun completed locally on 2026-08-23
 (America/New_York). VH07, VH08, and every VH10 subphase report
 `validated_complete`. The canonical SEA-AD results were
 overwritten; the frozen ROSMAP VH09 reference was not changed.
+
+On 2026-09-13, VH08 was split into independent fine and broad release roots.
+VH10 was rerun against the new fine-release authority to refresh paths and
+hashes. The 42-call significant-return table and all finding-level results
+remained scientifically unchanged.
 
 ## Executed threshold tier
 
@@ -75,7 +85,7 @@ frozen ROSMAP non-MT top-five gene in the same broad network.
 ## Key outputs
 
 - VH08 status:
-  `results/validation_human/08_deg/status.tsv`
+  `results/validation_human/08_deg_fine/status.tsv`
 - VH10 status:
   `results/validation_human/10_seaad_kda_rediscovery/status.tsv`
 - SEA-AD selected lists:

@@ -1,3 +1,6 @@
+# HISTORICAL CONTRACT: this configuration reproduces the original Phase 18
+# screen. Current work uses scripts/19b_genetic_support_simple_aggr.py with
+# results/minerva_production/20_sex_apoe_kda_combo.
 schema_version: phase19_genetic_support_config_v1
 
 analysis:
@@ -12,10 +15,10 @@ analysis:
   frozen_before_effect_review: true
 
 inputs:
-  phase18_returns: results/minerva_production/18_key_driver_selection/call_key_driver_returns.tsv
+  phase18_returns: results/minerva_production/18_sex_apoe_bidir_kda_complex_aggr (deprecated)/call_key_driver_returns.tsv
   phase18_returns_sha256: b917f70e6edcdf030f63e88ba8fbc5b22b80714599c12c80ea449e8c38bd51d8
   phase18_config: config/phase18_key_driver_selection.yml
-  phase18_config_sha256: d1979ef4b66d1e841633a2f235419147fa130da140d20b40c2d84b99cd90ae4f
+  phase18_config_sha256: d57405f29c9c2f925802f2177f55b3fac0c6c7c120c46889992b81f015334da7
   gencode_gtf: data/reference/gencode/gencode.v44.basic.annotation.gtf.gz
   gencode_gtf_sha256: 3e52f82c63f8fd860bf632ccde10441c05751f4c342ad08c0a98e9e2700171a5
   hgnc_complete_set: data/reference/hgnc/hgnc_complete_set_2026-06-05.txt

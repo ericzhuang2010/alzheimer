@@ -263,7 +263,7 @@ than 129 completed supertype contrasts.
 ### Sources
 
 - [`donor_group_counts.tsv`](../../../results/validation_human/02_cohort/donor_group_counts.tsv)
-- [`fine_contrast_status.tsv`](../../../results/validation_human/08_deg/fine_supertype_phase18_parity/fine_contrast_status.tsv)
+- [`fine_contrast_status.tsv`](../../../results/validation_human/08_deg_fine/fine_supertype_phase18_parity/fine_contrast_status.tsv)
 - [`07_contrasts/status.tsv`](../../../results/validation_human/07_contrasts/status.tsv)
 
 ## 5. Figure 3 — fine-supertype DEG landscape
@@ -318,9 +318,9 @@ stratified DEG tiers did not enter the fine-run KDA denominator.
 
 ### Sources
 
-- [`deg_summary.tsv`](../../../results/validation_human/08_deg/deg_summary.tsv)
-- [`fine_direction_deg_summary.tsv`](../../../results/validation_human/08_deg/query_handoff/fine_direction_deg_summary.tsv)
-- [`fine_contrast_status.tsv`](../../../results/validation_human/08_deg/fine_supertype_phase18_parity/fine_contrast_status.tsv)
+- [`deg_summary.tsv`](../../../results/validation_human/08_deg_fine/deg_summary.tsv)
+- [`fine_direction_deg_summary.tsv`](../../../results/validation_human/08_deg_fine/query_handoff/fine_direction_deg_summary.tsv)
+- [`fine_contrast_status.tsv`](../../../results/validation_human/08_deg_fine/fine_supertype_phase18_parity/fine_contrast_status.tsv)
 
 ## 6. Figure 4 — query attrition and network availability
 
@@ -754,7 +754,7 @@ untestable or that missing strata are the sole explanation.
 
 - [`rosmap_seaad_candidate_overlap.tsv`](../../../results/validation_human/10_seaad_kda_rediscovery/10d_overlap/rosmap_seaad_candidate_overlap.tsv)
 - [`seaad_kda_significant_returns.tsv`](../../../results/validation_human/10_seaad_kda_rediscovery/10b_kda/seaad_kda_significant_returns.tsv)
-- [`call_key_driver_returns.tsv`](../../../results/minerva_production/18_key_driver_selection/call_key_driver_returns.tsv)
+- [`call_key_driver_returns.tsv`](../../../results/minerva_production/18_sex_apoe_bidir_kda_complex_aggr (deprecated)/call_key_driver_returns.tsv)
 - [`seaad_rosmap_non_mt_key_driver_overlap_explanation.md`](../../validation_human/seaad_rosmap_non_mt_key_driver_overlap_explanation.md)
 
 ## 14. Slide-native visuals that do not need figure packages

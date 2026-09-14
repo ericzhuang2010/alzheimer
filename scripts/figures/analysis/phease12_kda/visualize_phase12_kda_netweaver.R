@@ -4,9 +4,9 @@ options(stringsAsFactors = FALSE, warn = 1)
 
 parse_args <- function(args) {
   out <- list(
-    input_dir = "results/minerva_production/12_kda",
+    input_dir = "results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs",
     netweaver_dir = "untracked/NetWeaver",
-    output_dir = "results/figures/analysis/phase12_kda/circular_figure",
+    output_dir = "results/figures/analysis/phase12_kda (deprecated)/circular_figure",
     basename = "phase12_kda_circular",
     top_per_network = 5L
   )

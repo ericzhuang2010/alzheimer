@@ -322,7 +322,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--stock-results",
-        default="results/minerva_production/12_kda/kda_results.tsv.gz",
+        default="results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs/kda_results.tsv.gz",
     )
     parser.add_argument(
         "--annotation",

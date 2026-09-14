@@ -1,0 +1,26 @@
+schema_version	check_order	check	blocking	passed	observed	expected	detail
+seaad_broad_deg_pathway_checks_v1	1	broad_release_validated	TRUE	TRUE	validated_complete	validated_complete	All declared VH08B artifacts were hash-checked
+seaad_broad_deg_pathway_checks_v1	2	fine_pathway_release_validated	TRUE	TRUE	validated_complete	validated_complete	VH15F is the fine-resolution authority
+seaad_broad_deg_pathway_checks_v1	3	structural_contrast_count	TRUE	TRUE	42	42	
+seaad_broad_deg_pathway_checks_v1	4	completed_contrast_count	TRUE	TRUE	28	28	
+seaad_broad_deg_pathway_checks_v1	5	nonestimable_contrast_count	TRUE	TRUE	14	14	
+seaad_broad_deg_pathway_checks_v1	6	completed_result_index_count	TRUE	TRUE	28	28	
+seaad_broad_deg_pathway_checks_v1	7	broad_filter_universes_match_results	TRUE	TRUE	7	7	
+seaad_broad_deg_pathway_checks_v1	8	primary_rank_rows	TRUE	TRUE	29180	29180	
+seaad_broad_deg_pathway_checks_v1	9	rank_statistic_exact	TRUE	TRUE	TRUE	TRUE	
+seaad_broad_deg_pathway_checks_v1	10	background_gene_rows	TRUE	TRUE	43770	43770	
+seaad_broad_deg_pathway_checks_v1	11	query_definition_count	TRUE	TRUE	378	378	
+seaad_broad_deg_pathway_checks_v1	12	query_genes_within_background	TRUE	TRUE	0	0	
+seaad_broad_deg_pathway_checks_v1	13	program_catalogs_match_fine	TRUE	TRUE	TRUE	TRUE	
+seaad_broad_deg_pathway_checks_v1	14	primary_gsea_rows	TRUE	TRUE	8358	8358	
+seaad_broad_deg_pathway_checks_v1	15	primary_gsea_keys_unique	TRUE	TRUE	0	0	
+seaad_broad_deg_pathway_checks_v1	16	primary_gsea_fdr_reproduces	TRUE	TRUE	TRUE	TRUE	
+seaad_broad_deg_pathway_checks_v1	17	primary_gsea_fdr_flags_match	TRUE	TRUE	TRUE	TRUE	
+seaad_broad_deg_pathway_checks_v1	18	primary_ora_rows	TRUE	TRUE	75222	75222	
+seaad_broad_deg_pathway_checks_v1	19	primary_ora_keys_unique	TRUE	TRUE	0	0	
+seaad_broad_deg_pathway_checks_v1	20	primary_ora_pvalues_reproduce	TRUE	TRUE	TRUE	TRUE	
+seaad_broad_deg_pathway_checks_v1	21	primary_ora_fdr_flags_match	TRUE	TRUE	TRUE	TRUE	
+seaad_broad_deg_pathway_checks_v1	22	broad_vs_fine_rows	TRUE	TRUE	25074	25074	
+seaad_broad_deg_pathway_checks_v1	23	broad_vs_fine_categories_valid	TRUE	TRUE	TRUE	TRUE	
+seaad_broad_deg_pathway_checks_v1	24	upstream_references_hash_bound	TRUE	TRUE	TRUE	TRUE	
+seaad_broad_deg_pathway_checks_v1	25	pooled_anchor_excluded	TRUE	TRUE	TRUE	TRUE	Primary broad analysis mirrors ROSMAP's 42 sex/APOE contrasts

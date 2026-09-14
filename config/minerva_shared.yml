@@ -4,6 +4,8 @@ project:
   phase09_annotation_config: config/phase09_annotation.yml
   phase10_similarity_config: config/phase10_similarity.yml
   phase11_pathway_config: config/phase11_pathway.yml
+  phase11_pathway_deg_fine_config: config/phase11_pathway_deg_fine.yml
+  phase11_pathway_deg_broad_config: config/phase11_pathway_deg_broad.yml
   phase12_kda_config: config/phase12_kda.yml
   phase13_respiratory_modifier_config: config/phase13_respiratory_modifier.yml
   phase14_modifier_heterogeneity_config: config/phase14_modifier_heterogeneity.yml
@@ -53,6 +55,8 @@ scope:
     - annotate_genes
     - similarity
     - pathway
+    - pathway_deg_fine
+    - pathway_deg_broad
     - kda
     - respiratory_modifier
     - modifier_heterogeneity

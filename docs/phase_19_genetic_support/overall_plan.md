@@ -118,19 +118,20 @@ that computation must run on Minerva.
 
 ## Remaining roadmap
 
-### Priority 0 (added 2026-08-29): rerun against the simple-aggregation driver list
+### Priority 0: current Phase 20 combo driver list
 
-The authoritative ROSMAP driver list is now the returned-only simple
-aggregation (`results/minerva_production/20_sex_apoe_kda`; 433
-non-MT genes), which supersedes the Phase 18 top-five freeze this phase
-originally screened. A dedicated rerun plan — new candidate freeze, staged
-workstreams, recalibrated thresholds, missing-input manifest, and transfer
-commands for the machine that holds the raw sources — is at
+The authoritative ROSMAP list is the direction-combined returned-only
+aggregation
+(`results/minerva_production/20_sex_apoe_kda_combo`; 228 non-MT genes in
+381 sex/APOE × broad-network units). It supersedes both the Phase 18 top-five
+freeze and the earlier non-combo Phase 20 list. WS0 and WS1 have been rerun;
+WS2 is partial because four raw GWAS sources are absent locally. The execution
+record, missing-input manifest, and data-host commands are at
 [simple_aggr_rerun/phase19_simple_aggr_rerun_plan.md](simple_aggr_rerun/phase19_simple_aggr_rerun_plan.md).
 
 ### Priority 1: public pQTL, PWAS, and TWAS support
 
-Run a candidate-frozen coverage inventory for the 19 nuclear genes using
+Run candidate-frozen coverage first for the Phase 20 combo P1/P2 genes using
 public brain or CSF protein resources and independent brain-expression models.
 Primary biological interpretation should require a cis-pQTL or a reproducible
 prediction model. TWAS/PWAS associations remain suggestive unless supported by
@@ -142,8 +143,8 @@ screen genes that lack a single genome-wide-significant regional GWAS variant.
 ### Priority 2: newer exact-cell-type QTL releases
 
 Audit larger public single-nucleus eQTL and sQTL resources for the exact Phase
-18 contexts, especially OPC RPS15 and ANKRD11, inhibitory-neuron RPS15 and
-COX7C, and astrocyte APOE and COX7C. Proceed only when complete regional
+20 sex/APOE × broad-network contexts, prioritizing `LAGE3`, `MIPOL1`,
+`PAPOLA`, and recurrent current drivers. Proceed only when complete regional
 statistics or fitted models and compatible LD are publicly obtainable. Donor
 overlap with ROSMAP must be recorded.
 

@@ -45,12 +45,12 @@ These terminal statuses were retained explicitly rather than silently omitted.
 
 ### Full-production outputs
 
-- [Overall summary](../../../results/minerva_production/08_mast/yu_table_s1_validation/yu_table_s1_comparison_summary.tsv)
-- [Validation status](../../../results/minerva_production/08_mast/yu_table_s1_validation/yu_table_s1_comparison_status.tsv)
-- [Per-contrast comparison](../../../results/minerva_production/08_mast/yu_table_s1_validation/yu_table_s1_comparison_by_contrast.tsv)
-- [Per-cell-type comparison](../../../results/minerva_production/08_mast/yu_table_s1_validation/yu_table_s1_comparison_by_cell_type.tsv)
-- [Row-level mismatches](../../../results/minerva_production/08_mast/yu_table_s1_validation/yu_table_s1_mismatches.tsv.gz)
-- [Validation checks](../../../results/minerva_production/08_mast/yu_table_s1_validation/yu_table_s1_comparison_checks.tsv)
+- [Overall summary](../../../results/minerva_production/08_deg_fine/yu_table_s1_validation/yu_table_s1_comparison_summary.tsv)
+- [Validation status](../../../results/minerva_production/08_deg_fine/yu_table_s1_validation/yu_table_s1_comparison_status.tsv)
+- [Per-contrast comparison](../../../results/minerva_production/08_deg_fine/yu_table_s1_validation/yu_table_s1_comparison_by_contrast.tsv)
+- [Per-cell-type comparison](../../../results/minerva_production/08_deg_fine/yu_table_s1_validation/yu_table_s1_comparison_by_cell_type.tsv)
+- [Row-level mismatches](../../../results/minerva_production/08_deg_fine/yu_table_s1_validation/yu_table_s1_mismatches.tsv.gz)
+- [Validation checks](../../../results/minerva_production/08_deg_fine/yu_table_s1_validation/yu_table_s1_comparison_checks.tsv)
 
 The remaining sections examine the local five-cell-type Vasculature result in detail to identify why otherwise matching effects cross the FDR boundary differently.
 
@@ -206,8 +206,8 @@ The best next step is to obtain Yu's analysis script and `sessionInfo()`. If tho
 
 ## Supporting artifacts
 
-- [Overall comparison summary](../../../results/local_pilot/08_mast/yu_table_s1_validation/yu_table_s1_comparison_summary.tsv)
-- [Comparison by Yu contrast](../../../results/local_pilot/08_mast/yu_table_s1_validation/yu_table_s1_comparison_by_contrast.tsv)
-- [Comparison by cell type](../../../results/local_pilot/08_mast/yu_table_s1_validation/yu_table_s1_comparison_by_cell_type.tsv)
-- [Row-level mismatch report](../../../results/local_pilot/08_mast/yu_table_s1_validation/yu_table_s1_mismatches.tsv.gz)
-- [Phase 08 scientific status](../../../results/local_pilot/08_mast/vasculature.yu_mast_de_status.tsv)
+- [Overall comparison summary](../../../results/local_pilot/08_deg_fine/yu_table_s1_validation/yu_table_s1_comparison_summary.tsv)
+- [Comparison by Yu contrast](../../../results/local_pilot/08_deg_fine/yu_table_s1_validation/yu_table_s1_comparison_by_contrast.tsv)
+- [Comparison by cell type](../../../results/local_pilot/08_deg_fine/yu_table_s1_validation/yu_table_s1_comparison_by_cell_type.tsv)
+- [Row-level mismatch report](../../../results/local_pilot/08_deg_fine/yu_table_s1_validation/yu_table_s1_mismatches.tsv.gz)
+- [Phase 08 scientific status](../../../results/local_pilot/08_deg_fine/vasculature.yu_mast_de_status.tsv)

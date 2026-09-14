@@ -58,7 +58,7 @@ Within an eligible run, a gene can have one of three states:
 | Absent from the effective background | The gene is missing for that run |
 
 Every row of
-[`call_key_driver_returns.tsv`](../../results/minerva_production/18_key_driver_selection/call_key_driver_returns.tsv)
+[`call_key_driver_returns.tsv`](../../results/minerva_production/18_sex_apoe_bidir_kda_complex_aggr (deprecated)/call_key_driver_returns.tsv)
 is one explicitly tested gene-by-run combination. Therefore, the presence of a
 `kda_run_id + key_driver` row means the gene was tested in that run. Absence of
 a row does not mean the run was ineligible; the gene may instead have been

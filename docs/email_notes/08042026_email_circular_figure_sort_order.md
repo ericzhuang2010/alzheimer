@@ -3,7 +3,7 @@
 ## Bottom line
 
 For the key-driver genes in
-`results/figures/analysis/phase12_kda/circular_figure/phase12_kda_circular.png`, the most
+`results/figures/analysis/phase12_kda (deprecated)/circular_figure/phase12_kda_circular.png`, the most
 paper-faithful interpretation of the professor's comment is:
 
 > Rank key drivers in descending order of the standardized **MeanOfLog** score
@@ -86,7 +86,7 @@ Suggested output fields are:
 ## Important implementation caveat
 
 Do **not** calculate this score directly from
-`results/minerva_production/12_kda/kda_results.tsv`. That table contains only
+`results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs/kda_results.tsv`. That table contains only
 significant KDA calls, so aggregating it would omit nonsignificant tests and
 systematically favor genes based on which results survived filtering.
 

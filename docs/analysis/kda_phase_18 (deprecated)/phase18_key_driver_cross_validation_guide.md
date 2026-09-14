@@ -42,7 +42,7 @@ scope.
 
 ### How the seven were chosen
 
-Every gene in the pilot first passed the formal Phase 18 selection gates in at least one broad network: usable-run coverage >= 0.80, at least one conservatively supporting run, aggregate ACAT q <= 0.05, and rank <= 5 within its broad-network × driver-class list. Conservative support means that the driver's neighborhood contained at least two other mitochondrial-query genes, had fold enrichment > 1, and had within-run q <= 0.05. The exact run- and aggregate-level evidence is stored in [`call_key_driver_returns.tsv`](../../../results/minerva_production/18_key_driver_selection/call_key_driver_returns.tsv).
+Every gene in the pilot first passed the formal Phase 18 selection gates in at least one broad network: usable-run coverage >= 0.80, at least one conservatively supporting run, aggregate ACAT q <= 0.05, and rank <= 5 within its broad-network × driver-class list. Conservative support means that the driver's neighborhood contained at least two other mitochondrial-query genes, had fold enrichment > 1, and had within-run q <= 0.05. The exact run- and aggregate-level evidence is stored in [`call_key_driver_returns.tsv`](../../../results/minerva_production/18_sex_apoe_bidir_kda_complex_aggr (deprecated)/call_key_driver_returns.tsv).
 
 The original six-gene subset was chosen to maximize information from the first validation round across five dimensions:
 
@@ -119,7 +119,7 @@ predicted mitochondrial targets
 
 The primary source is:
 
-- [`call_key_driver_returns.tsv`](../../../results/minerva_production/18_key_driver_selection/call_key_driver_returns.tsv)
+- [`call_key_driver_returns.tsv`](../../../results/minerva_production/18_sex_apoe_bidir_kda_complex_aggr (deprecated)/call_key_driver_returns.tsv)
 
 Before using any external resource, create:
 

@@ -27,20 +27,20 @@ OUT_DIR = REPO / "docs" / "presentations"
 OUT_PATH = OUT_DIR / "phase12_kda_phase13_modifier_figures.pptx"
 
 FIG = {
-    "circular": REPO / "results/figures/analysis/phase12_kda/reduced_circular_figure/phase12_kda_reduced_circular.png",
-    "sex_apoe": REPO / "results/figures/analysis/phase12_kda/sex_apoe_figure/phase12_kda_sex_apoe.png",
-    "wang": REPO / "results/figures/analysis/phase12_kda/network_figures/phase12_kda_wang_subnetworks.png",
-    "sex_reversal": REPO / "results/figures/analysis/phase12_kda/network_figures/phase12_kda_sex_reversal_networks.png",
-    "atp": REPO / "results/figures/analysis/phase12_kda/network_figures/phase12_kda_atp_convergence.png",
-    "connectivity": REPO / "results/figures/analysis/phase12_kda/network_figures/phase12_kda_connectivity_evidence.png",
+    "circular": REPO / "results/figures/analysis/phase12_kda (deprecated)/reduced_circular_figure/phase12_kda_reduced_circular.png",
+    "sex_apoe": REPO / "results/figures/analysis/phase12_kda (deprecated)/sex_apoe_figure/phase12_kda_sex_apoe.png",
+    "wang": REPO / "results/figures/analysis/phase12_kda (deprecated)/network_figures/phase12_kda_wang_subnetworks.png",
+    "sex_reversal": REPO / "results/figures/analysis/phase12_kda (deprecated)/network_figures/phase12_kda_sex_reversal_networks.png",
+    "atp": REPO / "results/figures/analysis/phase12_kda (deprecated)/network_figures/phase12_kda_atp_convergence.png",
+    "connectivity": REPO / "results/figures/analysis/phase12_kda (deprecated)/network_figures/phase12_kda_connectivity_evidence.png",
     "modifier": REPO / "results/figures/analysis/phase13_respiratory_modifier/modifier_landscape/phase13_modifier_landscape.png",
 }
 
 TABLE = {
-    "circular": REPO / "results/figures/analysis/phase12_kda/reduced_circular_figure/phase12_kda_reduced_circular_plotted_data.tsv",
-    "sex_apoe": REPO / "results/figures/analysis/phase12_kda/sex_apoe_figure/phase12_kda_sex_apoe_plotted_data.tsv",
-    "atp": REPO / "results/figures/analysis/phase12_kda/network_figures/phase12_kda_atp_convergence_pairs.tsv",
-    "corr": REPO / "results/figures/analysis/phase12_kda/network_figures/phase12_kda_connectivity_evidence_correlations.tsv",
+    "circular": REPO / "results/figures/analysis/phase12_kda (deprecated)/reduced_circular_figure/phase12_kda_reduced_circular_plotted_data.tsv",
+    "sex_apoe": REPO / "results/figures/analysis/phase12_kda (deprecated)/sex_apoe_figure/phase12_kda_sex_apoe_plotted_data.tsv",
+    "atp": REPO / "results/figures/analysis/phase12_kda (deprecated)/network_figures/phase12_kda_atp_convergence_pairs.tsv",
+    "corr": REPO / "results/figures/analysis/phase12_kda (deprecated)/network_figures/phase12_kda_connectivity_evidence_correlations.tsv",
     "modifier": REPO / "results/figures/analysis/phase13_respiratory_modifier/modifier_landscape/phase13_modifier_landscape_plotted_data.tsv",
 }
 

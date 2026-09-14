@@ -215,7 +215,7 @@ def load_facts() -> dict[str, dict[int, dict[str, int]]]:
 def append_divider(prs: Presentation) -> None:
     slide = ui.new_slide(prs, bg=ui.NAVY)
     ui.add_text(
-        slide, "PART 4", 0.78, 0.67, 2.4, 0.28,
+        slide, "PART 3", 0.78, 0.67, 2.4, 0.2372944007,
         size=10.5, color=ui.GOLD, bold=True,
     )
     ui.add_rect(

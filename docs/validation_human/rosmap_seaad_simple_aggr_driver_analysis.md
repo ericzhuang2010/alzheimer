@@ -3,7 +3,12 @@
 **Date:** 2026-08-29
 **Scope:** Fine-cell sex/APOE groups only, after the returned-only non-MT simple aggregation — the results presented in `docs/presentations/phase20_sex_apoe_kda_fine_broad.pptx`.
 
-**Sources:**
+**Status:** historical non-combo comparison. Current cross-cohort analysis uses
+`results/minerva_production/20_sex_apoe_kda_combo/` and
+`results/validation_human/12_sex_apoe_kda_combo/`; see
+`docs/analysis/kda_w_human_validation/rosmap_sex_apoe_broad_kda_analysis.md`.
+
+**Historical sources:**
 
 - ROSMAP: `results/minerva_production/20_sex_apoe_kda/simple_category_gene_aggregates.tsv` (689 non-MT gene × category units, 433 genes)
 - SEA-AD: `results/validation_human/11_sex_apoe_kda_rosmap_network/simple_category_gene_aggregates.tsv` (96 units, 91 genes)

@@ -114,7 +114,7 @@ eligible analyses, to occupy nearly the entire figure.
 The complete list and its exact ordering are written to:
 
 ```text
-results/figures/analysis/phase12_kda/circular_figure/phase12_kda_circular_plotted_data.tsv
+results/figures/analysis/phase12_kda (deprecated)/circular_figure/phase12_kda_circular_plotted_data.tsv
 ```
 
 ## 6. How the eligible denominators are calculated
@@ -662,7 +662,7 @@ driver biology.
 For example, to inspect every Astrocyte `MT-CO2` call:
 
 ```r
-phase12_dir <- "results/minerva_production/12_kda"
+phase12_dir <- "results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs"
 
 results <- read.delim(
   gzfile(file.path(phase12_dir, "kda_results.tsv.gz")),
@@ -730,9 +730,9 @@ The explicit equivalent is:
 
 ```bash
 Rscript scripts/figures/analysis/phease12_kda/visualize_phase12_kda_netweaver.R \
-  --input-dir results/minerva_production/12_kda \
+  --input-dir results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs \
   --netweaver-dir untracked/NetWeaver \
-  --output-dir results/figures/analysis/phase12_kda/circular_figure \
+  --output-dir results/figures/analysis/phase12_kda (deprecated)/circular_figure \
   --basename phase12_kda_netweaver \
   --top-per-network 5
 ```

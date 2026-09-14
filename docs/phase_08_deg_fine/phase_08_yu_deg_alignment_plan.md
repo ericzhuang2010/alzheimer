@@ -2,7 +2,7 @@
 
 ## Status and replacement decision
 
-This document defines the new Phase 08. It replaces the donor-screened Phase 08 v1 implementation that inherited model eligibility from Phase 07 while retaining the established `08_mast/` directory name.
+This document defines the new Phase 08. It replaces the donor-screened Phase 08 v1 implementation that inherited model eligibility from Phase 07 while retaining the established `08_deg_fine/` directory name.
 
 The replacement is a standalone Yu-replication branch:
 
@@ -10,9 +10,9 @@ The replacement is a standalone Yu-replication branch:
 - Construct the six Yu AD-versus-NCI strata for every fine cell type.
 - Do not read Phase 07 contrast eligibility, pseudobulk samples, or pseudobulk DEG results.
 - Keep Phase 07 unchanged as the donor-aware primary analysis.
-- Continue writing Phase 08 under `results/<environment>/08_mast/`.
-- Treat legacy `08_mast/*.mast_*` v1 artifacts as deprecated historical output.
-- Distinguish the replacement with `08_mast/*.yu_mast_*` filenames and v2 schemas.
+- Continue writing Phase 08 under `results/<environment>/08_deg_fine/`.
+- Treat legacy `08_deg_fine/*.mast_*` v1 artifacts as deprecated historical output.
+- Distinguish the replacement with `08_deg_fine/*.yu_mast_*` filenames and v2 schemas.
 
 The v1 comparison with Yu is retained in `docs/DEG_mismatch/phase08_vs_yu_degs.md`. Historical v1 artifacts may be retained in the same directory for audit, but the new Phase 08 and its downstream consumers must select only `*.yu_mast_*` v2 artifacts and must never read legacy `*.mast_*` v1 artifacts.
 
@@ -153,7 +153,7 @@ MAST-versus-pseudobulk comparison belongs in Phase 12, after the two independent
 
 ### Per-RDS Phase 08 bundle
 
-For every RDS ID, create the following under `results/<environment>/08_mast/`:
+For every RDS ID, create the following under `results/<environment>/08_deg_fine/`:
 
 | File pattern | Contents |
 |---|---|
@@ -177,7 +177,7 @@ The controller also creates:
 
 ### Yu Table S1 validation bundle
 
-Create the following under `results/<environment>/08_mast/yu_table_s1_validation/`:
+Create the following under `results/<environment>/08_deg_fine/yu_table_s1_validation/`:
 
 | File | Contents |
 |---|---|
@@ -196,7 +196,7 @@ The local comparison covers only Vasculature. Only the complete Minerva comparis
 
 | File | Required change |
 |---|---|
-| `scripts/08_run_mast.R` | Replace v1 selection and Phase 07 gating with the all-cohort implementation; write `08_mast/*.yu_mast_*` v2 artifacts. |
+| `scripts/08_run_mast.R` | Replace v1 selection and Phase 07 gating with the all-cohort implementation; write `08_deg_fine/*.yu_mast_*` v2 artifacts. |
 | `scripts/08_compare_yu_table_s1.R` | Add a read-only Table S1 comparator and mismatch-report generator. |
 | `scripts/run_one_rds.R` | Validate v2 resume from Phase 05, code, config, manifest, and artifact hashes; remove Phase 07 hash requirements. |
 | `scripts/run_pipeline.R` | Register output schema `yu_mast_de_v2`. |
@@ -204,7 +204,7 @@ The local comparison covers only Vasculature. Only the complete Minerva comparis
 
 ### Update downstream consumers
 
-The following must consume `08_mast/*.yu_mast_*` v2 artifacts instead of legacy `08_mast/*.mast_*` v1 artifacts. The directory does not change; the file patterns, schemas, status semantics, and scientific coverage do:
+The following must consume `08_deg_fine/*.yu_mast_*` v2 artifacts instead of legacy `08_deg_fine/*.mast_*` v1 artifacts. The directory does not change; the file patterns, schemas, status semantics, and scientific coverage do:
 
 - `scripts/09_run_mito_pathways.R`;
 - `scripts/10_similarity_analysis.R`;
@@ -229,7 +229,7 @@ No Phase 07 file is required.
 
 ### Output
 
-One Vasculature v2 bundle under `results/local_pilot/08_mast/`, one controller status, one log, one task graph, and the Vasculature-only Table S1 validation bundle.
+One Vasculature v2 bundle under `results/local_pilot/08_deg_fine/`, one controller status, one log, one task graph, and the Vasculature-only Table S1 validation bundle.
 
 ### What changes
 
@@ -288,7 +288,7 @@ Expected dry-run result: exactly one `mast:vasculature` task, `script_exists = T
 
 ```bash
 Rscript -e '
-root <- "results/local_pilot/08_mast"
+root <- "results/local_pilot/08_deg_fine"
 scientific <- read.delim(file.path(root, "vasculature.yu_mast_de_status.tsv"))
 manifest <- read.delim(file.path(root, "vasculature.yu_mast_contrast_manifest.tsv"))
 contrasts <- read.delim(file.path(root, "vasculature.yu_mast_contrast_status.tsv"))
@@ -346,7 +346,7 @@ No Phase 07 output is required. Phase 08 may run independently of Phase 07 after
 
 ### Output
 
-Nine per-RDS v2 bundles under `results/minerva_production/08_mast/`, nine controller statuses, nine logs, task graphs, and one complete Table S1 validation bundle. Combined scope is 54 fine cell types and 324 status rows.
+Nine per-RDS v2 bundles under `results/minerva_production/08_deg_fine/`, nine controller statuses, nine logs, task graphs, and one complete Table S1 validation bundle. Combined scope is 54 fine cell types and 324 status rows.
 
 ### Phase 05 availability preflight
 
@@ -496,7 +496,7 @@ Rscript scripts/08_compare_yu_table_s1.R \
 
 ```bash
 LD_PRELOAD="$MKL_PRELOAD" Rscript -e '
-root <- "results/minerva_production/08_mast"
+root <- "results/minerva_production/08_deg_fine"
 scientific_files <- list.files(
   root, pattern = "[.]yu_mast_de_status[.]tsv$", full.names = TRUE)
 manifest_files <- list.files(
@@ -611,7 +611,7 @@ Classify mismatches as: comparison not estimable, gene not returned, FDR failure
 
 After the structural and method-equivalent gates pass:
 
-1. keep `08_mast/` as the active Phase 08 path and allow consumers to select only `*.yu_mast_*` v2 artifacts;
+1. keep `08_deg_fine/` as the active Phase 08 path and allow consumers to select only `*.yu_mast_*` v2 artifacts;
 2. rerun Phase 09 pathway analysis;
 3. rerun Phase 10 Yu-style similarity analysis;
 4. rerun Phase 11 multiple-testing summaries;
@@ -631,4 +631,4 @@ The new Phase 08 is complete when:
 - all numerical, provenance, task, and artifact checks pass;
 - Table S1 comparison is reproducible;
 - alignment is at least `method_equivalent` and residual differences are attributed;
-- downstream phases consume only `08_mast/*.yu_mast_*` v2 artifacts.
+- downstream phases consume only `08_deg_fine/*.yu_mast_*` v2 artifacts.

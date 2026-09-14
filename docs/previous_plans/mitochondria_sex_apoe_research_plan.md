@@ -2110,7 +2110,7 @@ This branch supports paper comparability but remains secondary because ordinary 
 ### Local pilot: run Vasculature MAST
 
 - **Input:** normalized Vasculature RDS (~145 MB), frozen Phase 07 contrast manifest/sample eligibility, Phase 07 pseudobulk results, and shared MAST parameters.
-- **Output:** result table, model diagnostics, per-contrast statuses, checks, artifact manifest, and scientific status under `results/local_pilot/08_mast/` (~660 KB total in the completed pilot).
+- **Output:** result table, model diagnostics, per-contrast statuses, checks, artifact manifest, and scientific status under `results/local_pilot/08_deg_fine/` (~660 KB total in the completed pilot).
 - **What changes:** subsets cells in memory and fits MAST; it does not modify the normalized object. The paper-style branch fits only paper-matched AD-versus-NCI rows. Interaction/omnibus rows remain primary pseudobulk tests and receive explicit `not_applicable` MAST statuses.
 - **Create:** shared `scripts/08_run_mast.R` (~30 KB).
 - **Execute:**
@@ -2128,13 +2128,13 @@ Rscript scripts/run_pipeline.R \
 
 Rscript -e '
 status <- read.delim(
-  "results/local_pilot/08_mast/vasculature.mast_de_status.tsv"
+  "results/local_pilot/08_deg_fine/vasculature.mast_de_status.tsv"
 )
 checks <- read.delim(
-  "results/local_pilot/08_mast/vasculature.mast_de_checks.tsv"
+  "results/local_pilot/08_deg_fine/vasculature.mast_de_checks.tsv"
 )
 contrasts <- read.delim(
-  "results/local_pilot/08_mast/vasculature.mast_contrast_status.tsv"
+  "results/local_pilot/08_deg_fine/vasculature.mast_contrast_status.tsv"
 )
 stopifnot(
   identical(status$validation_status, "validated_complete"),
@@ -2168,7 +2168,7 @@ The 73 MAST calls are secondary, nonfinal local-pilot results. MAST treats nucle
 ### Minerva production: run all eligible MAST work
 
 - **Input:** completed normalized RDS files (~35-70 GB if all available), contrast manifest (~0.1-5 MB), and MAST parameters.
-- **Output:** MAST bundles under `results/minerva_production/08_mast/` (~0.1-5 GB if complete).
+- **Output:** MAST bundles under `results/minerva_production/08_deg_fine/` (~0.1-5 GB if complete).
 - **What changes:** runs at most one MAST task per source RDS at a time; large source objects run without another large RDS process.
 - **Create:** the `mast` mode in `scripts/run_pipeline.R` (~20-40 KB), calling `scripts/08_run_mast.R` (~15-30 KB).
 - **Prerequisite:** Phase 07.3 must finish and pass its complete Minerva validation before Phase 08 starts. Do not run the two phases concurrently.
@@ -2208,17 +2208,17 @@ Rscript scripts/run_pipeline.R \
 
 LD_PRELOAD="$MKL_PRELOAD" Rscript -e '
 scientific_files <- list.files(
-  "results/minerva_production/08_mast",
+  "results/minerva_production/08_deg_fine",
   pattern = "[.]mast_de_status[.]tsv$",
   full.names = TRUE
 )
 check_files <- list.files(
-  "results/minerva_production/08_mast",
+  "results/minerva_production/08_deg_fine",
   pattern = "[.]mast_de_checks[.]tsv$",
   full.names = TRUE
 )
 contrast_files <- list.files(
-  "results/minerva_production/08_mast",
+  "results/minerva_production/08_deg_fine",
   pattern = "[.]mast_contrast_status[.]tsv$",
   full.names = TRUE
 )
@@ -2329,9 +2329,9 @@ After all nine node commands finish, run the combined Phase 08 validation block 
 ### LSF fallback: run unresolved MAST rows
 
 - **Input:** nine normalized RDS files (~35-70 GB total), full contrast manifest (~0.1-5 MB), tested-gene definitions (~1-10 MB), and MAST parameters (~5-10 KB).
-- **Output:** one result/status bundle per eligible row under `results/minerva_production/08_mast/` (~0.1-5 GB total).
+- **Output:** one result/status bundle per eligible row under `results/minerva_production/08_deg_fine/` (~0.1-5 GB total).
 - **What changes:** each array task loads the required object, subsets one comparison in memory, and fits MAST. Normalized RDS files remain unchanged.
-- **Create:** `jobs/08_mast_array.lsf` (~3-8 KB), called through `jobs/submit_phase3_lsf.sh` (~5-15 KB) and using `scripts/08_run_mast.R` (~15-30 KB).
+- **Create:** `jobs/08_deg_fine_array.lsf` (~3-8 KB), called through `jobs/submit_phase3_lsf.sh` (~5-15 KB) and using `scripts/08_run_mast.R` (~15-30 KB).
 - **Execute:**
 
 ```bash
@@ -2964,7 +2964,7 @@ The phase sections reference the following planned implementation files. Create 
 | `jobs/05_pseudobulk_rds_array.lsf` | ~2-5 KB | Phase 07, Optional LSF fallback only |
 | `jobs/06_build_contrast_manifest.lsf` | ~2-5 KB | Phase 07, Optional LSF fallback only |
 | `jobs/07_pseudobulk_de_array.lsf` | ~3-8 KB | Phase 07, Optional LSF fallback only |
-| `jobs/08_mast_array.lsf` | ~3-8 KB | Phase 08, Optional LSF fallback only |
+| `jobs/08_deg_fine_array.lsf` | ~3-8 KB | Phase 08, Optional LSF fallback only |
 | `jobs/09_downstream.lsf` | ~3-8 KB | Phases 09-13, Optional LSF fallback only |
 | `jobs/10_finalize.lsf` | ~3-8 KB | Phases 14-15, Optional LSF fallback only |
 | `jobs/submit_phase3_lsf.sh` | ~5-15 KB | Phases 07-08, Optional LSF fallback only |

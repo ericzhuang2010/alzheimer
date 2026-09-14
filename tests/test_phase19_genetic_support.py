@@ -26,7 +26,7 @@ def digest(path: Path) -> str:
 
 def test_phase18_scope_is_frozen_to_all_25_genes_and_47_contexts() -> None:
     candidates = PHASE19.build_candidates(
-        ROOT / "results/minerva_production/18_key_driver_selection/call_key_driver_returns.tsv"
+        ROOT / "results/minerva_production/18_sex_apoe_bidir_kda_complex_aggr (deprecated)/call_key_driver_returns.tsv"
     )
     assert len(candidates) == 47
     assert candidates["gene"].nunique() == 25

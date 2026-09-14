@@ -159,17 +159,18 @@ require_phase(output_root, "05_pseudobulk", project_root)
 require_phase(output_root, "06_pseudobulk_qc", project_root)
 require_phase(output_root, "07_contrasts", project_root)
 
-output_dir <- file.path(output_root, "08_deg")
-fine_root <- file.path(output_dir, "fine_supertype_phase18_parity")
+fine_output_dir <- file.path(output_root, "08_deg_fine")
+broad_output_dir <- file.path(output_root, "08_deg_broad")
+fine_root <- file.path(fine_output_dir, "fine_supertype_phase18_parity")
 fine_filter_dir <- file.path(fine_root, "filters")
 fine_tested_dir <- file.path(fine_root, "tested")
 fine_diagnostic_dir <- file.path(fine_root, "diagnostics")
 fine_task_dir <- file.path(fine_root, "task_status")
-broad_filter_dir <- file.path(output_dir, "filters", "broad")
-pooled_root <- file.path(output_dir, "broad_pooled_anchor")
+broad_filter_dir <- file.path(broad_output_dir, "filters", "broad")
+pooled_root <- file.path(broad_output_dir, "broad_pooled_anchor")
 pooled_tested_dir <- file.path(pooled_root, "tested")
 pooled_diagnostic_dir <- file.path(pooled_root, "diagnostics")
-broad_root <- file.path(output_dir, "broad_stratified_support")
+broad_root <- file.path(broad_output_dir, "broad_stratified_support")
 broad_tested_dir <- file.path(broad_root, "tested")
 broad_diagnostic_dir <- file.path(broad_root, "diagnostics")
 for (directory in c(fine_filter_dir, fine_tested_dir, fine_diagnostic_dir, fine_task_dir,
@@ -193,9 +194,11 @@ expected_features <- as.integer(config$expected_identity$features)
 fine_status_rows <- list()
 fine_index_rows <- list()
 diagnostic_rows <- list()
-all_statistics_finite <- TRUE
-all_bh_reproduced <- TRUE
-all_replay_reproduced <- TRUE
+fine_statistics_finite <- TRUE
+fine_bh_reproduced <- TRUE
+fine_replay_reproduced <- TRUE
+broad_statistics_finite <- TRUE
+broad_bh_reproduced <- TRUE
 
 for (map_index in seq_len(nrow(mapping))) {
   map <- mapping[map_index, , drop = FALSE]
@@ -268,10 +271,10 @@ for (map_index in seq_len(nrow(mapping))) {
       vector <- contrast_vector(row, colnames(design))
       test <- edgeR::glmQLFTest(fit, contrast = vector)
       result <- result_table(test, keep, annotation, row)
-      all_statistics_finite <- all_statistics_finite && all(is.finite(result$logFC)) &&
+      fine_statistics_finite <- fine_statistics_finite && all(is.finite(result$logFC)) &&
         all(is.finite(result$logCPM)) && all(is.finite(result$F)) &&
         all(is.finite(result$PValue)) && all(is.finite(result$FDR))
-      all_bh_reproduced <- all_bh_reproduced && isTRUE(all.equal(result$FDR, p.adjust(result$PValue, method = "BH"), tolerance = 0))
+      fine_bh_reproduced <- fine_bh_reproduced && isTRUE(all.equal(result$FDR, p.adjust(result$PValue, method = "BH"), tolerance = 0))
       result_path <- file.path(fine_tested_dir, paste0(row$contrast_id[[1L]], ".tsv.gz"))
       atomic_fwrite(result, result_path)
       result_sha <- sha256_file(result_path)
@@ -297,7 +300,7 @@ for (map_index in seq_len(nrow(mapping))) {
       replay <- result_table(edgeR::glmQLFTest(fit, contrast = first_test), keep, annotation, context_rows[context_rows$eligibility_status == "eligible", , drop = FALSE][1, , drop = FALSE])
       replay_ok <- isTRUE(all.equal(replay$logFC, first_result$logFC, tolerance = 1e-12)) &&
         isTRUE(all.equal(replay$PValue, first_result$PValue, tolerance = 1e-12))
-      all_replay_reproduced <- all_replay_reproduced && replay_ok
+      fine_replay_reproduced <- fine_replay_reproduced && replay_ok
     }
     diagnostic_rows[[length(diagnostic_rows) + 1L]] <- data.frame(
       deg_tier = "fine_supertype_phase18_parity", context_id = map$supertype_id,
@@ -386,8 +389,8 @@ for (network in broad_order) {
     }
     test <- edgeR::glmQLFTest(fit_pooled, contrast = contrast_vector(row, colnames(pooled_design)))
     result <- result_table(test, keep, annotation, row)
-    all_statistics_finite <- all_statistics_finite && all(is.finite(as.matrix(result[, c("logFC", "logCPM", "F", "PValue", "FDR")])))
-    all_bh_reproduced <- all_bh_reproduced && isTRUE(all.equal(result$FDR, p.adjust(result$PValue, "BH"), tolerance = 0))
+    broad_statistics_finite <- broad_statistics_finite && all(is.finite(as.matrix(result[, c("logFC", "logCPM", "F", "PValue", "FDR")])))
+    broad_bh_reproduced <- broad_bh_reproduced && isTRUE(all.equal(result$FDR, p.adjust(result$PValue, "BH"), tolerance = 0))
     result_path <- file.path(pooled_tested_dir, paste0(row$contrast_id[[1L]], ".tsv.gz"))
     atomic_fwrite(result, result_path)
     result_sha <- sha256_file(result_path)
@@ -423,8 +426,8 @@ for (network in broad_order) {
     }
     test <- edgeR::glmQLFTest(fit_grouped, contrast = contrast_vector(row, colnames(grouped_design)))
     result <- result_table(test, keep, annotation, row)
-    all_statistics_finite <- all_statistics_finite && all(is.finite(as.matrix(result[, c("logFC", "logCPM", "F", "PValue", "FDR")])))
-    all_bh_reproduced <- all_bh_reproduced && isTRUE(all.equal(result$FDR, p.adjust(result$PValue, "BH"), tolerance = 0))
+    broad_statistics_finite <- broad_statistics_finite && all(is.finite(as.matrix(result[, c("logFC", "logCPM", "F", "PValue", "FDR")])))
+    broad_bh_reproduced <- broad_bh_reproduced && isTRUE(all.equal(result$FDR, p.adjust(result$PValue, "BH"), tolerance = 0))
     result_path <- file.path(broad_tested_dir, paste0(row$contrast_id[[1L]], ".tsv.gz"))
     atomic_fwrite(result, result_path)
     result_sha <- sha256_file(result_path)
@@ -462,54 +465,113 @@ pooled_index <- data.table::rbindlist(pooled_index_rows, use.names = TRUE, fill 
 broad_status <- data.table::rbindlist(broad_status_rows, use.names = TRUE, fill = TRUE)
 broad_index <- data.table::rbindlist(broad_index_rows, use.names = TRUE, fill = TRUE)
 diagnostics <- data.table::rbindlist(diagnostic_rows, use.names = TRUE, fill = TRUE)
+fine_diagnostics <- diagnostics[diagnostics$deg_tier == "fine_supertype_phase18_parity", ]
+broad_diagnostics <- diagnostics[diagnostics$deg_tier %in% c(
+  "broad_pooled_anchor", "broad_stratified_support"
+), ]
 atomic_fwrite(pooled_status, file.path(pooled_root, "contrast_status.tsv"))
 atomic_fwrite(pooled_index, file.path(pooled_root, "result_index.tsv"))
 atomic_fwrite(broad_status, file.path(broad_root, "contrast_status.tsv"))
 atomic_fwrite(broad_index, file.path(broad_root, "result_index.tsv"))
-atomic_fwrite(diagnostics, file.path(output_dir, "run_model_diagnostics.tsv.gz"))
+atomic_fwrite(fine_diagnostics, file.path(fine_output_dir, "run_model_diagnostics.tsv.gz"))
+atomic_fwrite(broad_diagnostics, file.path(broad_output_dir, "run_model_diagnostics.tsv.gz"))
 
-all_status <- data.table::rbindlist(list(fine_status, pooled_status, broad_status), use.names = TRUE, fill = TRUE)
-run_checks <- data.frame(
+fine_completed_paths <- fine_status$result_path[fine_status$terminal_status == "completed"]
+broad_all_status <- data.table::rbindlist(
+  list(pooled_status, broad_status), use.names = TRUE, fill = TRUE
+)
+broad_completed_paths <- broad_all_status$result_path[
+  broad_all_status$terminal_status == "completed"
+]
+fine_result_files_exist <- all(file.exists(file.path(project_root, fine_completed_paths)))
+broad_result_files_exist <- all(file.exists(file.path(project_root, broad_completed_paths)))
+
+fine_run_checks <- data.frame(
   check = c(
-    "fine_status_rows", "pooled_status_rows", "broad_status_rows",
-    "no_failed_contrasts", "eligible_fine_terminal", "eligible_pooled_terminal",
-    "eligible_broad_terminal", "statistics_finite", "BH_reproduced",
+    "fine_status_rows", "no_failed_contrasts", "eligible_fine_terminal",
+    "statistics_finite", "BH_reproduced",
     "sample_replay_reproduced", "result_files_exist"
   ),
   passed = c(
-    nrow(fine_status) == 774L, nrow(pooled_status) == 7L, nrow(broad_status) == 42L,
-    !any(all_status$terminal_status == "failed"),
+    nrow(fine_status) == 774L,
+    !any(fine_status$terminal_status == "failed"),
     all(fine_status$terminal_status[fine_status$eligibility_status == "eligible"] %in% c("completed", "not_estimable")),
-    all(pooled_status$terminal_status[pooled_status$eligibility_status == "eligible"] %in% c("completed", "not_estimable")),
-    all(broad_status$terminal_status[broad_status$eligibility_status == "eligible"] %in% c("completed", "not_estimable")),
-    all_statistics_finite, all_bh_reproduced, all_replay_reproduced,
-    all(file.exists(file.path(project_root, all_status$result_path[all_status$terminal_status == "completed"])))
+    fine_statistics_finite, fine_bh_reproduced, fine_replay_reproduced,
+    fine_result_files_exist
   ),
   observed = c(
-    nrow(fine_status), nrow(pooled_status), nrow(broad_status), sum(all_status$terminal_status == "failed"),
-    TRUE, TRUE, TRUE, all_statistics_finite, all_bh_reproduced, all_replay_reproduced,
-    sum(file.exists(file.path(project_root, all_status$result_path[all_status$terminal_status == "completed"])))
+    nrow(fine_status), sum(fine_status$terminal_status == "failed"),
+    TRUE, fine_statistics_finite, fine_bh_reproduced, fine_replay_reproduced,
+    sum(file.exists(file.path(project_root, fine_completed_paths)))
   ),
-  expected = c(774, 7, 42, 0, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, sum(all_status$terminal_status == "completed")),
+  expected = c(774, 0, TRUE, TRUE, TRUE, TRUE, length(fine_completed_paths)),
   details = "",
   stringsAsFactors = FALSE
 )
-atomic_fwrite(run_checks, file.path(output_dir, "run_checks.tsv"))
-failed <- run_checks$check[!run_checks$passed]
-run_state <- if (length(failed)) "failed" else "worker_complete"
-run_status <- data.frame(
-  schema_version = "seaad_deg_run_status_v2", task = "VH08_edgeR_runner",
-  task_status = run_state, failed_checks = paste(failed, collapse = ";"),
+broad_run_checks <- data.frame(
+  check = c(
+    "pooled_status_rows", "broad_status_rows", "no_failed_contrasts",
+    "eligible_pooled_terminal", "eligible_broad_terminal",
+    "statistics_finite", "BH_reproduced",
+    "sample_replay_reproduced", "result_files_exist"
+  ),
+  passed = c(
+    nrow(pooled_status) == 7L, nrow(broad_status) == 42L,
+    !any(broad_all_status$terminal_status == "failed"),
+    all(pooled_status$terminal_status[pooled_status$eligibility_status == "eligible"] %in% c("completed", "not_estimable")),
+    all(broad_status$terminal_status[broad_status$eligibility_status == "eligible"] %in% c("completed", "not_estimable")),
+    broad_statistics_finite, broad_bh_reproduced,
+    all(broad_diagnostics$replay_reproduced %in% TRUE),
+    broad_result_files_exist
+  ),
+  observed = c(
+    nrow(pooled_status), nrow(broad_status),
+    sum(broad_all_status$terminal_status == "failed"),
+    TRUE, TRUE, broad_statistics_finite, broad_bh_reproduced,
+    all(broad_diagnostics$replay_reproduced %in% TRUE),
+    sum(file.exists(file.path(project_root, broad_completed_paths)))
+  ),
+  expected = c(7, 42, 0, TRUE, TRUE, TRUE, TRUE, TRUE, length(broad_completed_paths)),
+  details = "",
+  stringsAsFactors = FALSE
+)
+atomic_fwrite(fine_run_checks, file.path(fine_output_dir, "run_checks.tsv"))
+atomic_fwrite(broad_run_checks, file.path(broad_output_dir, "run_checks.tsv"))
+fine_failed <- fine_run_checks$check[!fine_run_checks$passed]
+broad_failed <- broad_run_checks$check[!broad_run_checks$passed]
+fine_run_state <- if (length(fine_failed)) "failed" else "worker_complete"
+broad_run_state <- if (length(broad_failed)) "failed" else "worker_complete"
+fine_run_status <- data.frame(
+  schema_version = "seaad_deg_fine_run_status_v1",
+  task = "VH08F_edgeR_runner",
+  release_scope = "fine",
+  task_status = fine_run_state,
+  failed_checks = paste(fine_failed, collapse = ";"),
   started_at_utc = format(started_at, tz = "UTC", usetz = TRUE),
   completed_at_utc = format(Sys.time(), tz = "UTC", usetz = TRUE),
   fine_completed = sum(fine_status$terminal_status == "completed"),
   fine_no_genes_after_filter = sum(fine_status$terminal_reason == "no_genes_after_filterByExpr"),
-  pooled_completed = sum(pooled_status$terminal_status == "completed"),
-  broad_stratified_completed = sum(broad_status$terminal_status == "completed"),
+  result_files = length(fine_completed_paths),
   config_sha256 = sha256_file(config_path),
   stringsAsFactors = FALSE
 )
-atomic_fwrite(run_status, file.path(output_dir, "run_status.tsv"))
-cat("VH08 runner: ", run_state, "; fine completed=", run_status$fine_completed, "
+broad_run_status <- data.frame(
+  schema_version = "seaad_deg_broad_run_status_v1",
+  task = "VH08B_edgeR_runner",
+  release_scope = "broad",
+  task_status = broad_run_state,
+  failed_checks = paste(broad_failed, collapse = ";"),
+  started_at_utc = format(started_at, tz = "UTC", usetz = TRUE),
+  completed_at_utc = format(Sys.time(), tz = "UTC", usetz = TRUE),
+  pooled_completed = sum(pooled_status$terminal_status == "completed"),
+  broad_stratified_completed = sum(broad_status$terminal_status == "completed"),
+  result_files = length(broad_completed_paths),
+  config_sha256 = sha256_file(config_path),
+  stringsAsFactors = FALSE
+)
+atomic_fwrite(fine_run_status, file.path(fine_output_dir, "run_status.tsv"))
+atomic_fwrite(broad_run_status, file.path(broad_output_dir, "run_status.tsv"))
+cat("VH08 split runner: fine=", fine_run_state, "; broad=", broad_run_state,
+    "; fine completed=", fine_run_status$fine_completed, "
 ", sep = "")
-if (length(failed)) quit(status = 2L)
+if (length(fine_failed) || length(broad_failed)) quit(status = 2L)

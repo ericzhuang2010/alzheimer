@@ -127,7 +127,7 @@ aggregate, BH family, ranked list, candidate file, or figure.
 The authoritative upstream analysis is the validated Phase 12 bundle:
 
 ```text
-results/minerva_production/12_kda/
+results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs/
   kda_run_manifest.tsv
   kda_signature_members.tsv.gz
   kda_background_members.tsv.gz

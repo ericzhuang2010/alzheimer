@@ -152,10 +152,34 @@ def main() -> int:
         {"artifact_class": "compact_contracts_manifests_checks", "local_treatment": "retained", "git_treatment": "tracked"}
     ])
     atomic_write_tsv(storage, paths["storage"])
-    planned = pd.DataFrame([
-        {"phase": f"VH{index:02d}", "directory": name, "storage_root": str(output_root.relative_to(project_root))}
-        for index, name in enumerate(["00_environment", "01_audit", "02_cohort", "03_genes", "04_supertype_manifest", "05_pseudobulk", "06_pseudobulk_qc", "07_contrasts", "08_deg"])
-    ])
+    phase_directories = [
+        (f"VH{index:02d}", name)
+        for index, name in enumerate(
+            [
+                "00_environment",
+                "01_audit",
+                "02_cohort",
+                "03_genes",
+                "04_supertype_manifest",
+                "05_pseudobulk",
+                "06_pseudobulk_qc",
+                "07_contrasts",
+            ]
+        )
+    ] + [
+        ("VH08F", "08_deg_fine"),
+        ("VH08B", "08_deg_broad"),
+    ]
+    planned = pd.DataFrame(
+        [
+            {
+                "phase": phase,
+                "directory": name,
+                "storage_root": str(output_root.relative_to(project_root)),
+            }
+            for phase, name in phase_directories
+        ]
+    )
     atomic_write_tsv(planned, paths["planned"])
     atomic_write_tsv(pd.DataFrame(reference_rows), paths["references"])
     atomic_write_tsv(code_manifest, paths["code_manifest"])

@@ -68,7 +68,7 @@ for audit and locus review, but they did not earn a positive gene grade.
 The candidate list was rebuilt directly from the canonical Phase 18 result:
 
 ```text
-results/minerva_production/18_key_driver_selection/call_key_driver_returns.tsv
+results/minerva_production/18_sex_apoe_bidir_kda_complex_aggr (deprecated)/call_key_driver_returns.tsv
 ```
 
 The prespecified selection rule was:

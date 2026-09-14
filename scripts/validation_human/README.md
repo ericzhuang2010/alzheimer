@@ -1,4 +1,4 @@
-# SEA-AD Fine-Supertype DEG Validation
+# SEA-AD Fine- and Broad-Cell DEG Validation
 
 This directory implements the clean VH00-VH08 rebuild specified in
 docs/validation_human/seaad_deg_processing_plan.md.
@@ -21,9 +21,10 @@ Rscript scripts/validation_human/08_run_deg.R --config "$SEAAD_DEG_CONFIG"
 .venv/bin/python scripts/validation_human/08_finalize_deg_release.py --config "$SEAAD_DEG_CONFIG"
 ~~~
 
-All scientific outputs are isolated under results/validation_human/. Raw
-inputs, Phase 18 references, networks, and unrelated ROSMAP results are opened
-read-only.
+VH08 publishes independent validated releases under
+`results/validation_human/08_deg_fine/` and
+`results/validation_human/08_deg_broad/`. Raw inputs, Phase 18 references,
+networks, and unrelated ROSMAP results are opened read-only.
 
 ## VH11: SEA-AD RIMBANet networks
 
@@ -166,3 +167,25 @@ needed. Follow the
 for the path-by-path rebuild order, validation checks, and inputs that are not
 yet frozen. Current ROSMAP networks and VH10 KDA configuration are not changed
 by VH11.
+
+## VH15: SEA-AD DEG pathway analysis
+
+VH15 mirrors the validated ROSMAP DEG pathway analyses while retaining
+SEA-AD-specific estimability. Fine-cell analysis uses strict mitochondrial
+DEG ORA; broad-cell analysis uses full-rank mitochondrial GSEA plus strict,
+relaxed, and exploratory ORA. The broad analysis covers the 42 sex/APOE
+contrasts and intentionally excludes the seven pooled anchors.
+
+Run from the repository root:
+
+~~~bash
+Rscript scripts/validation_human/15_run_fine_deg_pathway_analysis.R \
+  --config config/seaad_phase15_pathway_deg_fine.yml
+Rscript scripts/validation_human/15_run_broad_deg_pathway_analysis.R \
+  --config config/seaad_phase15_pathway_deg_broad.yml
+Rscript tests/validation_human/test_seaad_phase15_pathway_analysis.R
+~~~
+
+Validated outputs are published atomically under
+`results/validation_human/15_pathway_deg_fine/` and
+`results/validation_human/15_pathway_deg_broad/`.

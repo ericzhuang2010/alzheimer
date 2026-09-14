@@ -980,7 +980,7 @@ checks <- do.call(rbind, checks)
 failed_checks <- checks$check[!checks$passed]
 validation_status <- if (length(failed_checks)) "failed" else "validated_complete"
 
-output_dir <- file.path(output_root, "08_mast")
+output_dir <- file.path(output_root, "08_deg_fine")
 paths <- list(
   manifest = file.path(
     output_dir, paste0(prefix, ".yu_mast_contrast_manifest.tsv")

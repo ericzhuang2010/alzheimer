@@ -221,11 +221,11 @@ For every enabled RDS:
 
 | File pattern | Requirement |
 |---|---|
-| `08_mast/<rds_id>.yu_mast_de.tsv.gz` | Complete returned-gene table using `yu_mast_de_results_v2`. |
-| `08_mast/<rds_id>.yu_mast_contrast_manifest.tsv` | Six planned Yu strata per fine cell type. |
-| `08_mast/<rds_id>.yu_mast_contrast_status.tsv` | Every planned contrast has a terminal status. |
-| `08_mast/<rds_id>.yu_mast_de_status.tsv` | Must use `yu_mast_de_status_v2` and be `validated_complete`. |
-| `08_mast/<rds_id>.yu_mast_de_artifacts.tsv` | Every declared file exists and matches bytes/checksum/status. |
+| `08_deg_fine/<rds_id>.yu_mast_de.tsv.gz` | Complete returned-gene table using `yu_mast_de_results_v2`. |
+| `08_deg_fine/<rds_id>.yu_mast_contrast_manifest.tsv` | Six planned Yu strata per fine cell type. |
+| `08_deg_fine/<rds_id>.yu_mast_contrast_status.tsv` | Every planned contrast has a terminal status. |
+| `08_deg_fine/<rds_id>.yu_mast_de_status.tsv` | Must use `yu_mast_de_status_v2` and be `validated_complete`. |
+| `08_deg_fine/<rds_id>.yu_mast_de_artifacts.tsv` | Every declared file exists and matches bytes/checksum/status. |
 | `results/<environment>/status/mast__<rds_id>.tsv` | Controller must have exit code zero and `validated_complete`. |
 
 `not_estimable` contrast rows are allowed and retained. A Phase 08
@@ -462,18 +462,18 @@ printf '%s  %s\n' \
 test -r config/phase09_annotation.yml
 test -r results/local_pilot/03_annotations/annotation_status.tsv
 test -r results/local_pilot/03_annotations/tested_gene_universe.tsv
-test -r results/local_pilot/08_mast/vasculature.yu_mast_de.tsv.gz
-test -r results/local_pilot/08_mast/vasculature.yu_mast_de_status.tsv
+test -r results/local_pilot/08_deg_fine/vasculature.yu_mast_de.tsv.gz
+test -r results/local_pilot/08_deg_fine/vasculature.yu_mast_de_status.tsv
 
 Rscript -e '
 phase03 <- read.delim(
   "results/local_pilot/03_annotations/annotation_status.tsv",
   check.names = FALSE)
 phase08 <- read.delim(
-  "results/local_pilot/08_mast/vasculature.yu_mast_de_status.tsv",
+  "results/local_pilot/08_deg_fine/vasculature.yu_mast_de_status.tsv",
   check.names = FALSE)
 contrasts <- read.delim(
-  "results/local_pilot/08_mast/vasculature.yu_mast_contrast_status.tsv",
+  "results/local_pilot/08_deg_fine/vasculature.yu_mast_contrast_status.tsv",
   check.names = FALSE)
 stopifnot(
   phase03$validation_status == "validated_complete",
@@ -517,7 +517,7 @@ artifacts <- fread(file.path(root, "annotation_artifacts.tsv"))
 master <- fread(file.path(root, "gene_annotation_master.tsv.gz"))
 annotated <- fread(file.path(root, "deg_all_annotated.tsv.gz"))
 phase08 <- fread(
-  "results/local_pilot/08_mast/vasculature.yu_mast_de.tsv.gz")
+  "results/local_pilot/08_deg_fine/vasculature.yu_mast_de.tsv.gz")
 
 stopifnot(
   status$schema_version == "mitochondrial_annotation_status_v1",
@@ -576,7 +576,7 @@ Run on a compute node:
 cd /sc/arion/work/zhuane01/alzheimer
 
 Rscript -e '
-status_root <- "results/minerva_production/08_mast"
+status_root <- "results/minerva_production/08_deg_fine"
 scientific_files <- list.files(
   status_root,
   pattern = "[.]yu_mast_de_status[.]tsv$",

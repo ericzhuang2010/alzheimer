@@ -1,0 +1,206 @@
+schema_version: phase11_pathway_deg_fine_config_v1
+
+inputs:
+  phase08_root: results/minerva_production/08_deg_fine
+  phase09_root: results/minerva_production/09_annotate_genes
+  phase11_similarity_root: results/minerva_production/11_pathway_similarity
+  phase12_root: results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs
+  phase20_combo_root: results/minerva_production/20_sex_apoe_kda_combo
+  legacy_module_membership: config/phase13_respiratory_modules.tsv
+  mitocarta_source: data/reference/Human.MitoCarta3.0.xls
+
+output:
+  directory: 11_pathway_deg_fine
+
+expected:
+  rds_sets: 9
+  fine_cell_types: 54
+  sex_apoe_strata: 6
+  planned_contrasts: 324
+  estimable_contrasts: 321
+  nonestimable_contrasts: 3
+  core_mito_rows_per_contrast: 1196
+  phase09_core_rows: 387504
+  kda_effective_calls: 194
+  mitocarta_pathways: 149
+  broad_mitocarta_pathways: 46
+  mitocarta_memberships: 3904
+  mitocarta_unique_symbols: 1035
+  legacy_modules: 4
+
+expected_schemas:
+  phase08_manifest: yu_mast_contrast_manifest_v2
+  phase08_status: yu_mast_contrast_status_v2
+  phase09_status: mitochondrial_annotation_status_v1
+  phase09_checks: mitochondrial_annotation_checks_v1
+  phase09_artifacts: mitochondrial_annotation_artifacts_v1
+  phase09_core: annotated_yu_mast_results_v1
+  phase11_reference_manifest: pathway_reference_manifest_v1
+  phase11_membership: pathway_membership_long_v1
+  phase12_status: mitochondrial_kda_status_v1
+  phase12_artifacts: mitochondrial_kda_artifacts_v1
+  phase12_background: mitochondrial_kda_background_members_v1
+  phase20_combo_manifest: phase20_sexapoe_kda_simple_aggr_combo_v1_run_manifest
+  phase20_combo_members: phase20_sexapoe_kda_simple_aggr_combo_v1_query_members
+
+analysis:
+  primary_mito_tier: core_mito_protein
+  ora_identifier: symbol_hgnc_current
+  tested_statuses:
+    - significant_up
+    - significant_down
+    - tested_not_significant
+  query_modes:
+    AD_any_mito:
+      order: 1
+      direction: any
+    AD_up_mito:
+      order: 2
+      direction: up
+    AD_down_mito:
+      order: 3
+      direction: down
+  minimum_query_size: 3
+  minimum_background_pathway_members: 5
+  minimum_reference_coverage: 0.30
+  small_pathway_upper_bound: 9
+  significance_threshold: 0.05
+
+collections:
+  legacy_four:
+    collection_order: 1
+    collection_role: compatibility_benchmark
+    source: config/phase13_respiratory_modules.tsv
+    expected_programs: 4
+    compatibility_testability: query_size_at_least_3
+  mitocarta_broad_46:
+    collection_order: 2
+    collection_role: primary_expanded
+    source_collection: mitocarta_mitopathways_v3_0
+    hierarchy_depths: [1, 2]
+    expected_programs: 46
+  mitocarta_complete_149:
+    collection_order: 3
+    collection_role: supplemental_complete
+    source_collection: mitocarta_mitopathways_v3_0
+    hierarchy_depths: [1, 2, 3]
+    expected_programs: 149
+
+references:
+  mitocarta:
+    release: MitoCarta3.0
+    source_sha256: e6ada0ae8dcd5447a5efb6f77c69a1c10b1ffa66521540a1e81b92c61e5505f2
+    normalized_collection: mitocarta_mitopathways_v3_0
+
+fdr:
+  method: BH
+  threshold: 0.05
+  local_family: query_id_x_pathway_collection
+  global_primary_family: pathway_collection_x_query_mode
+  kda_local_family: kda_run_id_x_pathway_collection
+  kda_global_family: pathway_collection
+
+redundancy:
+  collection: mitocarta_complete_149
+  report_all_pairs: true
+  representative_jaccard_threshold: 0.25
+
+legacy_reconciliation:
+  global_four_modules:
+    mtdna_oxphos_13:
+      expected_occurrences: 732
+      expected_up: 540
+      expected_down: 192
+      expected_significant_calls: 99
+    nuclear_oxphos_structural_86:
+      expected_occurrences: 1172
+      expected_up: 430
+      expected_down: 742
+      expected_significant_calls: 33
+    mitochondrial_translation_155:
+      expected_occurrences: 906
+      expected_up: 375
+      expected_down: 531
+      expected_significant_calls: 0
+    mib_micos_inner_membrane_19:
+      expected_occurrences: 103
+      expected_up: 31
+      expected_down: 72
+      expected_significant_calls: 0
+  mtdna_by_stratum:
+    F_e2:
+      expected_occurrences: 128
+      expected_up: 127
+      expected_down: 1
+      expected_significant_calls: 20
+    F_e33:
+      expected_occurrences: 217
+      expected_up: 217
+      expected_down: 0
+      expected_significant_calls: 29
+    F_e4:
+      expected_occurrences: 64
+      expected_up: 26
+      expected_down: 38
+      expected_significant_calls: 10
+    M_e2:
+      expected_occurrences: 132
+      expected_up: 13
+      expected_down: 119
+      expected_significant_calls: 13
+    M_e33:
+      expected_occurrences: 81
+      expected_up: 70
+      expected_down: 11
+      expected_significant_calls: 12
+    M_e4:
+      expected_occurrences: 110
+      expected_up: 87
+      expected_down: 23
+      expected_significant_calls: 15
+  female_e33:
+    signature_group: F_e33
+    mitochondrial_module: mtdna_oxphos_13
+    expected_group_mtdna_occurrences: 217
+    expected_group_mtdna_up: 217
+    expected_group_mtdna_down: 0
+    expected_group_significant_calls: 29
+    broad_cell_type: Excitatory_neurons
+    expected_broad_eligible_calls: 14
+    expected_broad_mtdna_occurrences: 123
+    expected_broad_mtdna_up: 123
+    expected_broad_mtdna_down: 0
+    expected_broad_significant_calls: 12
+  male_e33:
+    signature_group: M_e33
+    mitochondrial_module: mtdna_oxphos_13
+    nuclear_module: nuclear_oxphos_structural_86
+    expected_eligible_calls: 31
+    expected_mtdna_occurrences: 81
+    expected_mtdna_up: 70
+    expected_mtdna_down: 11
+    expected_mtdna_significant_calls: 12
+    expected_nuclear_occurrences: 68
+    expected_nuclear_up: 8
+    expected_nuclear_down: 60
+    expected_nuclear_significant_calls: 1
+
+schemas:
+  status: fine_deg_pathway_status_v1
+  checks: fine_deg_pathway_checks_v1
+  artifacts: fine_deg_pathway_artifacts_v1
+  reference_manifest: fine_deg_pathway_reference_manifest_v1
+  program_manifest: fine_deg_pathway_program_manifest_v1
+  contrast_manifest: fine_deg_pathway_contrast_manifest_v1
+  background_manifest: fine_deg_pathway_background_manifest_v1
+  background_genes: fine_deg_pathway_background_genes_v1
+  query_manifest: fine_deg_pathway_query_manifest_v1
+  query_genes: fine_deg_pathway_query_genes_v1
+  ora: fine_deg_pathway_ora_v1
+  significant_results: fine_deg_pathway_significant_results_v1
+  fine_cell_summary: fine_deg_pathway_fine_cell_summary_v1
+  broad_cell_summary: fine_deg_pathway_broad_cell_summary_v1
+  sex_apoe_summary: fine_deg_pathway_sex_apoe_summary_v1
+  redundancy_map: fine_deg_pathway_redundancy_map_v1
+  kda_ora: kda_effective_query_program_ora_v1
+  reconciliation: legacy_four_module_reconciliation_v1

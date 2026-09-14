@@ -126,7 +126,7 @@ described as experimental proof that RPL11 directly regulates the target.
 
 ### Current Phase 18 result
 
-- [`call_key_driver_returns.tsv`](../../../../results/minerva_production/18_key_driver_selection/call_key_driver_returns.tsv)
+- [`call_key_driver_returns.tsv`](../../../../results/minerva_production/18_sex_apoe_bidir_kda_complex_aggr (deprecated)/call_key_driver_returns.tsv)
 - [Non-MT evidence-atlas gene summary](../../../../results/figures/analysis/phase_18_key_driver_selection/evidence_atlas_non_mt/phase18_evidence_atlas_non_mt_gene_summary.tsv)
 - [Non-MT evidence-atlas gene-network details](../../../../results/figures/analysis/phase_18_key_driver_selection/evidence_atlas_non_mt/phase18_evidence_atlas_non_mt_gene_network_details.tsv)
 
@@ -143,9 +143,9 @@ The first column is the source and the second column is the target.
 
 ### Run query and background membership
 
-- [`kda_run_manifest.tsv`](../../../../results/minerva_production/12_kda/kda_run_manifest.tsv)
-- [`kda_signature_members.tsv.gz`](../../../../results/minerva_production/12_kda/kda_signature_members.tsv.gz)
-- [`kda_background_members.tsv.gz`](../../../../results/minerva_production/12_kda/kda_background_members.tsv.gz)
+- [`kda_run_manifest.tsv`](../../../../results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs/kda_run_manifest.tsv)
+- [`kda_signature_members.tsv.gz`](../../../../results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs/kda_signature_members.tsv.gz)
+- [`kda_background_members.tsv.gz`](../../../../results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs/kda_background_members.tsv.gz)
 
 These are upstream run inputs already used to reconstruct the current Phase 18
 table. They are needed because a run-specific induced network contains only

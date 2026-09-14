@@ -77,7 +77,7 @@ where two of the three displayed genes change.
 
 Supporting files:
 
-- [MeanOfLog plotted data](../../results/figures/analysis/phase12_kda/reduced_circular_figure/phase12_kda_reduced_circular_plotted_data.tsv)
-- [ACAT plotted data](../../results/figures/analysis/phase12_kda/reduced_circular_figure_ACAT/phase12_kda_reduced_circular_ACAT_plotted_data.tsv)
-- [Complete ACAT ranking](../../results/figures/analysis/phase12_kda/reduced_circular_figure_ACAT/phase12_kda_reduced_circular_ACAT_acat_summary.tsv)
-- [ACAT reduced circular figure](../../results/figures/analysis/phase12_kda/reduced_circular_figure_ACAT/phase12_kda_reduced_circular_ACAT.png)
+- [MeanOfLog plotted data](../../results/figures/analysis/phase12_kda (deprecated)/reduced_circular_figure/phase12_kda_reduced_circular_plotted_data.tsv)
+- [ACAT plotted data](../../results/figures/analysis/phase12_kda (deprecated)/reduced_circular_figure_ACAT/phase12_kda_reduced_circular_ACAT_plotted_data.tsv)
+- [Complete ACAT ranking](../../results/figures/analysis/phase12_kda (deprecated)/reduced_circular_figure_ACAT/phase12_kda_reduced_circular_ACAT_acat_summary.tsv)
+- [ACAT reduced circular figure](../../results/figures/analysis/phase12_kda (deprecated)/reduced_circular_figure_ACAT/phase12_kda_reduced_circular_ACAT.png)

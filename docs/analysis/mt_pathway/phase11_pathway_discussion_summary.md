@@ -179,7 +179,7 @@ The defensible conclusion is specific: **AD-associated mitochondrial transcripti
 - [Phase 09 mitochondrial DEG table](../../../results/minerva_production/09_annotate_genes/deg_mito_core.tsv.gz)
 - [Phase 10 similarity results](../../../results/minerva_production/10_similarity/mitochondrial_similarity_results.tsv.gz)
 - [Phase 10 paired states](../../../results/minerva_production/10_similarity/mitochondrial_similarity_state_pairs.tsv.gz)
-- [Phase 11 pathway results](../../../results/minerva_production/11_pathway/similarity_tail_pathway_ora.tsv.gz)
+- [Phase 11 pathway results](../../../results/minerva_production/11_pathway_similarity/similarity_tail_pathway_ora.tsv.gz)
 - [Current pre-network candidate table](pre_network_shortlist.tsv)
 - [Current pre-network stratum summary](pre_network_shortlist_strata.tsv)
 - [Yu paper PDF](../../yu_paper/Yu_sex_apoe.pdf)

@@ -7,8 +7,8 @@
 #BSUB -R "rusage[mem=16000]"
 #BSUB -R "span[hosts=1]"
 #BSUB -L /bin/bash
-#BSUB -oo results/minerva_production/12_kda/logs/%J.out
-#BSUB -eo results/minerva_production/12_kda/logs/%J.err
+#BSUB -oo results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs/logs/%J.out
+#BSUB -eo results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs/logs/%J.err
 
 set -euo pipefail
 
@@ -19,4 +19,4 @@ export RENV_PATHS_CACHE=/sc/arion/work/zhuane01/.cache/renv
 Rscript scripts/analysis/kda/run_global_kda.R \
   --network-id Vasculature_cells \
   --network data/bayesian_network/Vasculature_cells/result.links3.links.txt \
-  --output-dir results/minerva_production/12_kda/global
+  --output-dir results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs/global

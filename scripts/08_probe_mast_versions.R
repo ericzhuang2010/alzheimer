@@ -69,7 +69,7 @@ normalized_path <- file.path(
 )
 yu_path <- file.path(root, "docs/yu_paper/ALZ-22-e71463-s002.xlsx")
 baseline_path <- file.path(
-  root, "results/local_pilot/08_mast/vasculature.yu_mast_de.tsv.gz"
+  root, "results/local_pilot/08_deg_fine/vasculature.yu_mast_de.tsv.gz"
 )
 stopifnot(
   file.exists(normalized_path),

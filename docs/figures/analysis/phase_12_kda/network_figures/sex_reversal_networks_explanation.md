@@ -1,6 +1,6 @@
 # Phase 12 sex-reversal networks explained
 
-![Sex-reversed mitochondrial KDA signals retain shared driver-centered network structure](../../../../../results/figures/analysis/phase12_kda/network_figures/phase12_kda_sex_reversal_networks.png)
+![Sex-reversed mitochondrial KDA signals retain shared driver-centered network structure](../../../../../results/figures/analysis/phase12_kda (deprecated)/network_figures/phase12_kda_sex_reversal_networks.png)
 
 ## What question the figure addresses
 
@@ -182,8 +182,8 @@ does not prove that the drivers cause the expression changes.
 
 ## Supporting files
 
-- [Vector figure](../../../../../results/figures/analysis/phase12_kda/network_figures/phase12_kda_sex_reversal_networks.svg)
-- [Panel node data](../../../../../results/figures/analysis/phase12_kda/network_figures/phase12_kda_sex_reversal_networks_nodes.tsv)
-- [Panel edge data](../../../../../results/figures/analysis/phase12_kda/network_figures/phase12_kda_sex_reversal_networks_edges.tsv)
-- [Highlighted paths](../../../../../results/figures/analysis/phase12_kda/network_figures/phase12_kda_sex_reversal_networks_paths.tsv)
+- [Vector figure](../../../../../results/figures/analysis/phase12_kda (deprecated)/network_figures/phase12_kda_sex_reversal_networks.svg)
+- [Panel node data](../../../../../results/figures/analysis/phase12_kda (deprecated)/network_figures/phase12_kda_sex_reversal_networks_nodes.tsv)
+- [Panel edge data](../../../../../results/figures/analysis/phase12_kda (deprecated)/network_figures/phase12_kda_sex_reversal_networks_edges.tsv)
+- [Highlighted paths](../../../../../results/figures/analysis/phase12_kda (deprecated)/network_figures/phase12_kda_sex_reversal_networks_paths.tsv)
 - [Figure-generation implementation](../../../../../scripts/figures/analysis/phease12_kda/phase12_kda_network_figure_common.py)

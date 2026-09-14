@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""VH09: freeze canonical ROSMAP Phase 18 candidate units for SEA-AD validation."""
+"""Reproduce the historical VH09 ROSMAP Phase 18 candidate freeze.
+
+Current human validation uses the Phase 20 combo ROSMAP authority and the
+direction-combined SEA-AD workflow rooted at
+``results/validation_human/12_sex_apoe_kda_combo``.
+"""
 
 from __future__ import annotations
 

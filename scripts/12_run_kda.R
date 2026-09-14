@@ -202,7 +202,7 @@ phase12_main <- function(cli_args = commandArgs(trailingOnly = TRUE)) {
   must(stage_name %in% c("local_pilot", "minerva_production"), "KDA requires local_pilot or minerva_production")
   expected <- phase12$expected[[stage_name]]
   output_root <- absolute_path(config$outputs$root, project_root)
-  phase08_root <- file.path(output_root, "08_mast")
+  phase08_root <- file.path(output_root, "08_deg_fine")
   phase09_root <- file.path(output_root, "09_annotate_genes")
   final_root <- file.path(output_root, phase12$outputs$directory)
   temp_parent <- absolute_path(execution$temp_dir %||% file.path(output_root, "tmp"), project_root)

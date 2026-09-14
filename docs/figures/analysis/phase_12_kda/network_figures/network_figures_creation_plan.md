@@ -21,7 +21,7 @@ Relevant source materials are:
 - [`phase11_phase12_selected_mitochondrial_connections.md`](../../../analysis/phase11_phase12_selected_mitochondrial_connections.md);
 - [`phase12_driver_gene_discussion.md`](../../../analysis/kda/phase12_driver_gene_discussion.md); and
 - the validated production bundle under
-  `results/minerva_production/12_kda/`.
+  `results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs/`.
 
 The existing reduced circular figure answers **which drivers recur**, and the
 existing sex/APOE dot heatmap answers **where the candidates are supported**.
@@ -70,11 +70,11 @@ The implementation and captions must maintain the following distinctions.
 
 | File | Use |
 |---|---|
-| `results/minerva_production/12_kda/kda_status.tsv` | Require `validation_status == validated_complete` |
-| `results/minerva_production/12_kda/kda_checks.tsv` | Require every validation check to pass |
-| `results/minerva_production/12_kda/kda_results.tsv.gz` | Significant candidate rows, best layers, neighborhood sizes, overlap genes, adjusted P values, and fold enrichment |
-| `results/minerva_production/12_kda/kda_run_manifest.tsv` | Eligibility, tier, fine-cell type, sex/APOE group, signature direction, and run denominators |
-| `results/minerva_production/12_kda/kda_signature_members.tsv.gz` | Effective query membership and candidate-self checks |
+| `results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs/kda_status.tsv` | Require `validation_status == validated_complete` |
+| `results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs/kda_checks.tsv` | Require every validation check to pass |
+| `results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs/kda_results.tsv.gz` | Significant candidate rows, best layers, neighborhood sizes, overlap genes, adjusted P values, and fold enrichment |
+| `results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs/kda_run_manifest.tsv` | Eligibility, tier, fine-cell type, sex/APOE group, signature direction, and run denominators |
+| `results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs/kda_signature_members.tsv.gz` | Effective query membership and candidate-self checks |
 
 Use the compressed production files where both compressed and uncompressed
 copies exist. Confirm their hashes against `kda_artifacts.tsv` before figure
@@ -84,8 +84,8 @@ preparation.
 
 | File | Use |
 |---|---|
-| `results/figures/analysis/phase12_kda/phase12_kda_primary_directional_candidate_tests.tsv.gz` | Complete primary directional raw-P matrix for Figure 4 ACAT aggregation, including nonsignificant tests |
-| `results/figures/analysis/phase12_kda/phase12_kda_conservative_candidate_summary.tsv` | Existing conservative candidate counts and highlighted-candidate flags |
+| `results/figures/analysis/phase12_kda (deprecated)/phase12_kda_primary_directional_candidate_tests.tsv.gz` | Complete primary directional raw-P matrix for Figure 4 ACAT aggregation, including nonsignificant tests |
+| `results/figures/analysis/phase12_kda (deprecated)/phase12_kda_conservative_candidate_summary.tsv` | Existing conservative candidate counts and highlighted-candidate flags |
 
 The complete candidate-test matrix is required for Figure 4. Do not calculate
 ACAT using only `kda_results.tsv`, because that file contains only
@@ -96,7 +96,7 @@ significant rows.
 Use the nine files matching:
 
 ```text
-results/minerva_production/08_mast/*.yu_mast_de.tsv.gz
+results/minerva_production/08_deg_fine/*.yu_mast_de.tsv.gz
 ```
 
 Required columns are:
@@ -674,7 +674,7 @@ Write all new outputs outside the validated nine-file Phase 12 production
 bundle:
 
 ```text
-results/figures/analysis/phase12_kda/network_figures/
+results/figures/analysis/phase12_kda (deprecated)/network_figures/
 ├── phase12_kda_wang_subnetworks.pdf
 ├── phase12_kda_wang_subnetworks.svg
 ├── phase12_kda_wang_subnetworks.png

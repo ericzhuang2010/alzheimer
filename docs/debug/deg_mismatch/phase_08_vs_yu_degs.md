@@ -2,7 +2,7 @@
 
 No—the Phase 08 DEGs are not exactly the same as Yu's, but the overlap is high once restricted to contrasts Phase 08 actually ran.
 
-I compared exact `(cell type, sex–APOE contrast, gene)` calls from Yu's [Table S1 workbook](../yu_paper/ALZ-22-e71463-s002.xlsx) with all nine production files in the [Phase 08 outputs](../../results/minerva_production/08_mast/).
+I compared exact `(cell type, sex–APOE contrast, gene)` calls from Yu's [Table S1 workbook](../yu_paper/ALZ-22-e71463-s002.xlsx) with all nine production files in the [Phase 08 outputs](../../results/minerva_production/08_deg_fine/).
 
 | Comparison scope | Yu DEGs | Phase 08 DEGs | Shared | Yu recovered | Phase 08 supported by Yu |
 |---|---:|---:|---:|---:|---:|

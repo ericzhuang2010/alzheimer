@@ -43,6 +43,10 @@ class Phase18HelperTests(unittest.TestCase):
                 self.assertAlmostEqual(left, right, places=14)
 
 
+@unittest.skipUnless(
+    VH09.is_dir() and VH10.is_dir(),
+    "Historical VH09/VH10 bundles are deprecated and not mounted as active phases",
+)
 class ExecutedBundleTests(unittest.TestCase):
     def test_vh09_freeze_contract(self):
         status = pd.read_csv(VH09 / "status.tsv", sep="\t", keep_default_na=False)

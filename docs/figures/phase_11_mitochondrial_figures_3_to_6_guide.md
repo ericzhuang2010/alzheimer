@@ -30,7 +30,7 @@ It must not:
 - change a query or background;
 - substitute nominal pathways when no pathway passes the prespecified FDR; or
 - write any image into `results/<environment>/10_similarity/` or
-  `results/<environment>/11_pathway/`.
+  `results/<environment>/11_pathway_similarity/`.
 
 These are mitochondrial-restricted Yu analogues, not exact reproductions of
 the paper's transcriptome-wide figures.
@@ -41,13 +41,13 @@ The primary figure workflow reads:
 
 ```text
 results/<environment>/10_similarity/similarity_status.tsv
-results/<environment>/11_pathway/pathway_status.tsv
-results/<environment>/11_pathway/similarity_panel_data.tsv.gz
-results/<environment>/11_pathway/pathway_panel_data.tsv.gz
-results/<environment>/11_pathway/downstream_panel_manifest.tsv
-results/<environment>/11_pathway/pathway_reference_manifest.tsv
-results/<environment>/11_pathway/pathway_artifacts.tsv
-results/<environment>/11_pathway/pathway_checks.tsv
+results/<environment>/11_pathway_similarity/pathway_status.tsv
+results/<environment>/11_pathway_similarity/similarity_panel_data.tsv.gz
+results/<environment>/11_pathway_similarity/pathway_panel_data.tsv.gz
+results/<environment>/11_pathway_similarity/downstream_panel_manifest.tsv
+results/<environment>/11_pathway_similarity/pathway_reference_manifest.tsv
+results/<environment>/11_pathway_similarity/pathway_artifacts.tsv
+results/<environment>/11_pathway_similarity/pathway_checks.tsv
 ```
 
 The Phase 10 status supplies the provenance of the similarity calculation.
@@ -141,7 +141,7 @@ Rscript -e '
 library(data.table)
 
 sim_root <- "results/minerva_production/10_similarity"
-path_root <- "results/minerva_production/11_pathway"
+path_root <- "results/minerva_production/11_pathway_similarity"
 
 sim_status <- fread(file.path(sim_root, "similarity_status.tsv"))
 path_status <- fread(file.path(path_root, "pathway_status.tsv"))
@@ -243,7 +243,7 @@ library(data.table)
 library(ggplot2)
 
 similarity_data <- fread(
-  "results/minerva_production/11_pathway/similarity_panel_data.tsv.gz"
+  "results/minerva_production/11_pathway_similarity/similarity_panel_data.tsv.gz"
 )
 
 make_panel_a <- function(comparison_value, requested_value,
@@ -355,7 +355,7 @@ Fold enrichment = (k / n) / (M / N)
 
 ```r
 pathway_data <- fread(
-  "results/minerva_production/11_pathway/pathway_panel_data.tsv.gz"
+  "results/minerva_production/11_pathway_similarity/pathway_panel_data.tsv.gz"
 )
 
 select_display_pathways <- function(d, max_pathways = 15L) {
@@ -581,7 +581,7 @@ scientific status.
 - Four PDF and four PNG primary images exist and are nonempty.
 - PDFs open and have the expected page count.
 - PNGs are 300 dpi at the recorded dimensions.
-- No figure was written into `10_similarity/` or `11_pathway/`.
+- No figure was written into `10_similarity/` or `11_pathway_similarity/`.
 - Every image appears in `figure_manifest.tsv` with a matching checksum.
 - A rerun with identical inputs produces identical panel-data selection; minor
   binary differences caused by PDF metadata are reported if present.

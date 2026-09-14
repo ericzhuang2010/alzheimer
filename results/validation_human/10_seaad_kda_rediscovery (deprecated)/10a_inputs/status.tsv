@@ -1,0 +1,2 @@
+schema_version	phase	validation_status	failed_checks	started_at_utc	completed_at_utc	git_revision	config_sha256	host	query_mode	structural_direction_slots	completed_source_directions	active_kda_calls	small_query_calls	phase18_sized_calls	active_query_members	active_background_members	artifact_count
+seaad_fine_phase_status_v2	VH10A	validated_complete		2026-09-14T02:11:30.448548+00:00	2026-09-14T02:11:43.894400+00:00	7c8d0c623f507bdb111624846b00a26f2738b68d	8245ef9ffec567a4a6f142d57d2e7136f28e0602b1921be26272b6b27f593c7f	D200XMRQ5R	directional	1548	762	42	21	21	576	358004	7

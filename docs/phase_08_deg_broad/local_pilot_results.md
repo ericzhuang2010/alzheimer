@@ -110,7 +110,7 @@ Key outputs are:
 - `broad_deg_status.tsv`.
 
 The final artifact manifest contains 38 checksum-recorded files. Existing
-`08_mast/`, Phase 12, Phase 18, and Phase 20 artifacts were not modified.
+`08_deg_fine/`, Phase 12, Phase 18, and Phase 20 artifacts were not modified.
 
 ## Production readiness
 

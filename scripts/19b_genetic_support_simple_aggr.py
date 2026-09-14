@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
-"""Phase 19b: genetic-support screen for the simple-aggregation drivers.
+"""Phase 19b: genetic-support screen for Phase 20 combo KDA drivers.
 
 Implements workstreams WS0-WS2 of
 ``docs/phase_19_genetic_support/simple_aggr_rerun/phase19_simple_aggr_rerun_plan.md``:
 
-- ``freeze``   (WS0): freeze all 433 non-MT driver genes from the returned-only
-  simple aggregation, assign pre-registered priority tiers, and map genes to
-  GRCh38 loci (GENCODE v44 + HGNC) with gene-body +/- 1 Mb windows.
+- ``freeze``   (WS0): freeze all 228 non-MT driver genes from the Phase 20
+  direction-combined returned-only aggregation, assign pre-registered priority
+  tiers, and map genes to GRCh38 loci (GENCODE v44 + HGNC) with gene-body
+  +/- 1 Mb windows.
 - ``tier1``    (WS1): screen the frozen candidates against the local
   FunGen-xQTL public snapshot (unified workbook direct variant-to-gene
   mappings, TWAS/GVC gene lists, and variant-level window annotation).
@@ -25,14 +26,14 @@ Grade vocabulary for the tier1 stage (frozen before execution):
 - ``none_found``: no direct mapping and no list membership. Window-level
   variant annotation is reported separately and never graded.
 
-Regional results are annotation only (plan rule 11): with 433 windows of
+Regional results are annotation only (plan rule 11): with 228 windows of
 ~2 Mb, a nearby genome-wide-significant variant is expected for many genes by
 proximity alone and must not be reported as gene-level support.
 
-Missing GWAS source files are recorded and skipped, so the ``freeze`` and
-``tier1`` stages run on any machine holding the repository, while ``regional``
-completes only where the GWAS files exist (see the rerun plan's
-missing-input manifest).
+When raw GWAS sources are absent, ``regional`` reuses the hash-validated
+full-list scans for overlapping loci and records newly introduced loci as
+unresolved rather than treating them as negative. A complete regional rerun
+still requires the files in the rerun plan's missing-input manifest.
 """
 
 from __future__ import annotations
@@ -41,6 +42,7 @@ import argparse
 import gzip
 import hashlib
 import re
+import shutil
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -55,18 +57,18 @@ PLAN_DIR = ROOT / "docs" / "phase_19_genetic_support" / "simple_aggr_rerun"
 
 ROSMAP_PRIMARY = (
     ROOT
-    / "results/minerva_production/20_sex_apoe_kda"
-    / "simple_category_gene_aggregates.tsv"
+    / "results/minerva_production/20_sex_apoe_kda_combo"
+    / "combo_key_drivers_by_category.tsv"
 )
-ROSMAP_FROZEN = PLAN_DIR / "frozen_inputs" / "rosmap_simple_category_gene_aggregates.tsv"
-ROSMAP_SHA256 = "4e0ab4204ba837ec7ca0d5920e27f2557849f6acbc0d92189d5737193eab8ebd"
+ROSMAP_FROZEN = PLAN_DIR / "frozen_inputs" / "rosmap_combo_key_drivers_by_category.tsv"
+ROSMAP_SHA256 = "ba506a24d5fc925d732a7a9537b5c0201bf415b6848096068807db744e5498fd"
 SEAAD_PRIMARY = (
     ROOT
-    / "results/validation_human/11_sex_apoe_kda_rosmap_network"
+    / "results/validation_human/12_sex_apoe_kda_combo"
     / "simple_category_gene_aggregates.tsv"
 )
-SEAAD_FROZEN = PLAN_DIR / "frozen_inputs" / "seaad_simple_category_gene_aggregates.tsv"
-SEAAD_SHA256 = "e9593861292cbbdc327b22fc34096dcb5189fa9f3d5de0f135ffaad8426fdda4"
+SEAAD_FROZEN = PLAN_DIR / "frozen_inputs" / "seaad_combo_category_gene_aggregates.tsv"
+SEAAD_SHA256 = "32060ac52e2caa14c1974ee0bce392a50c75317bd23fc3be9abe74bc19755641"
 
 GENCODE_GTF = ROOT / "data/reference/gencode/gencode.v44.basic.annotation.gtf.gz"
 HGNC_SET = ROOT / "data/reference/hgnc/hgnc_complete_set_2026-06-05.txt"
@@ -111,13 +113,21 @@ GWAS_SOURCES = {
 CANDIDATE_DIR = ROOT / "results/minerva_production/19b_genetic_support_candidates"
 TIER1_DIR = ROOT / "results/minerva_production/19b_genetic_support_tier1"
 REGIONAL_DIR = ROOT / "results/minerva_production/19b_genetic_support_regional"
+LEGACY_REGIONAL_DIR = REGIONAL_DIR / "archive/phase19b_simple_aggr_v1"
+LEGACY_REGIONAL_SHA256 = {
+    "clinical_ad_bellenguez2022": "ea9da48e882028b03b9463d7a34f2c65e7d6b472e81c0ad21f48aba014c1438e",
+    "csf_abeta42_gcst90726396": "1190d8a65fed6ce718689ae7d8c90ddc52ed9f6b06502d43868d48486d44b558",
+    "csf_total_tau_gcst90726397": "459ba7fc9f7b0644bbee36eeb366f6597f86e1be0166c8e35f90f9ac340c53ba",
+    "csf_ptau181_gcst90726398": "ab5a98fc4e3f61615c84a2cd9a8a64532b989621ab320e0c17d564001741397d",
+}
 
-SCHEMA = "phase19b_simple_aggr_v1"
+SCHEMA = "phase19b_sex_apoe_kda_combo_v2"
 WINDOW_BP = 1_000_000
 GW_THRESHOLD = 5e-8
-EXPECTED_GENES = 433
-EXPECTED_CONTEXTS = 689
-EXPECTED_P1 = 35
+EXPECTED_GENES = 228
+EXPECTED_CONTEXTS = 381
+EXPECTED_P1 = 3
+EXPECTED_MAPPED_GENES = 226
 
 CHROM_COLUMNS = ["hm_chrom", "chromosome", "chr"]
 POS_COLUMNS = ["hm_pos", "base_pair_location", "position", "pos"]
@@ -201,9 +211,51 @@ def resolve_input(primary: Path, fallback: Path, expected_sha: str, label: str) 
 
 def load_non_mt(path: Path) -> pd.DataFrame:
     frame = pd.read_csv(path, sep="\t", dtype=str, keep_default_na=False, na_values=["NA"])
-    frame = frame[
-        frame["case_id"].eq("non_mt_driver") & ~frame["is_core_mito"].isin(["TRUE"])
-    ].copy()
+    combo_columns = {
+        "signature_group",
+        "sex",
+        "apoe_group",
+        "broad_cell_type",
+        "key_driver",
+        "is_core_mito",
+        "contributing_call_count",
+        "simple_aggregation_score",
+    }
+    validation_columns = {
+        "signature_group",
+        "sex",
+        "apoe_group",
+        "broad_network",
+        "current_symbol",
+        "case_id",
+        "is_core_mito",
+        "returned_call_count",
+        "returned_run_q_acat_score",
+    }
+    if combo_columns.issubset(frame.columns):
+        frame = frame.loc[
+            ~frame["is_core_mito"].astype(str).str.upper().isin(["TRUE", "T", "1", "YES"])
+        ].rename(
+            columns={
+                "broad_cell_type": "broad_network",
+                "key_driver": "current_symbol",
+                "contributing_call_count": "returned_call_count",
+                "simple_aggregation_score": "returned_run_q_acat_score",
+            }
+        )
+    elif validation_columns.issubset(frame.columns):
+        frame = frame.loc[
+            frame["case_id"].eq("non_mt_driver")
+            & ~frame["is_core_mito"].astype(str).str.upper().isin(["TRUE", "T", "1", "YES"])
+        ].copy()
+    else:
+        missing_combo = sorted(combo_columns - set(frame.columns))
+        missing_validation = sorted(validation_columns - set(frame.columns))
+        raise RuntimeError(
+            f"Unsupported KDA aggregate schema in {path}; "
+            f"missing combo fields={missing_combo}, "
+            f"missing validation fields={missing_validation}"
+        )
     frame["score"] = frame["returned_run_q_acat_score"].astype(float)
     frame["calls"] = frame["returned_call_count"].astype(int)
     frame = frame.sort_values(
@@ -379,7 +431,12 @@ def stage_freeze() -> None:
             check("p1_tier_count", tier_counts.get("P1", 0), EXPECTED_P1, tier_counts.get("P1", 0) == EXPECTED_P1),
             check("tier_partition", int(sum(tier_counts.values())), EXPECTED_GENES, sum(tier_counts.values()) == EXPECTED_GENES),
             check("genes_unique", gene_level["gene"].nunique(), EXPECTED_GENES, gene_level["gene"].nunique() == EXPECTED_GENES),
-            check("mapped_gene_count", mapped, ">=420", mapped >= 420),
+            check(
+                "mapped_gene_count",
+                mapped,
+                EXPECTED_MAPPED_GENES,
+                mapped == EXPECTED_MAPPED_GENES,
+            ),
             check("loci_rows_match_mapped", len(loci), mapped, len(loci) == mapped),
             check("loci_have_valid_windows", int((loci["window_end"] > loci["window_start"]).sum()), len(loci), bool((loci["window_end"] > loci["window_start"]).all())),
             check("no_mitochondrial_loci", int(loci["chromosome"].eq("M").sum()), 0, not loci["chromosome"].eq("M").any()),
@@ -660,31 +717,165 @@ def stage_regional() -> None:
     source_rows = []
     combined = []
     scanned = 0
+    reused = 0
     for trait, path in GWAS_SOURCES.items():
-        if not path.is_file():
-            source_rows.append({"schema_version": f"{SCHEMA}_sources", "trait": trait, "path": str(path), "status": "missing_source_skipped"})
-            print(f"regional: SKIPPED {trait} (missing {path})")
-            continue
-        print(f"regional: scanning {trait} ...")
-        summary = scan_gwas(path, loci)
-        summary.insert(0, "schema_version", f"{SCHEMA}_regional")
-        summary.insert(1, "trait", trait)
-        summary["priority_tier"] = summary["gene"].map(tier_map)
         trait_path = out / f"regional_summary_{trait}.tsv"
+        if not path.is_file():
+            legacy_path = LEGACY_REGIONAL_DIR / trait_path.name
+            expected_legacy_sha = LEGACY_REGIONAL_SHA256[trait]
+            if (
+                not legacy_path.is_file()
+                and trait_path.is_file()
+                and sha256_file(trait_path) == expected_legacy_sha
+            ):
+                legacy_path.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(trait_path, legacy_path)
+            if not legacy_path.is_file() or sha256_file(legacy_path) != expected_legacy_sha:
+                source_rows.append(
+                    {
+                        "schema_version": f"{SCHEMA}_sources",
+                        "trait": trait,
+                        "path": str(path.relative_to(ROOT)),
+                        "status": "missing_source_and_validated_cache_unavailable",
+                    }
+                )
+                print(f"regional: SKIPPED {trait} (missing source and validated cache)")
+                continue
+            cached = pd.read_csv(
+                legacy_path,
+                sep="\t",
+                dtype={"gene": str, "chromosome": str},
+            )
+            cached_summary = cached.loc[cached["gene"].isin(loci["gene"])].copy()
+            compare = cached_summary[
+                ["gene", "ensembl_gene_id", "chromosome", "window_start", "window_end"]
+            ].merge(
+                loci.loc[
+                    loci["gene"].isin(cached_summary["gene"]),
+                    ["gene", "ensembl_gene_id", "chromosome", "window_start", "window_end"],
+                ],
+                on="gene",
+                how="outer",
+                suffixes=("_cached", "_current"),
+                validate="one_to_one",
+            )
+            for field in ("ensembl_gene_id", "chromosome", "window_start", "window_end"):
+                if not compare[f"{field}_cached"].astype(str).equals(
+                    compare[f"{field}_current"].astype(str)
+                ):
+                    raise RuntimeError(f"{trait}: cached {field} does not match combo loci")
+            cached_summary["regional_scan_status"] = np.where(
+                cached_summary["chromosome"].astype(str).eq("X"),
+                "not_scanned_source_autosomal_only",
+                "reused_validated_full_list_scan",
+            )
+            cached_x = cached_summary["regional_scan_status"].eq(
+                "not_scanned_source_autosomal_only"
+            )
+            nullable_regional_fields = [
+                "variant_rows",
+                "regional_min_p",
+                "regional_lead_variant",
+                "genome_wide_significant",
+            ]
+            for field in nullable_regional_fields:
+                cached_summary[field] = cached_summary[field].astype(object)
+            cached_summary.loc[
+                cached_x,
+                nullable_regional_fields,
+            ] = pd.NA
+            missing_loci = loci.loc[
+                ~loci["gene"].isin(cached_summary["gene"])
+            ].copy()
+            missing_summary = missing_loci[
+                [
+                    "gene",
+                    "ensembl_gene_id",
+                    "chromosome",
+                    "window_start",
+                    "window_end",
+                ]
+            ].copy()
+            missing_summary["variant_rows"] = pd.NA
+            missing_summary["regional_min_p"] = pd.NA
+            missing_summary["regional_lead_variant"] = pd.NA
+            missing_summary["genome_wide_significant"] = pd.NA
+            missing_summary["regional_scan_status"] = np.where(
+                missing_summary["chromosome"].astype(str).eq("X"),
+                "not_scanned_source_autosomal_only",
+                "not_scanned_source_unavailable",
+            )
+            summary = pd.concat(
+                [cached_summary, missing_summary],
+                ignore_index=True,
+                sort=False,
+            ).sort_values("gene", kind="mergesort")
+            if len(summary) != len(loci) or summary["gene"].nunique() != len(loci):
+                raise RuntimeError(f"{trait}: combo regional rows are not complete")
+            summary["schema_version"] = f"{SCHEMA}_regional"
+            summary["trait"] = trait
+            reused += 1
+            source_rows.append(
+                {
+                    "schema_version": f"{SCHEMA}_sources",
+                    "trait": trait,
+                    "path": str(path.relative_to(ROOT)),
+                    "status": "reused_validated_full_list_scan",
+                    "cached_summary": str(legacy_path.relative_to(ROOT)),
+                    "cached_summary_sha256": expected_legacy_sha,
+                    "reused_candidate_windows": int(
+                        cached_summary["regional_scan_status"]
+                        .eq("reused_validated_full_list_scan")
+                        .sum()
+                    ),
+                    "unresolved_candidate_windows": int(
+                        missing_summary["regional_scan_status"]
+                        .eq("not_scanned_source_unavailable")
+                        .sum()
+                    ),
+                    "windows_with_variants": int(
+                        (pd.to_numeric(cached_summary["variant_rows"]) > 0).sum()
+                    ),
+                    "genome_wide_significant_windows": int(
+                        cached_summary["genome_wide_significant"]
+                        .astype(str)
+                        .str.upper()
+                        .eq("TRUE")
+                        .sum()
+                    ),
+                }
+            )
+            print(
+                f"regional: reused {len(cached_summary)} validated windows for {trait}; "
+                f"{len(missing_summary)} require the unavailable source"
+            )
+        else:
+            print(f"regional: scanning {trait} ...")
+            summary = scan_gwas(path, loci)
+            summary.insert(0, "schema_version", f"{SCHEMA}_regional")
+            summary.insert(1, "trait", trait)
+            summary["regional_scan_status"] = np.where(
+                summary["chromosome"].astype(str).eq("X"),
+                "not_scanned_source_autosomal_only",
+                "scanned_current_source",
+            )
+            scanned += 1
+            source_rows.append(
+                {
+                    "schema_version": f"{SCHEMA}_sources",
+                    "trait": trait,
+                    "path": str(path.relative_to(ROOT)),
+                    "status": "scanned",
+                    "windows_with_variants": int((summary["variant_rows"] > 0).sum()),
+                    "genome_wide_significant_windows": int(
+                        summary["genome_wide_significant"].sum()
+                    ),
+                }
+            )
+        summary["priority_tier"] = summary["gene"].map(tier_map)
         write_tsv(summary, trait_path)
         artifacts.append(trait_path)
         combined.append(summary)
-        scanned += 1
-        source_rows.append(
-            {
-                "schema_version": f"{SCHEMA}_sources",
-                "trait": trait,
-                "path": str(path),
-                "status": "scanned",
-                "windows_with_variants": int((summary["variant_rows"] > 0).sum()),
-                "genome_wide_significant_windows": int(summary["genome_wide_significant"].sum()),
-            }
-        )
     sources_path = out / "regional_sources.tsv"
     write_tsv(pd.DataFrame(source_rows), sources_path)
     artifacts.append(sources_path)
@@ -695,21 +886,73 @@ def stage_regional() -> None:
 
     checks.extend(
         [
-            check("sources_scanned", scanned, ">=1", scanned >= 1),
+            check(
+                "source_tables_materialized",
+                scanned + reused,
+                len(GWAS_SOURCES),
+                scanned + reused == len(GWAS_SOURCES),
+            ),
             check("loci_scanned_per_source", len(loci), len(loci), True),
         ]
     )
     if combined:
-        coverage_ok = all(bool((frame["variant_rows"] > 0).mean() > 0.95) for frame in combined)
-        checks.append(check("window_coverage_above_95pct", coverage_ok, True, coverage_ok))
+        coverage_ok = all(
+            bool(
+                (
+                    pd.to_numeric(
+                        frame.loc[
+                            frame["regional_scan_status"].isin(
+                                [
+                                    "reused_validated_full_list_scan",
+                                    "scanned_current_source",
+                                ]
+                            ),
+                            "variant_rows",
+                        ],
+                        errors="coerce",
+                    )
+                    > 0
+                ).mean()
+                > 0.95
+            )
+            for frame in combined
+        )
+        checks.append(
+            check(
+                "resolved_autosomal_window_coverage_above_95pct",
+                coverage_ok,
+                True,
+                coverage_ok,
+            )
+        )
+    unresolved_windows = sum(
+        int(
+            frame["regional_scan_status"]
+            .eq("not_scanned_source_unavailable")
+            .sum()
+        )
+        for frame in combined
+    )
     finalize_stage(
         out,
         "regional",
         checks,
-        {"sources_scanned": scanned, "sources_missing": len(GWAS_SOURCES) - scanned},
+        {
+            "validation_status": (
+                "validated_complete"
+                if unresolved_windows == 0
+                else "validated_partial_source_unavailable"
+            ),
+            "sources_scanned": scanned,
+            "sources_reused": reused,
+            "candidate_windows_unresolved": unresolved_windows,
+        },
         artifacts,
     )
-    print(f"regional: scanned={scanned} of {len(GWAS_SOURCES)} sources")
+    print(
+        f"regional: scanned={scanned} reused={reused} "
+        f"candidate_windows_unresolved={unresolved_windows}"
+    )
 
 
 def main() -> int:
