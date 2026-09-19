@@ -1,6 +1,6 @@
 # ROSMAP Sex/APOE Broad KDA: Findings, Mitochondrial Programs, and Supplemental SEA-AD Support
 
-- **Analysis date:** 2026-09-12
+- **Analysis date:** 2026-09-14
 - **Status:** exploratory synthesis for candidate prioritization, not confirmatory inference
 - **Discovery cohort:** ROSMAP
 - **Supplemental cross-cohort support:** SEA-AD; useful but not required for retaining a ROSMAP finding
@@ -41,7 +41,7 @@ These labels describe the groups that were analyzed separately. A result seen in
 - **DEG:** a differentially expressed gene. Here it means a gene whose RNA level differs between Alzheimer’s disease and the comparison group.
 - **Up or down:** “up” means more RNA in Alzheimer’s disease; “down” means less.
 - **log2FC:** log2 fold change, a way to report the size and direction of an expression difference. Positive values mean up and negative values mean down.
-- `paper_deg`**:** this report’s stricter ROSMAP DEG label, requiring both an adjusted P value below 0.05 and an expression change larger than the stored effect-size threshold.
+- **`paper_deg`:** this report’s stricter ROSMAP DEG label, requiring both an adjusted P value below 0.05 and an expression change larger than the stored effect-size threshold.
 - **mtDNA:** mitochondrial DNA, the small genome inside mitochondria.
 - **ATP:** a molecule cells use as spendable chemical energy.
 - **OXPHOS:** oxidative phosphorylation, the linked protein complexes mitochondria use to make most cellular ATP.
@@ -80,18 +80,20 @@ Think of the gene network as a road map:
 
 ### Recommended reading order
 
-Readers who mainly want the biology can read the quick answer and Findings 1–17. Sections 1–3 explain evidence and methods. Sections 8–11 explain genetics, next analyses, and limitations. Appendix A contains the complete recurrence inventory.
+Readers who mainly want the biology can read the quick answer and Findings 1–18. Sections 1–3 explain evidence and methods. Sections 8–11 explain genetics, next analyses, and limitations. Appendix A contains the complete recurrence inventory.
 
 ## Quick answer in plain language
 
 The clearest result is that the mitochondrial changes differ across the analyzed sex/APOE and cell-type groups. ROSMAP provides the primary evidence for the candidate drivers. SEA-AD is treated as bonus evidence rather than a pass/fail gate.
 
 1. **The strongest supplemental cross-cohort support is a mitochondrial program, not a driver gene.** Female ε3/ε3 excitatory neurons showed increased mtDNA OXPHOS RNA in both ROSMAP and SEA-AD.
-2. **Male ε3/ε3 inhibitory neurons showed an important mismatch.** mtDNA OXPHOS genes increased, while many nuclear-encoded mitochondrial-support genes decreased. This pattern also appeared in both datasets.
+2. **Male ε3/ε3 inhibitory neurons showed an important mismatch.** mtDNA OXPHOS genes increased, while many nuclear-encoded mitochondrial-support genes decreased. The direction pattern appeared in both datasets, although the ROSMAP direct-broad signal was composition-sensitive.
 3. **Many ROSMAP candidate drivers belong to the ordinary cytosolic ribosome.** `RPL11` and `RPS15` are leading examples. Their network neighborhoods connect cytosolic protein production to mitochondrial OXPHOS changes.
 4. **A second candidate system links lysosomes, autophagy, nutrient sensing, and mitochondria.** `LAMTOR5` is the strongest representative.
 5. **Several narrower candidates suggest testable mechanisms.** These include `WDR82`, `SELENOM`, `SELENOW`, `PGK1`, and the OPC pair `FTL`/`ANKRD11`.
 6. **Exact same-context driver matching is absent, but broader support is present.** Of 72 directly testable ROSMAP driver-category units, zero were selected again in the exact same sex/APOE and broad-cell category. However, `LAGE3`, `MIPOL1`, and `PAPOLA` recur in different contexts, and several mitochondrial programs recur. These relaxed matches count as partial support. The lack of an exact match does not remove a candidate supported by strong ROSMAP recurrence, a coherent network neighborhood, pathway evidence, genetics, or prior experiments.
+7. **The new pre-network pathway releases support the main fine-cell result.** ROSMAP Phase 11 and SEA-AD Phase 15 reproduce mtDNA-OXPHOS enrichment before KDA. Direct broad-cell GSEA is treated as a sensitivity analysis: it strongly reinforces the female ε3/ε3 excitatory signal, but several other patterns change with resolution or composition adjustment.
+8. **Completed Phase 19b adds `INTS8` as a secondary lead.** It is a one-call male ε2 inhibitory-neuron driver with a three-gene mitochondrial neighborhood, moderate Tier 1 support, and family-wise-significant clinical-AD MAGMA evidence. Its lack of KDA recurrence and valid colocalization keeps it below the recurrent primary candidates.
 
 The data do **not** establish causal regulation, a sex/APOE interaction, improved or impaired ATP production, or donor-independent replication. Each finding below explains separately what was observed, why it is interesting, what supports it, and what still needs to be tested.
 
@@ -126,32 +128,51 @@ These labels are provisional as of September 2026. The literature review was foc
 
 ### 2.1 ROSMAP discovery inputs
 
-Primary artifacts:
+Primary fine-cell-to-broad KDA artifacts:
 
 - [category summary](../../../results/minerva_production/20_sex_apoe_kda_combo/combo_category_summary.tsv)
 - [gene-by-category driver table](../../../results/minerva_production/20_sex_apoe_kda_combo/combo_key_drivers_by_category.tsv)
 - [run manifest](../../../results/minerva_production/20_sex_apoe_kda_combo/combo_run_manifest.tsv)
 - [effective mitochondrial query members](../../../results/minerva_production/20_sex_apoe_kda_combo/combo_query_members.tsv.gz)
 - [within-call returned KDA rows and exact overlap genes](../../../results/minerva_production/20_sex_apoe_kda_combo/combo_returned_call_rows.tsv.gz)
-- [source MAST DEG results](../../../results/minerva_production/08_mast/)
 - [exact KDA background members](../../../results/minerva_production/12_rosmap_sex_apoe_mito_kda_runs/kda_background_members.tsv.gz)
 
+Primary pre-network fine-cell pathway artifacts:
+
+- [complete fine-cell pathway grid](../../../results/minerva_production/11_pathway_deg_fine/fine_deg_pathway_ora.tsv.gz)
+- [fine-cell results aggregated by sex/APOE and broad cell type](../../../results/minerva_production/11_pathway_deg_fine/fine_deg_pathway_broad_cell_summary.tsv)
+- [fine-cell Phase 11 status](../../../results/minerva_production/11_pathway_deg_fine/fine_deg_pathway_status.tsv)
+
+Secondary direct-broad sensitivity artifacts:
+
+- [donor-level broad-cell GSEA grid](../../../results/minerva_production/11_pathway_deg_broad/broad_deg_pathway_gsea.tsv.gz)
+- [composition-adjusted concordance](../../../results/minerva_production/11_pathway_deg_broad/broad_deg_pathway_composition_concordance.tsv)
+- [broad-cell Phase 11 status](../../../results/minerva_production/11_pathway_deg_broad/broad_deg_pathway_status.tsv)
+
 The contrasts are AD versus NCI **within** each fine cell type and one of six groups: `F_e2`, `F_e33`, `F_e4`, `M_e2`, `M_e33`, and `M_e4`.
+
+The evidence hierarchy in this revision follows the project goal: fine-cell results are interpreted first and then summarized within sex/APOE × broad-cell categories. Direct broad-cell pseudobulk results are a secondary sensitivity analysis. They improve donor-level and continuous-rank assessment but discard fine-subtype information, so they can strengthen or qualify a fine-cell finding but do not replace it.
 
 ROSMAP `paper_deg` is defined in the stored output as within-contrast BH FDR `< 0.05` and `|log2FC| > log2(1.3)`. The KDA query contains effective core-MitoCarta DEGs; consequently, the mere presence of mitochondrial biology is expected. The informative outputs are the program, direction, context, and non-MT network neighborhood.
 
 The `is_core_mito` and non-MT counts below initially preserve the stored Phase 09 labels. A separate HGNC–MitoCarta identity audit is reported in Section 4.1 because synonym-only cross-gene matches affect this field.
 
-### 2.2 Targeted mitochondrial-program analysis
+### 2.2 Mitochondrial-program analysis
 
-Four frozen gene sets from [phase13_respiratory_modules.tsv](../../../config/phase13_respiratory_modules.tsv) were evaluated in each eligible KDA call:
+Phase 11 first tested mitochondrial pathways **before KDA** in each estimable fine-cell contrast. The primary fine-cell ORA used strict mitochondrial DEGs, the exact tested core-MitoCarta background for that context, and three queries: AD-any, AD-up, and AD-down. It covered 324 planned contrasts, of which 321 were estimable, and tested the legacy four programs, 46 broad MitoCarta programs, and 149 complete MitoCarta pathways. Local within-contrast/collection BH FDR is primary; the study-wide BH FDR is a sensitivity measure.
+
+The primary interpretation aggregates significant fine-cell results to sex/APOE × broad-cell categories without pooling away the originating fine types. A separate KDA-aligned compatibility analysis evaluated the same programs in the 194 effective Phase 20 queries.
+
+The four frozen benchmark gene sets from [phase13_respiratory_modules.tsv](../../../config/phase13_respiratory_modules.tsv) are:
 
 - 13 mtDNA-encoded OXPHOS genes;
 - 86 nuclear-encoded structural OXPHOS genes;
 - 155 mitochondrial-translation genes;
 - 19 MICOS/inner-membrane genes.
 
-For each call, the effective core-MitoCarta DEG query was compared with that call’s exact background restricted to core-MitoCarta genes using a one-sided hypergeometric test. Benjamini–Hochberg correction was applied across the four programs within that call. This is a targeted exploratory reanalysis of frozen modules, not a preregistered test.
+For the KDA-aligned compatibility layer, each effective core-MitoCarta DEG query was compared with that call’s exact core-MitoCarta background using a one-sided hypergeometric test, with Benjamini–Hochberg correction across the four programs within the call. This layer describes the pathway content of the KDA queries; it is not an independent DEG test.
+
+Direct broad-cell Phase 11 analysis used donor-level pseudobulk contrasts. Preranked GSEA over all tested core mitochondrial genes is primary at that resolution; thresholded ORA and composition-adjusted GSEA are sensitivity analyses. Positive normalized enrichment scores (NES) point toward AD-up and negative NES toward AD-down. These results retain donor-level structure but lose subtype localization.
 
 “Occurrences” below are gene-by-call observations. They are not independent donors or unique genes.
 
@@ -176,7 +197,12 @@ SEA-AD inputs:
 - [run manifest](../../../results/validation_human/12_sex_apoe_kda_combo/10a_inputs/seaad_kda_run_manifest.tsv)
 - [query members](../../../results/validation_human/12_sex_apoe_kda_combo/10a_inputs/seaad_kda_signature_members.tsv.gz)
 - [background members](../../../results/validation_human/12_sex_apoe_kda_combo/10a_inputs/seaad_kda_background_members.tsv.gz)
-- [source DEG results](../../../results/validation_human/08_deg_fine/fine_supertype_phase18_parity/tested/)
+- [source fine-cell DEG results](../../../results/validation_human/08_deg_fine/fine_supertype_phase18_parity/tested/)
+- [source broad-cell DEG status](../../../results/validation_human/08_deg_broad/status.tsv)
+- [primary fine-cell pathway summary](../../../results/validation_human/15_pathway_deg_fine/seaad_fine_deg_pathway_broad_cell_summary.tsv)
+- [fine-cell Phase 15 status](../../../results/validation_human/15_pathway_deg_fine/seaad_fine_deg_pathway_status.tsv)
+- [secondary direct-broad GSEA](../../../results/validation_human/15_pathway_deg_broad/seaad_broad_deg_pathway_gsea.tsv.gz)
+- [broad-cell Phase 15 status](../../../results/validation_human/15_pathway_deg_broad/seaad_broad_deg_pathway_status.tsv)
 
 SEA-AD was analyzed as a **graded support system**, not a required validation gate:
 
@@ -186,7 +212,7 @@ SEA-AD was analyzed as a **graded support system**, not a required validation ga
 4. **Pathway or mitochondrial-program support:** related genes or the same biological program recur even when the key-driver ranking changes.
 5. **No added SEA-AD support:** the comparison is unavailable or returns a different result. Given SEA-AD’s size and imbalance, this is not by itself a reason to discard a ROSMAP finding.
 
-SEA-AD uses dementia versus no-dementia labels, cohort-specific networks, and an FDR-only sensitivity query rather than the ROSMAP FDR-plus-effect threshold. It has only 22 active KDA calls, with 20 in `M_e33`. These differences greatly limit exact matching across sex, APOE, and cell type.
+SEA-AD uses dementia versus no-dementia labels and cohort-specific networks. Its KDA layer uses an FDR-only sensitivity query rather than the ROSMAP FDR-plus-effect threshold and has only 22 active calls, with 20 in `M_e33`. In contrast, the primary Phase 15 fine-cell pathway analysis applies the same FDR-plus-effect rule as Phase 11, but only 381/774 structural contrasts are estimable and just 30 have a nonempty strict mitochondrial query. These differences greatly limit exact matching across sex, APOE, and cell type.
 
 The practical rule in this report is:
 
@@ -262,7 +288,22 @@ Recurrence across fine-cell types does not create independent replication becaus
 
 
 
-### 4.1 Overall targeted program results
+### 4.1 Fine-cell pre-network and KDA-aligned program results
+
+The regenerated Phase 11/15 releases now provide an important separation between pathway signal already present in the fine-cell DEG lists and pathway signal observed in the subset that proceeded to KDA. For the direction-combined strict mitochondrial DEG query, the pre-network results were:
+
+
+| Program                   | ROSMAP Phase 11 local/global significant queries | SEA-AD Phase 15 local/global significant queries |
+| ------------------------- | ------------------------------------------------ | ------------------------------------------------ |
+| mtDNA OXPHOS              | 99/97 of 201 testable                            | 4/3 of 30 testable                               |
+| Nuclear structural OXPHOS | 35/34 of 201 testable                            | 0/0 of 30 testable                               |
+| Mitochondrial translation | 0/0 of 201 testable                              | 0/0 of 30 testable                               |
+| MICOS/inner membrane      | 0/0 of 201 testable                              | 0/0 of 30 testable                               |
+
+
+This shows that mtDNA- and nuclear-OXPHOS enrichment is present before network analysis and is not created by KDA driver selection. Fine-to-broad summaries also localize the dominant directional patterns: mtDNA-up enrichment occurs in 12/14 `F_e33` excitatory and 13/14 `F_e33` inhibitory directional queries; coordinated mtDNA/nuclear up occurs in 9/12 and 8/12 `F_e2` excitatory queries; nuclear-OXPHOS down occurs in 4/13 `F_e4` excitatory queries; mtDNA/nuclear down occurs in 4/14 and 7/14 `M_e2` excitatory queries; and mtDNA up occurs in 11/13 `M_e4` excitatory queries. These counts are fine-cell results summarized by broad class, not direct broad-cell tests.
+
+The KDA-aligned compatibility results remain useful because they describe exactly the query material used to nominate the drivers:
 
 
 | Program                   | ROSMAP query occurrences, up/down | ROSMAP significant calls | SEA-AD query occurrences, up/down | SEA-AD significant calls |
@@ -273,7 +314,7 @@ Recurrence across fine-cell types does not create independent replication becaus
 | MICOS/inner membrane      | 103, 31/72                        | 0/194                    | 4, 0/4                            | 0/22                     |
 
 
-The translation and MICOS counts represent a diffuse DEG burden but **not** enrichment relative to the core-MitoCarta background under this test.
+In this table, the translation and MICOS counts represent a diffuse DEG burden but **not** enrichment relative to the core-MitoCarta background under the KDA-aligned test. The separate direction-combined strict fine-cell ORA above reaches the same zero-enrichment conclusion for those two frozen programs; a single directional mitochondrial-translation result was locally significant in `M_e2` but did not survive study-wide correction.
 
 **MitoCarta identity sensitivity.** In the stored [Phase 09 annotation](../../../results/minerva_production/09_annotate_genes/gene_annotation_master.tsv.gz), 59 current HGNC symbols are flagged through a `unique_synonym` match to a different MitoCarta canonical symbol. Five occur among returned drivers: `ACP1`, `PSAP`, `RNH1`, `RPL13`, and `RPS12`. In particular, cytosolic `RPL13` and `RPS12` were matched to the distinct mitochondrial genes `MRPL13` and `MRPS12`. The official 228-gene/381-unit non-MT counts above preserve the stored classification.
 
@@ -296,6 +337,29 @@ As a post hoc program-level sensitivity check, removing all 59 identity-conflict
 
 This is the most important sex/APOE-related pattern, but it remains **stratum-resolved**, not proof that the AD effect differs statistically between strata. A donor-level disease × sex/APOE interaction on frozen program scores is required.
 
+### 4.3 Secondary direct-broad sensitivity
+
+The direct broad-cell GSEA is informative as a sensitivity check but is not the primary resolution. The most relevant exact comparisons are:
+
+
+| Category and program | ROSMAP primary NES; local BH | ROSMAP composition-adjusted NES; local BH | SEA-AD NES; local BH |
+| --- | --- | --- | --- |
+| `F_e33` excitatory, mtDNA OXPHOS | `+2.75`; `2.73 × 10^-12` | `+2.70`; `1.86 × 10^-12` | `+3.12`; `1.94 × 10^-17` |
+| `F_e33` excitatory, mitochondrial translation | `-1.58`; `0.00307` | `-1.63`; `0.00125` | `-1.66`; `0.000262` |
+| `M_e33` inhibitory, mtDNA OXPHOS | `+2.72`; `3.18 × 10^-6` | `+1.09`; `0.339` | `+2.79`; `1.13 × 10^-10` |
+| `M_e33` inhibitory, nuclear OXPHOS | `-1.47`; `0.0321` | `-1.18`; `0.339` | `-2.15`; `9.50 × 10^-7` |
+
+
+SEA-AD has no equivalent composition-adjusted broad-cell DEG release, so the middle column is a ROSMAP-only sensitivity.
+
+Three conclusions follow.
+
+First, direct broad-cell data strongly reinforce the `F_e33` excitatory mtDNA-up result: it appears in both cohorts and survives the ROSMAP composition adjustment. Second, direct broad-cell GSEA adds a new **secondary** lead in the same category: mitochondrial-translation genes rank toward the disease-down end in both cohorts and after ROSMAP composition adjustment. The fine-cell thresholded ORA found no mitochondrial-translation enrichment, so this is a broad/rank-based hypothesis, not a replacement for the fine-cell conclusion.
+
+Third, the direct-broad result qualifies the `M_e33` inhibitory mismatch. The unadjusted ROSMAP and SEA-AD broad-cell results agree, but neither ROSMAP component remains significant after composition adjustment. The fine-cell signed-gene agreement remains useful, while composition-independent broad-cell support is not established.
+
+Broad-cell results are not uniformly concordant across cohorts: among 112 jointly tested legacy-program/category pairs, 60 had the same NES sign. Of 32 pairs significant in both cohorts, 23 agreed in sign and nine did not. In particular, the direct-broad nuclear-OXPHOS result does not reproduce the fine-cell `F_e4` decrease and reverses between cohorts for `M_e4`. This resolution dependence is why the fine-cell-to-broad summaries remain primary.
+
 ### Finding 1: female APOE ε3/ε3 cells show a strong mtDNA OXPHOS increase
 
 **Provisional novelty: Moderate.** Increased mitochondrial transcription in Alzheimer’s disease is not new, but this female ε3/ε3 excitatory-neuron pattern and its cross-cohort support add a less-established context.
@@ -312,6 +376,8 @@ Across the eligible `F_e33` fine-cell calls:
 - all 217 occurrences were AD-up and none were AD-down;
 - 29 calls had statistically significant enrichment of mtDNA OXPHOS genes; and
 - nuclear OXPHOS also leaned up, with 76 up and 13 down occurrences.
+
+The separate Phase 11 fine-cell DEG analysis strengthens this result before any network selection: 12/14 `F_e33` excitatory fine-cell directional queries and 13/14 inhibitory queries had significant mtDNA-up enrichment. This is an analytical cross-check in the same ROSMAP data, not biological replication. At direct broad resolution, the excitatory result was significant in both cohorts and survived ROSMAP composition adjustment (Section 4.3).
 
 The number 217 does **not** mean that there are 217 different mtDNA OXPHOS genes. The human mitochondrial genome has only 13 OXPHOS protein-coding genes. An occurrence is counted again whenever the same gene appears in another eligible fine-cell call. The result therefore means that a small mitochondrial gene set repeatedly appeared across cells.
 
@@ -366,6 +432,8 @@ Across the eligible `M_e33` calls:
 
 The opposite directions are important because OXPHOS complexes contain matching parts made from both genomes. The cell must produce and assemble both sets of parts in the correct amounts.
 
+The refreshed pre-network fine-cell results refine the cell localization. ROSMAP mtDNA-up enrichment occurred in three `M_e33` inhibitory fine types, but no inhibitory fine type had significant nuclear-OXPHOS-down ORA; the two significant nuclear-down fine-cell results were excitatory (`Exc NRGN` and `Exc RELN CHD7`). SEA-AD separately showed mtDNA-up enrichment in `Lamp5_2` and `Pvalb_14`, plus a locally significant but not study-wide-significant nuclear-down result in `Pvalb_2`. Thus, the matched inhibitory-neuron mismatch is supported by signed gene overlap and unadjusted direct-broad GSEA, not by the same fine inhibitory subtype showing both enriched components in each cohort.
+
 #### What SEA-AD added
 
 In the matched male ε3/ε3 inhibitory-neuron comparison, ROSMAP and SEA-AD shared 22 mitochondrial query genes. Nineteen had the same fixed AD direction in both datasets; only three had opposite directions.
@@ -380,6 +448,8 @@ Examples of concordant nuclear or maintenance genes that were down include:
 - mitochondrial maintenance: `ENDOG` and `MTCH1`.
 
 The cross-cohort overlap was significant after multiple-test correction (`BH = 0.0417`). Removing unresolved mitochondrial identity-conflict genes left 21 shared genes and a similar result (`BH = 0.0486`). The three discordant genes were `HIBCH`, `ISCU`, and `TMEM126B`.
+
+Direct broad-cell GSEA also placed mtDNA OXPHOS up and nuclear OXPHOS down in male ε3/ε3 inhibitory neurons in both cohorts. However, both ROSMAP signals became nonsignificant after its composition adjustment (`BH = 0.339` for each). This lowers confidence that the broad-cell mismatch is composition-independent and makes fine-subtype and donor-level follow-up especially important.
 
 #### Why this may matter
 
@@ -423,6 +493,8 @@ Across eligible `F_e2` calls:
 
 This is one of the strongest same-direction patterns in ROSMAP. Both the mitochondrial instructions and the nuclear instructions for energy-making machinery mostly increased.
 
+The pre-network Phase 11 result points to excitatory neurons as a major source: mtDNA-up enrichment occurred in 9/12 testable `F_e2` excitatory fine types and nuclear-OXPHOS-up enrichment in 8/12. Direct-broad ROSMAP GSEA retained strong nuclear-OXPHOS upregulation in excitatory neurons but did not significantly reproduce the mtDNA component, so the coordinated two-genome claim remains primarily fine-cell evidence.
+
 #### Why this may matter
 
 APOE ε2 is associated with lower Alzheimer’s risk than APOE ε4 at the population level ([Belloy et al., 2019](https://doi.org/10.1016/j.neuron.2019.03.075)). A coordinated mitochondrial response could be protective, compensatory, or simply a different disease state. It is therefore an interesting mechanism to test.
@@ -450,7 +522,7 @@ Human genetics strongly supports different Alzheimer’s risks across APOE allel
 
 Directly compare female ε2 with female ε3/ε3 and female ε4 using donor-pseudobulk interaction models. Then measure respiratory proteins, ATP production, and stress tolerance in APOE-isogenic female neuronal and glial models.
 
-### Finding 4: female APOE ε4 cells show a strong nuclear-OXPHOS decrease
+### Finding 4: female APOE ε4 fine-cell results show a strong nuclear-OXPHOS decrease
 
 **Provisional novelty: Moderate.** APOE ε4-related mitochondrial problems are well studied, but the strongly nuclear-sided decrease in this female, cell-resolved ROSMAP context is a more specific extension.
 
@@ -468,6 +540,8 @@ Across eligible `F_e4` calls:
 - 6 calls had significant nuclear OXPHOS enrichment.
 
 The nuclear side is the clearest part of the result: about 95% of its occurrences were AD-down. The mtDNA side was more mixed, so it should not be described as a uniform decrease of all mitochondrial genes.
+
+Phase 11 pre-network ORA localizes the strongest nuclear-down component to 4/13 `F_e4` excitatory fine types. The direct-broad sensitivity did **not** reproduce it: ROSMAP excitatory nuclear OXPHOS was nonsignificant and weakly positive (`NES = +0.70`, local BH `= 0.991`), while SEA-AD was significantly positive (`NES = +2.01`, local BH `= 5.62 × 10^-5`). Because the primary fine-cell and secondary broad-cell resolutions disagree, this finding should be described specifically as a fine-cell/KDA signal rather than a broad-cell-wide female ε4 effect.
 
 #### Why this may matter
 
@@ -489,6 +563,7 @@ APOE ε4 models show altered mitochondrial and mitophagy-related phenotypes ([Sc
 - It does not prove that the decrease is unique to women or ε4 carriers.
 - The mtDNA pattern is mixed.
 - The only active SEA-AD comparison was too small to add meaningful support or contradiction.
+- Direct broad-cell GSEA does not reproduce the nuclear-down direction and therefore lowers confidence in resolution-independent generalization.
 
 
 
@@ -514,6 +589,8 @@ Across eligible `M_e2` calls:
 - 10 calls had significant nuclear OXPHOS enrichment.
 
 About 90% of mtDNA OXPHOS occurrences and 87% of nuclear OXPHOS occurrences were down. This differs from the mitonuclear mismatch in Finding 2 because both sides of the system move mainly in the same downward direction.
+
+The pre-network Phase 11 analysis separately found mtDNA-down enrichment in 12 fine-cell contrasts and nuclear-OXPHOS-down enrichment in 17. Within excitatory neurons the counts were 4/14 and 7/14, respectively. Direct-broad ROSMAP GSEA also showed nuclear-OXPHOS down in five of six estimable broad classes and mtDNA OXPHOS down in four, although SEA-AD cannot evaluate the ε2 stratum.
 
 #### Why this may matter
 
@@ -565,6 +642,8 @@ Across eligible `M_e4` calls:
 
 The mtDNA-up tendency is clear. The nuclear side is less one-sided than in `M_e33`, so this should be called a **possible weaker mismatch**, not a fully established one.
 
+ROSMAP direct-broad excitatory GSEA supported both components (`mtDNA NES = +2.03`, nuclear OXPHOS `NES = -1.72`), and both survived composition adjustment. The SEA-AD direct-broad sensitivity did not reproduce the pattern: its male ε4 excitatory mtDNA result was nonsignificant and its nuclear-OXPHOS result was strongly positive (`NES = +2.46`). No male ε4 SEA-AD fine-cell KDA query was active, so this is a cross-resolution warning rather than an exact fine-cell refutation.
+
 #### Why this may matter
 
 If confirmed, the pattern would suggest that increasing mitochondrial-genome RNA without a matching nuclear response is not limited to male ε3/ε3 cells. Comparing the strength of the pattern between male ε3/ε3 and male ε4 could help separate a general disease response from an APOE-dependent response.
@@ -583,6 +662,7 @@ APOE ε4 and altered mitochondrial biology are well-supported parts of Alzheimer
 - SEA-AD does not cover this group; that missing support is neutral rather than a failed result.
 - The analysis does not prove a male × ε4 interaction.
 - RNA directions do not demonstrate OXPHOS function.
+- Direct-broad results reverse the nuclear direction between cohorts, so the mismatch is not cross-cohort robust at that resolution.
 
 
 
@@ -1122,15 +1202,52 @@ Freeze each ROSMAP driver-associated mitochondrial gene set before looking at an
 
 ## 8. Orthogonal human-genetic evidence
 
-The local [phase19b first-pass screen](../../../results/minerva_production/19b_genetic_support_tier1/fungen_gene_evidence.tsv) provides gene-level, not cell-mechanism-level, evidence:
+### Finding 18: `INTS8` is a genetically supported but singleton mitochondrial-network lead
+
+**Provisional novelty: Moderate.** The completed genetic screen supports `INTS8` at the gene level, while its specific male ε2 inhibitory-neuron mitochondrial neighborhood remains a new and weakly replicated network hypothesis.
+
+#### Plain-language takeaway
+
+`INTS8` was not a recurrent KDA driver, but it is the one previously underemphasized candidate that gains meaningful priority from the completed Phase 19b analysis. Its network neighborhood contains three mitochondrial genes, and its clinical-AD MAGMA result passes the correction frozen for all 228 candidates and four traits.
+
+#### What ROSMAP and genetics showed
+
+- `INTS8` was returned in one `M_e2` inhibitory fine-cell call, `Inh L3-5 SST MAFB`.
+- It ranked fourth among non-MT drivers in that broad category, with a within-call adjusted KDA P value of `0.01236`.
+- Its exact three-gene overlap was `LIAS`, `TIMM9`, and `TIMMDC1`, connecting lipoate synthesis, mitochondrial protein import, and respiratory complex-I assembly.
+- Phase 19b Tier 1 assigned `INTS8` **moderate** support from the registered public evidence sources.
+- Clinical-AD MAGMA gave `P = 4.5842 × 10^-5`, just below the frozen family-wise threshold of `5.4825 × 10^-5`; none of the three CSF-biomarker traits was significant.
+- One of its two public QTL routes carried a source-significant signal, but the source was not sex/APOE-stratified and no valid H0–H4 colocalization test could be run.
+
+`INTS8` therefore deserves follow-up as a genetics-supported secondary candidate. It does not outrank `RPL11`, `RPS15`, or `LAMTOR5` as a network finding because it appeared in only one KDA call, and gene-level MAGMA association cannot validate this cell type, stratum, or three-gene neighborhood.
+
+#### What is not proven
+
+- MAGMA does not identify the causal variant or prove that `INTS8` is the causal gene at the locus.
+- The public QTL annotation is neither disease-specific nor sex/APOE-specific, and no colocalization estimate is available.
+- SEA-AD did not return `INTS8`, and no male ε2 SEA-AD KDA category was active.
+- A three-gene, one-call neighborhood is vulnerable to network topology and threshold choices.
+
+#### Best next evidence
+
+Resolve the clinical-AD locus with complete, source-matched QTL summary statistics and LD, then test colocalization. In parallel, perturb `INTS8` in inhibitory-neuron models and measure the exact `LIAS`/`TIMM9`/`TIMMDC1` neighborhood, complex-I assembly, and respiration.
+
+### Phase 19b screen across all 228 candidates
+
+The current [Phase 19b candidate freeze](../../../results/minerva_production/19b_genetic_support_candidates/candidates.tsv) contains all 228 Phase 20 non-MT genes and 381 category contexts; 226 genes map to GENCODE v44 loci. The completed [Tier 1 screen](../../../results/minerva_production/19b_genetic_support_tier1/fungen_gene_evidence.tsv) provides gene-level, not cell-mechanism-level, evidence:
 
 - **Strong:** `APOE`, `PLCG2`;
-- **Weak:** `SELENOW` through public TWAS-list membership;
+- **Moderate:** `INTS8`;
+- **Weak:** `CFL1`, `FBXW4`, `RABAC1`, `SAT2`, `SELENOW`, `SHMT1`, `TMEM160`, `UBC`, and `ZNF428`;
 - **None found in that registered source:** `RPL11`, `RPS15`, `WDR82`, `SELENOM`, `LAMTOR5`, `PGK1`, `FTL`, `ANKRD11`, and `LAGE3`.
 
-“None found” is not evidence that no genetic association exists. A focused [RPS15 public-data recovery](../../../results/minerva_production/19_genetic_support_opc_rps15_public_recovery%20%28deprecated%29/opc_rps15_status.tsv) found suggestive QTL signals but no resolved colocalization and no newly validated gene.
+“None found” is not evidence that no genetic association exists. It means that the registered sources did not supply qualifying gene-level evidence under the frozen rules.
 
-The genetics therefore strengthens `PLCG2` and expectedly `APOE`, modestly supports `SELENOW`, and does not independently validate the main ribosomal or LAMTOR5 network mechanisms.
+The corrected [MAGMA screen](../../../results/minerva_production/19b_genetic_support_magma/magma_candidate_results.tsv) assessed 832/912 candidate-by-trait records; 80 retain explicit symbol or reference-model limitations. Six rows passed `0.05 / (228 × 4)`: `APOE` for clinical AD and all three CSF traits, plus `PLCG2` and `INTS8` for clinical AD. Thus, MAGMA reinforces the same strong/moderate genes rather than rescuing a new ribosomal or lysosomal candidate.
+
+The [QTL audit](../../../results/minerva_production/19b_genetic_support_qtl/qtl_coverage.tsv) evaluated 538 routes for the 116 preregistered P1/P2 genes. There were 269 source-significant routes across 90 genes, but none of the public sources was sex/APOE-stratified. These are routing annotations, not exact-context disease support. Of 2,152 QTL-by-GWAS decisions, 47 passed the signal gate; all 47 were `not_assessable` because compatible full QTL statistics, LD, or fitted multi-signal models were unavailable. The [colocalization file](../../../results/minerva_production/19b_genetic_support_coloc/colocalization.tsv.gz) is therefore header-only, which means **not tested**, not negative colocalization.
+
+The completed genetics therefore strengthens `PLCG2` and expectedly `APOE`, elevates singleton `INTS8` as a secondary lead, modestly supports `SELENOW`, and does not independently validate the main ribosomal or `LAMTOR5` network mechanisms.
 
 ## 9. Evidence-based candidate priorities
 
@@ -1144,6 +1261,7 @@ The genetics therefore strengthens `PLCG2` and expectedly `APOE`, modestly suppo
 | 5        | `PGK1`–`BNIP3/BNIP3L` astrocyte module | Exact focused neighborhood, driver DEG in two calls, human glial-program and APOE4-mitophagy context      | Only three calls, inconsistent PGK1 direction, and possible ROSMAP donor overlap with prior work |
 | 6        | OPC `FTL`/`ANKRD11` module             | Repeated iron/GPX4/OXPHOS neighborhood and exploratory autophagy/mitophagy ORA                            | One OPC fine type, nearly identical neighborhoods, and no direct ferroptosis measurement         |
 | 7        | `PLCG2` inhibitory mtDNA signal        | Strong gene-level genetics and relevant AD literature                                                     | Single-gene `MT-CO1` overlap, no driver DEG, and unexpected cell context                         |
+| 8        | `INTS8` mitochondrial import/complex-I lead | Moderate Tier 1 support, family-wise-significant clinical-AD MAGMA, and a focused three-gene neighborhood | Singleton KDA call, no valid colocalization, and no exact-context SEA-AD test                     |
 
 
 The relaxed SEA-AD framework adds three secondary cross-cohort leads:
@@ -1155,6 +1273,8 @@ The relaxed SEA-AD framework adds three secondary cross-cohort leads:
 These three genes are not promoted above the primary ROSMAP candidates because the global cross-cohort gene overlap remains nonsignificant (`P = 0.0812`) and the contexts differ. Their recurrence is still useful for the general Alzheimer’s-driver goal.
 
 For a main paper narrative, the recurrent ROSMAP KDA drivers and their mitochondrial neighborhoods can serve as the central discovery results. SEA-AD program and cross-context matches should be presented as supplemental confidence-building evidence, not as a filter that determines which ROSMAP candidates may be discussed.
+
+The direct broad-cell analyses should be presented separately as sensitivity results. They reinforce the leading `F_e33` excitatory mtDNA program and nominate an additional rank-based mitochondrial-translation decrease, but their resolution and composition dependence make them unsuitable as a substitute for the fine-cell-to-broad analysis.
 
 ## 10. Artifacts needed to support or refute each claim
 
@@ -1197,6 +1317,7 @@ For a main paper narrative, the recurrent ROSMAP KDA drivers and their mitochond
 - `PGK1`: astrocyte glycolytic flux, lactate, hypoxia signaling, BNIP3/BNIP3L-dependent mitophagy, and APOE-genotype interaction.
 - `FTL`/`ANKRD11`: OPC iron pool, ferritin turnover, lipid peroxidation, GPX4 activity, maturation, and mitochondrial function.
 - `PLCG2`: cell-identity validation followed by neuron/microglia-specific perturbation and MT-CO1/respiration assays.
+- `INTS8`: locus resolution/colocalization followed by inhibitory-neuron perturbation, complex-I assembly, mitochondrial import, and respiration.
 
 This evidence ladder follows the precedent of moving from human network prioritization to context-specific perturbation used in prior sex-specific AD KDA work ([Guo et al., 2023](https://doi.org/10.1186/s13024-023-00624-5)).
 
@@ -1213,6 +1334,8 @@ This evidence ladder follows the precedent of moving from human network prioriti
 9. **mtRNA signals are QC-sensitive.** The WDR82 and PLCG2 findings especially require checks for mitochondrial read fraction, RNA quality, ambient RNA, doublets, and altered cell-state composition.
 10. **Pathway ORA is exploratory.** The background is network-aware at the gene-list level but does not model node degree, gene correlation, or repeated selection across related networks.
 11. **Literature is supporting context, not validation.** Studies in cell lines, mice, or the same discovery resource cannot independently establish the proposed ROSMAP mechanism.
+12. **Fine and direct-broad analyses trade different information.** Fine-cell analyses preserve subtype localization but inherit the upstream donor-independence concern; direct broad pseudobulk retains donor-level structure but can mix subtype and composition effects. Agreement strengthens a claim, while disagreement makes it resolution-dependent rather than allowing either analysis to be silently ignored.
+13. **The completed genetics still lacks colocalization.** Regional GWAS proximity and source-significant QTL routes are annotations. No candidate had a valid H0–H4 colocalization result, so these layers cannot establish a shared causal variant.
 
 
 
@@ -1220,15 +1343,18 @@ This evidence ladder follows the precedent of moving from human network prioriti
 
 The most defensible study-level narrative is:
 
-> AD-associated mitochondrial transcription differs across sex/APOE strata, with coordinated OXPHOS upregulation in female ε2/ε3 contexts, nuclear-OXPHOS repression in female ε4, broad mtDNA/nuclear repression in male ε2, and mtDNA-up/nuclear-down discordance in male ε3/ε4 contexts. Non-mitochondrial KDA candidates connect these programs primarily to cytosolic ribosome/translation and lysosome–autophagy–nutrient sensing.
+> AD-associated mitochondrial transcription differs across sex/APOE strata, with coordinated OXPHOS upregulation in female ε2 and ε3/ε3 contexts, nuclear-OXPHOS repression in female ε4, broad mtDNA/nuclear repression in male ε2, and mtDNA-up/nuclear-down discordance in male ε3/ε4 contexts. Non-mitochondrial KDA candidates connect these programs primarily to cytosolic ribosome/translation and lysosome–autophagy–nutrient sensing.
+
+The regenerated Phase 11 fine-cell pathway analysis supports this as a **fine-cell discovery narrative**, but the direct-broad sensitivity shows that not every component generalizes across resolution. The clearest resolution-robust result is `F_e33` excitatory mtDNA-OXPHOS upregulation. The `M_e33` inhibitory mismatch remains cross-cohort directional evidence, but its ROSMAP broad-cell components do not survive composition adjustment. The `F_e4` and `M_e4` nuclear directions are explicitly resolution- or cohort-dependent.
 
 ROSMAP is sufficient to nominate the driver genes below as discovery-stage, testable mechanisms:
 
 - recurrent module representatives: `RPL11`, `RPS15`, `LAMTOR5`;
 - focused novel candidates: `WDR82`, `SELENOM`, `SELENOW`, `PGK1`;
-- context-specific secondary modules: OPC `FTL`/`ANKRD11`, inhibitory `PLCG2`, astrocyte `APOE`, and F_e4 vascular heat shock.
+- context-specific secondary modules: OPC `FTL`/`ANKRD11`, inhibitory `PLCG2`, astrocyte `APOE`, and F_e4 vascular heat shock;
+- genetics-supported secondary lead: singleton inhibitory-neuron `INTS8`.
 
-SEA-AD adds strong program-level support for `F_e33` excitatory mtDNA upregulation and `M_e33` inhibitory mitonuclear discordance. It also adds context-relaxed gene support for `LAGE3`, `MIPOL1`, and `PAPOLA`. The absence of an exact same-context non-MT driver match is reported transparently but does not invalidate or remove the ROSMAP candidates.
+SEA-AD adds strong program-level support for `F_e33` excitatory mtDNA upregulation and directional support for `M_e33` inhibitory mitonuclear discordance. It also adds context-relaxed gene support for `LAGE3`, `MIPOL1`, and `PAPOLA`. The absence of an exact same-context non-MT driver match is reported transparently but does not invalidate or remove the ROSMAP candidates.
 
 The immediate priorities are donor-aware interaction testing, network-robustness analyses, and mechanistic experiments. Additional cross-cohort testing is valuable but optional. Those analyses will determine whether the current patterns reflect genuine sex/APOE modification or thresholded recurrence within related postmortem data.
 
