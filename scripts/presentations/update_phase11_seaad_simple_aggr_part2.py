@@ -1071,7 +1071,7 @@ def append_summary_slide(prs: Presentation, facts: dict[str, Any]):
         add_text(slide, str(count), 11.42, y, 0.35, 0.22, size=10.4, color=BLUE, bold=True, align=PP_ALIGN.RIGHT)
     add_text(
         slide,
-        "Counts are category presence—not independent replication or call counts.",
+        "Counts are category presence—not independent replication or counts of KDA calls.",
         7.08, 5.99, 4.74, 0.24, size=8.7, color=GRAY, italic=True,
     )
     add_text(

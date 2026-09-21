@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Insert an all-gene ROSMAP fine-cell DEG summary after slide 3.
 
-The slide summarizes significant Phase 08 DEG rows across the six sex/APOE
+The slide summarizes Phase 08 DEG rows across the six sex/APOE
 strata. Phase 11's validated contrast manifest supplies the planned and
 estimable comparison counts. A count is a gene-by-fine-cell comparison
 occurrence, so the same gene can contribute in more than one comparison.
@@ -299,7 +299,7 @@ def render_figure(frame: pd.DataFrame, output_dir: Path) -> dict[str, Path]:
     ax.invert_yaxis()
     ax.axhline(2.5, color="#D1D5DB", linewidth=1.1, zorder=1)
     ax.set_xlim(0, 52500)
-    ax.set_xlabel("Significant gene-by-fine-cell comparison occurrences", fontsize=12.0)
+    ax.set_xlabel("DEG occurrences across fine-cell comparisons", fontsize=12.0)
     ax.xaxis.set_major_formatter(
         FuncFormatter(lambda value, _position: "0" if value == 0 else f"{int(value / 1000)}k")
     )

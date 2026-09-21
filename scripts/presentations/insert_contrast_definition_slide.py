@@ -298,7 +298,7 @@ def build_contrast_slide(prs: Presentation):
         slide,
         "3",
         "Run call_key_drivers()",
-        "The call returns a list of significant key-driver genes for that contrast.",
+        "Output: significant genes returned from the KDA call for that contrast.",
         0.98,
         5.28,
         ui.BLUE,

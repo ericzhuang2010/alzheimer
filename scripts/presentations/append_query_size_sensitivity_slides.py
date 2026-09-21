@@ -276,7 +276,7 @@ def append_table(
     )
     ui.add_notes(
         slide,
-        goal="Show how increasing the minimum effective query size changes KDA availability and returned drivers.",
+        goal="Show how increasing the minimum effective query size changes KDA availability and genes returned from KDA calls.",
         walkthrough="ROSMAP contracts from three calls and 39 returned rows at three genes to one call and 26 rows at ten or more genes. SEA-AD is unchanged at five genes, contracts to three calls and eight rows at ten or twenty genes, and retains two calls and seven rows at thirty genes.",
         boundary="The donor minimum remains three per disease arm. This exact gating sensitivity drops existing calls; it does not refit DEG models or rerun KDA for retained calls. Significant rows are raw returns, while the final column excludes MT-* genes and deduplicates within cohort.",
         transition="Next, identify the specific calls responsible for the step changes.",
@@ -299,7 +299,7 @@ def append_cohort_effects(prs: Presentation) -> None:
             "Current executed query sizes: 3, 8, and 78 genes.",
             "Minimum 5 removes OPCs × F_e4: 9 driver rows.",
             "Minimum 10 also removes Astrocytes × F_e4: 4 more rows; thresholds 20 and 30 make no further change.",
-            "At ≥10, only the low-support Vasculature × M_e2 call remains: 26 rows and 20 unique non-MT drivers.",
+            "At ≥10, only the low-support Vasculature × M_e2 KDA call remains: 26 rows and 20 unique non-MT drivers.",
         ],
         0.90, 2.35, 5.17,
         size=11.7, accent=ui.VERMILION, line_h=0.75,
@@ -365,7 +365,7 @@ def append_interpretation(prs: Presentation) -> None:
             "Cross-cohort non-MT driver overlap remains zero at every tested threshold.",
             "At minimum 3 or 5, Astrocytes × F_e4 remains the only exact shared executed stratum, with no shared drivers.",
             "At minimum 10, 20, or 30, no exact stratum is executed in both cohorts; validation is unavailable rather than negative.",
-            "Thresholds ≥10 reduce validation assessability and make ROSMAP increasingly dominated by the low-support Vasculature × M_e2 call.",
+            "Thresholds ≥10 reduce validation assessability and make ROSMAP increasingly dominated by the low-support Vasculature × M_e2 KDA call.",
         ],
         1.05, 2.20, 10.95,
         size=14.0, accent=ui.BLUE, line_h=0.72,

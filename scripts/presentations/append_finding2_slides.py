@@ -708,12 +708,12 @@ def build_seaad_summary_slide(prs: Presentation, facts: dict[str, Any]):
     f1.add_content_title(
         slide,
         "SEA-AD supports the matched male ε3/ε3 inhibitory-neuron program",
-        f"{facts['sea_evaluable_calls']} matched calls were evaluable; support is program-level rather than exact-driver replication.",
+        f"{facts['sea_evaluable_calls']} eligible SEA-AD fine-cell DEG queries contributed. Support comes from shared MitoCarta MT DEGs and matching AD directions.",
     )
     f1.add_stat_card(
         slide,
         str(facts["sea_shared_genes"]),
-        "shared mitochondrial-query genes",
+        "shared MitoCarta MT DEGs",
         0.72,
         1.52,
         3.78,
@@ -836,9 +836,9 @@ def build_seaad_summary_slide(prs: Presentation, facts: dict[str, Any]):
     )
     f1.add_notes(
         slide,
-        "Summarize the matched SEA-AD inhibitory-neuron evidence.",
-        f"Across {facts['sea_evaluable_calls']} evaluable SEA-AD calls, the cohorts share {facts['sea_shared_genes']} mitochondrial-query genes. Nineteen have the same fixed AD direction and three differ. The overlap is larger than expected and remains significant after multiple-testing correction.",
-        "The result supports a DEG program, not the exact ROSMAP key-driver genes. It remains a narrow comparison concentrated in male epsilon-3 homozygous inhibitory neurons.",
+        "Explain the matched SEA-AD DEG support and what cross-cohort directional agreement means here.",
+        f"Eight eligible SEA-AD male epsilon-3 homozygous inhibitory-neuron fine-cell DEG queries contributed to this comparison. ROSMAP and SEA-AD shared {facts['sea_shared_genes']} MitoCarta MT DEGs, and {facts['sea_concordant_genes']} of the {facts['sea_shared_genes']} had the same AD direction. Nine core MT genes were upregulated in both cohorts. Nuclear-encoded OXPHOS, protein-import, mitochondrial-ribosome, and maintenance genes were downregulated in both. The overlap was {facts['sea_shared_genes']} genes compared with {facts['cross_cohort_expected']:.2f} expected and remained significant after correction, with a Benjamini-Hochberg adjusted P value of {facts['cross_cohort_bh']:.4f}. Excluding unresolved mitochondrial identity-conflict genes left {facts['identity_resolved_shared']} shared genes and a similar adjusted P value of {facts['identity_resolved_bh']:.4f}. The support therefore comes from shared DEGs and their directions across cohorts.",
+        "This is focused cross-cohort DEG support within the matched inhibitory-neuron context. It does not establish protein-level imbalance, mitochondrial dysfunction, or a formal disease-by-sex-by-APOE interaction.",
         "Show which genes carry the agreement.",
     )
     return slide

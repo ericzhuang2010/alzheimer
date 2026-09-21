@@ -2,7 +2,7 @@
 """Synchronize speaker notes with the reviewed 2026-09-16 slide order.
 
 The presentation was manually reorganized after its analysis slides were
-generated.  This utility treats the reviewed 160-slide deck as authoritative,
+generated.  This utility treats the reviewed 161-slide deck as authoritative,
 updates notes for the DEG, pathway, and finding additions, and rewrites transitions so
 that they point to the slide that now follows.  Slide content and ordering are
 intentionally left unchanged.
@@ -42,6 +42,7 @@ BASE_EXPECTED_TITLES = (
     "What is a contrast",
     "Overall DEG counts vary across sex/APOE groups",
     "Pathway analysis",
+    "Three mitochondrial gene sets used in this study",
     "Three levels of MitoCarta pathways",
     "How the pathway analysis was done",
     "Four mitochondrial pathways highlighted",
@@ -55,10 +56,10 @@ BASE_EXPECTED_TITLES = (
     "Summary for ROSMAP",
     "54 fine cell types create 324 planned contrasts",
     "Source validity and query size decide whether KDA is called",
-    "Mitochondrial query genes",
-    "ROSMAP KDA summary: 381 non-MT gene x category combinations represent 228 distinct genes",
+    "MitoCarta MT query genes",
+    "ROSMAP KDA summary: 381 non-MitoCarta gene × category combinations represent 228 distinct genes",
     "RPS15 recurs across 11 returned-only categories",
-    "Top five: 123 non-MT entries across 29 categories",
+    "Top five: 123 non-MitoCarta entries across 29 categories",
     "ROSMAP excitatory-neuron drivers recur across sex/APOE groups",
     "ROSMAP inhibitory-neuron drivers recur across sex/APOE groups",
     "ROSMAP astrocyte drivers recur across sex/APOE groups",
@@ -66,9 +67,9 @@ BASE_EXPECTED_TITLES = (
     "PART 4",
     "Summary for SEA-AD",
     "129 SEA-AD supertypes create 774 planned contrasts",
-    "SEA-AD KDA summary: 44 non-MT gene x category combinations represent 43 distinct genes",
+    "SEA-AD KDA summary: 44 non-MitoCarta gene × category combinations represent 43 distinct genes",
     "PJVK is the only gene recurring across 2 SEA-AD categories",
-    "Top-five display: 17 non-MT entries across 5 categories",
+    "Top-five display: 17 non-MitoCarta entries across 5 categories",
     "SEA-AD excitatory-neuron drivers occur in two sex/APOE groups",
     "PART 4",
     "Donor-threshold sensitivity — numerical comparison",
@@ -99,7 +100,8 @@ BASE_TRANSITIONS = (
     "Start by defining a contrast, the unit used for each AD-versus-comparison DEG analysis.",
     "With the contrast defined, summarize all significant DEG results across sex/APOE groups.",
     "Move from the all-gene DEG counts to pathway analysis.",
-    "Introduce the three-level MitoCarta hierarchy used to define the pathway sets.",
+    "Distinguish the three mitochondrial gene sets used in the analysis.",
+    "With the gene sets distinguished, introduce the three-level MitoCarta pathway hierarchy.",
     "Explain how the pathway analysis was performed and show the breadth of the pathway search.",
     "Focus next on four mitochondrial pathways used repeatedly in the later findings.",
     "Explain how fine-cell DEG results are pooled into each overlap value.",
@@ -112,8 +114,8 @@ BASE_TRANSITIONS = (
     "Summarize the ROSMAP branch before examining its contrast funnel.",
     "Follow the ROSMAP summary into the contrast-level funnel.",
     "Clarify the execution gate and the source contrasts that could not be fitted.",
-    "Inspect how the mitochondrial query is constructed.",
-    "Summarize the returned non-mitochondrial KDA results before examining rankings and recurrence.",
+    "Inspect how the MitoCarta MT query is constructed.",
+    "Summarize the returned non-MitoCarta KDA results before examining rankings and recurrence.",
     "Start with the most recurrent ROSMAP drivers.",
     "Then inspect the ranked top-five display across the 29 populated categories.",
     "Next, view recurrence within each broad cell class, beginning with excitatory neurons.",
@@ -123,7 +125,7 @@ BASE_TRANSITIONS = (
     "Move to the SEA-AD validation branch.",
     "Summarize SEA-AD coverage before examining its contrast funnel.",
     "Follow the SEA-AD summary into the contrast-level funnel.",
-    "Summarize the returned non-mitochondrial SEA-AD output.",
+    "Summarize the returned non-MitoCarta SEA-AD output.",
     "Then examine recurrence across SEA-AD categories.",
     "Inspect the top-five entries in the five populated SEA-AD categories.",
     "Finish the SEA-AD branch with excitatory-neuron recurrence across groups.",
@@ -197,7 +199,7 @@ _PRE_OVERLAP_INSERT_NOTE_OVERRIDES = {
             "and one sex/APOE group. Therefore, N fine cell types create six N "
             "planned contrasts; in ROSMAP, 54 fine types create 324. Source-invalid "
             "contrasts are removed, and a valid contrast proceeds to "
-            "call_key_drivers only when its mapped mitochondrial query contains at "
+            "KDA only when its mapped MitoCarta MT query contains at "
             "least three genes. One completed call can return a list of significant "
             "key-driver genes, with each gene appearing at most once in that call."
         ),
@@ -374,7 +376,9 @@ _PRE_OVERLAP_INSERT_NOTE_OVERRIDES = {
         "boundary": (
             "Forty-two is the structural design space, not 42 observed negative or "
             "positive results. A category may lack an eligible call or a returned "
-            "non-mitochondrial driver. The ACAT is returned-only: a call in which the "
+            "non-MitoCarta driver. Here, non-MitoCarta means outside the 1,136-gene "
+            "MitoCarta MT inventory; it may still influence mitochondrial biology. "
+            "The ACAT is returned-only: a call in which the "
             "gene was not returned does not contribute P equals one."
         ),
     },
@@ -382,9 +386,9 @@ _PRE_OVERLAP_INSERT_NOTE_OVERRIDES = {
         "goal": "Summarize ROSMAP as the primary discovery analysis before the detailed funnel.",
         "walkthrough": (
             "ROSMAP starts with 324 planned fine-cell contrasts. Those contrasts "
-            "produce 194 executable KDA calls and 381 non-mitochondrial "
+            "produce 194 executable KDA calls and 381 non-MitoCarta "
             "gene-by-category combinations, representing 228 distinct genes across "
-            "29 populated categories. Each contrast contributes its mitochondrial "
+            "29 populated categories. Each contrast contributes its MitoCarta MT "
             "DEG query, and returned fine-cell evidence is then aggregated within "
             "the matching sex/APOE-by-broad-cell category."
         ),
@@ -399,7 +403,7 @@ _PRE_OVERLAP_INSERT_NOTE_OVERRIDES = {
         "walkthrough": (
             "SEA-AD starts with 774 planned supertype-level contrasts. Only 22 meet "
             "the source-validity and three-gene query requirements for KDA. These "
-            "calls return 44 non-mitochondrial gene-by-category combinations, "
+            "calls return 44 non-MitoCarta gene-by-category combinations, "
             "representing 43 distinct genes across five populated categories. The "
             "analysis uses SEA-AD-specific networks rather than reusing ROSMAP "
             "networks."
@@ -433,7 +437,14 @@ def _slide_number_after_insertions(slide_number: int) -> int:
     after_overlap = slide_number + 1 if slide_number >= 8 else slide_number
     after_mitocarta = after_overlap + 1 if after_overlap >= 6 else after_overlap
     after_occurrence = after_mitocarta + 1 if after_mitocarta >= 11 else after_mitocarta
-    return after_occurrence - 2 if after_occurrence >= 15 else after_occurrence
+    after_preview_deletions = (
+        after_occurrence - 2 if after_occurrence >= 15 else after_occurrence
+    )
+    return (
+        after_preview_deletions + 1
+        if after_preview_deletions >= 6
+        else after_preview_deletions
+    )
 
 
 FULL_NOTE_OVERRIDES = {
@@ -441,6 +452,31 @@ FULL_NOTE_OVERRIDES = {
     for slide_number, fields in _PRE_OVERLAP_INSERT_NOTE_OVERRIDES.items()
 }
 FULL_NOTE_OVERRIDES[6] = {
+    "goal": (
+        "Distinguish the three mitochondrial gene sets by where the genes are "
+        "encoded and how each set is used."
+    ),
+    "walkthrough": (
+        "Mitochondrial DNA, abbreviated mtDNA, is the small DNA molecule inside "
+        "mitochondria. It encodes 37 genes: 13 protein genes, 22 transfer-RNA genes, "
+        "and two ribosomal-RNA genes. The MitoCarta MT gene inventory is broader, "
+        "where MT means mitochondrial. It contains 1,136 genes whose protein products "
+        "are associated with mitochondria: 13 are "
+        "encoded by mtDNA and 1,123 are encoded by nuclear DNA. The third set focuses "
+        "on the 13 protein-coding genes in mtDNA. All 13 contribute to oxidative "
+        "phosphorylation, abbreviated OXPHOS. Finding 1 measures RNA from this "
+        "13-gene set."
+    ),
+    "boundary": (
+        "The label mtDNA refers to the DNA molecule. The labels on the slide refer "
+        "to gene sets. MitoCarta MT genes refers specifically to the 1,136-gene "
+        "protein inventory. The shorthand core MT genes is avoided because it does not "
+        "clearly distinguish the 37 genes encoded by mtDNA from the 1,136-gene "
+        "MitoCarta inventory. RNA abundance from the 13 OXPHOS genes does not measure "
+        "mtDNA copy number, OXPHOS protein abundance, or mitochondrial function."
+    ),
+}
+FULL_NOTE_OVERRIDES[7] = {
     "goal": "Define the three MitoCarta pathway levels used in the analysis.",
     "walkthrough": (
         "MitoCarta organizes mitochondrial genes into a nested hierarchy. Level 1 "
@@ -459,7 +495,7 @@ FULL_NOTE_OVERRIDES[6] = {
         "results/minerva_production/11_pathway_deg_fine."
     ),
 }
-FULL_NOTE_OVERRIDES[9] = {
+FULL_NOTE_OVERRIDES[10] = {
     "goal": (
         "Explain the overlap formula and its worked example."
     ),
@@ -478,7 +514,7 @@ FULL_NOTE_OVERRIDES[9] = {
         "direction of change, recurrence across cell types, or pathway enrichment."
     ),
 }
-FULL_NOTE_OVERRIDES[11] = {
+FULL_NOTE_OVERRIDES[12] = {
     "goal": (
         "Define an occurrence and show how the upregulated OXPHOS occurrence "
         "percentage is calculated."
@@ -504,7 +540,55 @@ FULL_NOTE_OVERRIDES[11] = {
         "replications."
     ),
 }
-FULL_NOTE_OVERRIDES[35] = {
+FULL_NOTE_OVERRIDES[20] = {
+    "goal": (
+        "Explain how ROSMAP differential-expression results become mitochondrial "
+        "network queries."
+    ),
+    "walkthrough": (
+        "Start with the DEG rule on the left. A tested gene-by-comparison row must "
+        "be detected in at least 10 percent of AD or NCI nuclei, have a "
+        "within-contrast Benjamini-Hochberg false-discovery rate below 0.05, and "
+        "have an absolute log2 fold change above log2 of 1.3, approximately 0.379. "
+        "Both AD-upregulated and AD-downregulated DEGs can enter the query. Across "
+        "all contrasts, 2,864,117 gene-by-comparison rows were tested and 118,297 "
+        "passed the DEG rule: 58,112 upregulated and 60,185 downregulated. "
+        "Intersecting those rows with the 1,136-gene MitoCarta MT inventory yields "
+        "9,262 provisional "
+        "MitoCarta MT query memberships, including 4,258 upregulated and 5,004 "
+        "downregulated memberships. Network mapping removes 1,329 memberships whose "
+        "genes are absent from the corresponding Bayesian network, leaving 7,933 "
+        "mapped query memberships. Each contrast contributes its own query."
+    ),
+    "boundary": (
+        "These totals count gene-by-comparison memberships, so the same gene can "
+        "recur across contrasts. The 7,933 memberships do not form one pooled query, "
+        "and they are not unique-gene or key-driver counts. RNA direction is defined "
+        "relative to AD versus NCI."
+    ),
+}
+FULL_NOTE_OVERRIDES[22] = {
+    "goal": (
+        "Explain returned-only recurrence across ROSMAP sex/APOE-by-broad-cell "
+        "categories."
+    ),
+    "walkthrough": (
+        "Each bar counts the number of sex/APOE-by-broad-cell categories in which a "
+        "non-MitoCarta key driver was returned. A gene counts once in a category "
+        "even if it was returned by more than one fine-cell KDA call within that "
+        "category. RPS15 leads with 11 categories, spanning all six sex/APOE groups "
+        "and four broad-cell Bayesian networks. RPL11 follows with 10 categories, "
+        "also spanning all six groups and four networks. The remaining genes occur "
+        "in fewer categories."
+    ),
+    "boundary": (
+        "Returned-only recurrence is descriptive. A call in which a gene was not "
+        "returned does not contribute an absence or a P value of one. Categories "
+        "are related summaries rather than independent biological replications, and "
+        "recurrence does not establish causal regulation."
+    ),
+}
+FULL_NOTE_OVERRIDES[36] = {
     "goal": (
         "Define an arm and show the numerical impact of raising the minimum "
         "donor requirement from three to five in both cohorts."
@@ -514,10 +598,11 @@ FULL_NOTE_OVERRIDES[35] = {
         "two arms are AD and NCI. In SEA-AD, they are dementia and no dementia. "
         "A contrast is eligible only when each arm meets the stated donor minimum. "
         "Raising that minimum from three to five reduces ROSMAP from 42 to 40 "
-        "eligible contrasts and from three to two KDA runs. Its returned driver "
-        "rows fall from 39 to 13, and its unique non-mitochondrial drivers fall "
+        "eligible contrasts and from three to two KDA calls. Its gene rows returned "
+        "from KDA calls fall from 39 to 13, and its unique non-MitoCarta drivers fall "
         "from 33 to 13. SEA-AD falls from 28 to 20 eligible contrasts, but its five "
-        "KDA runs, 24 returned rows, and 18 unique non-mitochondrial drivers remain "
+        "KDA calls, 24 gene rows returned from KDA calls, and 18 unique non-MitoCarta "
+        "drivers remain "
         "unchanged."
     ),
     "boundary": (
@@ -529,13 +614,13 @@ FULL_NOTE_OVERRIDES[35] = {
         "donor-per-arm 3-versus-5 sensitivity assessment dated 2026-09-11."
     ),
 }
-FULL_NOTE_OVERRIDES[37] = {
+FULL_NOTE_OVERRIDES[38] = {
     "goal": (
         "Define the query-size threshold and show how increasing it changes KDA "
         "availability and returned drivers."
     ),
     "walkthrough": (
-        "The threshold is the minimum number of effective mitochondrial query "
+        "The threshold is the minimum number of effective MitoCarta MT query "
         "genes remaining after network mapping. The donor minimum stays fixed at "
         "three in each disease-status group, so the source-estimable contrast "
         "counts remain 42 for ROSMAP and 28 for SEA-AD. One query is used for each "
@@ -549,12 +634,12 @@ FULL_NOTE_OVERRIDES[37] = {
     "boundary": (
         "This sensitivity analysis filters existing calls by mapped query size. It "
         "does not refit DEG models or rerun KDA for retained calls. Significant rows "
-        "are raw KDA returns, while the final column excludes MT-* genes and "
+        "are raw KDA returns, while the final column excludes all 1,136 MitoCarta MT genes and "
         "deduplicates drivers within each cohort. Source: validated Phase 22 and "
         "VH14 run manifests and significant-return tables dated 2026-09-11."
     ),
 }
-FULL_NOTE_OVERRIDES[38] = {
+FULL_NOTE_OVERRIDES[39] = {
     "goal": "Identify the seven KDA calls that create the query-threshold pattern.",
     "walkthrough": (
         "Read the ROSMAP panel first. Its three executed queries contain 3, 8, and "
@@ -565,20 +650,21 @@ FULL_NOTE_OVERRIDES[38] = {
         "dependent on it. In SEA-AD, the five query sizes are 5, 9, 21, 43, and 45 "
         "genes. A minimum of five changes nothing. A minimum of ten removes the "
         "microglia male epsilon-3 homozygous and astrocyte female epsilon-4 calls, "
-        "reducing the output from 24 to 8 rows and from 18 to 3 unique non-MT "
+        "reducing the output from 24 to 8 rows and from 18 to 3 unique non-MitoCarta "
         "drivers. A minimum of thirty also removes the 21-gene oligodendrocyte call, "
-        "but its only returned gene is MT-*, so the non-MT driver count remains three."
+        "but its only returned gene is a MitoCarta MT gene, so the non-MitoCarta "
+        "driver count remains three."
     ),
     "boundary": (
         "Query size means the number of effective mitochondrial genes after network "
         "mapping, not the number of donors, cells, or genes in a pathway. This test "
-        "filters existing calls and does not rerun KDA. Returned MT-* genes explain "
-        "changes in raw row counts but are not eligible non-mitochondrial key "
-        "drivers. Source: validated Phase 22 and VH14 run manifests and "
+        "filters existing calls and does not rerun KDA. Returned MitoCarta MT genes "
+        "explain changes in raw row counts but are excluded when the analysis reports "
+        "non-MitoCarta key drivers. Source: validated Phase 22 and VH14 run manifests and "
         "significant-return tables dated 2026-09-11."
     ),
 }
-FULL_NOTE_OVERRIDES[40] = {
+FULL_NOTE_OVERRIDES[41] = {
     "goal": "Introduce Part 5, the biological findings and discussion.",
     "walkthrough": (
         "Part 5 translates the DEG, pathway, KDA, and sensitivity results into 17 "
@@ -592,6 +678,134 @@ FULL_NOTE_OVERRIDES[40] = {
         "establish causality or mitochondrial function. SEA-AD support is graded "
         "according to matched coverage and may support a broader pathway pattern "
         "without reproducing the exact driver gene."
+    ),
+}
+FULL_NOTE_OVERRIDES[42] = {
+    "goal": (
+        "Introduce Finding 1 and distinguish the differential-expression evidence "
+        "from key-driver analysis."
+    ),
+    "walkthrough": (
+        "Finding 1 concerns female APOE epsilon-3 homozygous excitatory neurons. "
+        "Across the relevant Alzheimer’s disease comparisons, RNA from "
+        "mitochondrial-DNA-encoded OXPHOS genes increases reproducibly. The next "
+        "slides state the result in plain language, show the ROSMAP evidence, assess "
+        "the matched SEA-AD evidence, and then discuss its meaning and limitations. "
+        "This is a mitochondrial DEG finding rather than a key-driver finding."
+    ),
+    "boundary": (
+        "The finding does not identify an upstream regulator, demonstrate increased "
+        "ATP production, or establish that the disease effect differs statistically "
+        "by sex or APOE genotype."
+    ),
+}
+FULL_NOTE_OVERRIDES[43] = {
+    "goal": "Explain Finding 1 in plain language.",
+    "walkthrough": (
+        "Read the four labels first: female, APOE epsilon-3 homozygous, excitatory "
+        "neurons, and Alzheimer’s disease. Mitochondrial DNA encodes 13 protein "
+        "subunits of oxidative phosphorylation, or OXPHOS. In these comparisons, "
+        "the RNA instructions for those subunits are more abundant in AD than in the "
+        "comparison group. The slide’s phrase mitochondrial energy-system parts "
+        "therefore refers specifically to mitochondrial-DNA-encoded OXPHOS subunits, "
+        "not to every gene involved in cellular energy metabolism."
+    ),
+    "boundary": (
+        "Higher RNA abundance does not demonstrate more OXPHOS protein, greater "
+        "respiration, increased ATP production, or healthier mitochondria. It also "
+        "does not by itself prove that this disease response is specific to female "
+        "epsilon-3 homozygous donors."
+    ),
+}
+FULL_NOTE_OVERRIDES[44] = {
+    "goal": (
+        "Present the ROSMAP evidence across all female epsilon-3 homozygous calls "
+        "and within excitatory neurons."
+    ),
+    "walkthrough": (
+        "F_e33 denotes the female APOE epsilon-3 homozygous group. Across all "
+        "eligible F_e33 fine-cell queries, the analysis records 217 mtDNA-OXPHOS DEG "
+        "occurrences, and all 217 are upregulated in AD. Twenty-nine input queries "
+        "are enriched for mtDNA-OXPHOS genes. Focusing on excitatory neurons, 14 "
+        "eligible fine-cell queries contain 123 mtDNA-OXPHOS occurrences, again all "
+        "upregulated, and 12 of the 14 queries are enriched. Here, enriched means "
+        "that the query contains more mtDNA-OXPHOS genes than expected in its exact "
+        "detectable-gene background after Benjamini-Hochberg correction."
+    ),
+    "boundary": (
+        "An occurrence is one significant gene in one fine-cell comparison, so the "
+        "same gene can contribute more than once across calls. Enrichment describes "
+        "the composition of the KDA input query; it is not a count or significance "
+        "test of returned key drivers."
+    ),
+}
+FULL_NOTE_OVERRIDES[45] = {
+    "goal": "Show the matched SEA-AD evidence for the excitatory-neuron result.",
+    "walkthrough": (
+        "Only one matched female epsilon-3 homozygous excitatory-neuron call was "
+        "evaluable in SEA-AD. Its effective query contains 10 genes. Nine are the "
+        "same mtDNA-OXPHOS genes found in ROSMAP, and all nine are upregulated in the "
+        "disease group in both cohorts. The analysis observed nine shared genes "
+        "compared with 3.83 expected under the category-specific background model. "
+        "The overlap remains significant after correction, with a BH-adjusted P "
+        "value of 0.005."
+    ),
+    "boundary": (
+        "This is strong directional agreement in one matched SEA-AD call, but it is "
+        "not broad replication across excitatory-neuron subtypes. It supports the "
+        "same DEG pattern without requiring SEA-AD to return the same upstream key "
+        "driver."
+    ),
+}
+FULL_NOTE_OVERRIDES[46] = {
+    "goal": "Explain why the repeated excitatory-neuron response may matter.",
+    "walkthrough": (
+        "Excitatory neurons use substantial energy to generate and recover from "
+        "electrical signaling. Mitochondrial DNA encodes 13 core OXPHOS subunits "
+        "needed by the respiratory system. The repeated increase in their RNA across "
+        "ROSMAP calls, together with the matched SEA-AD result, is consistent with a "
+        "coordinated mitochondrial transcriptional response in AD. The most cautious "
+        "interpretation is compensation or a stress response."
+    ),
+    "boundary": (
+        "RNA direction alone cannot distinguish successful compensation from "
+        "mitochondrial stress, altered RNA processing, selective cell survival, or "
+        "another disease-associated change. It does not show that mitochondria make "
+        "more ATP."
+    ),
+}
+FULL_NOTE_OVERRIDES[47] = {
+    "goal": "State what the finding does not prove and identify the next tests.",
+    "walkthrough": (
+        "The current evidence measures RNA abundance. A donor-aware disease-by-sex-"
+        "by-APOE interaction model is needed to test whether the disease association "
+        "differs by sex or genotype. Protein abundance and respiratory-complex "
+        "assembly would test whether the RNA pattern reaches the protein level. "
+        "Oxygen consumption, membrane potential, and ATP measurements would test "
+        "mitochondrial function. A causal mechanism would require perturbation and "
+        "functional rescue."
+    ),
+    "boundary": (
+        "The current data do not prove increased OXPHOS protein or function, a "
+        "female- or epsilon-3 homozygous-specific disease effect, or an upstream key "
+        "driver responsible for the RNA increase."
+    ),
+}
+FULL_NOTE_OVERRIDES[48] = {
+    "goal": "Place Finding 1 in prior research while preserving its novelty limits.",
+    "walkthrough": (
+        "Guo and colleagues support sex-aware Alzheimer’s disease network analysis. "
+        "Mathys and colleagues support strong cell-type heterogeneity in AD, but that "
+        "study also uses ROSMAP and therefore is not independent validation. Lee and "
+        "colleagues connect APOE4 astrocytes with impaired mitochondrial homeostasis, "
+        "but the APOE group and cell type differ from this finding. Together, these "
+        "studies make the interpretation plausible without reproducing the exact "
+        "female epsilon-3 homozygous excitatory-neuron result."
+    ),
+    "boundary": (
+        "None of the cited studies independently establishes this exact pattern. The "
+        "novelty assessment is therefore moderate: the mitochondrial biology is "
+        "established, while this sex, APOE, and cell-type context is less established."
     ),
 }
 
@@ -654,6 +868,92 @@ def read_structured_notes(slide, slide_number: int) -> dict[str, str]:
     return {key: value.strip() for key, value in match.groupdict().items()}
 
 
+def standardize_kda_call_wording(text: str) -> str:
+    """Use the presentation's audience-facing terminology for KDA actions and output."""
+    text = text.replace("Run key-driver analysis", "Make KDA calls")
+    text = text.replace("KDA runs", "KDA calls")
+    text = text.replace("KDA run", "KDA call")
+    text = text.replace("Run KDA", "Make KDA calls")
+    text = text.replace("rerun KDA", "make new KDA calls")
+    text = text.replace("KDA-run", "KDA-call")
+    text = text.replace("KDA-call", "KDA call")
+    text = text.replace(
+        "A tested but unreturned driver",
+        "A tested gene not returned from a KDA call",
+    )
+    text = re.sub(r"\breturned drivers\b", "genes returned from KDA calls", text, flags=re.IGNORECASE)
+    text = re.sub(r"\breturned driver\b", "gene returned from a KDA call", text, flags=re.IGNORECASE)
+    text = re.sub(r"\bdriver rows\b", "gene rows returned from KDA calls", text, flags=re.IGNORECASE)
+    text = text.replace("KDA returned key driver", "gene returned from KDA call")
+    text = text.replace("returned by KDA", "returned from KDA call")
+    text = text.replace("KDA returns", "rows returned from KDA calls")
+    text = text.replace("fine-cell runs", "fine-cell KDA calls")
+    text = text.replace("proceeds to KDA", "leads to a KDA call")
+    text = text.replace("One completed call", "One completed KDA call")
+    text = text.replace("a completed KDA test", "a completed KDA call")
+    text = text.replace("call_key_drivers()", "KDA calls")
+    text = text.replace("call_key_driver()", "KDA calls")
+    text = text.replace("call_key_drivers", "KDA calls")
+    text = text.replace("call_key_driver", "KDA calls")
+    text = text.replace("Call key driver", "Make KDA calls")
+    text = text.replace("A call in which a gene was not returned", "A KDA call in which a gene was not returned")
+    text = text.replace(
+        "For a gene returned by one KDA call",
+        "For a gene returned from one KDA call",
+    )
+    text = text.replace(
+        "For a gene returned by at least two calls",
+        "For a gene returned from at least two KDA calls",
+    )
+    text = text.replace(
+        "returned non-MitoCarta drivers from eligible fine-cell KDA calls",
+        "non-MitoCarta genes returned from eligible fine-cell KDA calls",
+    )
+    text = text.replace(
+        "Significant rows are raw rows returned from KDA calls",
+        "Significant rows are gene rows returned from KDA calls",
+    )
+    text = text.replace(
+        "Returned MitoCarta MT genes explain",
+        "MitoCarta MT genes returned from KDA calls explain",
+    )
+    text = text.replace(
+        "Its returned driver rows fall from 39 to 13",
+        "Its gene rows returned from KDA calls fall from 39 to 13",
+    )
+    text = text.replace(
+        "its five KDA calls, 24 returned rows",
+        "its five KDA calls, 24 gene rows returned from KDA calls",
+    )
+    text = text.replace(
+        "reduces the analysis from three runs and 39 significant rows to one run and 26 rows",
+        "reduces the analysis from three KDA calls and 39 significant rows to one KDA call and 26 rows",
+    )
+    text = text.replace(
+        "falls to three runs and eight rows at ten or twenty genes, and retains two runs and seven rows",
+        "falls to three KDA calls and eight rows at ten or twenty genes, and retains two KDA calls and seven rows",
+    )
+    text = text.replace("filters existing calls", "filters existing KDA calls")
+    text = text.replace("for retained calls", "for retained KDA calls")
+    text = re.sub(r"\bwithin-call\b", "within each KDA call", text, flags=re.IGNORECASE)
+    text = re.sub(r"\bone-call\b", "one KDA call", text, flags=re.IGNORECASE)
+    text = re.sub(r"\breturned-call\b", "returned KDA call", text, flags=re.IGNORECASE)
+    text = re.sub(r"\bcall-count\b", "KDA call count", text, flags=re.IGNORECASE)
+    text = re.sub(r"\breturned by one KDA call\b", "returned from one KDA call", text, flags=re.IGNORECASE)
+    text = re.sub(r"\breturned by at least two KDA calls\b", "returned from at least two KDA calls", text, flags=re.IGNORECASE)
+    text = re.sub(r"(?<!KDA )(?<!-)\bcalls\b", "KDA calls", text, flags=re.IGNORECASE)
+    text = re.sub(r"(?<!KDA )(?<!-)\bcall\b", "KDA call", text, flags=re.IGNORECASE)
+    text = text.replace(
+        "the ranking score is that KDA call's within each KDA call BH-adjusted KDA P value",
+        "the ranking score is the BH-adjusted KDA P value from that KDA call",
+    )
+    text = text.replace(
+        "For a gene returned by at least two KDA calls",
+        "For a gene returned from at least two KDA calls",
+    )
+    return text
+
+
 def write_notes(slide, fields: dict[str, str]) -> None:
     frame = slide.notes_slide.notes_text_frame
     if frame is None:
@@ -702,6 +1002,10 @@ def main() -> int:
         fields = read_structured_notes(slide, slide_number)
         fields.update(FULL_NOTE_OVERRIDES.get(slide_number, {}))
         fields["transition"] = transition
+        fields = {
+            key: standardize_kda_call_wording(value)
+            for key, value in fields.items()
+        }
         write_notes(slide, fields)
 
     if tuple(visual_fingerprint(slide) for slide in prs.slides) != before:
@@ -730,7 +1034,7 @@ def main() -> int:
             zip(reopened.slides, TRANSITIONS), start=1
         ):
             fields = read_structured_notes(slide, slide_number)
-            if fields["transition"] != transition:
+            if fields["transition"] != standardize_kda_call_wording(transition):
                 raise RuntimeError(
                     f"Slide {slide_number} transition failed round-trip validation"
                 )

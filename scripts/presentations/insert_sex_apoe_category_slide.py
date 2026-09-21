@@ -382,7 +382,7 @@ def build_category_slide(prs: Presentation):
     )
     ui.add_text(
         slide,
-        "42 is the design space; later slides show which categories have usable calls and returned drivers.",
+        "42 is the design space; later slides show which categories have usable KDA calls and genes returned from KDA calls.",
         5.64,
         6.44,
         6.72,

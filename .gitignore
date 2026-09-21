@@ -21,6 +21,8 @@ tmp/
 .mypy_cache/
 .ruff_cache/
 
+.codex-build/
+
 # R session and IDE state.
 .RData
 .Rhistory

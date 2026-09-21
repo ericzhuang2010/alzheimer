@@ -425,7 +425,7 @@ def replace_slide_xml(
     set_shape_text(
         root10,
         "TextBox 47",
-        "Counts are category presence—not independent replication or call counts.",
+        "Counts are category presence—not independent replication or counts of KDA calls.",
     )
     return {8: serialize_xml(root8), 9: serialize_xml(root9), 10: serialize_xml(root10)}
 

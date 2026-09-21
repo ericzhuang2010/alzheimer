@@ -360,7 +360,7 @@ def append_findings(prs: Presentation) -> None:
     ui.add_bullets(
         slide,
         [
-            "ROSMAP loses the Vasculature × M_e2 4-versus-3-donor call, which alone generated 26 driver rows. This removes the low-support result dominating the ROSMAP release.",
+            "ROSMAP loses the Vasculature × M_e2 KDA call based on 4 versus 3 donors, which returned 26 significant gene rows. This removes the low-support result dominating the ROSMAP release.",
             "SEA-AD loses eight eligible contrasts, but all already had empty mitochondrial queries. Therefore, all five KDA runs and all returned drivers remain unchanged.",
             "Cross-cohort validation remains zero at both thresholds.",
             "The only exact shared executed stratum remains Astrocytes × F_e4, with no shared drivers.",

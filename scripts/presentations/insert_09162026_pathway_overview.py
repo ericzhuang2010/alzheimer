@@ -268,7 +268,7 @@ def render_overlap_figure(frame: pd.DataFrame, output_dir: Path) -> dict[str, Pa
     ).reindex(index=range(1, 5), columns=range(1, 7))
     sizes = [program[2] for program in PROGRAMS]
     row_labels = [
-        "mtDNA-encoded OXPHOS\n(13 genes)",
+        "Core MT genes\n(13 genes)",
         "Nuclear structural OXPHOS\n(86 genes)",
         "Mitochondrial translation\n(155 genes)",
         "Inner-membrane organization\n(19 genes)",

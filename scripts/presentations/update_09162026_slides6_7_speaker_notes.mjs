@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-/** Refresh speaker notes for the manually revised Finding 1 slides 43–46. */
+/** Refresh speaker notes for the user-revised slides 6 and 7. */
 
 import crypto from "node:crypto";
 import fs from "node:fs/promises";
@@ -16,11 +16,11 @@ const SOURCE = path.join(
 );
 const BUILD_DIR = path.join(
   WORKSPACE_DIR,
-  "results/presentations/09162026_slides43_46_script_refresh_20260919/build",
+  "results/presentations/09162026_slides6_7_script_refresh_20260920/build",
 );
 const FINAL_PPTX = path.join(
   WORKSPACE_DIR,
-  "results/presentations/09162026_slides43_46_script_refresh_20260919/output/09162026_sex_apoe_kda_fine_broad_slides43_46_notes_refreshed_20260919.pptx",
+  "results/presentations/09162026_slides6_7_script_refresh_20260920/output/09162026_sex_apoe_kda_fine_broad_slides6_7_notes_refreshed_20260920.pptx",
 );
 const EXPECTED_SLIDES = 160;
 
@@ -38,48 +38,28 @@ function notes({ goal, walkthrough, boundary, transition }) {
 
 const NOTES_BY_SLIDE = new Map([
   [
-    43,
+    6,
     notes({
-      goal: "Explain the primary and secondary parts of Finding 1 in plain language.",
+      goal: "Define the two mitochondrial protein-gene sets used throughout the study.",
       walkthrough:
-        "Read the four labels first: female, APOE epsilon-3 homozygous, excitatory neurons, and Alzheimer’s disease. Mitochondrial DNA encodes 13 protein subunits of oxidative phosphorylation, or OXPHOS. RNA from those genes is more abundant in AD than in the comparison group. Nuclear-encoded OXPHOS RNA also mostly rises in ROSMAP, but the strongest repeated and cross-cohort evidence concerns the mitochondrial-DNA-encoded genes.",
+        "Start with core MT genes. In this study, that term means the 13 protein-coding genes in mitochondrial DNA. All 13 encode structural subunits of oxidative phosphorylation, or OXPHOS. The broader MitoCarta MT inventory contains 1,136 protein-coding genes associated with mitochondria. It includes the same 13 core MT genes and 1,123 genes encoded by nuclear DNA. We use MitoCarta MT genes to define the mitochondrial pathways and to build the DEG input queries used when we make KDA calls.",
       boundary:
-        "Higher RNA abundance does not demonstrate more OXPHOS protein, greater respiration, increased ATP production, or healthier mitochondria. It also does not establish that the disease response differs statistically by sex or APOE genotype.",
-      transition: "Show how repeatedly the two OXPHOS gene sets appear among ROSMAP fine-cell DEGs.",
+        "Mitochondrial DNA contains 37 genes in total. The other 24 encode 22 transfer RNAs and two ribosomal RNAs, so they are not included in the protein-gene sets analyzed here. In this study, core MT genes and mtDNA-encoded structural OXPHOS genes refer to the same 13 genes. Expression of these genes does not measure mtDNA copy number, OXPHOS protein abundance, or mitochondrial function.",
+      transition:
+        "The next slide shows how the 13 core MT genes and the nuclear-encoded OXPHOS genes fit inside MitoCarta.",
     }),
   ],
   [
-    44,
+    7,
     notes({
       goal:
-        "Explain the ROSMAP DEG occurrence counts across all female epsilon-3 homozygous comparisons and within excitatory neurons.",
+        "Show how the structural OXPHOS gene set is contained within the MitoCarta MT inventory.",
       walkthrough:
-        "F_e33 denotes the female APOE epsilon-3 homozygous group. Across eligible fine-cell DEG input queries, mtDNA OXPHOS genes appear 217 times, and all 217 occurrences are upregulated in AD. Nuclear OXPHOS genes appear 89 times, with 76 upregulated and 13 downregulated, so 85 percent are upregulated. Within excitatory neurons, 14 eligible fine-cell DEG queries contain 123 mtDNA-OXPHOS occurrences, all upregulated. One occurrence means that one pathway gene is a DEG in one fine-cell comparison. The same gene can therefore contribute multiple occurrences across fine cell types. The red banner describes a separate enrichment test, which asks whether an input query contains more mtDNA-OXPHOS genes than expected relative to its exact MitoCarta background after Benjamini-Hochberg correction. The main numbers displayed here are occurrence counts, not counts of enriched queries.",
+        "The green outer circle contains all 1,136 MitoCarta MT genes. The gold inner circle sits fully inside it because all 99 structural OXPHOS genes used here are in MitoCarta. The vertical split separates the 13 core MT genes, encoded by mitochondrial DNA, from 86 OXPHOS genes encoded by nuclear DNA. Together, the two groups account for the 99 structural OXPHOS genes. The remaining 1,037 MitoCarta MT genes fall outside the structural OXPHOS set.",
       boundary:
-        "The occurrence counts do not represent unique genes, expression magnitude, independent donors, or genes returned from KDA calls. The KDA input query is the mitochondrial DEG list supplied to that call.",
-      transition: "Ask whether the excitatory-neuron mtDNA OXPHOS pattern appears in SEA-AD.",
-    }),
-  ],
-  [
-    45,
-    notes({
-      goal: "Show the matched SEA-AD evidence for the excitatory-neuron result.",
-      walkthrough:
-        "Only one matched female epsilon-3 homozygous excitatory-neuron KDA call was evaluable in SEA-AD, so the coverage is narrow. Its effective query contains 10 genes. Nine are the same mtDNA-OXPHOS genes found in ROSMAP, and all nine are upregulated in the disease group in both cohorts. The analysis observed nine shared genes compared with 3.83 expected under the category-specific background model. The overlap remains significant after correction, with a Benjamini-Hochberg-adjusted P value of 0.005.",
-      boundary:
-        "This slide supports the mtDNA component of Finding 1. It does not establish broad replication across excitatory-neuron subtypes or cross-cohort replication of the secondary nuclear-OXPHOS increase. It also does not require SEA-AD to return the same upstream gene from a KDA call.",
-      transition: "Explain why the repeated mitochondrial response may matter biologically.",
-    }),
-  ],
-  [
-    46,
-    notes({
-      goal: "Explain why the repeated excitatory-neuron response may matter.",
-      walkthrough:
-        "Excitatory neurons use substantial energy to generate and recover from electrical signaling. Mitochondrial DNA encodes 13 core OXPHOS subunits needed by the respiratory system. Their RNA repeatedly increases in ROSMAP and shows the same direction in the matched SEA-AD comparison. Nuclear OXPHOS RNA also mostly increases in ROSMAP. Together, these observations are consistent with a coordinated mitochondrial response in AD. The most cautious possibilities are compensation or a stress response.",
-      boundary:
-        "RNA direction alone cannot distinguish successful compensation from mitochondrial stress, altered RNA processing, selective cell survival, or another disease-associated change. It does not show that mitochondria make more ATP or establish a causal mechanism.",
-      transition: "Place the result in prior research and clarify what remains unproven.",
+        "The circles show gene-set membership only. Nuclear-encoded tells us that the gene is located in nuclear DNA. Its protein still functions in mitochondria. The diagram does not show expression direction, pathway enrichment, protein abundance, or mitochondrial function. Circle area does not represent gene count.",
+      transition:
+        "Next, introduce the three levels used to organize MitoCarta pathways.",
     }),
   ],
 ]);
@@ -173,6 +153,30 @@ async function main() {
     throw new Error(`Expected ${EXPECTED_SLIDES} slides, found ${slides.length}`);
   }
 
+  const expectedTitles = new Map([
+    [6, "Two mitochondrial gene sets used in this study"],
+    [7, "How the OXPHOS gene sets fit within MitoCarta"],
+  ]);
+  const titleSnapshot = await presentation.inspect({
+    kind: "slide,textbox,notes",
+    maxChars: 200000,
+  });
+  const titlesBySlide = new Map(
+    titleSnapshot.ndjson
+      .split("\n")
+      .filter(Boolean)
+      .map((line) => JSON.parse(line))
+      .filter((record) => record.kind === "slide" && Number.isInteger(record.slide))
+      .map((record) => [record.slide, record.title]),
+  );
+  for (const [slideNumber, expectedTitle] of expectedTitles) {
+    if (titlesBySlide.get(slideNumber) !== expectedTitle) {
+      throw new Error(
+        `Slide ${slideNumber} title mismatch: ${JSON.stringify(titlesBySlide.get(slideNumber))}`,
+      );
+    }
+  }
+
   const beforePngs = new Map();
   for (const [slideNumber, updatedNotes] of NOTES_BY_SLIDE) {
     const slide = slides[slideNumber - 1];
@@ -221,8 +225,8 @@ async function main() {
   const result = await finalizePresentation({
     explicitTotalSlideCount: EXPECTED_SLIDES,
     requiredNativeTableOwnerSlides: [],
-    requiredNativeChartOwnerSlides: [13],
-    requiredEmbeddedWorkbookChartOwnerSlides: [13],
+    requiredNativeChartOwnerSlides: [14],
+    requiredEmbeddedWorkbookChartOwnerSlides: [14],
     nativeChartTargetApplication: "powerpoint",
     workspaceDir: WORKSPACE_DIR,
     candidatePath,
@@ -250,10 +254,7 @@ async function main() {
       referenceSha256: sha256(sourceBuffer),
     },
     verifyArtifactToolImport: true,
-    receiptPath: path.join(
-      BUILD_DIR,
-      "09162026_sex_apoe_kda_fine_broad_slides43_46_notes_refreshed.validation.json",
-    ),
+    receiptPath: path.join(BUILD_DIR, "slides6_7_notes_refreshed.validation.json"),
   });
 
   const reopened = await PresentationFile.importPptx(await FileBlob.load(FINAL_PPTX));
@@ -317,11 +318,11 @@ async function main() {
         source: SOURCE,
         sourceSha256: sha256(sourceBuffer),
         output: FINAL_PPTX,
+        outputSha256: sha256(await fs.readFile(FINAL_PPTX)),
         slideCount: EXPECTED_SLIDES,
         updatedSlides: [...NOTES_BY_SLIDE.keys()],
-        visibleSlidesPreserved: true,
-        changedParts,
-        validation: result,
+        changedPackageParts: changedParts,
+        warnings: result.warnings ?? [],
       },
       null,
       2,
@@ -329,7 +330,4 @@ async function main() {
   );
 }
 
-main().catch((error) => {
-  console.error(error.stack || error.message || String(error));
-  process.exitCode = 1;
-});
+await main();

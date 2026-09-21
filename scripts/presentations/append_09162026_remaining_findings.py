@@ -94,7 +94,7 @@ FINDINGS: tuple[dict[str, Any], ...] = (
         "plain_bottom": "This is a coordinated transcriptional response, not evidence that mitochondria produce more energy.",
         "evidence_title": "ROSMAP: female ε2 OXPHOS occurrences are almost uniformly AD-up",
         "evidence_subtitle": "Occurrences repeat a gene when it appears in another eligible fine-cell query.",
-        "metrics": (("128", "mtDNA-OXPHOS occurrences", "127 up, 1 down"), ("243", "nuclear-OXPHOS occurrences", "239 up, 4 down"), ("29", "program-call enrichments", "20 mtDNA, 9 nuclear")),
+        "metrics": (("128", "mtDNA-OXPHOS occurrences", "127 up, 1 down"), ("243", "nuclear-OXPHOS occurrences", "239 up, 4 down"), ("29", "pathway enrichments across KDA calls", "20 mtDNA, 9 nuclear")),
         "evidence_rows": (
             ("mtDNA OXPHOS", "99% up", "127 AD-up and 1 AD-down occurrence across eligible calls", "up"),
             ("Nuclear OXPHOS", "98% up", "239 AD-up and 4 AD-down occurrences across eligible calls", "up"),
@@ -207,7 +207,7 @@ FINDINGS: tuple[dict[str, Any], ...] = (
         "meaning_cards": (
             card("Population genetics", "ε2 lowers average AD risk", "Risk protection does not predict every molecular state after disease develops.", "green"),
             card("Tissue biology", "Surviving cells may differ", "The observed nuclei may represent cells that persist under a particular disease state.", "gold"),
-            card("Network interpretation", "Driver abundance is confounded", "More query genes create more opportunities for KDA to return candidates.", "red"),
+            card("Network interpretation", "Count of genes returned from KDA calls is confounded", "More query genes create more opportunities for a gene to be returned from a KDA call.", "red"),
         ),
         "meaning_bottom": "The DEG direction is interesting, while the unusually high KDA yield needs query-size matching.",
         "not_proven": ("Loss of mitochondrial function or ATP", "That APOE ε2 caused the downward program", "A male by ε2 interaction or stronger driver biology"),
@@ -367,7 +367,7 @@ FINDINGS: tuple[dict[str, Any], ...] = (
         "divider_note": "WDR82 appears only in excitatory neurons and sits near a four-gene mtDNA-up neighborhood.",
         "plain_title": "WDR82 sits near a focused mtDNA-up signal in excitatory neurons",
         "plain_subtitle": "The exact neighborhood is narrow, and four recurring mitochondrial genes begin within one long mitochondrial RNA.",
-        "tags": ("Excitatory only", "18 calls", "Four mtDNA genes", "Driver not a strong DEG"),
+        "tags": ("Excitatory only", "18 KDA calls", "Four mtDNA genes", "Gene returned from KDA calls ≠ strong DEG"),
         "concepts": (
             card("WDR82", "Chromatin-associated candidate", "WDR82 participates in nuclear chromatin regulation rather than the mitochondrial ribosome.", "blue"),
             card("Exact neighborhood", "MT-ND1, ND3, ND4L, ND5", "These four mtDNA genes account for nearly every exact KDA overlap.", "green"),
@@ -414,7 +414,7 @@ FINDINGS: tuple[dict[str, Any], ...] = (
         "divider_note": "SELENOM repeatedly sits near decreased mitochondrial-translation genes in neuronal queries.",
         "plain_title": "SELENOM connects ER redox control with mitochondrial protein production",
         "plain_subtitle": "The endoplasmic reticulum, or ER, folds many proteins and helps regulate calcium and oxidation.",
-        "tags": ("12 neuronal calls", "All six strata", "ER redox and calcium", "Mitochondrial translation"),
+        "tags": ("12 neuronal KDA calls", "All six strata", "ER redox and calcium", "Mitochondrial translation"),
         "concepts": (
             card("SELENOM", "ER redox protein", "This selenium-containing protein helps regulate reversible oxidation inside the ER.", "blue"),
             card("Mitochondrial translation", "Protein production inside mitochondria", "Mitochondrial ribosomes and factors build the proteins encoded by mtDNA.", "green"),
@@ -423,17 +423,17 @@ FINDINGS: tuple[dict[str, Any], ...] = (
         "plain_bottom": "SELENOM is not part of the mitochondrial ribosome. KDA links two cellular systems through network proximity.",
         "evidence_title": "ROSMAP: mitochondrial-translation genes dominate the SELENOM neighborhood",
         "evidence_subtitle": "The candidate recurs across groups, so the result is not sex- or APOE-specific.",
-        "metrics": (("12", "supporting calls", "10 excitatory, 2 inhibitory"), ("51", "mitochondrial overlaps", "27 translation genes"), ("11/12", "enriched input queries", "nuclear OXPHOS")),
+        "metrics": (("12", "supporting KDA calls", "10 excitatory, 2 inhibitory"), ("51", "mitochondrial overlaps", "27 translation genes"), ("11/12", "enriched input queries", "nuclear OXPHOS")),
         "evidence_rows": (
             ("Translation direction", "22 of 27 down", "Most mitochondrial-translation overlaps have lower RNA in AD", "down"),
             ("Repeated neighbors", "MRPS34, TUFM, MRPS7", "CLPP and MRPS26 also recur in the exact KDA neighborhood", "neutral"),
-            ("SELENOM itself", "DEG in 10 of 12", "The driver frequently changes expression as well as appearing in the network", "mixed"),
+            ("SELENOM itself", "DEG in 10 of 12", "The gene returned from KDA calls also changes expression frequently", "mixed"),
         ),
         "context_title": "Cross-cohort and genetic evidence do not yet support SELENOM directly",
         "context_subtitle": "The ROSMAP recurrence and coherent neighborhood remain the main evidence.",
         "context_cards": (
             card("SEA-AD testability", "10 matching backgrounds", "SELENOM was available in all male ε3/ε3 excitatory networks.", "blue"),
-            card("SEA-AD return", "0 of 10", "SEA-AD did not select SELENOM as a key driver in those calls.", "gold"),
+            card("SEA-AD return", "0 of 10", "SELENOM was not returned from those SEA-AD KDA calls.", "gold"),
             card("Human genetics", "No direct support found", "The local genetic screen did not provide direct gene-level support for SELENOM.", "gray"),
         ),
         "context_bottom": "Lack of SEA-AD or genetic support lowers external confidence but does not erase recurrent ROSMAP evidence.",
@@ -1034,7 +1034,7 @@ def build_context_slide(prs: Presentation, finding: dict[str, Any], transition: 
         slide,
         f"Place Finding {finding['number']} in its internal and supplemental evidence context.",
         finding["context_subtitle"] + " " + finding["context_bottom"] + notes_source(finding),
-        "Unavailable SEA-AD coverage is neutral. A tested but unreturned driver offers limited counterevidence because networks, labels, thresholds, and sample sizes differ.",
+        "Unavailable SEA-AD coverage is neutral. A tested gene not returned from a KDA call offers limited counterevidence because networks, labels, thresholds, and sample sizes differ.",
         transition,
     )
     return slide

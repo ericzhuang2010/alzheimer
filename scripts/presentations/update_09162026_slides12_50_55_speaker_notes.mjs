@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-/** Refresh speaker notes for the manually revised Finding 1 slides 43–46. */
+/** Refresh speaker notes for the revised slide 12 and slides 50–55. */
 
 import crypto from "node:crypto";
 import fs from "node:fs/promises";
@@ -16,13 +16,13 @@ const SOURCE = path.join(
 );
 const BUILD_DIR = path.join(
   WORKSPACE_DIR,
-  "results/presentations/09162026_slides43_46_script_refresh_20260919/build",
+  "results/presentations/09162026_slides12_50_55_script_refresh_20260920/build",
 );
 const FINAL_PPTX = path.join(
   WORKSPACE_DIR,
-  "results/presentations/09162026_slides43_46_script_refresh_20260919/output/09162026_sex_apoe_kda_fine_broad_slides43_46_notes_refreshed_20260919.pptx",
+  "results/presentations/09162026_slides12_50_55_script_refresh_20260920/output/09162026_sex_apoe_kda_fine_broad_slides12_50_55_notes_refreshed_20260920.pptx",
 );
-const EXPECTED_SLIDES = 160;
+const EXPECTED_SLIDES = 159;
 
 function notes({ goal, walkthrough, boundary, transition }) {
   return [
@@ -38,48 +38,92 @@ function notes({ goal, walkthrough, boundary, transition }) {
 
 const NOTES_BY_SLIDE = new Map([
   [
-    43,
-    notes({
-      goal: "Explain the primary and secondary parts of Finding 1 in plain language.",
-      walkthrough:
-        "Read the four labels first: female, APOE epsilon-3 homozygous, excitatory neurons, and Alzheimer’s disease. Mitochondrial DNA encodes 13 protein subunits of oxidative phosphorylation, or OXPHOS. RNA from those genes is more abundant in AD than in the comparison group. Nuclear-encoded OXPHOS RNA also mostly rises in ROSMAP, but the strongest repeated and cross-cohort evidence concerns the mitochondrial-DNA-encoded genes.",
-      boundary:
-        "Higher RNA abundance does not demonstrate more OXPHOS protein, greater respiration, increased ATP production, or healthier mitochondria. It also does not establish that the disease response differs statistically by sex or APOE genotype.",
-      transition: "Show how repeatedly the two OXPHOS gene sets appear among ROSMAP fine-cell DEGs.",
-    }),
-  ],
-  [
-    44,
+    12,
     notes({
       goal:
-        "Explain the ROSMAP DEG occurrence counts across all female epsilon-3 homozygous comparisons and within excitatory neurons.",
+        "Define a DEG occurrence and show how the upregulated OXPHOS occurrence percentage is calculated.",
       walkthrough:
-        "F_e33 denotes the female APOE epsilon-3 homozygous group. Across eligible fine-cell DEG input queries, mtDNA OXPHOS genes appear 217 times, and all 217 occurrences are upregulated in AD. Nuclear OXPHOS genes appear 89 times, with 76 upregulated and 13 downregulated, so 85 percent are upregulated. Within excitatory neurons, 14 eligible fine-cell DEG queries contain 123 mtDNA-OXPHOS occurrences, all upregulated. One occurrence means that one pathway gene is a DEG in one fine-cell comparison. The same gene can therefore contribute multiple occurrences across fine cell types. The red banner describes a separate enrichment test, which asks whether an input query contains more mtDNA-OXPHOS genes than expected relative to its exact MitoCarta background after Benjamini-Hochberg correction. The main numbers displayed here are occurrence counts, not counts of enriched queries.",
+        "Start with the red definition. One occurrence means that one pathway gene is a significant DEG in one fine-cell comparison. If the same gene is significant in another fine cell type, it contributes another occurrence. Calculate the percentage separately for each sex/APOE group and each OXPHOS gene set. Divide the upregulated occurrences by all upregulated plus downregulated occurrences, then multiply by 100. In the male epsilon-3 homozygous mtDNA-encoded OXPHOS example, 70 occurrences were upregulated and 11 were downregulated. Seventy divided by 81 equals 86 percent upregulated. A value of 50 percent means that upregulated and downregulated occurrences are equally common. Values above 50 percent favor upregulation, while values below 50 percent favor downregulation.",
       boundary:
-        "The occurrence counts do not represent unique genes, expression magnitude, independent donors, or genes returned from KDA calls. The KDA input query is the mitochondrial DEG list supplied to that call.",
-      transition: "Ask whether the excitatory-neuron mtDNA OXPHOS pattern appears in SEA-AD.",
+        "This occurrence-based summary gives more weight to genes that recur across fine-cell comparisons. It is not a fold change, a percentage of unique genes, cells, donors, or fine cell types, an enrichment result, or a measure of OXPHOS activity. Repeated occurrences are not independent biological replications.",
+      transition:
+        "Compare the upregulated occurrence percentage across the six sex/APOE groups.",
     }),
   ],
   [
-    45,
+    50,
     notes({
-      goal: "Show the matched SEA-AD evidence for the excitatory-neuron result.",
+      goal:
+        "Present the ROSMAP evidence for opposite OXPHOS directions in male epsilon-3 homozygous cells.",
       walkthrough:
-        "Only one matched female epsilon-3 homozygous excitatory-neuron KDA call was evaluable in SEA-AD, so the coverage is narrow. Its effective query contains 10 genes. Nine are the same mtDNA-OXPHOS genes found in ROSMAP, and all nine are upregulated in the disease group in both cohorts. The analysis observed nine shared genes compared with 3.83 expected under the category-specific background model. The overlap remains significant after correction, with a Benjamini-Hochberg-adjusted P value of 0.005.",
+        "Across 31 eligible male epsilon-3 homozygous fine-cell DEG queries used to make KDA calls, mtDNA-encoded OXPHOS genes contributed 81 occurrences: 70 AD-up and 11 AD-down. Therefore, 86 percent were upregulated. Nuclear-encoded OXPHOS genes contributed 68 occurrences: 8 AD-up and 60 AD-down. Therefore, 88 percent were downregulated. An occurrence is one pathway gene identified as a DEG in one fine-cell comparison, so the same gene can contribute again in another fine cell type.",
       boundary:
-        "This slide supports the mtDNA component of Finding 1. It does not establish broad replication across excitatory-neuron subtypes or cross-cohort replication of the secondary nuclear-OXPHOS increase. It also does not require SEA-AD to return the same upstream gene from a KDA call.",
-      transition: "Explain why the repeated mitochondrial response may matter biologically.",
+        "These are occurrences among the mitochondrial DEG input queries, not unique genes, independent donors, or genes returned from KDA calls. Opposite directions in gene expression do not demonstrate mismatched proteins or impaired respiration.",
+      transition:
+        "Ask whether the matched male epsilon-3 homozygous inhibitory-neuron pattern appears in SEA-AD.",
     }),
   ],
   [
-    46,
+    51,
     notes({
-      goal: "Explain why the repeated excitatory-neuron response may matter.",
+      goal:
+        "Explain the matched SEA-AD support and what program-level agreement means here.",
       walkthrough:
-        "Excitatory neurons use substantial energy to generate and recover from electrical signaling. Mitochondrial DNA encodes 13 core OXPHOS subunits needed by the respiratory system. Their RNA repeatedly increases in ROSMAP and shows the same direction in the matched SEA-AD comparison. Nuclear OXPHOS RNA also mostly increases in ROSMAP. Together, these observations are consistent with a coordinated mitochondrial response in AD. The most cautious possibilities are compensation or a stress response.",
+        "Eight matched male epsilon-3 homozygous inhibitory-neuron KDA calls were evaluable. ROSMAP and SEA-AD shared 22 mitochondrial-query genes, and 19 of the 22 had the same AD direction. Nine mtDNA-encoded OXPHOS genes were upregulated in both cohorts. Nuclear-encoded OXPHOS, protein-import, mitochondrial-ribosome, and maintenance genes were downregulated in both. The overlap was 22 genes compared with 15.17 expected and remained significant after correction, with a Benjamini-Hochberg adjusted P value of 0.0417. Excluding unresolved mitochondrial identity-conflict genes left 21 shared genes and a similar adjusted P value of 0.0486. Program-level support means agreement among related input DEG genes and their directions, not replication of the same gene returned from a KDA call.",
       boundary:
-        "RNA direction alone cannot distinguish successful compensation from mitochondrial stress, altered RNA processing, selective cell survival, or another disease-associated change. It does not show that mitochondria make more ATP or establish a causal mechanism.",
-      transition: "Place the result in prior research and clarify what remains unproven.",
+        "This is focused cross-cohort support within the matched inhibitory-neuron context. It does not establish the same gene returned from KDA calls, protein-level imbalance, mitochondrial dysfunction, or a formal disease-by-sex-by-APOE interaction.",
+      transition:
+        "Identify the genes that account for the cross-cohort directional agreement.",
+    }),
+  ],
+  [
+    52,
+    notes({
+      goal:
+        "Name the concordant and discordant genes in the matched inhibitory-neuron comparison.",
+      walkthrough:
+        "Nine mtDNA-encoded OXPHOS genes were upregulated in both cohorts: MT-ATP6, MT-CO2, MT-CO3, MT-CYB, MT-ND1, MT-ND2, MT-ND3, MT-ND4, and MT-ND4L. Eight nuclear or mitochondrial-maintenance genes were downregulated in both: UQCRFS1, SLC25A5, TIMM13, TIMM17A, MRPL16, MRPS34, ENDOG, and MTCH1. DBP was also downregulated in both cohorts, while PRELID2 was upregulated in both. HIBCH, ISCU, and TMEM126B had opposite directions across cohorts.",
+      boundary:
+        "These directions describe shared mitochondrial-query DEGs rather than genes returned from KDA calls. Directional agreement does not establish matched protein abundance, respiratory-complex assembly, or mitochondrial function.",
+      transition:
+        "Explain why coordinated expression from two genomes and their support systems may matter.",
+    }),
+  ],
+  [
+    53,
+    notes({
+      goal:
+        "Explain the biological relevance of the two-genome pattern without claiming impaired function.",
+      walkthrough:
+        "OXPHOS complexes combine proteins encoded by mitochondrial DNA with proteins encoded by nuclear DNA, so the two gene sets ultimately contribute to the same respiratory system. The cross-cohort evidence also includes lower expression of genes involved in mitochondrial protein import, mitochondrial ribosomes, transport, and maintenance. Opposite expression directions could reflect compensation, unassembled components, an altered cell state, or mitochondrial stress, but the present data cannot distinguish among those possibilities.",
+      boundary:
+        "This is an RNA-level difference between two OXPHOS gene sets. It does not show that respiratory proteins, complex assembly, respiration, or ATP production are unbalanced. The possible explanations are hypotheses for follow-up.",
+      transition:
+        "Place the finding in prior mitonuclear and cell-resolved Alzheimer’s research.",
+    }),
+  ],
+  [
+    54,
+    notes({
+      goal:
+        "Connect the finding to prior research while preserving the evidence and novelty boundaries.",
+      walkthrough:
+        "General mitonuclear biology establishes that OXPHOS requires coordinated mitochondrial-encoded and nuclear-encoded parts, but it does not show a protein imbalance in these samples. Guo and colleagues support analyzing Alzheimer’s molecular networks separately by sex, but they do not test this exact male epsilon-3 homozygous mismatch. Mathys and colleagues support strong cell-resolved Alzheimer’s responses, but their study also uses ROSMAP and therefore does not provide independent replication. The novelty assessment is high because the biological concept is established while this cross-cohort male epsilon-3 homozygous inhibitory-neuron pattern was not identified in the reviewed literature.",
+      boundary:
+        "Plausibility and novelty are separate from proof. None of these sources independently establishes the exact subgroup pattern, protein imbalance, or mitochondrial dysfunction.",
+      transition:
+        "Proceed to Finding 3, where both OXPHOS gene sets increase in female epsilon-2 cells.",
+    }),
+  ],
+  [
+    55,
+    notes({
+      goal: "Introduce Finding 3 and distinguish it from the male epsilon-3 homozygous mismatch.",
+      walkthrough:
+        "Finding 3 focuses on female APOE epsilon-2 cells. In these cells, both mtDNA-encoded and nuclear-encoded OXPHOS genes were mostly upregulated in Alzheimer’s disease. The two gene sets therefore moved in the same direction, unlike the opposing directions in Finding 2. The next slides show the plain-language result, the ROSMAP evidence, the supporting context, and the limits of interpretation.",
+      boundary:
+        "This coordinated pathway-level expression pattern does not establish greater OXPHOS protein abundance, increased ATP production, improved mitochondrial function, or a female epsilon-2-specific interaction.",
+      transition: "State Finding 3 in plain language.",
     }),
   ],
 ]);
@@ -252,7 +296,7 @@ async function main() {
     verifyArtifactToolImport: true,
     receiptPath: path.join(
       BUILD_DIR,
-      "09162026_sex_apoe_kda_fine_broad_slides43_46_notes_refreshed.validation.json",
+      "09162026_sex_apoe_kda_fine_broad_slides12_50_55_notes_refreshed.validation.json",
     ),
   });
 
@@ -317,11 +361,11 @@ async function main() {
         source: SOURCE,
         sourceSha256: sha256(sourceBuffer),
         output: FINAL_PPTX,
+        outputSha256: sha256(await fs.readFile(FINAL_PPTX)),
         slideCount: EXPECTED_SLIDES,
         updatedSlides: [...NOTES_BY_SLIDE.keys()],
-        visibleSlidesPreserved: true,
-        changedParts,
-        validation: result,
+        changedPackageParts: changedParts,
+        warnings: result.warnings ?? [],
       },
       null,
       2,
@@ -329,7 +373,4 @@ async function main() {
   );
 }
 
-main().catch((error) => {
-  console.error(error.stack || error.message || String(error));
-  process.exitCode = 1;
-});
+await main();

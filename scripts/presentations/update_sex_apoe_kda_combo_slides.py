@@ -983,7 +983,11 @@ def plot_broad_cell_recurrence(
     )
     axis.tick_params(axis="x", length=0, pad=3)
     axis.tick_params(axis="y", length=0, pad=5)
-    axis.set_xlabel("Unique non-MT key-driver genes", fontsize=9.5, labelpad=8)
+    axis.set_xlabel(
+        "Unique non-MitoCarta genes returned from KDA calls",
+        fontsize=9.5,
+        labelpad=8,
+    )
     axis.set_ylabel("")
     axis.set_xticks(np.arange(-0.5, len(genes), 1), minor=True)
     axis.set_yticks(np.arange(-0.5, 7, 1), minor=True)
@@ -1040,7 +1044,7 @@ def plot_broad_cell_recurrence(
     figure.text(
         0.045,
         0.955,
-        "Colored tile = gene is a key driver in that category; color = recurrence across all six categories.",
+        "Colored tile = gene returned from a KDA call in that category; color = recurrence across all six categories.",
         ha="left",
         va="center",
         fontsize=9.2,
@@ -1302,7 +1306,7 @@ def insert_broad_cell_recurrence_slide(
     ui.add_title_block(
         slide,
         title
-        or f"{cohort} {broad_cell_adjective} drivers recur across sex/APOE groups",
+        or f"{cohort} {broad_cell_adjective}: recurrence of genes returned from KDA calls",
         subtitle
         or f"{unique_gene_count} unique non-MT genes across {category_unit_count} gene × category combinations; columns are ordered by recurrence, then alphabetically.",
     )
@@ -1315,15 +1319,15 @@ def insert_broad_cell_recurrence_slide(
     )
     ui.set_alt_text(
         picture,
-        f"Matrix of {unique_gene_count} {cohort} {broad_cell_adjective} non-mitochondrial key-driver genes across six female and male sex/APOE categories; colored cells mark category membership and color indicates recurrence across categories.",
+        f"Matrix of {unique_gene_count} {cohort} {broad_cell_adjective} non-MitoCarta genes returned from KDA calls across six female and male sex/APOE categories; colored cells mark category membership and color indicates recurrence across categories.",
     )
     picture.name = (
-        f"{cohort} {broad_cell_adjective} non-MT key-driver recurrence matrix"
+        f"{cohort} {broad_cell_adjective} KDA-call gene recurrence matrix"
     )
     set_notes(
         slide,
-        f"Show how {cohort} {broad_cell_adjective} key drivers recur across the six sex/APOE categories.",
-        f"Rows are the three female groups followed by the three male groups. Columns contain all {unique_gene_count} distinct non-mitochondrial key-driver genes observed in the {broad_cell_adjective} broad cell type. A colored tile means the gene is present in that category; its color gives the total number of the six categories containing that gene. Columns are ordered from highest to lowest recurrence and alphabetically within ties.",
+        f"Show how {cohort} {broad_cell_adjective} genes returned from KDA calls recur across the six sex/APOE categories.",
+        f"Rows are the three female groups followed by the three male groups. Columns contain all {unique_gene_count} distinct non-MitoCarta genes returned from KDA calls in the {broad_cell_adjective} broad cell type. A colored tile means the gene was returned from a KDA call in that category; its color gives the total number of the six categories containing that gene. Columns are ordered from highest to lowest recurrence and alphabetically within ties.",
         "Category recurrence is descriptive presence across returned-only category results. It is not an effect size, an independent replication count, or a sex/APOE interaction test.",
         transition,
     )
@@ -2632,7 +2636,7 @@ def main() -> int:
         broad_cell_adjective="excitatory-neuron",
         unique_gene_count=int(sea_excitatory["current_symbol"].nunique()),
         category_unit_count=len(sea_excitatory),
-        title="SEA-AD excitatory-neuron drivers occur in two sex/APOE groups",
+        title="SEA-AD excitatory neurons: genes returned from KDA calls in two groups",
         subtitle="27 unique non-MT genes across 27 gene × category combinations; no gene recurs across sex/APOE categories.",
         transition="Move to the sensitivity analyses.",
         insert_index=19,
@@ -2665,48 +2669,48 @@ def main() -> int:
     checks.append(
         {
             "check_id": "rosmap_excitatory_recurrence_inserted_after_top5",
-            "observed": "ROSMAP excitatory-neuron drivers recur"
+            "observed": "ROSMAP excitatory-neuron: recurrence of genes returned from KDA calls"
             in excitatory_slide_text,
             "expected": True,
-            "passed": "ROSMAP excitatory-neuron drivers recur"
+            "passed": "ROSMAP excitatory-neuron: recurrence of genes returned from KDA calls"
             in excitatory_slide_text,
         }
     )
     checks.append(
         {
             "check_id": "rosmap_inhibitory_recurrence_inserted_after_excitatory",
-            "observed": "ROSMAP inhibitory-neuron drivers recur"
+            "observed": "ROSMAP inhibitory-neuron: recurrence of genes returned from KDA calls"
             in inhibitory_slide_text,
             "expected": True,
-            "passed": "ROSMAP inhibitory-neuron drivers recur"
+            "passed": "ROSMAP inhibitory-neuron: recurrence of genes returned from KDA calls"
             in inhibitory_slide_text,
         }
     )
     checks.append(
         {
             "check_id": "rosmap_astrocyte_recurrence_inserted_after_inhibitory",
-            "observed": "ROSMAP astrocyte drivers recur"
+            "observed": "ROSMAP astrocyte: recurrence of genes returned from KDA calls"
             in astrocyte_slide_text,
             "expected": True,
-            "passed": "ROSMAP astrocyte drivers recur"
+            "passed": "ROSMAP astrocyte: recurrence of genes returned from KDA calls"
             in astrocyte_slide_text,
         }
     )
     checks.append(
         {
             "check_id": "rosmap_opc_recurrence_inserted_after_astrocyte",
-            "observed": "ROSMAP OPC drivers recur" in opc_slide_text,
+            "observed": "ROSMAP OPC: recurrence of genes returned from KDA calls" in opc_slide_text,
             "expected": True,
-            "passed": "ROSMAP OPC drivers recur" in opc_slide_text,
+            "passed": "ROSMAP OPC: recurrence of genes returned from KDA calls" in opc_slide_text,
         }
     )
     checks.append(
         {
             "check_id": "seaad_excitatory_recurrence_inserted_after_top5",
-            "observed": "SEA-AD excitatory-neuron drivers occur"
+            "observed": "SEA-AD excitatory neurons: genes returned from KDA calls in two groups"
             in sea_excitatory_slide_text,
             "expected": True,
-            "passed": "SEA-AD excitatory-neuron drivers occur"
+            "passed": "SEA-AD excitatory neurons: genes returned from KDA calls in two groups"
             in sea_excitatory_slide_text,
         }
     )

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-/** Refresh speaker notes for the manually revised Finding 1 slides 43–46. */
+/** Refresh speaker notes for the manually revised slides 56–62. */
 
 import crypto from "node:crypto";
 import fs from "node:fs/promises";
@@ -16,15 +16,17 @@ const SOURCE = path.join(
 );
 const BUILD_DIR = path.join(
   WORKSPACE_DIR,
-  "results/presentations/09162026_slides43_46_script_refresh_20260919/build",
+  "results/presentations/09162026_slides56_62_notes_refresh_20260920/build",
 );
 const FINAL_PPTX = path.join(
   WORKSPACE_DIR,
-  "results/presentations/09162026_slides43_46_script_refresh_20260919/output/09162026_sex_apoe_kda_fine_broad_slides43_46_notes_refreshed_20260919.pptx",
+  "results/presentations/09162026_slides56_62_notes_refresh_20260920/output/09162026_sex_apoe_kda_fine_broad_slides56_62_notes_refreshed_20260920.pptx",
 );
-const EXPECTED_SLIDES = 160;
+const EXPECTED_SLIDES = 159;
+const EXPECTED_SOURCE_SHA256 =
+  "b91cb750cddde55e02345eab5540dc21c1709c00573a78b0e2acdf2034c71f80";
 
-function notes({ goal, walkthrough, boundary, transition }) {
+function notes({ goal, walkthrough, boundary, transition, sources }) {
   return [
     `Teaching goal: ${goal}`,
     "",
@@ -33,53 +35,98 @@ function notes({ goal, walkthrough, boundary, transition }) {
     `Scientific boundary: ${boundary}`,
     "",
     `Transition: ${transition}`,
+    ...(sources ? ["", `Sources: ${sources}`] : []),
   ].join("\n");
 }
 
+const FINDING_3_SOURCE =
+  "docs/analysis/kda_w_human_validation/rosmap_sex_apoe_broad_kda_analysis.md, Finding 3. Literature: https://doi.org/10.1016/j.neuron.2019.03.075; https://doi.org/10.1016/j.celrep.2023.113183; https://doi.org/10.1186/s13024-023-00624-5";
+const FINDING_4_SOURCE =
+  "docs/analysis/kda_w_human_validation/rosmap_sex_apoe_broad_kda_analysis.md, Finding 4. Literature: https://doi.org/10.1038/s41419-020-02776-4; https://doi.org/10.1016/j.celrep.2023.113183; https://doi.org/10.1038/s41586-024-07606-7";
+
 const NOTES_BY_SLIDE = new Map([
   [
-    43,
+    56,
     notes({
-      goal: "Explain the primary and secondary parts of Finding 1 in plain language.",
+      goal: "Introduce Finding 3 and distinguish it from the male APOE ε3/ε3 pattern.",
       walkthrough:
-        "Read the four labels first: female, APOE epsilon-3 homozygous, excitatory neurons, and Alzheimer’s disease. Mitochondrial DNA encodes 13 protein subunits of oxidative phosphorylation, or OXPHOS. RNA from those genes is more abundant in AD than in the comparison group. Nuclear-encoded OXPHOS RNA also mostly rises in ROSMAP, but the strongest repeated and cross-cohort evidence concerns the mitochondrial-DNA-encoded genes.",
+        "Finding 3 concerns female APOE ε2 cells. In the ROSMAP fine-cell analysis, core MT genes and nuclear-encoded OXPHOS genes were both predominantly upregulated in Alzheimer’s disease. The two OXPHOS gene sets therefore move together, unlike the opposite directions observed in male APOE ε3/ε3 cells. This section first states the result, then shows the occurrence counts, resolution checks, biological interpretation, and supporting literature.",
       boundary:
-        "Higher RNA abundance does not demonstrate more OXPHOS protein, greater respiration, increased ATP production, or healthier mitochondria. It also does not establish that the disease response differs statistically by sex or APOE genotype.",
-      transition: "Show how repeatedly the two OXPHOS gene sets appear among ROSMAP fine-cell DEGs.",
+        "These within-stratum results do not establish a disease-by-sex or disease-by-APOE interaction. Coordinated gene expression also does not demonstrate greater OXPHOS protein abundance, increased ATP production, or improved mitochondrial function.",
+      transition: "State the female APOE ε2 result and define the two gene sets being compared.",
+      sources: FINDING_3_SOURCE,
     }),
   ],
   [
-    44,
+    57,
     notes({
-      goal:
-        "Explain the ROSMAP DEG occurrence counts across all female epsilon-3 homozygous comparisons and within excitatory neurons.",
+      goal: "Explain the coordinated increase across the two OXPHOS gene sets.",
       walkthrough:
-        "F_e33 denotes the female APOE epsilon-3 homozygous group. Across eligible fine-cell DEG input queries, mtDNA OXPHOS genes appear 217 times, and all 217 occurrences are upregulated in AD. Nuclear OXPHOS genes appear 89 times, with 76 upregulated and 13 downregulated, so 85 percent are upregulated. Within excitatory neurons, 14 eligible fine-cell DEG queries contain 123 mtDNA-OXPHOS occurrences, all upregulated. One occurrence means that one pathway gene is a DEG in one fine-cell comparison. The same gene can therefore contribute multiple occurrences across fine cell types. The red banner describes a separate enrichment test, which asks whether an input query contains more mtDNA-OXPHOS genes than expected relative to its exact MitoCarta background after Benjamini-Hochberg correction. The main numbers displayed here are occurrence counts, not counts of enriched queries.",
+        "Core MT genes are the 13 protein-coding mitochondrial-DNA genes that encode structural OXPHOS subunits. Nuclear-encoded OXPHOS genes are the 86 nuclear genes that encode the remaining structural subunits used in this analysis. Across eligible female APOE ε2 fine-cell comparisons, 127 of 128 core MT gene occurrences and 239 of 243 nuclear-encoded OXPHOS gene occurrences were upregulated in AD. The result is therefore a coordinated transcript-level pattern across both gene sets.",
       boundary:
-        "The occurrence counts do not represent unique genes, expression magnitude, independent donors, or genes returned from KDA calls. The KDA input query is the mitochondrial DEG list supplied to that call.",
-      transition: "Ask whether the excitatory-neuron mtDNA OXPHOS pattern appears in SEA-AD.",
+        "An occurrence is one pathway gene identified as a DEG in one eligible fine-cell comparison, so the same gene may appear more than once across cell types. These counts do not measure unique genes, protein assembly, respiration, or ATP production.",
+      transition: "Show the complete ROSMAP occurrence and enrichment counts.",
+      sources: FINDING_3_SOURCE,
     }),
   ],
   [
-    45,
+    58,
     notes({
-      goal: "Show the matched SEA-AD evidence for the excitatory-neuron result.",
+      goal: "Quantify the ROSMAP evidence for Finding 3.",
       walkthrough:
-        "Only one matched female epsilon-3 homozygous excitatory-neuron KDA call was evaluable in SEA-AD, so the coverage is narrow. Its effective query contains 10 genes. Nine are the same mtDNA-OXPHOS genes found in ROSMAP, and all nine are upregulated in the disease group in both cohorts. The analysis observed nine shared genes compared with 3.83 expected under the category-specific background model. The overlap remains significant after correction, with a Benjamini-Hochberg-adjusted P value of 0.005.",
+        "The core MT gene set contributes 128 DEG occurrences: 127 AD-up and one AD-down, or 99 percent upregulated. Nuclear-encoded OXPHOS genes contribute 243 occurrences: 239 AD-up and four AD-down, or 98 percent upregulated. The analysis also identified 29 significant pathway-enrichment results across KDA calls, comprising 20 for core MT genes and nine for nuclear-encoded OXPHOS genes. Within fine excitatory neurons, nine of 12 fine cell types support core MT upregulation and eight of 12 support nuclear-encoded OXPHOS upregulation.",
       boundary:
-        "This slide supports the mtDNA component of Finding 1. It does not establish broad replication across excitatory-neuron subtypes or cross-cohort replication of the secondary nuclear-OXPHOS increase. It also does not require SEA-AD to return the same upstream gene from a KDA call.",
-      transition: "Explain why the repeated mitochondrial response may matter biologically.",
+        "Occurrence counts can repeat genes across fine-cell KDA queries and do not represent independent donors or expression effect sizes. The number of enriched KDA calls can also depend on query size and the genes available in each network background.",
+      transition: "Compare the primary fine-cell result with direct broad-cell and SEA-AD evidence.",
+      sources: FINDING_3_SOURCE,
     }),
   ],
   [
-    46,
+    59,
     notes({
-      goal: "Explain why the repeated excitatory-neuron response may matter.",
+      goal: "Explain how cell resolution and cohort coverage affect Finding 3.",
       walkthrough:
-        "Excitatory neurons use substantial energy to generate and recover from electrical signaling. Mitochondrial DNA encodes 13 core OXPHOS subunits needed by the respiratory system. Their RNA repeatedly increases in ROSMAP and shows the same direction in the matched SEA-AD comparison. Nuclear OXPHOS RNA also mostly increases in ROSMAP. Together, these observations are consistent with a coordinated mitochondrial response in AD. The most cautious possibilities are compensation or a stress response.",
+        "The project treats fine-cell results as primary and direct broad-cell results as sensitivity evidence. In the fine-cell analysis, nine of 12 excitatory fine cell types support core MT upregulation and eight of 12 support nuclear-encoded OXPHOS upregulation. In the direct broad-cell ROSMAP analysis, the nuclear-encoded OXPHOS increase remains strong, but the core MT component is not significant. SEA-AD has no active matched female APOE ε2 category, so it cannot test this finding.",
       boundary:
-        "RNA direction alone cannot distinguish successful compensation from mitochondrial stress, altered RNA processing, selective cell survival, or another disease-associated change. It does not show that mitochondria make more ATP or establish a causal mechanism.",
-      transition: "Place the result in prior research and clarify what remains unproven.",
+        "The broad-cell disagreement limits how broadly the coordinated two-gene-set result can be generalized. Missing SEA-AD coverage is neutral: it provides neither validation nor contradictory evidence.",
+      transition: "Explain why coordinated upregulation may be biologically interesting without calling it protective.",
+      sources: FINDING_3_SOURCE,
+    }),
+  ],
+  [
+    60,
+    notes({
+      goal: "Interpret the female APOE ε2 pattern cautiously.",
+      walkthrough:
+        "APOE ε2 lowers Alzheimer’s disease risk at the population level, but the current data come from diseased tissue. Both OXPHOS gene sets move upward rather than separating as they do in the male APOE ε3/ε3 finding. This coordinated response could reflect compensation for inefficient mitochondria or another altered disease state. It motivates a protective-response hypothesis for future testing.",
+      boundary:
+        "The observed gene-expression pattern does not establish that the response is protective, that mitochondria work more efficiently, or that APOE ε2 caused the response. Separate female APOE ε2 analyses also do not establish a statistical sex-by-APOE interaction.",
+      transition: "Place the result in the context of APOE risk, mitochondrial biology, and sex-aware Alzheimer’s research.",
+      sources: FINDING_3_SOURCE,
+    }),
+  ],
+  [
+    61,
+    notes({
+      goal: "Summarize the literature context and the novelty boundary for Finding 3.",
+      walkthrough:
+        "Belloy and colleagues establish that Alzheimer’s disease risk differs substantially across APOE alleles, but that work does not explain this female APOE ε2 expression pattern. Lee and colleagues show that APOE state can alter mitochondrial homeostasis in another experimental context. Guo and colleagues support analyzing Alzheimer’s molecular networks by sex and cell type, but they do not report this exact female APOE ε2 OXPHOS result. The novelty label is therefore high but provisional.",
+      boundary:
+        "These studies make the interpretation plausible, but none independently reproduces the same sex, APOE, cell-type, and disease comparison. The novelty assessment comes from a focused review rather than a systematic literature search.",
+      transition: "Move to Finding 4, which shows a different OXPHOS direction in female APOE ε4 fine-cell results.",
+      sources: FINDING_3_SOURCE,
+    }),
+  ],
+  [
+    62,
+    notes({
+      goal: "Introduce Finding 4 and contrast it with the preceding coordinated increase.",
+      walkthrough:
+        "Finding 4 concerns female APOE ε4 fine-cell results. Its strongest signal is lower expression of nuclear-encoded OXPHOS genes, while core MT genes show a smaller and more mixed pattern. The following slides show the ROSMAP occurrence counts, the disagreement with direct broad-cell results, and the limits of the interpretation.",
+      boundary:
+        "This is primarily a fine-cell transcriptomic and pathway result. It does not demonstrate reduced respiratory function, a uniform decrease across all MitoCarta MT genes, or a disease-by-APOE interaction.",
+      transition: "State the female APOE ε4 result in plain language.",
+      sources: FINDING_4_SOURCE,
     }),
   ],
 ]);
@@ -161,6 +208,12 @@ async function main() {
   await fs.mkdir(BUILD_DIR, { recursive: true });
   await fs.mkdir(path.dirname(FINAL_PPTX), { recursive: true });
 
+  const sourceBuffer = await fs.readFile(SOURCE);
+  const sourceHash = sha256(sourceBuffer);
+  if (sourceHash !== EXPECTED_SOURCE_SHA256) {
+    throw new Error(`Source deck changed before the notes refresh: ${sourceHash}`);
+  }
+
   const { importRuntimeModule } = await import(
     pathToFileURL(path.join(SKILL_DIR, "container_tools/runtime_helpers.mjs")).href
   );
@@ -177,14 +230,14 @@ async function main() {
   for (const [slideNumber, updatedNotes] of NOTES_BY_SLIDE) {
     const slide = slides[slideNumber - 1];
     const beforePng = await blobBuffer(
-      await presentation.export({ slide, format: "png", scale: 2 }),
+      await presentation.export({ slide, format: "png", scale: 1.5 }),
     );
     beforePngs.set(slideNumber, beforePng);
     await fs.writeFile(path.join(BUILD_DIR, `slide-${slideNumber}-before.png`), beforePng);
     slide.speakerNotes.textFrame.setText(updatedNotes);
     slide.speakerNotes.setVisible(true);
     const afterPng = await blobBuffer(
-      await presentation.export({ slide, format: "png", scale: 2 }),
+      await presentation.export({ slide, format: "png", scale: 1.5 }),
     );
     await fs.writeFile(path.join(BUILD_DIR, `slide-${slideNumber}-after.png`), afterPng);
     if (sha256(beforePng) !== sha256(afterPng)) {
@@ -194,7 +247,10 @@ async function main() {
 
   const artifactCandidatePath = path.join(BUILD_DIR, "artifact-candidate.pptx");
   await (await PresentationFile.exportPptx(presentation)).save(artifactCandidatePath);
-  const sourceBuffer = await fs.readFile(SOURCE);
+  if (sha256(await fs.readFile(SOURCE)) !== sourceHash) {
+    throw new Error("The source deck changed during the notes refresh");
+  }
+
   const sourceZip = await JSZip.loadAsync(sourceBuffer);
   const artifactZip = await JSZip.loadAsync(await fs.readFile(artifactCandidatePath));
   const changedNotesParts = [];
@@ -218,11 +274,11 @@ async function main() {
   const { finalizePresentation } = await import(
     pathToFileURL(path.join(SKILL_DIR, "container_tools/artifact_tool_utils.mjs")).href
   );
-  const result = await finalizePresentation({
+  const validation = await finalizePresentation({
     explicitTotalSlideCount: EXPECTED_SLIDES,
     requiredNativeTableOwnerSlides: [],
-    requiredNativeChartOwnerSlides: [13],
-    requiredEmbeddedWorkbookChartOwnerSlides: [13],
+    requiredNativeChartOwnerSlides: [14],
+    requiredEmbeddedWorkbookChartOwnerSlides: [14],
     nativeChartTargetApplication: "powerpoint",
     workspaceDir: WORKSPACE_DIR,
     candidatePath,
@@ -247,21 +303,18 @@ async function main() {
       basis: "reference",
       families: ["Arial"],
       referencePath: SOURCE,
-      referenceSha256: sha256(sourceBuffer),
+      referenceSha256: sourceHash,
     },
     verifyArtifactToolImport: true,
-    receiptPath: path.join(
-      BUILD_DIR,
-      "09162026_sex_apoe_kda_fine_broad_slides43_46_notes_refreshed.validation.json",
-    ),
+    receiptPath: path.join(BUILD_DIR, "slides56_62_notes_refresh.validation.json"),
   });
 
   const reopened = await PresentationFile.importPptx(await FileBlob.load(FINAL_PPTX));
   const reopenedSlides = slidesFromPresentation(reopened);
-  const notesSnapshot = await reopened.inspect({ kind: "notes", maxChars: 2000000 });
+  const notesSnapshot = await reopened.inspect({ kind: "notes", maxChars: 3000000 });
   const finalNotesBySlide = new Map(
     notesSnapshot.ndjson
-      .split("\n")
+      .split(/\r?\n/)
       .filter(Boolean)
       .map((line) => JSON.parse(line))
       .filter((record) => record.kind === "notes" && Number.isInteger(record.slide))
@@ -272,7 +325,7 @@ async function main() {
       await reopened.export({
         slide: reopenedSlides[slideNumber - 1],
         format: "png",
-        scale: 2,
+        scale: 1.5,
       }),
     );
     await fs.writeFile(path.join(BUILD_DIR, `slide-${slideNumber}-final.png`), finalPng);
@@ -280,10 +333,7 @@ async function main() {
       throw new Error(`Finalized deck changed visible slide ${slideNumber}`);
     }
     const actualNotes = finalNotesBySlide.get(slideNumber);
-    if (typeof actualNotes !== "string") {
-      throw new Error(`Finalized notes are missing on slide ${slideNumber}`);
-    }
-    if (actualNotes.trim() !== expectedNotes.trim()) {
+    if (typeof actualNotes !== "string" || actualNotes.trim() !== expectedNotes.trim()) {
       throw new Error(`Finalized notes do not match on slide ${slideNumber}`);
     }
   }
@@ -315,13 +365,14 @@ async function main() {
     JSON.stringify(
       {
         source: SOURCE,
-        sourceSha256: sha256(sourceBuffer),
+        sourceSha256: sourceHash,
         output: FINAL_PPTX,
+        outputSha256: sha256(await fs.readFile(FINAL_PPTX)),
         slideCount: EXPECTED_SLIDES,
         updatedSlides: [...NOTES_BY_SLIDE.keys()],
         visibleSlidesPreserved: true,
         changedParts,
-        validation: result,
+        warnings: validation.warnings ?? [],
       },
       null,
       2,
