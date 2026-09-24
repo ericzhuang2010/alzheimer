@@ -60,6 +60,7 @@ data/reference/rimbanet/encode_tf_targets.tsv.gz
 data/processed/*
 !data/processed/dataset_707_basic_02-08-2022.clean.txt
 !data/bayesian_network
+!data/bayesian_network_nomt
 untracked/
 ad_research/
 external_tools/
